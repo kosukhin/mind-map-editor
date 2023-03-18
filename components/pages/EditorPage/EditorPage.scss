@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #f1f1f1;
+  background: var(--editorBackground);
   overflow: hidden;
   display: grid;
   grid-template-areas:
@@ -28,7 +28,7 @@
 
   &-MiniMap {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: calc(50px + var(--defaultPadding));
+    right: var(--defaultPadding);
   }
 }

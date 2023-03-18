@@ -1,1 +1,8 @@
-.MiniMap {}
+.MiniMap {
+  width: 150px;
+  height: 150px;
+  background: lightblue;
+  pointer-events: none;
+  opacity: 0.8;
+  border: solid 1px #000;
+}

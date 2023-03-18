@@ -1,1 +1,5 @@
-.SideBar {}
+.SideBar {
+  padding: var(--defaultPadding);
+  background: #ccc;
+  box-sizing: border-box;
+}

@@ -1,3 +1,7 @@
 <template>
-  <div>mini map</div>
+  <div class="MiniMap">mini map</div>
 </template>
+
+<style scoped lang="scss">
+@import "MiniMap";
+</style>
