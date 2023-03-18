@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import EditorPage from '@/components/pages/EditorPage/EditorPage';
+</script>
+
 <template>
-  <div>Редактор</div>
+  <EditorPage />
 </template>
