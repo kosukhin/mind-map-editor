@@ -1,3 +1,3 @@
 <template>
-  <div>breds</div>
+  <div>Home / sss </div>
 </template>
