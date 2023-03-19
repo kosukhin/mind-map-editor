@@ -13,5 +13,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="canvasRef">editr</div>
+  <div ref="canvasRef" id="canvas">editr</div>
 </template>
