@@ -13,5 +13,6 @@
     "sass-loader": "^13.2.0"
   },
   "dependencies": {
+    "konva": "^8.4.2"
   }
 }

@@ -1,3 +1,5 @@
 <template>
-  <div>inpt</div>
+  <div class="Input">
+    <input type="text" />
+  </div>
 </template>

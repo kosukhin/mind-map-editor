@@ -1,3 +1,6 @@
 <template>
-  <div>checkbox</div>
+  <label>
+    <input type="checkbox" />
+    Label
+  </label>
 </template>
