@@ -1,3 +1,5 @@
+import { Dictionary } from "~/entities/types/Dictionary";
+
 export interface MapObjectRelation {
   id: string,
 }
@@ -22,9 +24,11 @@ export interface MapType {
   height: number,
 }
 
+export type MapStructureTypes = Dictionary<MapType>;
+
 export interface MapStructure {
   url: string,
   parent: string,
-  types: Record<string, MapType>,
-  objects: Record<string, MapObject>
+  types: MapStructureTypes,
+  objects: Dictionary<MapObject>
 }

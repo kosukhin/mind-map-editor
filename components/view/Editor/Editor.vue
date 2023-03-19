@@ -6,9 +6,10 @@ import { Nullable } from '~/entities/types/Nullable';
 
 const canvasRef  = ref<Nullable<HTMLElement>>(null);
 onMounted(() => {
-  if (canvasRef.value) {
-    useEditor(canvasRef.value)
-  }
+  if (!canvasRef.value) return;
+
+  const {fullRenderCounter} = useEditor(canvasRef.value);
+  fullRenderCounter.value++
 });
 </script>
 

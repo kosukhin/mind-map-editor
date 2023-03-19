@@ -1,67 +1,34 @@
-import Konva from "konva";
-import { Canvg } from "canvg";
-import { http } from "~/utils/http";
-import { MapObject, MapStructure } from "~/entities/Map";
 import { useRoute } from "vue-router";
+import { watch } from "@vue/runtime-core";
+import { getMap } from "~/requests/getMap";
+import { addObjectToLayer } from "~/utils/konva/addObjectToLayer";
+import { createLayer } from "~/utils/konva/createLayer";
+import {Nullable} from "~/entities/types/Nullable";
+import { MapStructure } from "~/entities/Map";
 
-const {Stage, Layer} = Konva;
+const currentMap = ref<Nullable<MapStructure>>(null)
 
-export async function useEditor(editorWrapper: HTMLElement) {
+export function useEditor(editorWrapper: HTMLElement) {
+  const fullRenderCounter = ref(0);
   const route = useRoute();
-  const mapName = route.path.replace('/', '');
-  const map = await getMap(mapName);
-  const layer = await renderCanvas(editorWrapper);
 
-  for (const object of Object.values(map.objects)) {
-    addTypeToKonva(layer, object);
-  }
-}
-
-async function renderCanvas(editorWrapper: HTMLElement) {
-  const canvasSize = {
-    width: editorWrapper.clientWidth,
-    height: editorWrapper.clientHeight,
-  };
-  const stage = new Stage({
-    ...canvasSize,
-    container: 'canvas',
-    fill: '#eee',
-    draggable: true,
-  });
-  const layer = new Layer();
-  stage.add(layer);
-  layer.draw();
-
-  return layer
-}
-
-async function addTypeToKonva(
-  layer: InstanceType<typeof Layer>,
-  object: MapObject
-) {
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  const v = await Canvg.fromString(ctx, '');
-}
-
-async function getMap(mapName: string): Promise<MapStructure> {
-  const response = await http({
-    method: 'get',
-    url: '/api/get-map',
-    params: {
-      document: mapName,
-    },
+  watch(fullRenderCounter, async () => {
+    await fullRenderCurrentMap(route.path, editorWrapper);
   })
 
-  const result = (response as any).data.structure as MapStructure;
-
-  for (const objectId of Object.keys(result.objects)) {
-    result.objects[objectId] = {
-      ...result.objects[objectId],
-      id: objectId
-    }
+  return {
+    fullRenderCounter,
+    currentMap,
   }
+}
 
-  return result;
+async function fullRenderCurrentMap(currentPath: string, editorWrapper: HTMLElement) {
+  const mapName = currentPath.replace('/', '');
+  const map = await getMap(mapName);
+  const layer = await createLayer(editorWrapper);
+  currentMap.value = map;
+
+  for (const object of Object.values(map.objects)) {
+    addObjectToLayer(layer, object, map.types);
+  }
 }
