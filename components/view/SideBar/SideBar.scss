@@ -2,4 +2,8 @@
   padding: var(--defaultPadding);
   background: #ccc;
   box-sizing: border-box;
+  
+  &-ItemName, &-ItemImage {
+    text-align: center;
+  }
 }

@@ -4,9 +4,9 @@ import { addObjectToLayer } from "~/utils/konva/addObjectToLayer";
 import { Ref, watch } from "@vue/runtime-core";
 import {Nullable} from '~/entities/types/Nullable';
 
-export function useCurrentMapRenderer(
+export const useCurrentMapRenderer = (
   editorWrapper: Ref<Nullable<HTMLElement>>
-) {
+) => {
   const {map} = useCurrentMap();
 
   watch([map, editorWrapper], async () => {

@@ -6,8 +6,11 @@ const {map} = useCurrentMap();
 
 <template>
   <div class="SideBar">
-    <div v-if="map">
-      {{ map.types }}
+    <div class="SideBar-Items" v-if="map">
+      <div class="SideBar-Item" v-for="(type, name) in map.types">
+        <div class="SideBar-ItemName">{{ name }}</div>
+        <div class="SideBar-ItemImage" v-html="type.svg"></div>
+      </div>
     </div>
   </div>
 </template>

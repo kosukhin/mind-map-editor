@@ -3,23 +3,21 @@ import {Nullable} from "~/entities/types/Nullable";
 import { ref } from "@vue/reactivity";
 import { getMap } from "~/requests/getMap";
 import { useRoute } from "vue-router";
+import { createSharedComposable } from "@vueuse/core";
 
-const map = ref<Nullable<MapStructure>>(null)
-let isFirstCalled = true;
-
-export function useCurrentMap() {
+const currentMap = () => {
+  const map = ref<Nullable<MapStructure>>(null)
   const route = useRoute();
   const mapName = route.path.replace('/', '');
 
-  if (isFirstCalled) {
-    getMap(mapName).then(m => {
-      map.value = m;
-      isFirstCalled = false;
-    })
-  }
+  getMap(mapName).then(m => {
+    map.value = m;
+  })
 
   return {
     map,
     mapName,
   }
 }
+
+export const useCurrentMap = createSharedComposable(currentMap);
