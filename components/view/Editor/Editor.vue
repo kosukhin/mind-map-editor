@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import { ref } from "@vue/reactivity";
-import { useEditor } from "~/composables/useEditor";
-import { onMounted } from "@vue/runtime-core";
 import { Nullable } from '~/entities/types/Nullable';
+import { useCurrentMapRenderer } from "~/composables/useCurrentMapRenderer";
 
 const canvasRef  = ref<Nullable<HTMLElement>>(null);
-onMounted(() => {
-  if (!canvasRef.value) return;
-
-  const {fullRenderCounter} = useEditor(canvasRef.value);
-  fullRenderCounter.value++
-});
+useCurrentMapRenderer(canvasRef);
 </script>
 
 <template>

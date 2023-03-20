@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { useEditor } from "#imports";
+import { useCurrentMap } from "~/composables/useCurrentMap";
 
-const {currentMap} = useEditor();
+const {map} = useCurrentMap();
 </script>
 
 <template>
-  <div class="SideBar">sidebar</div>
+  <div class="SideBar">
+    <div v-if="map">
+      {{ map.types }}
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
