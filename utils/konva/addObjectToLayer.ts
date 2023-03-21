@@ -22,6 +22,7 @@ export async function addObjectToLayer(
     width: type.width,
     height: type.height,
     draggable: true,
+    objectId: object.id
   });
   layer.add(img);
 }

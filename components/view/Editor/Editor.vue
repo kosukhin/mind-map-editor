@@ -10,7 +10,7 @@ useCurrentMapRenderer(canvasRef);
 const {dragend, click} = useLayerEvents();
 
 watch(dragend, () => {
-  console.log(dragend.value?.target.attrs.x);
+  console.log(dragend.value?.target.attrs.objectId);
 });
 watch(click, () => {
   console.log(click.value);
