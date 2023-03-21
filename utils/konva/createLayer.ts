@@ -1,8 +1,9 @@
 import Konva from "konva";
+import { MapLayer } from "~/entities/MapLayer";
 
 const {Stage, Layer} = Konva;
 
-export async function createLayer(editorWrapper: HTMLElement) {
+export function createLayer(editorWrapper: HTMLElement): MapLayer {
   const canvasSize = {
     width: editorWrapper.clientWidth,
     height: editorWrapper.clientHeight,
