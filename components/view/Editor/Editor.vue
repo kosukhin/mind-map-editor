@@ -2,18 +2,17 @@
 import { ref } from "@vue/reactivity";
 import { Nullable } from '~/entities/types/Nullable';
 import { useCurrentMapRenderer } from "~/composables/useCurrentMapRenderer";
-import { useLayerEvents } from "~/composables/useLayerEvents";
-import { watch } from "@vue/runtime-core";
+import {onMounted} from "@vue/runtime-core";
+import {createLayer} from "~/utils/konva/createLayer";
+import {useLayer} from "~/composables/useLayer";
 
+const {layer} = useLayer();
 const canvasRef  = ref<Nullable<HTMLElement>>(null);
 useCurrentMapRenderer(canvasRef);
-const {dragend, click} = useLayerEvents();
 
-watch(dragend, () => {
-  console.log(dragend.value?.target.attrs.objectId);
-});
-watch(click, () => {
-  console.log(click.value);
+onMounted(() => {
+  if (!canvasRef.value) return;
+  layer.value = createLayer(canvasRef.value);
 });
 </script>
 
