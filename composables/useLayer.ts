@@ -1,7 +1,6 @@
-import { MapLayer } from "~/entities/MapLayer";
+import { MapLayer, Nullable } from "~/entities";
 import { createSharedComposable } from "@vueuse/core";
 import { shallowRef } from "@vue/reactivity";
-import {Nullable} from '~/entities/types/Nullable';
 
 export const useLayer = createSharedComposable(() => {
   let layer = shallowRef<Nullable<MapLayer>>(null)

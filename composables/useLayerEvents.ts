@@ -1,6 +1,6 @@
-import { useLayer } from "~/composables/useLayer";
+import { useLayer } from "~/composables";
 import { watch } from "@vue/runtime-core";
-import {Nullable} from '~/entities/types/Nullable';
+import {Nullable} from '~/entities';
 import { shallowRef } from "@vue/reactivity";
 import { KonvaEventObject } from "konva/lib/Node";
 

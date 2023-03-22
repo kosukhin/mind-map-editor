@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref } from "@vue/reactivity";
-import { Nullable } from '~/entities/types/Nullable';
-import { useCurrentMapRenderer } from "~/composables/useCurrentMapRenderer";
+import { Nullable } from '~/entities';
+import {useCurrentMapRenderer, useLayer, useLayerListeners} from "~/composables";
 import {onMounted} from "@vue/runtime-core";
-import {createLayer} from "~/utils/konva/createLayer";
-import {useLayer} from "~/composables/useLayer";
+import {createLayer} from "~/utils";
 
 const {layer} = useLayer();
 const canvasRef  = ref<Nullable<HTMLElement>>(null);
-useCurrentMapRenderer(canvasRef);
+useCurrentMapRenderer();
+useLayerListeners();
 
 onMounted(() => {
   if (!canvasRef.value) return;
@@ -17,5 +17,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="canvasRef" id="canvas">editr</div>
+  <div ref="canvasRef" id="canvas"></div>
 </template>

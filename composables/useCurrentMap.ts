@@ -1,11 +1,10 @@
-import { MapStructure } from "~/entities/Map";
-import {Nullable} from "~/entities/types/Nullable";
 import { ref } from "@vue/reactivity";
-import { getMap } from "~/requests/getMap";
 import { useRoute } from "vue-router";
 import { createSharedComposable } from "@vueuse/core";
+import { getMap } from "~/requests";
+import { Nullable, MapStructure } from "~/entities";
 
-const currentMap = () => {
+export const useCurrentMap = createSharedComposable(() => {
   const map = ref<Nullable<MapStructure>>(null)
   const route = useRoute();
   const mapName = route.path.replace('/', '');
@@ -18,6 +17,4 @@ const currentMap = () => {
     map,
     mapName,
   }
-}
-
-export const useCurrentMap = createSharedComposable(currentMap);
+});

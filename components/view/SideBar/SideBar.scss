@@ -2,8 +2,26 @@
   padding: var(--defaultPadding);
   background: #ccc;
   box-sizing: border-box;
+
+  &-Items {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+
+  &-Item {
+    display: flex;
+    flex-direction: column;
+  }
   
   &-ItemName, &-ItemImage {
     text-align: center;
+  }
+
+  &-ItemButtons {
+    margin: 0 auto;
+    display: flex;
+    gap: 8px;
   }
 }
