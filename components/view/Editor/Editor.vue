@@ -4,6 +4,7 @@ import { Nullable } from '~/entities';
 import {useCurrentMapRenderer, useLayer, useLayerListeners} from "~/composables";
 import {onMounted} from "@vue/runtime-core";
 import {createLayer} from "~/utils";
+import Drawer from "~/components/ui/Drawer/Drawer.vue";
 
 const {layer} = useLayer();
 const canvasRef  = ref<Nullable<HTMLElement>>(null);
@@ -18,4 +19,5 @@ onMounted(() => {
 
 <template>
   <div ref="canvasRef" id="canvas"></div>
+  <Drawer>123</Drawer>
 </template>
