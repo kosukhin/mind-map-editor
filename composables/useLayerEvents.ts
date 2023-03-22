@@ -18,6 +18,7 @@ export const useLayerEvents = () => {
   const transformend = shallowRef<KonvaEvent>(null);
 
   watch(layer, () => {
+    // Можно сделать хэлпер notNullWatcher чтобы часто не повторять эту проверку
     if (!layer.value) return;
 
     layer.value.on('dragend', e => {
