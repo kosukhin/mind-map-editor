@@ -1,23 +1,29 @@
-import {ref, computed} from "@vue/reactivity";
-import {Nullable} from '~/entities';
-import {useCurrentMap} from "~/composables";
-import {createSharedComposable} from "@vueuse/core";
+import { computed, reactive } from "@vue/reactivity";
+import { Maybe } from "~/entities";
+import { useCurrentMap } from "~/composables";
+import { createSharedComposable } from "@vueuse/core";
+
+type StrNum = string | number;
 
 export const useMapTypes = createSharedComposable(() => {
-    const {map} = useCurrentMap();
-    const currentTypeId = ref<Nullable<string | number>>(null);
-    const currentType = computed(() => {
-        if (!(map.value && currentTypeId.value)) return null;
-        return map.value.types[currentTypeId.value];
-    });
-    const types = computed(() => {
-        if (!map.value) return null;
-        return map.value.types;
-    })
+  const { map } = useCurrentMap();
+  const currentTypeId = reactive(Maybe<StrNum>());
+  const currentType = computed(() =>
+    map.map(vMap =>
+      currentTypeId.map(vType =>
+        vMap.types[vType]
+      )
+    )
+  );
+  const types = computed(() =>
+    map.map(vMap =>
+      vMap.types
+    )
+  );
 
-    return {
-        currentTypeId,
-        currentType,
-        types,
-    }
-})
+  return {
+    currentTypeId,
+    currentType,
+    types
+  };
+});

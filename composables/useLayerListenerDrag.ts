@@ -5,10 +5,14 @@ export const useLayerListenerDrag = () => {
     const {dragend, dragstart} = useLayerEvents();
 
     watch(dragstart, () => {
-        console.log('dragstart');
+        dragstart.map((e) => {
+            console.log('dragstart', e);
+        })
     });
 
-    watch(dragend, (e) => {
-        console.log('dragend', e?.target.attrs.objectId);
+    watch(dragend, () => {
+        dragend.map((e) => {
+            console.log('dragend', e);
+        })
     });
 }

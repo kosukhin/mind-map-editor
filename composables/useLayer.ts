@@ -1,9 +1,9 @@
-import { MapLayer, Nullable } from "~/entities";
+import { MapLayer, Maybe } from "~/entities";
 import { createSharedComposable } from "@vueuse/core";
-import { shallowRef } from "@vue/reactivity";
+import { shallowReactive } from "@vue/reactivity";
 
 export const useLayer = createSharedComposable(() => {
-  let layer = shallowRef<Nullable<MapLayer>>(null)
+  let layer = shallowReactive(Maybe<MapLayer>())
 
   return {
     layer,

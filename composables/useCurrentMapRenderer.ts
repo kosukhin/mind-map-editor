@@ -7,11 +7,13 @@ export const useCurrentMapRenderer = () => {
   const {map} = useCurrentMap();
 
   watch([map, layer], async () => {
-    if (!(layer.value && map.value)) return;
-
-    for (const object of Object.values(map.value.objects)) {
-      addObjectToLayer(layer.value, object, map.value.types);
-    }
+    layer.map((vLayer) => {
+      map.map((vMap) => {
+        for (const object of Object.values(vMap.objects)) {
+          addObjectToLayer(vLayer, object, vMap.types);
+        }
+      })
+    })
   });
 
   return {

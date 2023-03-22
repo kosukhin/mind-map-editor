@@ -1,11 +1,10 @@
-import { ref } from "@vue/reactivity";
 import { useRoute } from "vue-router";
 import { createSharedComposable } from "@vueuse/core";
 import { getMap } from "~/requests";
-import { Nullable, MapStructure } from "~/entities";
+import { MapStructure, Maybe } from "~/entities";
 
 export const useCurrentMap = createSharedComposable(() => {
-  const map = ref<Nullable<MapStructure>>(null)
+  const map = reactive(Maybe<MapStructure>())
   const route = useRoute();
   const mapName = route.path.replace('/', '');
 

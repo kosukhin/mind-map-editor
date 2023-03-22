@@ -1,58 +1,57 @@
 import { useLayer } from "~/composables";
 import { watch } from "@vue/runtime-core";
-import {Nullable} from '~/entities';
-import { shallowRef } from "@vue/reactivity";
+import { Maybe, Nullable } from "~/entities";
+import { shallowReactive } from "@vue/reactivity";
 import { KonvaEventObject } from "konva/lib/Node";
 
 type KonvaEvent = Nullable<KonvaEventObject<any>>;
 
 export const useLayerEvents = () => {
   const { layer } = useLayer();
-  const dragend = shallowRef<KonvaEvent>(null);
-  const dragstart = shallowRef<KonvaEvent>(null);
-  const click = shallowRef<KonvaEvent>(null);
-  const tap = shallowRef<KonvaEvent>(null);
-  const mouseenter = shallowRef<KonvaEvent>(null);
-  const mouseleave = shallowRef<KonvaEvent>(null);
-  const wheel = shallowRef<KonvaEvent>(null);
-  const transformend = shallowRef<KonvaEvent>(null);
+  const dragend = shallowReactive(Maybe<KonvaEvent>());
+  const dragstart = shallowReactive(Maybe<KonvaEvent>());
+  const click = shallowReactive(Maybe<KonvaEvent>());
+  const tap = shallowReactive(Maybe<KonvaEvent>());
+  const mouseenter = shallowReactive(Maybe<KonvaEvent>());
+  const mouseleave = shallowReactive(Maybe<KonvaEvent>());
+  const wheel = shallowReactive(Maybe<KonvaEvent>());
+  const transformend = shallowReactive(Maybe<KonvaEvent>());
 
   watch(layer, () => {
-    // Можно сделать хэлпер notNullWatcher чтобы часто не повторять эту проверку
-    if (!layer.value) return;
+    layer.map((vLayer) => {
+      vLayer.on("dragend", e => {
+        dragend.value = e;
+      });
 
-    layer.value.on('dragend', e => {
-      dragend.value = e;
-    });
+      vLayer.on("dragstart", e => {
+        dragstart.value = e;
+      });
 
-    layer.value.on('dragstart', e => {
-      dragstart.value = e;
-    });
+      vLayer.on("click", e => {
+        click.value = e;
+      });
 
-    layer.value.on('click', e => {
-      click.value = e;
-    });
+      vLayer.on("tap", e => {
+        tap.value = e;
+      });
 
-    layer.value.on('tap', e => {
-      tap.value = e;
-    });
+      vLayer.on("mouseenter", e => {
+        mouseenter.value = e;
+      });
 
-    layer.value.on('mouseenter', e => {
-      mouseenter.value = e;
-    });
+      vLayer.on("mouseleave", e => {
+        mouseleave.value = e;
+      });
 
-    layer.value.on('mouseleave', e => {
-      mouseleave.value = e;
-    });
+      vLayer.on("wheel", e => {
+        wheel.value = e;
+      });
 
-    layer.value.on('wheel', e => {
-      wheel.value = e;
+      vLayer.on("transformend", e => {
+        transformend.value = e;
+      });
     });
-
-    layer.value.on('transformend', e => {
-      transformend.value = e;
-    });
-  })
+  });
 
   return {
     dragend,
@@ -62,6 +61,6 @@ export const useLayerEvents = () => {
     mouseenter,
     mouseleave,
     wheel,
-    transformend,
-  }
-}
+    transformend
+  };
+};
