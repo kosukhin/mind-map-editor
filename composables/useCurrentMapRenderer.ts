@@ -12,6 +12,7 @@ export const useCurrentMapRenderer = (
 
   watch([map, editorWrapper], async () => {
     if (!editorWrapper.value || !map.value) return;
+    // TODO вынести createLayer в компонент Edtiro.vue
     createLayer(editorWrapper.value);
 
     if (layer.value) {
