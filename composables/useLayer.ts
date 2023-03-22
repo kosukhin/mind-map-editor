@@ -9,6 +9,7 @@ export const useLayer = createSharedComposable(() => {
 
   return {
     layer,
+    // TODO это нужно убрать пользовать createLayer в компоненте напрямую
     createLayer: (element: HTMLElement) => {
       layer.value = createLayer(element)
     }
