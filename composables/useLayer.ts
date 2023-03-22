@@ -3,7 +3,7 @@ import { createSharedComposable } from "@vueuse/core";
 import { shallowReactive } from "@vue/reactivity";
 
 export const useLayer = createSharedComposable(() => {
-  let layer = shallowReactive(Maybe<MapLayer>())
+  const layer = shallowReactive(Maybe<MapLayer>())
 
   return {
     layer,

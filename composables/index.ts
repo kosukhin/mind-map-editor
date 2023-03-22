@@ -7,3 +7,4 @@ export * from './useLayerListenerClick'
 export * from './useLayerListenerDrag'
 export * from './useMapTypes'
 export * from './useMapObjects'
+export * from './useDrawer';

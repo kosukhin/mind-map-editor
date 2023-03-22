@@ -1,11 +1,22 @@
 <script setup lang="ts">
-import { useCurrentMap } from "~/composables/useCurrentMap";
-import {useMapObjects, useMapTypes} from "~/composables";
-import Button from '@/components/ui/Button/Button';
+import {
+  useMapObjects,
+  useMapTypes,
+  useCurrentMap,
+  useDrawer
+} from "~/composables";
+import Button from '~/components/ui/Button/Button';
+import Drawer from "~/components/ui/Drawer/Drawer.vue";
 
 const {map} = useCurrentMap();
 const {currentTypeId, currentType} = useMapTypes();
 const {currentObject} = useMapObjects();
+const {drawer} = useDrawer();
+
+const selectType = (name: string) => {
+  drawer.value = 'showType';
+  currentTypeId.value = name;
+}
 </script>
 
 <template>
@@ -15,15 +26,17 @@ const {currentObject} = useMapObjects();
         <div class="SideBar-ItemName">{{ name }}</div>
         <div class="SideBar-ItemImage" v-html="type.svg"></div>
         <div class="SideBar-ItemButtons">
-          <Button @click="currentTypeId.value = name">A</Button>
+          <Button @click="selectType(name)">A</Button>
           <Button>B</Button>
           <Button>C</Button>
         </div>
       </div>
-
-      <div>{{ currentType }}</div>
-      <div>{{ currentObject }}</div>
-
+      <Drawer name="showType">
+        {{ currentType }}
+      </Drawer>
+      <Drawer name="showObject">
+        {{ currentObject }}
+      </Drawer>
     </div>
   </div>
 </template>
