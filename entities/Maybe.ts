@@ -17,14 +17,20 @@ export class MaybeInst<T> {
   }
 }
 
-export type TMaybe = InstanceType<typeof MaybeInst<any>>;
+type ExtractGenerics<T extends readonly unknown[]> = T extends readonly []
+  ? []
+  : T extends readonly [MaybeInst<infer V>, ...infer Next]
+    ? [V, ...ExtractGenerics<Next>]
+    : never;
 
-export function allSet(containers: TMaybe[]) {
-  const values = containers.map(container => {
-    return container.isNothing ? null : container.value
-  });
-  const result = Maybe<typeof values>();
-  result.value = values.some(value => value === null) ? null : values;
+export function allSet<C extends readonly MaybeInst<unknown>[]>(containers: C) {
+  if (containers.some(container => container.isNothing)) {
+    return Maybe<ExtractGenerics<C>>();
+  }
+
+  const values = containers.map(container => container.value);
+  const result = Maybe<ExtractGenerics<C>>();
+  result.value = values as ExtractGenerics<C>;
 
   return result;
 }

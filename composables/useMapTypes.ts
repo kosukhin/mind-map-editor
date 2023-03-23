@@ -9,7 +9,7 @@ export const useMapTypes = createSharedComposable(() => {
   const {map} = useCurrentMap();
   const currentTypeId = reactive(Maybe<StrNum>());
   const currentType = computed(() =>
-    allSet([map, currentTypeId]).map(([vMap, vType]) => vMap.types[vType])
+    allSet([map, currentTypeId] as const).map(([vMap, vType]) => vMap.types[vType])
   );
   const types = computed(() =>
     map.map(vMap => vMap.types)

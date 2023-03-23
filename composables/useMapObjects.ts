@@ -7,7 +7,7 @@ export const useMapObjects = createSharedComposable(() => {
   const {map} = useCurrentMap();
   const currentObjectId = reactive(Maybe<number>());
   const currentObject = computed(() =>
-    allSet([map, currentObjectId]).map(([vMap, vObj]) => vMap.objects[vObj])
+    allSet([map, currentObjectId] as const).map(([vMap, vObj]) => vMap.objects[vObj])
   );
   const objects = computed(() =>
     map.map(vMap => vMap.objects)
