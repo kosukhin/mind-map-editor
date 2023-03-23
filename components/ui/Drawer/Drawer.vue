@@ -2,6 +2,7 @@
 import { useOverlay } from "~/composables/useOverlay";
 import { watchEffect } from "@vue/runtime-core";
 import { ref } from "@vue/reactivity";
+import {OVERLAY_CLOSE} from "~/constants";
 
 const props = defineProps({
   name: {
@@ -15,21 +16,19 @@ const {overlayName} = useOverlay();
 
 const close = () => {
   isOpened.value = false;
-  overlayName.value = '';
+  overlayName.value = OVERLAY_CLOSE;
 }
 
 watchEffect(() => {
   overlayName.map((vDrawer) => {
-    if (vDrawer === props.name) {
-      isOpened.value = true;
-    }
+    isOpened.value = vDrawer === props.name;
   })
 })
 </script>
 
 <template>
   <div class="Drawer" @click="close" v-if="isOpened">
-    <div class="Drawer-Inner">
+    <div class="Drawer-Inner" @click.stop>
       <slot />
     </div>
   </div>

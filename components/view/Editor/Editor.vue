@@ -21,5 +21,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="canvasRef" id="canvas"></div>
+  <div ref="canvasRef" :key="'editor-canvas'" id="canvas"></div>
 </template>

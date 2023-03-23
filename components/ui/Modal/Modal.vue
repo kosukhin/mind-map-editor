@@ -20,16 +20,14 @@ const close = () => {
 
 watchEffect(() => {
   overlayName.map((vModal) => {
-    if (vModal === props.name) {
-      isOpened.value = true;
-    }
+    isOpened.value = vModal === props.name;
   })
 })
 </script>
 
 <template>
   <div class="Modal" @click="close" v-if="isOpened">
-    <div class="Modal-Inner">
+    <div class="Modal-Inner" @click.stop>
       <slot />
     </div>
   </div>
