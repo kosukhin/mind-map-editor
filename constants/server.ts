@@ -1,2 +1,2 @@
-export const baseHost = 'http://localhost';
-export const mapParamName = 'document';
+export const BASE_HOST = 'http://localhost';
+export const MAP_PARAM_NAME = 'document';

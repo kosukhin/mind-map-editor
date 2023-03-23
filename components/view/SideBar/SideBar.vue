@@ -3,18 +3,20 @@ import {
   useMapObjects,
   useMapTypes,
   useCurrentMap,
-  useDrawer
+  useOverlay
 } from "~/composables";
 import Button from '~/components/ui/Button/Button';
 import Drawer from "~/components/ui/Drawer/Drawer.vue";
+import Modal from "~/components/ui/Modal/Modal.vue";
+import {SHOW_TYPE, SHOW_OBJECT} from "~/constants";
 
 const {map} = useCurrentMap();
 const {currentTypeId, currentType} = useMapTypes();
 const {currentObject} = useMapObjects();
-const {drawer} = useDrawer();
+const {overlayName} = useOverlay();
 
 const selectType = (name: string) => {
-  drawer.value = 'showType';
+  overlayName.value = SHOW_TYPE;
   currentTypeId.value = name;
 }
 </script>
@@ -31,10 +33,10 @@ const selectType = (name: string) => {
           <Button>C</Button>
         </div>
       </div>
-      <Drawer name="showType">
+      <Modal :name="SHOW_TYPE">
         {{ currentType }}
-      </Drawer>
-      <Drawer name="showObject">
+      </Modal>
+      <Drawer :name="SHOW_OBJECT">
         {{ currentObject }}
       </Drawer>
     </div>

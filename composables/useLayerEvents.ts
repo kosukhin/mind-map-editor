@@ -1,13 +1,13 @@
-import { useLayer } from "~/composables";
+import {useLayer} from "~/composables";
 import {watchEffect} from "@vue/runtime-core";
-import { Maybe, Nullable } from "~/entities";
-import { shallowReactive } from "@vue/reactivity";
-import { KonvaEventObject } from "konva/lib/Node";
+import {Maybe, Nullable} from "~/entities";
+import {shallowReactive} from "@vue/reactivity";
+import {KonvaEventObject} from "konva/lib/Node";
 
 type KonvaEvent = Nullable<KonvaEventObject<any>>;
 
 export const useLayerEvents = () => {
-  const { layer } = useLayer();
+  const {layer} = useLayer();
   const dragend = shallowReactive(Maybe<KonvaEvent>());
   const dragstart = shallowReactive(Maybe<KonvaEvent>());
   const click = shallowReactive(Maybe<KonvaEvent>());

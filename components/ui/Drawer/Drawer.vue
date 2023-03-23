@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useDrawer } from "~/composables/useDrawer";
-import { watch } from "@vue/runtime-core";
+import { useOverlay } from "~/composables/useOverlay";
+import { watchEffect } from "@vue/runtime-core";
 import { ref } from "@vue/reactivity";
 
 const props = defineProps({
@@ -11,15 +11,15 @@ const props = defineProps({
 })
 
 const isOpened = ref(false);
-const {drawer} = useDrawer();
+const {overlayName} = useOverlay();
 
 const close = () => {
   isOpened.value = false;
-  drawer.value = '';
+  overlayName.value = '';
 }
 
-watch(drawer, () => {
-  drawer.map((vDrawer) => {
+watchEffect(() => {
+  overlayName.map((vDrawer) => {
     if (vDrawer === props.name) {
       isOpened.value = true;
     }

@@ -1,5 +1,5 @@
-import { useCurrentMap, useLayer } from "~/composables";
-import { addObjectToLayer } from "~/utils";
+import {useCurrentMap, useLayer} from "~/composables";
+import {addObjectToLayer} from "~/utils";
 import {watchEffect} from "@vue/runtime-core";
 import {allSet, MapStructure} from "~/entities";
 

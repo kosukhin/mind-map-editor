@@ -1,7 +1,7 @@
-import { useRoute } from "vue-router";
-import { createSharedComposable } from "@vueuse/core";
-import { getMap } from "~/requests";
-import { MapStructure, Maybe } from "~/entities";
+import {useRoute} from "vue-router";
+import {createSharedComposable} from "@vueuse/core";
+import {getMap} from "~/requests";
+import {MapStructure, Maybe} from "~/entities";
 
 export const useCurrentMap = createSharedComposable(() => {
   const map = reactive(Maybe<MapStructure>())
