@@ -1,5 +1,5 @@
 <template>
-  <div class="MiniMap">mini map</div>
+  <div class="MiniMap"></div>
 </template>
 
 <style scoped lang="scss">

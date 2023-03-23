@@ -4,6 +4,11 @@ import Editor from '@/components/view/Editor/Editor';
 import SideBar from '@/components/view/SideBar/SideBar';
 import MiniMap from '@/components/view/MiniMap/MiniMap';
 import Notify from "~/components/ui/Notify/Notify.vue";
+import TypeForm from "~/components/view/TypeForm/TypeForm.vue";
+import ObjectForm from "~/components/view/ObjectForm/ObjectForm.vue";
+import Drawer from "~/components/ui/Drawer/Drawer.vue";
+import Modal from "~/components/ui/Modal/Modal.vue";
+import {SHOW_TYPE, SHOW_OBJECT} from "~/constants";
 </script>
 
 <template>
@@ -14,6 +19,8 @@ import Notify from "~/components/ui/Notify/Notify.vue";
     <MiniMap class="EditorPage-MiniMap" />
   </div>
   <Notify />
+  <Modal :name="SHOW_TYPE"><TypeForm /></Modal>
+  <Drawer :name="SHOW_OBJECT"><ObjectForm /></Drawer>
 </template>
 
 <style scoped lang="scss">

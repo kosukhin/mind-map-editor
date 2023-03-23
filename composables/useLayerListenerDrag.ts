@@ -5,13 +5,7 @@ import {allSet} from "~/entities";
 
 export const useLayerListenerDrag = () => {
   const {map} = useCurrentMap();
-  const {dragend, dragstart} = useLayerEvents();
-
-  watchEffect(() => {
-    dragstart.map((e) => {
-      console.log('dragstart', e);
-    })
-  });
+  const {dragend} = useLayerEvents();
 
   watchEffect(() => {
     allSet([dragend, map] as const).map(([vDrag, vMap]) => {

@@ -1,0 +1,10 @@
+.ObjectForm {
+  &-Title {
+    @include title;
+    margin-bottom: var(--defaultPadding);
+  }
+
+  &-Description {
+    margin-bottom: var(--defaultPadding);
+  }
+}

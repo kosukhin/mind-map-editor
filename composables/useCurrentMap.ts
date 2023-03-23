@@ -5,6 +5,7 @@ import {MapStructure, Maybe} from "~/entities";
 import {reactive} from "@vue/reactivity";
 import {watch} from "@vue/runtime-core";
 import {useNotify} from "~/composables";
+import {MAP_UPDATED} from "~/constants";
 
 export const useCurrentMap = createSharedComposable(() => {
   const {message} = useNotify();
@@ -19,7 +20,7 @@ export const useCurrentMap = createSharedComposable(() => {
   watch(map, () => {
     map.map(vMap => {
       saveMap(vMap);
-      message.value = 'Карта обновлена';
+      message.value = MAP_UPDATED;
     })
   }, {
     deep: true

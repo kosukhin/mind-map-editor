@@ -5,4 +5,13 @@ export default defineNuxtConfig({
     '@/assets/styles/variables.scss',
     '@/assets/styles/reset.scss',
   ],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "@/assets/styles/mixins.scss";',
+        },
+      },
+    },
+  },
 })

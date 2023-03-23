@@ -3,10 +3,11 @@ import {watchEffect} from "@vue/runtime-core";
 import {Maybe, Nullable} from "~/entities";
 import {shallowReactive} from "@vue/reactivity";
 import {KonvaEventObject} from "konva/lib/Node";
+import {createSharedComposable} from "@vueuse/core";
 
 type KonvaEvent = Nullable<KonvaEventObject<any>>;
 
-export const useLayerEvents = () => {
+export const useLayerEvents = createSharedComposable(() => {
   const {layer} = useLayer();
   const dragend = shallowReactive(Maybe<KonvaEvent>());
   const dragstart = shallowReactive(Maybe<KonvaEvent>());
@@ -63,4 +64,4 @@ export const useLayerEvents = () => {
     wheel,
     transformend
   };
-};
+});
