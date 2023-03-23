@@ -1,19 +1,18 @@
 import { useCurrentMap, useLayer } from "~/composables";
 import { addObjectToLayer } from "~/utils";
-import { watch } from "@vue/runtime-core";
+import {watchEffect} from "@vue/runtime-core";
+import {allSet, MapStructure} from "~/entities";
 
 export const useCurrentMapRenderer = () => {
   const {layer} = useLayer();
   const {map} = useCurrentMap();
 
-  watch([map, layer], async () => {
-    layer.map((vLayer) => {
-      map.map((vMap) => {
-        for (const object of Object.values(vMap.objects)) {
-          addObjectToLayer(vLayer, object, vMap.types);
-        }
-      })
-    })
+  watchEffect(() => {
+    allSet([layer, map]).map(([vLayer, vMap]) => {
+      for (const object of Object.values((vMap as MapStructure).objects)) {
+        addObjectToLayer(vLayer, object, vMap.types);
+      }
+    });
   });
 
   return {

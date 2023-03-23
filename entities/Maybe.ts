@@ -16,3 +16,15 @@ export class MaybeInst<T> {
     return fn(this.value);
   }
 }
+
+export type TMaybe = InstanceType<typeof MaybeInst<any>>;
+
+export function allSet(containers: TMaybe[]) {
+  const values = containers.map(container => {
+    return container.isNothing ? null : container.value
+  });
+  const result = Maybe<typeof values>();
+  result.value = values.some(value => value === null) ? null : values;
+
+  return result;
+}

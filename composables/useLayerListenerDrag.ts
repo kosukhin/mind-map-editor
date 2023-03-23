@@ -1,16 +1,16 @@
 import {useLayerEvents} from "~/composables/useLayerEvents";
-import {watch} from "@vue/runtime-core";
+import {watchEffect} from "@vue/runtime-core";
 
 export const useLayerListenerDrag = () => {
     const {dragend, dragstart} = useLayerEvents();
 
-    watch(dragstart, () => {
+    watchEffect( () => {
         dragstart.map((e) => {
             console.log('dragstart', e);
         })
     });
 
-    watch(dragend, () => {
+    watchEffect( () => {
         dragend.map((e) => {
             console.log('dragend', e);
         })

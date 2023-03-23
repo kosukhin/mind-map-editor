@@ -1,5 +1,5 @@
 import { useLayer } from "~/composables";
-import { watch } from "@vue/runtime-core";
+import {watchEffect} from "@vue/runtime-core";
 import { Maybe, Nullable } from "~/entities";
 import { shallowReactive } from "@vue/reactivity";
 import { KonvaEventObject } from "konva/lib/Node";
@@ -17,7 +17,7 @@ export const useLayerEvents = () => {
   const wheel = shallowReactive(Maybe<KonvaEvent>());
   const transformend = shallowReactive(Maybe<KonvaEvent>());
 
-  watch(layer, () => {
+  watchEffect(() => {
     layer.map((vLayer) => {
       vLayer.on("dragend", e => {
         dragend.value = e;

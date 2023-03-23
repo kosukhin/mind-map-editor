@@ -1,5 +1,5 @@
 import {useLayerEvents, useMapObjects} from "~/composables";
-import {watch} from "@vue/runtime-core";
+import {watchEffect} from "@vue/runtime-core";
 import { useDrawer } from "~/composables/useDrawer";
 
 export const useLayerListenerClick = () => {
@@ -7,7 +7,7 @@ export const useLayerListenerClick = () => {
     const {currentObjectId} = useMapObjects();
     const {drawer} = useDrawer();
 
-    watch(click, () => {
+    watchEffect( () => {
         click.map((e) => {
             currentObjectId.value = e?.target.attrs.objectId
             drawer.value = 'showObject';
