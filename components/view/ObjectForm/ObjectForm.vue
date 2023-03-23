@@ -3,7 +3,7 @@ import {
   useMapObjects,
   useSettings,
   useOverlay,
-  useCurrentMap
+  useCurrentMap, useLayer
 } from "~/composables";
 import Input from "~/components/ui/Input/Input.vue";
 import {watchEffect} from "@vue/runtime-core";
@@ -11,7 +11,9 @@ import {reactive} from "@vue/reactivity";
 import Button from "~/components/ui/Button/Button.vue";
 import {OVERLAY_CLOSE} from "~/constants";
 import {allSet} from "~/entities";
+import {updateObjectOnLayer} from "~/utils";
 
+const {layer, layerObjects} = useLayer();
 const {map} = useCurrentMap();
 const {overlayName} = useOverlay();
 const {currentObject, currentObjectId} = useMapObjects();
@@ -28,11 +30,12 @@ watchEffect(() => {
 
 const save = () => {
   overlayName.value = OVERLAY_CLOSE;
-  allSet([currentObjectId, map] as const).map(([objId, vMap]) => {
+  allSet([currentObjectId, map, layer] as const).map(async ([objId, vMap, vLayer]) => {
     vMap.objects[objId] = {
       ...vMap.objects[objId],
       ...form
     };
+    updateObjectOnLayer(layerObjects, vLayer, currentObject.value, vMap.types);
   })
 }
 </script>
@@ -43,16 +46,19 @@ const save = () => {
       <div class="ObjectForm-Title">Название</div>
       <div class="ObjectForm-Description">{{ currentObject.name }}</div>
       <div class="ObjectForm-Title">Описание</div>
-      <div class="ObjectForm-Description">{{ currentObject.description ? currentObject.description : 'Нет описания' }}</div>
+      <div class="ObjectForm-Description">{{
+          currentObject.description ? currentObject.description : 'Нет описания'
+        }}
+      </div>
     </div>
     <div class="ObjectForm-Inner" v-else>
       <div class="ObjectForm-Title">Название</div>
       <div class="ObjectForm-Row">
-        <Input v-model="form.name" />
+        <Input v-model="form.name"/>
       </div>
       <div class="ObjectForm-Title">Описание</div>
       <div class="ObjectForm-Row">
-        <Input v-model="form.description" />
+        <Input v-model="form.description"/>
       </div>
       <div class="ObjectForm-Row">
         <Button @click="save">Сохранить</Button>

@@ -1,16 +1,22 @@
 import {useCurrentMap, useLayer} from "~/composables";
 import {addObjectToLayer} from "~/utils";
-import {watchEffect} from "@vue/runtime-core";
 import {allSet} from "~/entities";
+import {watchOnce} from "@vueuse/core";
+import {computed} from "@vue/reactivity";
 
 export const useCurrentMapRenderer = () => {
-  const {layer} = useLayer();
+  const {layer, layerObjects} = useLayer();
   const {map} = useCurrentMap();
 
-  watchEffect(() => {
-    allSet([layer, map] as const).map(([vLayer, vMap]) => {
+  const allInit = computed(() =>
+    allSet([layer, map] as const).map(() => true)
+  );
+
+  watchOnce(allInit, () => {
+    allSet([layer, map] as const).map(async ([vLayer, vMap]) => {
       for (const object of Object.values(vMap.objects)) {
-        addObjectToLayer(vLayer, object, vMap.types);
+        const objects = await addObjectToLayer(vLayer, object, vMap.types);
+        layerObjects.set(object.id, objects);
       }
     });
   });

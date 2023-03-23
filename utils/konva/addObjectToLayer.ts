@@ -46,4 +46,6 @@ export async function addObjectToLayer(
       y: e.target.attrs.y - 15,
     });
   })
+
+  return [img, text];
 }
