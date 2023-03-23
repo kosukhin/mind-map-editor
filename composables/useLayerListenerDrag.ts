@@ -1,7 +1,10 @@
 import {useLayerEvents} from "~/composables/useLayerEvents";
 import {watchEffect} from "@vue/runtime-core";
+import {useCurrentMap} from "~/composables/useCurrentMap";
+import {allSet} from "~/entities";
 
 export const useLayerListenerDrag = () => {
+  const {map} = useCurrentMap();
   const {dragend, dragstart} = useLayerEvents();
 
   watchEffect(() => {
@@ -11,8 +14,11 @@ export const useLayerListenerDrag = () => {
   });
 
   watchEffect(() => {
-    dragend.map((e) => {
-      console.log('dragend', e);
+    allSet([dragend, map] as const).map(([vDrag, vMap]) => {
+      if (!vDrag?.target) return;
+      const currentObject = vMap.objects[vDrag.target.attrs.objectId];
+      currentObject.position[0] = vDrag.target.attrs.x;
+      currentObject.position[1] = vDrag.target.attrs.y;
     })
   });
 }

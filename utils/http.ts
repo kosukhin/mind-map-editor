@@ -10,6 +10,7 @@ export const http = async <T = unknown>(request: Request<T>): Promise<unknown> =
 
   const response = await fetch(url, {
     method: request.method,
+    body: ['post', 'put'].includes(request.method) ? JSON.stringify(request.data) : null
   });
 
   if (response.status !== 200) {
