@@ -5,7 +5,7 @@ import {
   useOverlay,
   useCurrentMap, useLayer
 } from "~/composables";
-import {watchEffect} from "@vue/runtime-core";
+import {nextTick, watch} from "@vue/runtime-core";
 import Button from "~/components/ui/Button/Button.vue";
 import {OVERLAY_CLOSE} from "~/constants";
 import {allSet} from "~/entities";
@@ -18,24 +18,28 @@ import Input from "~/components/ui/Input/Input.vue";
 const {layer, layerObjects} = useLayer();
 const {map} = useCurrentMap();
 const {overlayName} = useOverlay();
-const {currentObject, currentObjectId} = useMapObjects();
+const {currentObject} = useMapObjects();
 const {settings} = useSettings();
 const form = ref({});
 
-watchEffect(() => {
-  form.value = {
-    ...currentObject.value
-  }
+watch(currentObject, () => {
+  currentObject.map(vObj => {
+    form.value = {
+      ...vObj
+    }
+  })
+}, {
+  flush: 'post',
 })
 
 const save = () => {
   overlayName.value = OVERLAY_CLOSE;
-  allSet([currentObjectId, map, layer] as const).map(async ([objId, vMap, vLayer]) => {
-    vMap.objects[objId] = {
-      ...vMap.objects[objId],
+  allSet([currentObject, map, layer] as const).map(async ([vObj, vMap, vLayer]) => {
+    vMap.objects[vObj.id] = {
+      ...vMap.objects[vObj.id],
       ...form.value
     };
-    updateObjectOnLayer(layerObjects, vLayer, currentObject.value, vMap.types);
+    await updateObjectOnLayer(layerObjects, vLayer, vMap.objects[vObj.id], vMap.types);
   })
 }
 </script>

@@ -23,8 +23,8 @@ export const useLayerListenerClick = () => {
         }
       }
 
-      currentObjectId.value = objectId;
       overlayName.value = SHOW_OBJECT;
+      currentObjectId.value = objectId;
     })
   })
 }

@@ -5,10 +5,10 @@ const {currentType} = useMapTypes();
 </script>
 
 <template>
-  <div>
-    <div>width: {{ currentType.width }}</div>
-    <div>height: {{ currentType.height }}</div>
-    <div v-html="currentType.svg"></div>
+  <div v-if="!currentType.isNothing">
+    <div>width: {{ currentType.value.width }}</div>
+    <div>height: {{ currentType.value.height }}</div>
+    <div v-html="currentType.value.svg"></div>
   </div>
 </template>
 
