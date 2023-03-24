@@ -72,6 +72,10 @@ const save = () => {
       <div class="ObjectForm-Row">
         <Textarea v-model="form.description" />
       </div>
+      <div class="ObjectForm-Title">Z-Index</div>
+      <div class="ObjectForm-Row">
+        <Input v-model="form.zindex" type="number" />
+      </div>
       <div class="ObjectForm-ButtonsGroup">
         <Button type="success" @click="save">Сохранить</Button>
         <Button type="danger">Удалить</Button>
