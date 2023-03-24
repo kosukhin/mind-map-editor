@@ -12,7 +12,6 @@ export default defineEventHandler(async (event) => {
 
   if (fileExists) {
     const body = await readBody(event);
-    console.log('body', body);
     writeFileSync(filePath, JSON.stringify(body));
   }
 
