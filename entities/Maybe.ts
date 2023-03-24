@@ -4,6 +4,10 @@ export function Maybe<T>() {
   return new MaybeInst<T>();
 }
 
+export function MaybeError<T>() {
+  return new MaybeErrorInst<T>();
+}
+
 export class MaybeInst<T> {
   value: Nullable<T> = null;
 
@@ -14,6 +18,19 @@ export class MaybeInst<T> {
   map(fn: (value: T) => unknown): unknown {
     if (!this.value) return null;
     return fn(this.value);
+  }
+}
+
+export class MaybeErrorInst<T> extends MaybeInst<T> {
+  error: string = '';
+
+  get isNothing(): boolean {
+    return super.isNothing || this.error !== '';
+  }
+
+  map(fn: (value: T) => unknown): unknown {
+    if (this.error !== '') return null;
+    return super.map(fn);
   }
 }
 
