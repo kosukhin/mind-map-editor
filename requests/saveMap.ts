@@ -6,8 +6,8 @@ export async function saveMap(map: MapStructure) {
     method: 'post',
     url: '/api/save-map',
     params: {
-      document: 'synergy',
+      document: map.document,
     },
-    data: {document: 'synergy', structure: map}
+    data: {document: map.document, structure: map}
   })
 }

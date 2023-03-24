@@ -27,6 +27,7 @@ export interface MapType {
 export type MapStructureTypes = Dictionary<MapType>;
 
 export interface MapStructure {
+  document: string,
   url: string,
   parent: string,
   types: MapStructureTypes,

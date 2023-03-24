@@ -10,7 +10,7 @@ import {allSet, MapObject} from "~/entities";
 import {addObjectToLayer} from "~/utils";
 
 const {map} = useCurrentMap();
-const {layer} = useLayer();
+const {layer, layerObjects} = useLayer();
 const {currentTypeId} = useMapTypes();
 const {overlayName} = useOverlay();
 
@@ -35,7 +35,8 @@ const addToCanvas = (e: DragEvent, type: string) => {
   }
   allSet([layer, map] as const).map(async ([vLayer, vMap]) => {
     vMap.objects[newObject.id] = newObject;
-    addObjectToLayer(vLayer, newObject, vMap.types);
+    const objects = await addObjectToLayer(vLayer, newObject, vMap.types);
+    layerObjects.set(newObject.id, objects);
   });
 }
 </script>

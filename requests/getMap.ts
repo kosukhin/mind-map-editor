@@ -1,6 +1,13 @@
 import { MapStructure } from "~/entities/Map";
 import { http } from "~/utils/http";
 
+interface MapResponse {
+  data: {
+    document: string,
+    structure: MapStructure,
+  }
+}
+
 export async function getMap(mapName: string): Promise<MapStructure> {
   const response = await http({
     method: 'get',
@@ -8,9 +15,10 @@ export async function getMap(mapName: string): Promise<MapStructure> {
     params: {
       document: mapName,
     },
-  })
+  }) as MapResponse;
 
-  const result = (response as any).data.structure as MapStructure;
+  const result = response.data.structure;
+  result.document = response.data.document;
 
   for (const objectId of Object.keys(result.objects)) {
     result.objects[objectId] = {
