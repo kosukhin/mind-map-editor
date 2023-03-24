@@ -9,14 +9,16 @@ import {
 import {onMounted} from "@vue/runtime-core";
 import {createLayer} from "~/utils";
 
-const {layer} = useLayer();
+const {layer, stage} = useLayer();
 const canvasRef  = ref<Nullable<HTMLElement>>(null);
 useCurrentMapRenderer();
 useLayerListeners();
 
 onMounted(() => {
   if (!canvasRef.value) return;
-  layer.value = createLayer(canvasRef.value);
+  const [newLayer, newStage] = createLayer(canvasRef.value);
+  layer.value = newLayer;
+  stage.value = newStage;
 });
 </script>
 
