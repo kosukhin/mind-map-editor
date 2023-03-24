@@ -9,7 +9,7 @@ export const useMapObjects = createSharedComposable(() => {
   const currentObjectId = reactive(Maybe<number>());
   const currentObject = reactive(Maybe<MapObject>());
 
-  watch(currentObjectId, () => {
+  watch([currentObjectId, map], () => {
     allSet([currentObjectId, map] as const).map(([objId, vMap]) => {
       currentObject.value = vMap.objects[objId];
     })

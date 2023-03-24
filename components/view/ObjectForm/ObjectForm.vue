@@ -5,7 +5,7 @@ import {
   useOverlay,
   useCurrentMap, useLayer
 } from "~/composables";
-import {nextTick, watch} from "@vue/runtime-core";
+import {watch} from "@vue/runtime-core";
 import Button from "~/components/ui/Button/Button.vue";
 import {OVERLAY_CLOSE} from "~/constants";
 import {allSet} from "~/entities";
@@ -30,6 +30,7 @@ watch(currentObject, () => {
   })
 }, {
   flush: 'post',
+  immediate: true,
 })
 
 const save = () => {
@@ -48,10 +49,10 @@ const save = () => {
   <div class="ObjectForm" v-if="!settings.isNothing">
     <div class="ObjectForm-Inner" v-if="!settings.value.isEditable">
       <div class="ObjectForm-Title">Название</div>
-      <div class="ObjectForm-Description">{{ currentObject.name }}</div>
+      <div class="ObjectForm-Description">{{ currentObject.value.name }}</div>
       <div class="ObjectForm-Title">Описание</div>
       <div class="ObjectForm-Description">{{
-          currentObject.description ? currentObject.description : 'Нет описания'
+          currentObject.value.description ? currentObject.value.description : 'Нет описания'
         }}
       </div>
     </div>

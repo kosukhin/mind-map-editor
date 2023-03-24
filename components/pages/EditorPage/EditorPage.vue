@@ -13,14 +13,18 @@ import {SHOW_TYPE, SHOW_OBJECT} from "~/constants";
 
 <template>
   <div class="EditorPage">
-    <Header class="EditorPage-Header" />
-    <SideBar class="EditorPage-SideBar" />
-    <Editor class="EditorPage-Editor" />
-    <MiniMap class="EditorPage-MiniMap" />
+    <Header class="EditorPage-Header"/>
+    <SideBar class="EditorPage-SideBar"/>
+    <Editor class="EditorPage-Editor"/>
+    <MiniMap class="EditorPage-MiniMap"/>
   </div>
-  <Notify />
-  <Modal :name="SHOW_TYPE"><TypeForm /></Modal>
-  <Drawer :name="SHOW_OBJECT"><ObjectForm /></Drawer>
+  <Notify/>
+  <Modal :name="SHOW_TYPE">
+    <TypeForm/>
+  </Modal>
+  <Drawer :name="SHOW_OBJECT">
+    <ObjectForm/>
+  </Drawer>
 </template>
 
 <style scoped lang="scss">
