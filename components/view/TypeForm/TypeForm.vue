@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useMapTypes, useOverlay } from "~/composables";
+import { useMapTypes } from "~/composables";
 import { SHOW_TYPE } from "~/constants";
 import { ref } from "@vue/reactivity";
 import { useFormDirtyCheck } from "~/composables/useFormDirtyCheck";
@@ -16,6 +16,3 @@ useFormDirtyCheck(isDirty, SHOW_TYPE);
     <div v-html="currentType.value.svg"></div>
   </div>
 </template>
-
-<style scoped lang="scss">
-</style>

@@ -20,20 +20,24 @@ const selectType = (name: string) => {
 }
 
 const addToCanvas = (e: DragEvent, type: string) => {
-  const newObject: MapObject = {
-    name: '',
-    outlink: '',
-    linked: false,
-    targetBlank: false,
-    arrows: [],
-    description: '',
-    id: Date.now().toString(),
-    lastClick: Date.now(),
-    position: [e.x, e.y],
-    type,
-    zindex: 0,
-  }
   allSet([layer, map] as const).map(async ([vLayer, vMap]) => {
+    const vType = vMap.types[type];
+    const newObject: MapObject = {
+      name: '',
+      outlink: '',
+      linked: false,
+      targetBlank: false,
+      arrows: [],
+      description: '',
+      id: Date.now().toString(),
+      lastClick: Date.now(),
+      position: [
+        e.x - 200 - (vType.width / 2),
+        e.y - 50 - (vType.height / 2)
+      ],
+      type,
+      zindex: 0,
+    }
     vMap.objects[newObject.id] = newObject;
     const objects = await addObjectToLayer(vLayer, newObject, vMap.types);
     layerObjects.set(newObject.id, objects);
