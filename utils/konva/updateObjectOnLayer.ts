@@ -1,6 +1,6 @@
 import {MapObject, MapStructureTypes} from "~/entities";
 import Konva from "konva";
-import {addObjectToLayer} from "~/utils";
+import { addObjectToLayer, removeObjectOnLayer } from "~/utils";
 
 const {Layer} = Konva;
 
@@ -10,8 +10,7 @@ export const updateObjectOnLayer = async (
   object: MapObject,
   types: MapStructureTypes
 ) => {
-  const objects = layerObjects.get(object.id);
-  objects.forEach((object: any) => object.remove());
+  removeObjectOnLayer(layerObjects, object);
   const newObjects = await addObjectToLayer(layer, object, types);
   layerObjects.set(object.id, newObjects)
 }

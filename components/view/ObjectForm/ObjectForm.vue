@@ -9,7 +9,7 @@ import {watch} from "@vue/runtime-core";
 import Button from "~/components/ui/Button/Button.vue";
 import {SHOW_OBJECT} from "~/constants";
 import {allSet} from "~/entities";
-import {updateObjectOnLayer} from "~/utils";
+import { removeObjectOnLayer, updateObjectOnLayer } from "~/utils";
 import Textarea from "~/components/ui/Textarea/Textarea.vue";
 import Checkbox from "~/components/ui/Checkbox/Checkbox.vue";
 import {ref} from "@vue/reactivity";
@@ -35,6 +35,14 @@ watch(currentObject, () => {
   flush: 'post',
   immediate: true,
 })
+
+const remove = () => {
+  close();
+  allSet([currentObject, map] as const).map(([vObj, vMap]) => {
+    delete vMap.objects[vObj.id];
+    removeObjectOnLayer(layerObjects, vObj);
+  })
+}
 
 const save = () => {
   close();
@@ -86,7 +94,7 @@ const save = () => {
       </div>
       <div class="ObjectForm-ButtonsGroup">
         <Button type="success" @click="save">Сохранить</Button>
-        <Button type="danger">Удалить</Button>
+        <Button type="danger" @click="remove">Удалить</Button>
       </div>
     </div>
   </div>
