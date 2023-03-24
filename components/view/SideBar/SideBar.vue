@@ -32,8 +32,8 @@ const addToCanvas = (e: DragEvent, type: string) => {
       id: Date.now().toString(),
       lastClick: Date.now(),
       position: [
-        e.x - 200 - (vType.width / 2),
-        e.y - 50 - (vType.height / 2)
+        e.offsetX - 200,
+        e.offsetY
       ],
       type,
       zindex: 0,
@@ -50,7 +50,12 @@ const addToCanvas = (e: DragEvent, type: string) => {
     <div class="SideBar-Items" v-if="!map.isNothing">
       <div class="SideBar-Item" v-for="(type, name) in map.value.types">
         <div class="SideBar-ItemName">{{ name }}</div>
-        <div class="SideBar-ItemImage" draggable="true" v-html="type.svg" @dragend="addToCanvas($event, name)"></div>
+        <div
+          class="SideBar-ItemImage"
+          draggable="true"
+          v-html="type.svg"
+          @dragend="addToCanvas($event, name)"
+        ></div>
         <div class="SideBar-ItemButtons">
           <Button size="sm" @click="selectType(name)">A</Button>
         </div>
