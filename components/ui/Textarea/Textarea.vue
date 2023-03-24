@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import {defineEmits, defineProps} from "@vue/runtime-core";
 import {useVModel} from "@vueuse/core";
 
 const props = defineProps({
@@ -14,7 +13,11 @@ const data = useVModel(props, 'modelValue', emit);
 </script>
 
 <template>
-  <div class="Input">
-    <input v-model="data" type="text" />
+  <div class="Textarea">
+    <textarea class="Textarea-Input" v-model="data" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+@import "Textarea";
+</style>

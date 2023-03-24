@@ -5,27 +5,26 @@ import {
   useOverlay,
   useCurrentMap, useLayer
 } from "~/composables";
-import Input from "~/components/ui/Input/Input.vue";
 import {watchEffect} from "@vue/runtime-core";
-import {reactive} from "@vue/reactivity";
 import Button from "~/components/ui/Button/Button.vue";
 import {OVERLAY_CLOSE} from "~/constants";
 import {allSet} from "~/entities";
 import {updateObjectOnLayer} from "~/utils";
+import Textarea from "~/components/ui/Textarea/Textarea.vue";
+import Checkbox from "~/components/ui/Checkbox/Checkbox.vue";
+import {ref} from "@vue/reactivity";
 
 const {layer, layerObjects} = useLayer();
 const {map} = useCurrentMap();
 const {overlayName} = useOverlay();
 const {currentObject, currentObjectId} = useMapObjects();
 const {settings} = useSettings();
-const form = reactive({
-  name: '',
-  description: ''
-});
+const form = ref({});
 
 watchEffect(() => {
-  form.name = currentObject.value.name;
-  form.description = currentObject.value.description;
+  form.value = {
+    ...currentObject.value
+  }
 })
 
 const save = () => {
@@ -33,7 +32,7 @@ const save = () => {
   allSet([currentObjectId, map, layer] as const).map(async ([objId, vMap, vLayer]) => {
     vMap.objects[objId] = {
       ...vMap.objects[objId],
-      ...form
+      ...form.value
     };
     updateObjectOnLayer(layerObjects, vLayer, currentObject.value, vMap.types);
   })
@@ -52,13 +51,16 @@ const save = () => {
       </div>
     </div>
     <div class="ObjectForm-Inner" v-else>
+      <div class="ObjectForm-Row">
+        <Checkbox v-model="form.linked" label="Название ссылкой" />
+      </div>
       <div class="ObjectForm-Title">Название</div>
       <div class="ObjectForm-Row">
-        <Input v-model="form.name"/>
+        <Textarea v-model="form.name" />
       </div>
       <div class="ObjectForm-Title">Описание</div>
       <div class="ObjectForm-Row">
-        <Input v-model="form.description"/>
+        <Textarea v-model="form.description" />
       </div>
       <div class="ObjectForm-Row">
         <Button @click="save">Сохранить</Button>
