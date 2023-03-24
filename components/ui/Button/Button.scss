@@ -1,19 +1,24 @@
 .Button {
   display: block;
+  width: 100%;
   box-sizing: border-box;
   border: 1px solid var(--borderColor);
+  cursor: pointer;
 
   &_size {
     &_sm {
       padding: calc(var(--defaultPadding) / 6);
+      font-size: 10px;
     }
 
     &_md {
       padding: calc(var(--defaultPadding) / 2);
+      font-size: 16px;
     }
 
     &_lg {
       padding: var(--defaultPadding);
+      font-size: 20px;
     }
   }
 

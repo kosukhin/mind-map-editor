@@ -7,9 +7,9 @@ import Button from '@/components/ui/Button/Button';
   <div class="Header">
     <Breadcrumbs class="Header-Breadcrumbs" />
     <div class="Header-Actions">
-      <Button>X</Button>
-      <Button>Y</Button>
-      <Button>Z</Button>
+      <Button size="sm">X</Button>
+      <Button size="sm">Y</Button>
+      <Button  size="sm">Z</Button>
     </div>
   </div>
 </template>

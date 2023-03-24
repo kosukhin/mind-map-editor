@@ -14,7 +14,9 @@ const data = useVModel(props, 'modelValue', emit);
 </script>
 
 <template>
-  <div class="Input">
-    <input v-model="data" type="text" />
-  </div>
+  <input class="Input" v-model="data" type="text" />
 </template>
+
+<style lang="scss" scoped>
+@import "Input";
+</style>

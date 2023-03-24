@@ -13,6 +13,7 @@ import {updateObjectOnLayer} from "~/utils";
 import Textarea from "~/components/ui/Textarea/Textarea.vue";
 import Checkbox from "~/components/ui/Checkbox/Checkbox.vue";
 import {ref} from "@vue/reactivity";
+import Input from "~/components/ui/Input/Input.vue";
 
 const {layer, layerObjects} = useLayer();
 const {map} = useCurrentMap();
@@ -54,6 +55,15 @@ const save = () => {
       <div class="ObjectForm-Row">
         <Checkbox v-model="form.linked" label="Название ссылкой" />
       </div>
+      <template v-if="form.linked">
+        <div class="ObjectForm-Title">Внешняя ссылка</div>
+        <div class="ObjectForm-Row">
+          <Input v-model="form.outlink" />
+        </div>
+        <div class="ObjectForm-Row">
+          <Checkbox v-model="form.targetBlank" label="В новой влкадке" />
+        </div>
+      </template>
       <div class="ObjectForm-Title">Название</div>
       <div class="ObjectForm-Row">
         <Textarea v-model="form.name" />
@@ -62,8 +72,9 @@ const save = () => {
       <div class="ObjectForm-Row">
         <Textarea v-model="form.description" />
       </div>
-      <div class="ObjectForm-Row">
+      <div class="ObjectForm-ButtonsGroup">
         <Button type="success" @click="save">Сохранить</Button>
+        <Button type="danger">Удалить</Button>
       </div>
     </div>
   </div>

@@ -8,4 +8,9 @@
   &-Description {
     margin-bottom: var(--defaultPadding);
   }
+
+  &-ButtonsGroup {
+    display: flex;
+    gap: 8px;
+  }
 }
