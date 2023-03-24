@@ -24,9 +24,9 @@ const selectType = (name: string) => {
         <div class="SideBar-ItemName">{{ name }}</div>
         <div class="SideBar-ItemImage" v-html="type.svg"></div>
         <div class="SideBar-ItemButtons">
-          <Button @click="selectType(name)">A</Button>
-          <Button>B</Button>
-          <Button>C</Button>
+          <Button size="sm" @click="selectType(name)">A</Button>
+          <Button size="sm">B</Button>
+          <Button size="sm">C</Button>
         </div>
       </div>
     </div>

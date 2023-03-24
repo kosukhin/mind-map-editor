@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {useVModel} from "@vueuse/core";
+import {useTextareaAutosize, useVModel} from "@vueuse/core";
 
 const props = defineProps({
   modelValue: {
@@ -10,11 +10,14 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 const data = useVModel(props, 'modelValue', emit);
+const { textarea, input } = useTextareaAutosize({
+  input: data
+});
 </script>
 
 <template>
   <div class="Textarea">
-    <textarea class="Textarea-Input" v-model="data" />
+    <textarea ref="textarea" class="Textarea-Input" v-model="input" />
   </div>
 </template>
 

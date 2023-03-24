@@ -2,5 +2,11 @@
   &-Input {
     display: block;
     width: 100%;
+    padding: var(--defaultPadding);
+    border: 1px solid var(--borderColor);
+    box-sizing: border-box;
+    outline: none;
+    overflow: hidden;
+    resize: none;
   }
 }

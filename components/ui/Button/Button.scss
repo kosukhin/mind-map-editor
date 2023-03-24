@@ -1,1 +1,37 @@
-.Button {}
+.Button {
+  display: block;
+  box-sizing: border-box;
+  border: 1px solid var(--borderColor);
+
+  &_size {
+    &_sm {
+      padding: calc(var(--defaultPadding) / 6);
+    }
+
+    &_md {
+      padding: calc(var(--defaultPadding) / 2);
+    }
+
+    &_lg {
+      padding: var(--defaultPadding);
+    }
+  }
+
+  &_type {
+    &_default {
+      background: var(--defaultBG);
+    }
+
+    &_primary {
+      background: var(--primaryBG);
+    }
+
+    &_success {
+      background: var(--successBG);
+    }
+
+    &_danger {
+      background: var(--dangerBG);
+    }
+  }
+}

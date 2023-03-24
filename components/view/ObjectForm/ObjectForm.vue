@@ -63,7 +63,7 @@ const save = () => {
         <Textarea v-model="form.description" />
       </div>
       <div class="ObjectForm-Row">
-        <Button @click="save">Сохранить</Button>
+        <Button type="success" @click="save">Сохранить</Button>
       </div>
     </div>
   </div>
