@@ -7,7 +7,7 @@ import {
 } from "~/composables";
 import {watch} from "@vue/runtime-core";
 import Button from "~/components/ui/Button/Button.vue";
-import {OVERLAY_CLOSE} from "~/constants";
+import {SHOW_OBJECT} from "~/constants";
 import {allSet} from "~/entities";
 import {updateObjectOnLayer} from "~/utils";
 import Textarea from "~/components/ui/Textarea/Textarea.vue";
@@ -17,10 +17,11 @@ import Input from "~/components/ui/Input/Input.vue";
 
 const {layer, layerObjects} = useLayer();
 const {map} = useCurrentMap();
-const {overlayName} = useOverlay();
+const {tryToClose, close} = useOverlay();
 const {currentObject} = useMapObjects();
 const {settings} = useSettings();
 const form = ref({});
+const isDirty = ref(false);
 
 watch(currentObject, () => {
   currentObject.map(vObj => {
@@ -33,8 +34,22 @@ watch(currentObject, () => {
   immediate: true,
 })
 
+watch(tryToClose, () => {
+  tryToClose.map(vClose => {
+    if (isDirty.value && vClose === SHOW_OBJECT) {
+      if(confirm('Если продожить данные будут потеряны! Продолжить?')) {
+        close();
+      }
+
+      return;
+    }
+
+    close();
+  })
+})
+
 const save = () => {
-  overlayName.value = OVERLAY_CLOSE;
+  close();
   allSet([currentObject, map, layer] as const).map(async ([vObj, vMap, vLayer]) => {
     vMap.objects[vObj.id] = {
       ...vMap.objects[vObj.id],
@@ -56,7 +71,7 @@ const save = () => {
         }}
       </div>
     </div>
-    <div class="ObjectForm-Inner" v-else>
+    <div v-else class="ObjectForm-Inner" @change="isDirty = true">
       <div class="ObjectForm-Row">
         <Checkbox v-model="form.linked" label="Название ссылкой" />
       </div>

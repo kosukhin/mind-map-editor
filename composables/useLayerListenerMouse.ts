@@ -1,12 +1,12 @@
 import {useLayerEvents, useLayer} from "~/composables";
-import {watchEffect} from "@vue/runtime-core";
+import {watch} from "@vue/runtime-core";
 import {allSet} from "~/entities";
 
 export const useLayerListenerMouse = () => {
   const {stage} = useLayer();
   const {mouseenter, mouseleave} = useLayerEvents();
 
-  watchEffect(() => {
+  watch(mouseenter, () => {
     allSet([stage, mouseenter] as const).map(([vStage, e]) => {
       if (!e?.target) return;
 
@@ -16,7 +16,7 @@ export const useLayerListenerMouse = () => {
     });
   });
 
-  watchEffect(() => {
+  watch(mouseleave, () => {
     allSet([stage, mouseleave] as const).map(([vStage, e]) => {
       if (!e?.target) return;
 

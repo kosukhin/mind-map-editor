@@ -1,25 +1,23 @@
 <script setup lang="ts">
-import { useOverlay } from "~/composables/useOverlay";
-import { watchEffect } from "@vue/runtime-core";
-import { ref } from "@vue/reactivity";
-import {OVERLAY_CLOSE} from "~/constants";
+import {useOverlay} from "~/composables/useOverlay";
+import {watch} from "@vue/runtime-core";
+import {ref} from "@vue/reactivity";
 
 const props = defineProps({
   name: {
     type: String,
     required: true,
   }
-})
+});
 
 const isOpened = ref(false);
-const {overlayName} = useOverlay();
+const {overlayName, tryToClose} = useOverlay();
 
 const close = () => {
-  isOpened.value = false;
-  overlayName.value = OVERLAY_CLOSE;
+  tryToClose.value = props.name;
 }
 
-watchEffect(() => {
+watch(overlayName, () => {
   overlayName.map((vDrawer) => {
     isOpened.value = vDrawer === props.name;
   })
@@ -29,7 +27,7 @@ watchEffect(() => {
 <template>
   <div class="Drawer" @click="close" v-if="isOpened">
     <div class="Drawer-Inner" @click.stop>
-      <slot />
+      <slot/>
     </div>
   </div>
 </template>

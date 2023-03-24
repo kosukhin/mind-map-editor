@@ -1,7 +1,18 @@
 <script lang="ts" setup>
-import {useMapTypes} from "~/composables";
+import {useMapTypes, useOverlay} from "~/composables";
+import {watch} from "@vue/runtime-core";
+import {SHOW_TYPE} from "~/constants";
 
 const {currentType} = useMapTypes();
+const {tryToClose, close} = useOverlay();
+
+watch(tryToClose, () => {
+  tryToClose.map(vClose => {
+    if (vClose === SHOW_TYPE) {
+      close();
+    }
+  })
+})
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watchEffect } from "@vue/runtime-core";
+import {watch} from "@vue/runtime-core";
 import { ref } from "@vue/reactivity";
 import {useOverlay} from "~/composables";
 
@@ -11,14 +11,13 @@ const props = defineProps({
 })
 
 const isOpened = ref(false);
-const {overlayName} = useOverlay();
+const {overlayName, tryToClose} = useOverlay();
 
 const close = () => {
-  isOpened.value = false;
-  overlayName.value = '';
+  tryToClose.value = props.name;
 }
 
-watchEffect(() => {
+watch(overlayName, () => {
   overlayName.map((vModal) => {
     isOpened.value = vModal === props.name;
   })
