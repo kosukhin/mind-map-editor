@@ -1,18 +1,12 @@
 <script lang="ts" setup>
-import {useMapTypes, useOverlay} from "~/composables";
-import {watch} from "@vue/runtime-core";
-import {SHOW_TYPE} from "~/constants";
+import { useMapTypes, useOverlay } from "~/composables";
+import { SHOW_TYPE } from "~/constants";
+import { ref } from "@vue/reactivity";
+import { useFormDirtyCheck } from "~/composables/useFormDirtyCheck";
 
-const {currentType} = useMapTypes();
-const {tryToClose, close} = useOverlay();
-
-watch(tryToClose, () => {
-  tryToClose.map(vClose => {
-    if (vClose === SHOW_TYPE) {
-      close();
-    }
-  })
-})
+const { currentType } = useMapTypes();
+const isDirty = ref(false);
+useFormDirtyCheck(isDirty, SHOW_TYPE);
 </script>
 
 <template>

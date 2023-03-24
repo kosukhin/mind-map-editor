@@ -14,14 +14,16 @@ import Textarea from "~/components/ui/Textarea/Textarea.vue";
 import Checkbox from "~/components/ui/Checkbox/Checkbox.vue";
 import {ref} from "@vue/reactivity";
 import Input from "~/components/ui/Input/Input.vue";
+import { useFormDirtyCheck } from "~/composables/useFormDirtyCheck";
 
 const {layer, layerObjects} = useLayer();
 const {map} = useCurrentMap();
-const {tryToClose, close} = useOverlay();
+const {close} = useOverlay();
 const {currentObject} = useMapObjects();
 const {settings} = useSettings();
 const form = ref({});
 const isDirty = ref(false);
+useFormDirtyCheck(isDirty, SHOW_OBJECT);
 
 watch(currentObject, () => {
   currentObject.map(vObj => {
@@ -32,20 +34,6 @@ watch(currentObject, () => {
 }, {
   flush: 'post',
   immediate: true,
-})
-
-watch(tryToClose, () => {
-  tryToClose.map(vClose => {
-    if (isDirty.value && vClose === SHOW_OBJECT) {
-      if(confirm('Если продожить данные будут потеряны! Продолжить?')) {
-        close();
-      }
-
-      return;
-    }
-
-    close();
-  })
 })
 
 const save = () => {
