@@ -8,7 +8,8 @@ import TypeForm from "~/components/view/TypeForm/TypeForm.vue";
 import ObjectForm from "~/components/view/ObjectForm/ObjectForm.vue";
 import Drawer from "~/components/ui/Drawer/Drawer.vue";
 import Modal from "~/components/ui/Modal/Modal.vue";
-import {SHOW_TYPE, SHOW_OBJECT} from "~/constants";
+import {SHOW_TYPE, SHOW_TEXT, SHOW_OBJECT} from "~/constants";
+import MapAsText from "~/components/view/MapAsText/MapAsText.vue";
 </script>
 
 <template>
@@ -21,6 +22,9 @@ import {SHOW_TYPE, SHOW_OBJECT} from "~/constants";
   <Notify/>
   <Modal :name="SHOW_TYPE">
     <TypeForm/>
+  </Modal>
+  <Modal :name="SHOW_TEXT">
+    <MapAsText />
   </Modal>
   <Drawer :name="SHOW_OBJECT">
     <ObjectForm/>

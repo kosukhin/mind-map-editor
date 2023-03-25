@@ -30,6 +30,7 @@
     &_primary {
       background: var(--primaryBG);
       border-color: var(--primaryBG);
+      color: var(--inverseFG);
     }
 
     &_success {
