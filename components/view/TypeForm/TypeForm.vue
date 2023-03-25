@@ -17,7 +17,7 @@ const size = ref([0, 0]);
 const form = ref<any>({});
 const {stringify} = JSON;
 const isDirty = computed(() =>
-  stringify(form.value) !== stringify(currentType.map(vType => vType.svg))
+  stringify(form.value) !== stringify(currentType.map(vType => vType))
 )
 useFormDirtyCheck(isDirty, SHOW_TYPE);
 
