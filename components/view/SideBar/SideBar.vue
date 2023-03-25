@@ -78,8 +78,12 @@ const addToCanvas = (e: DragEvent, type: string) => {
           @dragend="addToCanvas($event, name)"
         ></div>
         <div class="SideBar-ItemButtons">
-          <Button size="sm" type="primary" @click="selectType(name)">A</Button>
-          <Button size="sm" type="danger" @click="removeType(name)">D</Button>
+          <Button size="sm" type="primary" @click="selectType(name)">
+            Изменить
+          </Button>
+          <Button size="sm" type="danger" @click="removeType(name)">
+            Удалить
+          </Button>
         </div>
       </div>
     </div>

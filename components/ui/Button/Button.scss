@@ -29,14 +29,17 @@
 
     &_primary {
       background: var(--primaryBG);
+      border-color: var(--primaryBG);
     }
 
     &_success {
       background: var(--successBG);
+      border-color: var(--successBG);
     }
 
     &_danger {
       background: var(--dangerBG);
+      border-color: var(--dangerBG);
       color: var(--inverseFG);
     }
   }

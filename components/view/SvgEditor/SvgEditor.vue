@@ -18,13 +18,14 @@ const data = useVModel(props, 'modelValue', emit);
 
 onMounted(() => {
   const editor = new Editor(document.getElementById('svg-editor'));
-  editor.init();
+
   editor.setConfig({
     lang: 'ru',
     allowInitialUserOverride: false,
     extensions: [],
     noDefaultExtensions: true,
   });
+  editor.init();
 
   setTimeout(() => {
     editor.loadFromString(String(data.value.svg));
