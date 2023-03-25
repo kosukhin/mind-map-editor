@@ -1,20 +1,49 @@
 <script lang="ts" setup>
-import { useMapTypes } from "~/composables";
+import { useCurrentMap, useMapTypes, useOverlay } from "~/composables";
 import { SHOW_TYPE } from "~/constants";
-import { ref } from "@vue/reactivity";
+import { computed, ref } from "@vue/reactivity";
 import { useFormDirtyCheck } from "~/composables/useFormDirtyCheck";
 import SvgEditor from "~/components/view/SvgEditor/SvgEditor.vue";
+import { watch } from "@vue/runtime-core";
+import Button from "~/components/ui/Button/Button.vue";
+import { allSet } from "~/entities";
 
-const { currentType } = useMapTypes();
-const isDirty = ref(false);
+const {close} = useOverlay();
+const {map} = useCurrentMap();
+const { currentTypeId, currentType } = useMapTypes();
+const svg = ref('');
+const size = ref([0, 0]);
+const isDirty = computed(() =>
+  svg.value !== currentType.map(vType => vType.svg)
+)
 useFormDirtyCheck(isDirty, SHOW_TYPE);
+
+watch(currentType, () => {
+  currentType.map(vType => {
+    svg.value = vType.svg;
+    size.value = [vType.width, vType.height];
+  })
+});
+
+const save = () => {
+  close();
+  allSet([map, currentTypeId] as const).map(([vMap, vTypeId]) => {
+    vMap.types[vTypeId] = {
+      svg: svg.value,
+      width: size.value[0],
+      height: size.value[1],
+    }
+  })
+}
 </script>
 
 <template>
   <div v-if="!currentType.isNothing">
-    <div>width: {{ currentType.value.width }}</div>
-    <div>height: {{ currentType.value.height }}</div>
-    <div v-html="currentType.value.svg"></div>
-    <SvgEditor :svg="currentType.value.svg" />
+    <SvgEditor v-model="svg" :size="size" />
+    <div>
+      <Button type="success" @click="save">
+        Сохранить
+      </Button>
+    </div>
   </div>
 </template>
