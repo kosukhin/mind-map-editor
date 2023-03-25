@@ -15,9 +15,10 @@
 
   &-Inner {
     width: 100%;
-    max-width: 600px;
+    max-width: 900px;
     min-height: 300px;
     background: var(--overlayInnerBG);
+    border-radius: var(--defaultRadius);
     box-sizing: border-box;
     padding: var(--defaultPadding);
   }

@@ -1,4 +1,5 @@
 :root {
+  --defaultRadius: 4px;
   --defaultPadding: 16px;
 
   --mainFG: #000;
@@ -6,7 +7,7 @@
   --borderColor: #999;
   --editorBackground: #f1f1f1;
   --overlayInnerBG: #fff;
-  --overlayBG: rgba(0,0,0,.3);
+  --overlayBG: rgba(0,0,0,.1);
   --defaultBG: #fff;
   --primaryBG: #22bdff;
   --successBG: #7dff67;

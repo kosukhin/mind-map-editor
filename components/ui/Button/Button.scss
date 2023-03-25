@@ -2,6 +2,7 @@
   display: block;
   width: 100%;
   box-sizing: border-box;
+  border-radius: var(--defaultRadius);
   border: 1px solid var(--borderColor);
   cursor: pointer;
 
