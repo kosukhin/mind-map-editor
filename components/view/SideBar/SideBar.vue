@@ -5,7 +5,7 @@ import {
   useOverlay, useLayer
 } from "~/composables";
 import Button from '~/components/ui/Button/Button';
-import {SHOW_TYPE} from "~/constants";
+import { DEFAULT_SVG, SHOW_TYPE } from "~/constants";
 import {allSet, MapObject} from "~/entities";
 import { addObjectToLayer, createObject } from "~/utils";
 
@@ -17,6 +17,38 @@ const {overlayName} = useOverlay();
 const selectType = (name: string) => {
   overlayName.value = SHOW_TYPE;
   currentTypeId.value = name;
+}
+
+const addType = () => {
+  map.map(vMap => {
+    const newTypeId = Date.now().toString();
+    vMap.types[newTypeId] = {
+      name: 'Новый тип',
+      svg: DEFAULT_SVG,
+      width: 100,
+      height: 100,
+    }
+    currentTypeId.value = newTypeId;
+    overlayName.value = SHOW_TYPE;
+  })
+}
+
+const removeType = (typeId: string) => {
+  map.map(vMap => {
+    let isTypeUsed = false;
+    Object.values(vMap.objects).forEach(object => {
+      if (object.type === typeId) {
+        isTypeUsed = true;
+      }
+    });
+
+    if (isTypeUsed) {
+      alert('Невозомжно удалить тип, он используется');
+      return;
+    }
+
+    delete vMap.types[typeId];
+  })
 }
 
 const addToCanvas = (e: DragEvent, type: string) => {
@@ -35,7 +67,7 @@ const addToCanvas = (e: DragEvent, type: string) => {
 <template>
   <div class="SideBar">
     <div class="SideBar-Items" v-if="!map.isNothing">
-      <Button type="primary">Добавить тип</Button>
+      <Button @click="addType" type="primary">Добавить тип</Button>
       <div class="SideBar-Item" v-for="(type, name) in map.value.types">
         <div class="SideBar-ItemName">{{ type.name }}</div>
         <div
@@ -46,7 +78,8 @@ const addToCanvas = (e: DragEvent, type: string) => {
           @dragend="addToCanvas($event, name)"
         ></div>
         <div class="SideBar-ItemButtons">
-          <Button size="sm" @click="selectType(name)">A</Button>
+          <Button size="sm" type="primary" @click="selectType(name)">A</Button>
+          <Button size="sm" type="danger" @click="removeType(name)">D</Button>
         </div>
       </div>
     </div>
