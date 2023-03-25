@@ -16,11 +16,11 @@ const mapHistory = computed(() => {
 
 <template>
   <div>
-    <a href="/">Главная</a> /
-    <template v-for="history in mapHistory">
+    <a href="/">Главная</a>
+    <template v-for="history in mapHistory"> /
       <a :href="history.link">
         {{ history.name }}
-      </a> /
+      </a>
     </template>
   </div>
 </template>

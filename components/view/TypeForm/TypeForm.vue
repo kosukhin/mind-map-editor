@@ -51,6 +51,9 @@ const save = () => {
       <Button type="success" @click="save">
         Сохранить
       </Button>
+      <Button @click="close">
+        Отменить
+      </Button>
     </div>
   </div>
 </template>

@@ -2,4 +2,9 @@
   &-Row {
     margin-bottom: var(--defaultPadding);
   }
+
+  &-Controls {
+    display: flex;
+    gap: var(--defaultPadding);
+  }
 }

@@ -24,6 +24,7 @@ onMounted(() => {
     allowInitialUserOverride: false,
     extensions: [],
     noDefaultExtensions: true,
+    imgPath: '/images'
   });
   editor.init();
 
