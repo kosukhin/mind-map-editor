@@ -20,7 +20,7 @@ export const useCurrentMap = createSharedComposable(() => {
   watch(map, () => {
     map.map(vMap => {
       try {
-        saveMap(vMap);
+        saveMap(vMap, mapName);
       } catch (e) {
         map.error = String(e);
       }
