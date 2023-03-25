@@ -38,12 +38,16 @@ const save = () => {
 </script>
 
 <template>
-  <div v-if="!currentType.isNothing">
-    <SvgEditor v-model="svg" :size="size" />
-    <div>
+  <div class="TypeForm" v-if="!currentType.isNothing">
+    <SvgEditor class="TypeForm-Editor" v-model="svg" :size="size" />
+    <div class="TypeForm-Controls">
       <Button type="success" @click="save">
         Сохранить
       </Button>
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+@import "TypeForm";
+</style>
