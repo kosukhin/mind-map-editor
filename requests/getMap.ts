@@ -20,6 +20,13 @@ export async function getMap(mapName: string): Promise<MapStructure> {
   const result = response.data.structure;
   result.document = response.data.document;
 
+  for (const typeId of Object.keys(result.types)) {
+    result.types[typeId] = {
+      ...result.types[typeId],
+      name: result.types[typeId].name ? result.types[typeId].name : typeId
+    }
+  }
+
   for (const objectId of Object.keys(result.objects)) {
     result.objects[objectId] = {
       ...result.objects[objectId],

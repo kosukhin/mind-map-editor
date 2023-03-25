@@ -6,25 +6,19 @@ import { useVModel } from "@vueuse/core";
 
 const props = defineProps({
   modelValue: {
-    type: String,
-  },
-  size: {
-    type: Array,
+    type: Object,
   }
 });
 
 const emit = defineEmits([
-  'update:modelValue',
-  'update:size'
+  'update:modelValue'
 ]);
 
 const data = useVModel(props, 'modelValue', emit);
-const sizeData = useVModel(props, 'size', emit);
 
 onMounted(() => {
   const editor = new Editor(document.getElementById('svg-editor'));
   editor.init();
-  editor.loadFromString(String(data.value));
   editor.setConfig({
     lang: 'ru',
     allowInitialUserOverride: false,
@@ -33,10 +27,11 @@ onMounted(() => {
   });
 
   setTimeout(() => {
+    editor.loadFromString(String(data.value.svg));
     editor.svgCanvas.bind('changed', () => {
-      data.value = editor.svgCanvas.getSvgString();
-      sizeData.value[0] = editor.svgCanvas.contentW;
-      sizeData.value[1] = editor.svgCanvas.contentH;
+      data.value.svg = editor.svgCanvas.getSvgString();
+      data.value.width = editor.svgCanvas.contentW;
+      data.value.height = editor.svgCanvas.contentH;
     })
   })
 });

@@ -19,6 +19,7 @@ export interface MapObject {
 }
 
 export interface MapType {
+  name: string,
   svg: string,
   width: number,
   height: number,
