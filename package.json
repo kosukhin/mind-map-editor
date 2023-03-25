@@ -16,6 +16,7 @@
     "@vueuse/core": "^9.13.0",
     "canvg": "^4.0.1",
     "konva": "^8.4.2",
+    "svgedit": "^7.3.0",
     "transliteration": "^2.3.5"
   }
 }

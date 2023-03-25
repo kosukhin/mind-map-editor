@@ -9,6 +9,9 @@
   z-index: 2;
   justify-content: center;
   align-items: center;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: var(--defaultPadding);
 
   &-Inner {
     width: 100%;

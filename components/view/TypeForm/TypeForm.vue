@@ -3,6 +3,7 @@ import { useMapTypes } from "~/composables";
 import { SHOW_TYPE } from "~/constants";
 import { ref } from "@vue/reactivity";
 import { useFormDirtyCheck } from "~/composables/useFormDirtyCheck";
+import SvgEditor from "~/components/view/SvgEditor/SvgEditor.vue";
 
 const { currentType } = useMapTypes();
 const isDirty = ref(false);
@@ -14,5 +15,6 @@ useFormDirtyCheck(isDirty, SHOW_TYPE);
     <div>width: {{ currentType.value.width }}</div>
     <div>height: {{ currentType.value.height }}</div>
     <div v-html="currentType.value.svg"></div>
+    <SvgEditor :svg="currentType.value.svg" />
   </div>
 </template>
