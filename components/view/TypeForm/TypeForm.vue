@@ -15,8 +15,9 @@ const { currentTypeId, currentType } = useMapTypes();
 const svg = ref('');
 const size = ref([0, 0]);
 const form = ref<any>({});
+const {stringify} = JSON;
 const isDirty = computed(() =>
-  form.value.svg !== currentType.map(vType => vType.svg)
+  stringify(form.value) !== stringify(currentType.map(vType => vType.svg))
 )
 useFormDirtyCheck(isDirty, SHOW_TYPE);
 
