@@ -16,6 +16,7 @@ export async function addObjectToLayer(
   const v = await Canvg.fromString(ctx, type.svg);
   await v.render();
   const img = new Image({
+    name: object.id,
     image: canvas,
     x: object.position[0],
     y: object.position[1],
@@ -28,6 +29,7 @@ export async function addObjectToLayer(
 
   const labelWidth = object.name.length * 7;
   const text = new Text({
+    name: object.id,
     x: object.position[0] + type.width / 2 - labelWidth / 2,
     y: object.position[1] - 15,
     text: object.name,

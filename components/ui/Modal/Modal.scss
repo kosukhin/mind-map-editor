@@ -9,7 +9,6 @@
   z-index: 2;
   justify-content: center;
   align-items: center;
-  overflow: auto;
   box-sizing: border-box;
   padding: var(--defaultPadding);
 
@@ -17,6 +16,8 @@
     width: 100%;
     max-width: 900px;
     min-height: 300px;
+    max-height: 90%;
+    overflow-y: auto;
     background: var(--overlayInnerBG);
     border-radius: var(--defaultRadius);
     box-sizing: border-box;

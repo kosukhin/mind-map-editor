@@ -23,5 +23,6 @@ export const useCurrentMapRenderer = () => {
 
   return {
     map,
+    allInit,
   }
 }
