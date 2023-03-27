@@ -66,14 +66,7 @@ export async function addObjectToLayer(
     });
     layer.add(arrow);
     arrows.push(arrow);
-  })
-
-  img.on('dragmove', (e) => {
-    text.position({
-      x: e.target.attrs.x + type.width / 2 - labelWidth / 2,
-      y: e.target.attrs.y - 15,
-    });
-  })
+  });
 
   return [img, text, ...arrows];
 }

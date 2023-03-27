@@ -49,7 +49,7 @@ export const useMiniMap = (
 
       setTimeout(redrawPreviewLayer);
 
-      vStage.on('dragmove', () => {
+      vStage.on('dragmove', (e) => {
         redrawPreviewLayer();
 
         if(miniMapScreen.value) {

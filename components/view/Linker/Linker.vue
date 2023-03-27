@@ -14,6 +14,13 @@ const title = ref('Сделать связь');
 const type = ref('default');
 
 const startRelation = () => {
+  if (type.value === 'danger') {
+    title.value = 'Сделать связь';
+    isLocked.value = false;
+    type.value = 'default';
+    return;
+  }
+
   currentObjectId.value = null;
   title.value = 'Выберите источник';
   isLocked.value = true;
@@ -27,7 +34,6 @@ const startRelation = () => {
     const stopSecond = watch(currentObjectId, () => {
       stopSecond();
       const toObjectId = currentObjectId.map(objId => objId) as string;
-      console.log('from', fromObjectId, 'to', toObjectId);
       title.value = 'Сделать связь';
       isLocked.value = false;
       type.value = 'default';
