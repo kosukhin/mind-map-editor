@@ -4,7 +4,7 @@ import {onMounted, watch} from "@vue/runtime-core";
 import {useCurrentMap, useLayer} from "~/composables";
 import {allSet, MapLayer} from "~/entities";
 import debounce from 'lodash/debounce';
-import {CANVAS_HEIGHT, CANVAS_WIDTH} from "~/constants";
+import {CANVAS_HEIGHT, CANVAS_WIDTH, MINIMAP_SCALE} from "~/constants";
 
 const { Stage } = Konva;
 
@@ -15,8 +15,7 @@ export const useMiniMap = (
   const {firstMapLoad} = useCurrentMap();
   const {layer, stage} = useLayer();
   let previewLayer: MapLayer | null = null;
-  const scale = 0.08;
-
+  const scale = MINIMAP_SCALE;
   let miniMapWidth = CANVAS_WIDTH;
   let miniMapHeight = CANVAS_HEIGHT;
 
@@ -25,8 +24,8 @@ export const useMiniMap = (
     const canvasSize = {w: canvas?.clientWidth ?? CANVAS_WIDTH, h: canvas?.clientHeight ?? CANVAS_HEIGHT};
     const miniScreenWidth = canvasSize.w * scale;
     const miniScreenHeight = canvasSize.h * scale;
-    miniMapWidth = (CANVAS_WIDTH + canvasSize.w) * scale;
-    miniMapHeight = (CANVAS_HEIGHT + canvasSize.h) * scale;
+    miniMapWidth = CANVAS_WIDTH * scale;
+    miniMapHeight = CANVAS_HEIGHT * scale;
 
     if (miniMap.value) {
       miniMap.value.style.width = miniMapWidth + 'px';

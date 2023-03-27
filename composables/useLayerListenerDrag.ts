@@ -3,6 +3,7 @@ import {watch} from "@vue/runtime-core";
 import {useCurrentMap} from "~/composables/useCurrentMap";
 import {allSet, MapArrow} from "~/entities";
 import {useLayer} from "~/composables/useLayer";
+import {CANVAS_HEIGHT, CANVAS_WIDTH} from "~/constants";
 
 export const useLayerListenerDrag = () => {
   const {firstMapLoad} = useCurrentMap();
@@ -21,6 +22,25 @@ export const useLayerListenerDrag = () => {
 
   watch(firstMapLoad, () => {
     allSet([stage, map] as const).map(([vStage, vMap]) => {
+      const canvas = document.getElementById('canvas');
+      const canvasSize = {w: canvas?.clientWidth ?? CANVAS_WIDTH, h: canvas?.clientHeight ?? CANVAS_HEIGHT};
+      const maxRight = CANVAS_WIDTH - canvasSize.w;
+      const maxBottom = CANVAS_HEIGHT - canvasSize.h;
+
+      vStage.dragBoundFunc((pos) => {
+        const right = pos.x*-1;
+        const bottom = pos.y*-1;
+
+        if (maxBottom < 0 || maxRight < 0) {
+          return {x: 0, y: 0}
+        }
+
+        return {
+          x: pos.x > 0 ? 0 : right > maxRight ? maxRight * -1 : pos.x,
+          y: pos.y > 0 ? 0 : bottom > maxBottom ? maxBottom * -1 : pos.y,
+        };
+      })
+
       vStage.on('dragmove', (e) => {
         if (!e.target.attrs.image) {
           return;
