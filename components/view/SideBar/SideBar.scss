@@ -29,4 +29,10 @@
     display: flex;
     gap: 8px;
   }
+
+  &-Footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 }

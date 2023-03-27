@@ -8,6 +8,7 @@ import Button from '~/components/ui/Button/Button';
 import {DEFAULT_SVG, HEADER_HEIGHT, SHOW_TYPE, SHOW_SETTINGS, SIDEBAR_WIDTH} from "~/constants";
 import {allSet, MapObject} from "~/entities";
 import { addObjectToLayer, createObject } from "~/utils";
+import Linker from "~/components/view/Linker/Linker.vue";
 
 const {map} = useCurrentMap();
 const {layer, stage, layerObjects} = useLayer();
@@ -95,6 +96,7 @@ const addToCanvas = (e: DragEvent, type: string) => {
       <Button type="primary" @click="overlayName.value=SHOW_SETTINGS">
         Настройки
       </Button>
+      <Linker />
     </div>
   </div>
 </template>

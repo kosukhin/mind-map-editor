@@ -96,6 +96,12 @@ const cancel = () => {
       <div class="ObjectForm-Row">
         <Input v-model="form.zindex" type="number" />
       </div>
+
+      <div class="ObjectForm-Title">Связи</div>
+      <div class="ObjectForm-Row">
+        {{ form.arrows }}
+      </div>
+
       <div class="ObjectForm-ButtonsGroup">
         <Button type="success" @click="save">Сохранить</Button>
         <Button type="danger" @click="remove">Удалить</Button>

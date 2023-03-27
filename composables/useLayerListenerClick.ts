@@ -4,12 +4,14 @@ import {useOverlay} from "~/composables/useOverlay";
 import {SHOW_OBJECT} from "~/constants";
 import {allSet} from "~/entities";
 import {openUrlByObject} from "~/utils";
+import {createSharedComposable} from "@vueuse/core";
 
-export const useLayerListenerClick = () => {
+export const useLayerListenerClick = createSharedComposable(() => {
   const {click} = useLayerEvents();
   const {map} = useCurrentMap();
   const {currentObjectId} = useMapObjects();
   const {overlayName} = useOverlay();
+  const isLocked = ref(false);
 
   watch(click, () => {
     allSet([click, map] as const).map(([e, vMap]) => {
@@ -23,8 +25,17 @@ export const useLayerListenerClick = () => {
         }
       }
 
-      overlayName.value = SHOW_OBJECT;
       currentObjectId.value = objectId;
+
+      if (isLocked.value) {
+        return;
+      }
+
+      overlayName.value = SHOW_OBJECT;
     })
   })
-}
+
+  return {
+    isLocked,
+  }
+});
