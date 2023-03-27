@@ -109,10 +109,10 @@ const cancel = () => {
         <div class="ObjectForm-Title">Связи</div>
         <div class="ObjectForm-Row">
           <div class="ObjectForm-Arrow" :key="arrow.id" v-for="(arrow, index) in form.arrows">
-          <span>
-            {{ arrow.id }}
-          </span>
-            <Button type="danger" size="sm" @click="removeRelation(index)">Удалить</Button>
+            <span class="ObjectForm-ArrowName">
+              #{{ index+1 }} {{ map.value.objects[arrow.id].name }}
+            </span>
+            <Button class="ObjectForm-ArrowButton" type="danger" size="sm" @click="removeRelation(index)">Удалить</Button>
           </div>
         </div>
       </template>

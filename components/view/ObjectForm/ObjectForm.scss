@@ -9,6 +9,22 @@
     margin-bottom: var(--defaultPadding);
   }
 
+  &-Arrow {
+    display: flex;
+    margin-bottom: 4px;
+    align-items: flex-start;
+  }
+
+  &-ArrowName {
+    font-size: 12px;
+  }
+
+  &-ArrowButton {
+    flex-basis: 80px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
   &-ButtonsGroup {
     display: flex;
     gap: 8px;
