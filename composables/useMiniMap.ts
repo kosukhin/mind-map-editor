@@ -24,7 +24,6 @@ export const useMiniMap = (miniMapContainer: Ref<HTMLDivElement | undefined>) =>
         scaleX: scale,
         scaleY: scale,
       });
-      console.log('create preview');
 
       const redrawPreviewLayer = debounce(() => {
         if (previewLayer) {

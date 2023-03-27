@@ -4,6 +4,6 @@
   background: var(--overlayInnerBG);
   pointer-events: none;
   opacity: 0.8;
-  border: solid 1px #000;
+  border: solid 1px var(--borderColor);
   border-radius: var(--defaultRadius);
 }
