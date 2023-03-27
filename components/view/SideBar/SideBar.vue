@@ -5,12 +5,12 @@ import {
   useOverlay, useLayer
 } from "~/composables";
 import Button from '~/components/ui/Button/Button';
-import { DEFAULT_SVG, SHOW_TYPE } from "~/constants";
+import {DEFAULT_SVG, HEADER_HEIGHT, SHOW_TYPE, SIDEBAR_WIDTH} from "~/constants";
 import {allSet, MapObject} from "~/entities";
 import { addObjectToLayer, createObject } from "~/utils";
 
 const {map} = useCurrentMap();
-const {layer, layerObjects} = useLayer();
+const {layer, stage, layerObjects} = useLayer();
 const {currentTypeId} = useMapTypes();
 const {overlayName} = useOverlay();
 
@@ -52,9 +52,13 @@ const removeType = (typeId: string) => {
 }
 
 const addToCanvas = (e: DragEvent, type: string) => {
-  allSet([layer, map] as const).map(async ([vLayer, vMap]) => {
+  allSet([layer, map, stage] as const).map(async ([vLayer, vMap, vStage]) => {
+    const vType = vMap.types[type];
     const newObject: MapObject = createObject(
-      [e.offsetX - 200, e.offsetY],
+      [
+        e.x - SIDEBAR_WIDTH - vType.width/2 + vStage.x()*-1,
+        e.y - HEADER_HEIGHT - vType.height/2 + vStage.y()*-1,
+      ],
       type
     );
     vMap.objects[newObject.id] = newObject;
