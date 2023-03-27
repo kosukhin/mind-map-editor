@@ -71,8 +71,8 @@ const addToCanvas = (e: DragEvent, type: string) => {
 
 <template>
   <div class="SideBar">
+    <Button @click="addType" type="primary">Добавить тип</Button>
     <div class="SideBar-Items" v-if="!map.isNothing">
-      <Button @click="addType" type="primary">Добавить тип</Button>
       <div class="SideBar-Item" v-for="(type, name) in map.value.types">
         <div class="SideBar-ItemName">{{ type.name }}</div>
         <div

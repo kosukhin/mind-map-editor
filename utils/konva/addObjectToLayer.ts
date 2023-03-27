@@ -64,6 +64,7 @@ export async function addObjectToLayer(
       stroke: '#888',
       strokeWidth: 2,
     });
+    arrow.zIndex(99999);
     layer.add(arrow);
     arrows.push(arrow);
   });
