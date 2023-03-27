@@ -31,7 +31,7 @@ const removeMap = () => {
     <Breadcrumbs class="Header-Breadcrumbs" />
     <div class="Header-Actions">
       <Button @click="showText" type="primary" size="sm">Текстом</Button>
-      <Button @click="removeMap" type="danger" size="sm">Удалить</Button>
+      <Button @click="removeMap" size="sm">Поиск</Button>
     </div>
   </div>
 </template>
