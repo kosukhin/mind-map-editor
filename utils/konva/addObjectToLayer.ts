@@ -1,16 +1,19 @@
-import { MapObject, MapStructureTypes } from "~/entities/Map";
+import {MapObject, MapStructure} from "~/entities/Map";
 import { Canvg } from "canvg";
 import Konva from "konva";
+import {MapArrow} from "~/entities";
 
-const { Layer, Image, Text } = Konva;
+const { Layer, Image, Text, Arrow } = Konva;
 
 export async function addObjectToLayer(
   layer: InstanceType<typeof Layer>,
   object: MapObject,
-  types: MapStructureTypes,
+  map: MapStructure,
 ) {
+  const {types} = map;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
+
   if (!ctx) return;
   const type = types[object.type];
   const v = await Canvg.fromString(ctx, type.svg);
@@ -42,6 +45,29 @@ export async function addObjectToLayer(
   });
   layer.add(text);
 
+  const arrows: MapArrow[] = [];
+  object.arrows.forEach(toObjectRelation => {
+    const toObject = map.objects[toObjectRelation.id];
+    const toObjectType = map.types[toObject.type];
+    const arrow = new Arrow({
+      x: 0,
+      y: 0,
+      points: [
+        object.position[0] + type.width / 2,
+        object.position[1] + type.height / 2,
+        toObject.position[0] + toObjectType.width / 2,
+        toObject.position[1] + toObjectType.height / 2
+      ],
+      pointerLength: 20,
+      pointerWidth: 10,
+      fill: '#ccc',
+      stroke: '#888',
+      strokeWidth: 2,
+    });
+    layer.add(arrow);
+    arrows.push(arrow);
+  })
+
   img.on('dragmove', (e) => {
     text.position({
       x: e.target.attrs.x + type.width / 2 - labelWidth / 2,
@@ -49,5 +75,5 @@ export async function addObjectToLayer(
     });
   })
 
-  return [img, text];
+  return [img, text, ...arrows];
 }

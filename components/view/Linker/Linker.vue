@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import Button from "~/components/ui/Button/Button.vue";
-import {useCurrentMap, useLayerListenerClick, useMapObjects} from "~/composables";
+import {useCurrentMap, useLayer, useLayerListenerClick, useMapObjects} from "~/composables";
 import {watch} from "@vue/runtime-core";
 import {ref} from "@vue/reactivity";
+import {updateObjectOnLayer} from "~/utils";
+import {allSet} from "~/entities";
 
+const {layer, layerObjects} = useLayer();
 const {map} = useCurrentMap();
 const {currentObjectId} = useMapObjects();
 const {isLocked} = useLayerListenerClick();
@@ -11,6 +14,7 @@ const title = ref('Сделать связь');
 const type = ref('default');
 
 const startRelation = () => {
+  currentObjectId.value = null;
   title.value = 'Выберите источник';
   isLocked.value = true;
   type.value = 'danger';
@@ -28,8 +32,9 @@ const startRelation = () => {
       isLocked.value = false;
       type.value = 'default';
 
-      map.map(vMap => {
+      allSet([map, layer] as const).map(async ([vMap, vLayer]) => {
         vMap.objects[fromObjectId].arrows.push({id: toObjectId});
+        await updateObjectOnLayer(layerObjects, vLayer, vMap.objects[fromObjectId], vMap);
       })
     });
   })

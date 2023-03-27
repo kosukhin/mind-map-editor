@@ -8,7 +8,7 @@ import {
 import {watch} from "@vue/runtime-core";
 import Button from "~/components/ui/Button/Button.vue";
 import {SHOW_OBJECT} from "~/constants";
-import {allSet} from "~/entities";
+import {allSet, MapObject} from "~/entities";
 import { removeObjectOnLayer, updateObjectOnLayer } from "~/utils";
 import Textarea from "~/components/ui/Textarea/Textarea.vue";
 import Checkbox from "~/components/ui/Checkbox/Checkbox.vue";
@@ -51,8 +51,16 @@ const save = () => {
       ...vMap.objects[vObj.id],
       ...form.value
     };
-    await updateObjectOnLayer(layerObjects, vLayer, vMap.objects[vObj.id], vMap.types);
+    await updateObjectOnLayer(layerObjects, vLayer, vMap.objects[vObj.id], vMap);
   })
+}
+
+const removeRelation = (index: number) => {
+  if (!(form.value as MapObject).arrows) return;
+  allSet([currentObject, map, layer] as const).map(async ([vObj, vMap, vLayer]) => {
+    (form.value as MapObject).arrows.splice(index, 1);
+    await updateObjectOnLayer(layerObjects, vLayer, vMap.objects[vObj.id], vMap);
+  });
 }
 
 const cancel = () => {
@@ -97,10 +105,17 @@ const cancel = () => {
         <Input v-model="form.zindex" type="number" />
       </div>
 
-      <div class="ObjectForm-Title">Связи</div>
-      <div class="ObjectForm-Row">
-        {{ form.arrows }}
-      </div>
+      <template v-if="form.arrows && form.arrows.length">
+        <div class="ObjectForm-Title">Связи</div>
+        <div class="ObjectForm-Row">
+          <div class="ObjectForm-Arrow" :key="arrow.id" v-for="(arrow, index) in form.arrows">
+          <span>
+            {{ arrow.id }}
+          </span>
+            <Button type="danger" size="sm" @click="removeRelation(index)">Удалить</Button>
+          </div>
+        </div>
+      </template>
 
       <div class="ObjectForm-ButtonsGroup">
         <Button type="success" @click="save">Сохранить</Button>

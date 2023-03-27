@@ -63,7 +63,7 @@ const addToCanvas = (e: DragEvent, type: string) => {
       type
     );
     vMap.objects[newObject.id] = newObject;
-    const objects = await addObjectToLayer(vLayer, newObject, vMap.types);
+    const objects = await addObjectToLayer(vLayer, newObject, vMap);
     layerObjects.set(newObject.id, objects);
   });
 }

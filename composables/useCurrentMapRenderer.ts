@@ -15,7 +15,7 @@ export const useCurrentMapRenderer = () => {
   watchOnce(allInit, () => {
     allSet([layer, map] as const).map(async ([vLayer, vMap]) => {
       for (const object of Object.values(vMap.objects)) {
-        const objects = await addObjectToLayer(vLayer, object, vMap.types);
+        const objects = await addObjectToLayer(vLayer, object, vMap);
         layerObjects.set(object.id, objects);
       }
     });
