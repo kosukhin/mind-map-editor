@@ -41,7 +41,10 @@ export const useLayerListenerDrag = () => {
         };
       })
 
+      let processed = false;
       vStage.on('dragmove', (e) => {
+        // if (processed) return;
+        // processed = true;
         if (!e.target.attrs.image) {
           return;
         }
@@ -67,7 +70,11 @@ export const useLayerListenerDrag = () => {
           const hasRelation = relObject.arrows.find(relArrow => relArrow.id === object.id);
           if (hasRelation) {
             const [img, text, ...arrows] = layerObjects.get(relObject.id);
-            relatedArrows.push(...arrows);
+            (arrows as any[]).forEach(arrow => {
+              if (arrow.attrs.toObjectId === object.id) {
+                relatedArrows.push(arrow);
+              }
+            });
           }
         });
         relatedArrows.forEach(relArrow => {

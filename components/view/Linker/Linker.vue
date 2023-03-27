@@ -13,8 +13,14 @@ const {isLocked} = useLayerListenerClick();
 const title = ref('Сделать связь');
 const type = ref('default');
 
+let stopNextObjectWatcher: Function | null = null;
+
 const startRelation = () => {
   if (type.value === 'danger') {
+    if (stopNextObjectWatcher) {
+      stopNextObjectWatcher();
+    }
+
     title.value = 'Сделать связь';
     isLocked.value = false;
     type.value = 'default';
@@ -25,9 +31,9 @@ const startRelation = () => {
   title.value = 'Выберите источник';
   isLocked.value = true;
   type.value = 'danger';
-
-  const stopFirst = watch(currentObjectId, () => {
-    stopFirst();
+  stopNextObjectWatcher = watch(currentObjectId, () => {
+    if (!stopNextObjectWatcher) return;
+    stopNextObjectWatcher();
     title.value = 'Выберите цель';
     const fromObjectId = currentObjectId.map(objId => objId) as string;
 

@@ -52,6 +52,7 @@ export async function addObjectToLayer(
     const arrow = new Arrow({
       x: 0,
       y: 0,
+      toObjectId: toObjectRelation.id,
       points: [
         object.position[0] + type.width / 2,
         object.position[1] + type.height / 2,
