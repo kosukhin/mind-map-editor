@@ -54,6 +54,10 @@ const save = () => {
     await updateObjectOnLayer(layerObjects, vLayer, vMap.objects[vObj.id], vMap.types);
   })
 }
+
+const cancel = () => {
+  close();
+}
 </script>
 
 <template>
@@ -95,6 +99,9 @@ const save = () => {
       <div class="ObjectForm-ButtonsGroup">
         <Button type="success" @click="save">Сохранить</Button>
         <Button type="danger" @click="remove">Удалить</Button>
+      </div>
+      <div class="ObjectForm-ButtonsGroup">
+        <Button @click="cancel">Отменить</Button>
       </div>
     </div>
   </div>

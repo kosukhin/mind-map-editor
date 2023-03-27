@@ -2,12 +2,16 @@
   padding: var(--defaultPadding);
   background: #ccc;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 
   &-Items {
     display: flex;
     flex-direction: column;
     gap: 24px;
     align-items: center;
+    flex-grow: 1;
+    overflow-y: auto;
   }
 
   &-Item {

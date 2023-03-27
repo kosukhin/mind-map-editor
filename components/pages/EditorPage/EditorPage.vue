@@ -8,8 +8,9 @@ import TypeForm from "~/components/view/TypeForm/TypeForm.vue";
 import ObjectForm from "~/components/view/ObjectForm/ObjectForm.vue";
 import Drawer from "~/components/ui/Drawer/Drawer.vue";
 import Modal from "~/components/ui/Modal/Modal.vue";
-import {SHOW_TYPE, SHOW_TEXT, SHOW_OBJECT} from "~/constants";
+import {SHOW_TYPE, SHOW_TEXT, SHOW_SETTINGS, SHOW_OBJECT} from "~/constants";
 import MapAsText from "~/components/view/MapAsText/MapAsText.vue";
+import Settings from "~/components/view/Settings/Settings.vue";
 </script>
 
 <template>
@@ -25,6 +26,9 @@ import MapAsText from "~/components/view/MapAsText/MapAsText.vue";
   </Modal>
   <Modal :name="SHOW_TEXT">
     <MapAsText />
+  </Modal>
+  <Modal :name="SHOW_SETTINGS">
+    <Settings />
   </Modal>
   <Drawer :name="SHOW_OBJECT">
     <ObjectForm/>

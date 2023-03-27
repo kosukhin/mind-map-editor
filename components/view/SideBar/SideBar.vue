@@ -5,7 +5,7 @@ import {
   useOverlay, useLayer
 } from "~/composables";
 import Button from '~/components/ui/Button/Button';
-import {DEFAULT_SVG, HEADER_HEIGHT, SHOW_TYPE, SIDEBAR_WIDTH} from "~/constants";
+import {DEFAULT_SVG, HEADER_HEIGHT, SHOW_TYPE, SHOW_SETTINGS, SIDEBAR_WIDTH} from "~/constants";
 import {allSet, MapObject} from "~/entities";
 import { addObjectToLayer, createObject } from "~/utils";
 
@@ -90,6 +90,11 @@ const addToCanvas = (e: DragEvent, type: string) => {
           </Button>
         </div>
       </div>
+    </div>
+    <div class="SideBar-Footer">
+      <Button type="primary" @click="overlayName.value=SHOW_SETTINGS">
+        Настройки
+      </Button>
     </div>
   </div>
 </template>

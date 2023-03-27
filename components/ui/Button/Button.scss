@@ -6,6 +6,10 @@
   border: 1px solid var(--borderColor);
   cursor: pointer;
 
+  &:hover {
+    opacity: 0.9;
+  }
+
   &_size {
     &_sm {
       padding: calc(var(--defaultPadding) / 6);
