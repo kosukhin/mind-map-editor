@@ -27,10 +27,16 @@ export interface MapType {
 
 export type MapStructureTypes = Dictionary<MapType>;
 
+export interface MapSettings {
+  colored: boolean,
+  title: string,
+}
+
 export interface MapStructure {
   document: string,
   url: string,
   parent: string,
+  settings: MapSettings,
   types: MapStructureTypes,
   objects: Dictionary<MapObject>
 }

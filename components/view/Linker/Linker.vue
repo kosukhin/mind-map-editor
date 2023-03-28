@@ -35,6 +35,7 @@ const startRelation = () => {
     if (!stopNextObjectWatcher) return;
     stopNextObjectWatcher();
     title.value = 'Выберите цель';
+    type.value = 'success';
     const fromObjectId = currentObjectId.map(objId => objId) as string;
 
     const stopSecond = watch(currentObjectId, () => {

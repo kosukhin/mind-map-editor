@@ -29,6 +29,11 @@ export async function getMap(mapName: string): Promise<MapStructure> {
 
   result.document = response.data.document;
 
+  result.settings = Object.assign({
+    colored: false,
+    title: 'Карта X',
+  }, result.settings ?? {});
+
   for (const typeId of Object.keys(result.types)) {
     result.types[typeId] = {
       ...result.types[typeId],

@@ -1,4 +1,9 @@
 .Settings {
+  &-ButtonGroup {
+    display: flex;
+    gap: 8px;
+  }
+
   &-Button {
     max-width: 200px;
   }

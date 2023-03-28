@@ -21,17 +21,15 @@ export const useCurrentMap = createSharedComposable(() => {
 
   watch(map, () => {
     map.map(vMap => {
-      try {
-        saveMap(vMap, mapName);
-      } catch (e) {
-        map.error = String(e);
-      }
-      message.value = MAP_UPDATED;
-    })
-
-    if (map.error) {
-      message.value = map.error;
-    }
+      saveMap(vMap, mapName)
+        .then(() => {
+          message.value = MAP_UPDATED;
+        })
+        .catch((e) => {
+          map.error = String(e);
+          message.value = map.error;
+        })
+    });
   }, {
     deep: true
   })

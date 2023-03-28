@@ -13,7 +13,6 @@ const {close} = useOverlay();
 const {map} = useCurrentMap();
 const { currentTypeId, currentType } = useMapTypes();
 const svg = ref('');
-const size = ref([0, 0]);
 const form = ref<any>({});
 const {stringify} = JSON;
 const isDirty = computed(() =>

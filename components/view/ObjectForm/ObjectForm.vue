@@ -12,9 +12,10 @@ import {allSet, MapObject} from "~/entities";
 import { removeObjectOnLayer, updateObjectOnLayer } from "~/utils";
 import Textarea from "~/components/ui/Textarea/Textarea.vue";
 import Checkbox from "~/components/ui/Checkbox/Checkbox.vue";
-import {ref} from "@vue/reactivity";
+import {computed, ref} from "@vue/reactivity";
 import Input from "~/components/ui/Input/Input.vue";
 import { useFormDirtyCheck } from "~/composables/useFormDirtyCheck";
+import cloneDeep from 'lodash/cloneDeep';
 
 const {layer, layerObjects} = useLayer();
 const {map} = useCurrentMap();
@@ -22,14 +23,15 @@ const {close} = useOverlay();
 const {currentObject} = useMapObjects();
 const {settings} = useSettings();
 const form = ref({});
-const isDirty = ref(false);
+const {stringify} = JSON;
+const isDirty = computed(() =>
+  stringify(form.value) !== stringify(currentObject.map(vObj => vObj))
+)
 useFormDirtyCheck(isDirty, SHOW_OBJECT);
 
 watch(currentObject, () => {
   currentObject.map(vObj => {
-    form.value = {
-      ...vObj
-    }
+    form.value = cloneDeep(vObj);
   })
 }, {
   flush: 'post',
