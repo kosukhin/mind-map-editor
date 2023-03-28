@@ -2,6 +2,7 @@ import {MapObject, MapStructure} from "~/entities/Map";
 import { Canvg } from "canvg";
 import Konva from "konva";
 import {MapArrow} from "~/entities";
+import {useCurrentMapColors} from "~/composables/useCurrentMapColors";
 
 const { Layer, Image, Text, Arrow } = Konva;
 
@@ -10,6 +11,8 @@ export async function addObjectToLayer(
   object: MapObject,
   map: MapStructure,
 ) {
+  // TODO ужасный костыль, нужно переосмыслить
+  const {colorsHash} = useCurrentMapColors();
   const {types} = map;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
@@ -40,7 +43,7 @@ export async function addObjectToLayer(
     fontFamily: 'Monospace',
     textDecoration: object.linked ? 'underline' : '',
     fontStyle: object.description ? 'bold' : '',
-    fill: 'black',
+    fill: colorsHash.value[object.lastClick] ?? 'black',
     objectId: object.id
   });
   layer.add(text);
