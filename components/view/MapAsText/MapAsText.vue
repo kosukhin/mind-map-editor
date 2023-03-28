@@ -6,6 +6,7 @@ const {map} = useCurrentMap();
 
 <template>
   <article class="MapAsText" v-if="!map.isNothing">
+    <h2 class="MapAsText-MainTitle">Вся карта текстом</h2>
     <div
       class="MapAsText-Item"
       :key="object.id"

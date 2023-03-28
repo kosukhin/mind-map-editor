@@ -44,6 +44,7 @@ const save = () => {
 
 <template>
   <div class="TypeForm" v-if="!currentType.isNothing">
+    <h2 class="TypeForm-Title">Тип карты</h2>
     <Input class="TypeForm-Row" v-model="form.name" />
     <SvgEditor class="TypeForm-Row" v-model="form" />
     <div class="TypeForm-Controls">

@@ -4,6 +4,15 @@
     gap: 8px;
   }
 
+  &-Title {
+    margin-bottom: var(--defaultPadding);
+  }
+
+  &-Content {
+    gap: 8px;
+    margin-bottom: var(--defaultPadding);
+  }
+
   &-Button {
     max-width: 200px;
   }

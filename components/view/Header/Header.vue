@@ -2,7 +2,7 @@
 import Breadcrumbs from '@/components/view/Breadcrumbs/Breadcrumbs';
 import Button from '@/components/ui/Button/Button';
 import { useOverlay } from "~/composables";
-import { SHOW_TEXT } from "~/constants";
+import { SHOW_TEXT, SHOW_SEARCH } from "~/constants";
 import { watch } from "@vue/runtime-core";
 
 const {overlayName, tryToClose, close} = useOverlay();
@@ -14,24 +14,14 @@ watch(tryToClose, () => {
     }
   })
 })
-
-const showText = () => {
-  overlayName.value = SHOW_TEXT;
-}
-
-const removeMap = () => {
-  if (confirm('Уверены что хотите удалить карту?')) {
-
-  }
-}
 </script>
 
 <template>
   <div class="Header">
     <Breadcrumbs class="Header-Breadcrumbs" />
     <div class="Header-Actions">
-      <Button @click="showText" type="primary" size="sm">Текстом</Button>
-      <Button @click="removeMap" size="sm">Поиск</Button>
+      <Button @click="overlayName.value=SHOW_TEXT" type="primary" size="sm">Текстом</Button>
+      <Button @click="overlayName.value=SHOW_SEARCH" size="sm">Поиск</Button>
     </div>
   </div>
 </template>

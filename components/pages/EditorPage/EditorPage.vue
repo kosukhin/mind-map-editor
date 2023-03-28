@@ -8,9 +8,10 @@ import TypeForm from "~/components/view/TypeForm/TypeForm.vue";
 import ObjectForm from "~/components/view/ObjectForm/ObjectForm.vue";
 import Drawer from "~/components/ui/Drawer/Drawer.vue";
 import Modal from "~/components/ui/Modal/Modal.vue";
-import {SHOW_TYPE, SHOW_TEXT, SHOW_SETTINGS, SHOW_OBJECT} from "~/constants";
+import {SHOW_TYPE, SHOW_TEXT, SHOW_SETTINGS, SHOW_OBJECT, SHOW_SEARCH} from "~/constants";
 import MapAsText from "~/components/view/MapAsText/MapAsText.vue";
 import Settings from "~/components/view/Settings/Settings.vue";
+import Search from "~/components/view/Search/Search.vue";
 </script>
 
 <template>
@@ -29,6 +30,9 @@ import Settings from "~/components/view/Settings/Settings.vue";
   </Modal>
   <Modal :name="SHOW_SETTINGS">
     <Settings />
+  </Modal>
+  <Modal :name="SHOW_SEARCH">
+    <Search />
   </Modal>
   <Drawer :name="SHOW_OBJECT">
     <ObjectForm/>

@@ -2,11 +2,12 @@
 import {useOverlayAutoClose} from "~/composables/useOverlayAutoclose";
 import {SHOW_SETTINGS} from "~/constants";
 import Button from "~/components/ui/Button/Button.vue";
-import {useCurrentMap} from "~/composables";
+import {useCurrentMap, useOverlay} from "~/composables";
 import {removeMap} from "~/requests";
 
 useOverlayAutoClose(SHOW_SETTINGS);
 const {map, mapName} = useCurrentMap();
+const {close} = useOverlay();
 
 const onRemove = async () => {
   if (confirm('Это действие безвозвратно удалит карту, продолжить?')) {
@@ -18,9 +19,15 @@ const onRemove = async () => {
 
 <template>
   <div class="Settings">
-    <h2>Настройки карты</h2>
+    <h2 class="Settings-Title">Настройки карты</h2>
+    <div class="Settings-Content">
+      <div class="Settings-Row">
+        row
+      </div>
+    </div>
     <div class="Settings-ButtonGroup">
       <Button class="Settings-Button" type="success">Сохранить</Button>
+      <Button class="Settings-Button" @click="close">Отменить</Button>
       <Button class="Settings-Button" type="danger" @click="onRemove">Удалить карту</Button>
     </div>
   </div>
