@@ -46,11 +46,8 @@ const onSave = () => {
 
 <template>
   <div class="Settings">
-    <h2 class="Settings-Title">Настройки карты</h2>
+    <h2 class="Settings-Title">Настройки карты, {{ version }}</h2>
     <div class="Settings-Content">
-      <div class="Settings-Row">
-        Версия приложения, v{{ version }}
-      </div>
       <div class="Settings-Row">
         <Checkbox v-model="form.colored" label="Использовать раскраску лейблов" />
       </div>

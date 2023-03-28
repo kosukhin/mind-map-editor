@@ -9,3 +9,4 @@ dist
 .DS_Store
 .idea
 maps/*.json
+search-index/*.json
