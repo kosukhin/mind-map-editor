@@ -1,6 +1,8 @@
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import path from "path";
 
+const packageJson = require('./package.json');
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
@@ -8,6 +10,11 @@ export default defineNuxtConfig({
     '@/assets/styles/variables.scss',
     '@/assets/styles/reset.scss',
   ],
+  runtimeConfig: {
+    public: {
+      version: packageJson.version,
+    }
+  },
   vite: {
     plugins: [
       viteStaticCopy({

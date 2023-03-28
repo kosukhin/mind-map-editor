@@ -5,12 +5,14 @@
   }
 
   &-Title {
-    margin-bottom: var(--defaultPadding);
+    margin-bottom: 32px;
   }
 
   &-Content {
-    gap: 8px;
-    margin-bottom: var(--defaultPadding);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
   }
 
   &-Button {

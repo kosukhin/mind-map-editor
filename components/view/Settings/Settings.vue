@@ -1,19 +1,46 @@
 <script lang="ts" setup>
-import {useOverlayAutoClose} from "~/composables/useOverlayAutoclose";
 import {SHOW_SETTINGS} from "~/constants";
 import Button from "~/components/ui/Button/Button.vue";
 import {useCurrentMap, useOverlay} from "~/composables";
 import {removeMap} from "~/requests";
+import {useRuntimeConfig} from "#app/nuxt";
+import Checkbox from "~/components/ui/Checkbox/Checkbox.vue";
+import Input from "~/components/ui/Input/Input.vue";
+import {computed, ref} from "@vue/reactivity";
+import {watch} from "@vue/runtime-core";
+import {MapSettings} from "~/entities";
+import {useFormDirtyCheck} from "~/composables/useFormDirtyCheck";
 
-useOverlayAutoClose(SHOW_SETTINGS);
-const {map, mapName} = useCurrentMap();
+const {map, mapName, firstMapLoad} = useCurrentMap();
 const {close} = useOverlay();
+const {version} = useRuntimeConfig();
+const form = ref({});
+const {stringify} = JSON;
+const isDirty = computed(() =>
+  stringify(form.value) !== stringify(map.map(vMap => vMap.settings))
+);
+useFormDirtyCheck(isDirty, SHOW_SETTINGS);
+
+watch(firstMapLoad, () => {
+  map.map(vMap => {
+    form.value = {...vMap.settings}
+  })
+}, {
+  immediate: true,
+})
 
 const onRemove = async () => {
   if (confirm('Это действие безвозвратно удалит карту, продолжить?')) {
     await removeMap(mapName);
     location.reload();
   }
+}
+
+const onSave = () => {
+  close();
+  map.map(vMap => {
+    vMap.settings = {...form.value} as MapSettings;
+  })
 }
 </script>
 
@@ -22,11 +49,20 @@ const onRemove = async () => {
     <h2 class="Settings-Title">Настройки карты</h2>
     <div class="Settings-Content">
       <div class="Settings-Row">
-        row
+        Версия приложения, v{{ version }}
+      </div>
+      <div class="Settings-Row">
+        <Checkbox v-model="form.colored" label="Использовать раскраску лейблов" />
+      </div>
+      <div class="Settings-Row">
+        <label>
+          <b>Название карты</b>
+          <Input v-model="form.title" />
+        </label>
       </div>
     </div>
     <div class="Settings-ButtonGroup">
-      <Button class="Settings-Button" type="success">Сохранить</Button>
+      <Button class="Settings-Button" type="success" @click="onSave">Сохранить</Button>
       <Button class="Settings-Button" @click="close">Отменить</Button>
       <Button class="Settings-Button" type="danger" @click="onRemove">Удалить карту</Button>
     </div>
