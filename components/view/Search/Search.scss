@@ -2,4 +2,18 @@
   &-Title {
     margin-bottom: var(--defaultPadding);
   }
+
+  &-Input {
+    margin-bottom: 16px;
+  }
+
+  &-Items {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &-ItemName {
+    cursor: pointer;
+  }
 }
