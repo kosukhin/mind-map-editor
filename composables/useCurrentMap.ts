@@ -21,7 +21,7 @@ export const useCurrentMap = createSharedComposable(() => {
 
   watch(map, () => {
     map.map(vMap => {
-      saveMap(vMap, mapName)
+      saveMap({...vMap, url: location.pathname}, mapName)
         .then(() => {
           message.value = MAP_UPDATED;
         })

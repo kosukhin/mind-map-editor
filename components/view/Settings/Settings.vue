@@ -32,7 +32,7 @@ watch(firstMapLoad, () => {
 const onRemove = async () => {
   if (confirm('Это действие безвозвратно удалит карту, продолжить?')) {
     await removeMap(mapName);
-    location.reload();
+    location.href = '/';
   }
 }
 

@@ -1,1 +1,28 @@
-.MainPage {}
+.MainPage {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  box-sizing: border-box;
+  padding: var(--defaultPadding);
+  max-width: 900px;
+  background: var(--defaultBG);
+  min-height: calc(100vh - 52px);
+  border-radius: var(--defaultRadius);
+
+  &-Row {
+    margin-bottom: 16px;
+  }
+
+  &-SubTitle,
+  &-Title {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  &-Files {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--defaultPadding);
+  }
+}
