@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {SHOW_SETTINGS} from "~/constants";
+import {SHOW_SETTINGS, SHOW_JSON} from "~/constants";
 import Button from "~/components/ui/Button/Button.vue";
 import {useCurrentMap, useOverlay} from "~/composables";
 import {removeMap} from "~/requests";
@@ -12,7 +12,7 @@ import {MapSettings} from "~/entities";
 import {useFormDirtyCheck} from "~/composables/useFormDirtyCheck";
 
 const {map, mapName, firstMapLoad} = useCurrentMap();
-const {close} = useOverlay();
+const {close, overlayName} = useOverlay();
 const {version} = useRuntimeConfig();
 const form = ref({});
 const {stringify} = JSON;
@@ -48,6 +48,9 @@ const onSave = () => {
   <div class="Settings">
     <h2 class="Settings-Title">Настройки карты, {{ version }}</h2>
     <div class="Settings-Content">
+      <div class="Settings-Row">
+        <Button @click="overlayName.value=SHOW_JSON" class="Settings-Button" type="primary">JSON экспорт\импорт</Button>
+      </div>
       <div class="Settings-Row">
         <Checkbox v-model="form.colored" label="Использовать раскраску лейблов" />
       </div>

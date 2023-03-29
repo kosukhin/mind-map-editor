@@ -1,0 +1,18 @@
+.JsonForm {
+  &-Title {
+    margin-bottom: 16px;
+  }
+
+  &-Text {
+    margin-bottom: 16px;
+  }
+
+  &-Buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  &-Button {
+    max-width: 200px;
+  }
+}

@@ -1,0 +1,47 @@
+<script lang="ts" setup>
+import {useCurrentMap, useOverlay} from "~/composables";
+import Textarea from "~/components/ui/Textarea/Textarea.vue";
+import {computed, ref} from "@vue/reactivity";
+import {nextTick, watch} from "@vue/runtime-core";
+import Button from "~/components/ui/Button/Button.vue";
+import {useFormDirtyCheck} from "~/composables/useFormDirtyCheck";
+import {SHOW_JSON} from "~/constants";
+
+const {map} = useCurrentMap();
+const {close} = useOverlay();
+const form = ref('');
+const {stringify} = JSON;
+const isDirty = computed(() =>
+  form.value !== stringify(map.map(vObj => vObj))
+)
+useFormDirtyCheck(isDirty, SHOW_JSON);
+
+watch(map, () => {
+  map.map(vMap => {
+    form.value = JSON.stringify(vMap)
+  })
+}, {
+  immediate: true
+});
+
+const onSave = async () => {
+  map.value = JSON.parse(form.value);
+  await nextTick();
+  location.reload();
+}
+</script>
+
+<template>
+  <div class="JsonForm">
+    <h2 class="JsonForm-Title">Экспорт\Импорт</h2>
+    <Textarea class="JsonForm-Text" v-model="form" />
+    <div class="JsonForm-Buttons">
+      <Button class="JsonForm-Button" @click="onSave" type="success">Сохранить</Button>
+      <Button class="JsonForm-Button" @click="close">Отмена</Button>
+    </div>
+  </div>
+</template>
+
+<style scoped lang="scss">
+@import "JsonForm";
+</style>
