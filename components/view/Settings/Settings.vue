@@ -3,7 +3,6 @@ import {SHOW_SETTINGS, SHOW_JSON, SHOW_PARENT_TYPES} from "~/constants";
 import Button from "~/components/ui/Button/Button.vue";
 import {useCurrentMap, useOverlay} from "~/composables";
 import {removeMap} from "~/requests";
-import {useRuntimeConfig} from "#app/nuxt";
 import Checkbox from "~/components/ui/Checkbox/Checkbox.vue";
 import Input from "~/components/ui/Input/Input.vue";
 import {computed, ref} from "@vue/reactivity";
@@ -11,9 +10,8 @@ import {watch} from "@vue/runtime-core";
 import {MapSettings} from "~/entities";
 import {useFormDirtyCheck} from "~/composables/useFormDirtyCheck";
 
-const {map, mapName, firstMapLoad} = useCurrentMap();
+const {map, mapName, firstMapLoad, parentTypes} = useCurrentMap();
 const {close, overlayName} = useOverlay();
-const {version} = useRuntimeConfig();
 const form = ref({});
 const {stringify} = JSON;
 const isDirty = computed(() =>
@@ -50,7 +48,12 @@ const onSave = () => {
       <div class="Settings-Row">
         <div class="Settings-ButtonGroup">
           <Button @click="overlayName.value=SHOW_JSON" class="Settings-Button" type="primary">JSON экспорт\импорт</Button>
-          <Button @click="overlayName.value=SHOW_PARENT_TYPES" type="primary" class="Settings-Button">Родительские типы</Button>
+          <Button
+            v-if="parentTypes.length"
+            @click="overlayName.value=SHOW_PARENT_TYPES"
+            type="primary"
+            class="Settings-Button"
+          >Родительские типы</Button>
         </div>
       </div>
       <div class="Settings-Row">

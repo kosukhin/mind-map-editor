@@ -65,12 +65,7 @@ const {version} = useRuntimeConfig();
     </template>
     <Search/>
   </Modal>
-  <Modal :name="SHOW_JSON">
-    <template #header>
-      <h2>Экспорт\Импорт</h2>
-    </template>
-    <JsonForm/>
-  </Modal>
+  <JsonForm/>
   <Drawer :name="SHOW_OBJECT">
     <ObjectForm/>
   </Drawer>

@@ -6,6 +6,7 @@ import {nextTick, watch} from "@vue/runtime-core";
 import Button from "~/components/ui/Button/Button.vue";
 import {useFormDirtyCheck} from "~/composables/useFormDirtyCheck";
 import {SHOW_JSON} from "~/constants";
+import Modal from "~/components/ui/Modal/Modal.vue";
 
 const {map} = useCurrentMap();
 const {close} = useOverlay();
@@ -32,13 +33,20 @@ const onSave = async () => {
 </script>
 
 <template>
-  <div class="JsonForm">
-    <Textarea class="JsonForm-Text" v-model="form" />
-    <div class="JsonForm-Buttons">
-      <Button class="JsonForm-Button" @click="onSave" type="success">Сохранить</Button>
-      <Button class="JsonForm-Button" @click="close">Отмена</Button>
+  <Modal :name="SHOW_JSON">
+    <template #header>
+      <h2>Экспорт\Импорт</h2>
+    </template>
+    <div class="JsonForm">
+      <Textarea class="JsonForm-Text" v-model="form" />
     </div>
-  </div>
+    <template #footer>
+      <div class="JsonForm-Buttons">
+        <Button class="JsonForm-Button" @click="onSave" type="success">Сохранить</Button>
+        <Button class="JsonForm-Button" @click="close">Отмена</Button>
+      </div>
+    </template>
+  </Modal>
 </template>
 
 <style scoped lang="scss">
