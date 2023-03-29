@@ -1,0 +1,33 @@
+.ParentTypes {
+  &-Title {
+    margin-bottom: 32px;
+  }
+
+  &-Items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+
+  &-Item {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: var(--defaultPadding);
+  }
+
+  &-ItemImage,
+  &-ItemTitle {
+    text-align: center;
+  }
+
+  &-ItemTitle {
+    margin-bottom: 8px;
+  }
+
+  &-ItemButton {
+    margin: auto auto 0;
+    max-width: 130px;
+    font-size: 12px;
+  }
+}

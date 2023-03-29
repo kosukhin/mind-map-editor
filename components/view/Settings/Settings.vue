@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {SHOW_SETTINGS, SHOW_JSON} from "~/constants";
+import {SHOW_SETTINGS, SHOW_JSON, SHOW_PARENT_TYPES} from "~/constants";
 import Button from "~/components/ui/Button/Button.vue";
 import {useCurrentMap, useOverlay} from "~/composables";
 import {removeMap} from "~/requests";
@@ -49,7 +49,10 @@ const onSave = () => {
     <h2 class="Settings-Title">Настройки карты, {{ version }}</h2>
     <div class="Settings-Content">
       <div class="Settings-Row">
-        <Button @click="overlayName.value=SHOW_JSON" class="Settings-Button" type="primary">JSON экспорт\импорт</Button>
+        <div class="Settings-ButtonGroup">
+          <Button @click="overlayName.value=SHOW_JSON" class="Settings-Button" type="primary">JSON экспорт\импорт</Button>
+          <Button @click="overlayName.value=SHOW_PARENT_TYPES" type="primary" class="Settings-Button">Родительские типы</Button>
+        </div>
       </div>
       <div class="Settings-Row">
         <Checkbox v-model="form.colored" label="Использовать раскраску лейблов" />

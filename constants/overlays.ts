@@ -4,4 +4,5 @@ export const SHOW_TEXT = 'showText';
 export const SHOW_SETTINGS = 'showSettings';
 export const SHOW_SEARCH = 'showSearch';
 export const SHOW_JSON = 'showJson';
+export const SHOW_PARENT_TYPES = 'showParentTypes';
 export const OVERLAY_CLOSE = 'closeOverlay';

@@ -1,4 +1,4 @@
-import { MapStructure } from "~/entities/Map";
+import {MapStructure, MapType} from "~/entities/Map";
 import { http } from "~/utils/http";
 import { createMap } from "~/utils";
 
@@ -8,10 +8,10 @@ interface MapResponse {
     document: string,
     structure: MapStructure,
   },
-  parentTypes: [],
+  parentTypes: MapType[],
 }
 
-export async function getMap(mapName: string): Promise<MapStructure> {
+export async function getMap(mapName: string): Promise<[MapStructure, MapType[]]> {
   const response = await http({
     method: 'get',
     url: '/api/get-map',
@@ -48,5 +48,5 @@ export async function getMap(mapName: string): Promise<MapStructure> {
     }
   }
 
-  return result;
+  return [result, response.parentTypes];
 }

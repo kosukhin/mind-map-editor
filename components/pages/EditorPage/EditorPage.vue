@@ -14,12 +14,14 @@ import {
   SHOW_TEXT,
   SHOW_SETTINGS,
   SHOW_OBJECT,
-  SHOW_SEARCH
+  SHOW_SEARCH,
+  SHOW_PARENT_TYPES
 } from "~/constants";
 import MapAsText from "~/components/view/MapAsText/MapAsText.vue";
 import Settings from "~/components/view/Settings/Settings.vue";
 import Search from "~/components/view/Search/Search.vue";
 import JsonForm from '~/components/view/JsonForm/JsonForm.vue';
+import ParentTypes from "~/components/view/ParentTypes/ParentTypes.vue";
 </script>
 
 <template>
@@ -32,6 +34,9 @@ import JsonForm from '~/components/view/JsonForm/JsonForm.vue';
   <Notify/>
   <Modal :name="SHOW_TYPE">
     <TypeForm/>
+  </Modal>
+  <Modal :name="SHOW_PARENT_TYPES">
+    <ParentTypes/>
   </Modal>
   <Modal :name="SHOW_TEXT">
     <MapAsText/>
