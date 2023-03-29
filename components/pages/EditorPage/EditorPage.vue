@@ -9,7 +9,6 @@ import ObjectForm from "~/components/view/ObjectForm/ObjectForm.vue";
 import Drawer from "~/components/ui/Drawer/Drawer.vue";
 import Modal from "~/components/ui/Modal/Modal.vue";
 import {
-  SHOW_JSON,
   SHOW_TYPE,
   SHOW_TEXT,
   SHOW_SETTINGS,
@@ -23,14 +22,19 @@ import Search from "~/components/view/Search/Search.vue";
 import JsonForm from '~/components/view/JsonForm/JsonForm.vue';
 import ParentTypes from "~/components/view/ParentTypes/ParentTypes.vue";
 import {useRuntimeConfig} from "#app/nuxt";
+import {ref} from "@vue/reactivity";
 
 const {version} = useRuntimeConfig();
+const isSidebarOpen = ref(false);
 </script>
 
 <template>
+  <div class="EditorPage-SideBarOpener" @click="isSidebarOpen = !isSidebarOpen">
+    <hr><hr><hr>
+  </div>
   <div class="EditorPage">
     <Header class="EditorPage-Header"/>
-    <SideBar class="EditorPage-SideBar"/>
+    <SideBar :class="['EditorPage-SideBar', {opened: isSidebarOpen}]"/>
     <Editor class="EditorPage-Editor"/>
     <MiniMap class="EditorPage-MiniMap"/>
   </div>
