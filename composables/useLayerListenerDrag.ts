@@ -3,7 +3,6 @@ import {watch} from "@vue/runtime-core";
 import {useCurrentMap} from "~/composables/useCurrentMap";
 import {allSet, MapArrow} from "~/entities";
 import {useLayer} from "~/composables/useLayer";
-import {CANVAS_HEIGHT, CANVAS_WIDTH} from "~/constants";
 import {useCanvas} from "~/composables/useCanvas";
 import {useCanvasBoundings} from "~/composables/useCanvasBoundings";
 

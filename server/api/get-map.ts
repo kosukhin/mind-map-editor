@@ -12,11 +12,13 @@ export default defineEventHandler((event) => {
   const filePath = `./maps/${document}.json`;
   const fileExists = existsSync(filePath);
   let data = {};
-  let parentTypes: any[] = [];
+  let parentTypes: any = {};
 
   if (fileExists) {
     data = JSON.parse(readFileSync(filePath).toString());
   }
+
+  const dataStructure = (data as any).structure;
 
   if (document) {
     const documentParts = document.split('_');
@@ -36,15 +38,15 @@ export default defineEventHandler((event) => {
         const parentData = readFileSync(`./maps/${parentName}.json`);
         const parentMap = JSON.parse(parentData.toString());
 
-        if (parentMap.structure.settings.title) {
-          if (!(data as any).structure.parentNames) {
-            (data as any).structure.parentNames = {};
+        if (parentMap.structure.settings.title && dataStructure) {
+          if (!dataStructure.parentNames) {
+            dataStructure.parentNames = {};
           }
-          (data as any).structure.parentNames[documentParts[i]] = parentMap.structure.settings.title;
+          dataStructure.parentNames[documentParts[i]] = parentMap.structure.settings.title;
         }
 
         if (parentMap.structure.types) {
-          parentTypes = parentTypes.concat(Object.values(parentMap.structure.types));
+          Object.assign(parentTypes, parentMap.structure.types);
         }
       }
     }
@@ -53,6 +55,6 @@ export default defineEventHandler((event) => {
   return {
     ok: fileExists,
     data,
-    parentTypes,
+    parentTypes: Object.values(parentTypes),
   }
 });

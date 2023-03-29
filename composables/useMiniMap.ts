@@ -61,16 +61,24 @@ export const useMiniMap = (
 
       setTimeout(redrawPreviewLayer);
 
-      vStage.on('dragmove', (e) => {
-        redrawPreviewLayer();
-
+      const calculateMiniScreen = () => {
         if(miniMapScreen.value) {
           const miniScreenX = vStage.x()*scale*-1;
           const miniScreenY = vStage.y()*scale*-1;
           miniMapScreen.value.style.top = miniScreenY + 'px';
           miniMapScreen.value.style.left = miniScreenX + 'px';
         }
-      })
+      }
+
+      vStage.on('dragmove', (e) => {
+        redrawPreviewLayer();
+        calculateMiniScreen();
+      });
+
+      vStage.on('wheel', (e) => {
+        redrawPreviewLayer();
+        calculateMiniScreen();
+      });
     })
   })
 }
