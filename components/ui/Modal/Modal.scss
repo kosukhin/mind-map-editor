@@ -11,8 +11,10 @@
   align-items: center;
   box-sizing: border-box;
   padding: var(--defaultPadding);
+  overflow: hidden;
 
   &-Inner {
+    position: relative;
     width: 100%;
     max-width: 900px;
     max-height: 90%;
@@ -23,6 +25,23 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
+
+  &-Back,
+  &-Close {
+    position: absolute;
+    top: 0;
+    right: -30px;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 100%;
+    cursor: pointer;
+    color: var(--mainFG);
+  }
+
+  &-Back {
+    left: -30px;
+    right: auto;
   }
 
   &-Content {
