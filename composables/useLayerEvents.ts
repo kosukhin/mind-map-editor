@@ -8,14 +8,14 @@ import {createSharedComposable} from "@vueuse/core";
 type KonvaEvent = Nullable<KonvaEventObject<any>>;
 
 export const useLayerEvents = createSharedComposable(() => {
-  const {layer} = useLayer();
+  const {layer, stage} = useLayer();
   const dragend = shallowReactive(Maybe<KonvaEvent>());
   const dragstart = shallowReactive(Maybe<KonvaEvent>());
   const click = shallowReactive(Maybe<KonvaEvent>());
   const tap = shallowReactive(Maybe<KonvaEvent>());
   const mouseenter = shallowReactive(Maybe<KonvaEvent>());
   const mouseleave = shallowReactive(Maybe<KonvaEvent>());
-  const wheel = shallowReactive(Maybe<KonvaEvent>());
+  const wheel = shallowReactive(Maybe<KonvaEventObject<WheelEvent>>());
   const transformend = shallowReactive(Maybe<KonvaEvent>());
 
   watch(layer, () => {
@@ -44,14 +44,16 @@ export const useLayerEvents = createSharedComposable(() => {
         mouseleave.value = e;
       });
 
-      vLayer.on("wheel", e => {
-        wheel.value = e;
-      });
-
       vLayer.on("transformend", e => {
         transformend.value = e;
       });
     });
+
+    stage.map(vStage => {
+      vStage.on("wheel", e => {
+        wheel.value = e;
+      });
+    })
   });
 
   return {

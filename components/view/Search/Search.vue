@@ -45,7 +45,7 @@ const moveToObject = (object: MapObject) => {
         <b class="Search-ItemName">{{ result.name }}</b>
       </div>
     </div>
-    <div v-else>
+    <div v-else-if="query">
       Нет результатов
     </div>
   </div>

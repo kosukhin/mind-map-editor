@@ -1,11 +1,12 @@
 import {
   useLayerListenerClick,
   useLayerListenerDrag,
-  useLayerListenerMouse
+  useLayerListenerMouse, useLayerListenerWheel
 } from "~/composables";
 
 export const useLayerListeners = () => {
   useLayerListenerClick();
   useLayerListenerDrag();
   useLayerListenerMouse();
+  useLayerListenerWheel();
 }
