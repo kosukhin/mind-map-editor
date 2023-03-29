@@ -2,19 +2,20 @@ import {useCurrentMap, useLayerEvents, useMapObjects} from "~/composables";
 import {watch} from "@vue/runtime-core";
 import {useOverlay} from "~/composables/useOverlay";
 import {SHOW_OBJECT} from "~/constants";
-import {allSet} from "~/entities";
+import {allSet, anySet} from "~/entities";
 import {openUrlByObject} from "~/utils";
 import {createSharedComposable} from "@vueuse/core";
+import {ref} from "@vue/reactivity";
 
 export const useLayerListenerClick = createSharedComposable(() => {
-  const {click} = useLayerEvents();
+  const {click, tap} = useLayerEvents();
   const {map} = useCurrentMap();
   const {currentObjectId} = useMapObjects();
   const {overlayName} = useOverlay();
   const isLocked = ref(false);
 
-  watch(click, () => {
-    allSet([click, map] as const).map(([e, vMap]) => {
+  watch([tap, click], () => {
+    allSet([anySet([click, tap]), map] as const).map(([e, vMap]) => {
       const objectId = e?.target.attrs.objectId;
 
       if (e?.target.attrs.text && objectId) {

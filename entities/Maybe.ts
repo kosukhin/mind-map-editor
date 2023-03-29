@@ -55,3 +55,11 @@ export function allSet<C extends readonly MaybeInst<unknown>[]>(containers: C) {
 
   return result;
 }
+
+export function anySet<C extends readonly MaybeInst<unknown>[]>(containers: C) {
+  const firstMaybe = (containers.find(container => !container.isNothing) ?? null) as Nullable<MaybeInst<ExtractGenerics<C>>>;
+  const result = Maybe<ExtractGenerics<C>>();
+  result.value = firstMaybe ? firstMaybe.value : null;
+
+  return result as typeof containers[number];
+}
