@@ -12,14 +12,47 @@ export default defineEventHandler((event) => {
   const filePath = `./maps/${document}.json`;
   const fileExists = existsSync(filePath);
   let data = {};
+  let parentTypes: any[] = [];
 
   if (fileExists) {
     data = JSON.parse(readFileSync(filePath).toString());
   }
 
+  if (document) {
+    const documentParts = document.split('_');
+    let parentName = '';
+
+    for (let i = 1; i < documentParts.length - 1; i++) {
+      if (i !== 1 && parentName[0] && parentName[0] !== '_') {
+        parentName = '_' + parentName;
+      }
+      if (i !== 1) {
+        parentName += '_' + documentParts[i];
+      } else {
+        parentName += documentParts[i];
+      }
+
+      if (parentName && existsSync(`./maps/${parentName}.json`)) {
+        const parentData = readFileSync(`./maps/${parentName}.json`);
+        const parentMap = JSON.parse(parentData.toString());
+
+        if (parentMap.structure.settings.title) {
+          if (!(data as any).structure.parentNames) {
+            (data as any).structure.parentNames = {};
+          }
+          (data as any).structure.parentNames[documentParts[i]] = parentMap.structure.settings.title;
+        }
+
+        if (parentMap.structure.types) {
+          parentTypes = parentTypes.concat(Object.values(parentMap.structure.types));
+        }
+      }
+    }
+  }
+
   return {
     ok: fileExists,
     data,
-    parentTypes: [],
+    parentTypes,
   }
 });

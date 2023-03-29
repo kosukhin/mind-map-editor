@@ -36,6 +36,7 @@ export interface MapStructure {
   document: string,
   url: string,
   parent: string,
+  parentNames?: Dictionary<string>,
   settings: MapSettings,
   types: MapStructureTypes,
   objects: Dictionary<MapObject>

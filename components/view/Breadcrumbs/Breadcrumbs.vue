@@ -1,16 +1,25 @@
 <script lang="ts" setup>
 import {useCurrentMap} from "~/composables";
+import {computed} from "@vue/reactivity";
 
-const {mapName} = useCurrentMap()
+const {mapName, map} = useCurrentMap()
 let link = '';
 const mapHistory = computed(() => {
-  return mapName.split('/').map(history => {
-    link += '/' + history;
-    return {
-      link,
-      name: history,
-    };
+  const result: any = map.map(vMap => {
+    return mapName.split('/').map(history => {
+      link += '/' + history;
+      return {
+        link,
+        name: vMap?.parentNames?.[history] ?? history,
+      };
+    });
   });
+
+  map.map((vMap) => {
+    result[result.length-1].name = vMap.settings.title
+  })
+
+  return result;
 })
 </script>
 
