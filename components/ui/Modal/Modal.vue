@@ -27,7 +27,15 @@ watch(overlayName, () => {
 <template>
   <div class="Modal" @click="close" v-if="isOpened">
     <div class="Modal-Inner" @click.stop>
-      <slot />
+      <div v-if="$slots.header" class="Modal-Header">
+        <slot name="header" />
+      </div>
+      <div class="Modal-Content">
+        <slot />
+      </div>
+      <div v-if="$slots.footer" class="Modal-Footer">
+        <slot name="footer" />
+      </div>
     </div>
   </div>
 </template>

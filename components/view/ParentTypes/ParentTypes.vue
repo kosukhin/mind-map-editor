@@ -16,7 +16,6 @@ const addType = (type: MapType) => {
 
 <template>
   <div class="ParentTypes">
-    <h2 class="ParentTypes-Title">Родительские типы</h2>
     <div v-if="!parentTypes.length">Нет типов</div>
     <div class="ParentTypes-Items" v-else>
       <div class="ParentTypes-Item" :key="item.name" v-for="item in parentTypes">

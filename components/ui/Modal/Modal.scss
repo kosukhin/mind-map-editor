@@ -16,10 +16,18 @@
     width: 100%;
     max-width: 900px;
     max-height: 90%;
-    overflow-y: auto;
     background: var(--overlayInnerBG);
     border-radius: var(--defaultRadius);
     box-sizing: border-box;
     padding: var(--defaultPadding);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &-Content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-bottom: 2px;
   }
 }

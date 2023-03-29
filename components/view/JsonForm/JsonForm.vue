@@ -33,7 +33,6 @@ const onSave = async () => {
 
 <template>
   <div class="JsonForm">
-    <h2 class="JsonForm-Title">Экспорт\Импорт</h2>
     <Textarea class="JsonForm-Text" v-model="form" />
     <div class="JsonForm-Buttons">
       <Button class="JsonForm-Button" @click="onSave" type="success">Сохранить</Button>

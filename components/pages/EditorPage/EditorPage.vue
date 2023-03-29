@@ -22,6 +22,9 @@ import Settings from "~/components/view/Settings/Settings.vue";
 import Search from "~/components/view/Search/Search.vue";
 import JsonForm from '~/components/view/JsonForm/JsonForm.vue';
 import ParentTypes from "~/components/view/ParentTypes/ParentTypes.vue";
+import {useRuntimeConfig} from "#app/nuxt";
+
+const {version} = useRuntimeConfig();
 </script>
 
 <template>
@@ -33,21 +36,39 @@ import ParentTypes from "~/components/view/ParentTypes/ParentTypes.vue";
   </div>
   <Notify/>
   <Modal :name="SHOW_TYPE">
+    <template #header>
+      <h2>Тип карты</h2>
+    </template>
     <TypeForm/>
   </Modal>
   <Modal :name="SHOW_PARENT_TYPES">
+    <template #header>
+      <h2>Родительские типы</h2>
+    </template>
     <ParentTypes/>
   </Modal>
   <Modal :name="SHOW_TEXT">
+    <template #header>
+      <h2>Вся карта текстом</h2>
+    </template>
     <MapAsText/>
   </Modal>
   <Modal :name="SHOW_SETTINGS">
+    <template #header>
+      <h2>Настройки карты, {{ version }}</h2>
+    </template>
     <Settings/>
   </Modal>
   <Modal :name="SHOW_SEARCH">
+    <template #header>
+      <h2>Поиск по карте</h2>
+    </template>
     <Search/>
   </Modal>
   <Modal :name="SHOW_JSON">
+    <template #header>
+      <h2>Экспорт\Импорт</h2>
+    </template>
     <JsonForm/>
   </Modal>
   <Drawer :name="SHOW_OBJECT">

@@ -38,7 +38,6 @@ const moveToObject = (object: MapObject) => {
 
 <template>
   <div class="Search">
-    <h2 class="Search-Title">Поиск по карте</h2>
     <Input class="Search-Input" v-model="query" placeholder="Введите запрос" />
     <div class="Search-Items" v-if="searchResults.length">
       <div @click="moveToObject(result)" class="Search-Item" v-for="result in searchResults">
