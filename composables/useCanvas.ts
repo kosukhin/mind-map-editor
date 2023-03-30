@@ -1,17 +1,15 @@
 import { onMounted, watch } from '@vue/runtime-core'
 import { reactive } from '@vue/reactivity'
-import { Maybe } from '~/entities'
+import { Maybe, CanvasSize } from '~/entities'
+import { canvasCreateSize } from '~/application'
 
 export const useCanvas = () => {
   const canvas = reactive(Maybe<HTMLElement>())
-  const canvasSize = reactive(Maybe<{ w: number; h: number }>())
+  const canvasSize = reactive(Maybe<CanvasSize>())
 
   watch(canvas, () => {
     canvas.map((vCanvas) => {
-      canvasSize.value = {
-        w: vCanvas.clientWidth,
-        h: vCanvas.clientHeight,
-      }
+      canvasSize.value = canvasCreateSize(vCanvas)
     })
   })
 
