@@ -41,3 +41,14 @@ export interface MapStructure {
   types: MapStructureTypes
   objects: Dictionary<MapObject>
 }
+
+export interface Map {
+  document: string
+  structure: MapStructure
+}
+
+export interface MapResponse {
+  ok: boolean
+  data: Map
+  parentTypes: MapType[]
+}

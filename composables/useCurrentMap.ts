@@ -2,9 +2,8 @@ import { useRoute } from 'vue-router'
 import { createSharedComposable } from '@vueuse/core'
 import { reactive, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
-import { getMap, saveMap } from '~/requests'
 import { MapStructure, MapType, MaybeError } from '~/entities'
-import { useNotify } from '~/composables'
+import { useNotify, useRequestGetMap, useRequestSaveMap } from '~/composables'
 import { MAP_UPDATED } from '~/constants'
 
 export const useCurrentMap = createSharedComposable(() => {
@@ -14,6 +13,8 @@ export const useCurrentMap = createSharedComposable(() => {
   const map = reactive(MaybeError<MapStructure>())
   const route = useRoute()
   const mapName = route.path.replace('/', '')
+  const { getMap } = useRequestGetMap()
+  const { saveMap } = useRequestSaveMap()
 
   getMap(mapName)
     .then(([vMap, vParentTypes]) => {

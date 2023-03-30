@@ -3,18 +3,19 @@ import { ref } from '@vue/reactivity'
 import debounce from 'lodash/debounce'
 import { watch } from '@vue/runtime-core'
 import { useSeoMeta } from '@vueuse/head'
-import { search } from '~/requests/search'
-import { getMaps } from '~/requests/getMaps'
 import Input from '~/components/ui/Input/Input'
 import { urlTrim } from '~/utils'
-
-const searchQuery = ref('')
-const maps = await getMaps()
-const searchResults = ref<{ url: string; name: string }[]>([])
+import { useRequestGetMaps, useRequestSearch } from '~/composables'
 
 useSeoMeta({
   title: 'Главная страница',
 })
+const { getMaps } = useRequestGetMaps()
+const { search } = useRequestSearch()
+
+const searchQuery = ref('')
+const maps = await getMaps()
+const searchResults = ref<{ url: string; name: string }[]>([])
 
 watch(
   searchQuery,

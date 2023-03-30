@@ -3,13 +3,13 @@ import { computed, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
 import { SHOW_SETTINGS, SHOW_JSON, SHOW_PARENT_TYPES } from '~/constants'
 import Button from '~/components/ui/Button/Button'
-import { useCurrentMap, useOverlay } from '~/composables'
-import { removeMap } from '~/requests'
+import { useCurrentMap, useOverlay, useRequestRemoveMap } from '~/composables'
 import Checkbox from '~/components/ui/Checkbox/Checkbox'
 import Input from '~/components/ui/Input/Input'
 import { MapSettings } from '~/entities'
 import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
 
+const { removeMap } = useRequestRemoveMap()
 const { map, mapName, firstMapLoad, parentTypes } = useCurrentMap()
 const { close, overlayName } = useOverlay()
 const form = ref({})
