@@ -5,10 +5,16 @@ import {getMaps} from "~/requests/getMaps";
 import debounce from "lodash/debounce";
 import {watch} from "@vue/runtime-core";
 import {search} from "~/requests/search";
+import {useSeoMeta} from "@vueuse/head";
+import {urlTrim} from "~/utils";
 
 const searchQuery = ref('');
 const maps = await getMaps();
 const searchResults = ref<{url: string, name: string}[]>([]);
+
+useSeoMeta({
+  title: 'Главная страница',
+})
 
 watch(searchQuery, debounce(async () => {
   if (!searchQuery.value) {
@@ -22,7 +28,7 @@ watch(searchQuery, debounce(async () => {
       const parts = res.ref.split('|');
       return {
         name: parts[0],
-        url: parts[1]
+        url: urlTrim(parts[1])
       }
     })
   }

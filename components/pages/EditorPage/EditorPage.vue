@@ -19,10 +19,21 @@ import Search from "~/components/view/Search/Search.vue";
 import JsonForm from '~/components/view/JsonForm/JsonForm.vue';
 import ParentTypes from "~/components/view/ParentTypes/ParentTypes.vue";
 import {useRuntimeConfig} from "#app/nuxt";
-import {useSideBar} from "~/composables";
+import {useCurrentMap, useSideBar} from "~/composables";
+import {watch} from "@vue/runtime-core";
+import {useSeoMeta} from "@vueuse/head";
 
 const {version} = useRuntimeConfig();
 const {isSidebarOpen} = useSideBar();
+const {firstMapLoad, map} = useCurrentMap();
+
+watch(firstMapLoad, () => {
+  map.map(vMap => {
+    useSeoMeta({
+      title: vMap.settings.title
+    })
+  })
+})
 </script>
 
 <template>
