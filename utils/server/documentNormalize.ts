@@ -1,7 +1,7 @@
 export const documentNormalize = (document: string | null) => {
   if (document && document.includes('/')) {
-    document = '_' + document.replaceAll('/', '_');
+    document = '_' + document.replaceAll('/', '_')
   }
 
-  return document;
+  return document
 }

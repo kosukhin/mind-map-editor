@@ -1,2 +1,1 @@
-export const once = (fn: Function) => {
-}
+export const once = (fn: Function) => {}

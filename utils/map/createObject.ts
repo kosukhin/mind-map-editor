@@ -1,8 +1,8 @@
-import { MapObject } from "~/entities";
+import { MapObject } from '~/entities'
 
 export const createObject = (
   position: [number, number],
-  type: string,
+  type: string
 ): MapObject => {
   return {
     name: '',

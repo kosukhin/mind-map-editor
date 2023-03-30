@@ -1,3 +1,3 @@
 export interface Settings {
-  isEditable: boolean,
+  isEditable: boolean
 }

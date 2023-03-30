@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import { ref } from "@vue/reactivity";
-import { Nullable } from '~/entities';
+import { ref } from '@vue/reactivity'
+import { onMounted } from '@vue/runtime-core'
+import { Nullable } from '~/entities'
 import {
   useCurrentMapRenderer,
   useLayer,
-  useLayerListeners
-} from "~/composables";
-import {onMounted} from "@vue/runtime-core";
-import {createLayer} from "~/utils";
+  useLayerListeners,
+} from '~/composables'
+import { createLayer } from '~/utils'
 
-const {layer, stage} = useLayer();
-const canvasRef  = ref<Nullable<HTMLElement>>(null);
-useCurrentMapRenderer();
-useLayerListeners();
+const { layer, stage } = useLayer()
+const canvasRef = ref<Nullable<HTMLElement>>(null)
+useCurrentMapRenderer()
+useLayerListeners()
 
 onMounted(() => {
-  if (!canvasRef.value) return;
-  const [newLayer, newStage] = createLayer(canvasRef.value);
-  layer.value = newLayer;
-  stage.value = newStage;
-});
+  if (!canvasRef.value) return
+  const [newLayer, newStage] = createLayer(canvasRef.value)
+  layer.value = newLayer
+  stage.value = newStage
+})
 </script>
 
 <template>
-  <div ref="canvasRef" :key="'editor-canvas'" id="canvas"></div>
+  <div id="canvas" ref="canvasRef" :key="'editor-canvas'"></div>
 </template>

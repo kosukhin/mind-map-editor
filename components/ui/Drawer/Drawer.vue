@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import {useOverlay} from "~/composables/useOverlay";
-import {watch} from "@vue/runtime-core";
-import {ref} from "@vue/reactivity";
+import { watch } from '@vue/runtime-core'
+import { ref } from '@vue/reactivity'
+import { useOverlay } from '~/composables/useOverlay'
 
 const props = defineProps({
   name: {
     type: String,
     required: true,
-  }
-});
+  },
+})
 
-const isOpened = ref(false);
-const {overlayName, tryToClose} = useOverlay();
+const isOpened = ref(false)
+const { overlayName, tryToClose } = useOverlay()
 
 const close = () => {
-  tryToClose.value = props.name;
+  tryToClose.value = props.name
 }
 
 watch(overlayName, () => {
   overlayName.map((vDrawer) => {
-    isOpened.value = vDrawer === props.name;
+    isOpened.value = vDrawer === props.name
   })
 })
 </script>
 
 <template>
-  <div class="Drawer" @click="close" v-if="isOpened">
+  <div v-if="isOpened" class="Drawer" @click="close">
     <div class="Drawer-Inner" @click.stop>
       <div v-if="$slots.header">
         <slot name="header" class="Drawer-Header" />
       </div>
       <div class="Drawer-Content">
-        <slot/>
+        <slot />
       </div>
       <div v-if="$slots.footer" class="Drawer-Footer">
         <slot name="footer" />
@@ -41,5 +41,5 @@ watch(overlayName, () => {
 </template>
 
 <style scoped lang="scss">
-@import "Drawer";
+@import 'Drawer';
 </style>

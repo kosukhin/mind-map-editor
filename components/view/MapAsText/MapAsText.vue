@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import { useCurrentMap } from "~/composables";
-import {nl2br} from "~/utils";
+import { useCurrentMap } from '~/composables'
+import { nl2br } from '~/utils'
 
-const {map} = useCurrentMap();
+const { map } = useCurrentMap()
 </script>
 
 <template>
-  <article class="MapAsText" v-if="!map.isNothing">
+  <article v-if="!map.isNothing" class="MapAsText">
     <div
-      class="MapAsText-Item"
-      :key="object.id"
       v-for="object in map.value.objects"
+      :key="object.id"
+      class="MapAsText-Item"
     >
       <h3 class="MapAsText-Title">{{ object.name }}</h3>
       <div v-html="nl2br(object.description)"></div>
@@ -19,5 +19,5 @@ const {map} = useCurrentMap();
 </template>
 
 <style lang="scss" scoped>
-@import "MapAsText";
+@import 'MapAsText';
 </style>

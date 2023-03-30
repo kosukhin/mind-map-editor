@@ -1,43 +1,43 @@
-import { Dictionary } from "~/entities/types/Dictionary";
+import { Dictionary } from '~/entities/types/Dictionary'
 
 export interface MapObjectRelation {
-  id: string,
+  id: string
 }
 
 export interface MapObject {
-  id: string,
-  type: string,
-  position: [number, number],
-  name: string,
-  outlink: string,
-  linked: boolean,
-  description: string,
-  zindex: number,
-  arrows: MapObjectRelation[],
-  targetBlank: boolean,
-  lastClick: number,
+  id: string
+  type: string
+  position: [number, number]
+  name: string
+  outlink: string
+  linked: boolean
+  description: string
+  zindex: number
+  arrows: MapObjectRelation[]
+  targetBlank: boolean
+  lastClick: number
 }
 
 export interface MapType {
-  name: string,
-  svg: string,
-  width: number,
-  height: number,
+  name: string
+  svg: string
+  width: number
+  height: number
 }
 
-export type MapStructureTypes = Dictionary<MapType>;
+export type MapStructureTypes = Dictionary<MapType>
 
 export interface MapSettings {
-  colored: boolean,
-  title: string,
+  colored: boolean
+  title: string
 }
 
 export interface MapStructure {
-  document: string,
-  url: string,
-  parent: string,
-  parentNames?: Dictionary<string>,
-  settings: MapSettings,
-  types: MapStructureTypes,
+  document: string
+  url: string
+  parent: string
+  parentNames?: Dictionary<string>
+  settings: MapSettings
+  types: MapStructureTypes
   objects: Dictionary<MapObject>
 }

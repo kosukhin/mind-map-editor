@@ -1,1 +1,1 @@
-export const MAP_UPDATED = 'Карта обновлена';
+export const MAP_UPDATED = 'Карта обновлена'

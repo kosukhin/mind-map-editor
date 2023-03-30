@@ -1,8 +1,8 @@
-import { MapStructure } from "~/entities";
+import { MapStructure } from '~/entities'
 
 export const createMap = (document: string): MapStructure => {
   return {
-    document: document,
+    document,
     objects: {},
     types: {},
     url: document,

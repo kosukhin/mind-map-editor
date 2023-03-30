@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-
-import {useVModel} from "@vueuse/core";
+import { useVModel } from '@vueuse/core'
 
 const props = defineProps({
   modelValue: {
@@ -9,12 +8,12 @@ const props = defineProps({
   label: {
     type: String,
     required: true,
-  }
-});
+  },
+})
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue'])
 
-const data = useVModel(props, 'modelValue', emit);
+const data = useVModel(props, 'modelValue', emit)
 </script>
 
 <template>
@@ -25,5 +24,5 @@ const data = useVModel(props, 'modelValue', emit);
 </template>
 
 <style lang="scss" scoped>
-@import "Checkbox";
+@import 'Checkbox';
 </style>

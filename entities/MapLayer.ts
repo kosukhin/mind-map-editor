@@ -1,7 +1,7 @@
-import Konva from "konva";
+import Konva from 'konva'
 
-const { Layer, Stage, Arrow } = Konva;
+const { Layer, Stage, Arrow } = Konva
 
-export type MapLayer = InstanceType<typeof Layer>;
-export type MapStage = InstanceType<typeof Stage>;
-export type MapArrow = InstanceType<typeof Arrow>;
+export type MapLayer = InstanceType<typeof Layer>
+export type MapStage = InstanceType<typeof Stage>
+export type MapArrow = InstanceType<typeof Arrow>

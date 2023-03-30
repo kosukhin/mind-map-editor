@@ -1,4 +1,4 @@
-import {http} from "~/utils";
+import { http } from '~/utils'
 
 export const removeMap = async (mapName: string) => {
   await http({

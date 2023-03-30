@@ -1,5 +1,5 @@
-import {http} from "~/utils";
-import {MapStructure} from "~/entities";
+import { http } from '~/utils'
+import { MapStructure } from '~/entities'
 
 export async function saveMap(map: MapStructure, mapName: string) {
   await http({
@@ -8,6 +8,6 @@ export async function saveMap(map: MapStructure, mapName: string) {
     params: {
       document: mapName,
     },
-    data: {document: map.document, structure: map}
+    data: { document: map.document, structure: map },
   })
 }

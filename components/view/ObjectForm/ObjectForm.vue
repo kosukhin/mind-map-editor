@@ -1,73 +1,92 @@
 <script lang="ts" setup>
+import { watch } from '@vue/runtime-core'
+import { computed, ref } from '@vue/reactivity'
+import cloneDeep from 'lodash/cloneDeep'
 import {
   useMapObjects,
   useSettings,
   useOverlay,
-  useCurrentMap, useLayer
-} from "~/composables";
-import {watch} from "@vue/runtime-core";
-import Button from "~/components/ui/Button/Button.vue";
-import {SHOW_OBJECT} from "~/constants";
-import {allSet, MapObject} from "~/entities";
-import {removeObjectOnLayer, updateObjectOnLayer} from "~/utils";
-import Textarea from "~/components/ui/Textarea/Textarea.vue";
-import Checkbox from "~/components/ui/Checkbox/Checkbox.vue";
-import {computed, ref} from "@vue/reactivity";
-import Input from "~/components/ui/Input/Input.vue";
-import {useFormDirtyCheck} from "~/composables/useFormDirtyCheck";
-import Drawer from "~/components/ui/Drawer/Drawer.vue";
-import cloneDeep from 'lodash/cloneDeep';
+  useCurrentMap,
+  useLayer,
+} from '~/composables'
+import Button from '~/components/ui/Button/Button.vue'
+import { SHOW_OBJECT } from '~/constants'
+import { allSet, MapObject } from '~/entities'
+import { removeObjectOnLayer, updateObjectOnLayer } from '~/utils'
+import Textarea from '~/components/ui/Textarea/Textarea.vue'
+import Checkbox from '~/components/ui/Checkbox/Checkbox.vue'
+import Input from '~/components/ui/Input/Input.vue'
+import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
+import Drawer from '~/components/ui/Drawer/Drawer.vue'
 
-const {layer, layerObjects} = useLayer();
-const {map} = useCurrentMap();
-const {close} = useOverlay();
-const {currentObject} = useMapObjects();
-const {settings} = useSettings();
-const form = ref({});
-const {stringify} = JSON;
-const isDirty = computed(() =>
-  stringify(form.value) !== stringify(currentObject.map(vObj => vObj))
+const { layer, layerObjects } = useLayer()
+const { map } = useCurrentMap()
+const { close } = useOverlay()
+const { currentObject } = useMapObjects()
+const { settings } = useSettings()
+const form = ref({})
+const { stringify } = JSON
+const isDirty = computed(
+  () => stringify(form.value) !== stringify(currentObject.map((vObj) => vObj))
 )
-useFormDirtyCheck(isDirty, SHOW_OBJECT);
+useFormDirtyCheck(isDirty, SHOW_OBJECT)
 
-watch(currentObject, () => {
-  currentObject.map(vObj => {
-    form.value = cloneDeep(vObj);
-  })
-}, {
-  flush: 'post',
-  immediate: true,
-})
+watch(
+  currentObject,
+  () => {
+    currentObject.map((vObj) => {
+      form.value = cloneDeep(vObj)
+    })
+  },
+  {
+    flush: 'post',
+    immediate: true,
+  }
+)
 
 const remove = () => {
-  close();
+  close()
   allSet([currentObject, map] as const).map(([vObj, vMap]) => {
-    delete vMap.objects[vObj.id];
-    removeObjectOnLayer(layerObjects, vObj);
+    delete vMap.objects[vObj.id]
+    removeObjectOnLayer(layerObjects, vObj)
   })
 }
 
 const save = () => {
-  close();
-  allSet([currentObject, map, layer] as const).map(async ([vObj, vMap, vLayer]) => {
-    vMap.objects[vObj.id] = {
-      ...vMap.objects[vObj.id],
-      ...form.value
-    };
-    await updateObjectOnLayer(layerObjects, vLayer, vMap.objects[vObj.id], vMap);
-  })
+  close()
+  allSet([currentObject, map, layer] as const).map(
+    async ([vObj, vMap, vLayer]) => {
+      vMap.objects[vObj.id] = {
+        ...vMap.objects[vObj.id],
+        ...form.value,
+      }
+      await updateObjectOnLayer(
+        layerObjects,
+        vLayer,
+        vMap.objects[vObj.id],
+        vMap
+      )
+    }
+  )
 }
 
 const removeRelation = (index: number) => {
-  if (!(form.value as MapObject).arrows) return;
-  allSet([currentObject, map, layer] as const).map(async ([vObj, vMap, vLayer]) => {
-    (form.value as MapObject).arrows.splice(index, 1);
-    await updateObjectOnLayer(layerObjects, vLayer, vMap.objects[vObj.id], vMap);
-  });
+  if (!(form.value as MapObject).arrows) return
+  allSet([currentObject, map, layer] as const).map(
+    async ([vObj, vMap, vLayer]) => {
+      ;(form.value as MapObject).arrows.splice(index, 1)
+      await updateObjectOnLayer(
+        layerObjects,
+        vLayer,
+        vMap.objects[vObj.id],
+        vMap
+      )
+    }
+  )
 }
 
 const cancel = () => {
-  close();
+  close()
 }
 </script>
 
@@ -76,50 +95,62 @@ const cancel = () => {
     <template #header>
       <h2 class="ObjectForm-MainTitle">Объект карты</h2>
     </template>
-    <div class="ObjectForm" v-if="!settings.isNothing">
-      <div class="ObjectForm-Inner" v-if="!settings.value.isEditable">
+    <div v-if="!settings.isNothing" class="ObjectForm">
+      <div v-if="!settings.value.isEditable" class="ObjectForm-Inner">
         <div class="ObjectForm-Title">Название</div>
         <div class="ObjectForm-Description">{{ currentObject.value.name }}</div>
         <div class="ObjectForm-Title">Описание</div>
-        <div class="ObjectForm-Description">{{
-            currentObject.value.description ? currentObject.value.description : 'Нет описания'
+        <div class="ObjectForm-Description">
+          {{
+            currentObject.value.description
+              ? currentObject.value.description
+              : 'Нет описания'
           }}
         </div>
       </div>
       <div v-else class="ObjectForm-Inner" @change="isDirty = true">
         <div class="ObjectForm-Row">
-          <Checkbox v-model="form.linked" label="Название ссылкой"/>
+          <Checkbox v-model="form.linked" label="Название ссылкой" />
         </div>
         <template v-if="form.linked">
           <div class="ObjectForm-Title">Внешняя ссылка</div>
           <div class="ObjectForm-Row">
-            <Input v-model="form.outlink"/>
+            <Input v-model="form.outlink" />
           </div>
           <div class="ObjectForm-Row">
-            <Checkbox v-model="form.targetBlank" label="В новой влкадке"/>
+            <Checkbox v-model="form.targetBlank" label="В новой влкадке" />
           </div>
         </template>
         <div class="ObjectForm-Title">Название</div>
         <div class="ObjectForm-Row">
-          <Textarea v-model="form.name"/>
+          <Textarea v-model="form.name" />
         </div>
         <div class="ObjectForm-Title">Описание</div>
         <div class="ObjectForm-Row">
-          <Textarea v-model="form.description"/>
+          <Textarea v-model="form.description" />
         </div>
         <div class="ObjectForm-Title">Z-Index</div>
         <div class="ObjectForm-Row">
-          <Input v-model="form.zindex" type="number"/>
+          <Input v-model="form.zindex" type="number" />
         </div>
 
         <template v-if="form.arrows && form.arrows.length">
           <div class="ObjectForm-Title">Связи</div>
           <div class="ObjectForm-Row">
-            <div class="ObjectForm-Arrow" :key="arrow.id" v-for="(arrow, index) in form.arrows">
-            <span class="ObjectForm-ArrowName">
-              #{{ index + 1 }} {{ map.value.objects[arrow.id].name }}
-            </span>
-              <Button class="ObjectForm-ArrowButton" type="danger" size="sm" @click="removeRelation(index)">Удалить
+            <div
+              v-for="(arrow, index) in form.arrows"
+              :key="arrow.id"
+              class="ObjectForm-Arrow"
+            >
+              <span class="ObjectForm-ArrowName">
+                #{{ index + 1 }} {{ map.value.objects[arrow.id].name }}
+              </span>
+              <Button
+                class="ObjectForm-ArrowButton"
+                type="danger"
+                size="sm"
+                @click="removeRelation(index)"
+                >Удалить
               </Button>
             </div>
           </div>
@@ -139,5 +170,5 @@ const cancel = () => {
 </template>
 
 <style scoped lang="scss">
-@import "ObjectForm";
+@import 'ObjectForm';
 </style>

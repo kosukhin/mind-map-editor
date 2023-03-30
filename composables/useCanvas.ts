@@ -1,27 +1,27 @@
-import {onMounted, watch} from "@vue/runtime-core";
-import {reactive} from "@vue/reactivity";
-import {Maybe} from "~/entities";
+import { onMounted, watch } from '@vue/runtime-core'
+import { reactive } from '@vue/reactivity'
+import { Maybe } from '~/entities'
 
 export const useCanvas = () => {
-  const canvas = reactive(Maybe<HTMLElement>());
-  const canvasSize = reactive(Maybe<{w: number, h: number}>());
+  const canvas = reactive(Maybe<HTMLElement>())
+  const canvasSize = reactive(Maybe<{ w: number; h: number }>())
 
   watch(canvas, () => {
-    canvas.map(vCanvas => {
+    canvas.map((vCanvas) => {
       canvasSize.value = {
         w: vCanvas.clientWidth,
-        h: vCanvas.clientHeight
+        h: vCanvas.clientHeight,
       }
     })
   })
 
   onMounted(() => {
-    const canvasElement = document.getElementById('canvas');
+    const canvasElement = document.getElementById('canvas')
 
     if (canvasElement) {
-      canvas.value = canvasElement;
+      canvas.value = canvasElement
     }
-  });
+  })
 
   return {
     canvas,

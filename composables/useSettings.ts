@@ -1,8 +1,8 @@
-import {Maybe, Settings} from "~/entities";
-import {reactive} from "@vue/reactivity";
+import { reactive } from '@vue/reactivity'
+import { Maybe, Settings } from '~/entities'
 
 export const useSettings = () => {
-  const settings = reactive(Maybe<Settings>());
+  const settings = reactive(Maybe<Settings>())
   settings.value = {
     isEditable: true,
   }

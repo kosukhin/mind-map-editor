@@ -1,9 +1,9 @@
-import { MapObject } from "~/entities";
+import { MapObject } from '~/entities'
 
 export const removeObjectOnLayer = (
   layerObjects: Map<string, any>,
-  object: MapObject,
+  object: MapObject
 ) => {
-  const objects = layerObjects.get(object.id);
-  objects.forEach((object: any) => object.remove());
+  const objects = layerObjects.get(object.id)
+  objects.forEach((object: any) => object.remove())
 }

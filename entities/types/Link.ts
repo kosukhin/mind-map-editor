@@ -1,1 +1,1 @@
-export type Link<T> = T | {isEmpty: boolean, value?: T}
+export type Link<T> = T | { isEmpty: boolean; value?: T }

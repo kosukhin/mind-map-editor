@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import {ref} from "@vue/reactivity";
-import {useMiniMap} from "~/composables/useMiniMap";
+import { ref } from '@vue/reactivity'
+import { useMiniMap } from '~/composables/useMiniMap'
 
-const miniMap = ref<HTMLDivElement>();
-const miniMapScreen = ref<HTMLDivElement>();
-useMiniMap(miniMap, miniMapScreen);
+const miniMap = ref<HTMLDivElement>()
+const miniMapScreen = ref<HTMLDivElement>()
+useMiniMap(miniMap, miniMapScreen)
 </script>
 
 <template>
@@ -15,5 +15,5 @@ useMiniMap(miniMap, miniMapScreen);
 </template>
 
 <style scoped lang="scss">
-@import "MiniMap";
+@import 'MiniMap';
 </style>

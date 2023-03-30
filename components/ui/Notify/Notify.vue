@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import {useNotify} from "~/composables/useNotify";
+import { useNotify } from '~/composables/useNotify'
 
-const {message} = useNotify();
+const { message } = useNotify()
 </script>
 
 <template>
@@ -11,5 +11,5 @@ const {message} = useNotify();
 </template>
 
 <style scoped lang="scss">
-@import "Notify";
+@import 'Notify';
 </style>
