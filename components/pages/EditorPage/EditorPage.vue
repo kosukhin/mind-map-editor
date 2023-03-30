@@ -8,7 +8,6 @@ import TypeForm from "~/components/view/TypeForm/TypeForm.vue";
 import ObjectForm from "~/components/view/ObjectForm/ObjectForm.vue";
 import Modal from "~/components/ui/Modal/Modal.vue";
 import {
-  SHOW_TYPE,
   SHOW_TEXT,
   SHOW_SETTINGS,
   SHOW_SEARCH,
@@ -20,10 +19,10 @@ import Search from "~/components/view/Search/Search.vue";
 import JsonForm from '~/components/view/JsonForm/JsonForm.vue';
 import ParentTypes from "~/components/view/ParentTypes/ParentTypes.vue";
 import {useRuntimeConfig} from "#app/nuxt";
-import {ref} from "@vue/reactivity";
+import {useSideBar} from "~/composables";
 
 const {version} = useRuntimeConfig();
-const isSidebarOpen = ref(false);
+const {isSidebarOpen} = useSideBar();
 </script>
 
 <template>

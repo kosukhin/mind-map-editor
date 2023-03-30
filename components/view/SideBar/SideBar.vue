@@ -2,7 +2,7 @@
 import {
   useMapTypes,
   useCurrentMap,
-  useOverlay, useLayer
+  useOverlay, useLayer, useSideBar
 } from "~/composables";
 import Button from '~/components/ui/Button/Button';
 import {DEFAULT_SVG, HEADER_HEIGHT, SHOW_TYPE, SHOW_SETTINGS, SIDEBAR_WIDTH} from "~/constants";
@@ -14,6 +14,7 @@ const {map} = useCurrentMap();
 const {layer, stage, layerObjects} = useLayer();
 const {currentTypeId} = useMapTypes();
 const {overlayName} = useOverlay();
+const {isSidebarOpen} = useSideBar();
 
 const selectType = (name: string) => {
   overlayName.value = SHOW_TYPE;
@@ -52,16 +53,24 @@ const removeType = (typeId: string) => {
   })
 }
 
-const addToCanvas = (e: DragEvent, type: string) => {
+const addToCanvas = (e: DragEvent, type: string, useStagePosition = false) => {
   allSet([layer, map, stage] as const).map(async ([vLayer, vMap, vStage]) => {
     const vType = vMap.types[type];
+    let position: [number, number] = [
+      e.x - SIDEBAR_WIDTH - vType.width/2 + vStage.x()*-1,
+      e.y - HEADER_HEIGHT - vType.height/2 + vStage.y()*-1,
+    ];
+
+    if (useStagePosition) {
+      position = [vStage.x()*-1, vStage.y()*-1];
+    }
+
     const newObject: MapObject = createObject(
-      [
-        e.x - SIDEBAR_WIDTH - vType.width/2 + vStage.x()*-1,
-        e.y - HEADER_HEIGHT - vType.height/2 + vStage.y()*-1,
-      ],
+      position,
       type
     );
+
+    isSidebarOpen.value = false;
     vMap.objects[newObject.id] = newObject;
     const objects = await addObjectToLayer(vLayer, newObject, vMap);
     layerObjects.set(newObject.id, objects);
@@ -81,6 +90,7 @@ const addToCanvas = (e: DragEvent, type: string) => {
           draggable="true"
           v-html="type.svg"
           @dragend="addToCanvas($event, name)"
+          @dblclick="addToCanvas($event, name, true)"
         ></div>
         <div class="SideBar-ItemButtons">
           <Button size="sm" type="primary" @click="selectType(name)">

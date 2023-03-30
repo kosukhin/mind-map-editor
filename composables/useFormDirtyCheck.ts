@@ -9,7 +9,11 @@ export const useFormDirtyCheck = (
 
   watch(tryToClose, () => {
     tryToClose.map(vClose => {
-      if (isDirty.value && vClose === formName) {
+      if (vClose !== formName) {
+        return;
+      }
+
+      if (isDirty.value) {
         if(confirm('Если продожить данные будут потеряны! Продолжить?')) {
           close();
         }
