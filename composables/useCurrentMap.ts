@@ -5,6 +5,8 @@ import { watch } from '@vue/runtime-core'
 import { MapStructure, MapType, MaybeError } from '~/entities'
 import { useNotify, useRequestGetMap, useRequestSaveMap } from '~/composables'
 import { MAP_UPDATED } from '~/constants'
+import { setError, setValue, setValues } from '~/utils'
+import { mapNormalizeBeforeSave } from '~/application'
 
 export const useCurrentMap = createSharedComposable(() => {
   const { message } = useNotify()
@@ -18,25 +20,26 @@ export const useCurrentMap = createSharedComposable(() => {
 
   getMap(mapName)
     .then(([vMap, vParentTypes]) => {
-      map.value = vMap
-      parentTypes.value = vParentTypes
-      firstMapLoad.value = true
+      setValues([
+        [map, vMap],
+        [parentTypes, vParentTypes],
+        [firstMapLoad, true],
+      ])
     })
-    .catch((e) => {
-      map.error = e
-    })
+    .catch(setError(map))
 
   watch(
     map,
     () => {
       map.map((vMap) => {
-        saveMap({ ...vMap, url: location.pathname }, mapName)
+        const normalMap = mapNormalizeBeforeSave(vMap, location.pathname)
+        saveMap(normalMap, mapName)
           .then(() => {
-            message.value = MAP_UPDATED
+            setValue(message, MAP_UPDATED)
           })
           .catch((e) => {
-            map.error = String(e)
-            message.value = map.error
+            setError(map, String(e))
+            setValue(message, map.error)
           })
       })
     },
