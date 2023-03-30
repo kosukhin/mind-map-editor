@@ -7,18 +7,18 @@ export const useCanvas = () => {
   const canvas = reactive(Maybe<HTMLElement>())
   const canvasSize = reactive(Maybe<CanvasSize>())
 
-  watch(canvas, () => {
-    canvas.map((vCanvas) => {
-      canvasSize.value = canvasCreateSize(vCanvas)
-    })
-  })
-
   onMounted(() => {
     const canvasElement = document.getElementById('canvas')
 
     if (canvasElement) {
       canvas.value = canvasElement
     }
+  })
+
+  watch(canvas, () => {
+    canvas.map((vCanvas) => {
+      canvasSize.value = canvasCreateSize(vCanvas)
+    })
   })
 
   return {

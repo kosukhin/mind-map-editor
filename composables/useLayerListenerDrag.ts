@@ -3,14 +3,14 @@ import { useLayerEvents } from '~/composables/useLayerEvents'
 import { useCurrentMap } from '~/composables/useCurrentMap'
 import { allSet, MapArrow } from '~/entities'
 import { useLayer } from '~/composables/useLayer'
-import { useCanvasBoundings } from '~/composables/useCanvasBoundings'
+import { useCanvasBoundaries } from '~/composables'
 
 export const useLayerListenerDrag = () => {
   const { firstMapLoad } = useCurrentMap()
   const { stage, layerObjects } = useLayer()
   const { map } = useCurrentMap()
   const { dragend } = useLayerEvents()
-  const { restrictBoundings } = useCanvasBoundings()
+  const { restrictBoundaries } = useCanvasBoundaries()
 
   watch(dragend, () => {
     allSet([dragend, map] as const).map(([vDrag, vMap]) => {
@@ -23,7 +23,7 @@ export const useLayerListenerDrag = () => {
 
   watch(firstMapLoad, () => {
     allSet([stage, map] as const).map(([vStage, vMap]) => {
-      vStage.dragBoundFunc(restrictBoundings)
+      vStage.dragBoundFunc(restrictBoundaries)
 
       vStage.on('dragmove', (e) => {
         if (!e.target.attrs.image) {
