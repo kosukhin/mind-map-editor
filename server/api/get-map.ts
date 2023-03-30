@@ -38,7 +38,7 @@ export default defineEventHandler((event) => {
         const parentData = readFileSync(`./maps/${parentName}.json`);
         const parentMap = JSON.parse(parentData.toString());
 
-        if (parentMap.structure.settings.title && dataStructure) {
+        if (parentMap.structure?.settings?.title && dataStructure) {
           if (!dataStructure.parentNames) {
             dataStructure.parentNames = {};
           }

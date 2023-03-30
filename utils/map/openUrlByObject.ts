@@ -1,11 +1,13 @@
 import {MapObject} from "~/entities";
 import {slugify} from 'transliteration';
+import {urlTrim} from "~/utils";
 
 export const openUrlByObject = (object: MapObject) => {
   if (object.linked) {
-    const link = object.outlink
+    let link = object.outlink
       ? object.outlink
       : location.href + '/' + slugify(object.name);
+    link = urlTrim(link);
 
     if (object.targetBlank) {
       window.open(link);

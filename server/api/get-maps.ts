@@ -1,5 +1,6 @@
 import fs from 'fs';
 import {MapStructure} from "~/entities";
+import {urlTrim} from "~/utils";
 
 const {readdirSync, readFileSync} = fs;
 
@@ -18,7 +19,7 @@ export default defineEventHandler((event) => {
         file = structure.settings.title;
       }
 
-      url = structure.url;
+      url = urlTrim(structure.url);
     } catch (e) {}
 
     return {

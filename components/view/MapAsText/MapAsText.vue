@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useCurrentMap } from "~/composables";
+import {nl2br} from "~/utils";
 
 const {map} = useCurrentMap();
 </script>
@@ -12,7 +13,7 @@ const {map} = useCurrentMap();
       v-for="object in map.value.objects"
     >
       <h3 class="MapAsText-Title">{{ object.name }}</h3>
-      <div>{{ object.description }}</div>
+      <div v-html="nl2br(object.description)"></div>
     </div>
   </article>
 </template>

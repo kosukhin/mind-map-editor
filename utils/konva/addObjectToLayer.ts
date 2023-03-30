@@ -49,38 +49,41 @@ export async function addObjectToLayer(
   layer.add(text);
 
   const arrows: MapArrow[] = [];
-  object.arrows.forEach(toObjectRelation => {
-    const toObject = map.objects[toObjectRelation.id];
 
-    if (!toObject) {
-      return;
-    }
+  if (object.arrows) {
+    object.arrows.forEach(toObjectRelation => {
+      const toObject = map.objects[toObjectRelation.id];
 
-    //TODO нужно получение типа спрятать
-    if (!map.types[toObject.type]) {
-      console.warn('Нет типа', toObject.type);
-    }
+      if (!toObject) {
+        return;
+      }
 
-    const toObjectType = map.types[toObject.type];
-    const arrow = new Arrow({
-      x: 0,
-      y: 0,
-      toObjectId: toObjectRelation.id,
-      points: [
-        object.position[0] + type.width / 2,
-        object.position[1] + type.height / 2,
-        toObject.position[0] + toObjectType.width / 2,
-        toObject.position[1] + toObjectType.height / 2
-      ],
-      pointerLength: 20,
-      pointerWidth: 10,
-      fill: '#ccc',
-      stroke: '#888',
-      strokeWidth: 2,
+      //TODO нужно получение типа спрятать
+      if (!map.types[toObject.type]) {
+        console.warn('Нет типа', toObject.type);
+      }
+
+      const toObjectType = map.types[toObject.type];
+      const arrow = new Arrow({
+        x: 0,
+        y: 0,
+        toObjectId: toObjectRelation.id,
+        points: [
+          object.position[0] + type.width / 2,
+          object.position[1] + type.height / 2,
+          toObject.position[0] + toObjectType.width / 2,
+          toObject.position[1] + toObjectType.height / 2
+        ],
+        pointerLength: 20,
+        pointerWidth: 10,
+        fill: '#ccc',
+        stroke: '#888',
+        strokeWidth: 2,
+      });
+      layer.add(arrow);
+      arrows.push(arrow);
     });
-    layer.add(arrow);
-    arrows.push(arrow);
-  });
+  }
 
   return [img, text, ...arrows];
 }
