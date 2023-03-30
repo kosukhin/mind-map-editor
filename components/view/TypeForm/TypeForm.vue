@@ -53,7 +53,7 @@ const save = () => {
     </template>
     <div v-if="!currentType.isNothing" class="TypeForm">
       <Input v-model="form.name" class="TypeForm-Row" />
-      <SvgEditor v-model="form" class="TypeForm-Row" />
+      <SvgEditor v-model="form" />
     </div>
     <template #footer>
       <div class="TypeForm-Controls">
