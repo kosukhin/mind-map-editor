@@ -23,7 +23,7 @@ watch(overlayName, () => {
   })
 })
 
-const back = async () => {
+const back = () => {
   history.value.pop()
   overlayName.value = String(history.value.pop())
 }

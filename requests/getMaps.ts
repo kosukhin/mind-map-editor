@@ -2,7 +2,7 @@ import { http } from '~/utils'
 
 interface GetMapsResponse {
   ok: boolean
-  files: string[]
+  files: { name: string; url: string }[]
 }
 
 export const getMaps = async (): Promise<GetMapsResponse> => {

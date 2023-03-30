@@ -47,12 +47,20 @@ watch(
     <div class="MainPage-Row">
       <Input v-model="searchQuery" placeholder="Поиск в картах" />
     </div>
-    <div v-for="result in searchResults" class="MainPage-Row">
+    <div
+      v-for="result in searchResults"
+      :key="result.url + result.name"
+      class="MainPage-Row"
+    >
       <a :href="result.url">{{ result.name }}</a>
     </div>
     <h3 class="MainPage-SubTitle">Существующие карты</h3>
     <div class="MainPage-Files">
-      <div v-for="file in maps.files" class="MainPage-File">
+      <div
+        v-for="file in maps.files"
+        :key="file.url + file.name"
+        class="MainPage-File"
+      >
         <a :href="file.url">{{ file.name }}</a>
       </div>
     </div>
