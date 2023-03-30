@@ -91,10 +91,10 @@ const addToCanvas = (e: DragEvent, type: string, useStagePosition = false) => {
         <div class="SideBar-ItemName">{{ type.name }}</div>
         <div
           class="SideBar-ItemImage"
-          title="Перетащите на канвас, чтобы добавить"
           draggable="true"
-          @dragend="addToCanvas($event, name)"
+          title="Перетащите на канвас, чтобы добавить"
           @dblclick="addToCanvas($event, name, true)"
+          @dragend="addToCanvas($event, name)"
           v-html="type.svg"
         ></div>
         <div class="SideBar-ItemButtons">

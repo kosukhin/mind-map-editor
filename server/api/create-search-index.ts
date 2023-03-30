@@ -15,7 +15,7 @@ lunrLanguagesRu(lunr)
 
 const { readFileSync, readdirSync } = fs
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(() => {
   const dirs = readdirSync('./maps/').filter((file) => {
     return !['README.md'].includes(file)
   })

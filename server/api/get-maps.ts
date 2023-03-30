@@ -4,7 +4,7 @@ import { urlTrim } from '~/utils'
 
 const { readdirSync, readFileSync } = fs
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(() => {
   const files = readdirSync('./maps/')
     .filter((file) => {
       return file[0] !== '_' && !['README.md'].includes(file)

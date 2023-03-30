@@ -1,5 +1,5 @@
 import Konva from 'konva'
-import { MapObject, MapStructure, MapStructureTypes } from '~/entities'
+import { MapObject, MapStructure } from '~/entities'
 import { addObjectToLayer, removeObjectOnLayer } from '~/utils'
 
 const { Layer } = Konva

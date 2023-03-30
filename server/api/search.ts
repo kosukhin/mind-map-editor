@@ -4,6 +4,7 @@ import lunr from 'lunr'
 import { BASE_HOST } from '~/constants'
 
 const { readFileSync } = fs
+const { Index } = lunr
 
 export default defineEventHandler((event) => {
   const { req } = event.node
@@ -11,7 +12,7 @@ export default defineEventHandler((event) => {
   const query = url.searchParams.get('query')
 
   const data = readFileSync('./search-index/idx.json')
-  const idx = lunr.Index.load(JSON.parse(data.toString()))
+  const idx = Index.load(JSON.parse(data.toString()))
   const result = query ? idx.search(query) : []
 
   return {

@@ -73,12 +73,12 @@ export const useMiniMap = (
         }
       }
 
-      vStage.on('dragmove', (e) => {
+      vStage.on('dragmove', () => {
         redrawPreviewLayer()
         calculateMiniScreen()
       })
 
-      vStage.on('wheel', (e) => {
+      vStage.on('wheel', () => {
         redrawPreviewLayer()
         calculateMiniScreen()
       })

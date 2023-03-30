@@ -2,7 +2,7 @@ import fs from 'fs'
 import { documentNormalize } from '../../utils'
 import { BASE_HOST, MAP_PARAM_NAME } from '~/constants'
 
-const { writeFileSync, existsSync } = fs
+const { writeFileSync } = fs
 
 export default defineEventHandler(async (event) => {
   const { req } = event.node

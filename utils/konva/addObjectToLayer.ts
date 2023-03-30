@@ -58,11 +58,6 @@ export async function addObjectToLayer(
         return
       }
 
-      // TODO нужно получение типа спрятать
-      if (!map.types[toObject.type]) {
-        console.warn('Нет типа', toObject.type)
-      }
-
       const toObjectType = map.types[toObject.type]
       const arrow = new Arrow({
         x: 0,

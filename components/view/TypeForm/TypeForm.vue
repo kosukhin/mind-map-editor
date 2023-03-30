@@ -13,7 +13,6 @@ import Modal from '~/components/ui/Modal/Modal.vue'
 const { close } = useOverlay()
 const { map } = useCurrentMap()
 const { currentTypeId, currentType } = useMapTypes()
-const svg = ref('')
 const form = ref<any>({})
 const { stringify } = JSON
 const isDirty = computed(
