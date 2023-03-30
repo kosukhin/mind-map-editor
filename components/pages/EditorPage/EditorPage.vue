@@ -6,13 +6,11 @@ import MiniMap from '@/components/view/MiniMap/MiniMap.vue';
 import Notify from "~/components/ui/Notify/Notify.vue";
 import TypeForm from "~/components/view/TypeForm/TypeForm.vue";
 import ObjectForm from "~/components/view/ObjectForm/ObjectForm.vue";
-import Drawer from "~/components/ui/Drawer/Drawer.vue";
 import Modal from "~/components/ui/Modal/Modal.vue";
 import {
   SHOW_TYPE,
   SHOW_TEXT,
   SHOW_SETTINGS,
-  SHOW_OBJECT,
   SHOW_SEARCH,
   SHOW_PARENT_TYPES
 } from "~/constants";
@@ -39,12 +37,7 @@ const isSidebarOpen = ref(false);
     <MiniMap class="EditorPage-MiniMap"/>
   </div>
   <Notify/>
-  <Modal :name="SHOW_TYPE">
-    <template #header>
-      <h2>Тип карты</h2>
-    </template>
-    <TypeForm/>
-  </Modal>
+  <TypeForm/>
   <Modal :name="SHOW_PARENT_TYPES">
     <template #header>
       <h2>Родительские типы</h2>
@@ -70,9 +63,7 @@ const isSidebarOpen = ref(false);
     <Search/>
   </Modal>
   <JsonForm/>
-  <Drawer :name="SHOW_OBJECT">
-    <ObjectForm/>
-  </Drawer>
+  <ObjectForm/>
 </template>
 
 <style scoped lang="scss">

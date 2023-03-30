@@ -9,6 +9,8 @@
 
   &-Inner {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     width: 300px;
     top: 0;
     left: 0;
@@ -16,5 +18,14 @@
     background: var(--overlayInnerBG);
     box-sizing: border-box;
     padding: var(--defaultPadding);
+  }
+
+  &-Content {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  &-Footer {
+    background: var(--defaultBG);
   }
 }

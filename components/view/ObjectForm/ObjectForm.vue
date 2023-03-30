@@ -9,12 +9,13 @@ import {watch} from "@vue/runtime-core";
 import Button from "~/components/ui/Button/Button.vue";
 import {SHOW_OBJECT} from "~/constants";
 import {allSet, MapObject} from "~/entities";
-import { removeObjectOnLayer, updateObjectOnLayer } from "~/utils";
+import {removeObjectOnLayer, updateObjectOnLayer} from "~/utils";
 import Textarea from "~/components/ui/Textarea/Textarea.vue";
 import Checkbox from "~/components/ui/Checkbox/Checkbox.vue";
 import {computed, ref} from "@vue/reactivity";
 import Input from "~/components/ui/Input/Input.vue";
-import { useFormDirtyCheck } from "~/composables/useFormDirtyCheck";
+import {useFormDirtyCheck} from "~/composables/useFormDirtyCheck";
+import Drawer from "~/components/ui/Drawer/Drawer.vue";
 import cloneDeep from 'lodash/cloneDeep';
 
 const {layer, layerObjects} = useLayer();
@@ -71,55 +72,61 @@ const cancel = () => {
 </script>
 
 <template>
-  <div class="ObjectForm" v-if="!settings.isNothing">
-    <h2 class="ObjectForm-MainTitle">Объект карты</h2>
-    <div class="ObjectForm-Inner" v-if="!settings.value.isEditable">
-      <div class="ObjectForm-Title">Название</div>
-      <div class="ObjectForm-Description">{{ currentObject.value.name }}</div>
-      <div class="ObjectForm-Title">Описание</div>
-      <div class="ObjectForm-Description">{{
-          currentObject.value.description ? currentObject.value.description : 'Нет описания'
-        }}
+  <Drawer :name="SHOW_OBJECT">
+    <template #header>
+      <h2 class="ObjectForm-MainTitle">Объект карты</h2>
+    </template>
+    <div class="ObjectForm" v-if="!settings.isNothing">
+      <div class="ObjectForm-Inner" v-if="!settings.value.isEditable">
+        <div class="ObjectForm-Title">Название</div>
+        <div class="ObjectForm-Description">{{ currentObject.value.name }}</div>
+        <div class="ObjectForm-Title">Описание</div>
+        <div class="ObjectForm-Description">{{
+            currentObject.value.description ? currentObject.value.description : 'Нет описания'
+          }}
+        </div>
+      </div>
+      <div v-else class="ObjectForm-Inner" @change="isDirty = true">
+        <div class="ObjectForm-Row">
+          <Checkbox v-model="form.linked" label="Название ссылкой"/>
+        </div>
+        <template v-if="form.linked">
+          <div class="ObjectForm-Title">Внешняя ссылка</div>
+          <div class="ObjectForm-Row">
+            <Input v-model="form.outlink"/>
+          </div>
+          <div class="ObjectForm-Row">
+            <Checkbox v-model="form.targetBlank" label="В новой влкадке"/>
+          </div>
+        </template>
+        <div class="ObjectForm-Title">Название</div>
+        <div class="ObjectForm-Row">
+          <Textarea v-model="form.name"/>
+        </div>
+        <div class="ObjectForm-Title">Описание</div>
+        <div class="ObjectForm-Row">
+          <Textarea v-model="form.description"/>
+        </div>
+        <div class="ObjectForm-Title">Z-Index</div>
+        <div class="ObjectForm-Row">
+          <Input v-model="form.zindex" type="number"/>
+        </div>
+
+        <template v-if="form.arrows && form.arrows.length">
+          <div class="ObjectForm-Title">Связи</div>
+          <div class="ObjectForm-Row">
+            <div class="ObjectForm-Arrow" :key="arrow.id" v-for="(arrow, index) in form.arrows">
+            <span class="ObjectForm-ArrowName">
+              #{{ index + 1 }} {{ map.value.objects[arrow.id].name }}
+            </span>
+              <Button class="ObjectForm-ArrowButton" type="danger" size="sm" @click="removeRelation(index)">Удалить
+              </Button>
+            </div>
+          </div>
+        </template>
       </div>
     </div>
-    <div v-else class="ObjectForm-Inner" @change="isDirty = true">
-      <div class="ObjectForm-Row">
-        <Checkbox v-model="form.linked" label="Название ссылкой" />
-      </div>
-      <template v-if="form.linked">
-        <div class="ObjectForm-Title">Внешняя ссылка</div>
-        <div class="ObjectForm-Row">
-          <Input v-model="form.outlink" />
-        </div>
-        <div class="ObjectForm-Row">
-          <Checkbox v-model="form.targetBlank" label="В новой влкадке" />
-        </div>
-      </template>
-      <div class="ObjectForm-Title">Название</div>
-      <div class="ObjectForm-Row">
-        <Textarea v-model="form.name" />
-      </div>
-      <div class="ObjectForm-Title">Описание</div>
-      <div class="ObjectForm-Row">
-        <Textarea v-model="form.description" />
-      </div>
-      <div class="ObjectForm-Title">Z-Index</div>
-      <div class="ObjectForm-Row">
-        <Input v-model="form.zindex" type="number" />
-      </div>
-
-      <template v-if="form.arrows && form.arrows.length">
-        <div class="ObjectForm-Title">Связи</div>
-        <div class="ObjectForm-Row">
-          <div class="ObjectForm-Arrow" :key="arrow.id" v-for="(arrow, index) in form.arrows">
-            <span class="ObjectForm-ArrowName">
-              #{{ index+1 }} {{ map.value.objects[arrow.id].name }}
-            </span>
-            <Button class="ObjectForm-ArrowButton" type="danger" size="sm" @click="removeRelation(index)">Удалить</Button>
-          </div>
-        </div>
-      </template>
-
+    <template #footer>
       <div class="ObjectForm-ButtonsGroup">
         <Button type="success" @click="save">Сохранить</Button>
         <Button type="danger" @click="remove">Удалить</Button>
@@ -127,8 +134,8 @@ const cancel = () => {
       <div class="ObjectForm-ButtonsGroup">
         <Button @click="cancel">Отменить</Button>
       </div>
-    </div>
-  </div>
+    </template>
+  </Drawer>
 </template>
 
 <style scoped lang="scss">

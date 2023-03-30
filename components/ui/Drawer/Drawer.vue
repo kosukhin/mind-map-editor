@@ -27,7 +27,15 @@ watch(overlayName, () => {
 <template>
   <div class="Drawer" @click="close" v-if="isOpened">
     <div class="Drawer-Inner" @click.stop>
-      <slot/>
+      <div v-if="$slots.header">
+        <slot name="header" class="Drawer-Header" />
+      </div>
+      <div class="Drawer-Content">
+        <slot/>
+      </div>
+      <div v-if="$slots.footer" class="Drawer-Footer">
+        <slot name="footer" />
+      </div>
     </div>
   </div>
 </template>
