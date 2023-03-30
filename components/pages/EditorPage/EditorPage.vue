@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from '#app/nuxt'
 import { watch } from '@vue/runtime-core'
-import { useSeoMeta } from '@vueuse/head'
+import { ReactiveHead, useSeoMeta } from '@vueuse/head'
+import { reactive } from '@vue/reactivity'
 import Header from '@/components/view/Header/Header'
 import Editor from '@/components/view/Editor/Editor.vue'
 import SideBar from '@/components/view/SideBar/SideBar.vue'
@@ -26,12 +27,14 @@ import { useCurrentMap, useSideBar } from '~/composables'
 const { version } = useRuntimeConfig()
 const { isSidebarOpen } = useSideBar()
 const { firstMapLoad, map } = useCurrentMap()
+const head = reactive<ReactiveHead>({
+  title: 'Идет загрузка...',
+})
+useSeoMeta(head)
 
 watch(firstMapLoad, () => {
   map.map((vMap) => {
-    useSeoMeta({
-      title: vMap.settings.title,
-    })
+    head.title = vMap.settings.title
   })
 })
 </script>
