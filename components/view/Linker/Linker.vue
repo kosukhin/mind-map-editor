@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { watch } from '@vue/runtime-core'
 import { ref } from '@vue/reactivity'
-import Button from '~/components/ui/Button/Button.vue'
+import Button from '~/components/ui/Button/Button'
 import {
   useCurrentMap,
   useLayer,

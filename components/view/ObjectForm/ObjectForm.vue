@@ -9,15 +9,15 @@ import {
   useCurrentMap,
   useLayer,
 } from '~/composables'
-import Button from '~/components/ui/Button/Button.vue'
+import Button from '~/components/ui/Button/Button'
 import { SHOW_OBJECT } from '~/constants'
 import { allSet, MapObject } from '~/entities'
 import { removeObjectOnLayer, updateObjectOnLayer } from '~/utils'
-import Textarea from '~/components/ui/Textarea/Textarea.vue'
-import Checkbox from '~/components/ui/Checkbox/Checkbox.vue'
-import Input from '~/components/ui/Input/Input.vue'
+import Textarea from '~/components/ui/Textarea/Textarea'
+import Checkbox from '~/components/ui/Checkbox/Checkbox'
+import Input from '~/components/ui/Input/Input'
 import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
-import Drawer from '~/components/ui/Drawer/Drawer.vue'
+import Drawer from '~/components/ui/Drawer/Drawer'
 
 const { layer, layerObjects } = useLayer()
 const { map } = useCurrentMap()

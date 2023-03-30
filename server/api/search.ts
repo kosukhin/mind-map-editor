@@ -4,6 +4,7 @@ import lunr from 'lunr'
 import { BASE_HOST } from '~/constants'
 
 const { readFileSync } = fs
+// eslint-disable-next-line import/no-named-as-default-member
 const { Index } = lunr
 
 export default defineEventHandler((event) => {

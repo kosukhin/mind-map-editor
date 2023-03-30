@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import svg64 from 'svg64'
 import {
   useMapTypes,
   useCurrentMap,
@@ -16,7 +17,7 @@ import {
 } from '~/constants'
 import { allSet, MapObject } from '~/entities'
 import { addObjectToLayer, createObject } from '~/utils'
-import Linker from '~/components/view/Linker/Linker.vue'
+import Linker from '~/components/view/Linker/Linker'
 
 const { map } = useCurrentMap()
 const { layer, stage, layerObjects } = useLayer()
@@ -87,16 +88,21 @@ const addToCanvas = (e: DragEvent, type: string, useStagePosition = false) => {
   <div class="SideBar">
     <Button type="primary" @click="addType">Добавить тип</Button>
     <div v-if="!map.isNothing" class="SideBar-Items">
-      <div v-for="(type, name) in map.value.types" class="SideBar-Item">
+      <div
+        v-for="(type, name) in map.value.types"
+        :key="name"
+        class="SideBar-Item"
+      >
         <div class="SideBar-ItemName">{{ type.name }}</div>
-        <div
+        <img
+          alt="Перетащите на канвас, чтобы добавить"
+          :src="svg64(type.svg)"
           class="SideBar-ItemImage"
           draggable="true"
           title="Перетащите на канвас, чтобы добавить"
           @dblclick="addToCanvas($event, name, true)"
           @dragend="addToCanvas($event, name)"
-          v-html="type.svg"
-        ></div>
+        />
         <div class="SideBar-ItemButtons">
           <Button size="sm" type="primary" @click="selectType(name)">
             Изменить

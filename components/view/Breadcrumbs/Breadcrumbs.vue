@@ -26,7 +26,7 @@ const mapHistory = computed(() => {
 <template>
   <div>
     <a href="/">Главная</a>
-    <template v-for="history in mapHistory">
+    <template v-for="history in mapHistory" :key="history.name + history.link">
       /
       <a :href="history.link">
         {{ history.name }}

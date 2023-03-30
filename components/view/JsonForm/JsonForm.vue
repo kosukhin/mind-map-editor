@@ -2,11 +2,11 @@
 import { computed, ref } from '@vue/reactivity'
 import { nextTick, watch } from '@vue/runtime-core'
 import { useCurrentMap, useOverlay } from '~/composables'
-import Textarea from '~/components/ui/Textarea/Textarea.vue'
-import Button from '~/components/ui/Button/Button.vue'
+import Textarea from '~/components/ui/Textarea/Textarea'
+import Button from '~/components/ui/Button/Button'
 import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
 import { SHOW_JSON } from '~/constants'
-import Modal from '~/components/ui/Modal/Modal.vue'
+import Modal from '~/components/ui/Modal/Modal'
 
 const { map } = useCurrentMap()
 const { close } = useOverlay()

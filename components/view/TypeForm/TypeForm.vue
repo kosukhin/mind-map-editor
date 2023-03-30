@@ -4,11 +4,11 @@ import { watch } from '@vue/runtime-core'
 import { useCurrentMap, useMapTypes, useOverlay } from '~/composables'
 import { SHOW_TYPE } from '~/constants'
 import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
-import SvgEditor from '~/components/view/SvgEditor/SvgEditor.vue'
-import Button from '~/components/ui/Button/Button.vue'
+import SvgEditor from '~/components/view/SvgEditor/SvgEditor'
+import Button from '~/components/ui/Button/Button'
 import { allSet } from '~/entities'
-import Input from '~/components/ui/Input/Input.vue'
-import Modal from '~/components/ui/Modal/Modal.vue'
+import Input from '~/components/ui/Input/Input'
+import Modal from '~/components/ui/Modal/Modal'
 
 const { close } = useOverlay()
 const { map } = useCurrentMap()

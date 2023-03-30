@@ -7,8 +7,8 @@ import {
   useOverlayAutoClose,
 } from '~/composables'
 import { SHOW_SEARCH } from '~/constants'
-import Input from '~/components/ui/Input/Input.vue'
-import { allSet, MapObject } from '~/entities'
+import Input from '~/components/ui/Input/Input'
+import { MapObject } from '~/entities'
 
 useOverlayAutoClose(SHOW_SEARCH)
 const { stage, layerObjects } = useLayer()
@@ -47,6 +47,7 @@ const moveToObject = (object: MapObject) => {
     <div v-if="searchResults.length" class="Search-Items">
       <div
         v-for="result in searchResults"
+        :key="result.name"
         class="Search-Item"
         @click="moveToObject(result)"
       >

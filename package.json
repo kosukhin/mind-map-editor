@@ -17,18 +17,20 @@
     "@nuxtjs/eslint-module": "^3.1.0",
     "@types/lodash": "^4.14.191",
     "@types/lunr": "^2.3.4",
-    "nuxt": "^3.3.1",
-    "sass": "^1.59.3",
-    "sass-loader": "^13.2.0",
-    "vite-plugin-static-copy": "^0.13.1",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-nuxt": "^3.2.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "nuxt": "^3.3.1",
+    "prettier": "^2.8.7",
+    "sass": "^1.59.3",
+    "sass-loader": "^13.2.0",
     "stylelint": "^14.11.0",
     "stylelint-config-standard": "^28.0.0",
     "stylelint-config-standard-scss": "^5.0.0",
-    "stylelint-processor-html": "^1.0.0"
+    "stylelint-processor-html": "^1.0.0",
+    "typescript": "^5.0.2",
+    "vite-plugin-static-copy": "^0.13.1"
   },
   "dependencies": {
     "@vueuse/core": "^9.13.0",
@@ -37,6 +39,7 @@
     "lodash": "^4.17.21",
     "lunr": "^2.3.9",
     "lunr-languages": "^1.10.0",
+    "svg64": "^2.0.0",
     "svgedit": "^7.3.0",
     "transliteration": "^2.3.5"
   }

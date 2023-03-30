@@ -24,6 +24,9 @@
 
   &-ItemName, &-ItemImage {
     text-align: center;
+    object-fit: none;
+    align-self: center;
+    margin: 8px 0;
     background: transparent;
   }
 

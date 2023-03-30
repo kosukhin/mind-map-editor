@@ -4,24 +4,24 @@ import { watch } from '@vue/runtime-core'
 import { ReactiveHead, useSeoMeta } from '@vueuse/head'
 import { reactive } from '@vue/reactivity'
 import Header from '@/components/view/Header/Header'
-import Editor from '@/components/view/Editor/Editor.vue'
-import SideBar from '@/components/view/SideBar/SideBar.vue'
-import MiniMap from '@/components/view/MiniMap/MiniMap.vue'
-import Notify from '~/components/ui/Notify/Notify.vue'
-import TypeForm from '~/components/view/TypeForm/TypeForm.vue'
-import ObjectForm from '~/components/view/ObjectForm/ObjectForm.vue'
-import Modal from '~/components/ui/Modal/Modal.vue'
+import Editor from '@/components/view/Editor/Editor'
+import SideBar from '@/components/view/SideBar/SideBar'
+import MiniMap from '@/components/view/MiniMap/MiniMap'
+import Notify from '~/components/ui/Notify/Notify'
+import TypeForm from '~/components/view/TypeForm/TypeForm'
+import ObjectForm from '~/components/view/ObjectForm/ObjectForm'
+import Modal from '~/components/ui/Modal/Modal'
 import {
   SHOW_TEXT,
   SHOW_SETTINGS,
   SHOW_SEARCH,
   SHOW_PARENT_TYPES,
 } from '~/constants'
-import MapAsText from '~/components/view/MapAsText/MapAsText.vue'
-import Settings from '~/components/view/Settings/Settings.vue'
-import Search from '~/components/view/Search/Search.vue'
-import JsonForm from '~/components/view/JsonForm/JsonForm.vue'
-import ParentTypes from '~/components/view/ParentTypes/ParentTypes.vue'
+import MapAsText from '~/components/view/MapAsText/MapAsText'
+import Settings from '~/components/view/Settings/Settings'
+import Search from '~/components/view/Search/Search'
+import JsonForm from '~/components/view/JsonForm/JsonForm'
+import ParentTypes from '~/components/view/ParentTypes/ParentTypes'
 import { useCurrentMap, useSideBar } from '~/composables'
 
 const { version } = useRuntimeConfig()

@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+import svg64 from 'svg64'
 import { useCurrentMap, useOverlayAutoClose } from '~/composables'
 import { SHOW_PARENT_TYPES } from '~/constants'
-import Button from '~/components/ui/Button/Button.vue'
+import Button from '~/components/ui/Button/Button'
 import { MapType } from '~/entities'
 
 useOverlayAutoClose(SHOW_PARENT_TYPES)
@@ -24,7 +25,7 @@ const addType = (type: MapType) => {
         class="ParentTypes-Item"
       >
         <div class="ParentTypes-ItemTitle">{{ item.name }}</div>
-        <div class="ParentTypes-ItemImage" v-html="item.svg"></div>
+        <img class="ParentTypes-ItemImage" :src="svg64(item.svg)" alt="" />
         <Button
           class="ParentTypes-ItemButton"
           type="success"
