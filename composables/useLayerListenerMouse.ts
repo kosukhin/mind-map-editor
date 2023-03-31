@@ -8,8 +8,6 @@ export const useLayerListenerMouse = () => {
 
   watch(mouseenter, () => {
     allSet([stage, mouseenter] as const).map(([vStage, e]) => {
-      if (!e?.target) return
-
       if (e.target.attrs.image || e.target.attrs.text) {
         vStage.container().style.cursor = 'pointer'
       }
@@ -17,10 +15,8 @@ export const useLayerListenerMouse = () => {
   })
 
   watch(mouseleave, () => {
-    allSet([stage, mouseleave] as const).map(([vStage, e]) => {
-      if (!e?.target) return
-
-      vStage.container().style.cursor = 'default'
+    allSet([stage, mouseleave] as const).map((args) => {
+      args[0].container().style.cursor = 'default'
     })
   })
 }

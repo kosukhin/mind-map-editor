@@ -16,8 +16,8 @@ export const useLayerListenerClick = createSharedComposable(() => {
   const isLocked = ref(false)
 
   watch([tap, click], () => {
-    allSet([anySet([click, tap]), map] as const).map(([e, vMap]) => {
-      const objectId = e?.target.attrs.objectId
+    allSet([anySet([click, tap] as const), map] as const).map(([e, vMap]) => {
+      const objectId = e.target.attrs.objectId
 
       if (e?.target.attrs.text && objectId) {
         const currentObject = vMap.objects[objectId]

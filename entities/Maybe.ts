@@ -8,10 +8,6 @@ export function MaybeError<T>() {
   return new MaybeErrorInst<T>()
 }
 
-export function Identity<U>(input: U) {
-  return input as U
-}
-
 export class MaybeInst<T> {
   value: Nullable<T> = null
 

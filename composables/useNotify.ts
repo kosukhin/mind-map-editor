@@ -3,6 +3,7 @@ import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
 import { Maybe } from '~/entities'
 import { NOTIFY_DELAY } from '~/constants'
+import { setValue } from '~/utils'
 
 export const useNotify = createSharedComposable(() => {
   const message = reactive(Maybe<string>())
@@ -10,7 +11,7 @@ export const useNotify = createSharedComposable(() => {
   watch(message, () => {
     message.map(() => {
       setTimeout(() => {
-        message.value = null
+        setValue(message, null)
       }, NOTIFY_DELAY)
     })
   })
