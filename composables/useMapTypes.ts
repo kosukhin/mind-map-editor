@@ -3,6 +3,7 @@ import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
 import { allSet, MapType, Maybe } from '~/entities'
 import { useCurrentMap } from '~/composables'
+import { setValue } from '~/utils'
 
 type StrNum = string | number
 
@@ -13,7 +14,7 @@ export const useMapTypes = createSharedComposable(() => {
 
   watch(currentTypeId, () => {
     allSet([map, currentTypeId] as const).map(([vMap, vType]) => {
-      currentType.value = vMap.types[vType]
+      setValue(currentType, vMap.types[vType])
     })
   })
 

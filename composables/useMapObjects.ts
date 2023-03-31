@@ -3,6 +3,7 @@ import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
 import { allSet, MapObject, Maybe } from '~/entities'
 import { useCurrentMap } from '~/composables/useCurrentMap'
+import { setValue } from '~/utils'
 
 export const useMapObjects = createSharedComposable(() => {
   const { map } = useCurrentMap()
@@ -11,7 +12,7 @@ export const useMapObjects = createSharedComposable(() => {
 
   watch([currentObjectId, map], () => {
     allSet([currentObjectId, map] as const).map(([objId, vMap]) => {
-      currentObject.value = vMap.objects[objId]
+      setValue(currentObject, vMap.objects[objId])
     })
   })
 

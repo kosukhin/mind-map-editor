@@ -20,7 +20,7 @@ export const useOverlay = createSharedComposable(() => {
       if (vOverlay !== OVERLAY_CLOSE) {
         history.value.push(vOverlay)
       } else {
-        history.value = []
+        setValue(history, [])
       }
     })
   })
