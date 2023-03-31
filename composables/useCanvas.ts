@@ -4,6 +4,7 @@ import { Maybe, CanvasSize } from '~/entities'
 import { canvasCreateSize } from '~/application'
 import { setValue } from '~/utils'
 import { useDom } from '~/composables'
+import { CANVAS_DOM_ID } from '~/constants'
 
 export const useCanvas = () => {
   const canvas = reactive(Maybe<HTMLElement>())
@@ -11,7 +12,7 @@ export const useCanvas = () => {
   const { findById } = useDom()
 
   onMounted(() => {
-    const canvasElement = findById('canvas')
+    const canvasElement = findById(CANVAS_DOM_ID)
 
     if (canvasElement) {
       setValue(canvas, canvasElement)
