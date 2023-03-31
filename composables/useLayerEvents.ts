@@ -4,6 +4,7 @@ import { KonvaEventObject } from 'konva/lib/Node'
 import { createSharedComposable } from '@vueuse/core'
 import { Maybe, Nullable } from '~/entities'
 import { useLayer } from '~/composables'
+import { setValue } from '~/utils'
 
 type KonvaEvent = Nullable<KonvaEventObject<any>>
 
@@ -20,39 +21,17 @@ export const useLayerEvents = createSharedComposable(() => {
 
   watch(layer, () => {
     layer.map((vLayer) => {
-      vLayer.on('dragend', (e) => {
-        dragend.value = e
-      })
-
-      vLayer.on('dragstart', (e) => {
-        dragstart.value = e
-      })
-
-      vLayer.on('click', (e) => {
-        click.value = e
-      })
-
-      vLayer.on('tap', (e) => {
-        tap.value = e
-      })
-
-      vLayer.on('mouseenter', (e) => {
-        mouseenter.value = e
-      })
-
-      vLayer.on('mouseleave', (e) => {
-        mouseleave.value = e
-      })
-
-      vLayer.on('transformend', (e) => {
-        transformend.value = e
-      })
+      vLayer.on('dragend', setValue(dragend))
+      vLayer.on('dragstart', setValue(dragstart))
+      vLayer.on('click', setValue(click))
+      vLayer.on('tap', setValue(tap))
+      vLayer.on('mouseenter', setValue(mouseenter))
+      vLayer.on('mouseleave', setValue(mouseleave))
+      vLayer.on('transformend', setValue(transformend))
     })
 
     stage.map((vStage) => {
-      vStage.on('wheel', (e) => {
-        wheel.value = e
-      })
+      vStage.on('wheel', setValue(wheel))
     })
   })
 
