@@ -1,21 +1,17 @@
 import { KonvaEventObject } from 'konva/lib/Node'
 import curry from 'lodash/fp/curry'
-import { CanvasSize, Stage } from '~/entities'
-import { canvasRestrictBoundaries } from '~/application'
+import { Maybe, Stage, Vector2d } from '~/entities'
 
 export const layerWheelHandler = curry(
-  (canvasSize: CanvasSize, vStage: Stage, e: KonvaEventObject<WheelEvent>) => {
-    try {
-      e.evt.preventDefault()
-      const dx = e.evt.deltaX
-      const dy = e.evt.deltaY
-      const x = vStage.x() - dx
-      const y = vStage.y() - dy
-      vStage.position(canvasRestrictBoundaries({ x, y }, canvasSize))
-    } catch {
-      return false
-    }
+  (vStage: Stage, e: KonvaEventObject<WheelEvent>) => {
+    const result = Maybe<[Stage, Vector2d]>()
+    e.evt.preventDefault()
+    const dx = e.evt.deltaX
+    const dy = e.evt.deltaY
+    const x = vStage.x() - dx
+    const y = vStage.y() - dy
+    result.value = [vStage, { x, y }]
 
-    return true
+    return result
   }
 )
