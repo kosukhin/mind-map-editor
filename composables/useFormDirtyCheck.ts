@@ -1,8 +1,9 @@
 import { watch } from '@vue/runtime-core'
 import { Ref } from '@vue/reactivity'
 import { useOverlay } from '~/composables/useOverlay'
-import { OVERLAY_CLOSE_ALERT } from '~/constants'
+import { OVERLAY_CLOSE, OVERLAY_CLOSE_ALERT } from '~/constants'
 import { formDirtyCheck } from '~/application'
+import { setValue } from '~/utils'
 
 export const useFormDirtyCheck = (isDirty: Ref<boolean>, formName: string) => {
   const { tryToClose, close } = useOverlay()
@@ -11,7 +12,9 @@ export const useFormDirtyCheck = (isDirty: Ref<boolean>, formName: string) => {
     tryToClose
       .map(formDirtyCheck(isDirty.value, formName))
       .map((needConfirm) => {
-        if (!needConfirm || (needConfirm && confirm(OVERLAY_CLOSE_ALERT))) {
+        setValue(tryToClose, OVERLAY_CLOSE)
+
+        if (!needConfirm || confirm(OVERLAY_CLOSE_ALERT)) {
           close()
         }
       })

@@ -2,20 +2,20 @@ import { watch } from '@vue/runtime-core'
 import { shallowReactive } from '@vue/reactivity'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { createSharedComposable } from '@vueuse/core'
-import { Maybe, Nullable } from '~/entities'
+import { Maybe } from '~/entities'
 import { useLayer } from '~/composables'
 import { setValue } from '~/utils'
 
-type KonvaEvent = Nullable<KonvaEventObject<any>>
+type KonvaEvent = KonvaEventObject<any>
 
 export const useLayerEvents = createSharedComposable(() => {
   const { layer, stage } = useLayer()
-  const dragend = shallowReactive(Maybe<KonvaEvent>())
-  const dragstart = shallowReactive(Maybe<KonvaEvent>())
-  const click = shallowReactive(Maybe<KonvaEvent>())
-  const tap = shallowReactive(Maybe<KonvaEvent>())
-  const mouseenter = shallowReactive(Maybe<KonvaEvent>())
-  const mouseleave = shallowReactive(Maybe<KonvaEvent>())
+  const dragend = shallowReactive(Maybe<KonvaEventObject<DragEvent>>())
+  const dragstart = shallowReactive(Maybe<KonvaEventObject<DragEvent>>())
+  const click = shallowReactive(Maybe<KonvaEventObject<MouseEvent>>())
+  const tap = shallowReactive(Maybe<KonvaEventObject<PointerEvent>>())
+  const mouseenter = shallowReactive(Maybe<KonvaEventObject<MouseEvent>>())
+  const mouseleave = shallowReactive(Maybe<KonvaEventObject<MouseEvent>>())
   const wheel = shallowReactive(Maybe<KonvaEventObject<WheelEvent>>())
   const transformend = shallowReactive(Maybe<KonvaEvent>())
 

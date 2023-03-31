@@ -20,7 +20,7 @@ export class MaybeInst<T> {
   }
 
   map(fn: (value: T) => unknown): unknown {
-    if (!this.value) return null
+    if (this.isNothing) return null
     return fn(this.value)
   }
 }
