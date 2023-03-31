@@ -20,7 +20,7 @@ export const useCanvas = () => {
 
   watch(canvas, () => {
     canvas.map((vCanvas) => {
-      canvasSize.value = canvasCreateSize(vCanvas)
+      setValue(canvasSize, canvasCreateSize(vCanvas))
     })
   })
 

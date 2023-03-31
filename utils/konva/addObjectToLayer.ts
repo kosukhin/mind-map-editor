@@ -1,7 +1,7 @@
 import { Canvg } from 'canvg'
 import Konva from 'konva'
 import { MapObject, MapStructure } from '~/entities/Map'
-import { MapArrow } from '~/entities'
+import { KonvaLayerObject, MapArrow } from '~/entities'
 import { useCurrentMapColors } from '~/composables/useCurrentMapColors'
 
 const { Layer, Image, Text, Arrow } = Konva
@@ -80,5 +80,5 @@ export async function addObjectToLayer(
     })
   }
 
-  return [img, text, ...arrows]
+  return [img, text, ...arrows] as KonvaLayerObject[]
 }
