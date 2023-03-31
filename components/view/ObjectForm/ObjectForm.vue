@@ -95,7 +95,7 @@ const cancel = () => {
     <template #header>
       <h2 class="ObjectForm-MainTitle">Объект карты</h2>
     </template>
-    <div v-if="!settings.isNothing" class="ObjectForm">
+    <div v-if="!settings.isNothing && form" class="ObjectForm">
       <div v-if="!settings.value.isEditable" class="ObjectForm-Inner">
         <div class="ObjectForm-Title">Название</div>
         <div class="ObjectForm-Description">{{ currentObject.value.name }}</div>
