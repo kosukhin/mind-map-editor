@@ -4,6 +4,12 @@ interface Valuable {
   value: any
 }
 
+export const setProperty = curry(
+  (target: any, property: string, value: any) => {
+    target[property] = value
+  }
+)
+
 export const setValue = curry((valuable: Valuable, value: any) => {
   valuable.value = value
 })

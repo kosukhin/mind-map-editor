@@ -4,6 +4,8 @@ import { useCurrentMap } from '~/composables/useCurrentMap'
 import { allSet, MapArrow } from '~/entities'
 import { useLayer } from '~/composables/useLayer'
 import { useCanvasBoundaries } from '~/composables'
+import { setProperty, unwrapTuple } from '~/utils'
+import { layerDragHandler } from '~/application'
 
 export const useLayerListenerDrag = () => {
   const { firstMapLoad } = useCurrentMap()
@@ -13,12 +15,11 @@ export const useLayerListenerDrag = () => {
   const { restrictBoundaries } = useCanvasBoundaries()
 
   watch(dragend, () => {
-    allSet([dragend, map] as const).map(([vDrag, vMap]) => {
-      if (!vDrag?.target) return
-      const currentObject = vMap.objects[vDrag.target.attrs.objectId]
-      currentObject.position[0] = vDrag.target.attrs.x
-      currentObject.position[1] = vDrag.target.attrs.y
-    })
+    allSet([dragend, map] as const)
+      .map(unwrapTuple(layerDragHandler))
+      .map(([object, position]) => {
+        setProperty(object, 'position', [position.x, position.y])
+      })
   })
 
   watch(firstMapLoad, () => {
