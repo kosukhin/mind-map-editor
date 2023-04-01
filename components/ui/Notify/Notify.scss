@@ -4,5 +4,14 @@
   right: var(--defaultPadding);
   padding: var(--defaultPadding);
   font-size: 12px;
-  background: #c8ffc7;
+
+  &_theme {
+    &_success {
+      background: var(--successBG);
+    }
+
+    &_error {
+      background: var(--dangerBG);
+    }
+  }
 }

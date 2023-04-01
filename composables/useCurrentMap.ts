@@ -4,7 +4,7 @@ import { reactive, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
 import { MapStructure, MapType, MaybeError } from '~/entities'
 import { useNotify, useRequestGetMap, useRequestSaveMap } from '~/composables'
-import { MAP_UPDATED } from '~/constants'
+import { MAP_UPDATED, NOTIFY_ERROR, NOTIFY_SUCCESS } from '~/constants'
 import { setError, setValue, setValues } from '~/utils'
 import { mapNormalizeBeforeSave } from '~/application'
 
@@ -35,11 +35,11 @@ export const useCurrentMap = createSharedComposable(() => {
         const normalMap = mapNormalizeBeforeSave(vMap, location.pathname)
         saveMap(normalMap, mapName)
           .then(() => {
-            setValue(message, MAP_UPDATED)
+            setValue(message, [MAP_UPDATED, NOTIFY_SUCCESS])
           })
           .catch((e) => {
             setError(map, String(e))
-            setValue(message, map.error)
+            setValue(message, [map.error, NOTIFY_ERROR])
           })
       })
     },

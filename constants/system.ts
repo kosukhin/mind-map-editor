@@ -5,3 +5,5 @@ export const CANVAS_WIDTH = 3000
 export const CANVAS_HEIGHT = 3000
 export const MINIMAP_SCALE = 0.04
 export const CANVAS_DOM_ID = 'canvas'
+export const NOTIFY_SUCCESS = 'success'
+export const NOTIFY_ERROR = 'error'

@@ -5,8 +5,11 @@ const { message } = useNotify()
 </script>
 
 <template>
-  <div v-if="!message.isNothing" class="Notify">
-    {{ message.value }}
+  <div
+    v-if="!message.isNothing"
+    :class="['Notify', `Notify_theme_${message.value[1]}`]"
+  >
+    {{ message.value[0] }}
   </div>
 </template>
 

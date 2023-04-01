@@ -6,7 +6,7 @@ import { NOTIFY_DELAY } from '~/constants'
 import { setValue } from '~/utils'
 
 export const useNotify = createSharedComposable(() => {
-  const message = reactive(Maybe<string>())
+  const message = reactive(Maybe<[string, string]>())
 
   watch(message, () => {
     message.map(() => {
