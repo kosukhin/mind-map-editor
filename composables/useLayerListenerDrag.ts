@@ -5,9 +5,9 @@ import {
   useCanvasBoundaries,
   useLayer,
 } from '~/composables'
-import { allSet, MapArrow, MapObjectRelation } from '~/entities'
+import { allSet } from '~/entities'
 import { setProperty, unwrapTuple } from '~/utils'
-import { layerDragHandler } from '~/application'
+import { layerDragHandler, layerDragObjectHandler } from '~/application'
 
 export const useLayerListenerDrag = () => {
   const { firstMapLoad } = useCurrentMap()
@@ -25,50 +25,17 @@ export const useLayerListenerDrag = () => {
   })
 
   watch(dragmove, () => {
-    allSet([dragmove, map] as const).map(([dragEvent, vMap]) => {
-      if (!dragEvent.target.attrs.image) {
-        return
-      }
-
-      const objectId = dragEvent.target.attrs.objectId
-      const object = vMap.objects[objectId]
-      const labelWidth = object.name.length * 7
-      const type = vMap.types[object.type]
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const [img, text, ...arrows] = layerObjects.get(objectId)
-
-      text.position({
-        x: dragEvent.target.attrs.x + type.width / 2 - labelWidth / 2,
-        y: dragEvent.target.attrs.y - 15,
+    allSet([dragmove, map] as const)
+      .map(unwrapTuple(layerDragObjectHandler(layerObjects)))
+      .map(({ text, arrows, relatedArrows }) => {
+        text.map(([text, position]) => text.position(position))
+        arrows.map((arrows) => {
+          arrows.forEach(([arrow, points]) => arrow.points(points))
+        })
+        relatedArrows.map((arrows) => {
+          arrows.forEach(([arrow, points]) => arrow.points(points))
+        })
       })
-      ;(arrows as MapArrow[]).forEach((arrow) => {
-        const points = arrow.points()
-        points[0] = dragEvent.target.attrs.x + type.width / 2
-        points[1] = dragEvent.target.attrs.y + type.height / 2
-        arrow.points(points)
-      })
-      const relatedArrows: MapArrow[] = []
-      Object.values(vMap.objects).forEach((relObject) => {
-        const hasRelation = (relObject.arrows as MapObjectRelation).find(
-          (relArrow) => relArrow.id === object.id
-        )
-        if (hasRelation) {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const [img, text, ...arrows] = layerObjects.get(relObject.id)
-          ;(arrows as any[]).forEach((arrow) => {
-            if (arrow.attrs.toObjectId === object.id) {
-              relatedArrows.push(arrow)
-            }
-          })
-        }
-      })
-      relatedArrows.forEach((relArrow) => {
-        const points = relArrow.points()
-        points[2] = dragEvent.target.attrs.x + type.width / 2
-        points[3] = dragEvent.target.attrs.y + type.height / 2
-        relArrow.points(points)
-      })
-    })
   })
 
   watch(firstMapLoad, () => {
