@@ -1,16 +1,23 @@
 <script lang="ts" setup>
-import { ref } from '@vue/reactivity'
+import { reactive } from '@vue/reactivity'
 import { useMiniMap } from '~/composables/useMiniMap'
+import { Maybe } from '~/entities'
 
-const miniMap = ref<HTMLDivElement>()
-const miniMapScreen = ref<HTMLDivElement>()
+const miniMap = reactive(Maybe<HTMLDivElement>())
+const miniMapScreen = reactive(Maybe<HTMLDivElement>())
+const setMiniMap = (vMiniMap) => {
+  miniMap.value = vMiniMap
+}
+const setMiniMapScreen = (vMiniMapScreen) => {
+  miniMapScreen.value = vMiniMapScreen
+}
 useMiniMap(miniMap, miniMapScreen)
 </script>
 
 <template>
   <div class="MiniMap-Wrapper">
-    <div ref="miniMap" class="MiniMap"></div>
-    <div ref="miniMapScreen" class="MiniMap-Screen"></div>
+    <div :ref="setMiniMap" class="MiniMap"></div>
+    <div :ref="setMiniMapScreen" class="MiniMap-Screen"></div>
   </div>
 </template>
 
