@@ -1,9 +1,14 @@
 import Konva from 'konva'
 import { Ref } from '@vue/reactivity'
-import { onMounted, watch } from '@vue/runtime-core'
+import { watch } from '@vue/runtime-core'
 import debounce from 'lodash/debounce'
-import { useCurrentMap, useLayer } from '~/composables'
-import { allSet, MapLayer } from '~/entities'
+import {
+  useCanvas,
+  useCurrentMap,
+  useLayer,
+  useLayerEvents,
+} from '~/composables'
+import { allSet, anySet, MapLayer } from '~/entities'
 import { CANVAS_HEIGHT, CANVAS_WIDTH, MINIMAP_SCALE } from '~/constants'
 
 const { Stage } = Konva
@@ -14,31 +19,30 @@ export const useMiniMap = (
 ) => {
   const { firstMapLoad } = useCurrentMap()
   const { layer, stage } = useLayer()
+  const { canvasSize } = useCanvas()
+  const { dragmove, wheel } = useLayerEvents()
   let previewLayer: MapLayer | null = null
   const scale = MINIMAP_SCALE
   let miniMapWidth = CANVAS_WIDTH
   let miniMapHeight = CANVAS_HEIGHT
 
-  onMounted(() => {
-    const canvas = document.getElementById('canvas')
-    const canvasSize = {
-      w: canvas?.clientWidth ?? CANVAS_WIDTH,
-      h: canvas?.clientHeight ?? CANVAS_HEIGHT,
-    }
-    const miniScreenWidth = canvasSize.w * scale
-    const miniScreenHeight = canvasSize.h * scale
-    miniMapWidth = CANVAS_WIDTH * scale
-    miniMapHeight = CANVAS_HEIGHT * scale
+  watch(canvasSize, () => {
+    canvasSize.map((vCanvasSize) => {
+      const miniScreenWidth = vCanvasSize.w * scale
+      const miniScreenHeight = vCanvasSize.h * scale
+      miniMapWidth = CANVAS_WIDTH * scale
+      miniMapHeight = CANVAS_HEIGHT * scale
 
-    if (miniMap.value) {
-      miniMap.value.style.width = miniMapWidth + 'px'
-      miniMap.value.style.height = miniMapHeight + 'px'
-    }
+      if (miniMap.value) {
+        miniMap.value.style.width = miniMapWidth + 'px'
+        miniMap.value.style.height = miniMapHeight + 'px'
+      }
 
-    if (miniMapScreen.value) {
-      miniMapScreen.value.style.width = miniScreenWidth + 'px'
-      miniMapScreen.value.style.height = miniScreenHeight + 'px'
-    }
+      if (miniMapScreen.value) {
+        miniMapScreen.value.style.width = miniScreenWidth + 'px'
+        miniMapScreen.value.style.height = miniScreenHeight + 'px'
+      }
+    })
   })
 
   watch(firstMapLoad, () => {
@@ -73,14 +77,11 @@ export const useMiniMap = (
         }
       }
 
-      vStage.on('dragmove', () => {
-        redrawPreviewLayer()
-        calculateMiniScreen()
-      })
-
-      vStage.on('wheel', () => {
-        redrawPreviewLayer()
-        calculateMiniScreen()
+      watch([dragmove, wheel], () => {
+        anySet([dragmove, wheel]).map(() => {
+          redrawPreviewLayer()
+          calculateMiniScreen()
+        })
       })
     })
   })
