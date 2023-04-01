@@ -1,9 +1,11 @@
 import { watch } from '@vue/runtime-core'
-import { useLayerEvents } from '~/composables/useLayerEvents'
-import { useCurrentMap } from '~/composables/useCurrentMap'
+import {
+  useLayerEvents,
+  useCurrentMap,
+  useCanvasBoundaries,
+  useLayer,
+} from '~/composables'
 import { allSet, MapArrow } from '~/entities'
-import { useLayer } from '~/composables/useLayer'
-import { useCanvasBoundaries } from '~/composables'
 import { setProperty, unwrapTuple } from '~/utils'
 import { layerDragHandler } from '~/application'
 

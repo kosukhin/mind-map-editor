@@ -1,11 +1,15 @@
 import { watch } from '@vue/runtime-core'
 import { createSharedComposable } from '@vueuse/core'
 import { ref } from '@vue/reactivity'
-import { useCurrentMap, useLayerEvents, useMapObjects } from '~/composables'
-import { useOverlay } from '~/composables/useOverlay'
+import {
+  useCurrentMap,
+  useLayerEvents,
+  useMapObjects,
+  useOverlay,
+} from '~/composables'
 import { allSet, anySet } from '~/entities'
 import { openUrlByObject, setValue, unwrapTuple } from '~/utils'
-import { mapObjectClick } from '~/application/mapObjectClick'
+import { mapObjectClick } from '~/application'
 
 export const useLayerListenerClick = createSharedComposable(() => {
   const { click, tap } = useLayerEvents()

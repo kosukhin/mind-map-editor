@@ -2,7 +2,7 @@ import { reactive } from '@vue/reactivity'
 import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
 import { allSet, MapObject, Maybe } from '~/entities'
-import { useCurrentMap } from '~/composables/useCurrentMap'
+import { useCurrentMap } from '~/composables'
 import { setValue } from '~/utils'
 
 export const useMapObjects = createSharedComposable(() => {

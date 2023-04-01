@@ -1,6 +1,7 @@
 import { useRequest } from '~/composables'
 import { MapResponse, MapStructure, MapType } from '~/entities'
 import { createMap } from '~/utils'
+import { API_GET_MAP, GET, MAP_DEFAULT_TITLE } from '~/constants'
 
 export const useRequestGetMap = () => {
   const { http } = useRequest()
@@ -9,8 +10,8 @@ export const useRequestGetMap = () => {
     mapName: string
   ): Promise<[MapStructure, MapType[]]> => {
     const response = (await http({
-      method: 'get',
-      url: '/api/get-map',
+      method: GET,
+      url: API_GET_MAP,
       params: {
         document: mapName,
       },
@@ -28,7 +29,7 @@ export const useRequestGetMap = () => {
     result.settings = Object.assign(
       {
         colored: false,
-        title: 'Карта X',
+        title: MAP_DEFAULT_TITLE,
       },
       result.settings ?? {}
     )

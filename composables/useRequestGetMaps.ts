@@ -1,13 +1,14 @@
 import { useRequest } from '~/composables'
 import { GetMapsResponse } from '~/entities'
+import { API_GET_MAPS, GET } from '~/constants'
 
 export const useRequestGetMaps = () => {
   const { http } = useRequest()
 
   const getMaps = async (): Promise<GetMapsResponse> => {
     return (await http({
-      method: 'get',
-      url: '/api/get-maps',
+      method: GET,
+      url: API_GET_MAPS,
     })) as GetMapsResponse
   }
 
