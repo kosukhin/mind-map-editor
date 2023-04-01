@@ -18,6 +18,7 @@ export const useLayerEvents = createSharedComposable(() => {
   const mouseleave = shallowReactive(Maybe<KonvaEventObject<MouseEvent>>())
   const wheel = shallowReactive(Maybe<KonvaEventObject<WheelEvent>>())
   const transformend = shallowReactive(Maybe<KonvaEvent>())
+  const dragmove = shallowReactive(Maybe<KonvaEventObject<DragEvent>>())
 
   watch(layer, () => {
     layer.map((vLayer) => {
@@ -32,12 +33,14 @@ export const useLayerEvents = createSharedComposable(() => {
 
     stage.map((vStage) => {
       vStage.on('wheel', setValue(wheel))
+      vStage.on('dragmove', setValue(dragmove))
     })
   })
 
   return {
     dragend,
     dragstart,
+    dragmove,
     click,
     tap,
     mouseenter,

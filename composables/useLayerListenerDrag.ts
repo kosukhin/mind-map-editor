@@ -5,7 +5,7 @@ import {
   useCanvasBoundaries,
   useLayer,
 } from '~/composables'
-import { allSet, MapArrow } from '~/entities'
+import { allSet, MapArrow, MapObjectRelation } from '~/entities'
 import { setProperty, unwrapTuple } from '~/utils'
 import { layerDragHandler } from '~/application'
 
@@ -13,7 +13,7 @@ export const useLayerListenerDrag = () => {
   const { firstMapLoad } = useCurrentMap()
   const { stage, layerObjects } = useLayer()
   const { map } = useCurrentMap()
-  const { dragend } = useLayerEvents()
+  const { dragend, dragmove } = useLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
 
   watch(dragend, () => {
@@ -24,54 +24,56 @@ export const useLayerListenerDrag = () => {
       })
   })
 
-  watch(firstMapLoad, () => {
-    allSet([stage, map] as const).map(([vStage, vMap]) => {
-      vStage.dragBoundFunc(restrictBoundaries)
+  watch(dragmove, () => {
+    allSet([dragmove, map] as const).map(([dragEvent, vMap]) => {
+      if (!dragEvent.target.attrs.image) {
+        return
+      }
 
-      vStage.on('dragmove', (e) => {
-        if (!e.target.attrs.image) {
-          return
-        }
+      const objectId = dragEvent.target.attrs.objectId
+      const object = vMap.objects[objectId]
+      const labelWidth = object.name.length * 7
+      const type = vMap.types[object.type]
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [img, text, ...arrows] = layerObjects.get(objectId)
 
-        const objectId = e.target.attrs.objectId
-        const object = vMap.objects[objectId]
-        const labelWidth = object.name.length * 7
-        const type = vMap.types[object.type]
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [img, text, ...arrows] = layerObjects.get(objectId)
-
-        text.position({
-          x: e.target.attrs.x + type.width / 2 - labelWidth / 2,
-          y: e.target.attrs.y - 15,
-        })
-        ;(arrows as MapArrow[]).forEach((arrow) => {
-          const points = arrow.points()
-          points[0] = e.target.attrs.x + type.width / 2
-          points[1] = e.target.attrs.y + type.height / 2
-          arrow.points(points)
-        })
-        const relatedArrows: MapArrow[] = []
-        Object.values(vMap.objects).forEach((relObject) => {
-          const hasRelation = relObject.arrows.find(
-            (relArrow) => relArrow.id === object.id
-          )
-          if (hasRelation) {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const [img, text, ...arrows] = layerObjects.get(relObject.id)
-            ;(arrows as any[]).forEach((arrow) => {
-              if (arrow.attrs.toObjectId === object.id) {
-                relatedArrows.push(arrow)
-              }
-            })
-          }
-        })
-        relatedArrows.forEach((relArrow) => {
-          const points = relArrow.points()
-          points[2] = e.target.attrs.x + type.width / 2
-          points[3] = e.target.attrs.y + type.height / 2
-          relArrow.points(points)
-        })
+      text.position({
+        x: dragEvent.target.attrs.x + type.width / 2 - labelWidth / 2,
+        y: dragEvent.target.attrs.y - 15,
       })
+      ;(arrows as MapArrow[]).forEach((arrow) => {
+        const points = arrow.points()
+        points[0] = dragEvent.target.attrs.x + type.width / 2
+        points[1] = dragEvent.target.attrs.y + type.height / 2
+        arrow.points(points)
+      })
+      const relatedArrows: MapArrow[] = []
+      Object.values(vMap.objects).forEach((relObject) => {
+        const hasRelation = (relObject.arrows as MapObjectRelation).find(
+          (relArrow) => relArrow.id === object.id
+        )
+        if (hasRelation) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const [img, text, ...arrows] = layerObjects.get(relObject.id)
+          ;(arrows as any[]).forEach((arrow) => {
+            if (arrow.attrs.toObjectId === object.id) {
+              relatedArrows.push(arrow)
+            }
+          })
+        }
+      })
+      relatedArrows.forEach((relArrow) => {
+        const points = relArrow.points()
+        points[2] = dragEvent.target.attrs.x + type.width / 2
+        points[3] = dragEvent.target.attrs.y + type.height / 2
+        relArrow.points(points)
+      })
+    })
+  })
+
+  watch(firstMapLoad, () => {
+    stage.map((vStage) => {
+      vStage.dragBoundFunc(restrictBoundaries)
     })
   })
 }
