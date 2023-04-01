@@ -15,7 +15,6 @@ export const useLayerListenerClick = createSharedComposable(() => {
   const { click, tap } = useLayerEvents()
   const { map } = useCurrentMap()
   const { currentObjectId } = useMapObjects()
-
   const { overlayName } = useOverlay()
   const isLocked = ref(false)
 
