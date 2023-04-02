@@ -1,4 +1,5 @@
 import { Dictionary, MapStructure } from '~/entities'
+import { colorsMap } from '~/constants'
 
 export const canvasCreateColorsHash = (
   vMap: MapStructure
@@ -14,7 +15,6 @@ export const canvasCreateColorsHash = (
 
   const chunk = Math.ceil(clicks.length / 3)
   let groups = {}
-  const colorsMap = ['darkred', 'darkorange', 'darkgreen']
 
   for (let i = 0; i < clicks.length; i += chunk) {
     const color = colorsMap.shift()
