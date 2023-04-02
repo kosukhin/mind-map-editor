@@ -1,5 +1,4 @@
-import { Dictionary } from '~/entities/types/Dictionary'
-import { KonvaLayerObject } from '~/entities/Konva'
+import { Dictionary } from '~/entities/Dictionary'
 
 export interface MapObjectRelation {
   id: string

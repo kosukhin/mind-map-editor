@@ -1,9 +1,9 @@
 import curry from 'lodash/fp/curry'
-import { CanvasSize, Vector2d } from '~/entities'
+import { Size, Vector2d } from '~/entities'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '~/constants'
 
 export const canvasRestrictBoundaries = curry(
-  (pos: Vector2d, canvasSize: CanvasSize): Vector2d => {
+  (pos: Vector2d, canvasSize: Size): Vector2d => {
     const maxRight = CANVAS_WIDTH - canvasSize.w
     const maxBottom = CANVAS_HEIGHT - canvasSize.h
 

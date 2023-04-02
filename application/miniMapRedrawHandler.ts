@@ -1,7 +1,7 @@
 import debounce from 'lodash/debounce'
 import Konva from 'konva'
 import { setElementPosition } from '~/utils'
-import { CanvasSize, Layer, MapLayer, Stage } from '~/entities'
+import { Size, Layer, Stage } from '~/entities'
 import { MINIMAP_SCALE } from '~/constants'
 import { miniMapCalculateSizes } from '~/application'
 
@@ -10,11 +10,11 @@ export const miniMapRedrawHandler = (
   vStage: Stage,
   vMiniMap: HTMLElement,
   vMiniMapScreen: HTMLElement,
-  vCanvasSize: CanvasSize
+  vCanvasSize: Size
 ) => {
   const [{ w, h }] = miniMapCalculateSizes(vCanvasSize)
   const scale = MINIMAP_SCALE
-  let previewLayer: MapLayer | null = null
+  let previewLayer: Layer | null = null
   const previewStage = new Konva.Stage({
     container: vMiniMap,
     width: w,

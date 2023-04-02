@@ -1,10 +1,8 @@
 import { Canvg } from 'canvg'
 import Konva from 'konva'
 import { MapObject, MapStructure } from '~/entities/Map'
-import { KonvaLayerObject, MapArrow } from '~/entities'
+import { KonvaLayerObject, Arrow } from '~/entities'
 import { useCurrentMapColors } from '~/composables/useCurrentMapColors'
-
-const { Layer, Image, Text, Arrow } = Konva
 
 export async function addObjectToLayer(
   layer: InstanceType<typeof Layer>,
@@ -21,7 +19,7 @@ export async function addObjectToLayer(
   const type = types[object.type]
   const v = await Canvg.fromString(ctx, type.svg)
   await v.render()
-  const img = new Image({
+  const img = new Konva.Image({
     name: object.id,
     image: canvas,
     x: object.position[0],
@@ -34,7 +32,7 @@ export async function addObjectToLayer(
   layer.add(img)
 
   const labelWidth = object.name.length * 7
-  const text = new Text({
+  const text = new Konva.Text({
     name: object.id,
     x: object.position[0] + type.width / 2 - labelWidth / 2,
     y: object.position[1] - 15,
@@ -48,7 +46,7 @@ export async function addObjectToLayer(
   })
   layer.add(text)
 
-  const arrows: MapArrow[] = []
+  const arrows: Arrow[] = []
 
   if (object.arrows) {
     object.arrows.forEach((toObjectRelation) => {
@@ -59,7 +57,7 @@ export async function addObjectToLayer(
       }
 
       const toObjectType = map.types[toObject.type]
-      const arrow = new Arrow({
+      const arrow = new Konva.Arrow({
         x: 0,
         y: 0,
         toObjectId: toObjectRelation.id,

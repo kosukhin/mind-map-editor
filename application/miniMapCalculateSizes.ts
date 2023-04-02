@@ -1,7 +1,7 @@
-import { CanvasSize } from '~/entities'
+import { Size } from '~/entities'
 import { CANVAS_HEIGHT, CANVAS_WIDTH, MINIMAP_SCALE } from '~/constants'
 
-export const miniMapCalculateSizes = (vCanvasSize: CanvasSize) => {
+export const miniMapCalculateSizes = (vCanvasSize: Size) => {
   const miniScreenWidth = vCanvasSize.w * MINIMAP_SCALE
   const miniScreenHeight = vCanvasSize.h * MINIMAP_SCALE
   const miniMapWidth = CANVAS_WIDTH * MINIMAP_SCALE

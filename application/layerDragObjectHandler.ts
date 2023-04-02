@@ -2,7 +2,6 @@ import { KonvaEventObject } from 'konva/lib/Node'
 import curry from 'lodash/fp/curry'
 import {
   Arrow,
-  MapArrow,
   MapLayerObjects,
   MapStructure,
   Maybe,
@@ -48,7 +47,7 @@ export const layerDragObjectHandler = curry(
       },
     ]
     const resultArrows: [Arrow, number[]][] = []
-    ;(arrows as MapArrow[]).forEach((arrow) => {
+    ;(arrows as Arrow[]).forEach((arrow) => {
       const points = arrow.points()
       points[0] = dragEvent.target.attrs.x + type.width / 2
       points[1] = dragEvent.target.attrs.y + type.height / 2
