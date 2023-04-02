@@ -9,7 +9,6 @@ export async function addObjectToLayer(
   object: MapObject,
   map: MapStructure
 ) {
-  // TODO ужасный костыль, нужно переосмыслить
   const { colorsHash } = useCurrentMapColors()
   const { types } = map
   const canvas = document.createElement('canvas')
