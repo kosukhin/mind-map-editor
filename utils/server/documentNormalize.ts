@@ -3,5 +3,5 @@ export const documentNormalize = (document: string | null) => {
     document = '_' + document.replaceAll('/', '_')
   }
 
-  return document
+  return document && document.toLowerCase()
 }
