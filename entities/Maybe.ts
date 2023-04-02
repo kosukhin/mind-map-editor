@@ -21,8 +21,11 @@ export class MaybeInst<T> {
   }
 
   chain<U>(fn: (value: T) => U): MaybeInst<U> {
-    const result = Maybe<T>()
-    result.value = fn(this.value)
+    const result = Maybe<U>()
+
+    if (!this.isNothing) {
+      result.value = fn(this.value)
+    }
 
     return result
   }
