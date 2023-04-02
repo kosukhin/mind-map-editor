@@ -10,7 +10,7 @@ export const useFormDirtyCheck = (isDirty: Ref<boolean>, formName: string) => {
 
   watch(tryToClose, () => {
     tryToClose
-      .map(formDirtyCheck(isDirty.value, formName))
+      .chain(formDirtyCheck(isDirty.value, formName))
       .map((needConfirm) => {
         setValue(tryToClose, OVERLAY_CLOSE)
 

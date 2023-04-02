@@ -20,7 +20,7 @@ export const useLayerListenerClick = createSharedComposable(() => {
 
   watch([tap, click], () => {
     allSet([anySet([click, tap] as const), map] as const)
-      .map(unwrapTuple(mapObjectClick(isLocked.value)))
+      .chain(unwrapTuple(mapObjectClick(isLocked.value)))
       .map((result) => {
         result.currentObjectId.map(setValue(currentObjectId))
         result.overlayName.map(setValue(overlayName))

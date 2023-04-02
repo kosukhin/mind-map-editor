@@ -1,7 +1,5 @@
-import { CanvasSize, Group, Size } from '~/entities'
+import { CanvasSize } from '~/entities'
 import { CANVAS_HEIGHT, CANVAS_WIDTH, MINIMAP_SCALE } from '~/constants'
-
-type Result = Size[]
 
 export const miniMapCalculateSizes = (vCanvasSize: CanvasSize) => {
   const miniScreenWidth = vCanvasSize.w * MINIMAP_SCALE
@@ -9,8 +7,8 @@ export const miniMapCalculateSizes = (vCanvasSize: CanvasSize) => {
   const miniMapWidth = CANVAS_WIDTH * MINIMAP_SCALE
   const miniMapHeight = CANVAS_HEIGHT * MINIMAP_SCALE
 
-  return Group<Result>([
+  return [
     { w: miniMapWidth, h: miniMapHeight },
     { w: miniScreenWidth, h: miniScreenHeight },
-  ])
+  ]
 }

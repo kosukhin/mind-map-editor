@@ -15,9 +15,16 @@ export class MaybeInst<T> {
     return this.value === null
   }
 
-  map(fn: (value: T) => unknown): unknown {
+  map<U>(fn: (value: T) => U): U | null {
     if (this.isNothing) return null
     return fn(this.value)
+  }
+
+  chain<U>(fn: (value: T) => U): MaybeInst<U> {
+    const result = Maybe<T>()
+    result.value = fn(this.value)
+
+    return result
   }
 }
 

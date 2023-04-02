@@ -12,7 +12,7 @@ import {
 import { allSet, anySet, MapLayer, MaybeInst } from '~/entities'
 import { CANVAS_HEIGHT, CANVAS_WIDTH, MINIMAP_SCALE } from '~/constants'
 import { setElementPosition, unwrapTuple } from '~/utils'
-import { miniMapCalculateSizes } from '~/application/miniMapCalculateSizes'
+import { miniMapCalculateSizes } from '~/application'
 
 const { Stage } = Konva
 
@@ -31,7 +31,7 @@ export const useMiniMap = (
 
   watch(canvasSize, () => {
     allSet([canvasSize, miniMap, miniMapScreen])
-      .map(unwrapTuple(miniMapCalculateSizes))
+      .chain(unwrapTuple(miniMapCalculateSizes))
       .map(([miniMapSizes, miniMapScreenSizes]) => {
         miniMap.value.style.width = miniMapSizes.w + 'px'
         miniMap.value.style.height = miniMapSizes.h + 'px'
