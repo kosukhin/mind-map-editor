@@ -2,11 +2,8 @@ import { KonvaEventObject } from 'konva/lib/Node'
 import curry from 'lodash/fp/curry'
 import {
   Arrow,
-  Group,
-  GroupInst,
   MapArrow,
   MapLayerObjects,
-  MapObjectRelation,
   MapStructure,
   Maybe,
   MaybeInst,
@@ -25,12 +22,12 @@ export const layerDragObjectHandler = curry(
     layerObjects: MapLayerObjects,
     dragEvent: KonvaEventObject<DragEvent>,
     vMap: MapStructure
-  ): GroupInst<Result> => {
-    const result = Group<Result>({
+  ): Result => {
+    const result = {
       text: Maybe<[Text, Vector2d]>(),
       arrows: Maybe<[Arrow, number[]][]>(),
       relatedArrows: Maybe<[Arrow, number[]][]>(),
-    })
+    }
 
     if (!dragEvent.target.attrs.image) {
       return result
@@ -43,7 +40,7 @@ export const layerDragObjectHandler = curry(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [img, text, ...arrows] = layerObjects.get(objectId)
 
-    result.value.text.value = [
+    result.text.value = [
       text,
       {
         x: dragEvent.target.attrs.x + type.width / 2 - labelWidth / 2,
@@ -57,11 +54,11 @@ export const layerDragObjectHandler = curry(
       points[1] = dragEvent.target.attrs.y + type.height / 2
       resultArrows.push([arrow, points])
     })
-    result.value.arrows.value = resultArrows
+    result.arrows.value = resultArrows
 
     const relatedArrows: MapArrow[] = []
     Object.values(vMap.objects).forEach((relObject) => {
-      const hasRelation = (relObject.arrows as MapObjectRelation).find(
+      const hasRelation = relObject.arrows.find(
         (relArrow) => relArrow.id === object.id
       )
       if (hasRelation) {
@@ -83,7 +80,7 @@ export const layerDragObjectHandler = curry(
       resultRelatedArrows.push([relArrow, points])
     })
 
-    result.value.relatedArrows.value = resultRelatedArrows
+    result.relatedArrows.value = resultRelatedArrows
 
     return result
   }

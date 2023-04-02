@@ -18,7 +18,7 @@ export const useLayerListenerDrag = () => {
 
   watch(dragend, () => {
     allSet([dragend, map] as const)
-      .map(unwrapTuple(layerDragHandler))
+      .chain(unwrapTuple(layerDragHandler))
       .map(([object, position]) => {
         setProperty(object, 'position', [position.x, position.y])
       })
@@ -26,7 +26,7 @@ export const useLayerListenerDrag = () => {
 
   watch(dragmove, () => {
     allSet([dragmove, map] as const)
-      .map(unwrapTuple(layerDragObjectHandler(layerObjects)))
+      .chain(unwrapTuple(layerDragObjectHandler(layerObjects)))
       .map(({ text, arrows, relatedArrows }) => {
         text.map(([text, position]) => text.position(position))
         arrows.map(applyArrowPoints)
