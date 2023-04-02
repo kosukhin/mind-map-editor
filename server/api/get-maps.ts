@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { slugify } from 'transliteration'
 import { MapStructure } from '~/entities'
 import { urlTrim } from '~/utils'
 
@@ -24,7 +25,7 @@ export default defineEventHandler(() => {
           file = structure.settings.title
         }
 
-        url = urlTrim(structure.url)
+        url = slugify(urlTrim(structure.url))
       } catch (e) {}
 
       return {
