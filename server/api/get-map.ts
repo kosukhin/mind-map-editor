@@ -1,4 +1,5 @@
 import fs from 'fs'
+import path from 'path'
 import { BASE_HOST, MAP_PARAM_NAME } from '~/constants/server'
 import { documentNormalize } from '~/utils'
 
@@ -9,7 +10,7 @@ export default defineEventHandler((event) => {
   const url = new URL(BASE_HOST + req.url)
   let document = url.searchParams.get(MAP_PARAM_NAME)
   document = documentNormalize(document)
-  const filePath = `./maps/${document}.json`
+  const filePath = path.join('.', `/maps/${document}.json`)
   const fileExists = existsSync(filePath)
   let data = {}
   const parentTypes: any = {}
@@ -34,8 +35,13 @@ export default defineEventHandler((event) => {
         parentName += documentParts[i]
       }
 
-      if (parentName && existsSync(`./maps/${parentName}.json`)) {
-        const parentData = readFileSync(`./maps/${parentName}.json`)
+      if (
+        parentName &&
+        existsSync(path.join('.', `/maps/${parentName}.json`))
+      ) {
+        const parentData = readFileSync(
+          path.join('.', `/maps/${parentName}.json`)
+        )
         const parentMap = JSON.parse(parentData.toString())
 
         if (parentMap.structure?.settings?.title && dataStructure) {

@@ -1,5 +1,6 @@
 import fs from 'fs'
 // @ts-ignore
+import path from 'path'
 import lunr from 'lunr'
 import { BASE_HOST } from '~/constants'
 
@@ -12,7 +13,7 @@ export default defineEventHandler((event) => {
   const url = new URL(BASE_HOST + req.url)
   const query = url.searchParams.get('query')
 
-  const data = readFileSync('./search-index/idx.json')
+  const data = readFileSync(path.join('.', '/search-index/idx.json'))
   const idx = Index.load(JSON.parse(data.toString()))
   const result = query ? idx.search(query) : []
 
