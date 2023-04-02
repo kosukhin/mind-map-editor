@@ -10,3 +10,4 @@ dist
 .idea
 maps/*.json
 search-index/*.json
+deploy.sh
