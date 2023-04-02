@@ -1,12 +1,12 @@
 .ParentTypes {
   &-Title {
-    margin-bottom: 32px;
+    margin-bottom: var(--mbExLg);
   }
 
   &-Items {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
+    gap: var(--mbMd);
   }
 
   &-Item {
@@ -23,7 +23,7 @@
   }
 
   &-ItemTitle {
-    margin-bottom: 8px;
+    margin-bottom: var(--mbMd);
   }
 
   &-ItemButton {

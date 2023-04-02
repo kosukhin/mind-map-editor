@@ -4,13 +4,13 @@
   }
 
   &-Input {
-    margin-bottom: 16px;
+    margin-bottom: var(--mbExMd);
   }
 
   &-Items {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--mbExMd);
   }
 
   &-ItemName {

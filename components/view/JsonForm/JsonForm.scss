@@ -1,15 +1,15 @@
 .JsonForm {
   &-Title {
-    margin-bottom: 16px;
+    margin-bottom: var(--mbExMd);
   }
 
   &-Text {
-    margin-bottom: 16px;
+    margin-bottom: var(--mbExMd);
   }
 
   &-Buttons {
     display: flex;
-    gap: 8px;
+    gap: var(--mbMd);
   }
 
   &-Button {

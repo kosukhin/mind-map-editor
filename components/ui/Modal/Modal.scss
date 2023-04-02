@@ -24,7 +24,7 @@
     padding: var(--defaultPadding);
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--mbExMd);
   }
 
   &-Back,
@@ -37,7 +37,7 @@
     line-height: 100%;
     cursor: pointer;
     color: var(--dangerBG);
-    padding: 4px;
+    padding: var(--mbSm);
     background: rgba(256, 256, 256, .6);
     display: flex;
     width: 30px;

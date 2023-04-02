@@ -15,7 +15,7 @@
 
   &-Arrow {
     display: flex;
-    margin-bottom: 4px;
+    margin-bottom: var(--mbSm);
     align-items: flex-start;
   }
 
@@ -31,7 +31,7 @@
 
   &-ButtonsGroup {
     display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
+    gap: var(--mbMd);
+    margin-bottom: var(--mbMd);
   }
 }

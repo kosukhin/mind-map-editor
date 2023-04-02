@@ -1,18 +1,18 @@
 .Settings {
   &-ButtonGroup {
     display: flex;
-    gap: 8px;
+    gap: var(--mbMd);
   }
 
   &-Title {
-    margin-bottom: 32px;
+    margin-bottom: var(--mbExLg);
   }
 
   &-Content {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    margin-bottom: 32px;
+    gap: var(--mbExMd);
+    margin-bottom: var(--mbExLg);
   }
 
   &-Button {
