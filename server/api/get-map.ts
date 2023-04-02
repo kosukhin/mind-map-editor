@@ -61,6 +61,7 @@ export default defineEventHandler((event) => {
 
   return {
     ok: fileExists,
+    document,
     data,
     parentTypes: Object.values(parentTypes),
   }
