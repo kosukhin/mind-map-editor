@@ -1,6 +1,7 @@
 import { UnwrapRef } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
 import { watchOnce } from '@vueuse/core'
+import debounce from 'lodash/debounce'
 import {
   useCanvas,
   useCurrentMap,
@@ -36,15 +37,18 @@ export const useMiniMap = (
       .chain(unwrapTuple(miniMapRedrawHandler))
       .map(({ redrawPreviewLayer, calculateMiniScreen }) => {
         setTimeout(redrawPreviewLayer)
-        watch([dragmove, wheel], () => {
-          anySet([dragmove, wheel]).map(() => {
-            redrawPreviewLayer()
-            const [vMiniMapScreen, miniScreenX, miniScreenY] =
-              calculateMiniScreen()
-            vMiniMapScreen.style.top = miniScreenY + 'px'
-            vMiniMapScreen.style.left = miniScreenX + 'px'
-          })
-        })
+        watch(
+          [dragmove, wheel],
+          debounce(() => {
+            anySet([dragmove, wheel]).map(() => {
+              redrawPreviewLayer()
+              const [vMiniMapScreen, miniScreenX, miniScreenY] =
+                calculateMiniScreen()
+              vMiniMapScreen.style.top = miniScreenY + 'px'
+              vMiniMapScreen.style.left = miniScreenX + 'px'
+            })
+          }, 500)
+        )
       })
   })
 }
