@@ -3,8 +3,9 @@ import { computed } from '@vue/reactivity'
 import { useCurrentMap } from '~/composables'
 
 const { mapName, map } = useCurrentMap()
-let link = ''
+
 const mapHistory = computed(() => {
+  let link = ''
   const result: any = map.map((vMap) => {
     return mapName.split('/').map((history) => {
       link += '/' + history

@@ -10,7 +10,7 @@ export function MaybeError<T>() {
 }
 
 export class MaybeInst<T> {
-  option: Option<T>
+  option: Option<T> = none
 
   get value() {
     return isSome(this.option) ? this.option.value : null
