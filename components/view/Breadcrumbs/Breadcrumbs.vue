@@ -14,7 +14,7 @@ const mapHistory = computed(() => {
         name: vMap?.parentNames?.[history] ?? history,
       }
     })
-  })
+  }).value
 
   map.map((vMap) => {
     result[result.length - 1].name = vMap.settings.title

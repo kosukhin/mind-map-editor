@@ -15,7 +15,8 @@ const { close, overlayName } = useOverlay()
 const form = ref({})
 const { stringify } = JSON
 const isDirty = computed(
-  () => stringify(form.value) !== stringify(map.map((vMap) => vMap.settings))
+  () =>
+    stringify(form.value) !== stringify(map.map((vMap) => vMap.settings).value)
 )
 useFormDirtyCheck(isDirty, SHOW_SETTINGS)
 

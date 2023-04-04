@@ -65,9 +65,9 @@ const startRelation = () => {
 </script>
 
 <template>
-  <Button class="Linker" :type="type" @click="startRelation">{{
-    title
-  }}</Button>
+  <Button class="Linker" :type="type" @click="startRelation">
+    {{ title }}
+  </Button>
 </template>
 
 <style scoped lang="scss">

@@ -26,7 +26,7 @@ const searchResults = computed(() => {
     }
 
     return []
-  })
+  }).value
 })
 
 const moveToObject = (object: MapObject) => {

@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity'
 import { nextTick, watch } from '@vue/runtime-core'
-import { useCurrentMap, useOverlay } from '~/composables'
+import { useCurrentMap, useOverlay, useFormDirtyCheck } from '~/composables'
 import Textarea from '~/components/ui/Textarea/Textarea'
 import Button from '~/components/ui/Button/Button'
-import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
 import { SHOW_JSON } from '~/constants'
 import Modal from '~/components/ui/Modal/Modal'
 

@@ -11,7 +11,7 @@ export const useLayerListenerWheel = () => {
 
   watch(wheel, () => {
     allSet([stage, wheel] as const)
-      .chain(unwrapTuple(layerWheelHandler))
+      .map(unwrapTuple(layerWheelHandler))
       .map(([vStage, vector]) => {
         vStage.position(restrictBoundaries(vector as Vector2d))
       })

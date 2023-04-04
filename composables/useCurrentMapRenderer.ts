@@ -8,7 +8,9 @@ import { unwrapTuple } from '~/utils'
 export const useCurrentMapRenderer = () => {
   const { layer, layerObjects } = useLayer()
   const { map } = useCurrentMap()
-  const allInit = computed(() => allSet([layer, map] as const).map(() => true))
+  const allInit = computed(
+    () => allSet([layer, map] as const).map(() => true).value
+  )
 
   watchOnce(allInit, () => {
     allSet([layer, map] as const).map(

@@ -23,7 +23,7 @@ export const useMiniMap = (
 
   watch(canvasSize, () => {
     allSet([canvasSize, miniMap, miniMapScreen])
-      .chain(unwrapTuple(miniMapCalculateSizes))
+      .map(unwrapTuple(miniMapCalculateSizes))
       .map(([miniMapSizes, miniMapScreenSizes]) => {
         miniMap.value.style.width = miniMapSizes.w + 'px'
         miniMap.value.style.height = miniMapSizes.h + 'px'
@@ -34,7 +34,7 @@ export const useMiniMap = (
 
   watchOnce(firstMapLoad, () => {
     allSet([layer, stage, miniMap, miniMapScreen, canvasSize] as const)
-      .chain(unwrapTuple(miniMapRedrawHandler))
+      .map(unwrapTuple(miniMapRedrawHandler))
       .map(({ redrawPreviewLayer, calculateMiniScreen }) => {
         setTimeout(redrawPreviewLayer)
         watch(

@@ -27,7 +27,7 @@ const { settings } = useSettings()
 const form = ref({})
 const { stringify } = JSON
 const isDirty = computed(
-  () => stringify(form.value) !== stringify(currentObject.map((vObj) => vObj))
+  () => stringify(form.value) !== stringify(currentObject.value)
 )
 useFormDirtyCheck(isDirty, SHOW_OBJECT)
 

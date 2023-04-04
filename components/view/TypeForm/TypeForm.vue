@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
-import { useCurrentMap, useMapTypes, useOverlay } from '~/composables'
+import {
+  useCurrentMap,
+  useMapTypes,
+  useOverlay,
+  useFormDirtyCheck,
+} from '~/composables'
 import { SHOW_TYPE } from '~/constants'
-import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
 import SvgEditor from '~/components/view/SvgEditor/SvgEditor'
 import Button from '~/components/ui/Button/Button'
 import { allSet } from '~/entities'
@@ -16,7 +20,7 @@ const { currentTypeId, currentType } = useMapTypes()
 const form = ref<any>({})
 const { stringify } = JSON
 const isDirty = computed(
-  () => stringify(form.value) !== stringify(currentType.map((vType) => vType))
+  () => stringify(form.value) !== stringify(currentType.value)
 )
 useFormDirtyCheck(isDirty, SHOW_TYPE)
 

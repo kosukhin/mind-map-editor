@@ -8,7 +8,7 @@ export const useCurrentMapColors = createSharedComposable(() => {
   const { map } = useCurrentMap()
 
   const colorsHash = computed<Dictionary<string>>(
-    () => map.map(canvasCreateColorsHash) as Dictionary<string>
+    () => map.map(canvasCreateColorsHash).value as Dictionary<string>
   )
 
   return {
