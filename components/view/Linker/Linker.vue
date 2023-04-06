@@ -9,7 +9,7 @@ import {
   useMapObjects,
 } from '~/composables'
 import { updateObjectOnLayer } from '~/utils'
-import { allSet } from '~/entities'
+import { all } from '~/entities'
 
 const { layer, layerObjects } = useLayer()
 const { map } = useCurrentMap()
@@ -41,16 +41,16 @@ const startRelation = () => {
     stopNextObjectWatcher()
     title.value = 'Выберите цель'
     type.value = 'success'
-    const fromObjectId = currentObjectId.map((objId) => objId) as string
+    const fromObjectId = currentObjectId.map((objId) => objId).value as string
 
     const stopSecond = watch(currentObjectId, () => {
       stopSecond()
-      const toObjectId = currentObjectId.map((objId) => objId) as string
+      const toObjectId = currentObjectId.map((objId) => objId).value as string
       title.value = 'Сделать связь'
       isLocked.value = false
       type.value = 'default'
 
-      allSet([map, layer] as const).map(async ([vMap, vLayer]) => {
+      all([map, layer] as const).map(async ([vMap, vLayer]) => {
         vMap.objects[fromObjectId].arrows.push({ id: toObjectId })
         await updateObjectOnLayer(
           layerObjects,

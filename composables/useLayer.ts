@@ -1,14 +1,13 @@
 import { createSharedComposable } from '@vueuse/core'
-import { shallowReactive } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
-import { Maybe, MapLayerObjects, Layer, Stage } from '~/entities'
+import { MapLayerObjects, Layer, Stage, shallowReMaybe } from '~/entities'
 import { useCanvas } from '~/composables'
 import { createLayer, setValue } from '~/utils'
 
 export const useLayer = createSharedComposable(() => {
   const { canvas } = useCanvas()
-  const layer = shallowReactive(Maybe<Layer>())
-  const stage = shallowReactive(Maybe<Stage>())
+  const layer = shallowReMaybe<Layer>()
+  const stage = shallowReMaybe<Stage>()
   const layerObjects: MapLayerObjects = new Map()
 
   watch(canvas, () => {

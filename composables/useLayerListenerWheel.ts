@@ -1,8 +1,8 @@
 import { watch } from '@vue/runtime-core'
 import { useLayer, useLayerEvents, useCanvasBoundaries } from '~/composables'
-import { allSet, Vector2d } from '~/entities'
+import { all, Vector2d } from '~/entities'
 import { layerWheelHandler } from '~/application'
-import { unwrapTuple } from '~/utils'
+import { unwrap } from '~/utils'
 
 export const useLayerListenerWheel = () => {
   const { stage } = useLayer()
@@ -10,8 +10,8 @@ export const useLayerListenerWheel = () => {
   const { restrictBoundaries } = useCanvasBoundaries()
 
   watch(wheel, () => {
-    allSet([stage, wheel] as const)
-      .map(unwrapTuple(layerWheelHandler))
+    all([stage, wheel] as const)
+      .map(unwrap(layerWheelHandler))
       .map(([vStage, vector]) => {
         vStage.position(restrictBoundaries(vector as Vector2d))
       })

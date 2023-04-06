@@ -15,7 +15,7 @@ import {
   SHOW_SETTINGS,
   SIDEBAR_WIDTH,
 } from '~/constants'
-import { allSet, MapObject } from '~/entities'
+import { all, MapObject } from '~/entities'
 import { addObjectToLayer, createObject } from '~/utils'
 import Linker from '~/components/view/Linker/Linker'
 
@@ -63,7 +63,7 @@ const removeType = (typeId: string) => {
 }
 
 const addToCanvas = (e: DragEvent, type: string, useStagePosition = false) => {
-  allSet([layer, map, stage] as const).map(async ([vLayer, vMap, vStage]) => {
+  all([layer, map, stage] as const).map(async ([vLayer, vMap, vStage]) => {
     const vType = vMap.types[type]
     let position: [number, number] = [
       e.x - SIDEBAR_WIDTH - vType.width / 2 + vStage.x() * -1,

@@ -1,21 +1,26 @@
 import { watchOnce } from '@vueuse/core'
 import { computed } from '@vue/reactivity'
 import { useCurrentMap, useLayer } from '~/composables'
-import { allSet } from '~/entities'
+import { all } from '~/entities'
 import { renderMapObjects } from '~/application'
-import { unwrapTuple } from '~/utils'
+import { unwrap } from '~/utils'
 
 export const useCurrentMapRenderer = () => {
   const { layer, layerObjects } = useLayer()
   const { map } = useCurrentMap()
   const allInit = computed(
-    () => allSet([layer, map] as const).map(() => true).value
+    () => all([layer, map] as const).map(() => true).value
   )
 
   watchOnce(allInit, () => {
-    allSet([layer, map] as const).map(
-      unwrapTuple(renderMapObjects(layerObjects))
-    )
+    all([layer, map] as const)
+      .map(unwrap(renderMapObjects))
+      .map(async (objectsResponse) => {
+        const resultObjects = await objectsResponse
+        resultObjects.forEach(([objectId, objects]) => {
+          layerObjects.set(objectId, objects)
+        })
+      })
   })
 
   return {

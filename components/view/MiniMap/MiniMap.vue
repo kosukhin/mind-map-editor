@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { reactive } from '@vue/reactivity'
 import { useMiniMap } from '~/composables/useMiniMap'
-import { Maybe } from '~/entities'
+import { reMaybe } from '~/entities'
 
-const miniMap = reactive(Maybe<HTMLDivElement>())
-const miniMapScreen = reactive(Maybe<HTMLDivElement>())
+const miniMap = reMaybe<HTMLDivElement>()
+const miniMapScreen = reMaybe<HTMLDivElement>()
 const setMiniMap = (vMiniMap) => {
   miniMap.value = vMiniMap
 }

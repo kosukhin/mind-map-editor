@@ -7,9 +7,9 @@ const { message } = useNotify()
 <template>
   <div
     v-if="!message.isNothing"
-    :class="['Notify', `Notify_theme_${message.value[1]}`]"
+    :class="['Notify', `Notify_theme_${message.value && message.value[1]}`]"
   >
-    {{ message.value[0] }}
+    {{ message.value && message.value[0] }}
   </div>
 </template>
 

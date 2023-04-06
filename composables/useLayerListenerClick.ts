@@ -7,8 +7,8 @@ import {
   useMapObjects,
   useOverlay,
 } from '~/composables'
-import { allSet, anySet } from '~/entities'
-import { openUrlByObject, setValue, unwrapTuple } from '~/utils'
+import { all, any } from '~/entities'
+import { openUrlByObject, setValue, unwrap } from '~/utils'
 import { mapObjectClick } from '~/application'
 
 export const useLayerListenerClick = createSharedComposable(() => {
@@ -19,8 +19,8 @@ export const useLayerListenerClick = createSharedComposable(() => {
   const isLocked = ref(false)
 
   watch([tap, click], () => {
-    allSet([anySet([click, tap] as const), map] as const)
-      .map(unwrapTuple(mapObjectClick(isLocked.value)))
+    all([any([click, tap] as const), map] as const)
+      .map(unwrap(mapObjectClick(isLocked.value)))
       .map((result) => {
         result.currentObjectId.map(setValue(currentObjectId))
         result.overlayName.map(setValue(overlayName))

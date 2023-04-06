@@ -11,7 +11,7 @@ import {
 } from '~/composables'
 import Button from '~/components/ui/Button/Button'
 import { SHOW_OBJECT } from '~/constants'
-import { allSet, MapObject } from '~/entities'
+import { all, MapObject } from '~/entities'
 import { removeObjectOnLayer, updateObjectOnLayer } from '~/utils'
 import Textarea from '~/components/ui/Textarea/Textarea'
 import Checkbox from '~/components/ui/Checkbox/Checkbox'
@@ -46,7 +46,7 @@ watch(
 
 const remove = () => {
   close()
-  allSet([currentObject, map] as const).map(([vObj, vMap]) => {
+  all([currentObject, map] as const).map(([vObj, vMap]) => {
     delete vMap.objects[vObj.id]
     removeObjectOnLayer(layerObjects, vObj)
   })
@@ -54,7 +54,7 @@ const remove = () => {
 
 const save = () => {
   close()
-  allSet([currentObject, map, layer] as const).map(
+  all([currentObject, map, layer] as const).map(
     async ([vObj, vMap, vLayer]) => {
       vMap.objects[vObj.id] = {
         ...vMap.objects[vObj.id],
@@ -72,7 +72,7 @@ const save = () => {
 
 const removeRelation = (index: number) => {
   if (!(form.value as MapObject).arrows) return
-  allSet([currentObject, map, layer] as const).map(
+  all([currentObject, map, layer] as const).map(
     async ([vObj, vMap, vLayer]) => {
       ;(form.value as MapObject).arrows.splice(index, 1)
       await updateObjectOnLayer(

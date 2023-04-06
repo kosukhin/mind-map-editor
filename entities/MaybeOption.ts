@@ -1,5 +1,14 @@
-import { isNone, isSome, map, match, none, Option, some } from 'fp-ts/Option'
+import { map, fromNullable, isSome } from 'fp-ts/Option'
+import { reactive, shallowReactive, UnwrapNestedRefs } from '@vue/reactivity'
 import { Nullable } from '~/entities'
+
+export function reMaybe<T>() {
+  return reactive(Maybe<T>()) as MaybeInst<T>
+}
+
+export function shallowReMaybe<T>() {
+  return shallowReactive(Maybe<T>()) as MaybeInst<T>
+}
 
 export function Maybe<T>() {
   return new MaybeInst<T>()
@@ -10,40 +19,20 @@ export function MaybeError<T>() {
 }
 
 export class MaybeInst<T> {
-  option: Option<T> = none
-
-  get value() {
-    return isSome(this.option) ? this.option.value : null
-  }
-
-  set value(value: T | null) {
-    if (value === null) {
-      this.option = none
-    }
-
-    this.option = some(value as T)
-  }
+  value: T | null = null
 
   get isNothing(): boolean {
-    return isNone(this.option)
+    return this.value === null
   }
 
-  match(): T | null {
-    return match(
-      () => null,
-      () => {
-        return this.value
-      }
-    )(this.option)
-  }
-
-  map<U>(fn: (value: T) => U): MaybeInst<U> {
+  map<U>(fn: (value: T) => U): MaybeInst<U | T> {
     if (this.isNothing) {
       return this
     }
 
     const result = Maybe<U>()
-    result.option = map(fn)(this.option)
+    const option = map(fn)(fromNullable(this.value))
+    result.value = isSome(option) ? option.value : null
 
     return result
   }
@@ -61,9 +50,15 @@ type ExtractGenerics<T extends readonly unknown[]> = T extends readonly []
   ? []
   : T extends readonly [MaybeInst<infer V>, ...infer Next]
   ? [V, ...ExtractGenerics<Next>]
+  : T extends readonly MaybeInst<infer V>[]
+  ? V[]
   : never
 
-export function allSet<C extends readonly MaybeInst<unknown>[]>(containers: C) {
+export function rmb<T>(r: T | UnwrapNestedRefs<T>): T {
+  return r as T
+}
+
+export function all<C extends readonly MaybeInst<unknown>[]>(containers: C) {
   if (containers.some((container) => container.isNothing)) {
     return Maybe<ExtractGenerics<C>>()
   }
@@ -75,7 +70,7 @@ export function allSet<C extends readonly MaybeInst<unknown>[]>(containers: C) {
   return result
 }
 
-export function anySet<C extends readonly MaybeInst<unknown>[]>(containers: C) {
+export function any<C extends readonly MaybeInst<unknown>[]>(containers: C) {
   const firstMaybe = (containers.find((container) => !container.isNothing) ??
     null) as Nullable<MaybeInst<ExtractGenerics<C>>>
   const result = Maybe<ExtractGenerics<C>>()

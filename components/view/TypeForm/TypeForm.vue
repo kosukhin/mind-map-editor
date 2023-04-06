@@ -10,7 +10,7 @@ import {
 import { SHOW_TYPE } from '~/constants'
 import SvgEditor from '~/components/view/SvgEditor/SvgEditor'
 import Button from '~/components/ui/Button/Button'
-import { allSet } from '~/entities'
+import { all } from '~/entities'
 import Input from '~/components/ui/Input/Input'
 import Modal from '~/components/ui/Modal/Modal'
 
@@ -41,7 +41,7 @@ watch(
 
 const save = () => {
   close()
-  allSet([map, currentTypeId] as const).map(([vMap, vTypeId]) => {
+  all([map, currentTypeId] as const).map(([vMap, vTypeId]) => {
     vMap.types[vTypeId] = {
       ...vMap.types[vTypeId],
       ...form.value,

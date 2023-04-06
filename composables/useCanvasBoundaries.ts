@@ -6,7 +6,7 @@ export const useCanvasBoundaries = () => {
   const { canvasSize } = useCanvas()
 
   const restrictBoundaries = (pos: Vector2d) =>
-    canvasSize.map(canvasRestrictBoundaries(pos)) as Vector2d
+    canvasSize.map(canvasRestrictBoundaries(pos)).value as Vector2d
 
   return {
     restrictBoundaries,

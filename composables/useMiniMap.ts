@@ -1,4 +1,3 @@
-import { UnwrapRef } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
 import { watchOnce } from '@vueuse/core'
 import debounce from 'lodash/debounce'
@@ -8,13 +7,13 @@ import {
   useLayer,
   useLayerEvents,
 } from '~/composables'
-import { allSet, anySet, MaybeInst } from '~/entities'
-import { unwrapTuple } from '~/utils'
+import { all, any, MaybeInst } from '~/entities'
+import { unwrap } from '~/utils'
 import { miniMapCalculateSizes, miniMapRedrawHandler } from '~/application'
 
 export const useMiniMap = (
-  miniMap: UnwrapRef<MaybeInst<HTMLDivElement>>,
-  miniMapScreen: UnwrapRef<MaybeInst<HTMLDivElement>>
+  miniMap: MaybeInst<HTMLDivElement>,
+  miniMapScreen: MaybeInst<HTMLDivElement>
 ) => {
   const { firstMapLoad } = useCurrentMap()
   const { layer, stage } = useLayer()
@@ -22,8 +21,8 @@ export const useMiniMap = (
   const { dragmove, wheel } = useLayerEvents()
 
   watch(canvasSize, () => {
-    allSet([canvasSize, miniMap, miniMapScreen])
-      .map(unwrapTuple(miniMapCalculateSizes))
+    all([canvasSize] as const)
+      .map(unwrap(miniMapCalculateSizes))
       .map(([miniMapSizes, miniMapScreenSizes]) => {
         miniMap.value.style.width = miniMapSizes.w + 'px'
         miniMap.value.style.height = miniMapSizes.h + 'px'
@@ -33,14 +32,14 @@ export const useMiniMap = (
   })
 
   watchOnce(firstMapLoad, () => {
-    allSet([layer, stage, miniMap, miniMapScreen, canvasSize] as const)
-      .map(unwrapTuple(miniMapRedrawHandler))
+    all([layer, stage, miniMap, miniMapScreen, canvasSize] as const)
+      .map(unwrap(miniMapRedrawHandler))
       .map(({ redrawPreviewLayer, calculateMiniScreen }) => {
         setTimeout(redrawPreviewLayer)
         watch(
           [dragmove, wheel],
           debounce(() => {
-            anySet([dragmove, wheel]).map(() => {
+            any([dragmove, wheel]).map(() => {
               redrawPreviewLayer()
               const [vMiniMapScreen, miniScreenX, miniScreenY] =
                 calculateMiniScreen()

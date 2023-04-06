@@ -5,8 +5,8 @@ import {
   useCanvasBoundaries,
   useLayer,
 } from '~/composables'
-import { allSet } from '~/entities'
-import { applyArrowPoints, setProperty, unwrapTuple } from '~/utils'
+import { all } from '~/entities'
+import { applyArrowPoints, setProperty, unwrap } from '~/utils'
 import { layerDragHandler, layerDragObjectHandler } from '~/application'
 
 export const useLayerListenerDrag = () => {
@@ -17,16 +17,16 @@ export const useLayerListenerDrag = () => {
   const { restrictBoundaries } = useCanvasBoundaries()
 
   watch(dragend, () => {
-    allSet([dragend, map] as const)
-      .map(unwrapTuple(layerDragHandler))
+    all([dragend, map] as const)
+      .map(unwrap(layerDragHandler))
       .map(([object, position]) => {
         setProperty(object, 'position', [position.x, position.y])
       })
   })
 
   watch(dragmove, () => {
-    allSet([dragmove, map] as const)
-      .map(unwrapTuple(layerDragObjectHandler(layerObjects)))
+    all([dragmove, map] as const)
+      .map(unwrap(layerDragObjectHandler(layerObjects)))
       .map(({ text, arrows, relatedArrows }) => {
         text.map(([text, position]) => text.position(position))
         arrows.map(applyArrowPoints)
