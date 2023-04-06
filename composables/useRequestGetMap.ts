@@ -17,7 +17,7 @@ export const useRequestGetMap = () => {
       },
     })) as MapResponse
 
-    return requestNormalizeGetMap(response)
+    return requestNormalizeGetMap(response, mapName)
   }
 
   return {

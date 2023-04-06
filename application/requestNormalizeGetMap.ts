@@ -2,7 +2,10 @@ import { MapResponse, MapStructure, MapType } from '~/entities'
 import { createMap } from '~/utils'
 import { MAP_DEFAULT_TITLE } from '~/constants'
 
-export const requestNormalizeGetMap = (response: MapResponse) => {
+export const requestNormalizeGetMap = (
+  response: MapResponse,
+  mapName: string
+) => {
   let result
 
   if (!response.ok) {
