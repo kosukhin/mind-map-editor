@@ -21,7 +21,7 @@ export default defineNuxtConfig({
               __dirname,
               './node_modules/svgedit/dist/editor/images/*.svg'
             ),
-            dest: 'images/',
+            dest: path.resolve(__dirname, './public/images'),
           },
         ],
       }),
