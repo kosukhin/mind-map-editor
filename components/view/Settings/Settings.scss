@@ -2,6 +2,14 @@
   &-ButtonGroup {
     display: flex;
     gap: var(--mbMd);
+
+    @media (max-height: $tabletMW) {
+      flex-direction: column;
+
+      .Settings-Button {
+        max-width: none;
+      }
+    }
   }
 
   &-Title {
