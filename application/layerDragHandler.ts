@@ -1,10 +1,9 @@
 import { KonvaEventObject } from 'konva/lib/Node'
 import { MapStructure } from '~/entities'
 
-export const layerDragHandler = (
-  vDrag: KonvaEventObject<DragEvent>,
-  vMap: MapStructure
-) => {
+type Params = [KonvaEventObject<DragEvent>, MapStructure]
+
+export const layerDragHandler = ([vDrag, vMap]: Params) => {
   const currentObject = vMap.objects[vDrag.target.attrs.objectId]
 
   return [

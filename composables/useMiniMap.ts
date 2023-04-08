@@ -8,8 +8,8 @@ import {
   useLayerEvents,
 } from '~/composables'
 import { all, any, MaybeInst } from '~/entities'
-import { unwrap } from '~/utils'
 import { miniMapCalculateSizes, miniMapRedrawHandler } from '~/application'
+import { MINI_MAP_UPDATE_FREQ } from '~/constants'
 
 export const useMiniMap = (
   miniMap: MaybeInst<HTMLDivElement>,
@@ -22,31 +22,35 @@ export const useMiniMap = (
 
   watch(canvasSize, () => {
     all([canvasSize] as const)
-      .map(unwrap(miniMapCalculateSizes))
+      .map(miniMapCalculateSizes)
       .map(([miniMapSizes, miniMapScreenSizes]) => {
-        miniMap.value.style.width = miniMapSizes.w + 'px'
-        miniMap.value.style.height = miniMapSizes.h + 'px'
-        miniMapScreen.value.style.width = miniMapScreenSizes.w + 'px'
-        miniMapScreen.value.style.height = miniMapScreenSizes.h + 'px'
+        all([miniMap, miniMapScreen] as const).map(
+          ([vMiniMap, vMiniMapScreen]) => {
+            vMiniMap.style.width = miniMapSizes.w + 'px'
+            vMiniMap.style.height = miniMapSizes.h + 'px'
+            vMiniMapScreen.style.width = miniMapScreenSizes.w + 'px'
+            vMiniMapScreen.style.height = miniMapScreenSizes.h + 'px'
+          }
+        )
       })
   })
 
   watchOnce(firstMapLoad, () => {
     all([layer, stage, miniMap, miniMapScreen, canvasSize] as const)
-      .map(unwrap(miniMapRedrawHandler))
+      .map(miniMapRedrawHandler)
       .map(({ redrawPreviewLayer, calculateMiniScreen }) => {
         setTimeout(redrawPreviewLayer)
         watch(
           [dragmove, wheel],
           debounce(() => {
-            any([dragmove, wheel]).map(() => {
+            any([dragmove, wheel] as const).map(() => {
               redrawPreviewLayer()
               const [vMiniMapScreen, miniScreenX, miniScreenY] =
                 calculateMiniScreen()
               vMiniMapScreen.style.top = miniScreenY + 'px'
               vMiniMapScreen.style.left = miniScreenX + 'px'
             })
-          }, 500)
+          }, MINI_MAP_UPDATE_FREQ)
         )
       })
   })

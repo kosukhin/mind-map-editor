@@ -5,14 +5,16 @@ import { Size, Layer, Stage } from '~/entities'
 import { MINIMAP_SCALE } from '~/constants'
 import { miniMapCalculateSizes } from '~/application'
 
-export const miniMapRedrawHandler = (
-  vLayer: Layer,
-  vStage: Stage,
-  vMiniMap: HTMLElement,
-  vMiniMapScreen: HTMLElement,
-  vCanvasSize: Size
-) => {
-  const [{ w, h }] = miniMapCalculateSizes(vCanvasSize)
+type Params = [Layer, Stage, HTMLElement, HTMLElement, Size]
+
+export const miniMapRedrawHandler = ([
+  vLayer,
+  vStage,
+  vMiniMap,
+  vMiniMapScreen,
+  vCanvasSize,
+]: Params) => {
+  const [{ w, h }] = miniMapCalculateSizes([vCanvasSize])
   const scale = MINIMAP_SCALE
   let previewLayer: Layer | null = null
   const previewStage = new Konva.Stage({

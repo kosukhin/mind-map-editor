@@ -1,5 +1,4 @@
 import { KonvaEventObject } from 'konva/lib/Node'
-import curry from 'lodash/fp/curry'
 import {
   Arrow,
   MapLayerObjects,
@@ -16,12 +15,11 @@ interface Result {
   relatedArrows: MaybeInst<[Arrow, number[]][]>
 }
 
-export const layerDragObjectHandler = curry(
-  (
-    layerObjects: MapLayerObjects,
-    dragEvent: KonvaEventObject<DragEvent>,
-    vMap: MapStructure
-  ): Result => {
+type Params = [KonvaEventObject<DragEvent>, MapStructure]
+
+export const layerDragObjectHandler =
+  (layerObjects: MapLayerObjects) =>
+  ([dragEvent, vMap]: Params): Result => {
     const result = {
       text: Maybe<[Text, Vector2d]>(),
       arrows: Maybe<[Arrow, number[]][]>(),
@@ -55,7 +53,7 @@ export const layerDragObjectHandler = curry(
     })
     result.arrows.value = resultArrows
 
-    const relatedArrows: MapArrow[] = []
+    const relatedArrows: Arrow[] = []
     Object.values(vMap.objects).forEach((relObject) => {
       const hasRelation = relObject.arrows.find(
         (relArrow) => relArrow.id === object.id
@@ -83,4 +81,3 @@ export const layerDragObjectHandler = curry(
 
     return result
   }
-)

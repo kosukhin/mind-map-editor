@@ -6,7 +6,7 @@ import {
   useLayer,
 } from '~/composables'
 import { all } from '~/entities'
-import { applyArrowPoints, setProperty, unwrap } from '~/utils'
+import { applyArrowPoints, setProperty } from '~/utils'
 import { layerDragHandler, layerDragObjectHandler } from '~/application'
 
 export const useLayerListenerDrag = () => {
@@ -18,7 +18,7 @@ export const useLayerListenerDrag = () => {
 
   watch(dragend, () => {
     all([dragend, map] as const)
-      .map(unwrap(layerDragHandler))
+      .map(layerDragHandler)
       .map(([object, position]) => {
         setProperty(object, 'position', [position.x, position.y])
       })
@@ -26,7 +26,7 @@ export const useLayerListenerDrag = () => {
 
   watch(dragmove, () => {
     all([dragmove, map] as const)
-      .map(unwrap(layerDragObjectHandler(layerObjects)))
+      .map(layerDragObjectHandler(layerObjects))
       .map(({ text, arrows, relatedArrows }) => {
         text.map(([text, position]) => text.position(position))
         arrows.map(applyArrowPoints)

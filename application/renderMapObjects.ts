@@ -1,13 +1,24 @@
 import { addObjectToLayer } from '~/utils'
-import { Layer, MapStructure } from '~/entities'
+import { KonvaLayerObject, Layer, MapStructure } from '~/entities'
 
-export const renderMapObjects = async (vLayer: Layer, vMap: MapStructure) => {
-  const resultObjects = []
+type Params = [Layer, MapStructure]
+type Result = Array<[string, KonvaLayerObject[]]>
+
+export const renderMapObjects = ([vLayer, vMap]: Params) => {
+  const promises = []
 
   for (const object of Object.values(vMap.objects)) {
-    const objects = await addObjectToLayer(vLayer, object, vMap)
-    resultObjects.push([object.id, objects])
+    promises.push(addObjectToLayer(vLayer, object, vMap))
   }
 
-  return resultObjects
+  return (fn: (values: Result) => void) => {
+    Promise.all(promises).then((results) => {
+      const resultValue = []
+      results.forEach((curResult) => {
+        resultValue.push([curResult[0].attrs.objectId, curResult])
+      })
+
+      fn(resultValue)
+    })
+  }
 }

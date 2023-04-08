@@ -1,5 +1,4 @@
 import { KonvaEventObject } from 'konva/lib/Node'
-import curry from 'lodash/fp/curry'
 import { MapObject, MapStructure, Maybe, MaybeInst } from '~/entities'
 import { SHOW_OBJECT } from '~/constants'
 
@@ -9,12 +8,11 @@ interface Result {
   overlayName: MaybeInst<string>
 }
 
-export const mapObjectClick = curry(
-  (
-    isLocked: boolean,
-    e: KonvaEventObject<MouseEvent | PointerEvent>,
-    vMap: MapStructure
-  ): Result => {
+type Params = [KonvaEventObject<MouseEvent | PointerEvent>, MapStructure]
+
+export const mapObjectClick =
+  (isLocked: boolean) =>
+  ([e, vMap]: Params): Result => {
     const groupResult = {
       currentObjectId: Maybe<number>(),
       openUrlByObject: Maybe<MapObject>(),
@@ -39,4 +37,3 @@ export const mapObjectClick = curry(
 
     return groupResult
   }
-)
