@@ -2,10 +2,10 @@ import { useRoute } from 'vue-router'
 import { createSharedComposable } from '@vueuse/core'
 import { reactive, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
-import { MapStructure, MapType, MaybeError } from '~/entities'
+import { MapStructure, MapType } from '~/entities'
 import { useNotify, useRequestGetMap, useRequestSaveMap } from '~/composables'
 import { MAP_UPDATED, NOTIFY_ERROR, NOTIFY_SUCCESS } from '~/constants'
-import { setError, setValue, setValues } from '~/utils'
+import { setError, setValue, setValues, MaybeError } from '~/utils'
 import { mapNormalizeBeforeSave } from '~/application'
 
 export const useMap = createSharedComposable(() => {

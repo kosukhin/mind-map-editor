@@ -1,9 +1,8 @@
 import { ref } from '@vue/reactivity'
 import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
-import { reMaybe } from '~/entities'
 import { OVERLAY_CLOSE } from '~/constants'
-import { setValue } from '~/utils'
+import { setValue, reMaybe } from '~/utils'
 
 export const useOverlay = createSharedComposable(() => {
   const overlayName = reMaybe<string>()

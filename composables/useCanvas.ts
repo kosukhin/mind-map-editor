@@ -1,7 +1,7 @@
 import { onMounted, watch } from '@vue/runtime-core'
-import { reMaybe, Size } from '~/entities'
+import { Size } from '~/entities'
 import { canvasCreateSize } from '~/application'
-import { setValue } from '~/utils'
+import { setValue, reMaybe } from '~/utils'
 import { useDom } from '~/composables'
 import { CANVAS_DOM_ID } from '~/constants'
 

@@ -1,8 +1,8 @@
 import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
-import { MapLayerObjects, Layer, Stage, shallowReMaybe } from '~/entities'
+import { MapLayerObjects, Layer, Stage } from '~/entities'
 import { useCanvas } from '~/composables'
-import { createLayer, setValue } from '~/utils'
+import { createLayer, setValue, shallowReMaybe } from '~/utils'
 
 export const useLayer = createSharedComposable(() => {
   const { canvas } = useCanvas()

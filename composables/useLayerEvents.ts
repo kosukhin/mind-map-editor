@@ -1,9 +1,8 @@
 import { watch } from '@vue/runtime-core'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { createSharedComposable } from '@vueuse/core'
-import { shallowReMaybe } from '~/entities'
+import { shallowReMaybe, setValue } from '~/utils'
 import { useLayer } from '~/composables'
-import { setValue } from '~/utils'
 
 export const useLayerEvents = createSharedComposable(() => {
   const { layer, stage } = useLayer()

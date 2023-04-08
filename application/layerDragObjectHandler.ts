@@ -3,11 +3,11 @@ import {
   Arrow,
   MapLayerObjects,
   MapStructure,
-  Maybe,
   MaybeInst,
   Text,
   Vector2d,
 } from '~/entities'
+import { Maybe } from '~/utils'
 
 interface Result {
   text: MaybeInst<[Text, Vector2d]>

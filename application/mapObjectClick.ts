@@ -1,5 +1,6 @@
 import { KonvaEventObject } from 'konva/lib/Node'
-import { MapObject, MapStructure, Maybe, MaybeInst } from '~/entities'
+import { MapObject, MapStructure, MaybeInst } from '~/entities'
+import { Maybe } from '~/utils'
 import { SHOW_OBJECT } from '~/constants'
 
 interface Result {
