@@ -22,11 +22,11 @@ import Settings from '~/components/view/Settings/Settings'
 import Search from '~/components/view/Search/Search'
 import JsonForm from '~/components/view/JsonForm/JsonForm'
 import ParentTypes from '~/components/view/ParentTypes/ParentTypes'
-import { useCurrentMap, useSideBar } from '~/composables'
+import { useMap, useSideBar } from '~/composables'
 
 const { version } = useRuntimeConfig()
 const { isSidebarOpen } = useSideBar()
-const { firstMapLoad, map } = useCurrentMap()
+const { firstMapLoad, map } = useMap()
 const head = reactive<ReactiveHead>({
   title: 'Идет загрузка...',
 })

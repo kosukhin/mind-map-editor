@@ -2,7 +2,7 @@
 import svg64 from 'svg64'
 import {
   useMapTypes,
-  useCurrentMap,
+  useMap,
   useOverlay,
   useLayer,
   useSideBar,
@@ -15,11 +15,11 @@ import {
   SHOW_SETTINGS,
   SIDEBAR_WIDTH,
 } from '~/constants'
-import { all, MapObject } from '~/entities'
+import { all, KonvaLayerObject, MapObject } from '~/entities'
 import { addObjectToLayer, createObject } from '~/utils'
 import Linker from '~/components/view/Linker/Linker'
 
-const { map } = useCurrentMap()
+const { map } = useMap()
 const { layer, stage, layerObjects } = useLayer()
 const { currentTypeId } = useMapTypes()
 const { overlayName } = useOverlay()
@@ -79,7 +79,7 @@ const addToCanvas = (e: DragEvent, type: string, useStagePosition = false) => {
     isSidebarOpen.value = false
     vMap.objects[newObject.id] = newObject
     const objects = await addObjectToLayer(vLayer, newObject, vMap)
-    layerObjects.set(newObject.id, objects)
+    layerObjects.set(newObject.id, objects as KonvaLayerObject[])
   })
 }
 </script>

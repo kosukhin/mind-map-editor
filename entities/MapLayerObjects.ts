@@ -1,3 +1,3 @@
-import { KonvaLayerObject } from '~/entities/Konva'
+import { KonvaLayerObject } from '~/entities'
 
-export type MapLayerObjects = Map<string, KonvaLayerObject>
+export type MapLayerObjects = Map<string, KonvaLayerObject[]>

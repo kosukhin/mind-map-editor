@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity'
 import { nextTick, watch } from '@vue/runtime-core'
-import { useCurrentMap, useOverlay, useFormDirtyCheck } from '~/composables'
+import { useMap, useOverlay, useFormDirtyCheck } from '~/composables'
 import Textarea from '~/components/ui/Textarea/Textarea'
 import Button from '~/components/ui/Button/Button'
 import { SHOW_JSON } from '~/constants'
 import Modal from '~/components/ui/Modal/Modal'
 
-const { map } = useCurrentMap()
+const { map } = useMap()
 const { close } = useOverlay()
 const form = ref('')
 const { stringify } = JSON

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { useCurrentMap, useOverlayAutoClose } from '~/composables'
+import { useMap, useOverlayAutoClose } from '~/composables'
 import Nl2br from '~/components/utils/nl2br/nl2br'
 import { SHOW_TEXT } from '~/constants'
 
-const { map } = useCurrentMap()
+const { map } = useMap()
 useOverlayAutoClose(SHOW_TEXT)
 </script>
 

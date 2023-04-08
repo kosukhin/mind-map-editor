@@ -1,12 +1,7 @@
 import { watch } from '@vue/runtime-core'
 import { watchOnce } from '@vueuse/core'
 import debounce from 'lodash/debounce'
-import {
-  useCanvas,
-  useCurrentMap,
-  useLayer,
-  useLayerEvents,
-} from '~/composables'
+import { useCanvas, useMap, useLayer, useLayerEvents } from '~/composables'
 import { all, any, MaybeInst } from '~/entities'
 import { miniMapCalculateSizes, miniMapRedrawHandler } from '~/application'
 import { MINI_MAP_UPDATE_FREQ } from '~/constants'
@@ -15,7 +10,7 @@ export const useMiniMap = (
   miniMap: MaybeInst<HTMLDivElement>,
   miniMapScreen: MaybeInst<HTMLDivElement>
 ) => {
-  const { firstMapLoad } = useCurrentMap()
+  const { firstMapLoad } = useMap()
   const { layer, stage } = useLayer()
   const { canvasSize } = useCanvas()
   const { dragmove, wheel } = useLayerEvents()

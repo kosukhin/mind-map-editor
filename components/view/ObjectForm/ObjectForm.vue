@@ -6,7 +6,7 @@ import {
   useMapObjects,
   useSettings,
   useOverlay,
-  useCurrentMap,
+  useMap,
   useLayer,
 } from '~/composables'
 import Button from '~/components/ui/Button/Button'
@@ -20,7 +20,7 @@ import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
 import Drawer from '~/components/ui/Drawer/Drawer'
 
 const { layer, layerObjects } = useLayer()
-const { map } = useCurrentMap()
+const { map } = useMap()
 const { close } = useOverlay()
 const { currentObject } = useMapObjects()
 const { settings } = useSettings()

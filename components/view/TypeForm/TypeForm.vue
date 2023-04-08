@@ -2,7 +2,7 @@
 import { computed, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
 import {
-  useCurrentMap,
+  useMap,
   useMapTypes,
   useOverlay,
   useFormDirtyCheck,
@@ -15,7 +15,7 @@ import Input from '~/components/ui/Input/Input'
 import Modal from '~/components/ui/Modal/Modal'
 
 const { close } = useOverlay()
-const { map } = useCurrentMap()
+const { map } = useMap()
 const { currentTypeId, currentType } = useMapTypes()
 const form = ref<any>({})
 const { stringify } = JSON

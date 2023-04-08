@@ -25,7 +25,7 @@ export class MaybeInst<T> {
     return this.value === null
   }
 
-  map<U>(fn: (value: T) => U): MaybeInst<U> | MaybeInst<T> {
+  map<U>(fn: (value: T) => U): MaybeInst<U> {
     if (this.isNothing) {
       return this
     }

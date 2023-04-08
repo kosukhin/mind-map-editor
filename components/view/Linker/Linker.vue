@@ -3,7 +3,7 @@ import { watch } from '@vue/runtime-core'
 import { ref } from '@vue/reactivity'
 import Button from '~/components/ui/Button/Button'
 import {
-  useCurrentMap,
+  useMap,
   useLayer,
   useLayerListenerClick,
   useMapObjects,
@@ -12,7 +12,7 @@ import { updateObjectOnLayer } from '~/utils'
 import { all } from '~/entities'
 
 const { layer, layerObjects } = useLayer()
-const { map } = useCurrentMap()
+const { map } = useMap()
 const { currentObjectId } = useMapObjects()
 const { isLocked } = useLayerListenerClick()
 const title = ref('Сделать связь')

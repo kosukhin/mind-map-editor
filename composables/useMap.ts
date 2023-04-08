@@ -8,7 +8,7 @@ import { MAP_UPDATED, NOTIFY_ERROR, NOTIFY_SUCCESS } from '~/constants'
 import { setError, setValue, setValues } from '~/utils'
 import { mapNormalizeBeforeSave } from '~/application'
 
-export const useCurrentMap = createSharedComposable(() => {
+export const useMap = createSharedComposable(() => {
   const { message } = useNotify()
   const firstMapLoad = ref(false)
   const parentTypes = ref<MapType[]>([])

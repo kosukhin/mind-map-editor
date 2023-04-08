@@ -1,7 +1,7 @@
 import { watch } from '@vue/runtime-core'
 import {
   useLayerEvents,
-  useCurrentMap,
+  useMap,
   useCanvasBoundaries,
   useLayer,
 } from '~/composables'
@@ -10,9 +10,9 @@ import { applyArrowPoints, setProperty } from '~/utils'
 import { layerDragHandler, layerDragObjectHandler } from '~/application'
 
 export const useLayerListenerDrag = () => {
-  const { firstMapLoad } = useCurrentMap()
+  const { firstMapLoad } = useMap()
   const { stage, layerObjects } = useLayer()
-  const { map } = useCurrentMap()
+  const { map } = useMap()
   const { dragend, dragmove } = useLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
 

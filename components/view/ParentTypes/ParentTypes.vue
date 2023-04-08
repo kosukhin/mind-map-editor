@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import svg64 from 'svg64'
-import { useCurrentMap, useOverlayAutoClose } from '~/composables'
+import { useMap, useOverlayAutoClose } from '~/composables'
 import { SHOW_PARENT_TYPES } from '~/constants'
 import Button from '~/components/ui/Button/Button'
 import { MapType } from '~/entities'
 
 useOverlayAutoClose(SHOW_PARENT_TYPES)
-const { map, parentTypes } = useCurrentMap()
+const { map, parentTypes } = useMap()
 
 const addType = (type: MapType) => {
   map.map((vMap) => {

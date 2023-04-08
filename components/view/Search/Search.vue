@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity'
 import {
-  useCurrentMap,
+  useMap,
   useLayer,
   useOverlay,
   useOverlayAutoClose,
@@ -12,7 +12,7 @@ import { MapObject } from '~/entities'
 
 useOverlayAutoClose(SHOW_SEARCH)
 const { stage, layerObjects } = useLayer()
-const { map } = useCurrentMap()
+const { map } = useMap()
 const { close } = useOverlay()
 
 const query = ref('')

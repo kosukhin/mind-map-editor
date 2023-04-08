@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useCurrentMapRenderer, useLayerListeners } from '~/composables'
+import { useMapRenderer, useLayerListeners } from '~/composables'
 import { CANVAS_DOM_ID } from '~/constants'
 
-useCurrentMapRenderer()
+useMapRenderer()
 useLayerListeners()
 </script>
 

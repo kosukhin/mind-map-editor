@@ -1,13 +1,13 @@
 import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
 import { all, MapType, reMaybe } from '~/entities'
-import { useCurrentMap } from '~/composables'
+import { useMap } from '~/composables'
 import { setValue } from '~/utils'
 
 type StrNum = string | number
 
 export const useMapTypes = createSharedComposable(() => {
-  const { map } = useCurrentMap()
+  const { map } = useMap()
   const currentTypeId = reMaybe<StrNum>()
   const currentType = reMaybe<MapType>()
 

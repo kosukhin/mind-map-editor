@@ -12,9 +12,9 @@ export const useRequest = () => {
 
     const response = await fetch(url, {
       method: request.method,
-      body: [POST, PUT].includes(request.method)
+      body: ([POST, PUT].includes(request.method)
         ? JSON.stringify(request.data)
-        : null,
+        : null) as string,
     })
 
     if (response.status !== 200) {

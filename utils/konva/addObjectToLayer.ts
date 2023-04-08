@@ -2,14 +2,14 @@ import { Canvg } from 'canvg'
 import Konva from 'konva'
 import { MapObject, MapStructure } from '~/entities/Map'
 import { KonvaLayerObject, Arrow } from '~/entities'
-import { useCurrentMapColors } from '~/composables/useCurrentMapColors'
+import { useMapColors } from '~/composables/useMapColors'
 
 export async function addObjectToLayer(
   layer: InstanceType<typeof Layer>,
   object: MapObject,
   map: MapStructure
 ) {
-  const { colorsHash } = useCurrentMapColors()
+  const { colorsHash } = useMapColors()
   const { types } = map
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')

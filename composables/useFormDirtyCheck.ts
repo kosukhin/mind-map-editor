@@ -1,6 +1,6 @@
 import { watch } from '@vue/runtime-core'
 import { Ref } from '@vue/reactivity'
-import { useOverlay } from '~/composables/useOverlay'
+import { useOverlay } from '~/composables'
 import { OVERLAY_CLOSE, OVERLAY_CLOSE_ALERT } from '~/constants'
 import { formDirtyCheck } from '~/application'
 import { setValue } from '~/utils'
