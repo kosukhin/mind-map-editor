@@ -4,19 +4,21 @@ import {
   useMap,
   useCanvasBoundaries,
   useLayer,
+  useLocks,
 } from '~/composables'
 import { all } from '~/entities'
 import { applyArrowPoints, setProperty } from '~/utils'
 import { layerDragHandler, layerDragObjectHandler } from '~/application'
 
 export const useLayerListenerDrag = () => {
-  const { firstMapLoad } = useMap()
   const { stage, layerObjects } = useLayer()
-  const { map } = useMap()
+  const { firstMapLoad, map } = useMap()
+  const { isClickLocked } = useLocks()
   const { dragend, dragmove } = useLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
 
   watch(dragend, () => {
+    if (isClickLocked.value) return
     all([dragend, map] as const)
       .map(layerDragHandler)
       .map(([object, position]) => {
@@ -25,6 +27,7 @@ export const useLayerListenerDrag = () => {
   })
 
   watch(dragmove, () => {
+    if (isClickLocked.value) return
     all([dragmove, map] as const)
       .map(layerDragObjectHandler(layerObjects))
       .map(({ text, arrows, relatedArrows }) => {

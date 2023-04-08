@@ -2,19 +2,14 @@
 import { watch } from '@vue/runtime-core'
 import { ref } from '@vue/reactivity'
 import Button from '~/components/ui/Button/Button'
-import {
-  useMap,
-  useLayer,
-  useLayerListenerClick,
-  useMapObjects,
-} from '~/composables'
+import { useMap, useLayer, useMapObjects, useLocks } from '~/composables'
 import { updateObjectOnLayer } from '~/utils'
 import { all } from '~/entities'
 
 const { layer, layerObjects } = useLayer()
 const { map } = useMap()
 const { currentObjectId } = useMapObjects()
-const { isLocked } = useLayerListenerClick()
+const { isClickLocked } = useLocks()
 const title = ref('Сделать связь')
 const type = ref('default')
 
@@ -27,14 +22,14 @@ const startRelation = () => {
     }
 
     title.value = 'Сделать связь'
-    isLocked.value = false
+    isClickLocked.value = false
     type.value = 'default'
     return
   }
 
   currentObjectId.value = null
   title.value = 'Выберите источник'
-  isLocked.value = true
+  isClickLocked.value = true
   type.value = 'danger'
   stopNextObjectWatcher = watch(currentObjectId, () => {
     if (!stopNextObjectWatcher) return
@@ -47,7 +42,7 @@ const startRelation = () => {
       stopSecond()
       const toObjectId = currentObjectId.map((objId) => objId).value as string
       title.value = 'Сделать связь'
-      isLocked.value = false
+      isClickLocked.value = false
       type.value = 'default'
 
       all([map, layer] as const).map(async ([vMap, vLayer]) => {

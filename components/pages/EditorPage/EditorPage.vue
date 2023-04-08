@@ -22,9 +22,10 @@ import Settings from '~/components/view/Settings/Settings'
 import Search from '~/components/view/Search/Search'
 import JsonForm from '~/components/view/JsonForm/JsonForm'
 import ParentTypes from '~/components/view/ParentTypes/ParentTypes'
-import { useMap, useSideBar } from '~/composables'
+import { useLocks, useMap, useSideBar } from '~/composables'
 
 const { version } = useRuntimeConfig()
+const { isClickLocked } = useLocks()
 const { isSidebarOpen } = useSideBar()
 const { firstMapLoad, map } = useMap()
 const head = reactive<ReactiveHead>({
@@ -40,6 +41,13 @@ watch(firstMapLoad, () => {
 </script>
 
 <template>
+  <div
+    class="EditorPage-SelectionLocker"
+    @click="isClickLocked = !isClickLocked"
+  >
+    <div v-if="!isClickLocked" class="opened">&#128275;</div>
+    <div v-if="isClickLocked" class="closed">&#128274;</div>
+  </div>
   <div class="EditorPage-SideBarOpener" @click="isSidebarOpen = !isSidebarOpen">
     <hr />
     <hr />

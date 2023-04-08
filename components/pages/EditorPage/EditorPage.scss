@@ -21,7 +21,7 @@
   &-SideBar {
     grid-area: nav;
 
-    @media (max-width: 768px) {
+    @media (max-width: $tabletMW) {
       position: absolute;
       top: 50px;
       z-index: 9;
@@ -31,6 +31,25 @@
       &.opened {
         left: 0;
       }
+    }
+  }
+
+  &-SelectionLocker {
+    visibility: hidden;
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    right: 0;
+    bottom: 130px;
+    width: 50px;
+    height: 50px;
+    background: var(--headerBG);
+    z-index: 1;
+    font-size: 20px;
+
+    @media (max-width: $tabletMW) {
+      visibility: visible;
     }
   }
 
@@ -54,7 +73,7 @@
       border-width: 2px;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: $tabletMW) {
       visibility: visible;
     }
   }
@@ -69,7 +88,7 @@
     right: var(--defaultPadding);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: $tabletMW) {
     grid-template-areas:
     "header header"
     "editor editor";
