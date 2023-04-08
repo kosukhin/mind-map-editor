@@ -1,31 +1,21 @@
-import { Nullable } from '~/entities'
-
-export function Maybe<T>() {
-  return new MaybeInst<T>()
-}
-
-export function MaybeError<T>() {
-  return new MaybeErrorInst<T>()
-}
+import { map, fromNullable, isSome } from 'fp-ts/Option'
+import { Maybe } from '~/utils'
 
 export class MaybeInst<T> {
-  value: Nullable<T> = null
+  value: T | null = null
 
   get isNothing(): boolean {
     return this.value === null
   }
 
-  map<U>(fn: (value: T) => U): U | null {
-    if (this.isNothing) return null
-    return fn(this.value)
-  }
-
-  chain<U>(fn: (value: T) => U): MaybeInst<U> {
-    const result = Maybe<U>()
-
-    if (!this.isNothing) {
-      result.value = fn(this.value)
+  map<U>(fn: (value: T) => U): MaybeInst<U> {
+    if (this.isNothing) {
+      return this
     }
+
+    const result = Maybe<U>()
+    const option = map(fn)(fromNullable(this.value))
+    result.value = isSome(option) ? option.value : null
 
     return result
   }
@@ -37,36 +27,4 @@ export class MaybeErrorInst<T> extends MaybeInst<T> {
   get isNothing(): boolean {
     return super.isNothing || this.error !== ''
   }
-
-  map(fn: (value: T) => unknown): unknown {
-    if (this.error !== '') return null
-    return super.map(fn)
-  }
-}
-
-type ExtractGenerics<T extends readonly unknown[]> = T extends readonly []
-  ? []
-  : T extends readonly [MaybeInst<infer V>, ...infer Next]
-  ? [V, ...ExtractGenerics<Next>]
-  : never
-
-export function allSet<C extends readonly MaybeInst<unknown>[]>(containers: C) {
-  if (containers.some((container) => container.isNothing)) {
-    return Maybe<ExtractGenerics<C>>()
-  }
-
-  const values = containers.map((container) => container.value)
-  const result = Maybe<ExtractGenerics<C>>()
-  result.value = values as ExtractGenerics<C>
-
-  return result
-}
-
-export function anySet<C extends readonly MaybeInst<unknown>[]>(containers: C) {
-  const firstMaybe = (containers.find((container) => !container.isNothing) ??
-    null) as Nullable<MaybeInst<ExtractGenerics<C>>>
-  const result = Maybe<ExtractGenerics<C>>()
-  result.value = firstMaybe ? firstMaybe.value : null
-
-  return result as (typeof containers)[number]
 }

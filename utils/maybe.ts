@@ -1,6 +1,5 @@
-import { map, fromNullable, isSome } from 'fp-ts/Option'
-import { reactive, shallowReactive, UnwrapNestedRefs } from '@vue/reactivity'
-import { Nullable } from '~/entities'
+import { reactive, shallowReactive } from '@vue/reactivity'
+import { MaybeErrorInst, MaybeInst, Nullable } from '~/entities'
 
 export function reMaybe<T>() {
   return reactive(Maybe<T>()) as MaybeInst<T>
@@ -18,34 +17,6 @@ export function MaybeError<T>() {
   return new MaybeErrorInst<T>()
 }
 
-export class MaybeInst<T> {
-  value: T | null = null
-
-  get isNothing(): boolean {
-    return this.value === null
-  }
-
-  map<U>(fn: (value: T) => U): MaybeInst<U> {
-    if (this.isNothing) {
-      return this
-    }
-
-    const result = Maybe<U>()
-    const option = map(fn)(fromNullable(this.value))
-    result.value = isSome(option) ? option.value : null
-
-    return result
-  }
-}
-
-export class MaybeErrorInst<T> extends MaybeInst<T> {
-  error: string = ''
-
-  get isNothing(): boolean {
-    return super.isNothing || this.error !== ''
-  }
-}
-
 type ExtractGenerics<T extends readonly unknown[]> = T extends readonly []
   ? []
   : T extends readonly [MaybeInst<infer V>, ...infer Next]
@@ -53,10 +24,6 @@ type ExtractGenerics<T extends readonly unknown[]> = T extends readonly []
   : T extends readonly MaybeInst<infer V>[]
   ? V[]
   : never
-
-export function rmb<T>(r: T | UnwrapNestedRefs<T>): T {
-  return r as T
-}
 
 export function all<C extends readonly MaybeInst<unknown>[]>(containers: C) {
   if (containers.some((container) => container.isNothing)) {

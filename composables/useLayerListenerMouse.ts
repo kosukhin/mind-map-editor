@@ -1,6 +1,6 @@
 import { watch } from '@vue/runtime-core'
 import { useLayerEvents, useLayer } from '~/composables'
-import { all } from '~/entities'
+import { all } from '~/utils'
 
 export const useLayerListenerMouse = () => {
   const { stage } = useLayer()

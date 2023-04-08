@@ -5,8 +5,6 @@ import { shallowReMaybe } from '~/entities'
 import { useLayer } from '~/composables'
 import { setValue } from '~/utils'
 
-type KonvaEvent = KonvaEventObject<any>
-
 export const useLayerEvents = createSharedComposable(() => {
   const { layer, stage } = useLayer()
   const dragend = shallowReMaybe<KonvaEventObject<DragEvent>>()
@@ -17,7 +15,6 @@ export const useLayerEvents = createSharedComposable(() => {
   const mouseenter = shallowReMaybe<KonvaEventObject<MouseEvent>>()
   const mouseleave = shallowReMaybe<KonvaEventObject<MouseEvent>>()
   const wheel = shallowReMaybe<KonvaEventObject<WheelEvent>>()
-  const transformend = shallowReMaybe<KonvaEvent>()
   const dragmove = shallowReMaybe<KonvaEventObject<DragEvent>>()
 
   watch(layer, () => {
@@ -28,7 +25,6 @@ export const useLayerEvents = createSharedComposable(() => {
       vLayer.on('tap', setValue(tap))
       vLayer.on('mouseenter', setValue(mouseenter))
       vLayer.on('mouseleave', setValue(mouseleave))
-      vLayer.on('transformend', setValue(transformend))
     })
 
     stage.map((vStage) => {
@@ -49,6 +45,5 @@ export const useLayerEvents = createSharedComposable(() => {
     mouseenter,
     mouseleave,
     wheel,
-    transformend,
   }
 })

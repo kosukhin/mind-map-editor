@@ -3,20 +3,20 @@ import { computed, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
 import {
   useMap,
-  useMapTypes,
+  useMapType,
   useOverlay,
   useFormDirtyCheck,
 } from '~/composables'
 import { SHOW_TYPE } from '~/constants'
 import SvgEditor from '~/components/view/SvgEditor/SvgEditor'
 import Button from '~/components/ui/Button/Button'
-import { all } from '~/entities'
+import { all } from '~/utils'
 import Input from '~/components/ui/Input/Input'
 import Modal from '~/components/ui/Modal/Modal'
 
 const { close } = useOverlay()
 const { map } = useMap()
-const { currentTypeId, currentType } = useMapTypes()
+const { currentTypeId, currentType } = useMapType()
 const form = ref<any>({})
 const { stringify } = JSON
 const isDirty = computed(

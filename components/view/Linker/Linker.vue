@@ -2,13 +2,12 @@
 import { watch } from '@vue/runtime-core'
 import { ref } from '@vue/reactivity'
 import Button from '~/components/ui/Button/Button'
-import { useMap, useLayer, useMapObjects, useLocks } from '~/composables'
-import { updateObjectOnLayer } from '~/utils'
-import { all } from '~/entities'
+import { useMap, useLayer, useMapObject, useLocks } from '~/composables'
+import { updateObjectOnLayer, all } from '~/utils'
 
 const { layer, layerObjects } = useLayer()
 const { map } = useMap()
-const { currentObjectId } = useMapObjects()
+const { currentObjectId } = useMapObject()
 const { isClickLocked } = useLocks()
 const title = ref('Сделать связь')
 const type = ref('default')

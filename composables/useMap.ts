@@ -1,8 +1,8 @@
 import { useRoute } from 'vue-router'
 import { createSharedComposable } from '@vueuse/core'
-import { ref } from '@vue/reactivity'
+import { reactive, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
-import { MapStructure, MapType, reMaybe } from '~/entities'
+import { MapStructure, MapType, MaybeError } from '~/entities'
 import { useNotify, useRequestGetMap, useRequestSaveMap } from '~/composables'
 import { MAP_UPDATED, NOTIFY_ERROR, NOTIFY_SUCCESS } from '~/constants'
 import { setError, setValue, setValues } from '~/utils'
@@ -12,7 +12,7 @@ export const useMap = createSharedComposable(() => {
   const { message } = useNotify()
   const firstMapLoad = ref(false)
   const parentTypes = ref<MapType[]>([])
-  const map = reMaybe<MapStructure>()
+  const map = reactive(MaybeError<MapStructure>())
   const route = useRoute()
   const mapName = route.path.replace('/', '')
   const { getMap } = useRequestGetMap()

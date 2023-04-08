@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import svg64 from 'svg64'
 import {
-  useMapTypes,
+  useMapType,
   useMap,
   useOverlay,
   useLayer,
@@ -15,13 +15,13 @@ import {
   SHOW_SETTINGS,
   SIDEBAR_WIDTH,
 } from '~/constants'
-import { all, KonvaLayerObject, MapObject } from '~/entities'
-import { addObjectToLayer, createObject } from '~/utils'
+import { KonvaLayerObject, MapObject } from '~/entities'
+import { addObjectToLayer, createObject, all } from '~/utils'
 import Linker from '~/components/view/Linker/Linker'
 
 const { map } = useMap()
 const { layer, stage, layerObjects } = useLayer()
-const { currentTypeId } = useMapTypes()
+const { currentTypeId } = useMapType()
 const { overlayName } = useOverlay()
 const { isSidebarOpen } = useSideBar()
 

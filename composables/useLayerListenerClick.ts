@@ -3,20 +3,19 @@ import { createSharedComposable } from '@vueuse/core'
 import {
   useMap,
   useLayerEvents,
-  useMapObjects,
+  useMapObject,
   useOverlay,
   useSideBar,
   useLocks,
 } from '~/composables'
-import { all, any } from '~/entities'
-import { openUrlByObject, setValue } from '~/utils'
+import { all, any, openUrlByObject, setValue } from '~/utils'
 import { mapObjectClick } from '~/application'
 
 export const useLayerListenerClick = createSharedComposable(() => {
   const { click, tap, stageClick } = useLayerEvents()
   const { map } = useMap()
   const { isSidebarOpen } = useSideBar()
-  const { currentObjectId } = useMapObjects()
+  const { currentObjectId } = useMapObject()
   const { overlayName } = useOverlay()
   const { isClickLocked } = useLocks()
 

@@ -3,7 +3,7 @@ import { watch } from '@vue/runtime-core'
 import { computed, ref } from '@vue/reactivity'
 import cloneDeep from 'lodash/cloneDeep'
 import {
-  useMapObjects,
+  useMapObject,
   useSettings,
   useOverlay,
   useMap,
@@ -11,8 +11,8 @@ import {
 } from '~/composables'
 import Button from '~/components/ui/Button/Button'
 import { SHOW_OBJECT } from '~/constants'
-import { all, MapObject } from '~/entities'
-import { removeObjectOnLayer, updateObjectOnLayer } from '~/utils'
+import { MapObject } from '~/entities'
+import { all, removeObjectOnLayer, updateObjectOnLayer } from '~/utils'
 import Textarea from '~/components/ui/Textarea/Textarea'
 import Checkbox from '~/components/ui/Checkbox/Checkbox'
 import Input from '~/components/ui/Input/Input'
@@ -22,7 +22,7 @@ import Drawer from '~/components/ui/Drawer/Drawer'
 const { layer, layerObjects } = useLayer()
 const { map } = useMap()
 const { close } = useOverlay()
-const { currentObject } = useMapObjects()
+const { currentObject } = useMapObject()
 const { settings } = useSettings()
 const form = ref({})
 const { stringify } = JSON

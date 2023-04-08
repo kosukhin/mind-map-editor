@@ -1,7 +1,7 @@
 import { watchOnce } from '@vueuse/core'
 import { computed } from '@vue/reactivity'
 import { useMap, useLayer } from '~/composables'
-import { all } from '~/entities'
+import { all } from '~/utils'
 import { renderMapObjects } from '~/application'
 
 export const useMapRenderer = () => {

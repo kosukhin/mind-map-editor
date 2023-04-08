@@ -6,8 +6,7 @@ import {
   useLayer,
   useLocks,
 } from '~/composables'
-import { all } from '~/entities'
-import { applyArrowPoints, setProperty } from '~/utils'
+import { all, applyArrowPoints, setProperty } from '~/utils'
 import { layerDragHandler, layerDragObjectHandler } from '~/application'
 
 export const useLayerListenerDrag = () => {

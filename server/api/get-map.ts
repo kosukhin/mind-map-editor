@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { BASE_HOST, MAP_PARAM_NAME } from '~/constants/server'
+import { BASE_HOST, MAP_PARAM_NAME } from '~/constants'
 import { documentNormalize } from '~/utils'
 
 const { existsSync, readFileSync } = fs

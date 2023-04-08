@@ -1,8 +1,14 @@
 import { Canvg } from 'canvg'
 import Konva from 'konva'
-import { MapObject, MapStructure } from '~/entities/Map'
-import { KonvaLayerObject, Arrow } from '~/entities'
-import { useMapColors } from '~/composables/useMapColors'
+import {
+  MapObject,
+  MapStructure,
+  KonvaLayerObject,
+  Arrow,
+  Layer,
+  Stage,
+} from '~/entities'
+import { useMapColors } from '~/composables'
 
 export async function addObjectToLayer(
   layer: InstanceType<typeof Layer>,
@@ -78,4 +84,42 @@ export async function addObjectToLayer(
   }
 
   return [img, text, ...arrows] as KonvaLayerObject[]
+}
+
+export function createLayer(editorWrapper: HTMLElement): [Layer, Stage] {
+  const canvasSize = {
+    width: editorWrapper.clientWidth,
+    height: editorWrapper.clientHeight,
+  }
+  const stage = new Konva.Stage({
+    ...canvasSize,
+    container: 'canvas',
+    fill: '#eee',
+    draggable: true,
+  })
+
+  const layer = new Konva.Layer()
+  stage.add(layer)
+  layer.draw()
+
+  return [layer, stage]
+}
+
+export const removeObjectOnLayer = (
+  layerObjects: Map<string, any>,
+  object: MapObject
+) => {
+  const objects = layerObjects.get(object.id)
+  objects.forEach((object: any) => object.remove())
+}
+
+export const updateObjectOnLayer = async (
+  layerObjects: Map<string, any>,
+  layer: Layer,
+  object: MapObject,
+  vMap: MapStructure
+) => {
+  removeObjectOnLayer(layerObjects, object)
+  const newObjects = await addObjectToLayer(layer, object, vMap)
+  layerObjects.set(object.id, newObjects)
 }
