@@ -9,6 +9,7 @@ import {
   Stage,
 } from '~/entities'
 import { useMapColors } from '~/composables'
+import { maxNewLineLength } from '~/utils/common'
 
 export async function addObjectToLayer(
   layer: InstanceType<typeof Layer>,
@@ -37,11 +38,12 @@ export async function addObjectToLayer(
   })
   layer.add(img)
 
-  const labelWidth = object.name.length * 7
+  const labelWidth = maxNewLineLength(object.name) * 7
+
   const text = new Konva.Text({
     name: object.id,
     x: object.position[0] + type.width / 2 - labelWidth / 2,
-    y: object.position[1] - 15,
+    y: object.position[1] + type.height + 5,
     text: object.name,
     fontSize: 11,
     fontFamily: 'Monospace',

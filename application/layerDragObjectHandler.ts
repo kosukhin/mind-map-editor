@@ -7,7 +7,7 @@ import {
   Text,
   Vector2d,
 } from '~/entities'
-import { Maybe } from '~/utils'
+import { maxNewLineLength, Maybe } from '~/utils'
 
 interface Result {
   text: MaybeInst<[Text, Vector2d]>
@@ -32,7 +32,7 @@ export const layerDragObjectHandler =
 
     const objectId = dragEvent.target.attrs.objectId
     const object = vMap.objects[objectId]
-    const labelWidth = object.name.length * 7
+    const labelWidth = maxNewLineLength(object.name) * 7
     const type = vMap.types[object.type]
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [img, text, ...arrows] = layerObjects.get(objectId)
@@ -41,7 +41,7 @@ export const layerDragObjectHandler =
       text,
       {
         x: dragEvent.target.attrs.x + type.width / 2 - labelWidth / 2,
-        y: dragEvent.target.attrs.y - 15,
+        y: dragEvent.target.attrs.y + type.height + 5,
       },
     ]
     const resultArrows: [Arrow, number[]][] = []
