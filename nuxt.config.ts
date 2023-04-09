@@ -28,6 +28,10 @@ export default defineNuxtConfig({
             dest: path.resolve(__dirname, './public/maps'),
           },
           {
+            src: path.resolve(__dirname, './maps/*.json'),
+            dest: path.resolve(__dirname, './.nuxt/dist/server'),
+          },
+          {
             src: path.resolve(__dirname, './search-index/*'),
             dest: path.resolve(__dirname, './public/search-index'),
           },
