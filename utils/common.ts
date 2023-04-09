@@ -39,6 +39,10 @@ export const urlTrim = (url: string) => {
 }
 
 export const maxNewLineLength = (str: string): number => {
+  if (!str) {
+    return 0
+  }
+
   return Math.max.apply(
     null,
     str.split('\n').map((str) => str.length)
