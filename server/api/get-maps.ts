@@ -7,7 +7,7 @@ import { urlTrim } from '~/utils'
 const { readdirSync, readFileSync } = fs
 
 export default defineEventHandler(() => {
-  const files = readdirSync('./chunks/app')
+  const files = readdirSync('/var')
 
   return { files }
 
