@@ -13,7 +13,7 @@ export default defineEventHandler((event) => {
   const url = new URL(BASE_HOST + req.url)
   const query = url.searchParams.get('query')
 
-  const data = readFileSync(path.join('.', '/search-index/idx.json'))
+  const data = readFileSync(path.join('.', '/public/search-index/idx.json'))
   const idx = Index.load(JSON.parse(data.toString()))
   const result = query ? idx.search(query) : []
 

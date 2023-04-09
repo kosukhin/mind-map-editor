@@ -17,12 +17,12 @@ lunrLanguagesRu(lunr)
 const { readFileSync, readdirSync } = fs
 
 export default defineEventHandler(() => {
-  const dirs = readdirSync(path.join('.', '/maps')).filter((file) => {
+  const dirs = readdirSync(path.join('.', '/public/maps')).filter((file) => {
     return !['README.md'].includes(file)
   })
   const documents: any[] = []
   dirs.forEach((dir) => {
-    const data = readFileSync(path.join('.', '/maps/') + dir)
+    const data = readFileSync(path.join('.', '/public/maps/') + dir)
     const document = JSON.parse(data.toString()) as { structure: MapStructure }
 
     Object.values(document.structure.objects).forEach((object) => {
@@ -47,7 +47,10 @@ export default defineEventHandler(() => {
     }, this)
   })
   const serializedIdx = JSON.stringify(idx)
-  fs.writeFileSync(path.join('.', '/search-index/idx.json'), serializedIdx)
+  fs.writeFileSync(
+    path.join('.', '/public/search-index/idx.json'),
+    serializedIdx
+  )
 
   return {
     result: true,

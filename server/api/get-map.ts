@@ -10,7 +10,7 @@ export default defineEventHandler((event) => {
   const url = new URL(BASE_HOST + req.url)
   let document = url.searchParams.get(MAP_PARAM_NAME)
   document = documentNormalize(document)
-  const filePath = path.join('.', `/maps/${document}.json`)
+  const filePath = path.join('.', `/public/maps/${document}.json`)
   const fileExists = existsSync(filePath)
   let data = {}
   const parentTypes: any = {}
@@ -37,10 +37,10 @@ export default defineEventHandler((event) => {
 
       if (
         parentName &&
-        existsSync(path.join('.', `/maps/${parentName}.json`))
+        existsSync(path.join('.', `/public/maps/${parentName}.json`))
       ) {
         const parentData = readFileSync(
-          path.join('.', `/maps/${parentName}.json`)
+          path.join('.', `/public/maps/${parentName}.json`)
         )
         const parentMap = JSON.parse(parentData.toString())
 

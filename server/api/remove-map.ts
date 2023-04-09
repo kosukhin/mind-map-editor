@@ -10,7 +10,7 @@ export default defineEventHandler((event) => {
   const url = new URL(BASE_HOST + req.url)
   let document = url.searchParams.get(MAP_PARAM_NAME)
   document = documentNormalize(document)
-  const filePath = path.join('.', `/maps/${document}.json`)
+  const filePath = path.join('.', `/public/maps/${document}.json`)
 
   if (existsSync(filePath)) {
     unlinkSync(filePath)
