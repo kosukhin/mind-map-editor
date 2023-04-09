@@ -55,6 +55,8 @@ export const layerDragObjectHandler =
 
     const relatedArrows: Arrow[] = []
     Object.values(vMap.objects).forEach((relObject) => {
+      if (!relObject.arrows) return
+
       const hasRelation = relObject.arrows.find(
         (relArrow) => relArrow.id === object.id
       )
