@@ -1,4 +1,4 @@
-import curry from 'lodash/fp/curry'
+import curry from 'lodash/fp/curry.js'
 
 interface ErrorFull {
   error: any

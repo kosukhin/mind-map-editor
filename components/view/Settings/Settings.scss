@@ -3,7 +3,7 @@
     display: flex;
     gap: var(--mbMd);
 
-    @media (max-height: $tabletMW) {
+    @media (max-width: $tabletMW) {
       flex-direction: column;
 
       .Settings-Button {
