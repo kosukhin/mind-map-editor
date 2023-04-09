@@ -3,11 +3,15 @@ import path from 'path'
 import { slugify } from 'transliteration'
 import { MapStructure } from '~/entities'
 import { urlTrim } from '~/utils'
+import { BASE_HOST, MAP_PARAM_NAME } from '~/constants'
 
 const { readdirSync, readFileSync } = fs
 
-export default defineEventHandler(() => {
-  const files = readdirSync('./')
+export default defineEventHandler((event) => {
+  const { req } = event.node
+  const url = new URL(BASE_HOST + req.url)
+  const document = url.searchParams.get(MAP_PARAM_NAME)
+  const files = readdirSync(document ?? './')
 
   return { files }
 
