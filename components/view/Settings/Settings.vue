@@ -79,6 +79,11 @@ const onSave = () => {
           <Input v-model="form.title" />
         </label>
       </div>
+      <div class="Settings-Row">
+        <a href="https://github.com/kosukhin/mind-map-creator" target="_blank">
+          Репозиторий на GitHub
+        </a>
+      </div>
     </div>
     <div class="Settings-ButtonGroup">
       <Button class="Settings-Button" type="success" @click="onSave"
