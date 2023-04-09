@@ -7,35 +7,39 @@ import { urlTrim } from '~/utils'
 const { readdirSync, readFileSync } = fs
 
 export default defineEventHandler(() => {
-  const files = readdirSync(path.join('.', '/public/maps/'))
-    .filter((file) => {
-      return file[0] !== '_' && !['README.md'].includes(file)
-    })
-    .map((file) => {
-      let content = {}
-      let url = ''
+  const files = readdirSync('./')
 
-      try {
-        content = JSON.parse(
-          readFileSync(path.join('.', `/public/maps/${file}`)).toString()
-        ) as MapStructure
-        const structure = (content as any).structure as MapStructure
+  return { files }
 
-        if (structure.settings) {
-          file = structure.settings.title
-        }
-
-        url = slugify(urlTrim(structure.url))
-      } catch (e) {}
-
-      return {
-        name: file,
-        url,
-      }
-    })
-
-  return {
-    ok: true,
-    files,
-  }
+  // const files = readdirSync(path.join('.', '/public/maps/'))
+  //   .filter((file) => {
+  //     return file[0] !== '_' && !['README.md'].includes(file)
+  //   })
+  //   .map((file) => {
+  //     let content = {}
+  //     let url = ''
+  //
+  //     try {
+  //       content = JSON.parse(
+  //         readFileSync(path.join('.', `/public/maps/${file}`)).toString()
+  //       ) as MapStructure
+  //       const structure = (content as any).structure as MapStructure
+  //
+  //       if (structure.settings) {
+  //         file = structure.settings.title
+  //       }
+  //
+  //       url = slugify(urlTrim(structure.url))
+  //     } catch (e) {}
+  //
+  //     return {
+  //       name: file,
+  //       url,
+  //     }
+  //   })
+  //
+  // return {
+  //   ok: true,
+  //   files,
+  // }
 })
