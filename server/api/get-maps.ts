@@ -7,7 +7,7 @@ import { urlTrim } from '~/utils'
 const { readdirSync, readFileSync } = fs
 
 export default defineEventHandler(() => {
-  const files = readdirSync('/var')
+  const files = readdirSync('/var/task')
 
   return { files }
 
