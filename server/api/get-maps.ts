@@ -14,6 +14,7 @@ export default defineEventHandler((event) => {
   const files = readdirSync(document ?? './')
 
   return {
+    url: req.url,
     files,
     document,
   }
