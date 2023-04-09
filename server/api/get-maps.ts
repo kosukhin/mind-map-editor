@@ -13,7 +13,10 @@ export default defineEventHandler((event) => {
   const document = url.searchParams.get(MAP_PARAM_NAME)
   const files = readdirSync(document ?? './')
 
-  return { files }
+  return {
+    files,
+    document,
+  }
 
   // const files = readdirSync(path.join('.', '/public/maps/'))
   //   .filter((file) => {
