@@ -13,7 +13,8 @@ import { useMapColors } from '~/composables'
 export async function addObjectToLayer(
   layer: InstanceType<typeof Layer>,
   object: MapObject,
-  map: MapStructure
+  map: MapStructure,
+  clickLocked = false
 ) {
   const { colorsHash } = useMapColors()
   const { types } = map
@@ -31,7 +32,7 @@ export async function addObjectToLayer(
     y: object.position[1],
     width: type.width,
     height: type.height,
-    draggable: true,
+    draggable: !clickLocked,
     objectId: object.id,
   })
   layer.add(img)

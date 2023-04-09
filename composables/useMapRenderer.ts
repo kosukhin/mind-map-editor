@@ -1,18 +1,19 @@
 import { watchOnce } from '@vueuse/core'
 import { computed } from '@vue/reactivity'
-import { useMap, useLayer } from '~/composables'
+import { useMap, useLayer, useLocks } from '~/composables'
 import { all } from '~/utils'
 import { renderMapObjects } from '~/application'
 
 export const useMapRenderer = () => {
   const { layer, layerObjects } = useLayer()
   const { map } = useMap()
+  const { maybeClickLocked } = useLocks()
   const allInit = computed(
     () => all([layer, map] as const).map(() => true).value
   )
 
   watchOnce(allInit, () => {
-    all([layer, map] as const)
+    all([layer, map, maybeClickLocked] as const)
       .map(renderMapObjects)
       .map((dispatch) => {
         dispatch((vObjects) => {

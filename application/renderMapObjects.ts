@@ -1,14 +1,14 @@
 import { addObjectToLayer } from '~/utils'
 import { KonvaLayerObject, Layer, MapStructure } from '~/entities'
 
-type Params = [Layer, MapStructure]
+type Params = [Layer, MapStructure, boolean]
 type Result = Array<[string, KonvaLayerObject[]]>
 
-export const renderMapObjects = ([vLayer, vMap]: Params) => {
+export const renderMapObjects = ([vLayer, vMap, vClickLocked]: Params) => {
   const promises = []
 
   for (const object of Object.values(vMap.objects)) {
-    promises.push(addObjectToLayer(vLayer, object, vMap))
+    promises.push(addObjectToLayer(vLayer, object, vMap, vClickLocked))
   }
 
   return (fn: (values: Result) => void) => {

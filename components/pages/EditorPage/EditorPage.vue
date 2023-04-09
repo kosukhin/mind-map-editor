@@ -43,6 +43,7 @@ watch(firstMapLoad, () => {
 <template>
   <div
     class="EditorPage-SelectionLocker"
+    :class="{ 'EditorPage-SelectionLocker_Locked': isClickLocked }"
     @click="isClickLocked = !isClickLocked"
   >
     <div v-if="!isClickLocked" class="opened">&#128275;</div>
