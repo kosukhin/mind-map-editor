@@ -3,6 +3,7 @@ import path from 'path'
 import { slugify } from 'transliteration'
 import { MapStructure } from '~/entities'
 import { urlTrim } from '~/utils'
+import { DEMO_FILES } from '~/constants'
 
 const { readdirSync, readFileSync } = fs
 
@@ -12,7 +13,7 @@ export default defineEventHandler(() => {
   if (runtimeConfig.public.isDemo) {
     return {
       ok: true,
-      files: [{ name: 'Демо', url: 'demo' }],
+      files: DEMO_FILES,
     }
   }
 

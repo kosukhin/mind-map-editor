@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { BASE_HOST, MAP_PARAM_NAME } from '~/constants'
+import { BASE_HOST, DEMO_DOC_NAME, MAP_PARAM_NAME } from '~/constants'
 import { documentNormalize } from '~/utils'
 import demoMap from '~/maps/demo.json'
 
@@ -12,7 +12,7 @@ export default defineEventHandler((event) => {
   if (runtimeConfig.public.isDemo) {
     return {
       ok: true,
-      document: 'demo',
+      document: DEMO_DOC_NAME,
       data: demoMap,
       parentTypes: [],
     }
