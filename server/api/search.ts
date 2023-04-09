@@ -9,6 +9,12 @@ const { readFileSync } = fs
 const { Index } = lunr
 
 export default defineEventHandler((event) => {
+  const runtimeConfig = useRuntimeConfig()
+
+  if (runtimeConfig.public.isDemo) {
+    throw new Error('Демо режим')
+  }
+
   const { req } = event.node
   const url = new URL(BASE_HOST + req.url)
   const query = url.searchParams.get('query')

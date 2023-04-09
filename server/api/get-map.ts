@@ -2,10 +2,22 @@ import fs from 'fs'
 import path from 'path'
 import { BASE_HOST, MAP_PARAM_NAME } from '~/constants'
 import { documentNormalize } from '~/utils'
+import demoMap from '~/maps/demo.json'
 
 const { existsSync, readFileSync } = fs
 
 export default defineEventHandler((event) => {
+  const runtimeConfig = useRuntimeConfig()
+
+  if (runtimeConfig.public.isDemo) {
+    return {
+      ok: true,
+      document: 'demo',
+      data: demoMap,
+      parentTypes: [],
+    }
+  }
+
   const { req } = event.node
   const url = new URL(BASE_HOST + req.url)
   let document = url.searchParams.get(MAP_PARAM_NAME)

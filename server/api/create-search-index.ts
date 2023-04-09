@@ -17,6 +17,12 @@ lunrLanguagesRu(lunr)
 const { readFileSync, readdirSync } = fs
 
 export default defineEventHandler(() => {
+  const runtimeConfig = useRuntimeConfig()
+
+  if (runtimeConfig.public.isDemo) {
+    throw new Error('Демо режим')
+  }
+
   const dirs = readdirSync(path.join('.', '/public/maps')).filter((file) => {
     return !['README.md'].includes(file)
   })

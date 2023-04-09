@@ -6,6 +6,12 @@ import { documentNormalize } from '~/utils'
 const { existsSync, unlinkSync } = fs
 
 export default defineEventHandler((event) => {
+  const runtimeConfig = useRuntimeConfig()
+
+  if (runtimeConfig.public.isDemo) {
+    throw new Error('Демо режим')
+  }
+
   const { req } = event.node
   const url = new URL(BASE_HOST + req.url)
   let document = url.searchParams.get(MAP_PARAM_NAME)

@@ -2,6 +2,7 @@ import path from 'path'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 const packageJson = require('./package.json')
+const lastArg = process.argv[process.argv.length - 1]
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -10,6 +11,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       version: packageJson.version,
+      isDemo: lastArg === '--demo',
     },
   },
   vite: {
@@ -22,18 +24,6 @@ export default defineNuxtConfig({
               './node_modules/svgedit/dist/editor/images/*.svg'
             ),
             dest: path.resolve(__dirname, './public/images'),
-          },
-          {
-            src: path.resolve(__dirname, './maps/*.json'),
-            dest: path.resolve(__dirname, './public/maps'),
-          },
-          {
-            src: path.resolve(__dirname, './maps/*.json'),
-            dest: path.resolve(__dirname, './.nuxt/dist/server'),
-          },
-          {
-            src: path.resolve(__dirname, './search-index/*'),
-            dest: path.resolve(__dirname, './public/search-index'),
           },
         ],
       }),

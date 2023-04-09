@@ -6,6 +6,14 @@ import { BASE_HOST, MAP_PARAM_NAME } from '~/constants'
 const { writeFileSync } = fs
 
 export default defineEventHandler(async (event) => {
+  const runtimeConfig = useRuntimeConfig()
+
+  if (runtimeConfig.public.isDemo) {
+    return {
+      ok: false,
+    }
+  }
+
   const { req } = event.node
   const url = new URL(BASE_HOST + req.url)
   let document = url.searchParams.get(MAP_PARAM_NAME)
