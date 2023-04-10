@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useShare } from '@vueuse/core'
-import { computed } from '@vue/reactivity'
+import { computed, ref } from '@vue/reactivity'
 import { useMap, useOverlayAutoClose } from '~/composables'
 import { SHOW_TEXT } from '~/constants'
 import Modal from '~/components/ui/Modal/Modal'
@@ -9,6 +9,7 @@ import { nl2br } from '~/utils'
 
 const { share, isSupported } = useShare()
 const { map } = useMap()
+const textRef = ref()
 useOverlayAutoClose(SHOW_TEXT)
 
 const mapAsString = computed(() => {
@@ -36,9 +37,19 @@ const onShare = () => {
   }
 
   share({
-    title: 'Hello',
+    title: 'Карта',
     text: mapAsString.value,
     url: location.href,
+  })
+}
+
+const onSelectAll = () => {
+  map.map((vMap) => {
+    const range = new Range()
+    range.setStart(textRef.value, 0)
+    range.setEnd(textRef.value, Object.values(vMap.objects).length)
+    document.getSelection()?.removeAllRanges()
+    document.getSelection()?.addRange(range)
   })
 }
 </script>
@@ -53,12 +64,21 @@ const onShare = () => {
           type="success"
           class="MapAsText-Share"
           @click="onShare"
-          >Шарить</Button
         >
+          Шарить
+        </Button>
+        <Button
+          size="sm"
+          type="primary"
+          class="MapAsText-Share"
+          @click="onSelectAll"
+        >
+          Выделить всё
+        </Button>
       </h2>
     </template>
     <article v-if="!map.isNothing" class="MapAsText">
-      <div v-html="mapAsString"></div>
+      <div ref="textRef" v-html="mapAsString"></div>
     </article>
   </Modal>
 </template>
