@@ -7,13 +7,13 @@ import { renderMapObjects } from '~/application'
 export const useMapRenderer = () => {
   const { layer, layerObjects } = useLayer()
   const { map } = useMap()
-  const { maybeClickLocked } = useLocks()
+  const { maybeDragLocked } = useLocks()
   const allInit = computed(
     () => all([layer, map] as const).map(() => true).value
   )
 
   watchOnce(allInit, () => {
-    all([layer, map, maybeClickLocked] as const)
+    all([layer, map, maybeDragLocked] as const)
       .map(renderMapObjects)
       .map((dispatch) => {
         dispatch((vObjects) => {

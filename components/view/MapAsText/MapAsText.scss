@@ -10,4 +10,15 @@
   &-Title {
     margin-bottom: calc(var(--defaultPadding) / 2);
   }
+
+  &-Share {
+    display: inline-block;
+    max-width: 100px;
+  }
+
+  &-ModalTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 }

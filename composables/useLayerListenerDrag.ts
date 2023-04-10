@@ -12,12 +12,12 @@ import { layerDragHandler, layerDragObjectHandler } from '~/application'
 export const useLayerListenerDrag = () => {
   const { stage, layerObjects } = useLayer()
   const { firstMapLoad, map } = useMap()
-  const { isClickLocked } = useLocks()
+  const { isDragLocked } = useLocks()
   const { dragend, dragmove } = useLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
 
   watch(dragend, () => {
-    if (isClickLocked.value) return
+    if (isDragLocked.value) return
     all([dragend, map] as const)
       .map(layerDragHandler)
       .map(([object, position]) => {
@@ -26,7 +26,7 @@ export const useLayerListenerDrag = () => {
   })
 
   watch(dragmove, () => {
-    if (isClickLocked.value) return
+    if (isDragLocked.value) return
     all([dragmove, map] as const)
       .map(layerDragObjectHandler(layerObjects))
       .map(({ text, arrows, relatedArrows }) => {

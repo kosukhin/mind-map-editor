@@ -11,12 +11,7 @@ import Notify from '~/components/ui/Notify/Notify'
 import TypeForm from '~/components/view/TypeForm/TypeForm'
 import ObjectForm from '~/components/view/ObjectForm/ObjectForm'
 import Modal from '~/components/ui/Modal/Modal'
-import {
-  SHOW_TEXT,
-  SHOW_SETTINGS,
-  SHOW_SEARCH,
-  SHOW_PARENT_TYPES,
-} from '~/constants'
+import { SHOW_SETTINGS, SHOW_SEARCH, SHOW_PARENT_TYPES } from '~/constants'
 import MapAsText from '~/components/view/MapAsText/MapAsText'
 import Settings from '~/components/view/Settings/Settings'
 import Search from '~/components/view/Search/Search'
@@ -25,7 +20,7 @@ import ParentTypes from '~/components/view/ParentTypes/ParentTypes'
 import { useLocks, useMap, useSideBar } from '~/composables'
 
 const { version } = useRuntimeConfig()
-const { isClickLocked } = useLocks()
+const { isDragLocked } = useLocks()
 const { isSidebarOpen } = useSideBar()
 const { firstMapLoad, map } = useMap()
 const head = reactive<ReactiveHead>({
@@ -38,16 +33,21 @@ watch(firstMapLoad, () => {
     head.title = vMap.settings.title
   })
 })
+
+const handleLock = () => {
+  isDragLocked.value = !isDragLocked.value
+  setTimeout(() => location.reload())
+}
 </script>
 
 <template>
   <div
     class="EditorPage-SelectionLocker"
-    :class="{ 'EditorPage-SelectionLocker_Locked': isClickLocked }"
-    @click="isClickLocked = !isClickLocked"
+    :class="{ 'EditorPage-SelectionLocker_Locked': isDragLocked }"
+    @click="handleLock"
   >
-    <div v-if="!isClickLocked" class="opened">&#128275;</div>
-    <div v-if="isClickLocked" class="closed">&#128274;</div>
+    <div v-if="!isDragLocked" class="opened">&#128275;</div>
+    <div v-if="isDragLocked" class="closed">&#128274;</div>
   </div>
   <div class="EditorPage-SideBarOpener" @click="isSidebarOpen = !isSidebarOpen">
     <hr />
@@ -68,12 +68,7 @@ watch(firstMapLoad, () => {
     </template>
     <ParentTypes />
   </Modal>
-  <Modal :name="SHOW_TEXT">
-    <template #header>
-      <h2>Вся карта текстом</h2>
-    </template>
-    <MapAsText />
-  </Modal>
+  <MapAsText />
   <Modal :name="SHOW_SETTINGS">
     <template #header>
       <h2>Настройки карты, {{ version }}</h2>
