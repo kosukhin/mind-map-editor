@@ -59,3 +59,7 @@ export const nl2br = (str: string, isXhtml: boolean = false) => {
     '$1' + breakTag + '$2'
   )
 }
+
+export const stripHtml = (string: string) => {
+  return string.replace(/<\/?[^>]+>/gi, ' ')
+}

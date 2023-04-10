@@ -5,7 +5,7 @@ import { useMap, useOverlayAutoClose } from '~/composables'
 import { SHOW_TEXT } from '~/constants'
 import Modal from '~/components/ui/Modal/Modal'
 import Button from '~/components/ui/Button/Button.vue'
-import { nl2br } from '~/utils'
+import { nl2br, stripHtml } from '~/utils'
 
 const { share, isSupported } = useShare()
 const { map } = useMap()
@@ -37,7 +37,7 @@ const onShare = () => {
   }
 
   share({
-    text: mapAsString.value,
+    text: stripHtml(mapAsString.value),
   })
 }
 
