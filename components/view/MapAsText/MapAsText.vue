@@ -37,9 +37,7 @@ const onShare = () => {
   }
 
   share({
-    title: 'Карта',
     text: mapAsString.value,
-    url: location.href,
   })
 }
 
