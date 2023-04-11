@@ -1,0 +1,6 @@
+# Синхронизует файлы проекта с сервером
+rm -Rf ./public/maps &&
+rm -Rf ./public/images &&
+rm -Rf ./public/search-index &&
+npm run build &&
+rsync -zavP .output/ YOUR_HOST_HERE:/var/www/mind-map-creator/.output/
