@@ -5,6 +5,12 @@ import { createMap } from '~/utils'
 const { writeFileSync } = fs
 
 export default defineEventHandler(async (event) => {
+  const runtimeConfig = useRuntimeConfig()
+
+  if (runtimeConfig.public.isDemo) {
+    throw new Error('Демо режим')
+  }
+
   const body = await readBody(event)
   let document = ''
 
