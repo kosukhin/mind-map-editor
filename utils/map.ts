@@ -1,13 +1,17 @@
 import { slugify } from 'transliteration'
-import { Arrow, MapObject, MapStructure } from '~/entities'
+import { Arrow, MapObject, MapStructure, Nullable } from '~/entities'
 import { MAP_DEFAULT_TITLE } from '~/constants'
 import { urlTrim } from '~/utils'
 
-export const createMap = (document: string): MapStructure => {
+export const createMap = (
+  document: string,
+  title: Nullable<string> = null
+): MapStructure => {
+  document = title ? slugify(title) : document
   return {
     settings: {
       colored: false,
-      title: MAP_DEFAULT_TITLE,
+      title: title ?? MAP_DEFAULT_TITLE,
     },
     document,
     objects: {},

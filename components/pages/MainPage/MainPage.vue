@@ -5,14 +5,21 @@ import { watch } from '@vue/runtime-core'
 import { useSeoMeta } from '@vueuse/head'
 import Input from '~/components/ui/Input/Input'
 import { urlTrim } from '~/utils'
-import { useRequestGetMaps, useRequestSearch } from '~/composables'
+import {
+  useRequestCreateMap,
+  useRequestGetMaps,
+  useRequestSearch,
+} from '~/composables'
+import Button from '~/components/ui/Button/Button.vue'
 
 useSeoMeta({
   title: 'Главная страница',
 })
 const { getMaps } = useRequestGetMaps()
 const { search } = useRequestSearch()
+const { createMap } = useRequestCreateMap()
 
+const newMapName = ref('')
 const searchQuery = ref('')
 const maps = await getMaps()
 const searchResults = ref<{ url: string; name: string }[]>([])
@@ -37,6 +44,14 @@ watch(
     }
   }, 500)
 )
+
+const onCreateMap = async () => {
+  const response = await createMap(newMapName.value)
+
+  if (response.ok) {
+    location.href = `/${response.document}`
+  }
+}
 </script>
 
 <template>
@@ -64,6 +79,15 @@ watch(
       >
         <a :href="file.url">{{ file.name }}</a>
       </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <div class="MainPage-NewMap">
+      <Input v-model="newMapName" placeholder="Введите название новой карты" />
+      <Button class="MainPage-Button" type="primary" @click="onCreateMap">
+        Создать
+      </Button>
     </div>
   </div>
 </template>

@@ -36,7 +36,9 @@ export default defineEventHandler(() => {
         }
 
         url = slugify(urlTrim(structure.url))
-      } catch (e) {}
+      } catch (e) {
+        console.log(e)
+      }
 
       return {
         name: file,

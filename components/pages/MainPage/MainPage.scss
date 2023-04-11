@@ -25,4 +25,13 @@
     flex-wrap: wrap;
     gap: var(--defaultPadding);
   }
+
+  &-Button {
+    max-width: 200px;
+  }
+
+  &-NewMap {
+    display: flex;
+    gap: var(--mbMd);
+  }
 }
