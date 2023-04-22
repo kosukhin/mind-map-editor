@@ -49,6 +49,14 @@ export const maxNewLineLength = (str: string): number => {
   )
 }
 
+export const newLineCount = (str: string): number => {
+  if (!str) {
+    return 0
+  }
+
+  return str.split('\n').length
+}
+
 export const nl2br = (str: string, isXhtml: boolean = false) => {
   if (typeof str === 'undefined' || str === null) {
     return ''

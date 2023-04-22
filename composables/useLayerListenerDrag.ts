@@ -29,10 +29,11 @@ export const useLayerListenerDrag = () => {
     if (isDragLocked.value) return
     all([dragmove, map] as const)
       .map(layerDragObjectHandler(layerObjects))
-      .map(({ text, arrows, relatedArrows }) => {
+      .map(({ text, arrows, relatedArrows, additionalText }) => {
         text.map(([text, position]) => text.position(position))
         arrows.map(applyArrowPoints)
         relatedArrows.map(applyArrowPoints)
+        additionalText.map(([text, position]) => text.position(position))
       })
   })
 

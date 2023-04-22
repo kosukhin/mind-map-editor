@@ -125,6 +125,10 @@ const cancel = () => {
         <div class="ObjectForm-Row">
           <Textarea v-model="form.name" />
         </div>
+        <div class="ObjectForm-Title">Название сверху</div>
+        <div class="ObjectForm-Row">
+          <Textarea v-model="form.additionalName" />
+        </div>
         <div class="ObjectForm-Title">Описание</div>
         <div class="ObjectForm-Row">
           <Textarea v-model="form.description" />

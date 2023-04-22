@@ -9,7 +9,7 @@ import {
   Stage,
 } from '~/entities'
 import { useMapColors } from '~/composables'
-import { maxNewLineLength } from '~/utils/common'
+import { maxNewLineLength, newLineCount } from '~/utils/common'
 
 export async function addObjectToLayer(
   layer: InstanceType<typeof Layer>,
@@ -21,6 +21,7 @@ export async function addObjectToLayer(
   const { types } = map
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
+  const additionalObjects = []
 
   if (!ctx) return
   const type = types[object.type]
@@ -47,12 +48,31 @@ export async function addObjectToLayer(
     text: object.name,
     fontSize: 11,
     fontFamily: 'Monospace',
-    textDecoration: object.linked ? 'underline' : '',
+    textDecoration: object.linked && !object.additionalName ? 'underline' : '',
     fontStyle: object.description ? 'bold' : '',
     fill: colorsHash.value[object.lastClick] ?? 'black',
     objectId: object.id,
   })
   layer.add(text)
+
+  if (object.additionalName) {
+    const labelWidth = maxNewLineLength(object.additionalName) * 7
+    const labelHeight = newLineCount(object.additionalName) * 11
+    const additionalText = new Konva.Text({
+      name: object.id,
+      x: object.position[0] + type.width / 2 - labelWidth / 2,
+      y: object.position[1] - labelHeight - 4,
+      text: object.additionalName,
+      fontSize: 11,
+      fontFamily: 'Monospace',
+      textDecoration: object.linked ? 'underline' : '',
+      fontStyle: object.description ? 'bold' : '',
+      fill: colorsHash.value[object.lastClick] ?? 'black',
+      objectId: object.id,
+    })
+    layer.add(additionalText)
+    additionalObjects.push(additionalText)
+  }
 
   const arrows: Arrow[] = []
 
@@ -86,7 +106,7 @@ export async function addObjectToLayer(
     })
   }
 
-  return [img, text, ...arrows] as KonvaLayerObject[]
+  return [img, text, arrows, additionalObjects] as KonvaLayerObject[]
 }
 
 export function createLayer(editorWrapper: HTMLElement): [Layer, Stage] {
@@ -113,7 +133,15 @@ export const removeObjectOnLayer = (
   object: MapObject
 ) => {
   const objects = layerObjects.get(object.id)
-  objects.forEach((object: any) => object.remove())
+  objects.forEach((object: any) => {
+    if (Array.isArray(object)) {
+      object.forEach((innerObject: any) => {
+        innerObject.remove()
+      })
+    } else {
+      object.remove()
+    }
+  })
 }
 
 export const updateObjectOnLayer = async (

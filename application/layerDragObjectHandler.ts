@@ -7,10 +7,11 @@ import {
   Text,
   Vector2d,
 } from '~/entities'
-import { maxNewLineLength, Maybe } from '~/utils'
+import { maxNewLineLength, Maybe, newLineCount } from '~/utils'
 
 interface Result {
   text: MaybeInst<[Text, Vector2d]>
+  additionalText: MaybeInst<[Text, Vector2d]>
   arrows: MaybeInst<[Arrow, number[]][]>
   relatedArrows: MaybeInst<[Arrow, number[]][]>
 }
@@ -22,6 +23,7 @@ export const layerDragObjectHandler =
   ([dragEvent, vMap]: Params): Result => {
     const result = {
       text: Maybe<[Text, Vector2d]>(),
+      additionalText: Maybe<[Text, Vector2d]>(),
       arrows: Maybe<[Arrow, number[]][]>(),
       relatedArrows: Maybe<[Arrow, number[]][]>(),
     }
@@ -35,7 +37,20 @@ export const layerDragObjectHandler =
     const labelWidth = maxNewLineLength(object.name) * 7
     const type = vMap.types[object.type]
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [img, text, ...arrows] = layerObjects.get(objectId)
+    const [img, text, arrows, additionalObjects] = layerObjects.get(objectId)
+
+    const additionalText = additionalObjects[0]
+    if (additionalText) {
+      const labelWidth = maxNewLineLength(object.additionalName) * 7
+      const labelHeight = newLineCount(object.additionalName) * 11
+      result.additionalText.value = [
+        additionalText,
+        {
+          x: dragEvent.target.attrs.x + type.width / 2 - labelWidth / 2,
+          y: dragEvent.target.attrs.y - labelHeight - 4,
+        },
+      ]
+    }
 
     result.text.value = [
       text,
@@ -62,7 +77,7 @@ export const layerDragObjectHandler =
       )
       if (hasRelation) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [img, text, ...arrows] = layerObjects.get(relObject.id)
+        const [img, text, arrows] = layerObjects.get(relObject.id)
         ;(arrows as any[]).forEach((arrow) => {
           if (arrow.attrs.toObjectId === object.id) {
             relatedArrows.push(arrow)

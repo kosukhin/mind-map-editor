@@ -9,6 +9,7 @@ export interface MapObject {
   type: string
   position: [number, number]
   name: string
+  additionalName: string | null
   outlink: string
   linked: boolean
   description: string
