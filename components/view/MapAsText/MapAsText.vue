@@ -22,6 +22,9 @@ const mapAsString = computed(() => {
           ${nl2br(object.name)}
           </h3>
           <p>
+          ${nl2br(object.additionalName || '')}
+          </p>
+          <p>
           ${nl2br(object.description || '')}
           </p>
         </div>`

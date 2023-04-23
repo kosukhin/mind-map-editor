@@ -121,13 +121,13 @@ const cancel = () => {
             <Checkbox v-model="form.targetBlank" label="В новой влкадке" />
           </div>
         </template>
-        <div class="ObjectForm-Title">Название</div>
-        <div class="ObjectForm-Row">
-          <Textarea v-model="form.name" />
-        </div>
         <div class="ObjectForm-Title">Название сверху</div>
         <div class="ObjectForm-Row">
           <Textarea v-model="form.additionalName" />
+        </div>
+        <div class="ObjectForm-Title">Название внизу</div>
+        <div class="ObjectForm-Row">
+          <Textarea v-model="form.name" />
         </div>
         <div class="ObjectForm-Title">Описание</div>
         <div class="ObjectForm-Row">

@@ -71,3 +71,16 @@ export const nl2br = (str: string, isXhtml: boolean = false) => {
 export const stripHtml = (string: string) => {
   return string.replace(/<\/?[^>]+>/gi, ' ')
 }
+
+export const debug = (string: string, tag: string = 'DEBUG') => {
+  if (process.env.NODE_ENV === 'production') {
+    return
+  }
+
+  if (['dragmove'].includes(tag)) {
+    return
+  }
+
+  const { log } = console
+  log && log(`[${tag}] ${string}`)
+}

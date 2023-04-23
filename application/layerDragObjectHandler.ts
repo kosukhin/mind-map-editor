@@ -7,7 +7,7 @@ import {
   Text,
   Vector2d,
 } from '~/entities'
-import { maxNewLineLength, Maybe, newLineCount } from '~/utils'
+import { debug, maxNewLineLength, Maybe, newLineCount } from '~/utils'
 
 interface Result {
   text: MaybeInst<[Text, Vector2d]>
@@ -21,6 +21,7 @@ type Params = [KonvaEventObject<DragEvent>, MapStructure]
 export const layerDragObjectHandler =
   (layerObjects: MapLayerObjects) =>
   ([dragEvent, vMap]: Params): Result => {
+    debug('dragmove fired', 'dragmove')
     const result = {
       text: Maybe<[Text, Vector2d]>(),
       additionalText: Maybe<[Text, Vector2d]>(),
@@ -29,6 +30,7 @@ export const layerDragObjectHandler =
     }
 
     if (!dragEvent.target.attrs.image) {
+      debug('not image object', 'dragmove')
       return result
     }
 
