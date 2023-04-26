@@ -94,6 +94,9 @@ const cancel = () => {
   <Drawer :name="SHOW_OBJECT">
     <template #header>
       <h2 class="ObjectForm-MainTitle">Объект карты</h2>
+      <small v-if="currentObject.value" class="ObjectForm-MainSubTitle">
+        ID #{{ currentObject.value.id }}
+      </small>
     </template>
     <div v-if="!settings.isNothing && form" class="ObjectForm">
       <div v-if="!settings.value.isEditable" class="ObjectForm-Inner">

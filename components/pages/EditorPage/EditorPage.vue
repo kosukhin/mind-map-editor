@@ -17,7 +17,13 @@ import Settings from '~/components/view/Settings/Settings'
 import Search from '~/components/view/Search/Search'
 import JsonForm from '~/components/view/JsonForm/JsonForm'
 import ParentTypes from '~/components/view/ParentTypes/ParentTypes'
-import { useLocks, useMap, useSideBar } from '~/composables'
+import {
+  useLocks,
+  useMap,
+  useSideBar,
+  useHashChange,
+  useMoveToObject,
+} from '~/composables'
 
 const { version } = useRuntimeConfig()
 const { isDragLocked } = useLocks()
@@ -27,10 +33,18 @@ const head = reactive<ReactiveHead>({
   title: 'Идет загрузка...',
 })
 useSeoMeta(head)
+const { hashChanged } = useHashChange()
+const { scrollToObject } = useMoveToObject()
 
 watch(firstMapLoad, () => {
   map.map((vMap) => {
     head.title = vMap.settings.title
+  })
+})
+
+watch(hashChanged, () => {
+  hashChanged.map((vHash) => {
+    scrollToObject(vHash)
   })
 })
 

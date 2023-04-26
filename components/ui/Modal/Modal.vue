@@ -14,7 +14,7 @@ const isOpened = ref(false)
 const { overlayName, tryToClose, history } = useOverlay()
 
 const close = () => {
-  tryToClose.value = props.name
+  tryToClose.value = props.name as string
 }
 
 watch(overlayName, () => {

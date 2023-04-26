@@ -2,16 +2,16 @@
 import { computed, ref } from '@vue/reactivity'
 import {
   useMap,
-  useLayer,
   useOverlay,
   useOverlayAutoClose,
+  useMoveToObject,
 } from '~/composables'
 import { SHOW_SEARCH } from '~/constants'
 import Input from '~/components/ui/Input/Input'
 import { MapObject } from '~/entities'
 
 useOverlayAutoClose(SHOW_SEARCH)
-const { stage, layerObjects } = useLayer()
+const { scrollToObject } = useMoveToObject()
 const { map } = useMap()
 const { close } = useOverlay()
 
@@ -31,13 +31,7 @@ const searchResults = computed(() => {
 
 const moveToObject = (object: MapObject) => {
   close()
-  stage.map((vStage) => {
-    const [img] = layerObjects.get(object.id)
-    const x = img.x() * -1 + 200
-    const y = img.y() * -1 + 50
-
-    vStage.position({ x, y })
-  })
+  scrollToObject(object.id)
 }
 </script>
 

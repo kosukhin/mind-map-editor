@@ -5,6 +5,11 @@
   }
 
   &-MainTitle {
+    margin-bottom: var(--mbSm);
+  }
+
+  &-MainSubTitle {
+    display: block;
     margin-bottom: var(--defaultPadding);
   }
 
