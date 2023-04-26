@@ -9,6 +9,8 @@
 
 [Демо на Netlify](https://main--heroic-dragon-b8712a.netlify.app/demo)
 
+![image](https://user-images.githubusercontent.com/109918884/234613022-04f614bf-db21-47f6-b436-49c0c6b62e6a.png)
+
 # Составляющие диаграмм
 ## Типы
 
