@@ -29,7 +29,14 @@ export default defineEventHandler(() => {
   const documents: any[] = []
   dirs.forEach((dir) => {
     const data = readFileSync(path.join('.', '/public/maps/') + dir)
-    const document = JSON.parse(data.toString()) as { structure: MapStructure }
+    let document
+    try {
+      document = JSON.parse(data.toString()) as {
+        structure: MapStructure
+      }
+    } catch {
+      return
+    }
 
     Object.values(document.structure.objects).forEach((object) => {
       documents.push({
