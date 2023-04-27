@@ -3,11 +3,11 @@ import path from 'path'
 // @ts-ignore
 import lunr from 'lunr'
 // @ts-ignore
-import lunrLanguagesStemmer from 'lunr-languages/lunr.stemmer.support'
+import lunrLanguagesStemmer from 'lunr-languages/lunr.stemmer.support.js'
 // @ts-ignore
-import lunrLanguagesMulti from 'lunr-languages/lunr.multi'
+import lunrLanguagesMulti from 'lunr-languages/lunr.multi.js'
 // @ts-ignore
-import lunrLanguagesRu from 'lunr-languages/lunr.ru'
+import lunrLanguagesRu from 'lunr-languages/lunr.ru.js'
 import { MapStructure } from '~/entities'
 
 lunrLanguagesStemmer(lunr)

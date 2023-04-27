@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.13.0",
+    "@vueuse/head": "^1.1.26",
     "canvg": "^4.0.1",
     "fp-ts": "^2.13.1",
     "konva": "^8.4.2",
