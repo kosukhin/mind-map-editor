@@ -11,8 +11,13 @@ import {
 } from '~/composables'
 import Button from '~/components/ui/Button/Button'
 import { SHOW_OBJECT } from '~/constants'
-import { MapObject } from '~/entities'
-import { all, removeObjectOnLayer, updateObjectOnLayer } from '~/utils'
+import { KonvaLayerObject, MapObject } from '~/entities'
+import {
+  addObjectToLayer,
+  all,
+  removeObjectOnLayer,
+  updateObjectOnLayer,
+} from '~/utils'
 import Textarea from '~/components/ui/Textarea/Textarea'
 import Checkbox from '~/components/ui/Checkbox/Checkbox'
 import Input from '~/components/ui/Input/Input'
@@ -45,6 +50,10 @@ watch(
 )
 
 const remove = () => {
+  if (!confirm('Вы уверены что нужно удалить?')) {
+    return
+  }
+
   close()
   all([currentObject, map] as const).map(([vObj, vMap]) => {
     delete vMap.objects[vObj.id]
@@ -87,6 +96,20 @@ const removeRelation = (index: number) => {
 
 const cancel = () => {
   close()
+}
+
+const clone = () => {
+  close()
+  all([currentObject, map, layer] as const).map(
+    async ([vObj, vMap, vLayer]) => {
+      const newId = Date.now().toString()
+      const clonedObject = cloneDeep(vObj)
+      clonedObject.id = newId
+      vMap.objects[newId] = clonedObject
+      const objects = await addObjectToLayer(vLayer, clonedObject, vMap)
+      layerObjects.set(clonedObject.id, objects as KonvaLayerObject[])
+    }
+  )
 }
 </script>
 
@@ -139,6 +162,16 @@ const cancel = () => {
         <div class="ObjectForm-Title">Z-Index</div>
         <div class="ObjectForm-Row">
           <Input v-model="form.zindex" type="number" />
+        </div>
+        <div class="ObjectForm-Row">
+          <Button
+            class="ObjectForm-ArrowButton"
+            type="primary"
+            size="md"
+            @click="clone"
+          >
+            Клонировать
+          </Button>
         </div>
 
         <template v-if="form.arrows && form.arrows.length">
