@@ -1,5 +1,6 @@
 import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
+import debounce from 'lodash/debounce'
 import { reMaybe } from '~/utils'
 import { useMap } from '~/composables'
 
@@ -11,9 +12,9 @@ export const useHashChange = createSharedComposable(() => {
     return url.split('#')[1] ?? null
   }
 
-  const clearHash = () => {
+  const clearHash = debounce(() => {
     location.hash = ''
-  }
+  }, 500)
 
   window.addEventListener('hashchange', (e) => {
     hashChanged.value = getHashFromUrl(e.newURL)
