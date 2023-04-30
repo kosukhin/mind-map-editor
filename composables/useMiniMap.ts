@@ -40,7 +40,6 @@ export const useMiniMap = (
           [dragmove, wheel],
           debounce(() => {
             any([dragmove, wheel] as const).map(() => {
-              redrawPreviewLayer()
               const [vMiniMapScreen, miniScreenX, miniScreenY] =
                 calculateMiniScreen()
               vMiniMapScreen.style.top = miniScreenY + 'px'
