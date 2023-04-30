@@ -1,12 +1,17 @@
 import { watchOnce } from '@vueuse/core'
 import { computed } from '@vue/reactivity'
-import { useMap, useLayer, useLocks } from '~/composables'
+import {
+  useMap,
+  useLayer,
+  useLocks,
+  useMapPartialRenderer,
+} from '~/composables'
 import { all } from '~/utils'
 import { renderMapObjects } from '~/application'
-import { renderVisibleMapObjects } from '~/application/renderVisibleMapObjects'
 
 export const useMapRenderer = () => {
-  const { layer, stage, layerObjects } = useLayer()
+  const { triggerPartialRendering } = useMapPartialRenderer()
+  const { layer, layerObjects } = useLayer()
   const { map } = useMap()
   const { maybeDragLocked } = useLocks()
   const allInit = computed(
@@ -25,7 +30,7 @@ export const useMapRenderer = () => {
       })
 
     setTimeout(() => {
-      all([stage, map, layer]).map(renderVisibleMapObjects(layerObjects))
+      triggerPartialRendering()
     }, 1000)
   })
 

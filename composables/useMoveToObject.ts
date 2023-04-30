@@ -1,20 +1,25 @@
-import { useLayer } from '~/composables/useLayer'
+import { useLayer, useMap, useMapPartialRenderer } from '~/composables'
+import { all } from '~/utils'
 
 export const useMoveToObject = () => {
-  const { stage, layerObjects } = useLayer()
+  const { stage } = useLayer()
+  const { map } = useMap()
+  const { triggerPartialRendering } = useMapPartialRenderer()
 
   return {
     scrollToObject: (id: string) => {
-      if (!layerObjects.has(id)) {
-        return
-      }
+      all([stage, map] as const).map(([vStage, vMap]) => {
+        const object = vMap.objects[id]
 
-      stage.map((vStage) => {
-        const [img] = layerObjects.get(id)
-        const x = img.x() * -1 + 20
-        const y = img.y() * -1 + 20
+        if (!object) {
+          return
+        }
+
+        const x = object.position[0] * -1 + 20
+        const y = object.position[1] * -1 + 20
 
         vStage.position({ x, y })
+        triggerPartialRendering()
       })
     },
   }
