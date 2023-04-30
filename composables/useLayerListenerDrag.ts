@@ -1,4 +1,6 @@
 import { watch } from '@vue/runtime-core'
+import Konva from 'konva'
+import debounce from 'lodash/debounce'
 import {
   useLayerEvents,
   useMap,
@@ -6,14 +8,44 @@ import {
   useLayer,
   useLocks,
 } from '~/composables'
-import { all, applyArrowPoints, setProperty } from '~/utils'
-import { layerDragHandler, layerDragObjectHandler } from '~/application'
+import {
+  addObjectToLayer,
+  all,
+  any,
+  applyArrowPoints,
+  removeObjectOnLayer,
+  setProperty,
+} from '~/utils'
+import {
+  calculateVisibleObjects,
+  layerDragHandler,
+  layerDragObjectHandler,
+} from '~/application'
+import { KonvaLayerObject } from '~/entities'
+
+const calcRendering =
+  (layerObjects) =>
+  ([vDrag, vMap, vLayer]) => {
+    if (vDrag.target instanceof Konva.Stage) {
+      vLayer.destroyChildren()
+      layerObjects.clear()
+      const [visible, invisible] = calculateVisibleObjects(vMap, vDrag.target)
+      visible.forEach(async (object) => {
+        removeObjectOnLayer(layerObjects, object)
+        const objects = await addObjectToLayer(vLayer, object, vMap, false)
+        layerObjects.set(object.id, objects as KonvaLayerObject[])
+      })
+      invisible.forEach((object) => {
+        removeObjectOnLayer(layerObjects, object)
+      })
+    }
+  }
 
 export const useLayerListenerDrag = () => {
-  const { stage, layerObjects } = useLayer()
+  const { stage, layer, layerObjects } = useLayer()
   const { firstMapLoad, map } = useMap()
   const { isDragLocked } = useLocks()
-  const { dragend, dragmove } = useLayerEvents()
+  const { dragend, dragmove, wheel } = useLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
 
   watch(dragend, () => {
@@ -36,6 +68,15 @@ export const useLayerListenerDrag = () => {
         additionalText.map(([text, position]) => text.position(position))
       })
   })
+
+  watch(
+    [dragmove, wheel],
+    debounce(() => {
+      all([any([dragmove, wheel]), map, layer] as const).map(
+        calcRendering(layerObjects)
+      )
+    }, 500)
+  )
 
   watch(firstMapLoad, () => {
     stage.map((vStage) => {

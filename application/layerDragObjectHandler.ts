@@ -4,6 +4,7 @@ import {
   MapLayerObjects,
   MapStructure,
   MaybeInst,
+  Stage,
   Text,
   Vector2d,
 } from '~/entities'
@@ -17,6 +18,36 @@ interface Result {
 }
 
 type Params = [KonvaEventObject<DragEvent>, MapStructure]
+
+export const calculateVisibleObjects = (vMap: MapStructure, vStage: Stage) => {
+  const { objects } = vMap
+  const isInBoundings = (position: [number, number]) => {
+    const stageStartX = vStage.x()
+    const stageEndX = vStage.x() - vStage.width()
+    const stageStartY = vStage.y()
+    const stageEndY = vStage.y() - vStage.height()
+    const [objectX, objectY] = position
+
+    return (
+      stageStartX > -objectX &&
+      -objectX > stageEndX &&
+      stageStartY > -objectY &&
+      -objectY > stageEndY
+    )
+  }
+
+  const visible = []
+  const invisible = []
+  Object.values(objects).forEach((object) => {
+    if (isInBoundings(object.position)) {
+      visible.push(object)
+    } else {
+      invisible.push(object)
+    }
+  })
+
+  return [visible, invisible]
+}
 
 export const layerDragObjectHandler =
   (layerObjects: MapLayerObjects) =>

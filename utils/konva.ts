@@ -133,6 +133,9 @@ export const removeObjectOnLayer = (
   object: MapObject
 ) => {
   const objects = layerObjects.get(object.id)
+  if (!objects) {
+    return
+  }
   objects.forEach((object: any) => {
     if (Array.isArray(object)) {
       object.forEach((innerObject: any) => {
