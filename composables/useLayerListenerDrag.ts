@@ -1,6 +1,6 @@
 import { watch } from '@vue/runtime-core'
-import Konva from 'konva'
 import debounce from 'lodash/debounce'
+import Konva from 'konva'
 import {
   useLayerEvents,
   useMap,
@@ -8,38 +8,9 @@ import {
   useLayer,
   useLocks,
 } from '~/composables'
-import {
-  addObjectToLayer,
-  all,
-  any,
-  applyArrowPoints,
-  removeObjectOnLayer,
-  setProperty,
-} from '~/utils'
-import {
-  calculateVisibleObjects,
-  layerDragHandler,
-  layerDragObjectHandler,
-} from '~/application'
-import { KonvaLayerObject } from '~/entities'
-
-const calcRendering =
-  (layerObjects) =>
-  ([vDrag, vMap, vLayer]) => {
-    if (vDrag.target instanceof Konva.Stage) {
-      vLayer.destroyChildren()
-      layerObjects.clear()
-      const [visible, invisible] = calculateVisibleObjects(vMap, vDrag.target)
-      visible.forEach(async (object) => {
-        removeObjectOnLayer(layerObjects, object)
-        const objects = await addObjectToLayer(vLayer, object, vMap, false)
-        layerObjects.set(object.id, objects as KonvaLayerObject[])
-      })
-      invisible.forEach((object) => {
-        removeObjectOnLayer(layerObjects, object)
-      })
-    }
-  }
+import { all, any, applyArrowPoints, setProperty } from '~/utils'
+import { layerDragHandler, layerDragObjectHandler } from '~/application'
+import { renderVisibleMapObjects } from '~/application/renderVisibleMapObjects'
 
 export const useLayerListenerDrag = () => {
   const { stage, layer, layerObjects } = useLayer()
@@ -73,7 +44,11 @@ export const useLayerListenerDrag = () => {
     [dragmove, wheel],
     debounce(() => {
       all([any([dragmove, wheel]), map, layer] as const).map(
-        calcRendering(layerObjects)
+        ([vDrag, vMap, vLayer]) => {
+          if (vDrag.target instanceof Konva.Stage) {
+            renderVisibleMapObjects(layerObjects)([vDrag.target, vMap, vLayer])
+          }
+        }
       )
     }, 500)
   )
