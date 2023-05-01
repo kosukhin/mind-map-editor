@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { watch } from '@vue/runtime-core'
 import { ref } from '@vue/reactivity'
+import { useMagicKeys } from '@vueuse/core'
 import { useOverlay } from '~/composables/useOverlay'
 
 const props = defineProps({
@@ -11,6 +12,7 @@ const props = defineProps({
 })
 
 const isOpened = ref(false)
+const { current } = useMagicKeys()
 const { overlayName, tryToClose } = useOverlay()
 
 const close = () => {
@@ -21,6 +23,16 @@ watch(overlayName, () => {
   overlayName.map((vDrawer) => {
     isOpened.value = vDrawer === props.name
   })
+})
+
+watch(current, () => {
+  if (!isOpened.value) {
+    return
+  }
+
+  if (current.has('escape')) {
+    close()
+  }
 })
 </script>
 

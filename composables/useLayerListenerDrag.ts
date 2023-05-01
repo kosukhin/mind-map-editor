@@ -44,7 +44,7 @@ export const useLayerListenerDrag = () => {
     [dragmove, wheel],
     debounce(() => {
       triggerPartialRendering()
-    }, 500)
+    }, 100)
   )
 
   watch(firstMapLoad, () => {
