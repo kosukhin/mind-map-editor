@@ -19,9 +19,14 @@ const query = ref('')
 const searchResults = computed(() => {
   return map.map((vMap) => {
     if (query.value) {
+      const searchQuery = query.value.toLowerCase()
       const objects = Object.values(vMap.objects)
       return objects.filter((object) => {
-        return object.name.toLowerCase().includes(query.value.toLowerCase())
+        return (
+          object.name.toLowerCase().includes(searchQuery) ||
+          (object.additionalName &&
+            object.additionalName.toLowerCase().includes(searchQuery))
+        )
       })
     }
 
@@ -46,6 +51,10 @@ const moveToObject = (object: MapObject) => {
         @click="moveToObject(result)"
       >
         <b class="Search-ItemName">{{ result.name }}</b>
+        <b v-if="result.additionalName" class="Search-ItemName">
+          &nbsp;
+          {{ result.additionalName }}
+        </b>
       </div>
     </div>
     <div v-else-if="query">Нет результатов</div>
