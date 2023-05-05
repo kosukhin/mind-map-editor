@@ -108,7 +108,7 @@ export const layerDragObjectHandler =
       const hasRelation = relObject.arrows.find(
         (relArrow) => relArrow.id === object.id
       )
-      if (hasRelation) {
+      if (hasRelation && layerObjects.has(relObject.id)) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [img, text, arrows] = layerObjects.get(relObject.id)
         ;(arrows as any[]).forEach((arrow) => {

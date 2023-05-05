@@ -82,5 +82,5 @@ export const debug = (string: string, tag: string = 'DEBUG') => {
   }
 
   const { log } = console
-  log && log(`[${tag}] ${string}`)
+  log && log(`['${tag}'] ${string}`)
 }

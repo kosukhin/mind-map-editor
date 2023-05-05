@@ -1,5 +1,6 @@
 import { watch } from '@vue/runtime-core'
 import debounce from 'lodash/debounce'
+import Konva from 'konva'
 import {
   useLayerEvents,
   useMap,
@@ -8,7 +9,7 @@ import {
   useLocks,
   useMapPartialRenderer,
 } from '~/composables'
-import { all, applyArrowPoints, setProperty } from '~/utils'
+import { all, applyArrowPoints, debug, setProperty } from '~/utils'
 import { layerDragHandler, layerDragObjectHandler } from '~/application'
 
 export const useLayerListenerDrag = () => {
@@ -20,6 +21,7 @@ export const useLayerListenerDrag = () => {
   const { triggerPartialRendering } = useMapPartialRenderer()
 
   watch(dragend, () => {
+    debug('debug fired', 'drag')
     if (isDragLocked.value) return
     all([dragend, map] as const)
       .map(layerDragHandler)
@@ -42,8 +44,10 @@ export const useLayerListenerDrag = () => {
 
   watch(
     [dragmove, wheel],
-    debounce(() => {
-      triggerPartialRendering()
+    debounce((e) => {
+      if (e[0]?.value?.target && e[0].value.target instanceof Konva.Stage) {
+        triggerPartialRendering()
+      }
     }, 100)
   )
 
