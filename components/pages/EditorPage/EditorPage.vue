@@ -28,6 +28,8 @@ import {
   useSideBar,
   useHashChange,
   useMoveToObject,
+  useKeybindings,
+  useOverlay,
 } from '~/composables'
 import Keybindings from '~/components/view/Keybindings/Keybindings.vue'
 
@@ -41,6 +43,8 @@ const head = reactive<ReactiveHead>({
 useSeoMeta(head)
 const { hashChanged } = useHashChange()
 const { scrollToObject } = useMoveToObject()
+const { ctrlFFired } = useKeybindings()
+const { overlayName } = useOverlay()
 
 watch(firstMapLoad, () => {
   map.map((vMap) => {
@@ -52,6 +56,12 @@ watch(hashChanged, () => {
   hashChanged.map((vHash) => {
     scrollToObject(vHash)
   })
+})
+
+watch(ctrlFFired, (value) => {
+  if (value) {
+    overlayName.value = SHOW_SEARCH
+  }
 })
 
 const handleLock = () => {

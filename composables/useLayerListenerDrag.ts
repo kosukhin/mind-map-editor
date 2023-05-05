@@ -42,13 +42,22 @@ export const useLayerListenerDrag = () => {
       })
   })
 
+  const partialRenderingDelay = 100
+
   watch(
-    [dragmove, wheel],
+    dragmove,
     debounce((e) => {
-      if (e[0]?.value?.target && e[0].value.target instanceof Konva.Stage) {
+      if (e.value?.target && e.value.target instanceof Konva.Stage) {
         triggerPartialRendering()
       }
-    }, 100)
+    }, partialRenderingDelay)
+  )
+
+  watch(
+    wheel,
+    debounce(() => {
+      triggerPartialRendering()
+    }, partialRenderingDelay)
   )
 
   watch(firstMapLoad, () => {
