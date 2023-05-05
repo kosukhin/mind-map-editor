@@ -16,7 +16,7 @@ const { current } = useMagicKeys()
 const { overlayName, tryToClose } = useOverlay()
 
 const close = () => {
-  tryToClose.value = props.name
+  tryToClose.value = props.name as string
 }
 
 watch(overlayName, () => {

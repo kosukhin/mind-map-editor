@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
-import { SHOW_SETTINGS, SHOW_JSON, SHOW_PARENT_TYPES } from '~/constants'
+import {
+  SHOW_SETTINGS,
+  SHOW_JSON,
+  SHOW_PARENT_TYPES,
+  SHOW_KEYBINDINGS,
+} from '~/constants'
 import Button from '~/components/ui/Button/Button'
 import { useMap, useOverlay, useRequestRemoveMap } from '~/composables'
 import Checkbox from '~/components/ui/Checkbox/Checkbox'
@@ -56,15 +61,24 @@ const onSave = () => {
             class="Settings-Button"
             type="primary"
             @click="overlayName.value = SHOW_JSON"
-            >JSON экспорт\импорт</Button
           >
+            JSON экспорт\импорт
+          </Button>
+          <Button
+            class="Settings-Button"
+            type="primary"
+            @click="overlayName.value = SHOW_KEYBINDINGS"
+          >
+            Сочетания клавиш
+          </Button>
           <Button
             v-if="parentTypes.length"
             type="primary"
             class="Settings-Button"
             @click="overlayName.value = SHOW_PARENT_TYPES"
-            >Родительские типы</Button
           >
+            Родительские типы
+          </Button>
         </div>
       </div>
       <div class="Settings-Row">

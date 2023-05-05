@@ -11,7 +11,12 @@ import Notify from '~/components/ui/Notify/Notify'
 import TypeForm from '~/components/view/TypeForm/TypeForm'
 import ObjectForm from '~/components/view/ObjectForm/ObjectForm'
 import Modal from '~/components/ui/Modal/Modal'
-import { SHOW_SETTINGS, SHOW_SEARCH, SHOW_PARENT_TYPES } from '~/constants'
+import {
+  SHOW_SETTINGS,
+  SHOW_SEARCH,
+  SHOW_PARENT_TYPES,
+  SHOW_KEYBINDINGS,
+} from '~/constants'
 import MapAsText from '~/components/view/MapAsText/MapAsText'
 import Settings from '~/components/view/Settings/Settings'
 import Search from '~/components/view/Search/Search'
@@ -24,6 +29,7 @@ import {
   useHashChange,
   useMoveToObject,
 } from '~/composables'
+import Keybindings from '~/components/view/Keybindings/Keybindings.vue'
 
 const { version } = useRuntimeConfig()
 const { isDragLocked } = useLocks()
@@ -76,6 +82,12 @@ const handleLock = () => {
   </div>
   <Notify />
   <TypeForm />
+  <Modal :name="SHOW_KEYBINDINGS">
+    <template #header>
+      <h2>Сочетания клавиш</h2>
+    </template>
+    <Keybindings />
+  </Modal>
   <Modal :name="SHOW_PARENT_TYPES">
     <template #header>
       <h2>Родительские типы</h2>

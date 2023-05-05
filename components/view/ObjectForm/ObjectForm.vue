@@ -2,12 +2,14 @@
 import { watch } from '@vue/runtime-core'
 import { computed, ref } from '@vue/reactivity'
 import cloneDeep from 'lodash/cloneDeep'
+import { watchOnce } from '@vueuse/core'
 import {
   useMapObject,
   useSettings,
   useOverlay,
   useMap,
   useLayer,
+  useKeybindings,
 } from '~/composables'
 import Button from '~/components/ui/Button/Button'
 import { SHOW_OBJECT } from '~/constants'
@@ -24,6 +26,7 @@ import Input from '~/components/ui/Input/Input'
 import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
 import Drawer from '~/components/ui/Drawer/Drawer'
 
+const { ctrlSFired } = useKeybindings()
 const { layer, layerObjects } = useLayer()
 const { map } = useMap()
 const { close } = useOverlay()
@@ -41,6 +44,11 @@ watch(
   () => {
     currentObject.map((vObj) => {
       form.value = cloneDeep(vObj)
+      watchOnce(ctrlSFired, (value) => {
+        if (value) {
+          save()
+        }
+      })
     })
   },
   {
