@@ -1,4 +1,4 @@
-import { ref } from '@vue/reactivity'
+import { computed, ref } from '@vue/reactivity'
 import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
 import { OVERLAY_CLOSE } from '~/constants'
@@ -8,6 +8,10 @@ export const useOverlay = createSharedComposable(() => {
   const overlayName = reMaybe<string>()
   const tryToClose = reMaybe<string>()
   const history = ref<string[]>([])
+
+  const isClosed = computed(() => {
+    return overlayName.value === OVERLAY_CLOSE
+  })
 
   const close = () => {
     setValue(overlayName, OVERLAY_CLOSE)
@@ -28,6 +32,7 @@ export const useOverlay = createSharedComposable(() => {
     overlayName,
     tryToClose,
     history,
+    isClosed,
     close,
   }
 })

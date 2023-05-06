@@ -2,7 +2,6 @@
 import { watch } from '@vue/runtime-core'
 import { computed, ref } from '@vue/reactivity'
 import cloneDeep from 'lodash/cloneDeep'
-import { watchOnce } from '@vueuse/core'
 import {
   useMapObject,
   useSettings,
@@ -29,7 +28,7 @@ import Drawer from '~/components/ui/Drawer/Drawer'
 const { ctrlSFired } = useKeybindings()
 const { layer, layerObjects } = useLayer()
 const { map } = useMap()
-const { close } = useOverlay()
+const { close, isClosed } = useOverlay()
 const { currentObject } = useMapObject()
 const { settings } = useSettings()
 const form = ref({})
@@ -39,16 +38,21 @@ const isDirty = computed(
 )
 useFormDirtyCheck(isDirty, SHOW_OBJECT)
 
+watch(ctrlSFired, (value) => {
+  if (isClosed.value) {
+    return
+  }
+
+  if (value) {
+    save()
+  }
+})
+
 watch(
   currentObject,
   () => {
     currentObject.map((vObj) => {
       form.value = cloneDeep(vObj)
-      watchOnce(ctrlSFired, (value) => {
-        if (value) {
-          save()
-        }
-      })
     })
   },
   {
