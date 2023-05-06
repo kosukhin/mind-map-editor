@@ -51,7 +51,7 @@ const selectMenuItem = (id: string) => {
         href="#"
         @click.prevent="selectMenuItem(item.id)"
       >
-        {{ item.name }}
+        {{ item.additionalName ? item.additionalName : item.name }}
       </a>
     </div>
   </div>
