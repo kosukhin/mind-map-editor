@@ -61,16 +61,12 @@ watch(hashChanged, () => {
   })
 })
 
-watch(shiftFFired, (value) => {
-  if (value) {
-    overlayName.value = SHOW_SEARCH
-  }
+watch(shiftFFired, () => {
+  overlayName.value = SHOW_SEARCH
 })
 
-watch(shiftMFired, (value) => {
-  if (value) {
-    overlayName.value = SHOW_OBJECT_MENU
-  }
+watch(shiftMFired, () => {
+  overlayName.value = SHOW_OBJECT_MENU
 })
 
 const handleLock = () => {

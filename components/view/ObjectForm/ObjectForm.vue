@@ -38,14 +38,12 @@ const isDirty = computed(
 )
 useFormDirtyCheck(isDirty, SHOW_OBJECT)
 
-watch(shiftSFired, (value) => {
+watch(shiftSFired, () => {
   if (isClosed.value) {
     return
   }
 
-  if (value) {
-    save()
-  }
+  save()
 })
 
 watch(
