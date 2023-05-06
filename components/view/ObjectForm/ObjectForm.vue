@@ -25,7 +25,7 @@ import Input from '~/components/ui/Input/Input'
 import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
 import Drawer from '~/components/ui/Drawer/Drawer'
 
-const { ctrlSFired } = useKeybindings()
+const { shiftSFired } = useKeybindings()
 const { layer, layerObjects } = useLayer()
 const { map } = useMap()
 const { close, isClosed } = useOverlay()
@@ -38,7 +38,7 @@ const isDirty = computed(
 )
 useFormDirtyCheck(isDirty, SHOW_OBJECT)
 
-watch(ctrlSFired, (value) => {
+watch(shiftSFired, (value) => {
   if (isClosed.value) {
     return
   }

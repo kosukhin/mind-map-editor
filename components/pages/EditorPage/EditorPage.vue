@@ -46,7 +46,7 @@ const head = reactive<ReactiveHead>({
 useSeoMeta(head)
 const { hashChanged } = useHashChange()
 const { scrollToObject } = useMoveToObject()
-const { ctrlFFired, ctrlMFired } = useKeybindings()
+const { shiftFFired, shiftMFired } = useKeybindings()
 const { overlayName } = useOverlay()
 
 watch(firstMapLoad, () => {
@@ -61,13 +61,13 @@ watch(hashChanged, () => {
   })
 })
 
-watch(ctrlFFired, (value) => {
+watch(shiftFFired, (value) => {
   if (value) {
     overlayName.value = SHOW_SEARCH
   }
 })
 
-watch(ctrlMFired, (value) => {
+watch(shiftMFired, (value) => {
   if (value) {
     overlayName.value = SHOW_OBJECT_MENU
   }

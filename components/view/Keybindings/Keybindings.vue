@@ -8,9 +8,9 @@ useOverlayAutoClose(SHOW_KEYBINDINGS)
 <template>
   <pre class="Keybindings">
     Esc - закрывает модалку или дровер
-    Ctrl+<em>S</em> - Сохраняет форму
-    Ctrl+<em>F</em> - Открывает окно поиска
-    Ctrl+<em>M</em> - Открывает меню
+    Shift+<em>S</em> - Сохраняет форму
+    Shift+<em>F</em> - Открывает окно поиска
+    Shift+<em>M</em> - Открывает меню
   </pre>
 </template>
 

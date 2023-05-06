@@ -1,22 +1,15 @@
-import { useMagicKeys } from '@vueuse/core'
+import { createSharedComposable, useMagicKeys } from '@vueuse/core'
 
-export const useKeybindings = () => {
+export const useKeybindings = createSharedComposable(() => {
   const {
-    ctrl_s: ctrlSFired,
-    ctrl_f: ctrlFFired,
-    ctrl_m: ctrlMFired,
-  } = useMagicKeys({
-    passive: false,
-    onEventFired(e) {
-      if (e.ctrlKey && e.key === 's') e.preventDefault()
-      if (e.ctrlKey && e.key === 'f') e.preventDefault()
-      if (e.ctrlKey && e.key === 'm') e.preventDefault()
-    },
-  })
+    shift_s: shiftSFired,
+    shift_f: shiftFFired,
+    shift_m: shiftMFired,
+  } = useMagicKeys()
 
   return {
-    ctrlSFired,
-    ctrlFFired,
-    ctrlMFired,
+    shiftSFired,
+    shiftFFired,
+    shiftMFired,
   }
-}
+})
