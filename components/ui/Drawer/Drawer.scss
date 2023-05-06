@@ -1,4 +1,5 @@
 .Drawer {
+  $self: &;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -18,6 +19,15 @@
     background: var(--overlayInnerBG);
     box-sizing: border-box;
     padding: var(--defaultPadding);
+  }
+
+  &_Direction {
+    &_rtl {
+      #{$self}-Inner {
+        left: auto;
+        right: 0;
+      }
+    }
   }
 
   &-Content {

@@ -1,0 +1,17 @@
+.ObjectMenu {
+  padding: 20px 0;
+
+  &-List {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+  }
+
+  &-Empty {
+    color: #777;
+  }
+
+  &-Item {
+    display: block;
+  }
+}

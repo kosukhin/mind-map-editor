@@ -181,7 +181,15 @@ const clone = () => {
             Клонировать
           </Button>
         </div>
-
+        <div class="ObjectForm-Row">
+          <Checkbox v-model="form.inMenu" label="Использовать в меню" />
+        </div>
+        <template v-if="form.inMenu">
+          <div class="ObjectForm-Title">Порядок в меню</div>
+          <div class="ObjectForm-Row">
+            <Input v-model="form.menuOrder" type="number" />
+          </div>
+        </template>
         <template v-if="form.arrows && form.arrows.length">
           <div class="ObjectForm-Title">Связи</div>
           <div class="ObjectForm-Row">

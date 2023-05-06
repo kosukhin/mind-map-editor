@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watch } from '@vue/runtime-core'
-import { ref } from '@vue/reactivity'
+import { computed, ref } from '@vue/reactivity'
 import { useMagicKeys } from '@vueuse/core'
 import { useOverlay } from '~/composables/useOverlay'
 
@@ -9,11 +9,20 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  direction: {
+    type: String,
+    default: 'ltr',
+    validator: (value: string) => ['ltr', 'rtl', 'ttb', 'btt'].includes(value),
+  },
 })
 
 const isOpened = ref(false)
 const { current } = useMagicKeys()
 const { overlayName, tryToClose } = useOverlay()
+const classes = computed(() => ({
+  Drawer: true,
+  [`Drawer_Direction_${props.direction}`]: true,
+}))
 
 const close = () => {
   tryToClose.value = props.name as string
@@ -37,7 +46,7 @@ watch(current, () => {
 </script>
 
 <template>
-  <div v-if="isOpened" class="Drawer" @click="close">
+  <div v-if="isOpened" :class="classes" @click="close">
     <div class="Drawer-Inner" @click.stop>
       <div v-if="$slots.header">
         <slot name="header" class="Drawer-Header" />

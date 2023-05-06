@@ -16,6 +16,7 @@ import {
   SHOW_SEARCH,
   SHOW_PARENT_TYPES,
   SHOW_KEYBINDINGS,
+  SHOW_OBJECT_MENU,
 } from '~/constants'
 import MapAsText from '~/components/view/MapAsText/MapAsText'
 import Settings from '~/components/view/Settings/Settings'
@@ -32,6 +33,8 @@ import {
   useOverlay,
 } from '~/composables'
 import Keybindings from '~/components/view/Keybindings/Keybindings.vue'
+import ObjectMenu from '~/components/view/ObjectMenu/ObjectMenu.vue'
+import Drawer from '~/components/ui/Drawer/Drawer.vue'
 
 const { version } = useRuntimeConfig()
 const { isDragLocked } = useLocks()
@@ -43,7 +46,7 @@ const head = reactive<ReactiveHead>({
 useSeoMeta(head)
 const { hashChanged } = useHashChange()
 const { scrollToObject } = useMoveToObject()
-const { ctrlFFired } = useKeybindings()
+const { ctrlFFired, ctrlMFired } = useKeybindings()
 const { overlayName } = useOverlay()
 
 watch(firstMapLoad, () => {
@@ -61,6 +64,12 @@ watch(hashChanged, () => {
 watch(ctrlFFired, (value) => {
   if (value) {
     overlayName.value = SHOW_SEARCH
+  }
+})
+
+watch(ctrlMFired, (value) => {
+  if (value) {
+    overlayName.value = SHOW_OBJECT_MENU
   }
 })
 
@@ -92,6 +101,12 @@ const handleLock = () => {
   </div>
   <Notify />
   <TypeForm />
+  <Drawer :name="SHOW_OBJECT_MENU" direction="rtl">
+    <template #header>
+      <h2>Меню</h2>
+    </template>
+    <ObjectMenu />
+  </Drawer>
   <Modal :name="SHOW_KEYBINDINGS">
     <template #header>
       <h2>Сочетания клавиш</h2>

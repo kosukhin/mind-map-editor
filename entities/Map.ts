@@ -17,6 +17,8 @@ export interface MapObject {
   arrows: MapObjectRelation[]
   targetBlank: boolean
   lastClick: number
+  inMenu: boolean
+  menuOrder: number
 }
 
 export interface MapType {
