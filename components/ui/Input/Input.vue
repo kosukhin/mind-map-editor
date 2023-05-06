@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { defineEmits, defineProps, watch, watchEffect } from '@vue/runtime-core'
+import { defineEmits, defineProps, watch } from '@vue/runtime-core'
 import { useVModel } from '@vueuse/core'
 import { ref } from '@vue/reactivity'
+import debounce from 'lodash/debounce'
 
 const props = defineProps({
   modelValue: {
@@ -18,11 +19,14 @@ const emit = defineEmits(['update:modelValue'])
 const data = useVModel(props, 'modelValue', emit)
 const input = ref(null)
 
-watch(input, () => {
-  if (props.autofocus) {
-    ;(input.value as HTMLInputElement).focus()
-  }
-})
+watch(
+  input,
+  debounce(() => {
+    if (props.autofocus) {
+      ;(input.value as HTMLInputElement).focus()
+    }
+  }, 500)
+)
 </script>
 
 <template>
