@@ -1,0 +1,9 @@
+.Select {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--defaultPadding);
+  border: 1px solid var(--borderColor);
+  border-radius: var(--defaultRadius);
+  background: var(--defaultBG);
+}

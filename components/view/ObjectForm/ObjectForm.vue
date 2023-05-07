@@ -24,6 +24,7 @@ import Checkbox from '~/components/ui/Checkbox/Checkbox'
 import Input from '~/components/ui/Input/Input'
 import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
 import Drawer from '~/components/ui/Drawer/Drawer'
+import Select from '~/components/ui/Select/Select.vue'
 
 const { shiftSFired } = useKeybindings()
 const { layer, layerObjects } = useLayer()
@@ -37,6 +38,20 @@ const isDirty = computed(
   () => stringify(form.value) !== stringify(currentObject.value)
 )
 useFormDirtyCheck(isDirty, SHOW_OBJECT)
+const mapTypes = computed(() => {
+  const result = []
+
+  map.map((vMap) => {
+    Object.entries(vMap.types).forEach(([typeId, type]) => {
+      result.push({
+        id: typeId,
+        name: type.name,
+      })
+    })
+  })
+
+  return result
+})
 
 watch(shiftSFired, () => {
   if (isClosed.value) {
@@ -172,6 +187,15 @@ const clone = () => {
         <div class="ObjectForm-Title">Z-Index</div>
         <div class="ObjectForm-Row">
           <Input v-model="form.zindex" type="number" />
+        </div>
+        <div class="ObjectForm-Title">Тип объекта</div>
+        <div class="ObjectForm-Row">
+          <Select
+            v-model="form.type"
+            :items="mapTypes"
+            option-id="id"
+            option-label="name"
+          />
         </div>
         <div class="ObjectForm-Row">
           <Button
