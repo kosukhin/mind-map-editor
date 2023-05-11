@@ -37,6 +37,9 @@ export const createObject = (
     position,
     type,
     zindex: 0,
+    inMenu: false,
+    menuOrder: 0,
+    additionalName: '',
   }
 }
 
