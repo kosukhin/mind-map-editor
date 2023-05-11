@@ -25,6 +25,7 @@ import Input from '~/components/ui/Input/Input'
 import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
 import Drawer from '~/components/ui/Drawer/Drawer'
 import Select from '~/components/ui/Select/Select.vue'
+import { findRelationsToRemove } from '~/application'
 
 const { shiftSFired } = useKeybindings()
 const { layer, layerObjects } = useLayer()
@@ -81,6 +82,13 @@ const remove = () => {
 
   close()
   all([currentObject, map] as const).map(([vObj, vMap]) => {
+    findRelationsToRemove(vObj, vMap).map((relations) => {
+      relations.forEach((relation) => {
+        relation.indexes.forEach((indexToRemove) => {
+          vMap.objects[relation.objectId].arrows.splice(indexToRemove, 1)
+        })
+      })
+    })
     delete vMap.objects[vObj.id]
     removeObjectOnLayer(layerObjects, vObj)
   })
