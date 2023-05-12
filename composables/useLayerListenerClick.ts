@@ -34,7 +34,7 @@ export const useLayerListenerClick = createSharedComposable(() => {
         })
         result.currentObjectId.map(setValue(currentObjectId))
         result.overlayName.map(setValue(overlayName))
-        result.openUrlByObject.map((object) => openUrlByObject(object))
+        result.openUrlByObject.map(openUrlByObject)
       })
   })
 })

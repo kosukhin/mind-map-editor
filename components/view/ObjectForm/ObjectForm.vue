@@ -16,6 +16,7 @@ import { KonvaLayerObject, MapObject } from '~/entities'
 import {
   addObjectToLayer,
   all,
+  createMapObjectUrl,
   removeObjectOnLayer,
   updateObjectOnLayer,
 } from '~/utils'
@@ -75,6 +76,15 @@ watch(
   }
 )
 
+const objectUrl = computed({
+  get() {
+    return createMapObjectUrl(form.value)
+  },
+  set(value) {
+    form.value.outlink = value
+  },
+})
+
 const remove = () => {
   if (!confirm('Вы уверены что нужно удалить?')) {
     return
@@ -101,6 +111,7 @@ const save = () => {
       vMap.objects[vObj.id] = {
         ...vMap.objects[vObj.id],
         ...form.value,
+        outlink: objectUrl.value,
       }
       await updateObjectOnLayer(
         layerObjects,
@@ -174,7 +185,7 @@ const clone = () => {
         <template v-if="form.linked">
           <div class="ObjectForm-Title">Внешняя ссылка</div>
           <div class="ObjectForm-Row">
-            <Input v-model="form.outlink" />
+            <Input v-model="objectUrl" />
           </div>
           <div class="ObjectForm-Row">
             <Checkbox v-model="form.targetBlank" label="В новой влкадке" />
