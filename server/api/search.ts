@@ -2,7 +2,17 @@ import fs from 'fs'
 // @ts-ignore
 import path from 'path'
 import lunr from 'lunr'
+// @ts-ignore
+import lunrLanguagesStemmer from 'lunr-languages/lunr.stemmer.support.js'
+// @ts-ignore
+import lunrLanguagesMulti from 'lunr-languages/lunr.multi.js'
+// @ts-ignore
+import lunrLanguagesRu from 'lunr-languages/lunr.ru.js'
 import { BASE_HOST } from '~/constants'
+
+lunrLanguagesStemmer(lunr)
+lunrLanguagesMulti(lunr)
+lunrLanguagesRu(lunr)
 
 const { readFileSync } = fs
 // eslint-disable-next-line import/no-named-as-default-member
