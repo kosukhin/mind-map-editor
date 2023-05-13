@@ -18,6 +18,10 @@ export const useOverlay = createSharedComposable(() => {
     setValue(tryToClose, OVERLAY_CLOSE)
   }
 
+  function isOpened(maybeName: string) {
+    return overlayName.value === maybeName
+  }
+
   watch(overlayName, () => {
     overlayName.map((vOverlay) => {
       if (vOverlay !== OVERLAY_CLOSE) {
@@ -34,5 +38,6 @@ export const useOverlay = createSharedComposable(() => {
     history,
     isClosed,
     close,
+    isOpened,
   }
 })

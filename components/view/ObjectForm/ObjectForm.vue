@@ -37,10 +37,9 @@ import Drawer from '~/components/ui/Drawer/Drawer'
 import Select from '~/components/ui/Select/Select.vue'
 import { findRelationsToRemove } from '~/application'
 
-const { shiftSFired } = useKeybindings()
 const { layer, layerObjects } = useLayer()
 const { map } = useMap()
-const { close, isClosed } = useOverlay()
+const { close, isOpened } = useOverlay()
 const { currentObject } = useMapObject()
 const { settings } = useSettings()
 const form = ref({})
@@ -64,11 +63,11 @@ const mapTypes = computed(() => {
   return result
 })
 
+const { shiftSFired } = useKeybindings()
 watch(shiftSFired, () => {
-  if (isClosed.value) {
+  if (!isOpened(SHOW_OBJECT)) {
     return
   }
-
   save()
 })
 

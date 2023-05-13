@@ -8,7 +8,12 @@ import {
   SHOW_KEYBINDINGS,
 } from '~/constants'
 import Button from '~/components/ui/Button/Button'
-import { useMap, useOverlay, useRequestRemoveMap } from '~/composables'
+import {
+  useKeybindings,
+  useMap,
+  useOverlay,
+  useRequestRemoveMap,
+} from '~/composables'
 import Checkbox from '~/components/ui/Checkbox/Checkbox'
 import Input from '~/components/ui/Input/Input'
 import { MapSettings } from '~/entities'
@@ -16,7 +21,7 @@ import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
 
 const { removeMap } = useRequestRemoveMap()
 const { map, mapName, firstMapLoad, parentTypes } = useMap()
-const { close, overlayName } = useOverlay()
+const { close, overlayName, isOpened } = useOverlay()
 const form = ref({})
 const { stringify } = JSON
 const isDirty = computed(
@@ -50,6 +55,14 @@ const onSave = () => {
     vMap.settings = { ...form.value } as MapSettings
   })
 }
+
+const { shiftSFired } = useKeybindings()
+watch(shiftSFired, () => {
+  if (!isOpened(SHOW_SETTINGS)) {
+    return
+  }
+  onSave()
+})
 </script>
 
 <template>

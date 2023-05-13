@@ -6,6 +6,7 @@ import {
   useMapType,
   useOverlay,
   useFormDirtyCheck,
+  useKeybindings,
 } from '~/composables'
 import { SHOW_TYPE } from '~/constants'
 import SvgEditor from '~/components/view/SvgEditor/SvgEditor'
@@ -14,7 +15,7 @@ import { all } from '~/utils'
 import Input from '~/components/ui/Input/Input'
 import Modal from '~/components/ui/Modal/Modal'
 
-const { close } = useOverlay()
+const { close, isOpened } = useOverlay()
 const { map } = useMap()
 const { currentTypeId, currentType } = useMapType()
 const form = ref<any>({})
@@ -48,6 +49,14 @@ const save = () => {
     }
   })
 }
+
+const { shiftSFired } = useKeybindings()
+watch(shiftSFired, () => {
+  if (!isOpened(SHOW_TYPE)) {
+    return
+  }
+  save()
+})
 </script>
 
 <template>
