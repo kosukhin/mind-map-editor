@@ -9,8 +9,14 @@
   }
 
   &-MainSubTitle {
-    display: block;
     margin-bottom: var(--defaultPadding);
+    display: flex;
+    align-items: center;
+    gap: var(--mbExLg);
+
+    * {
+      white-space: nowrap;
+    }
   }
 
   &-Row,

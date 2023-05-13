@@ -2,6 +2,7 @@
 import { watch } from '@vue/runtime-core'
 import { computed, ref } from '@vue/reactivity'
 import cloneDeep from 'lodash/cloneDeep'
+import { useClipboard } from '@vueuse/core'
 import {
   useMapObject,
   useSettings,
@@ -9,15 +10,23 @@ import {
   useMap,
   useLayer,
   useKeybindings,
+  useNotify,
 } from '~/composables'
 import Button from '~/components/ui/Button/Button'
-import { SHOW_OBJECT } from '~/constants'
+import {
+  COPIED,
+  NOT_SUPPOERTED,
+  NOTIFY_ERROR,
+  NOTIFY_SUCCESS,
+  SHOW_OBJECT,
+} from '~/constants'
 import { KonvaLayerObject, MapObject } from '~/entities'
 import {
   addObjectToLayer,
   all,
   createMapObjectUrl,
   removeObjectOnLayer,
+  setValue,
   updateObjectOnLayer,
 } from '~/utils'
 import Textarea from '~/components/ui/Textarea/Textarea'
@@ -155,6 +164,19 @@ const clone = () => {
     }
   )
 }
+
+const { message } = useNotify()
+const { copy, isSupported } = useClipboard()
+function onCopyUrl() {
+  if (!isSupported) {
+    setValue(message, [NOT_SUPPOERTED, NOTIFY_ERROR])
+    return
+  }
+  currentObject.map((vObject) => {
+    copy(`${location.pathname}#${vObject.id}`)
+    setValue(message, [COPIED, NOTIFY_SUCCESS])
+  })
+}
 </script>
 
 <template>
@@ -162,7 +184,8 @@ const clone = () => {
     <template #header>
       <h2 class="ObjectForm-MainTitle">Объект карты</h2>
       <small v-if="currentObject.value" class="ObjectForm-MainSubTitle">
-        ID #{{ currentObject.value.id }}
+        <span> ID #{{ currentObject.value.id }} </span>
+        <Button size="sm" type="primary" @click="onCopyUrl">копировать</Button>
       </small>
     </template>
     <div v-if="!settings.isNothing && form" class="ObjectForm">
