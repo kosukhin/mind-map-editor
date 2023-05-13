@@ -10,13 +10,11 @@ export const useMapType = createSharedComposable(() => {
   const { map } = useMap()
   const currentTypeId = reMaybe<StrNum>()
   const currentType = reMaybe<MapType>()
-
   watch(currentTypeId, () => {
     all([map, currentTypeId] as const).map(([vMap, vType]) => {
       setValue(currentType, vMap.types[vType])
     })
   })
-
   return {
     currentTypeId,
     currentType,

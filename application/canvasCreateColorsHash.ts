@@ -7,15 +7,12 @@ export const canvasCreateColorsHash = (
   if (!vMap.settings.colored) {
     return {}
   }
-
   const clicks = Object.values(vMap.objects).map((obj) => {
     return obj.lastClick
   })
   clicks.sort((a, b) => a - b)
-
   const chunk = Math.ceil(clicks.length / 3)
   let groups = {}
-
   for (let i = 0; i < clicks.length; i += chunk) {
     const color = colorsMap.shift()
     groups = {
@@ -26,6 +23,5 @@ export const canvasCreateColorsHash = (
       }, {}),
     }
   }
-
   return groups
 }

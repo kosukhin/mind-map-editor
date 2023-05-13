@@ -5,7 +5,6 @@ import { NOTIFY_DELAY } from '~/constants'
 
 export const useNotify = createSharedComposable(() => {
   const message = reMaybe<[string, string]>()
-
   watch(message, () => {
     message.map(() => {
       setTimeout(() => {
@@ -13,7 +12,6 @@ export const useNotify = createSharedComposable(() => {
       }, NOTIFY_DELAY)
     })
   })
-
   return {
     message,
   }

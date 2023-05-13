@@ -11,7 +11,6 @@ const { currentObjectId } = useMapObject()
 const { isClickLocked } = useLocks()
 const title = ref('Сделать связь')
 const type = ref('default')
-
 let stopNextObjectWatcher: Function | null = null
 
 const startRelation = () => {
@@ -19,13 +18,11 @@ const startRelation = () => {
     if (stopNextObjectWatcher) {
       stopNextObjectWatcher()
     }
-
     title.value = 'Сделать связь'
     isClickLocked.value = false
     type.value = 'default'
     return
   }
-
   currentObjectId.value = null
   title.value = 'Выберите источник'
   isClickLocked.value = true

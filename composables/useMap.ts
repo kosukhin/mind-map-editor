@@ -17,7 +17,6 @@ export const useMap = createSharedComposable(() => {
   const mapName = route.path.replace('/', '')
   const { getMap } = useRequestGetMap()
   const { saveMap } = useRequestSaveMap()
-
   getMap(mapName)
     .then(([vMap, vParentTypes]) => {
       setValues([
@@ -27,7 +26,6 @@ export const useMap = createSharedComposable(() => {
       ])
     })
     .catch(setError(map))
-
   watch(
     map,
     () => {
@@ -47,7 +45,6 @@ export const useMap = createSharedComposable(() => {
       deep: true,
     }
   )
-
   return {
     map,
     firstMapLoad,

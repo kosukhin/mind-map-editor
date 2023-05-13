@@ -3,6 +3,5 @@ export const formDirtyCheck =
     if (overlayName !== formName) {
       return null as boolean
     }
-
     return isDirty
   }

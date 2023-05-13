@@ -9,7 +9,6 @@ export const miniMapCalculateSizes = ([vCanvasSize]: Params): Result => {
   const miniScreenHeight = vCanvasSize.h * MINIMAP_SCALE
   const miniMapWidth = CANVAS_WIDTH * MINIMAP_SCALE
   const miniMapHeight = CANVAS_HEIGHT * MINIMAP_SCALE
-
   return [
     { w: miniMapWidth, h: miniMapHeight },
     { w: miniScreenWidth, h: miniScreenHeight },

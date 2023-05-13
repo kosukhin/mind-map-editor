@@ -3,7 +3,6 @@ import { API_REMOVE_MAP, POST } from '~/constants'
 
 export const useRequestRemoveMap = () => {
   const { http } = useRequest()
-
   const removeMap = async (mapName: string) => {
     await http({
       method: POST,
@@ -13,7 +12,6 @@ export const useRequestRemoveMap = () => {
       },
     })
   }
-
   return {
     removeMap,
   }

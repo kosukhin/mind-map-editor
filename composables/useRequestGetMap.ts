@@ -5,7 +5,6 @@ import { requestNormalizeGetMap } from '~/application'
 
 export const useRequestGetMap = () => {
   const { http } = useRequest()
-
   const getMap = async (
     mapName: string
   ): Promise<[MapStructure, MapType[]]> => {
@@ -16,10 +15,8 @@ export const useRequestGetMap = () => {
         document: mapName,
       },
     })) as MapResponse
-
     return requestNormalizeGetMap(response, mapName)
   }
-
   return {
     getMap,
   }

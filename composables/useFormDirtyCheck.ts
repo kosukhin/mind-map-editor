@@ -7,13 +7,11 @@ import { setValue } from '~/utils'
 
 export const useFormDirtyCheck = (isDirty: Ref<boolean>, formName: string) => {
   const { tryToClose, close } = useOverlay()
-
   watch(tryToClose, () => {
     tryToClose
       .map(formDirtyCheck(isDirty.value, formName))
       .map((needConfirm) => {
         setValue(tryToClose, OVERLAY_CLOSE)
-
         if (!needConfirm || confirm(OVERLAY_CLOSE_ALERT)) {
           close()
         }

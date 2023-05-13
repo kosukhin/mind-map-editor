@@ -18,11 +18,9 @@ export const useLayerListenerClick = createSharedComposable(() => {
   const { currentObjectId } = useMapObject()
   const { overlayName } = useOverlay()
   const { isClickLocked } = useLocks()
-
   watch(stageClick, () => {
     isSidebarOpen.value = false
   })
-
   watch([tap, click], () => {
     all([any([click, tap] as const), map] as const)
       .map(mapObjectClick(isClickLocked.value))

@@ -3,8 +3,10 @@ import { Maybe } from '~/utils'
 
 type RelativeObject = { objectId: string; indexes: string[] }
 
-// Рассчитывает какие связи нужно удалить из зависимых объектов
-export function findRelationsToRemove(vObject: MapObject, vMap: MapStructure) {
+export const findRelationsToRemove = (
+  vObject: MapObject,
+  vMap: MapStructure
+) => {
   const relations = Maybe<RelativeObject[]>()
   Object.values(vMap.objects).forEach((currentObject) => {
     const result: RelativeObject = { objectId: currentObject.id, indexes: [] }

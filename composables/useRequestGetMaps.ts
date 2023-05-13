@@ -4,14 +4,12 @@ import { API_GET_MAPS, GET } from '~/constants'
 
 export const useRequestGetMaps = () => {
   const { http } = useRequest()
-
   const getMaps = async (): Promise<GetMapsResponse> => {
     return (await http({
       method: GET,
       url: API_GET_MAPS,
     })) as GetMapsResponse
   }
-
   return {
     getMaps,
   }

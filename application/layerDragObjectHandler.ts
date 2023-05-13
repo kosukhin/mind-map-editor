@@ -27,7 +27,6 @@ export const calculateVisibleObjects = (vMap: MapStructure, vStage: Stage) => {
     const stageStartY = vStage.y()
     const stageEndY = vStage.y() - vStage.height()
     const [objectX, objectY] = position
-
     return (
       stageStartX > -objectX &&
       -objectX > stageEndX &&
@@ -35,7 +34,6 @@ export const calculateVisibleObjects = (vMap: MapStructure, vStage: Stage) => {
       -objectY > stageEndY
     )
   }
-
   const visible = []
   const invisible = []
   Object.values(objects).forEach((object) => {
@@ -45,7 +43,6 @@ export const calculateVisibleObjects = (vMap: MapStructure, vStage: Stage) => {
       invisible.push(object)
     }
   })
-
   return [visible, invisible]
 }
 
@@ -59,19 +56,16 @@ export const layerDragObjectHandler =
       arrows: Maybe<[Arrow, number[]][]>(),
       relatedArrows: Maybe<[Arrow, number[]][]>(),
     }
-
     if (!dragEvent.target.attrs.image) {
       debug('not image object', 'dragmove')
       return result
     }
-
     const objectId = dragEvent.target.attrs.objectId
     const object = vMap.objects[objectId]
     const labelWidth = maxNewLineLength(object.name) * 7
     const type = vMap.types[object.type]
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [img, text, arrows, additionalObjects] = layerObjects.get(objectId)
-
     const additionalText = additionalObjects[0]
     if (additionalText) {
       const labelWidth = maxNewLineLength(object.additionalName) * 7
@@ -84,7 +78,6 @@ export const layerDragObjectHandler =
         },
       ]
     }
-
     result.text.value = [
       text,
       {
@@ -100,11 +93,9 @@ export const layerDragObjectHandler =
       resultArrows.push([arrow, points])
     })
     result.arrows.value = resultArrows
-
     const relatedArrows: Arrow[] = []
     Object.values(vMap.objects).forEach((relObject) => {
       if (!relObject.arrows) return
-
       const hasRelation = relObject.arrows.find(
         (relArrow) => relArrow.id === object.id
       )
@@ -118,7 +109,6 @@ export const layerDragObjectHandler =
         })
       }
     })
-
     const resultRelatedArrows: [Arrow, number[]][] = []
     relatedArrows.forEach((relArrow) => {
       const points = relArrow.points()
@@ -126,8 +116,6 @@ export const layerDragObjectHandler =
       points[3] = dragEvent.target.attrs.y + type.height / 2
       resultRelatedArrows.push([relArrow, points])
     })
-
     result.relatedArrows.value = resultRelatedArrows
-
     return result
   }

@@ -5,7 +5,6 @@ type Response = { ok: boolean; document: string }
 
 export const useRequestCreateMap = () => {
   const { http } = useRequest()
-
   const createMap = async (mapName: string): Promise<Response> => {
     return (await http<{ name: string }>({
       method: POST,
@@ -15,7 +14,6 @@ export const useRequestCreateMap = () => {
       },
     } as const)) as Response
   }
-
   return {
     createMap,
   }

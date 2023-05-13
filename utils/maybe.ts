@@ -29,11 +29,9 @@ export function all<C extends readonly MaybeInst<unknown>[]>(containers: C) {
   if (containers.some((container) => container.isNothing)) {
     return Maybe<ExtractGenerics<C>>()
   }
-
   const values = containers.map((container) => container.value)
   const result = Maybe<ExtractGenerics<C>>()
   result.value = values as ExtractGenerics<C>
-
   return result
 }
 
@@ -42,6 +40,5 @@ export function any<C extends readonly MaybeInst<unknown>[]>(containers: C) {
     null) as Nullable<MaybeInst<ExtractGenerics<C>>>
   const result = Maybe<ExtractGenerics<C>>()
   result.value = firstMaybe ? firstMaybe.value : null
-
   return result as (typeof containers)[number]
 }

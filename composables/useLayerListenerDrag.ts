@@ -19,7 +19,6 @@ export const useLayerListenerDrag = () => {
   const { dragend, dragmove, wheel } = useLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
   const { triggerPartialRendering } = useMapPartialRenderer()
-
   watch(dragend, () => {
     debug('debug fired', 'drag')
     if (isDragLocked.value) return
@@ -29,7 +28,6 @@ export const useLayerListenerDrag = () => {
         setProperty(object, 'position', [position.x, position.y])
       })
   })
-
   watch(dragmove, () => {
     if (isDragLocked.value) return
     all([dragmove, map] as const)
@@ -41,9 +39,7 @@ export const useLayerListenerDrag = () => {
         additionalText.map(([text, position]) => text.position(position))
       })
   })
-
   const partialRenderingDelay = 100
-
   watch(
     dragmove,
     debounce((e) => {
@@ -52,14 +48,12 @@ export const useLayerListenerDrag = () => {
       }
     }, partialRenderingDelay)
   )
-
   watch(
     wheel,
     debounce(() => {
       triggerPartialRendering()
     }, partialRenderingDelay)
   )
-
   watch(firstMapLoad, () => {
     stage.map((vStage) => {
       vStage.dragBoundFunc(restrictBoundaries)

@@ -34,7 +34,6 @@ export const urlTrim = (url: string) => {
     urlArr.splice(urlArr.length - 1, 1)
     return urlArr.join('')
   }
-
   return url
 }
 
@@ -42,7 +41,6 @@ export const maxNewLineLength = (str: string): number => {
   if (!str) {
     return 0
   }
-
   return Math.max.apply(
     null,
     str.split('\n').map((str) => str.length)
@@ -53,7 +51,6 @@ export const newLineCount = (str: string): number => {
   if (!str) {
     return 0
   }
-
   return str.split('\n').length
 }
 
@@ -76,11 +73,9 @@ export const debug = (string: string, tag: string = 'DEBUG') => {
   if (process.env.NODE_ENV === 'production') {
     return
   }
-
   if (['dragmove'].includes(tag)) {
     return
   }
-
   const { log } = console
   log && log(`['${tag}'] ${string}`)
 }

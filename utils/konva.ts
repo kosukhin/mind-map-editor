@@ -22,7 +22,6 @@ export async function addObjectToLayer(
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   const additionalObjects = []
-
   if (!ctx) return
   const type = types[object.type]
   const v = await Canvg.fromString(ctx, type.svg)
@@ -38,9 +37,7 @@ export async function addObjectToLayer(
     objectId: object.id,
   })
   layer.add(img)
-
   const labelWidth = maxNewLineLength(object.name) * 7
-
   const text = new Konva.Text({
     name: object.id,
     x: object.position[0] + type.width / 2 - labelWidth / 2,
@@ -54,7 +51,6 @@ export async function addObjectToLayer(
     objectId: object.id,
   })
   layer.add(text)
-
   if (object.additionalName) {
     const labelWidth = maxNewLineLength(object.additionalName) * 7
     const labelHeight = newLineCount(object.additionalName) * 11
@@ -73,17 +69,13 @@ export async function addObjectToLayer(
     layer.add(additionalText)
     additionalObjects.push(additionalText)
   }
-
   const arrows: Arrow[] = []
-
   if (object.arrows) {
     object.arrows.forEach((toObjectRelation) => {
       const toObject = map.objects[toObjectRelation.id]
-
       if (!toObject) {
         return
       }
-
       const toObjectType = map.types[toObject.type]
       const arrow = new Konva.Arrow({
         x: 0,
@@ -105,7 +97,6 @@ export async function addObjectToLayer(
       arrows.push(arrow)
     })
   }
-
   return [img, text, arrows, additionalObjects] as KonvaLayerObject[]
 }
 
@@ -120,11 +111,9 @@ export function createLayer(editorWrapper: HTMLElement): [Layer, Stage] {
     fill: '#eee',
     draggable: true,
   })
-
   const layer = new Konva.Layer()
   stage.add(layer)
   layer.draw()
-
   return [layer, stage]
 }
 

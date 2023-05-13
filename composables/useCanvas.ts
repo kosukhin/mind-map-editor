@@ -9,21 +9,17 @@ export const useCanvas = () => {
   const canvas = reMaybe<HTMLElement>()
   const canvasSize = reMaybe<Size>()
   const { findById } = useDom()
-
   onMounted(() => {
     const canvasElement = findById(CANVAS_DOM_ID)
-
     if (canvasElement) {
       setValue(canvas, canvasElement)
     }
   })
-
   watch(canvas, () => {
     canvas.map((vCanvas) => {
       setValue(canvasSize, canvasCreateSize(vCanvas))
     })
   })
-
   return {
     canvas,
     canvasSize,

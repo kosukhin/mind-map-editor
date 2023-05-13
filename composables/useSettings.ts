@@ -6,7 +6,6 @@ export const useSettings = () => {
   settings.value = {
     isEditable: true,
   }
-
   return {
     settings,
   }

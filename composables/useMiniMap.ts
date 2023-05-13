@@ -15,7 +15,6 @@ export const useMiniMap = (
   const { layer, stage } = useLayer()
   const { canvasSize } = useCanvas()
   const { dragmove, wheel } = useLayerEvents()
-
   watch(canvasSize, () => {
     all([canvasSize] as const)
       .map(miniMapCalculateSizes)
@@ -30,7 +29,6 @@ export const useMiniMap = (
         )
       })
   })
-
   watchOnce(firstMapLoad, () => {
     all([layer, stage, miniMap, miniMapScreen, canvasSize] as const)
       .map(miniMapRedrawHandler)

@@ -5,7 +5,6 @@ type SearchResponse = { response: Array<{ ref: string }> }
 
 export const useRequestSearch = () => {
   const { http } = useRequest()
-
   const search = async (query: string): Promise<SearchResponse> => {
     return (await http({
       method: GET,
@@ -15,7 +14,6 @@ export const useRequestSearch = () => {
       },
     })) as SearchResponse
   }
-
   return {
     search,
   }

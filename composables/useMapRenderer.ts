@@ -17,7 +17,6 @@ export const useMapRenderer = () => {
   const allInit = computed(
     () => all([layer, map] as const).map(() => true).value
   )
-
   watchOnce(allInit, () => {
     all([layer, map, maybeDragLocked] as const)
       .map(renderMapObjects)
@@ -26,14 +25,12 @@ export const useMapRenderer = () => {
           vObjects.forEach(([objectId, objects]) => {
             layerObjects.set(objectId, objects)
           })
+          setTimeout(() => {
+            triggerPartialRendering()
+          }, 1000)
         })
       })
-
-    setTimeout(() => {
-      triggerPartialRendering()
-    }, 1000)
   })
-
   return {
     map,
     allInit,

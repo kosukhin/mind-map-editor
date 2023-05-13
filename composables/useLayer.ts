@@ -9,7 +9,6 @@ export const useLayer = createSharedComposable(() => {
   const layer = shallowReMaybe<Layer>()
   const stage = shallowReMaybe<Stage>()
   const layerObjects: MapLayerObjects = new Map()
-
   watch(canvas, () => {
     canvas.map((vCanvas) => {
       const [newLayer, newStage] = createLayer(vCanvas)
@@ -17,7 +16,6 @@ export const useLayer = createSharedComposable(() => {
       setValue(stage, newStage)
     })
   })
-
   return {
     layer,
     stage,

@@ -56,23 +56,19 @@ export function createMapObjectUrl(object: MapObject) {
           : ''
       )
   link = urlTrim(link)
-
   return link
 }
 
 export const openUrlByObject = (object: MapObject) => {
   if (object.linked) {
     const link = createMapObjectUrl(object)
-
     if (object.targetBlank) {
       window.open(link)
     } else {
       location.href = link
     }
-
     return true
   }
-
   return false
 }
 

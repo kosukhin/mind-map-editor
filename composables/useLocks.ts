@@ -7,7 +7,6 @@ export const useLocks = createSharedComposable(() => {
   const isClickLocked = ref(false)
   const isDragLocked = useLocalStorage('drag-locked', false)
   const maybeDragLocked = reMaybe<boolean>()
-
   watch(
     isDragLocked,
     () => {
@@ -17,7 +16,6 @@ export const useLocks = createSharedComposable(() => {
       immediate: true,
     }
   )
-
   return {
     isClickLocked,
     isDragLocked,

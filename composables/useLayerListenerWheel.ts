@@ -7,7 +7,6 @@ export const useLayerListenerWheel = () => {
   const { stage } = useLayer()
   const { wheel } = useLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
-
   watch(wheel, () => {
     all([stage, wheel] as const)
       .map(layerWheelHandler)

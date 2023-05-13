@@ -5,7 +5,6 @@ type Params = [KonvaEventObject<DragEvent>, MapStructure]
 
 export const layerDragHandler = ([vDrag, vMap]: Params) => {
   const currentObject = vMap.objects[vDrag.target.attrs.objectId]
-
   return [
     currentObject,
     {
