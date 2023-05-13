@@ -24,7 +24,7 @@ export default defineEventHandler(() => {
   }
 
   const dirs = readdirSync(path.join('.', '/public/maps')).filter((file) => {
-    return !['README.md'].includes(file)
+    return !['README.md', '.git'].includes(file)
   })
   const documents: any[] = []
   dirs.forEach((dir) => {
