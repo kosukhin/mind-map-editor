@@ -43,6 +43,8 @@ watch(
           url: urlTrim(parts[1]),
         }
       })
+    } else {
+      searchResults.value = []
     }
   }, 500)
 )
