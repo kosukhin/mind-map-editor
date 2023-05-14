@@ -57,6 +57,9 @@ watch(firstMapLoad, () => {
 
 watch(hashChanged, () => {
   hashChanged.map((vHash) => {
+    if (!vHash) {
+      return
+    }
     scrollToObject(vHash)
   })
 })
