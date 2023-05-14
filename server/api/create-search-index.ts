@@ -39,8 +39,14 @@ export default defineEventHandler(() => {
     }
 
     Object.values(document.structure.objects).forEach((object) => {
+      let url
+
+      if (document.structure.url) {
+        url = document.structure.url + '#' + object.id
+      }
+
       documents.push({
-        name: object.name + '|' + (document.structure.url ?? 'no'),
+        name: object.name + '|' + (url ?? 'no'),
         text: object.description + ' ' + object.name,
       })
     })

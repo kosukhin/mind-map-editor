@@ -21,6 +21,7 @@ const { createMap } = useRequestCreateMap()
 
 const newMapName = ref('')
 const searchQuery = ref('')
+const lastSearchDate = ref('')
 const maps = await getMaps()
 const searchResults = ref<{ url: string; name: string }[]>([])
 
@@ -32,6 +33,7 @@ watch(
     }
 
     const result = await search(searchQuery.value)
+    lastSearchDate.value = new Date().toLocaleString()
 
     if (result.response.length) {
       searchResults.value = result.response.map((res) => {
@@ -62,6 +64,9 @@ const onCreateMap = async () => {
     </div>
     <div class="MainPage-Row">
       <Input v-model="searchQuery" placeholder="Поиск в картах" />
+    </div>
+    <div v-if="lastSearchDate" class="MainPage-Row">
+      Время последнего поиска: {{ lastSearchDate }}
     </div>
     <div
       v-for="result in searchResults"
