@@ -4,15 +4,16 @@ import { nextTick, watch } from '@vue/runtime-core'
 import { useMap, useOverlay, useFormDirtyCheck } from '~/composables'
 import Textarea from '~/components/ui/Textarea/Textarea'
 import Button from '~/components/ui/Button/Button'
-import { SHOW_JSON } from '~/constants'
+import { SHOW_JSON, SHOW_JSON_TYPES } from '~/constants'
 import Modal from '~/components/ui/Modal/Modal'
+import JsonTypesForm from '~/components/view/JsonForm/JsonTypesForm.vue'
 
 const { map } = useMap()
-const { close } = useOverlay()
+const { close, overlayName } = useOverlay()
 const form = ref('')
 const { stringify } = JSON
 const isDirty = computed(
-  () => form.value !== stringify(map.map((vObj) => vObj))
+  () => form.value !== stringify(map.map((vObj) => vObj).value)
 )
 useFormDirtyCheck(isDirty, SHOW_JSON)
 
@@ -33,9 +34,14 @@ const onSave = async () => {
   await nextTick()
   location.reload()
 }
+
+const openTypes = () => {
+  overlayName.value = SHOW_JSON_TYPES
+}
 </script>
 
 <template>
+  <JsonTypesForm />
   <Modal :name="SHOW_JSON">
     <template #header>
       <h2>Экспорт\Импорт</h2>
@@ -47,6 +53,9 @@ const onSave = async () => {
       <div class="JsonForm-Buttons">
         <Button class="JsonForm-Button" type="success" @click="onSave"
           >Сохранить</Button
+        >
+        <Button class="JsonForm-Button" type="primary" @click="openTypes"
+          >Типы</Button
         >
         <Button class="JsonForm-Button" @click="close">Отмена</Button>
       </div>
