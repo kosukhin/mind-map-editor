@@ -92,6 +92,7 @@ export async function addObjectToLayer(
         fill: '#ccc',
         stroke: '#888',
         strokeWidth: 2,
+        opacity: 0.5,
       })
       layer.add(arrow)
       arrows.push(arrow)
