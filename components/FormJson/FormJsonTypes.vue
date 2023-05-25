@@ -2,21 +2,16 @@
 import { computed, ref } from '@vue/reactivity'
 import { nextTick, watch } from '@vue/runtime-core'
 import merge from 'lodash/merge'
-import Modal from '~/components/ui/Modal/Modal'
-import Textarea from '~/components/ui/Textarea/Textarea'
-import Button from '~/components/ui/Button/Button'
 import { SHOW_JSON_TYPES } from '~/constants'
 import { useFormDirtyCheck, useMap, useOverlay } from '~/composables'
+import BaseModal from '~/components/BaseModal/BaseModal.vue'
+import BaseTextarea from '~/components/BaseTextarea/BaseTextarea.vue'
+import BaseButton from '~/components/BaseButton/BaseButton.vue'
 
-const { close } = useOverlay()
+const { stringify } = JSON
+
 const { map } = useMap()
 const form = ref('')
-const { stringify } = JSON
-const isDirty = computed(
-  () => form.value !== stringify(map.map((vObj) => vObj.types).value)
-)
-useFormDirtyCheck(isDirty, SHOW_JSON_TYPES)
-
 watch(
   map,
   () => {
@@ -28,6 +23,10 @@ watch(
     immediate: true,
   }
 )
+const isDirty = computed(
+  () => form.value !== stringify(map.map((vObj) => vObj.types).value)
+)
+useFormDirtyCheck(isDirty, SHOW_JSON_TYPES)
 
 const onSave = () => {
   map.map(async (vMap) => {
@@ -36,27 +35,29 @@ const onSave = () => {
     location.reload()
   })
 }
+
+const { close } = useOverlay()
 </script>
 
 <template>
-  <Modal :name="SHOW_JSON_TYPES">
+  <BaseModal :name="SHOW_JSON_TYPES">
     <template #header>
       <h2>Экспорт\Импорт Типов</h2>
     </template>
-    <div class="JsonForm">
-      <Textarea v-model="form" class="JsonForm-Text" />
+    <div class="FormJson">
+      <BaseTextarea v-model="form" class="FormJson-Text" />
     </div>
     <template #footer>
-      <div class="JsonForm-Buttons">
-        <Button class="JsonForm-Button" type="success" @click="onSave">
+      <div class="FormJson-Buttons">
+        <BaseButton class="FormJson-Button" type="success" @click="onSave">
           Сохранить
-        </Button>
-        <Button class="JsonForm-Button" @click="close">Отмена</Button>
+        </BaseButton>
+        <BaseButton class="FormJson-Button" @click="close">Отмена</BaseButton>
       </div>
     </template>
-  </Modal>
+  </BaseModal>
 </template>
 
 <style scoped lang="scss">
-@import 'JsonForm';
+@import 'FormJson';
 </style>

@@ -20,13 +20,13 @@ const props = defineProps({
     required: true,
   },
 })
-
 const emit = defineEmits(['update:modelValue'])
+
 const data = useVModel(props, 'modelValue', emit)
 </script>
 
 <template>
-  <select v-model="data" class="Select">
+  <select v-model="data" class="BaseSelect">
     <option
       v-for="item in props.items"
       :key="item[props.optionId]"
@@ -38,5 +38,5 @@ const data = useVModel(props, 'modelValue', emit)
 </template>
 
 <style lang="scss" scoped>
-@import 'Select';
+@import 'BaseSelect';
 </style>

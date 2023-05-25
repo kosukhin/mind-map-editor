@@ -10,7 +10,6 @@ const props = defineProps({
     required: true,
   },
 })
-
 const emit = defineEmits(['update:modelValue'])
 
 const data = useVModel(props, 'modelValue', emit)

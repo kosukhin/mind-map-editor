@@ -1,4 +1,4 @@
-.SideBar {
+.TheSideBar {
   padding: var(--defaultPadding);
   background: var(--headerBG);
   box-sizing: border-box;
@@ -14,7 +14,7 @@
     flex-grow: 1;
     overflow-y: auto;
     margin: 0 calc(-1 * var(--mbExMd));
-    padding: var(--defaultPadding) 0;
+    padding-bottom: var(--defaultPadding);
   }
 
   &-Item {

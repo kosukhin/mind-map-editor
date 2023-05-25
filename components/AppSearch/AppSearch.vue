@@ -7,15 +7,13 @@ import {
   useMoveToObject,
 } from '~/composables'
 import { SHOW_SEARCH } from '~/constants'
-import Input from '~/components/ui/Input/Input'
 import { MapObject } from '~/entities'
+import BaseInput from '~/components/BaseInput/BaseInput.vue'
 
 useOverlayAutoClose(SHOW_SEARCH)
-const { scrollToObject } = useMoveToObject()
-const { map } = useMap()
-const { close } = useOverlay()
 
 const query = ref('')
+const { map } = useMap()
 const searchResults = computed(() => {
   return map.map((vMap) => {
     if (query.value) {
@@ -34,6 +32,8 @@ const searchResults = computed(() => {
   }).value
 })
 
+const { close } = useOverlay()
+const { scrollToObject } = useMoveToObject()
 const moveToObject = (object: MapObject) => {
   close()
   scrollToObject(object.id)
@@ -42,7 +42,7 @@ const moveToObject = (object: MapObject) => {
 
 <template>
   <div class="AppSearch">
-    <Input
+    <BaseInput
       v-model="query"
       autofocus
       class="AppSearch-Input"

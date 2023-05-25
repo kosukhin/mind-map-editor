@@ -2,7 +2,7 @@
 import { watch } from '@vue/runtime-core'
 import { computed, ref } from '@vue/reactivity'
 import { useMagicKeys } from '@vueuse/core'
-import { useOverlay } from '~/composables/useOverlay'
+import { useOverlay } from '~/composables'
 
 const props = defineProps({
   name: {
@@ -16,24 +16,22 @@ const props = defineProps({
   },
 })
 
-const isOpened = ref(false)
-const { current } = useMagicKeys()
-const { overlayName, tryToClose } = useOverlay()
 const classes = computed(() => ({
   BaseDrawer: true,
   [`BaseDrawer_Direction_${props.direction}`]: true,
 }))
 
+const { overlayName, tryToClose } = useOverlay()
 const close = () => {
   tryToClose.value = props.name as string
 }
-
+const isOpened = ref(false)
 watch(overlayName, () => {
   overlayName.map((vDrawer) => {
     isOpened.value = vDrawer === props.name
   })
 })
-
+const { current } = useMagicKeys()
 watch(current, () => {
   if (!isOpened.value) {
     return

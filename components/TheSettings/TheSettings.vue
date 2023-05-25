@@ -7,29 +7,22 @@ import {
   SHOW_PARENT_TYPES,
   SHOW_KEYBINDINGS,
 } from '~/constants'
-import Button from '~/components/ui/Button/Button'
 import {
   useKeybindings,
   useMap,
   useOverlay,
   useRequestRemoveMap,
+  useFormDirtyCheck,
 } from '~/composables'
-import Checkbox from '~/components/ui/Checkbox/Checkbox'
-import Input from '~/components/ui/Input/Input'
 import { MapSettings } from '~/entities'
-import { useFormDirtyCheck } from '~/composables/useFormDirtyCheck'
+import BaseButton from '~/components/BaseButton/BaseButton.vue'
+import BaseCheckbox from '~/components/BaseCheckbox/BaseCheckbox.vue'
+import BaseInput from '~/components/BaseInput/BaseInput.vue'
 
-const { removeMap } = useRequestRemoveMap()
-const { map, mapName, firstMapLoad, parentTypes } = useMap()
-const { close, overlayName, isOpened } = useOverlay()
-const form = ref({})
 const { stringify } = JSON
-const isDirty = computed(
-  () =>
-    stringify(form.value) !== stringify(map.map((vMap) => vMap.settings).value)
-)
-useFormDirtyCheck(isDirty, SHOW_SETTINGS)
 
+const form = ref({})
+const { map, mapName, firstMapLoad, parentTypes } = useMap()
 watch(
   firstMapLoad,
   () => {
@@ -42,6 +35,7 @@ watch(
   }
 )
 
+const { removeMap } = useRequestRemoveMap()
 const onRemove = async () => {
   if (confirm('Это действие безвозвратно удалит карту, продолжить?')) {
     await removeMap(mapName)
@@ -49,6 +43,7 @@ const onRemove = async () => {
   }
 }
 
+const { close, overlayName, isOpened } = useOverlay()
 const onSave = () => {
   close()
   map.map((vMap) => {
@@ -63,67 +58,75 @@ watch(shiftSFired, () => {
   }
   onSave()
 })
+
+const isDirty = computed(
+  () =>
+    stringify(form.value) !== stringify(map.map((vMap) => vMap.settings).value)
+)
+useFormDirtyCheck(isDirty, SHOW_SETTINGS)
 </script>
 
 <template>
-  <div class="Settings">
-    <div class="Settings-Content">
-      <div class="Settings-Row">
-        <div class="Settings-ButtonGroup">
-          <Button
-            class="Settings-Button"
+  <div class="TheSettings">
+    <div class="TheSettings-Content">
+      <div class="TheSettings-Row">
+        <div class="TheSettings-ButtonGroup">
+          <BaseButton
+            class="TheSettings-Button"
             type="primary"
             @click="overlayName.value = SHOW_JSON"
           >
             JSON экспорт\импорт
-          </Button>
-          <Button
-            class="Settings-Button"
+          </BaseButton>
+          <BaseButton
+            class="TheSettings-Button"
             type="primary"
             @click="overlayName.value = SHOW_KEYBINDINGS"
           >
             Сочетания клавиш
-          </Button>
-          <Button
+          </BaseButton>
+          <BaseButton
             v-if="parentTypes.length"
             type="primary"
-            class="Settings-Button"
+            class="TheSettings-Button"
             @click="overlayName.value = SHOW_PARENT_TYPES"
           >
             Родительские типы
-          </Button>
+          </BaseButton>
         </div>
       </div>
-      <div class="Settings-Row">
-        <Checkbox
+      <div class="TheSettings-Row">
+        <BaseCheckbox
           v-model="form.colored"
           label="Использовать раскраску лейблов"
         />
       </div>
-      <div class="Settings-Row">
+      <div class="TheSettings-Row">
         <label>
           <b>Название карты</b>
-          <Input v-model="form.title" />
+          <BaseInput v-model="form.title" />
         </label>
       </div>
-      <div class="Settings-Row">
+      <div class="TheSettings-Row">
         <a href="https://github.com/kosukhin/mind-map-creator" target="_blank">
           Репозиторий на GitHub
         </a>
       </div>
     </div>
-    <div class="Settings-ButtonGroup">
-      <Button class="Settings-Button" type="success" @click="onSave"
-        >Сохранить</Button
-      >
-      <Button class="Settings-Button" @click="close">Отменить</Button>
-      <Button class="Settings-Button" type="danger" @click="onRemove"
-        >Удалить карту</Button
-      >
+    <div class="TheSettings-ButtonGroup">
+      <BaseButton class="TheSettings-Button" type="success" @click="onSave">
+        Сохранить
+      </BaseButton>
+      <BaseButton class="TheSettings-Button" @click="close">
+        Отменить
+      </BaseButton>
+      <BaseButton class="TheSettings-Button" type="danger" @click="onRemove">
+        Удалить карту
+      </BaseButton>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-@import 'Settings';
+@import 'TheSettings';
 </style>

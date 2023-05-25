@@ -2,12 +2,12 @@
 import svg64 from 'svg64'
 import { useMap, useOverlayAutoClose } from '~/composables'
 import { SHOW_PARENT_TYPES } from '~/constants'
-import Button from '~/components/ui/Button/Button'
 import { MapType } from '~/entities'
+import BaseButton from '~/components/BaseButton/BaseButton.vue'
 
 useOverlayAutoClose(SHOW_PARENT_TYPES)
-const { map, parentTypes } = useMap()
 
+const { map, parentTypes } = useMap()
 const addType = (type: MapType) => {
   map.map((vMap) => {
     vMap.types[type.name] = type
@@ -26,12 +26,13 @@ const addType = (type: MapType) => {
       >
         <div class="AppTypesParent-ItemTitle">{{ item.name }}</div>
         <img class="AppTypesParent-ItemImage" :src="svg64(item.svg)" alt="" />
-        <Button
+        <BaseButton
           class="AppTypesParent-ItemButton"
           type="success"
           @click="addType(item)"
-          >Добавить на карту</Button
         >
+          Добавить на карту
+        </BaseButton>
       </div>
     </div>
   </div>

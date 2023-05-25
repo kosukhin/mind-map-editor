@@ -14,11 +14,9 @@ const props = defineProps({
     default: false,
   },
 })
-
 const emit = defineEmits(['update:modelValue'])
-const data = useVModel(props, 'modelValue', emit)
-const input = ref(null)
 
+const input = ref(null)
 watch(
   input,
   debounce(() => {
@@ -27,6 +25,8 @@ watch(
     }
   }, 500)
 )
+
+const data = useVModel(props, 'modelValue', emit)
 </script>
 
 <template>

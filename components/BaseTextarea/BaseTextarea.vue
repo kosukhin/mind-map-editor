@@ -7,7 +7,6 @@ const props = defineProps({
     default: '',
   },
 })
-
 const emit = defineEmits(['update:modelValue'])
 
 const data = useVModel(props, 'modelValue', emit)
@@ -17,11 +16,11 @@ const { textarea, input } = useTextareaAutosize({
 </script>
 
 <template>
-  <div class="Textarea">
-    <textarea ref="textarea" v-model="input" class="Textarea-Input" />
+  <div class="BaseTextarea">
+    <textarea ref="textarea" v-model="input" class="BaseTextarea-Input" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import 'Textarea';
+@import 'BaseTextarea';
 </style>

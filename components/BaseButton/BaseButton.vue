@@ -16,7 +16,7 @@ const props = defineProps({
 })
 
 const classes = computed(() => ({
-  Button: true,
+  BaseButton: true,
   [`BaseButton_size_${props.size}`]: true,
   [`BaseButton_type_${props.type}`]: true,
 }))

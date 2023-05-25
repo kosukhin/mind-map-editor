@@ -6,7 +6,7 @@ useOverlayAutoClose(SHOW_KEYBINDINGS)
 </script>
 
 <template>
-  <pre class="Keybindings">
+  <pre class="TheKeybindings">
     Esc - закрывает модалку или дровер
     Shift+<em>S</em> - Сохраняет форму
     Shift+<em>F</em> - Открывает окно поиска
@@ -15,5 +15,5 @@ useOverlayAutoClose(SHOW_KEYBINDINGS)
 </template>
 
 <style scoped lang="scss">
-@import 'Keybindings';
+@import 'TheKeybindings';
 </style>

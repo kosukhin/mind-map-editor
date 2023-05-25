@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import EditorPage from '@/components/pages/EditorPage/EditorPage'
+import EditorPage from '@/components/PageEditor/PageEditor'
 </script>
 
 <template>

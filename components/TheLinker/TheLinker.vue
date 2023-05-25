@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { watch } from '@vue/runtime-core'
 import { ref } from '@vue/reactivity'
-import Button from '~/components/ui/Button/Button'
 import { useMap, useLayer, useMapObject, useLocks } from '~/composables'
 import { updateObjectOnLayer, all } from '~/utils'
+import BaseButton from '~/components/BaseButton/BaseButton.vue'
 
 const { layer, layerObjects } = useLayer()
 const { map } = useMap()
@@ -12,7 +12,6 @@ const { isClickLocked } = useLocks()
 const title = ref('Сделать связь')
 const type = ref('default')
 let stopNextObjectWatcher: Function | null = null
-
 const startRelation = () => {
   if (type.value === 'danger') {
     if (stopNextObjectWatcher) {
@@ -56,11 +55,7 @@ const startRelation = () => {
 </script>
 
 <template>
-  <Button class="Linker" :type="type" @click="startRelation">
+  <BaseButton class="TheLinker" :type="type" @click="startRelation">
     {{ title }}
-  </Button>
+  </BaseButton>
 </template>
-
-<style scoped lang="scss">
-@import 'Linker';
-</style>

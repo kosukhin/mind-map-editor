@@ -10,11 +10,9 @@ const props = defineProps({
     default: () => ({}),
   },
 })
-
 const emit = defineEmits(['update:modelValue'])
 
 const data = useVModel(props, 'modelValue', emit)
-
 onMounted(() => {
   const editor = new Editor(document.getElementById('svg-editor'))
 

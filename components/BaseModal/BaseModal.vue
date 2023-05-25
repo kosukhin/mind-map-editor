@@ -12,19 +12,16 @@ const props = defineProps({
 })
 
 const isOpened = ref(false)
-const { current } = useMagicKeys()
 const { overlayName, tryToClose, history } = useOverlay()
-
 const close = () => {
   tryToClose.value = props.name as string
 }
-
 watch(overlayName, () => {
   overlayName.map((vModal) => {
     isOpened.value = vModal === props.name
   })
 })
-
+const { current } = useMagicKeys()
 watch(current, () => {
   if (!isOpened.value) {
     return
@@ -34,7 +31,6 @@ watch(current, () => {
     close()
   }
 })
-
 const back = () => {
   history.value.pop()
   overlayName.value = String(history.value.pop())

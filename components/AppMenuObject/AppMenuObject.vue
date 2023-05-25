@@ -10,11 +10,9 @@ import {
 import { SHOW_OBJECT_MENU } from '~/constants'
 
 useOverlayAutoClose(SHOW_OBJECT_MENU)
-const { scrollToObject } = useMoveToObject()
+
 const { firstMapLoad, map } = useMap()
 const menuItems = ref([])
-const { close } = useOverlay()
-
 watch(
   firstMapLoad,
   () => {
@@ -31,6 +29,8 @@ watch(
   }
 )
 
+const { close } = useOverlay()
+const { scrollToObject } = useMoveToObject()
 const selectMenuItem = (id: string) => {
   scrollToObject(id)
   close()

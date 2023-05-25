@@ -3,7 +3,6 @@ import { computed } from '@vue/reactivity'
 import { useMap } from '~/composables'
 
 const { mapName, map } = useMap()
-
 const mapHistory = computed(() => {
   let link = ''
   const result: any = map.map((vMap) => {
@@ -24,10 +23,13 @@ const mapHistory = computed(() => {
 
 <template>
   <div>
-    <a href="/public">Главная</a>
-    <span v-for="history in mapHistory" :key="history.name + history.link">
+    <a href="/">Главная</a>
+    <span
+      v-for="history in mapHistory"
+      :key="history ? history.name + history.link : 'none'"
+    >
       /
-      <a :href="history.link">
+      <a v-if="history" :href="history.link">
         {{ history.name }}
       </a>
     </span>

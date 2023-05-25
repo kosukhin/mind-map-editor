@@ -9,22 +9,17 @@ import {
   useKeybindings,
 } from '~/composables'
 import { SHOW_TYPE } from '~/constants'
-import SvgEditor from '~/components/view/SvgEditor/SvgEditor'
-import Button from '~/components/ui/Button/Button'
 import { all } from '~/utils'
-import Input from '~/components/ui/Input/Input'
-import Modal from '~/components/ui/Modal/Modal'
+import AppSvgEditor from '~/components/AppSvgEditor/AppSvgEditor.vue'
+import BaseButton from '~/components/BaseButton/BaseButton.vue'
+import BaseInput from '~/components/BaseInput/BaseInput.vue'
+import BaseModal from '~/components/BaseModal/BaseModal.vue'
 
-const { close, isOpened } = useOverlay()
-const { map } = useMap()
-const { currentTypeId, currentType } = useMapType()
-const form = ref<any>({})
 const { stringify } = JSON
-const isDirty = computed(
-  () => stringify(form.value) !== stringify(currentType.value)
-)
-useFormDirtyCheck(isDirty, SHOW_TYPE)
 
+const form = ref<any>({})
+const { currentTypeId, currentType } = useMapType()
+const { map } = useMap()
 watch(
   currentType,
   () => {
@@ -39,6 +34,10 @@ watch(
     immediate: true,
   }
 )
+const isDirty = computed(
+  () => stringify(form.value) !== stringify(currentType.value)
+)
+useFormDirtyCheck(isDirty, SHOW_TYPE)
 
 const save = () => {
   close()
@@ -50,6 +49,7 @@ const save = () => {
   })
 }
 
+const { close, isOpened } = useOverlay()
 const { shiftSFired } = useKeybindings()
 watch(shiftSFired, () => {
   if (!isOpened(SHOW_TYPE)) {
@@ -60,21 +60,21 @@ watch(shiftSFired, () => {
 </script>
 
 <template>
-  <Modal :name="SHOW_TYPE">
+  <BaseModal :name="SHOW_TYPE">
     <template #header>
       <h2>Тип карты</h2>
     </template>
-    <div v-if="!currentType.isNothing" class="TypeForm">
-      <Input v-model="form.name" class="TypeForm-Row" />
-      <SvgEditor v-model="form" />
+    <div v-if="!currentType.isNothing" class="FormType">
+      <BaseInput v-model="form.name" class="FormType-Row" />
+      <AppSvgEditor v-model="form" />
     </div>
     <template #footer>
-      <div class="TypeForm-Controls">
-        <Button type="success" @click="save"> Сохранить </Button>
-        <Button @click="close"> Отменить </Button>
+      <div class="FormType-Controls">
+        <BaseButton type="success" @click="save"> Сохранить </BaseButton>
+        <BaseButton @click="close"> Отменить </BaseButton>
       </div>
     </template>
-  </Modal>
+  </BaseModal>
 </template>
 
 <style lang="scss" scoped>
