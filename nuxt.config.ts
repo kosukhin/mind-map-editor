@@ -7,7 +7,11 @@ const lastArg = process.argv[process.argv.length - 1]
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
-  css: ['@/assets/styles/variables.scss', '@/assets/styles/reset.scss'],
+  css: [
+    '@fortawesome/fontawesome-svg-core/styles.css',
+    '@/assets/styles/variables.scss',
+    '@/assets/styles/reset.scss',
+  ],
   runtimeConfig: {
     public: {
       version: packageJson.version,

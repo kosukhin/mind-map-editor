@@ -1,0 +1,14 @@
+.FormType {
+  &-Row {
+    margin-bottom: var(--defaultPadding);
+  }
+
+  &-Controls {
+    display: flex;
+    gap: var(--defaultPadding);
+  }
+
+  &-Title {
+    margin-bottom: var(--defaultPadding);
+  }
+}

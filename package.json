@@ -34,6 +34,8 @@
     "vite-plugin-static-copy": "^0.13.1"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
     "@vueuse/core": "^9.13.0",
     "@vueuse/head": "^1.1.26",
     "canvg": "^4.0.1",
