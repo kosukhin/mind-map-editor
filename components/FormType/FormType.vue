@@ -50,8 +50,8 @@ const save = () => {
 }
 
 const { close, isOpened } = useOverlay()
-const { shiftSFired } = useKeybindings()
-watch(shiftSFired, () => {
+const { ctrlSFired } = useKeybindings()
+watch(ctrlSFired, () => {
   if (!isOpened(SHOW_TYPE)) {
     return
   }

@@ -2,33 +2,32 @@ import { createSharedComposable } from '@vueuse/core'
 import { ref } from '@vue/reactivity'
 
 export const useKeybindings = createSharedComposable(() => {
-  const shiftSFired = ref(0)
-  const shiftFFired = ref(0)
-  const shiftMFired = ref(0)
+  const ctrlSFired = ref(0)
+  const ctrlFFired = ref(0)
+  const ctrlMFired = ref(0)
+  const ctrlHFired = ref(0)
+  const keysMap = {
+    KeyS: ctrlSFired,
+    KeyF: ctrlFFired,
+    KeyM: ctrlMFired,
+    KeyH: ctrlHFired,
+  }
+
   document.addEventListener(
     'keydown',
     (e) => {
-      if (
-        e.ctrlKey &&
-        (e.code === 'KeyS' || e.code === 'KeyF' || e.code === 'KeyM')
-      ) {
+      if (e.ctrlKey && keysMap[e.code]) {
         e.preventDefault()
-        if (e.code === 'KeyS') {
-          shiftSFired.value++
-        }
-        if (e.code === 'KeyF') {
-          shiftFFired.value++
-        }
-        if (e.code === 'KeyM') {
-          shiftMFired.value++
-        }
+        keysMap[e.code].value++
       }
     },
     true
   )
+
   return {
-    shiftSFired,
-    shiftFFired,
-    shiftMFired,
+    ctrlSFired,
+    ctrlFFired,
+    ctrlMFired,
+    ctrlHFired,
   }
 })

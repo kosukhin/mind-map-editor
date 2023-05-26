@@ -51,8 +51,8 @@ const onSave = () => {
   })
 }
 
-const { shiftSFired } = useKeybindings()
-watch(shiftSFired, () => {
+const { ctrlSFired } = useKeybindings()
+watch(ctrlSFired, () => {
   if (!isOpened(SHOW_SETTINGS)) {
     return
   }

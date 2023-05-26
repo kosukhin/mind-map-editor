@@ -38,28 +38,32 @@ const back = () => {
 </script>
 
 <template>
-  <div v-if="isOpened" class="BaseModal" @click="close">
-    <div class="BaseModal-Inner" @click.stop>
-      <div
-        v-if="history.length > 1"
-        title="Назад"
-        class="BaseModal-Back"
-        @click="back"
-      >
-        &lt;
-      </div>
-      <div title="Закрыть" class="BaseModal-Close" @click="close">&times;</div>
-      <div v-if="$slots.header" class="BaseModal-Header">
-        <slot name="header" />
-      </div>
-      <div class="BaseModal-Content">
-        <slot />
-      </div>
-      <div v-if="$slots.footer" class="BaseModal-Footer">
-        <slot name="footer" />
+  <Transition name="fade">
+    <div v-if="isOpened" class="BaseModal" @click="close">
+      <div class="BaseModal-Inner" @click.stop>
+        <div
+          v-if="history.length > 1"
+          title="Назад"
+          class="BaseModal-Back"
+          @click="back"
+        >
+          &lt;
+        </div>
+        <div title="Закрыть" class="BaseModal-Close" @click="close">
+          &times;
+        </div>
+        <div v-if="$slots.header" class="BaseModal-Header">
+          <slot name="header" />
+        </div>
+        <div class="BaseModal-Content">
+          <slot />
+        </div>
+        <div v-if="$slots.footer" class="BaseModal-Footer">
+          <slot name="footer" />
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped lang="scss">

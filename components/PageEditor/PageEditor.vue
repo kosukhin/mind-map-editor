@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from '#app/nuxt'
 import { watch } from '@vue/runtime-core'
-import { ReactiveHead, useSeoMeta } from '@vueuse/head'
-import { reactive } from '@vue/reactivity'
 import {
   SHOW_SETTINGS,
   SHOW_SEARCH,
   SHOW_PARENT_TYPES,
   SHOW_KEYBINDINGS,
   SHOW_OBJECT_MENU,
+  SHOW_HISTORY_MAPS,
 } from '~/constants'
 import {
   useLocks,
-  useMap,
   useSideBar,
   useHashChange,
   useMoveToObject,
@@ -35,18 +33,10 @@ import AppTypesParent from '~/components/AppTypesParent/AppTypesParent.vue'
 import TheKeybindings from '~/components/TheKeybindings/TheKeybindings.vue'
 import AppMenuObject from '~/components/AppMenuObject/AppMenuObject.vue'
 import BaseDrawer from '~/components/BaseDrawer/BaseDrawer.vue'
+import TheHistoryMaps from '~/components/TheHistoryMaps/TheHistoryMaps.vue'
+import { useMeta } from '~/composables/useMeta'
 
-const head = reactive<ReactiveHead>({
-  title: 'Идет загрузка...',
-})
-useSeoMeta(head)
-
-const { firstMapLoad, map } = useMap()
-watch(firstMapLoad, () => {
-  map.map((vMap) => {
-    head.title = vMap.settings.title
-  })
-})
+useMeta()
 
 const { scrollToObject } = useMoveToObject()
 const { hashChanged } = useHashChange()
@@ -60,12 +50,15 @@ watch(hashChanged, () => {
 })
 
 const { overlayName } = useOverlay()
-const { shiftFFired, shiftMFired } = useKeybindings()
-watch(shiftFFired, () => {
+const { ctrlFFired, ctrlMFired, ctrlHFired } = useKeybindings()
+watch(ctrlFFired, () => {
   overlayName.value = SHOW_SEARCH
 })
-watch(shiftMFired, () => {
+watch(ctrlMFired, () => {
   overlayName.value = SHOW_OBJECT_MENU
+})
+watch(ctrlHFired, () => {
+  overlayName.value = SHOW_HISTORY_MAPS
 })
 
 const { isDragLocked } = useLocks()
@@ -133,6 +126,7 @@ const { isSidebarOpen } = useSideBar()
   </BaseModal>
   <FormJson />
   <FormObject />
+  <TheHistoryMaps />
 </template>
 
 <style scoped lang="scss">

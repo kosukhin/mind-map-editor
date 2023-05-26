@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useOverlay } from '~/composables'
-import { SHOW_TEXT, SHOW_SEARCH, SHOW_OBJECT_MENU } from '~/constants'
+import {
+  SHOW_TEXT,
+  SHOW_SEARCH,
+  SHOW_OBJECT_MENU,
+  SHOW_HISTORY_MAPS,
+} from '~/constants'
 import BaseIcon from '~/components/BaseIcon/BaseIcon.vue'
 import BaseBreadcrumbs from '@/components/BaseBreadcrumbs/BaseBreadcrumbs.vue'
 import BaseButton from '@/components/BaseButton/BaseButton.vue'
@@ -30,6 +35,13 @@ const { overlayName } = useOverlay()
       </BaseButton>
       <BaseButton size="sm" @click="overlayName.value = SHOW_SEARCH">
         <BaseIcon icon="fa-search" />
+      </BaseButton>
+      <BaseButton
+        size="sm"
+        title="История посещений"
+        @click="overlayName.value = SHOW_HISTORY_MAPS"
+      >
+        <BaseIcon icon="fa-history" />
       </BaseButton>
     </div>
   </div>

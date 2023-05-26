@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@fortawesome/fontawesome-svg-core/styles.css',
     '@/assets/styles/variables.scss',
     '@/assets/styles/reset.scss',
+    '@/assets/styles/transitions.scss',
   ],
   runtimeConfig: {
     public: {

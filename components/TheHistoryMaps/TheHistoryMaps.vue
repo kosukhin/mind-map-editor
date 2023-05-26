@@ -1,0 +1,55 @@
+<script lang="ts" setup>
+import { useStorage } from '@vueuse/core'
+import { useRoute } from 'vue-router'
+import { watch } from '@vue/runtime-core'
+import { SHOW_HISTORY_MAPS } from '~/constants'
+import BaseDrawer from '~/components/BaseDrawer/BaseDrawer.vue'
+import { useOverlayAutoClose } from '~/composables'
+import { useMeta } from '~/composables/useMeta'
+
+useOverlayAutoClose(SHOW_HISTORY_MAPS)
+
+const MAX_HISTORY_ITEMS = 7
+const mapsHistory = useStorage<{ url: string; title: string }[]>(
+  'maps-history',
+  []
+)
+const route = useRoute()
+const { head } = useMeta()
+watch(head, () => {
+  const currentMapIndex = mapsHistory.value.findIndex(
+    (item) => item.url === route.path
+  )
+  if (currentMapIndex !== -1) {
+    mapsHistory.value.splice(currentMapIndex, 1)
+  }
+  mapsHistory.value.unshift({
+    url: route.path,
+    title: String(head.title),
+  })
+  mapsHistory.value = mapsHistory.value.slice(0, MAX_HISTORY_ITEMS)
+})
+</script>
+
+<template>
+  <BaseDrawer :name="SHOW_HISTORY_MAPS" direction="rtl">
+    <template #header>
+      <h2 class="TheHistoryMaps-Title">История посещений</h2>
+    </template>
+    <div>
+      <ul>
+        <li
+          v-for="(history, index) in mapsHistory"
+          :key="index"
+          class="TheHistoryMaps-Item"
+        >
+          <a :href="history.url">{{ history.title }}</a>
+        </li>
+      </ul>
+    </div>
+  </BaseDrawer>
+</template>
+
+<style lang="scss" scoped>
+@import 'TheHistoryMaps';
+</style>

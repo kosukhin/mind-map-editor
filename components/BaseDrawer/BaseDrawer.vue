@@ -44,19 +44,21 @@ watch(current, () => {
 </script>
 
 <template>
-  <div v-if="isOpened" :class="classes" @click="close">
-    <div class="BaseDrawer-Inner" @click.stop>
-      <div v-if="$slots.header">
-        <slot name="header" class="BaseDrawer-Header" />
-      </div>
-      <div class="BaseDrawer-Content">
-        <slot />
-      </div>
-      <div v-if="$slots.footer" class="BaseDrawer-Footer">
-        <slot name="footer" />
+  <Transition name="fade">
+    <div v-if="isOpened" :class="classes" @click="close">
+      <div class="BaseDrawer-Inner" @click.stop>
+        <div v-if="$slots.header">
+          <slot name="header" class="BaseDrawer-Header" />
+        </div>
+        <div class="BaseDrawer-Content">
+          <slot />
+        </div>
+        <div v-if="$slots.footer" class="BaseDrawer-Footer">
+          <slot name="footer" />
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped lang="scss">
