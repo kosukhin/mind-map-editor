@@ -9,7 +9,7 @@ import { useMeta } from '~/composables/useMeta'
 
 useOverlayAutoClose(SHOW_HISTORY_MAPS)
 
-const MAX_HISTORY_ITEMS = 7
+const MAX_HISTORY_ITEMS = 20
 const mapsHistory = useStorage<{ url: string; title: string }[]>(
   'maps-history',
   []
@@ -44,6 +44,7 @@ watch(head, () => {
           class="TheHistoryMaps-Item"
         >
           <a :href="history.url">{{ history.title }}</a>
+          ({{ history.url }})
         </li>
       </ul>
     </div>
