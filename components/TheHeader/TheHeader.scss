@@ -1,13 +1,41 @@
 .TheHeader {
   padding: var(--defaultPadding);
-  background: var(--headerBG);
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid var(--borderColor);
+  position: relative;
+  background: transparent;
 
   &-Actions {
     display: flex;
     gap: var(--mbSm);
+  }
+
+  &-Background {
+    position: absolute;
+    z-index: -1;
+    background: var(--headerBG);
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &-Filled {
+    position: absolute;
+    top: 0;
+    width: var(--progress);
+    height: 100%;
+    background: var(--progressColor);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+    padding: var(--mbExMd);
+    color: var(--mainFG);
+    opacity: .1;
+    white-space: nowrap;
+    text-transform: uppercase;
   }
 }

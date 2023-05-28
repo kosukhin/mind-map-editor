@@ -39,6 +39,7 @@ export interface MapStructure {
   document: string
   url: string
   parent: string
+  progress: number
   parentNames?: Dictionary<string>
   settings: MapSettings
   types: MapStructureTypes

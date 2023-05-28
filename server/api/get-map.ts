@@ -3,6 +3,7 @@ import path from 'path'
 import { BASE_HOST, DEMO_DOC_NAME, MAP_PARAM_NAME } from '~/constants'
 import { documentNormalize } from '~/utils'
 import demoMap from '~/maps/demo.json'
+import { currentDate, getProgressByDay } from '~/utils/server-only'
 
 const { existsSync, readFileSync } = fs
 
@@ -32,6 +33,11 @@ export default defineEventHandler((event) => {
   }
 
   const dataStructure = (data as any).structure
+
+  if (dataStructure) {
+    const date = currentDate()
+    dataStructure.progress = getProgressByDay(date)
+  }
 
   if (document) {
     const documentParts = document.split('_')

@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { useOverlay } from '~/composables'
+import { useCssVar } from '@vueuse/core'
+import { ref } from '@vue/reactivity'
+import { watch } from '@vue/runtime-core'
+import { normal } from 'color-blend'
+import { useMap, useOverlay } from '~/composables'
 import {
   SHOW_TEXT,
   SHOW_SEARCH,
@@ -11,10 +15,29 @@ import BaseBreadcrumbs from '@/components/BaseBreadcrumbs/BaseBreadcrumbs.vue'
 import BaseButton from '@/components/BaseButton/BaseButton.vue'
 
 const { overlayName } = useOverlay()
+const { firstMapLoad, map } = useMap()
+
+const progressElement = ref(null)
+const progress = useCssVar('--progress', progressElement)
+const progressColor = useCssVar('--progressColor', progressElement)
+watch(firstMapLoad, () => {
+  map.map((vMap) => {
+    const progressNumber = (vMap.progress < 100 ? vMap.progress : 100) / 100
+    const progressRest = 1 - progressNumber
+    progress.value = `${progressNumber * 100}%`
+    const red = { r: 255, g: 0, b: 0, a: progressRest }
+    const green = { r: 0, g: 255, b: 0, a: progressNumber }
+    const color = normal(red, green)
+    progressColor.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
+  })
+})
 </script>
 
 <template>
   <div class="TheHeader">
+    <div ref="progressElement" class="TheHeader-Background">
+      <div class="TheHeader-Filled">Прогресс сегодня</div>
+    </div>
     <BaseBreadcrumbs class="TheHeader-Breadcrumbs" />
     <div class="TheHeader-Actions">
       <BaseButton
