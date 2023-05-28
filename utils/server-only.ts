@@ -1,7 +1,7 @@
 import fs from 'fs'
-import flow from 'lodash/flow'
-import get from 'lodash/get'
-import set from 'lodash/set'
+import flow from 'lodash/flow.js'
+import get from 'lodash/get.js'
+import set from 'lodash/set.js'
 import { createFilePathByName } from '~/utils/server'
 import { stateStepper } from '~/libraries/stateStepper'
 
