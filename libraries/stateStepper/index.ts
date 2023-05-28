@@ -1,15 +1,26 @@
 import isFunction from 'lodash/isFunction.js'
 import get from 'lodash/get.js'
 
-export function stateStepper(stateObject: any, factory: Function) {
+export type Step<T extends object> = (
+  fn: Function,
+  args: ('prevResult' | keyof T | Function)[],
+  saveTo: 'prevResult' | keyof T
+) => any
+export type State = <F extends Function>(fn: F) => () => ReturnType<F>
+export type StateStepperFactory<T> = (step: Step<T>, state: State) => any
+
+export function stateStepper<T extends any>(
+  stateObject: T,
+  factory: StateStepperFactory<T>
+) {
   const step = createStep(stateObject)
-  const state = (fn: Function) => fn(stateObject)
+  const state = (fn: Function) => () => fn(stateObject)
   const mainCallback = factory(step, state)
   return mainCallback()
 }
 
-function createStep(state: any) {
-  return (fn: Function, args: (string | Function)[], saveTo = 'prevResult') => {
+function createStep<T>(state: T): Step<T> {
+  return (fn, args, saveTo = 'prevResult') => {
     return () => {
       const callArgs = args.map((arg) => {
         if (isFunction(arg)) {
