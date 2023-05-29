@@ -42,3 +42,9 @@ export function any<C extends readonly MaybeInst<unknown>[]>(containers: C) {
   result.value = firstMaybe ? firstMaybe.value : null
   return result as (typeof containers)[number]
 }
+
+export function map<P, T extends MaybeInst<P>>(fn: (value: P) => any) {
+  return (maybe: T) => {
+    return maybe.map((value) => fn(value))
+  }
+}
