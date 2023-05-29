@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useSharedNotify } from '~/composables/useNotify'
+import { useSharedNotify } from '~/composables'
 
 const { message } = useSharedNotify()
 </script>

@@ -16,6 +16,7 @@ import {
   useMoveToObject,
   useSharedKeybindings,
   useSharedOverlay,
+  useSharedMeta,
 } from '~/composables'
 import TheHeader from '@/components/TheHeader/TheHeader.vue'
 import TheEditor from '@/components/TheEditor/TheEditor.vue'
@@ -34,7 +35,6 @@ import TheKeybindings from '~/components/TheKeybindings/TheKeybindings.vue'
 import AppMenuObject from '~/components/AppMenuObject/AppMenuObject.vue'
 import BaseDrawer from '~/components/BaseDrawer/BaseDrawer.vue'
 import TheHistoryMaps from '~/components/TheHistoryMaps/TheHistoryMaps.vue'
-import { useSharedMeta } from '~/composables/useMeta'
 
 useSharedMeta()
 

@@ -4,8 +4,7 @@ import { useRoute } from 'vue-router'
 import { watch } from '@vue/runtime-core'
 import { SHOW_HISTORY_MAPS } from '~/constants'
 import BaseDrawer from '~/components/BaseDrawer/BaseDrawer.vue'
-import { useOverlayAutoClose } from '~/composables'
-import { useSharedMeta } from '~/composables/useMeta'
+import { useOverlayAutoClose, useSharedMeta } from '~/composables'
 
 useOverlayAutoClose(SHOW_HISTORY_MAPS)
 

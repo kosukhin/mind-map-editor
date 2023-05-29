@@ -5,3 +5,7 @@ export const setElementPosition = (
   element.style.top = top + 'px'
   element.style.left = left + 'px'
 }
+
+export function findById(elementId: string) {
+  return document.getElementById(elementId)
+}

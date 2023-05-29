@@ -1,4 +1,4 @@
-import { useCanvas } from '~/composables/useCanvas'
+import { useCanvas } from '~/composables'
 import { canvasRestrictBoundaries } from '~/application'
 import { Vector2d } from '~/entities'
 import { DEFAULT_BOUNDARIES } from '~/constants'
