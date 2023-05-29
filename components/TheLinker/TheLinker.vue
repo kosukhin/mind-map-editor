@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { watch } from '@vue/runtime-core'
 import { ref } from '@vue/reactivity'
-import { useMap, useLayer, useMapObject, useLocks } from '~/composables'
+import { useSharedMap, useSharedLayer, useSharedMapObject, useSharedLocks } from '~/composables'
 import { updateObjectOnLayer, all } from '~/utils'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 
-const { layer, layerObjects } = useLayer()
-const { map } = useMap()
-const { currentObjectId } = useMapObject()
-const { isClickLocked } = useLocks()
+const { layer, layerObjects } = useSharedLayer()
+const { map } = useSharedMap()
+const { currentObjectId } = useSharedMapObject()
+const { isClickLocked } = useSharedLocks()
 const title = ref('Сделать связь')
 const type = ref('default')
 let stopNextObjectWatcher: Function | null = null

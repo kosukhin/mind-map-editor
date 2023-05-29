@@ -3,7 +3,7 @@ import { useCssVar } from '@vueuse/core'
 import { ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
 import { normal } from 'color-blend'
-import { useMap, useOverlay } from '~/composables'
+import { useSharedMap, useSharedOverlay } from '~/composables'
 import {
   SHOW_TEXT,
   SHOW_SEARCH,
@@ -14,8 +14,8 @@ import BaseIcon from '~/components/BaseIcon/BaseIcon.vue'
 import BaseBreadcrumbs from '@/components/BaseBreadcrumbs/BaseBreadcrumbs.vue'
 import BaseButton from '@/components/BaseButton/BaseButton.vue'
 
-const { overlayName } = useOverlay()
-const { firstMapLoad, map } = useMap()
+const { overlayName } = useSharedOverlay()
+const { firstMapLoad, map } = useSharedMap()
 
 const progressElement = ref(null)
 const progress = useCssVar('--progress', progressElement)

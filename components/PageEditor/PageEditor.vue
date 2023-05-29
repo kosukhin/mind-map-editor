@@ -10,12 +10,12 @@ import {
   SHOW_HISTORY_MAPS,
 } from '~/constants'
 import {
-  useLocks,
-  useSideBar,
-  useHashChange,
+  useSharedLocks,
+  useSharedSideBar,
+  useSharedHashChange,
   useMoveToObject,
-  useKeybindings,
-  useOverlay,
+  useSharedKeybindings,
+  useSharedOverlay,
 } from '~/composables'
 import TheHeader from '@/components/TheHeader/TheHeader.vue'
 import TheEditor from '@/components/TheEditor/TheEditor.vue'
@@ -34,12 +34,12 @@ import TheKeybindings from '~/components/TheKeybindings/TheKeybindings.vue'
 import AppMenuObject from '~/components/AppMenuObject/AppMenuObject.vue'
 import BaseDrawer from '~/components/BaseDrawer/BaseDrawer.vue'
 import TheHistoryMaps from '~/components/TheHistoryMaps/TheHistoryMaps.vue'
-import { useMeta } from '~/composables/useMeta'
+import { useSharedMeta } from '~/composables/useMeta'
 
-useMeta()
+useSharedMeta()
 
 const { scrollToObject } = useMoveToObject()
-const { hashChanged } = useHashChange()
+const { hashChanged } = useSharedHashChange()
 watch(hashChanged, () => {
   hashChanged.map((vHash) => {
     if (!vHash) {
@@ -49,8 +49,8 @@ watch(hashChanged, () => {
   })
 })
 
-const { overlayName } = useOverlay()
-const { ctrlFFired, ctrlMFired, ctrlHFired } = useKeybindings()
+const { overlayName } = useSharedOverlay()
+const { ctrlFFired, ctrlMFired, ctrlHFired } = useSharedKeybindings()
 watch(ctrlFFired, () => {
   overlayName.value = SHOW_SEARCH
 })
@@ -61,14 +61,14 @@ watch(ctrlHFired, () => {
   overlayName.value = SHOW_HISTORY_MAPS
 })
 
-const { isDragLocked } = useLocks()
+const { isDragLocked } = useSharedLocks()
 const handleLock = () => {
   isDragLocked.value = !isDragLocked.value
   setTimeout(() => location.reload())
 }
 
 const { version } = useRuntimeConfig()
-const { isSidebarOpen } = useSideBar()
+const { isSidebarOpen } = useSharedSideBar()
 </script>
 
 <template>

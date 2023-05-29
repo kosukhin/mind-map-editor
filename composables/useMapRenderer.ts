@@ -1,19 +1,19 @@
 import { watchOnce } from '@vueuse/core'
 import { computed } from '@vue/reactivity'
 import {
-  useMap,
-  useLayer,
-  useLocks,
+  useSharedMap,
+  useSharedLayer,
+  useSharedLocks,
   useMapPartialRenderer,
 } from '~/composables'
 import { all } from '~/utils'
 import { renderMapObjects } from '~/application'
 
-export const useMapRenderer = () => {
+export function useMapRenderer() {
   const { triggerPartialRendering } = useMapPartialRenderer()
-  const { layer, layerObjects } = useLayer()
-  const { map } = useMap()
-  const { maybeDragLocked } = useLocks()
+  const { layer, layerObjects } = useSharedLayer()
+  const { map } = useSharedMap()
+  const { maybeDragLocked } = useSharedLocks()
   const allInit = computed(
     () => all([layer, map] as const).map(() => true).value
   )
@@ -31,6 +31,7 @@ export const useMapRenderer = () => {
         })
       })
   })
+
   return {
     map,
     allInit,

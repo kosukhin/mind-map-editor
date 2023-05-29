@@ -3,7 +3,7 @@ import { API_SEARCH, GET } from '~/constants'
 
 type SearchResponse = { response: Array<{ ref: string }> }
 
-export const useRequestSearch = () => {
+export function useRequestSearch() {
   const { http } = useRequest()
   const search = async (query: string): Promise<SearchResponse> => {
     return (await http({
@@ -14,6 +14,7 @@ export const useRequestSearch = () => {
       },
     })) as SearchResponse
   }
+
   return {
     search,
   }

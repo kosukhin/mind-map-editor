@@ -1,7 +1,7 @@
 import { createSharedComposable } from '@vueuse/core'
 import { ref } from '@vue/reactivity'
 
-export const useKeybindings = createSharedComposable(() => {
+export const useSharedKeybindings = createSharedComposable(() => {
   const ctrlSFired = ref(0)
   const ctrlFFired = ref(0)
   const ctrlMFired = ref(0)

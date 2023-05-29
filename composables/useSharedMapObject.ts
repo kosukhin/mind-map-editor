@@ -2,10 +2,10 @@ import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
 import { all, reMaybe, setValue } from '~/utils'
 import { MapObject } from '~/entities'
-import { useMap } from '~/composables'
+import { useSharedMap } from '~/composables'
 
-export const useMapObject = createSharedComposable(() => {
-  const { map } = useMap()
+export const useSharedMapObject = createSharedComposable(() => {
+  const { map } = useSharedMap()
   const currentObjectId = reMaybe<number>()
   const currentObject = reMaybe<MapObject>()
   watch([currentObjectId, map], () => {

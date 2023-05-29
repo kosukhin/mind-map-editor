@@ -1,23 +1,24 @@
 import { watch } from '@vue/runtime-core'
 import { createSharedComposable } from '@vueuse/core'
 import {
-  useMap,
-  useLayerEvents,
-  useMapObject,
-  useOverlay,
-  useSideBar,
-  useLocks,
+  useSharedMap,
+  useSharedLayerEvents,
+  useSharedMapObject,
+  useSharedOverlay,
+  useSharedSideBar,
+  useSharedLocks,
 } from '~/composables'
 import { all, any, openUrlByObject, setValue } from '~/utils'
 import { mapObjectClick } from '~/application'
 
-export const useLayerListenerClick = createSharedComposable(() => {
-  const { click, tap, stageClick } = useLayerEvents()
-  const { map } = useMap()
-  const { isSidebarOpen } = useSideBar()
-  const { currentObjectId } = useMapObject()
-  const { overlayName } = useOverlay()
-  const { isClickLocked } = useLocks()
+export const useSharedLayerListenerClick = createSharedComposable(() => {
+  const { click, tap, stageClick } = useSharedLayerEvents()
+  const { map } = useSharedMap()
+  const { isSidebarOpen } = useSharedSideBar()
+  const { currentObjectId } = useSharedMapObject()
+  const { overlayName } = useSharedOverlay()
+  const { isClickLocked } = useSharedLocks()
+
   watch(stageClick, () => {
     isSidebarOpen.value = false
   })

@@ -1,7 +1,7 @@
 import { Request } from '~/entities'
 import { POST, PUT } from '~/constants'
 
-export const useRequest = () => {
+export function useRequest() {
   const http = async <T = unknown>(request: Request<T>): Promise<unknown> => {
     let url = request.url
     if (request.params) {
@@ -19,6 +19,7 @@ export const useRequest = () => {
     }
     return response.json()
   }
+
   return {
     http,
   }

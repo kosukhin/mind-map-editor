@@ -3,7 +3,7 @@ import { API_CREATE_MAP, POST } from '~/constants'
 
 type Response = { ok: boolean; document: string }
 
-export const useRequestCreateMap = () => {
+export function useRequestCreateMap() {
   const { http } = useRequest()
   const createMap = async (mapName: string): Promise<Response> => {
     return (await http<{ name: string }>({
@@ -14,6 +14,7 @@ export const useRequestCreateMap = () => {
       },
     } as const)) as Response
   }
+
   return {
     createMap,
   }

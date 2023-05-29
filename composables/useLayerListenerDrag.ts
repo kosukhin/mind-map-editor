@@ -2,23 +2,24 @@ import { watch } from '@vue/runtime-core'
 import debounce from 'lodash/debounce'
 import Konva from 'konva'
 import {
-  useLayerEvents,
-  useMap,
+  useSharedLayerEvents,
+  useSharedMap,
   useCanvasBoundaries,
-  useLayer,
-  useLocks,
+  useSharedLayer,
+  useSharedLocks,
   useMapPartialRenderer,
 } from '~/composables'
 import { all, applyArrowPoints, debug, setProperty } from '~/utils'
 import { layerDragHandler, layerDragObjectHandler } from '~/application'
 
-export const useLayerListenerDrag = () => {
-  const { stage, layerObjects } = useLayer()
-  const { firstMapLoad, map } = useMap()
-  const { isDragLocked } = useLocks()
-  const { dragend, dragmove, wheel } = useLayerEvents()
+export function useLayerListenerDrag() {
+  const { stage, layerObjects } = useSharedLayer()
+  const { firstMapLoad, map } = useSharedMap()
+  const { isDragLocked } = useSharedLocks()
+  const { dragend, dragmove, wheel } = useSharedLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
   const { triggerPartialRendering } = useMapPartialRenderer()
+
   watch(dragend, () => {
     debug('debug fired', 'drag')
     if (isDragLocked.value) return

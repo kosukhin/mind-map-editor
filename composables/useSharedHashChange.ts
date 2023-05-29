@@ -2,11 +2,11 @@ import { createSharedComposable } from '@vueuse/core'
 import { watch } from '@vue/runtime-core'
 import debounce from 'lodash/debounce'
 import { reMaybe } from '~/utils'
-import { useMap } from '~/composables'
+import { useSharedMap } from '~/composables'
 
-export const useHashChange = createSharedComposable(() => {
+export const useSharedHashChange = createSharedComposable(() => {
   const hashChanged = reMaybe<string>()
-  const { firstMapLoad } = useMap()
+  const { firstMapLoad } = useSharedMap()
   const getHashFromUrl = (url: string) => {
     return url.split('#')[1] ?? null
   }
@@ -23,5 +23,6 @@ export const useHashChange = createSharedComposable(() => {
       clearHash()
     })
   })
+
   return { hashChanged }
 })

@@ -4,7 +4,7 @@ import { watch } from '@vue/runtime-core'
 import { OVERLAY_CLOSE } from '~/constants'
 import { setValue, reMaybe } from '~/utils'
 
-export const useOverlay = createSharedComposable(() => {
+export const useSharedOverlay = createSharedComposable(() => {
   const overlayName = reMaybe<string>()
   const tryToClose = reMaybe<string>()
   const history = ref<string[]>([])
@@ -27,6 +27,7 @@ export const useOverlay = createSharedComposable(() => {
       }
     })
   })
+
   return {
     overlayName,
     tryToClose,

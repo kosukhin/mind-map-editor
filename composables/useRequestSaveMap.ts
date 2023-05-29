@@ -2,7 +2,7 @@ import { useRequest } from '~/composables'
 import { MapStructure, Map } from '~/entities'
 import { API_SAVE_MAP, POST } from '~/constants'
 
-export const useRequestSaveMap = () => {
+export function useRequestSaveMap() {
   const { http } = useRequest()
   const saveMap = async (map: MapStructure, mapName: string): Promise<void> => {
     await http<Map>({
@@ -14,6 +14,7 @@ export const useRequestSaveMap = () => {
       data: { document: map.document, structure: map },
     } as const)
   }
+
   return {
     saveMap,
   }

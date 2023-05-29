@@ -8,7 +8,7 @@ import {
   Layer,
   Stage,
 } from '~/entities'
-import { useMapColors } from '~/composables'
+import { useSharedMapColors } from '~/composables'
 import { maxNewLineLength, newLineCount } from '~/utils/common'
 
 export async function addObjectToLayer(
@@ -17,7 +17,7 @@ export async function addObjectToLayer(
   map: MapStructure,
   clickLocked = false
 ) {
-  const { colorsHash } = useMapColors()
+  const { colorsHash } = useSharedMapColors()
   const { types } = map
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')

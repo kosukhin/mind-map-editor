@@ -1,12 +1,13 @@
 import { watch } from '@vue/runtime-core'
-import { useLayer, useLayerEvents, useCanvasBoundaries } from '~/composables'
+import { useSharedLayer, useSharedLayerEvents, useCanvasBoundaries } from '~/composables'
 import { all } from '~/utils'
 import { layerWheelHandler } from '~/application'
 
-export const useLayerListenerWheel = () => {
-  const { stage } = useLayer()
-  const { wheel } = useLayerEvents()
+export function useLayerListenerWheel() {
+  const { stage } = useSharedLayer()
+  const { wheel } = useSharedLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
+
   watch(wheel, () => {
     all([stage, wheel] as const)
       .map(layerWheelHandler)

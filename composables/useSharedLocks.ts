@@ -3,7 +3,7 @@ import { watch } from '@vue/runtime-core'
 import { ref } from '@vue/reactivity'
 import { reMaybe } from '~/utils'
 
-export const useLocks = createSharedComposable(() => {
+export const useSharedLocks = createSharedComposable(() => {
   const isClickLocked = ref(false)
   const isDragLocked = useLocalStorage('drag-locked', false)
   const maybeDragLocked = reMaybe<boolean>()
@@ -16,6 +16,7 @@ export const useLocks = createSharedComposable(() => {
       immediate: true,
     }
   )
+
   return {
     isClickLocked,
     isDragLocked,

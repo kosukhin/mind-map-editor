@@ -1,10 +1,10 @@
 import { watch } from '@vue/runtime-core'
-import { useLayerEvents, useLayer } from '~/composables'
+import { useSharedLayerEvents, useSharedLayer } from '~/composables'
 import { all } from '~/utils'
 
-export const useLayerListenerMouse = () => {
-  const { stage } = useLayer()
-  const { mouseenter, mouseleave } = useLayerEvents()
+export function useLayerListenerMouse() {
+  const { stage } = useSharedLayer()
+  const { mouseenter, mouseleave } = useSharedLayerEvents()
   watch(mouseenter, () => {
     all([stage, mouseenter] as const).map(([vStage, e]) => {
       if (e.target.attrs.image || e.target.attrs.text) {

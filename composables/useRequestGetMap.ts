@@ -3,7 +3,7 @@ import { MapResponse, MapStructure, MapType } from '~/entities'
 import { API_GET_MAP, GET } from '~/constants'
 import { requestNormalizeGetMap } from '~/application'
 
-export const useRequestGetMap = () => {
+export function useRequestGetMap() {
   const { http } = useRequest()
   const getMap = async (
     mapName: string
@@ -17,6 +17,7 @@ export const useRequestGetMap = () => {
     })) as MapResponse
     return requestNormalizeGetMap(response, mapName)
   }
+
   return {
     getMap,
   }

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity'
-import { useMap } from '~/composables'
+import { useSharedMap } from '~/composables'
 
-const { mapName, map } = useMap()
+const { mapName, map } = useSharedMap()
 const mapHistory = computed(() => {
   let link = ''
   const result: any = map.map((vMap) => {

@@ -4,13 +4,13 @@ import { computed, ref } from '@vue/reactivity'
 import cloneDeep from 'lodash/cloneDeep'
 import { useClipboard } from '@vueuse/core'
 import {
-  useMapObject,
+  useSharedMapObject,
   useSettings,
-  useOverlay,
-  useMap,
-  useLayer,
-  useKeybindings,
-  useNotify,
+  useSharedOverlay,
+  useSharedMap,
+  useSharedLayer,
+  useSharedKeybindings,
+  useSharedNotify,
   useFormDirtyCheck,
 } from '~/composables'
 import {
@@ -39,7 +39,7 @@ import BaseSelect from '~/components/BaseSelect/BaseSelect.vue'
 
 const { stringify } = JSON
 
-const { map } = useMap()
+const { map } = useSharedMap()
 const mapTypes = computed(() => {
   const result = []
 
@@ -55,8 +55,8 @@ const mapTypes = computed(() => {
   return result
 })
 
-const { close, isOpened } = useOverlay()
-const { ctrlSFired } = useKeybindings()
+const { close, isOpened } = useSharedOverlay()
+const { ctrlSFired } = useSharedKeybindings()
 watch(ctrlSFired, () => {
   if (!isOpened(SHOW_OBJECT)) {
     return
@@ -65,7 +65,7 @@ watch(ctrlSFired, () => {
 })
 
 const form = ref({})
-const { currentObject } = useMapObject()
+const { currentObject } = useSharedMapObject()
 watch(
   currentObject,
   () => {
@@ -92,7 +92,7 @@ const objectUrl = computed({
   },
 })
 
-const { layer, layerObjects } = useLayer()
+const { layer, layerObjects } = useSharedLayer()
 const remove = () => {
   if (!confirm('Вы уверены что нужно удалить?')) {
     return
@@ -162,7 +162,7 @@ const clone = () => {
   )
 }
 
-const { message } = useNotify()
+const { message } = useSharedNotify()
 const { copy, isSupported } = useClipboard()
 function onCopyUrl() {
   if (!isSupported) {

@@ -8,9 +8,9 @@ import {
   SHOW_KEYBINDINGS,
 } from '~/constants'
 import {
-  useKeybindings,
-  useMap,
-  useOverlay,
+  useSharedKeybindings,
+  useSharedMap,
+  useSharedOverlay,
   useRequestRemoveMap,
   useFormDirtyCheck,
 } from '~/composables'
@@ -22,7 +22,7 @@ import BaseInput from '~/components/BaseInput/BaseInput.vue'
 const { stringify } = JSON
 
 const form = ref({})
-const { map, mapName, firstMapLoad, parentTypes } = useMap()
+const { map, mapName, firstMapLoad, parentTypes } = useSharedMap()
 watch(
   firstMapLoad,
   () => {
@@ -43,7 +43,7 @@ const onRemove = async () => {
   }
 }
 
-const { close, overlayName, isOpened } = useOverlay()
+const { close, overlayName, isOpened } = useSharedOverlay()
 const onSave = () => {
   close()
   map.map((vMap) => {
@@ -51,7 +51,7 @@ const onSave = () => {
   })
 }
 
-const { ctrlSFired } = useKeybindings()
+const { ctrlSFired } = useSharedKeybindings()
 watch(ctrlSFired, () => {
   if (!isOpened(SHOW_SETTINGS)) {
     return

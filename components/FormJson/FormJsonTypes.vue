@@ -3,14 +3,18 @@ import { computed, ref } from '@vue/reactivity'
 import { nextTick, watch } from '@vue/runtime-core'
 import merge from 'lodash/merge'
 import { SHOW_JSON_TYPES } from '~/constants'
-import { useFormDirtyCheck, useMap, useOverlay } from '~/composables'
+import {
+  useFormDirtyCheck,
+  useSharedMap,
+  useSharedOverlay,
+} from '~/composables'
 import BaseModal from '~/components/BaseModal/BaseModal.vue'
 import BaseTextarea from '~/components/BaseTextarea/BaseTextarea.vue'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 
 const { stringify } = JSON
 
-const { map } = useMap()
+const { map } = useSharedMap()
 const form = ref('')
 watch(
   map,
@@ -36,7 +40,7 @@ const onSave = () => {
   })
 }
 
-const { close } = useOverlay()
+const { close } = useSharedOverlay()
 </script>
 
 <template>

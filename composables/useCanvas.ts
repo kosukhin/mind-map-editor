@@ -6,7 +6,7 @@ import { setValue, reMaybe, map, ifElse, isTruthy } from '~/utils'
 import { useDom } from '~/composables'
 import { CANVAS_DOM_ID } from '~/constants'
 
-export const useCanvas = () => {
+export function useCanvas() {
   const canvas = reMaybe<HTMLElement>()
   const canvasSize = reMaybe<Size>()
   const { findById } = useDom()

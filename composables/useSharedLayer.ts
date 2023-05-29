@@ -4,7 +4,7 @@ import { MapLayerObjects, Layer, Stage } from '~/entities'
 import { useCanvas } from '~/composables'
 import { createLayer, setValue, shallowReMaybe } from '~/utils'
 
-export const useLayer = createSharedComposable(() => {
+export const useSharedLayer = createSharedComposable(() => {
   const { canvas } = useCanvas()
   const layer = shallowReMaybe<Layer>()
   const stage = shallowReMaybe<Stage>()
@@ -16,6 +16,7 @@ export const useLayer = createSharedComposable(() => {
       setValue(stage, newStage)
     })
   })
+
   return {
     layer,
     stage,

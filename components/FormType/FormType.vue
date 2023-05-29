@@ -2,11 +2,11 @@
 import { computed, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
 import {
-  useMap,
-  useMapType,
-  useOverlay,
+  useSharedMap,
+  useSharedMapType,
+  useSharedOverlay,
   useFormDirtyCheck,
-  useKeybindings,
+  useSharedKeybindings,
 } from '~/composables'
 import { SHOW_TYPE } from '~/constants'
 import { all } from '~/utils'
@@ -18,8 +18,8 @@ import BaseModal from '~/components/BaseModal/BaseModal.vue'
 const { stringify } = JSON
 
 const form = ref<any>({})
-const { currentTypeId, currentType } = useMapType()
-const { map } = useMap()
+const { currentTypeId, currentType } = useSharedMapType()
+const { map } = useSharedMap()
 watch(
   currentType,
   () => {
@@ -49,8 +49,8 @@ const save = () => {
   })
 }
 
-const { close, isOpened } = useOverlay()
-const { ctrlSFired } = useKeybindings()
+const { close, isOpened } = useSharedOverlay()
+const { ctrlSFired } = useSharedKeybindings()
 watch(ctrlSFired, () => {
   if (!isOpened(SHOW_TYPE)) {
     return

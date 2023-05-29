@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity'
 import { nextTick, watch } from '@vue/runtime-core'
-import { useMap, useOverlay, useFormDirtyCheck } from '~/composables'
+import { useSharedMap, useSharedOverlay, useFormDirtyCheck } from '~/composables'
 import { SHOW_JSON, SHOW_JSON_TYPES } from '~/constants'
 import BaseTextarea from '~/components/BaseTextarea/BaseTextarea.vue'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
@@ -11,7 +11,7 @@ import FormJsonTypes from '~/components/FormJson/FormJsonTypes.vue'
 const { stringify } = JSON
 
 const form = ref('')
-const { map } = useMap()
+const { map } = useSharedMap()
 watch(
   map,
   () => {
@@ -33,7 +33,7 @@ const isDirty = computed(
 )
 useFormDirtyCheck(isDirty, SHOW_JSON)
 
-const { close, overlayName } = useOverlay()
+const { close, overlayName } = useSharedOverlay()
 const openTypes = () => {
   overlayName.value = SHOW_JSON_TYPES
 }

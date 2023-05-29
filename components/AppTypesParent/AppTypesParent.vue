@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import svg64 from 'svg64'
-import { useMap, useOverlayAutoClose } from '~/composables'
+import { useSharedMap, useOverlayAutoClose } from '~/composables'
 import { SHOW_PARENT_TYPES } from '~/constants'
 import { MapType } from '~/entities'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 
 useOverlayAutoClose(SHOW_PARENT_TYPES)
 
-const { map, parentTypes } = useMap()
+const { map, parentTypes } = useSharedMap()
 const addType = (type: MapType) => {
   map.map((vMap) => {
     vMap.types[type.name] = type

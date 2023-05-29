@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import svg64 from 'svg64'
 import {
-  useMapType,
-  useMap,
-  useOverlay,
-  useLayer,
-  useSideBar,
+  useSharedMapType,
+  useSharedMap,
+  useSharedOverlay,
+  useSharedLayer,
+  useSharedSideBar,
 } from '~/composables'
 import {
   DEFAULT_SVG,
@@ -21,14 +21,14 @@ import TheLinker from '~/components/TheLinker/TheLinker.vue'
 import BaseGroup from '~/components/BaseGroup/BaseGroup.vue'
 import BaseIcon from '~/components/BaseIcon/BaseIcon.vue'
 
-const { overlayName } = useOverlay()
-const { currentTypeId } = useMapType()
+const { overlayName } = useSharedOverlay()
+const { currentTypeId } = useSharedMapType()
 const selectType = (name: string) => {
   overlayName.value = SHOW_TYPE
   currentTypeId.value = name
 }
 
-const { map } = useMap()
+const { map } = useSharedMap()
 const addType = () => {
   map.map((vMap) => {
     const newTypeId = Date.now().toString()
@@ -61,8 +61,8 @@ const removeType = (typeId: string) => {
   })
 }
 
-const { isSidebarOpen } = useSideBar()
-const { layer, stage, layerObjects } = useLayer()
+const { isSidebarOpen } = useSharedSideBar()
+const { layer, stage, layerObjects } = useSharedLayer()
 const addToCanvas = (e: DragEvent, type: string, useStagePosition = false) => {
   all([layer, map, stage] as const).map(async ([vLayer, vMap, vStage]) => {
     const vType = vMap.types[type]

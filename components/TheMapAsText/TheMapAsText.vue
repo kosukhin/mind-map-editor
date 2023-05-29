@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useShare } from '@vueuse/core'
 import { computed, ref } from '@vue/reactivity'
-import { useMap, useOverlayAutoClose } from '~/composables'
+import { useSharedMap, useOverlayAutoClose } from '~/composables'
 import { SHOW_TEXT } from '~/constants'
 import { nl2br, stripHtml } from '~/utils'
 import BaseModal from '~/components/BaseModal/BaseModal.vue'
@@ -9,7 +9,7 @@ import BaseButton from '~/components/BaseButton/BaseButton.vue'
 
 useOverlayAutoClose(SHOW_TEXT)
 
-const { map } = useMap()
+const { map } = useSharedMap()
 const mapAsString = computed(() => {
   return (
     map.map((vMap) => {

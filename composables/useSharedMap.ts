@@ -3,13 +3,13 @@ import { createSharedComposable } from '@vueuse/core'
 import { reactive, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
 import { MapStructure, MapType } from '~/entities'
-import { useNotify, useRequestGetMap, useRequestSaveMap } from '~/composables'
+import { useSharedNotify, useRequestGetMap, useRequestSaveMap } from '~/composables'
 import { MAP_UPDATED, NOTIFY_ERROR, NOTIFY_SUCCESS } from '~/constants'
 import { setError, setValue, setValues, MaybeError } from '~/utils'
 import { mapNormalizeBeforeSave } from '~/application'
 
-export const useMap = createSharedComposable(() => {
-  const { message } = useNotify()
+export const useSharedMap = createSharedComposable(() => {
+  const { message } = useSharedNotify()
   const firstMapLoad = ref(false)
   const parentTypes = ref<MapType[]>([])
   const map = reactive(MaybeError<MapStructure>())
@@ -45,6 +45,7 @@ export const useMap = createSharedComposable(() => {
       deep: true,
     }
   )
+
   return {
     map,
     firstMapLoad,

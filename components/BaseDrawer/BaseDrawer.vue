@@ -2,7 +2,7 @@
 import { watch } from '@vue/runtime-core'
 import { computed, ref } from '@vue/reactivity'
 import { useMagicKeys } from '@vueuse/core'
-import { useOverlay } from '~/composables'
+import { useSharedOverlay } from '~/composables'
 
 const props = defineProps({
   name: {
@@ -21,7 +21,7 @@ const classes = computed(() => ({
   [`BaseDrawer_Direction_${props.direction}`]: true,
 }))
 
-const { overlayName, tryToClose } = useOverlay()
+const { overlayName, tryToClose } = useSharedOverlay()
 const close = () => {
   tryToClose.value = props.name as string
 }
