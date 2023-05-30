@@ -1,4 +1,5 @@
 import curry from 'lodash/fp/curry.js'
+import sum from 'lodash/sum.js'
 
 interface ErrorFull {
   error: any
@@ -78,4 +79,12 @@ export const debug = (string: string, tag: string = 'DEBUG') => {
   }
   const { log } = console
   log && log(`['${tag}'] ${string}`)
+}
+
+export function objectToValues(obj: object) {
+  return Object.values(obj)
+}
+
+export function average(values: number[]) {
+  return Math.round(sum(values) / values.length)
 }

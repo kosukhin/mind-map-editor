@@ -36,7 +36,10 @@ watch(firstMapLoad, () => {
 <template>
   <div class="TheHeader">
     <div ref="progressElement" class="TheHeader-Background">
-      <div class="TheHeader-Filled">{{ $t('theHeader.todayProgress') }}</div>
+      <div class="TheHeader-Filled">
+        {{ $t('theHeader.todayProgress') }}
+        {{ progress }}
+      </div>
     </div>
     <BaseBreadcrumbs class="TheHeader-Breadcrumbs" />
     <div class="TheHeader-Actions">

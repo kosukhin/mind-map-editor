@@ -4,6 +4,7 @@ import get from 'lodash/get.js'
 import set from 'lodash/set.js'
 import { createFilePathByName } from '~/utils/server'
 import { stateStepper } from '~/libraries/stateStepper'
+import { average, objectToValues } from '~/utils/common'
 
 const { writeFileSync, readFileSync } = fs
 export function saveDocument(filePath: string, body: any) {
@@ -22,6 +23,21 @@ export function readFile(filePath: string): string {
     return defaultValue
   }
 }
+
+export const calculateAverageProgress = () =>
+  stateStepper(
+    {
+      fileName: '__progress',
+    },
+    (step) =>
+      flow(
+        step(createFilePathByName, ['fileName']),
+        step(readFile, ['prevResult']),
+        step(parse, ['prevResult']),
+        step(objectToValues, ['prevResult']),
+        step(average, ['prevResult'])
+      )
+  )
 
 export const getProgressByDay = (day: string) =>
   stateStepper(
