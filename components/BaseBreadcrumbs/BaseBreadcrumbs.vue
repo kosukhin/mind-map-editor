@@ -23,7 +23,7 @@ const mapHistory = computed(() => {
 
 <template>
   <div>
-    <a href="/">Главная</a>
+    <a href="/">{{ $t('breadcrumbs.home') }}</a>
     <span
       v-for="history in mapHistory"
       :key="history ? history.name + history.link : 'none'"

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
+import { useI18n } from 'vue-i18n'
 import {
   SHOW_SETTINGS,
   SHOW_JSON,
@@ -35,9 +36,10 @@ watch(
   }
 )
 
+const i18n = useI18n()
 const { removeMap } = useRequestRemoveMap()
 const onRemove = async () => {
-  if (confirm('Это действие безвозвратно удалит карту, продолжить?')) {
+  if (confirm(i18n.t('theSettings.notifications.thisWillTotallyRemoveMap'))) {
     await removeMap(mapName)
     location.href = '/'
   }
@@ -76,14 +78,14 @@ useFormDirtyCheck(isDirty, SHOW_SETTINGS)
             type="primary"
             @click="overlayName.value = SHOW_JSON"
           >
-            JSON экспорт\импорт
+            {{ $t('theSettings.jsonExportImport') }}
           </BaseButton>
           <BaseButton
             class="TheSettings-Button"
             type="primary"
             @click="overlayName.value = SHOW_KEYBINDINGS"
           >
-            Сочетания клавиш
+            {{ $t('theSettings.keybindings') }}
           </BaseButton>
           <BaseButton
             v-if="parentTypes.length"
@@ -91,37 +93,37 @@ useFormDirtyCheck(isDirty, SHOW_SETTINGS)
             class="TheSettings-Button"
             @click="overlayName.value = SHOW_PARENT_TYPES"
           >
-            Родительские типы
+            {{ $t('theSettings.parentTypes') }}
           </BaseButton>
         </div>
       </div>
       <div class="TheSettings-Row">
         <BaseCheckbox
           v-model="form.colored"
-          label="Использовать раскраску лейблов"
+          :label="$t('theSettings.useLabelsColoring')"
         />
       </div>
       <div class="TheSettings-Row">
         <label>
-          <b>Название карты</b>
+          <b>{{ $t('theSettings.mapName') }}</b>
           <BaseInput v-model="form.title" />
         </label>
       </div>
       <div class="TheSettings-Row">
         <a href="https://github.com/kosukhin/mind-map-creator" target="_blank">
-          Репозиторий на GitHub
+          {{ $t('theSettings.githubRepo') }}
         </a>
       </div>
     </div>
     <div class="TheSettings-ButtonGroup">
       <BaseButton class="TheSettings-Button" type="success" @click="onSave">
-        Сохранить
+        {{ $t('theSettings.save') }}
       </BaseButton>
       <BaseButton class="TheSettings-Button" @click="close">
-        Отменить
+        {{ $t('theSettings.cancel') }}
       </BaseButton>
       <BaseButton class="TheSettings-Button" type="danger" @click="onRemove">
-        Удалить карту
+        {{ $t('theSettings.removeMap') }}
       </BaseButton>
     </div>
   </div>

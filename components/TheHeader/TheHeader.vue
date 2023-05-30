@@ -36,20 +36,20 @@ watch(firstMapLoad, () => {
 <template>
   <div class="TheHeader">
     <div ref="progressElement" class="TheHeader-Background">
-      <div class="TheHeader-Filled">Прогресс сегодня</div>
+      <div class="TheHeader-Filled">{{ $t('theHeader.todayProgress') }}</div>
     </div>
     <BaseBreadcrumbs class="TheHeader-Breadcrumbs" />
     <div class="TheHeader-Actions">
       <BaseButton
         type="success"
         size="sm"
-        title="Меню"
+        :title="$t('theHeader.menu')"
         @click="overlayName.value = SHOW_OBJECT_MENU"
       >
         <BaseIcon icon="fa-bars" />
       </BaseButton>
       <BaseButton
-        title="Текстом"
+        :title="$t('theHeader.byText')"
         type="primary"
         size="sm"
         @click="overlayName.value = SHOW_TEXT"
@@ -61,7 +61,7 @@ watch(firstMapLoad, () => {
       </BaseButton>
       <BaseButton
         size="sm"
-        title="История посещений"
+        :title="$t('theHeader.visitHistory')"
         @click="overlayName.value = SHOW_HISTORY_MAPS"
       >
         <BaseIcon icon="fa-history" />

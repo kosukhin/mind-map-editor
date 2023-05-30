@@ -40,8 +40,7 @@ const selectMenuItem = (id: string) => {
 <template>
   <div class="AppMenuObject">
     <div v-if="!menuItems.length" class="AppMenuObject-Empty">
-      В меню нет пунктов, чтобы добавить объект в меню откройте дровер объекта и
-      установите чекбокс "Использовать в меню".
+      {{ $t('appMenuObject.noItems') }}
     </div>
     <div v-else class="AppMenuObject-List">
       <a

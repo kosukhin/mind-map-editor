@@ -1,6 +1,6 @@
 import { defineI18nConfig } from '#i18n'
-import en from '~/locales/en.ts'
-import ru from '~/locales/ru.ts'
+import en from '~/locales/en.json'
+import ru from '~/locales/ru.json'
 
 export default defineI18nConfig(() => ({
   legacy: false,

@@ -46,7 +46,9 @@ const { close } = useSharedOverlay()
 <template>
   <BaseModal :name="SHOW_JSON_TYPES">
     <template #header>
-      <h2>Экспорт\Импорт Типов</h2>
+      <h2>
+        {{ $t('formJsonTypes.exportOrImport') }}
+      </h2>
     </template>
     <div class="FormJson">
       <BaseTextarea v-model="form" class="FormJson-Text" />
@@ -54,9 +56,11 @@ const { close } = useSharedOverlay()
     <template #footer>
       <div class="FormJson-Buttons">
         <BaseButton class="FormJson-Button" type="success" @click="onSave">
-          Сохранить
+          {{ $t('formJsonTypes.save') }}
         </BaseButton>
-        <BaseButton class="FormJson-Button" @click="close">Отмена</BaseButton>
+        <BaseButton class="FormJson-Button" @click="close">{{
+          $t('formJsonTypes.cancel')
+        }}</BaseButton>
       </div>
     </template>
   </BaseModal>

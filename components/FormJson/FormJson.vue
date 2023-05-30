@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity'
 import { nextTick, watch } from '@vue/runtime-core'
-import { useSharedMap, useSharedOverlay, useFormDirtyCheck } from '~/composables'
+import {
+  useSharedMap,
+  useSharedOverlay,
+  useFormDirtyCheck,
+} from '~/composables'
 import { SHOW_JSON, SHOW_JSON_TYPES } from '~/constants'
 import BaseTextarea from '~/components/BaseTextarea/BaseTextarea.vue'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
@@ -43,7 +47,7 @@ const openTypes = () => {
   <FormJsonTypes />
   <BaseModal :name="SHOW_JSON">
     <template #header>
-      <h2>Экспорт\Импорт</h2>
+      <h2>{{ $t('formJson.exportOrImport') }}</h2>
     </template>
     <div class="FormJson">
       <BaseTextarea v-model="form" class="FormJson-Text" />
@@ -51,12 +55,14 @@ const openTypes = () => {
     <template #footer>
       <div class="FormJson-Buttons">
         <BaseButton class="FormJson-Button" type="success" @click="onSave">
-          Сохранить
+          {{ $t('formJson.save') }}
         </BaseButton>
         <BaseButton class="FormJson-Button" type="primary" @click="openTypes">
-          Типы
+          {{ $t('formJson.types') }}
         </BaseButton>
-        <BaseButton class="FormJson-Button" @click="close"> Отмена </BaseButton>
+        <BaseButton class="FormJson-Button" @click="close">
+          {{ $t('formJson.cancel') }}
+        </BaseButton>
       </div>
     </template>
   </BaseModal>

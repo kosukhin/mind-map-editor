@@ -95,32 +95,32 @@ const { isSidebarOpen } = useSharedSideBar()
   <FormType />
   <BaseDrawer :name="SHOW_OBJECT_MENU" direction="rtl">
     <template #header>
-      <h2>Меню</h2>
+      <h2>{{ $t('pageEditor.menu') }}</h2>
     </template>
     <AppMenuObject />
   </BaseDrawer>
   <BaseModal :name="SHOW_KEYBINDINGS">
     <template #header>
-      <h2>Сочетания клавиш</h2>
+      <h2>{{ $t('pageEditor.keybindings') }}</h2>
     </template>
     <TheKeybindings />
   </BaseModal>
   <BaseModal :name="SHOW_PARENT_TYPES">
     <template #header>
-      <h2>Родительские типы</h2>
+      <h2>{{ $t('pageEditor.parentTypes') }}</h2>
     </template>
     <AppTypesParent />
   </BaseModal>
   <TheMapAsText />
   <BaseModal :name="SHOW_SETTINGS">
     <template #header>
-      <h2>Настройки карты, {{ version }}</h2>
+      <h2>{{ $t('pageEditor.mapSettings') }}, {{ version }}</h2>
     </template>
     <TheSettings />
   </BaseModal>
   <BaseModal :name="SHOW_SEARCH">
     <template #header>
-      <h2>Поиск по карте</h2>
+      <h2>{{ $t('pageEditor.mapSearch') }}</h2>
     </template>
     <AppSearch />
   </BaseModal>

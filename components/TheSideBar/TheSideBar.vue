@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import svg64 from 'svg64'
+import { useI18n } from 'vue-i18n'
 import {
   useSharedMapType,
   useSharedMap,
@@ -28,12 +29,13 @@ const selectType = (name: string) => {
   currentTypeId.value = name
 }
 
+const i18n = useI18n()
 const { map } = useSharedMap()
 const addType = () => {
   map.map((vMap) => {
     const newTypeId = Date.now().toString()
     vMap.types[newTypeId] = {
-      name: 'Новый тип',
+      name: i18n.t('theSideBar.newType'),
       svg: DEFAULT_SVG,
       width: 100,
       height: 100,
@@ -53,7 +55,7 @@ const removeType = (typeId: string) => {
     })
 
     if (isTypeUsed) {
-      alert('Невозомжно удалить тип, он используется')
+      alert(i18n.t('theSideBar.notifications.impossibleToRemoveType'))
       return
     }
 
@@ -95,31 +97,35 @@ const addToCanvas = (e: DragEvent, type: string, useStagePosition = false) => {
       >
         <div class="TheSideBar-ItemName">{{ type.name }}</div>
         <img
-          alt="Перетащите на канвас, чтобы добавить"
+          :alt="$t('theSideBar.notifications.dragToCanvasToAdd')"
           :src="svg64(type.svg)"
           class="TheSideBar-ItemImage"
           draggable="true"
-          title="Перетащите на канвас, чтобы добавить"
+          :title="$t('theSideBar.notifications.dragToCanvasToAdd')"
           @dblclick="addToCanvas($event, name, true)"
           @dragend="addToCanvas($event, name)"
         />
         <div class="TheSideBar-ItemButtons">
           <BaseButton size="sm" type="primary" @click="selectType(name)">
-            Изменить
+            {{ $t('theSideBar.change') }}
           </BaseButton>
           <BaseButton size="sm" type="danger" @click="removeType(name)">
-            Удалить
+            {{ $t('theSideBar.delete') }}
           </BaseButton>
         </div>
       </div>
     </div>
     <div class="TheSideBar-Footer">
       <BaseGroup>
-        <BaseButton title="Добавить тип" type="success" @click="addType">
+        <BaseButton
+          :title="$t('theSideBar.addType')"
+          type="success"
+          @click="addType"
+        >
           <BaseIcon icon="fa-plus-square" />
         </BaseButton>
         <BaseButton
-          title="Настройки"
+          :title="$t('theSideBar.settings')"
           type="primary"
           @click="overlayName.value = SHOW_SETTINGS"
         >

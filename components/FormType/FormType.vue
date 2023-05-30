@@ -62,7 +62,7 @@ watch(ctrlSFired, () => {
 <template>
   <BaseModal :name="SHOW_TYPE">
     <template #header>
-      <h2>Тип карты</h2>
+      <h2>{{ $t('formType.mapType') }}</h2>
     </template>
     <div v-if="!currentType.isNothing" class="FormType">
       <BaseInput v-model="form.name" class="FormType-Row" />
@@ -70,8 +70,12 @@ watch(ctrlSFired, () => {
     </div>
     <template #footer>
       <div class="FormType-Controls">
-        <BaseButton type="success" @click="save"> Сохранить </BaseButton>
-        <BaseButton @click="close"> Отменить </BaseButton>
+        <BaseButton type="success" @click="save">
+          {{ $t('formType.save') }}
+        </BaseButton>
+        <BaseButton @click="close">
+          {{ $t('formType.cancel') }}
+        </BaseButton>
       </div>
     </template>
   </BaseModal>

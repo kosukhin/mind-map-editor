@@ -1,19 +1,27 @@
 import { defineNuxtPlugin } from '#imports'
 
+const GENERAL_KEY_PREFIX = 'general.'
+const KEY_FIRST_SEGMENT_REGEXP = /^[^.]+\./
+
 export default defineNuxtPlugin((nuxtApp) => {
-  return {
-    provide: {
-      ft: (key: string) => {
-        let result = nuxtApp.$i18n.t(key)
+  nuxtApp.$i18n.setMissingHandler((...args) => {
+    const isDev = process.dev
+    const key = args[1]
 
-        if (result === key) {
-          const parts = result.split('.')
-          parts[0] = 'general'
-          result = nuxtApp.$i18n.t(parts.join('.'))
-        }
+    if (key.indexOf(GENERAL_KEY_PREFIX) === 0) {
+      return key
+    }
 
-        return result
-      },
-    },
-  }
+    const generalKey = key.replace(KEY_FIRST_SEGMENT_REGEXP, GENERAL_KEY_PREFIX)
+    const result = nuxtApp.$i18n.t(generalKey)
+
+    if (isDev && result === generalKey) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[i18n] Translation was not found keys: ${key}, ${generalKey}`
+      )
+    }
+
+    return result
+  })
 })

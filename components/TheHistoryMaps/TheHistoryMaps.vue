@@ -33,7 +33,9 @@ watch(head, () => {
 <template>
   <BaseDrawer :name="SHOW_HISTORY_MAPS" direction="rtl">
     <template #header>
-      <h2 class="TheHistoryMaps-Title">История посещений</h2>
+      <h2 class="TheHistoryMaps-Title">
+        {{ $t('theHistoryMaps.visitHistory') }}
+      </h2>
     </template>
     <div>
       <ul>

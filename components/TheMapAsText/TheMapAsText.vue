@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useShare } from '@vueuse/core'
 import { computed, ref } from '@vue/reactivity'
+import { useI18n } from 'vue-i18n'
 import { useSharedMap, useOverlayAutoClose } from '~/composables'
 import { SHOW_TEXT } from '~/constants'
 import { nl2br, stripHtml } from '~/utils'
@@ -32,10 +33,11 @@ const mapAsString = computed(() => {
   )
 })
 
+const i18n = useI18n()
 const { share, isSupported } = useShare()
 const onShare = () => {
   if (!isSupported.value) {
-    alert('Шаринг не поддерживается')
+    alert(i18n.t('theMapAsText.notifications.sharingDontSupported'))
   }
 
   share({
@@ -59,14 +61,14 @@ const onSelectAll = () => {
   <BaseModal :name="SHOW_TEXT">
     <template #header>
       <h2 class="TheMapAsText-ModalTitle">
-        Вся карта текстом
+        {{ $t('theMapAsText.mapAsText') }}
         <BaseButton
           size="sm"
           type="success"
           class="TheMapAsText-Share"
           @click="onShare"
         >
-          Шарить
+          {{ $t('theMapAsText.share') }}
         </BaseButton>
         <BaseButton
           size="sm"
@@ -74,7 +76,7 @@ const onSelectAll = () => {
           class="TheMapAsText-Share"
           @click="onSelectAll"
         >
-          Выделить всё
+          {{ $t('theMapAsText.selectAll') }}
         </BaseButton>
       </h2>
     </template>

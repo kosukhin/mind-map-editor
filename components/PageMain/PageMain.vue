@@ -3,6 +3,7 @@ import { ref } from '@vue/reactivity'
 import debounce from 'lodash/debounce'
 import { watch } from '@vue/runtime-core'
 import { useSeoMeta } from '@vueuse/head'
+import { useI18n } from 'vue-i18n'
 import { urlTrim } from '~/utils'
 import {
   useRequestCreateMap,
@@ -12,8 +13,9 @@ import {
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 import BaseInput from '~/components/BaseInput/BaseInput.vue'
 
+const i18n = useI18n()
 useSeoMeta({
-  title: 'Главная страница',
+  title: i18n.t('pageMain.mainTitle'),
 })
 
 const { getMaps } = useRequestGetMaps()
@@ -62,13 +64,15 @@ const onCreateMap = async () => {
   <div class="PageMain">
     <h2 class="PageMain-Title">Mind-Map-Creator</h2>
     <div class="PageMain-Row">
-      <a href="/api/create-search-index" target="_blank">Обновить индекс</a>
+      <a href="/api/create-search-index" target="_blank">
+        {{ $t('pageMain.updateIndex') }}
+      </a>
     </div>
     <div class="PageMain-Row">
       <BaseInput v-model="searchQuery" placeholder="Поиск в картах" />
     </div>
     <div v-if="lastSearchDate" class="PageMain-Row">
-      Время последнего поиска: {{ lastSearchDate }}
+      {{ $t('pageMain.lastSearchTime') }}: {{ lastSearchDate }}
     </div>
     <div
       v-for="result in searchResults"
@@ -77,7 +81,7 @@ const onCreateMap = async () => {
     >
       <a :href="result.url">{{ result.name }}</a>
     </div>
-    <h3 class="PageMain-SubTitle">Существующие карты</h3>
+    <h3 class="PageMain-SubTitle">{{ $t('pageMain.existedMaps') }}</h3>
     <div class="PageMain-Files">
       <div
         v-for="file in maps.files"
@@ -93,10 +97,10 @@ const onCreateMap = async () => {
     <div class="PageMain-NewMap">
       <BaseInput
         v-model="newMapName"
-        placeholder="Введите название новой карты"
+        :placeholder="$t('pageMain.specifyNewCardName')"
       />
       <BaseButton class="PageMain-Button" type="primary" @click="onCreateMap">
-        Создать
+        {{ $t('pageMain.create') }}
       </BaseButton>
     </div>
   </div>

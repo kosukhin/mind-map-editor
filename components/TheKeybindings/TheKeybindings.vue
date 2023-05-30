@@ -7,11 +7,11 @@ useOverlayAutoClose(SHOW_KEYBINDINGS)
 
 <template>
   <pre class="TheKeybindings">
-    Esc - закрывает модалку или дровер
-    Ctrl+<em>S</em> - Сохраняет форму
-    Ctrl+<em>F</em> - Открывает окно поиска
-    Ctrl+<em>M</em> - Открывает меню
-    Ctrl+<em>H</em> - Открывает историю вкладок
+    Esc - {{ $t('theKeybindings.closeModal') }}
+    Ctrl+<em>S</em> - {{ $t('theKeybindings.saveForm') }}
+    Ctrl+<em>F</em> - {{ $t('theKeybindings.openSearchWindow') }}
+    Ctrl+<em>M</em> - {{ $t('theKeybindings.openMenu') }}
+    Ctrl+<em>H</em> - {{ $t('theKeybindings.openTabsHistory') }}
   </pre>
 </template>
 

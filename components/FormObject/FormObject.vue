@@ -3,6 +3,7 @@ import { watch } from '@vue/runtime-core'
 import { computed, ref } from '@vue/reactivity'
 import cloneDeep from 'lodash/cloneDeep'
 import { useClipboard } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 import {
   useSharedMapObject,
   useSettings,
@@ -92,9 +93,10 @@ const objectUrl = computed({
   },
 })
 
+const i18n = useI18n()
 const { layer, layerObjects } = useSharedLayer()
 const remove = () => {
-  if (!confirm('Вы уверены что нужно удалить?')) {
+  if (!confirm(i18n.t('formObject.notifications.sureDelete'))) {
     return
   }
 
@@ -181,49 +183,55 @@ const { settings } = useSettings()
 <template>
   <BaseDrawer :name="SHOW_OBJECT">
     <template #header>
-      <h2 class="FormObject-MainTitle">Объект карты</h2>
+      <h2 class="FormObject-MainTitle">{{ $t('formObject.mapObject') }}</h2>
       <small v-if="currentObject.value" class="FormObject-MainSubTitle">
         <span> ID #{{ currentObject.value.id }} </span>
         <BaseButton size="sm" type="primary" @click="onCopyUrl">
-          копировать
+          {{ $t('formObject.copy') }}
         </BaseButton>
       </small>
     </template>
     <div v-if="!settings.isNothing && form" class="FormObject">
       <div v-if="!settings.value.isEditable" class="FormObject-Inner">
-        <div class="FormObject-Title">Название</div>
+        <div class="FormObject-Title">{{ $t('formObject.name') }}</div>
         <div class="FormObject-Description">{{ currentObject.value.name }}</div>
-        <div class="FormObject-Title">Описание</div>
+        <div class="FormObject-Title">{{ $t('formObject.description') }}</div>
         <div class="FormObject-Description">
           {{
             currentObject.value.description
               ? currentObject.value.description
-              : 'Нет описания'
+              : $t('formObject.noDescription')
           }}
         </div>
       </div>
       <div v-else class="FormObject-Inner" @change="isDirty = true">
         <div class="FormObject-Row">
-          <BaseCheckbox v-model="form.linked" label="Название ссылкой" />
+          <BaseCheckbox
+            v-model="form.linked"
+            :label="$t('formObject.nameAsLink')"
+          />
         </div>
         <template v-if="form.linked">
-          <div class="FormObject-Title">Внешняя ссылка</div>
+          <div class="FormObject-Title">{{ $t('formObject.outerLink') }}</div>
           <div class="FormObject-Row">
             <BaseInput v-model="objectUrl" />
           </div>
           <div class="FormObject-Row">
-            <BaseCheckbox v-model="form.targetBlank" label="В новой влкадке" />
+            <BaseCheckbox
+              v-model="form.targetBlank"
+              :label="$t('formObject.inNewTab')"
+            />
           </div>
         </template>
-        <div class="FormObject-Title">Название сверху</div>
+        <div class="FormObject-Title">{{ $t('formObject.topName') }}</div>
         <div class="FormObject-Row">
           <BaseTextarea v-model="form.additionalName" />
         </div>
-        <div class="FormObject-Title">Название внизу</div>
+        <div class="FormObject-Title">{{ $t('formObject.bottomName') }}</div>
         <div class="FormObject-Row">
           <BaseTextarea v-model="form.name" />
         </div>
-        <div class="FormObject-Title">Описание</div>
+        <div class="FormObject-Title">{{ $t('formObject.description') }}</div>
         <div class="FormObject-Row">
           <BaseTextarea v-model="form.description" />
         </div>
@@ -231,7 +239,7 @@ const { settings } = useSettings()
         <div class="FormObject-Row">
           <BaseInput v-model="form.zindex" type="number" />
         </div>
-        <div class="FormObject-Title">Тип объекта</div>
+        <div class="FormObject-Title">{{ $t('formObject.objectType') }}</div>
         <div class="FormObject-Row">
           <BaseSelect
             v-model="form.type"
@@ -247,20 +255,23 @@ const { settings } = useSettings()
             size="md"
             @click="clone"
           >
-            Клонировать
+            {{ $t('formObject.clone') }}
           </BaseButton>
         </div>
         <div class="FormObject-Row">
-          <BaseCheckbox v-model="form.inMenu" label="Использовать в меню" />
+          <BaseCheckbox
+            v-model="form.inMenu"
+            :label="$t('formObject.useInMenu')"
+          />
         </div>
         <template v-if="form.inMenu">
-          <div class="FormObject-Title">Порядок в меню</div>
+          <div class="FormObject-Title">{{ $t('formObject.menuOrder') }}</div>
           <div class="FormObject-Row">
             <BaseInput v-model="form.menuOrder" type="number" />
           </div>
         </template>
         <template v-if="form.arrows && form.arrows.length">
-          <div class="FormObject-Title">Связи</div>
+          <div class="FormObject-Title">{{ $t('formObject.relations') }}</div>
           <div class="FormObject-Row">
             <div
               v-for="(arrow, index) in form.arrows"
@@ -275,7 +286,8 @@ const { settings } = useSettings()
                 type="danger"
                 size="sm"
                 @click="removeRelation(index)"
-                >Удалить
+              >
+                {{ $t('formObject.delete') }}
               </BaseButton>
             </div>
           </div>
@@ -284,11 +296,17 @@ const { settings } = useSettings()
     </div>
     <template #footer>
       <div class="FormObject-ButtonsGroup">
-        <BaseButton type="success" @click="save">Сохранить</BaseButton>
-        <BaseButton type="danger" @click="remove">Удалить</BaseButton>
+        <BaseButton type="success" @click="save">
+          {{ $t('formObject.save') }}
+        </BaseButton>
+        <BaseButton type="danger" @click="remove">
+          {{ $t('formObject.delete') }}
+        </BaseButton>
       </div>
       <div class="FormObject-ButtonsGroup">
-        <BaseButton @click="cancel">Отменить</BaseButton>
+        <BaseButton @click="cancel">
+          {{ $t('formObject.cancel') }}
+        </BaseButton>
       </div>
     </template>
   </BaseDrawer>

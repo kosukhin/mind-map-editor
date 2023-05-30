@@ -17,7 +17,7 @@ const addType = (type: MapType) => {
 
 <template>
   <div class="AppTypesParent">
-    <div v-if="!parentTypes.length">Нет типов</div>
+    <div v-if="!parentTypes.length">{{ $t('typesParent.noTypes') }}</div>
     <div v-else class="AppTypesParent-Items">
       <div
         v-for="item in parentTypes"
@@ -31,7 +31,7 @@ const addType = (type: MapType) => {
           type="success"
           @click="addType(item)"
         >
-          Добавить на карту
+          {{ $t('typesParent.addToMap') }}
         </BaseButton>
       </div>
     </div>
