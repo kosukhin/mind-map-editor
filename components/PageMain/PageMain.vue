@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce'
 import { watch } from '@vue/runtime-core'
 import { useSeoMeta } from '@vueuse/head'
 import { useI18n } from 'vue-i18n'
-import { urlTrim } from '~/utils'
+import { calculateProgressBg, urlTrim } from '~/utils'
 import {
   useRequestCreateMap,
   useRequestGetMaps,
@@ -26,7 +26,16 @@ const progress = computed(() => {
   return Object.fromEntries(
     Object.entries(maps.progress).map(([key, value]) => {
       value = Math.round((value * 100) / max)
-      return [key, value]
+      const decimal = value / 100
+      const color = calculateProgressBg(decimal)
+      return [
+        key,
+        {
+          value,
+          decimal,
+          color: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
+        },
+      ]
     })
   )
 })
@@ -121,10 +130,13 @@ const onCreateMap = async () => {
       <div
         v-for="(bar, index) in progress"
         :key="index"
-        :style="`height: ${bar}%`"
+        :style="`height: ${bar.value}%;background: ${bar.color}`"
         class="PageMain-Bar"
       >
-        {{ bar }}%
+        <p>{{ bar.value }}%</p>
+        <p>
+          {{ index }}
+        </p>
       </div>
     </div>
   </div>

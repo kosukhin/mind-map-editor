@@ -47,9 +47,13 @@
     background: var(--primaryBG);
     flex: 1 1 0;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    color: var(--inverseFG);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--mbMd);
+    overflow: hidden;
+    opacity: 0.7;
+    color: var(--mainFG);
     box-sizing: border-box;
     padding: var(--mbMd);
     font-size: var(--fzSmall);

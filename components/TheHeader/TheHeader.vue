@@ -2,7 +2,6 @@
 import { useCssVar } from '@vueuse/core'
 import { ref } from '@vue/reactivity'
 import { watch } from '@vue/runtime-core'
-import { normal } from 'color-blend'
 import { useSharedMap, useSharedOverlay } from '~/composables'
 import {
   SHOW_TEXT,
@@ -13,6 +12,7 @@ import {
 import BaseIcon from '~/components/BaseIcon/BaseIcon.vue'
 import BaseBreadcrumbs from '@/components/BaseBreadcrumbs/BaseBreadcrumbs.vue'
 import BaseButton from '@/components/BaseButton/BaseButton.vue'
+import { calculateProgressBg } from '~/utils'
 
 const { overlayName } = useSharedOverlay()
 const { firstMapLoad, map } = useSharedMap()
@@ -23,11 +23,8 @@ const progressColor = useCssVar('--progressColor', progressElement)
 watch(firstMapLoad, () => {
   map.map((vMap) => {
     const progressNumber = (vMap.progress < 100 ? vMap.progress : 100) / 100
-    const progressRest = 1 - progressNumber
-    progress.value = `${progressNumber * 100}%`
-    const red = { r: 255, g: 0, b: 0, a: progressRest }
-    const green = { r: 0, g: 255, b: 0, a: progressNumber }
-    const color = normal(red, green)
+    progress.value = `${vMap.progress}%`
+    const color = calculateProgressBg(progressNumber)
     progressColor.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
   })
 })

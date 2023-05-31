@@ -1,5 +1,6 @@
 import curry from 'lodash/fp/curry.js'
 import sum from 'lodash/sum.js'
+import { normal } from 'color-blend'
 
 interface ErrorFull {
   error: any
@@ -91,4 +92,11 @@ export function average(values: number[]) {
 
 export function apply(args: any[], fn: Function) {
   return fn(...args)
+}
+
+export function calculateProgressBg(progress: number) {
+  const progressRest = 1 - progress
+  const red = { r: 255, g: 0, b: 0, a: progressRest }
+  const green = { r: 0, g: 255, b: 0, a: progress }
+  return normal(red, green)
 }
