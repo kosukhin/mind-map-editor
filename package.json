@@ -1,6 +1,7 @@
 {
   "private": true,
   "version": "0.0.2",
+  "type": "module",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -37,6 +38,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@nuxtjs/i18n-edge": "^8.0.0-beta.12-28090693.c8406ad",
     "@vueuse/core": "^9.13.0",
     "@vueuse/head": "^1.1.26",
     "canvg": "^4.0.1",

@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     '@/assets/styles/reset.scss',
     '@/assets/styles/transitions.scss',
   ],
-  modules: ['@nuxtjs/i18n'],
+  modules: ['@nuxtjs/i18n-edge'],
   i18n: {
     vueI18n: './i18n.config.ts',
   },
