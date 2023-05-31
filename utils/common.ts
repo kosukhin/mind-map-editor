@@ -88,3 +88,7 @@ export function objectToValues(obj: object) {
 export function average(values: number[]) {
   return Math.round(sum(values) / values.length)
 }
+
+export function apply(args: any[], fn: Function) {
+  return fn(...args)
+}

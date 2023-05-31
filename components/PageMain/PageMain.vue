@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from '@vue/reactivity'
+import { computed, ref } from '@vue/reactivity'
 import debounce from 'lodash/debounce'
 import { watch } from '@vue/runtime-core'
 import { useSeoMeta } from '@vueuse/head'
@@ -20,6 +20,16 @@ useSeoMeta({
 
 const { getMaps } = useRequestGetMaps()
 const maps = await getMaps()
+const progress = computed(() => {
+  const max = Math.max(...Object.values(maps.progress))
+
+  return Object.fromEntries(
+    Object.entries(maps.progress).map(([key, value]) => {
+      value = Math.round((value * 100) / max)
+      return [key, value]
+    })
+  )
+})
 
 const { search } = useRequestSearch()
 const searchQuery = ref('')
@@ -102,6 +112,20 @@ const onCreateMap = async () => {
       <BaseButton class="PageMain-Button" type="primary" @click="onCreateMap">
         {{ $t('pageMain.create') }}
       </BaseButton>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <h3 class="PageMain-SubTitle">{{ $t('pageMain.progressStatistic') }}</h3>
+    <div class="PageMain-Bars">
+      <div
+        v-for="(bar, index) in progress"
+        :key="index"
+        :style="`height: ${bar}%`"
+        class="PageMain-Bar"
+      >
+        {{ bar }}%
+      </div>
     </div>
   </div>
 </template>
