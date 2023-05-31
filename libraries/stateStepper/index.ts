@@ -24,7 +24,8 @@ export function stateStepper<T extends any>(
 
 function createStep<T>(state: T): Step<T> {
   return (fn, args, saveTo = DEFAULT_RESULT_KEY) => {
-    return () => {
+    return (value: any) => {
+      state[DEFAULT_RESULT_KEY] = value
       const callArgs = args.map((arg) => {
         if (isFunction(arg)) {
           return arg

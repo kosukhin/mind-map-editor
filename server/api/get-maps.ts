@@ -4,6 +4,7 @@ import { slugify } from 'transliteration'
 import { MapStructure } from '~/entities'
 import { urlTrim } from '~/utils'
 import { DEMO_FILES } from '~/constants'
+import { parseFileByName } from '~/utils/server-only'
 
 const { readdirSync, readFileSync } = fs
 
@@ -45,9 +46,11 @@ export default defineEventHandler(() => {
         url,
       }
     })
+  const progress = parseFileByName('__progress')
 
   return {
     ok: true,
+    progress,
     files,
   }
 })

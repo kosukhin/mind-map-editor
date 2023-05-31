@@ -68,6 +68,7 @@
     "useLabelsColoring": "Использовать раскраску лейблов",
     "githubRepo": "Репозиторий на GitHub",
     "newType": "Новый тип",
+    "progressStatistic": "Статистика прогресса",
     "notifications": {
       "sureDelete": "Вы уверены что нужно удалить?",
       "sharingDontSupported": "Шаринг не поддерживается",

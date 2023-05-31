@@ -4,7 +4,7 @@ import get from 'lodash/get.js'
 import set from 'lodash/set.js'
 import { createFilePathByName } from '~/utils/server'
 import { stateStepper } from '~/libraries/stateStepper'
-import { average, objectToValues } from '~/utils/common'
+import { apply, average, objectToValues } from '~/utils/common'
 
 const { writeFileSync, readFileSync } = fs
 export function saveDocument(filePath: string, body: any) {
@@ -24,20 +24,10 @@ export function readFile(filePath: string): string {
   }
 }
 
+export const parseFileByName = flow(createFilePathByName, readFile, parse)
+
 export const calculateAverageProgress = () =>
-  stateStepper(
-    {
-      fileName: '__progress',
-    },
-    (step) =>
-      flow(
-        step(createFilePathByName, ['fileName']),
-        step(readFile, ['prevResult']),
-        step(parse, ['prevResult']),
-        step(objectToValues, ['prevResult']),
-        step(average, ['prevResult'])
-      )
-  )
+  apply(['__progress'], flow(parseFileByName, objectToValues, average))
 
 export const getProgressByDay = (day: string) =>
   stateStepper(
@@ -48,19 +38,17 @@ export const getProgressByDay = (day: string) =>
     },
     (step) =>
       flow(
-        step(createFilePathByName, ['fileName']),
-        step(readFile, ['prevResult']),
-        step(parse, ['prevResult']),
+        step(parseFileByName, ['fileName']),
         step(get, ['prevResult', 'day', 'defaultValue'])
       )
   )
 
-export const incrementProgress = (file: string, property: string) =>
+export const incrementProgress = (fileName: string, property: string) =>
   stateStepper(
     {
       object: {},
-      fileName: file,
-      getProperty: property,
+      fileName,
+      property,
       filePath: null,
       defaultValue: 1,
     },
@@ -69,9 +57,9 @@ export const incrementProgress = (file: string, property: string) =>
         step(createFilePathByName, ['fileName'], 'filePath'),
         step(readFile, ['filePath']),
         step(parse, ['prevResult'], 'object'),
-        step(get, ['object', 'getProperty', 'defaultValue']),
+        step(get, ['object', 'property', 'defaultValue']),
         step(increment, ['prevResult'], 'incremented'),
-        step(set, ['object', 'getProperty', 'incremented']),
+        step(set, ['object', 'property', 'incremented']),
         step(saveDocument, ['filePath', 'object'])
       )
   )

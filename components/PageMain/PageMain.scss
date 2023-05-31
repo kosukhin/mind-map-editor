@@ -34,4 +34,25 @@
     display: flex;
     gap: var(--mbMd);
   }
+
+  &-Bars {
+    background: var(--editorBackground);
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: stretch;
+  }
+
+  &-Bar {
+    background: var(--primaryBG);
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    color: var(--inverseFG);
+    box-sizing: border-box;
+    padding: var(--mbMd);
+    font-size: var(--fzSmall);
+    border: solid 2px var(--editorBackground)
+  }
 }
