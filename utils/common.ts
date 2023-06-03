@@ -90,8 +90,12 @@ export function average(values: number[]) {
   return Math.round(sum(values) / values.length)
 }
 
-export function apply(args: any[], fn: Function) {
-  return fn(...args)
+export function apply(args: any[] | any, fn: Function) {
+  if (Array.isArray(args)) {
+    return fn(...args)
+  }
+
+  return fn(args)
 }
 
 export function calculateProgressBg(progress: number) {

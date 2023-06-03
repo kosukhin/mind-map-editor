@@ -1,8 +1,11 @@
 import isFunction from 'lodash/isFunction.js'
 import get from 'lodash/get.js'
 
+const DEBUG_KEY = '__debug'
 const DEFAULT_RESULT_KEY = 'prevResult'
 const defaultState = { [DEFAULT_RESULT_KEY]: null }
+
+const log = (...args: string[]) => console.log(...args)
 
 export type Step<T extends typeof defaultState> = (
   fn: Function,
@@ -30,9 +33,23 @@ function createStep<T>(state: T): Step<T> {
         if (isFunction(arg)) {
           return arg
         }
-        return get(state, arg)
+        return get(state, arg, arg)
       })
       state[saveTo] = fn(...callArgs)
+      if (state[DEBUG_KEY]) {
+        log(
+          '\n',
+          '[STEP] ',
+          'fn:',
+          fn.name,
+          '\n ---------- \n',
+          `args(${JSON.stringify(args)}): `,
+          JSON.stringify(callArgs),
+          '\n ---------- \n',
+          `saveTo(${saveTo}):`,
+          state[saveTo]
+        )
+      }
       return state[saveTo]
     }
   }

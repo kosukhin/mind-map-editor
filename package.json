@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "test": "npx vitest --config vitest.config.ts",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -38,6 +39,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@nuxt/test-utils": "^3.5.2",
     "@nuxtjs/i18n-edge": "^8.0.0-beta.12-28090693.c8406ad",
     "@vueuse/core": "^9.13.0",
     "@vueuse/head": "^1.1.26",
@@ -50,7 +52,8 @@
     "lunr-languages": "^1.10.0",
     "svg64": "^2.0.0",
     "svgedit": "^7.3.0",
-    "transliteration": "^2.3.5"
+    "transliteration": "^2.3.5",
+    "vitest": "^0.31.4"
   },
   "config": {
     "commitizen": {

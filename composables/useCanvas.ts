@@ -2,7 +2,15 @@ import { onMounted, watch } from '@vue/runtime-core'
 import flow from 'lodash/flow'
 import { Size } from '~/entities'
 import { canvasCreateSize } from '~/application'
-import { setValue, reMaybe, map, ifElse, isTruthy, findById } from '~/utils'
+import {
+  setValue,
+  reMaybe,
+  map,
+  ifElse,
+  isTruthy,
+  findById,
+  apply,
+} from '~/utils'
 import { CANVAS_DOM_ID } from '~/constants'
 
 export function useCanvas() {
@@ -10,12 +18,11 @@ export function useCanvas() {
   const canvasSize = reMaybe<Size>()
 
   onMounted(() => {
-    const canvasElement = findById(CANVAS_DOM_ID)
-    ifElse(isTruthy, setValue(canvas))(canvasElement)
+    apply(findById(CANVAS_DOM_ID), ifElse(isTruthy, setValue(canvas)))
   })
 
   watch(canvas, () => {
-    map(flow(canvasCreateSize, setValue(canvasSize)))(canvas)
+    apply(canvas, map(flow(canvasCreateSize, setValue(canvasSize))))
   })
 
   return {
