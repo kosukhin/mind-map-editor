@@ -1,4 +1,5 @@
-import { Size, Vector2d } from '~/entities'
+import { Size } from '~/entities/Size'
+import { Vector2d } from '~/entities/Konva'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '~/constants'
 
 export const canvasRestrictBoundaries =

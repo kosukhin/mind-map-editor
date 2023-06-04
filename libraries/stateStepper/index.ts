@@ -1,4 +1,5 @@
 import get from 'lodash/get.js'
+import curry from 'lodash/curry.js'
 
 const DEBUG_KEY = '__debug'
 const DEFAULT_RESULT_KEY = 'prevResult'
@@ -14,19 +15,24 @@ export type Step<T extends typeof defaultState> = (
 export type State = <F extends Function>(fn: F) => () => ReturnType<F>
 export type StateStepperFactory<T> = (step: Step<T>, state: State) => any
 
-export function stateStepper<T extends any>(
-  stateObject: T,
-  factory: StateStepperFactory<T>
-) {
+export function stateStepper<
+  A extends string[],
+  T extends Record<A[number], any>
+>(args: A, stateObject: T, factory: StateStepperFactory<T>) {
   const step = createStep(stateObject)
   const state = (fn: Function) => () => fn(stateObject)
   const mainCallback = factory(step, state)
-  return mainCallback()
+  return curry((...runArgs: any[]) => {
+    args.forEach((arg, index) => {
+      stateObject[arg] = runArgs[index] ?? null
+    })
+    return mainCallback()
+  }, args.length)
 }
 
 function createStep<T>(state: T): Step<T> {
-  return (fn, args, saveTo = DEFAULT_RESULT_KEY) => {
-    return (value: any) => {
+  return function step(fn, args, saveTo = DEFAULT_RESULT_KEY) {
+    return function stepRunner(value: any) {
       state[DEFAULT_RESULT_KEY] = value
       if (!args) {
         args = [DEFAULT_RESULT_KEY] as (keyof T)[]

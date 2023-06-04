@@ -1,3 +1,5 @@
+import curry from 'lodash/fp/curry.js'
+
 export function ifElse<T>(
   comparator: (T) => boolean,
   thenBranch: Function,
@@ -22,6 +24,8 @@ export const arraySort = (fn: Function) => (v: any[]) => v.sort(fn)
 export const arrayShift = (v: any[]) => v.shift()
 export const sortAsc = (a, b) => a - b
 export const mathCeil = Math.ceil
+export const mathSub = (a, b) => a - b
+export const mathMultiply = (a, b) => a * b
 export const mathDivBy = (by: number) => (v) => v / by
 export const pass = (v) => v
 export const iterateGroup = (
@@ -36,3 +40,10 @@ export const iterateGroup = (
 
   return v
 }
+export const and = (a, b) => a && b
+export const or = (a, b) => a || b
+export const gt = (a, b) => a > b
+export const lt = (a, b) => a < b
+export const gte = (a, b) => a >= b
+export const lte = (a, b) => a <= b
+export const eq = (a, b) => a === b
