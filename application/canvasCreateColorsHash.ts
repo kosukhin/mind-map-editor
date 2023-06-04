@@ -21,15 +21,11 @@ import { isTruthy } from '~/utils/comparators'
 
 export const canvasCreateColorsHash = stateStepper(
   ['vMap'],
-  {
-    clicks: null,
-    clicksLength: null,
-    chunkSize: null,
-    groups: {},
-    colorsMap: clone(colorsMap),
-  },
+  ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap'],
   (step) =>
     flow(
+      step(clone, [{}], 'groups'),
+      step(clone, [colorsMap], 'colorsMap'),
       step(get, ['vMap', 'settings.colored']),
       ifElse(
         isTruthy,

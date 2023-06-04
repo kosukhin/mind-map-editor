@@ -7,17 +7,17 @@ import { and, gt, ifElse, mathMultiply, mathSub, pass } from '~/utils/fp'
 
 export const canvasRestrictBoundaries = stateStepper(
   ['pos', 'canvasSize'],
-  {
-    maxRight: null,
-    nMaxRight: null,
-    maxBottom: null,
-    nMaxBottom: null,
-    posX: null,
-    posY: null,
-    right: null,
-    bottom: null,
-    size: { x: 0, y: 0 },
-  },
+  [
+    'maxRight',
+    'nMaxRight',
+    'maxBottom',
+    'nMaxBottom',
+    'posX',
+    'posY',
+    'right',
+    'bottom',
+    'size',
+  ],
   (step) =>
     flow(
       step(get, ['canvasSize', 'w']),
@@ -30,6 +30,9 @@ export const canvasRestrictBoundaries = stateStepper(
       step(get, ['pos', 'y'], 'posY'),
       step(mathMultiply, ['posX', -1], 'right'),
       step(mathMultiply, ['posY', -1], 'bottom'),
+      step(pass, ['pos'], 'size'),
+      step(set, ['size', 'x', 0]),
+      step(set, ['size', 'y', 0]),
       and(step(gt, ['maxBottom', 0]), step(gt, ['maxRight', 0])),
       ifElse(
         step(pass, ['prevResult']),

@@ -6,15 +6,12 @@ import { pass } from '~/utils/fp'
 
 export const canvasCreateSize = stateStepper(
   ['canvasElement'],
-  {
-    canvasWidth: null,
-    canvasHeight: null,
-    size: {},
-  },
+  ['canvasWidth', 'canvasHeight', 'size'],
   (step) =>
     flow(
       step(get, ['canvasElement', 'clientWidth'], 'canvasWidth'),
       step(get, ['canvasElement', 'clientHeight'], 'canvasHeight'),
+      step(pass, [{}], 'size'),
       step(set, ['size', 'w', 'canvasWidth']),
       step(set, ['size', 'h', 'canvasHeight']),
       step(pass, ['size'])

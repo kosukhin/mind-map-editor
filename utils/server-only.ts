@@ -29,32 +29,22 @@ export const parseFileByName = flow(createFilePathByName, readFile, parse)
 export const calculateAverageProgress = () =>
   apply(['__progress'], flow(parseFileByName, objectToValues, average))
 
-export const getProgressByDay = stateStepper(
-  ['day'],
-  {
-    fileName: '__progress',
-    defaultValue: 1,
-  },
-  (step) =>
-    flow(
-      step(parseFileByName, ['fileName']),
-      step(get, ['prevResult', 'day', 'defaultValue'])
-    )
+export const getProgressByDay = stateStepper(['day'], [], (step) =>
+  flow(
+    step(parseFileByName, ['__progress']),
+    step(get, ['prevResult', 'day', 1])
+  )
 )
 
 export const incrementProgress = stateStepper(
   ['fileName', 'property'],
-  {
-    object: {},
-    filePath: null,
-    defaultValue: 1,
-  },
+  ['object', 'filePath'],
   (step) =>
     flow(
       step(createFilePathByName, ['fileName'], 'filePath'),
       step(readFile, ['filePath']),
       step(parse, ['prevResult'], 'object'),
-      step(get, ['object', 'property', 'defaultValue']),
+      step(get, ['object', 'property', 1]),
       step(increment, ['prevResult'], 'incremented'),
       step(set, ['object', 'property', 'incremented']),
       step(saveDocument, ['filePath', 'object'])
