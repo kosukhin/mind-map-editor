@@ -15,7 +15,7 @@ export type Step<T extends typeof defaultState> = (
 export type State = <F extends Function>(fn: F) => () => ReturnType<F>
 export type StateStepperFactory<T> = (step: Step<T>, state: State) => any
 
-export function stateStepper<A extends string[], T extends string[]>(
+export function stepper<A extends string[], T extends string[]>(
   args: A,
   vars: T,
   factory: StateStepperFactory<T>

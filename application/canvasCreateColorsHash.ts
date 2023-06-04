@@ -1,7 +1,7 @@
 import flow from 'lodash/flow'
 import get from 'lodash/get'
 import set from 'lodash/set'
-import { stateStepper } from '~/libraries/stateStepper'
+import { stepper } from '~/libraries/stepper'
 import { colorsMap } from '~/constants'
 import {
   arrayForEach,
@@ -19,35 +19,33 @@ import {
 } from '~/utils/fp'
 import { isTruthy } from '~/utils/comparators'
 
-export const canvasCreateColorsHash = stateStepper(
+export const canvasCreateColorsHash = stepper(
   ['vMap'],
   ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap'],
-  (step) =>
+  (s) =>
     flow(
-      step(clone, [{}], 'groups'),
-      step(clone, [colorsMap], 'colorsMap'),
-      step(get, ['vMap', 'settings.colored']),
+      s(clone, [{}], 'groups'),
+      s(clone, [colorsMap], 'colorsMap'),
+      s(get, ['vMap', 'settings.colored']),
       ifElse(
         isTruthy,
         flow(
-          step(get, ['vMap', 'objects', {}]),
+          s(get, ['vMap', 'objects', {}]),
           objectValues,
-          arrayMap(step(get, ['prevResult', 'lastClick'])),
+          arrayMap(s(get, ['prevResult', 'lastClick'])),
           arraySort(sortAsc),
-          step(pass, ['prevResult'], 'clicks'),
-          step(get, ['clicks', 'length', 0]),
-          step(pass, ['prevResult'], 'clicksLength'),
-          step(mathDivBy(3), ['clicksLength']),
+          s(pass, ['prevResult'], 'clicks'),
+          s(get, ['clicks', 'length', 0]),
+          s(pass, ['prevResult'], 'clicksLength'),
+          s(mathDivBy(3), ['clicksLength']),
           mathCeil,
-          step(pass, ['prevResult'], 'chunkSize'),
-          step(iterateGroup, [
+          s(pass, ['prevResult'], 'chunkSize'),
+          s(iterateGroup, [
             flow(
-              step(pass, ['prevResult'], 'currentGroup'),
-              step(arrayShift, ['colorsMap'], 'currentColor'),
-              step(
-                arrayForEach(
-                  step(set, ['groups', 'prevResult', 'currentColor'])
-                ),
+              s(pass, ['prevResult'], 'currentGroup'),
+              s(arrayShift, ['colorsMap'], 'currentColor'),
+              s(
+                arrayForEach(s(set, ['groups', 'prevResult', 'currentColor'])),
                 ['currentGroup']
               )
             ),
@@ -57,6 +55,6 @@ export const canvasCreateColorsHash = stateStepper(
           ])
         )
       ),
-      step(pass, ['groups'])
+      s(pass, ['groups'])
     )
 )

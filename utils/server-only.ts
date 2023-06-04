@@ -3,7 +3,7 @@ import flow from 'lodash/flow.js'
 import get from 'lodash/get.js'
 import set from 'lodash/set.js'
 import { createFilePathByName } from '~/utils/server'
-import { stateStepper } from '~/libraries/stateStepper'
+import { stepper } from '~/libraries/stepper'
 import { apply, average, objectToValues } from '~/utils/common'
 
 const { writeFileSync, readFileSync } = fs
@@ -29,25 +29,22 @@ export const parseFileByName = flow(createFilePathByName, readFile, parse)
 export const calculateAverageProgress = () =>
   apply(['__progress'], flow(parseFileByName, objectToValues, average))
 
-export const getProgressByDay = stateStepper(['day'], [], (step) =>
-  flow(
-    step(parseFileByName, ['__progress']),
-    step(get, ['prevResult', 'day', 1])
-  )
+export const getProgressByDay = stepper(['day'], [], (s) =>
+  flow(s(parseFileByName, ['__progress']), s(get, ['prevResult', 'day', 1]))
 )
 
-export const incrementProgress = stateStepper(
+export const incrementProgress = stepper(
   ['fileName', 'property'],
   ['object', 'filePath'],
-  (step) =>
+  (s) =>
     flow(
-      step(createFilePathByName, ['fileName'], 'filePath'),
-      step(readFile, ['filePath']),
-      step(parse, ['prevResult'], 'object'),
-      step(get, ['object', 'property', 1]),
-      step(increment, ['prevResult'], 'incremented'),
-      step(set, ['object', 'property', 'incremented']),
-      step(saveDocument, ['filePath', 'object'])
+      s(createFilePathByName, ['fileName'], 'filePath'),
+      s(readFile, ['filePath']),
+      s(parse, ['prevResult'], 'object'),
+      s(get, ['object', 'property', 1]),
+      s(increment, ['prevResult'], 'incremented'),
+      s(set, ['object', 'property', 'incremented']),
+      s(saveDocument, ['filePath', 'object'])
     )
 )
 
