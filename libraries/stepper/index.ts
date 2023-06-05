@@ -5,22 +5,20 @@ import isFunction from 'lodash/isFunction.js'
 
 const DEBUG_KEY = '__debug'
 const DEFAULT_RESULT_KEY = 'prevResult'
-const defaultState = { [DEFAULT_RESULT_KEY]: null }
 
 const log = (...args: string[]) => console.log(...args)
 
-export type Step<T extends typeof defaultState> = (
-  fn: Function,
-  args?: (keyof T | Function)[],
-  saveTo?: keyof T
-) => any
+export interface Step<T extends string[]> {
+  (fn: Function, saveTo?: T[number]): any
+  (fn: Function, args?: (T[number] | Function)[], saveTo?: keyof T): any
+}
 export type State = <F extends Function>(fn: F) => () => ReturnType<F>
 export type StateStepperFactory<T> = (step: Step<T>, state: State) => any
 
 export function stepper<A extends string[], T extends string[]>(
   args: A,
   vars: T,
-  factory: StateStepperFactory<T>
+  factory: StateStepperFactory<T | A>
 ) {
   const [setState, state, step] = createStep()
   const mainCallback = factory(step, state)
@@ -50,6 +48,10 @@ function createStep<T>(): [(s: T) => void, State, Step<T>] {
       return () => fn(state)
     },
     function step(fn, args, saveTo = DEFAULT_RESULT_KEY) {
+      if (typeof args === 'string') {
+        saveTo = args
+        args = []
+      }
       return function stepRunner(value: any) {
         state[DEFAULT_RESULT_KEY] = value
         if (!args) {

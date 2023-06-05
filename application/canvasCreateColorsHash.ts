@@ -26,13 +26,13 @@ export const canvasCreateColorsHash = stepper(
   ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap'],
   (s) =>
     flow(
-      s(objectCreate, [], 'groups'),
-      s(inject(clone(colorsMap)), [], 'colorsMap'),
+      s(objectCreate, 'groups'),
+      s(inject(clone(colorsMap)), 'colorsMap'),
       s(get, ['vMap', 'settings.colored']),
       ifElse(
         isTruthy,
         flow(
-          s(objectCreate),
+          objectCreate,
           s(get, ['vMap', 'objects', 'prevResult']),
           objectValues,
           arrayMap(s(get, ['prevResult', 'lastClick'])),

@@ -11,7 +11,7 @@ export const canvasCreateSize = stepper(
     flow(
       s(get, ['canvasElement', 'clientWidth'], 'canvasWidth'),
       s(get, ['canvasElement', 'clientHeight'], 'canvasHeight'),
-      s(objectCreate, [], 'size'),
+      s(objectCreate, 'size'),
       s(set, ['size', 'w', 'canvasWidth']),
       s(set, ['size', 'h', 'canvasHeight']),
       s(pass, ['size'])
