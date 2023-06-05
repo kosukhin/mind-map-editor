@@ -8,17 +8,24 @@ const DEFAULT_RESULT_KEY = 'prevResult'
 
 const log = (...args: string[]) => console.log(...args)
 
-export interface Step<T extends string[]> {
-  (fn: Function, saveTo?: T[number]): any
-  (fn: Function, args?: (T[number] | Function)[], saveTo?: keyof T): any
-}
 export type State = <F extends Function>(fn: F) => () => ReturnType<F>
-export type StateStepperFactory<T> = (step: Step<T>, state: State) => any
+type defaultKey = typeof DEFAULT_RESULT_KEY
 
-export function stepper<A extends string[], T extends string[]>(
+export function stepper<A, T>(
   args: A,
   vars: T,
-  factory: StateStepperFactory<T | A>
+  factory: (
+    step: {
+      (fn: Function, saveTo?: T[number] | A[number] | defaultKey): any
+      (fn: Function, args?: (T[number] | A[number] | defaultKey)[]): any
+      (
+        fn: Function,
+        args?: (T[number] | A[number] | Function)[],
+        saveTo?: T[number] | A[number] | defaultKey
+      ): any
+    },
+    state: State
+  ) => any
 ) {
   const [setState, state, step] = createStep()
   const mainCallback = factory(step, state)
@@ -38,7 +45,7 @@ export function stepper<A extends string[], T extends string[]>(
   }, args.length)
 }
 
-function createStep<T>(): [(s: T) => void, State, Step<T>] {
+function createStep<T>() {
   let state: any = null
   return [
     function setState(initState: T): void {
@@ -57,7 +64,7 @@ function createStep<T>(): [(s: T) => void, State, Step<T>] {
         if (!args) {
           args = [DEFAULT_RESULT_KEY] as (keyof T)[]
         }
-        const callArgs = args.map((arg, index) => {
+        const callArgs = (args as any).map((arg, index) => {
           if (typeof arg !== 'undefined' && !isFunction(arg) && isObject(arg)) {
             throw new Error(
               `StepperError: argument ${JSON.stringify(
