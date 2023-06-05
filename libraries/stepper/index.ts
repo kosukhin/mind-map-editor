@@ -1,5 +1,7 @@
 import get from 'lodash/get.js'
 import curry from 'lodash/curry.js'
+import isObject from 'lodash/isObject.js'
+import isFunction from 'lodash/isFunction.js'
 
 const DEBUG_KEY = '__debug'
 const DEFAULT_RESULT_KEY = 'prevResult'
@@ -53,7 +55,18 @@ function createStep<T>(): [(s: T) => void, State, Step<T>] {
         if (!args) {
           args = [DEFAULT_RESULT_KEY] as (keyof T)[]
         }
-        const callArgs = args.map((arg) => get(state, arg, arg))
+        const callArgs = args.map((arg, index) => {
+          if (typeof arg !== 'undefined' && !isFunction(arg) && isObject(arg)) {
+            throw new Error(
+              `StepperError: argument ${JSON.stringify(
+                arg
+              )} at index ${index} in function ${
+                fn.name
+              } must not be object, because it will be shared`
+            )
+          }
+          return get(state, arg, arg)
+        })
         state[saveTo] = fn(...callArgs)
         if (state[DEBUG_KEY]) {
           log(

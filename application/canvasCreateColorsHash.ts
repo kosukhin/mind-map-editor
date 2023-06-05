@@ -10,9 +10,11 @@ import {
   arraySort,
   clone,
   ifElse,
+  inject,
   iterateGroup,
   mathCeil,
   mathDivBy,
+  objectCreate,
   objectValues,
   pass,
   sortAsc,
@@ -24,13 +26,14 @@ export const canvasCreateColorsHash = stepper(
   ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap'],
   (s) =>
     flow(
-      s(clone, [{}], 'groups'),
-      s(clone, [colorsMap], 'colorsMap'),
+      s(objectCreate, [], 'groups'),
+      s(inject(clone(colorsMap)), [], 'colorsMap'),
       s(get, ['vMap', 'settings.colored']),
       ifElse(
         isTruthy,
         flow(
-          s(get, ['vMap', 'objects', {}]),
+          s(objectCreate),
+          s(get, ['vMap', 'objects', 'prevResult']),
           objectValues,
           arrayMap(s(get, ['prevResult', 'lastClick'])),
           arraySort(sortAsc),

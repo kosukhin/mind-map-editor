@@ -17,7 +17,9 @@ export function ifElse<T>(
 }
 
 export const clone = (v: any) => JSON.parse(JSON.stringify(v))
+export const inject = (obj: any) => () => obj
 export const objectValues = Object.values
+export const objectCreate = () => ({})
 export const arrayMap = (fn: Function) => (v: any[]) => v.map(fn)
 export const arrayForEach = (fn: Function) => (v: any[]) => v.forEach(fn)
 export const arraySort = (fn: Function) => (v: any[]) => v.sort(fn)
