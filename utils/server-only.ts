@@ -29,23 +29,26 @@ export const parseFileByName = flow(createFilePathByName, readFile, parse)
 export const calculateAverageProgress = () =>
   apply(['__progress'], flow(parseFileByName, objectToValues, average))
 
-export const getProgressByDay = stepper(['day'], [], (s) =>
-  flow(s(parseFileByName, ['__progress']), s(get, ['prevResult', 'day', 1]))
+const { entryPoint: ep1, step: s1 } = stepper(['day'], [])
+export const getProgressByDay = flow(
+  ep1,
+  s1(parseFileByName, ['__progress']),
+  s1(get, ['prevResult', 'day', 1])
 )
 
-export const incrementProgress = stepper(
+const { entryPoint: ep2, step: s2 } = stepper(
   ['fileName', 'property'],
-  ['object', 'filePath'],
-  (s: Step) =>
-    flow(
-      s(createFilePathByName, ['fileName'], 'filePath'),
-      s(readFile, ['filePath']),
-      s(parse, ['prevResult'], 'object'),
-      s(get, ['object', 'property', 1]),
-      s(increment, ['prevResult'], 'incremented'),
-      s(set, ['object', 'property', 'incremented']),
-      s(saveDocument, ['filePath', 'object'])
-    )
+  ['object', 'filePath']
+)
+export const incrementProgress = flow(
+  ep2,
+  s2(createFilePathByName, ['fileName'], 'filePath'),
+  s2(readFile, ['filePath']),
+  s2(parse, ['prevResult'], 'object'),
+  s2(get, ['object', 'property', 1]),
+  s2(increment, ['prevResult'], 'incremented'),
+  s2(set, ['object', 'property', 'incremented']),
+  s2(saveDocument, ['filePath', 'object'])
 )
 
 function increment(value: string) {

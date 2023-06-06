@@ -1,5 +1,4 @@
 import get from 'lodash/get.js'
-import curry from 'lodash/curry.js'
 import isObject from 'lodash/isObject.js'
 import isFunction from 'lodash/isFunction.js'
 
@@ -8,21 +7,18 @@ const DEFAULT_RESULT_KEY = 'prevResult'
 
 const log = (...args: string[]) => console.log(...args)
 
-export type State = <F extends Function>(fn: F) => () => ReturnType<F>
 export type Step = {
-  (fn: Function, args?: any[]): any
-  (fn: Function, saveTo?: string): any
   (fn: Function, args?: any[], saveTo?: string): any
+  (fn: Function, saveTo?: string): any
+  (fn: Function, args?: any[]): any
 }
 
 export function stepper<A extends string[], T extends string[]>(
   args: A,
-  vars: T,
-  factory: (step: Step, state: State) => any
+  vars: T
 ) {
-  const [setState, state, step] = createStep()
-  const mainCallback = factory(step, state)
-  return curry((...runArgs: any[]) => {
+  const [setState, state, step] = createStep() as [Function, Function, Step]
+  const entryPoint = (...runArgs: any[]) => {
     const state = {}
     setState(state)
     vars.forEach((variable) => {
@@ -34,8 +30,10 @@ export function stepper<A extends string[], T extends string[]>(
     if (state[DEBUG_KEY]) {
       log('--- BEGIN --- \n')
     }
-    return mainCallback()
-  }, args.length)
+    return null
+  }
+
+  return { entryPoint, state, step, argsCount: args.length }
 }
 
 function createStep<T>() {

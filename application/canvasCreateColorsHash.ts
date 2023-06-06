@@ -21,41 +21,40 @@ import {
 } from '~/utils/fp'
 import { isTruthy } from '~/utils/comparators'
 
-export const canvasCreateColorsHash = stepper(
+const { entryPoint, step: s } = stepper(
   ['vMap'],
-  ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap'],
-  (s: Step) =>
+  ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap']
+)
+export const canvasCreateColorsHash = flow(
+  entryPoint,
+  s(objectCreate, 'groups'),
+  s(inject(clone(colorsMap)), 'colorsMap'),
+  s(get, ['vMap', 'settings.colored']),
+  ifElse(
+    isTruthy,
     flow(
-      s(objectCreate, 'groups'),
-      s(inject(clone(colorsMap)), 'colorsMap'),
-      s(get, ['vMap', 'settings.colored']),
-      ifElse(
-        isTruthy,
+      objectCreate,
+      s(get, ['vMap', 'objects', 'prevResult']),
+      objectValues,
+      arrayMap(s(get, ['prevResult', 'lastClick'])),
+      s(arraySort(sortAsc), ['prevResult'], 'clicks'),
+      s(get, ['clicks', 'length', 0], 'clicksLength'),
+      s(mathDivBy(3), ['clicksLength']),
+      mathCeil,
+      s(pass, ['prevResult'], 'chunkSize'),
+      s(iterateGroup, [
         flow(
-          objectCreate,
-          s(get, ['vMap', 'objects', 'prevResult']),
-          objectValues,
-          arrayMap(s(get, ['prevResult', 'lastClick'])),
-          s(arraySort(sortAsc), ['prevResult'], 'clicks'),
-          s(get, ['clicks', 'length', 0], 'clicksLength'),
-          s(mathDivBy(3), ['clicksLength']),
-          mathCeil,
-          s(pass, ['prevResult'], 'chunkSize'),
-          s(iterateGroup, [
-            flow(
-              s(pass, ['prevResult'], 'currentGroup'),
-              s(arrayShift, ['colorsMap'], 'currentColor'),
-              s(
-                arrayForEach(s(set, ['groups', 'prevResult', 'currentColor'])),
-                ['currentGroup']
-              )
-            ),
-            'clicksLength',
-            'chunkSize',
-            'clicks',
+          s(pass, ['prevResult'], 'currentGroup'),
+          s(arrayShift, ['colorsMap'], 'currentColor'),
+          s(arrayForEach(s(set, ['groups', 'prevResult', 'currentColor'])), [
+            'currentGroup',
           ])
-        )
-      ),
-      s(pass, ['groups'])
+        ),
+        'clicksLength',
+        'chunkSize',
+        'clicks',
+      ])
     )
+  ),
+  s(pass, ['groups'])
 )
