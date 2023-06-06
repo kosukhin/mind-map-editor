@@ -1,7 +1,7 @@
 import flow from 'lodash/flow'
 import get from 'lodash/get'
 import set from 'lodash/set'
-import { Step, stepper } from '~/libraries/stepper'
+import { createStepper } from '~/libraries/stepper'
 import { colorsMap } from '~/constants'
 import {
   arrayForEach,
@@ -21,7 +21,7 @@ import {
 } from '~/utils/fp'
 import { isTruthy } from '~/utils/comparators'
 
-const { entryPoint, step: s } = stepper(
+const { entryPoint, step: s } = createStepper(
   ['vMap'],
   ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap']
 )

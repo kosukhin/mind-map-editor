@@ -3,7 +3,7 @@ import flow from 'lodash/flow.js'
 import get from 'lodash/get.js'
 import set from 'lodash/set.js'
 import { createFilePathByName } from '~/utils/server'
-import { Step, stepper } from '~/libraries/stepper'
+import { Step, createStepper } from '~/libraries/stepper'
 import { apply, average, objectToValues } from '~/utils/common'
 
 const { writeFileSync, readFileSync } = fs
@@ -29,14 +29,14 @@ export const parseFileByName = flow(createFilePathByName, readFile, parse)
 export const calculateAverageProgress = () =>
   apply(['__progress'], flow(parseFileByName, objectToValues, average))
 
-const { entryPoint: ep1, step: s1 } = stepper(['day'], [])
+const { entryPoint: ep1, step: s1 } = createStepper(['day'], [])
 export const getProgressByDay = flow(
   ep1,
   s1(parseFileByName, ['__progress']),
   s1(get, ['prevResult', 'day', 1])
 )
 
-const { entryPoint: ep2, step: s2 } = stepper(
+const { entryPoint: ep2, step: s2 } = createStepper(
   ['fileName', 'property'],
   ['object', 'filePath']
 )

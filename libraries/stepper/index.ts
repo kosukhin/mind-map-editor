@@ -13,11 +13,15 @@ export type Step = {
   (fn: Function, args?: any[]): any
 }
 
-export function stepper<A extends string[], T extends string[]>(
+export function createStepper<A extends string[], T extends string[]>(
   args: A,
   vars: T
 ) {
-  const [setState, state, step] = createStep() as [Function, Function, Step]
+  const [setState, stateObject, step] = createStep() as [
+    Function,
+    Function,
+    Step
+  ]
   const entryPoint = (...runArgs: any[]) => {
     const state = {}
     setState(state)
@@ -30,10 +34,10 @@ export function stepper<A extends string[], T extends string[]>(
     if (state[DEBUG_KEY]) {
       log('--- BEGIN --- \n')
     }
-    return null
+    return stateObject
   }
 
-  return { entryPoint, state, step, argsCount: args.length }
+  return { entryPoint, stateObject, step, argsCount: args.length }
 }
 
 function createStep<T>() {
@@ -42,9 +46,7 @@ function createStep<T>() {
     function setState(initState: T): void {
       state = initState
     },
-    function state(fn: Function) {
-      return () => fn(state)
-    },
+    state,
     function step(fn, args, saveTo = DEFAULT_RESULT_KEY) {
       if (typeof args === 'string') {
         saveTo = args

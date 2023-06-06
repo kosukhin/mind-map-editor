@@ -1,10 +1,10 @@
 import flow from 'lodash/flow'
 import set from 'lodash/set'
 import get from 'lodash/get'
-import { stepper } from '~/libraries/stepper'
+import { createStepper } from '~/libraries/stepper'
 import { objectCreate, pass } from '~/utils/fp'
 
-const { entryPoint, step: s } = stepper(
+const { entryPoint, step: s } = createStepper(
   ['canvasElement'],
   ['canvasWidth', 'canvasHeight', 'size']
 )

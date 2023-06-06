@@ -3,14 +3,14 @@ import set from 'lodash/set'
 import get from 'lodash/get'
 import curry from 'lodash/curry'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '~/constants'
-import { stepper } from '~/libraries/stepper'
+import { createStepper } from '~/libraries/stepper'
 import { and, gt, ifElse, mathMultiply, mathSub, pass } from '~/utils/fp'
 
 const {
   entryPoint,
   step: s,
   argsCount,
-} = stepper(
+} = createStepper(
   ['pos', 'canvasSize'],
   [
     'maxRight',
