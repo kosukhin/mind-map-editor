@@ -9,23 +9,16 @@ const DEFAULT_RESULT_KEY = 'prevResult'
 const log = (...args: string[]) => console.log(...args)
 
 export type State = <F extends Function>(fn: F) => () => ReturnType<F>
-type defaultKey = typeof DEFAULT_RESULT_KEY
+export type Step = {
+  (fn: Function, args?: any[]): any
+  (fn: Function, saveTo?: string): any
+  (fn: Function, args?: any[], saveTo?: string): any
+}
 
-export function stepper<A, T>(
+export function stepper<A extends string[], T extends string[]>(
   args: A,
   vars: T,
-  factory: (
-    step: {
-      (fn: Function, saveTo?: T[number] | A[number] | defaultKey): any
-      (fn: Function, args?: (T[number] | A[number] | defaultKey)[]): any
-      (
-        fn: Function,
-        args?: (T[number] | A[number] | Function)[],
-        saveTo?: T[number] | A[number] | defaultKey
-      ): any
-    },
-    state: State
-  ) => any
+  factory: (step: Step, state: State) => any
 ) {
   const [setState, state, step] = createStep()
   const mainCallback = factory(step, state)

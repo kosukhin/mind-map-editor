@@ -3,7 +3,7 @@ import flow from 'lodash/flow.js'
 import get from 'lodash/get.js'
 import set from 'lodash/set.js'
 import { createFilePathByName } from '~/utils/server'
-import { stepper } from '~/libraries/stepper'
+import { Step, stepper } from '~/libraries/stepper'
 import { apply, average, objectToValues } from '~/utils/common'
 
 const { writeFileSync, readFileSync } = fs
@@ -36,7 +36,7 @@ export const getProgressByDay = stepper(['day'], [], (s) =>
 export const incrementProgress = stepper(
   ['fileName', 'property'],
   ['object', 'filePath'],
-  (s) =>
+  (s: Step) =>
     flow(
       s(createFilePathByName, ['fileName'], 'filePath'),
       s(readFile, ['filePath']),

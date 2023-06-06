@@ -1,7 +1,7 @@
 import flow from 'lodash/flow'
 import get from 'lodash/get'
 import set from 'lodash/set'
-import { stepper } from '~/libraries/stepper'
+import { Step, stepper } from '~/libraries/stepper'
 import { colorsMap } from '~/constants'
 import {
   arrayForEach,
@@ -24,7 +24,7 @@ import { isTruthy } from '~/utils/comparators'
 export const canvasCreateColorsHash = stepper(
   ['vMap'],
   ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap'],
-  (s) =>
+  (s: Step) =>
     flow(
       s(objectCreate, 'groups'),
       s(inject(clone(colorsMap)), 'colorsMap'),
@@ -36,10 +36,8 @@ export const canvasCreateColorsHash = stepper(
           s(get, ['vMap', 'objects', 'prevResult']),
           objectValues,
           arrayMap(s(get, ['prevResult', 'lastClick'])),
-          arraySort(sortAsc),
-          s(pass, ['prevResult'], 'clicks'),
-          s(get, ['clicks', 'length', 0]),
-          s(pass, ['prevResult'], 'clicksLength'),
+          s(arraySort(sortAsc), ['prevResult'], 'clicks'),
+          s(get, ['clicks', 'length', 0], 'clicksLength'),
           s(mathDivBy(3), ['clicksLength']),
           mathCeil,
           s(pass, ['prevResult'], 'chunkSize'),

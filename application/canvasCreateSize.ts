@@ -1,13 +1,13 @@
 import flow from 'lodash/flow'
 import set from 'lodash/set'
 import get from 'lodash/get'
-import { stepper } from '~/libraries/stepper'
+import { Step, stepper } from '~/libraries/stepper'
 import { objectCreate, pass } from '~/utils/fp'
 
 export const canvasCreateSize = stepper(
   ['canvasElement'],
   ['canvasWidth', 'canvasHeight', 'size'],
-  (s) =>
+  (s: Step) =>
     flow(
       s(get, ['canvasElement', 'clientWidth'], 'canvasWidth'),
       s(get, ['canvasElement', 'clientHeight'], 'canvasHeight'),

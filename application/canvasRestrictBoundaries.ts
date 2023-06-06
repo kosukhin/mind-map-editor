@@ -2,7 +2,7 @@ import flow from 'lodash/flow'
 import set from 'lodash/set'
 import get from 'lodash/get'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '~/constants'
-import { stepper } from '~/libraries/stepper'
+import { Step, stepper } from '~/libraries/stepper'
 import { and, gt, ifElse, mathMultiply, mathSub, pass } from '~/utils/fp'
 
 export const canvasRestrictBoundaries = stepper(
@@ -18,7 +18,7 @@ export const canvasRestrictBoundaries = stepper(
     'bottom',
     'size',
   ],
-  (s) =>
+  (s: Step) =>
     flow(
       s(get, ['canvasSize', 'w']),
       s(mathSub, [CANVAS_WIDTH, 'prevResult'], 'maxRight'),
