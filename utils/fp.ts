@@ -1,4 +1,5 @@
 import curry from 'lodash/fp/curry.js'
+import { step } from '~/libraries/stepper/v2'
 
 export function ifElse<T>(
   comparator: (T) => boolean,
@@ -34,13 +35,24 @@ export const iterateGroup = (
   fn: Function,
   limit: number,
   chunk: number,
-  v: any[]
+  data: any[]
 ) => {
-  for (let i = 0; i < limit; i += chunk) {
-    fn(v.slice(i, i + chunk))
-  }
+  return (v) => {
+    let composition = null
+    for (let i = 0; i < limit; i += chunk) {
+      if (!composition) {
+        composition = step(fn, [data.slice(i, i + chunk)])
+      } else {
+        composition(step(fn, [data.slice(i, i + chunk)]))
+      }
+    }
 
-  return v
+    if (composition) {
+      composition(v)
+    }
+
+    return v
+  }
 }
 export const and = (a, b) => a && b
 export const or = (a, b) => a || b

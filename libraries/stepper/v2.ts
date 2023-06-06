@@ -46,10 +46,25 @@ export function stepper(args, vars) {
   }
 }
 
+export function clearStep(fn: any, args: any[]) {
+  return (value: any) => {
+    const realArgs = args.map((arg) => {
+      if (arg === DEFAULT_RESULT_KEY) {
+        args = value
+      }
+      return arg
+    })
+    return fn(...realArgs)
+  }
+}
+
 export function step(fn: any, args?: any, saveTo?: any): Step {
   if (typeof args === 'string') {
     saveTo = args
     args = []
+  }
+  if (!saveTo) {
+    saveTo = DEFAULT_RESULT_KEY
   }
   return (value: any) => {
     if (!(value instanceof StepContainer)) {
