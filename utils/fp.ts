@@ -1,5 +1,4 @@
-import curry from 'lodash/fp/curry.js'
-import { step } from '~/libraries/stepper/v2'
+import { StepContainer } from '~/libraries/stepper/v2'
 
 export function ifElse<T>(
   comparator: (T) => boolean,
@@ -22,7 +21,6 @@ export const inject = (obj: any) => () => obj
 export const objectValues = Object.values
 export const objectCreate = () => ({})
 export const arrayMap = (fn: Function) => (v: any[]) => v.map(fn)
-export const arrayForEach = (fn: Function) => (v: any[]) => v.forEach(fn)
 export const arraySort = (fn: Function) => (v: any[]) => v.sort(fn)
 export const arrayShift = (v: any[]) => v.shift()
 export const sortAsc = (a, b) => a - b
@@ -31,24 +29,30 @@ export const mathSub = (a, b) => a - b
 export const mathMultiply = (a, b) => a * b
 export const mathDivBy = (by: number) => (v) => v / by
 export const pass = (v) => v
+export const arrayForEach = (fn: Function, data: any) => {
+  return (v: StepContainer) => {
+    const vData = data(v)
+    vData.forEach((item) => {
+      v.set('prevResult', item)
+      fn(v)
+    })
+  }
+}
 export const iterateGroup = (
   fn: Function,
-  limit: number,
-  chunk: number,
-  data: any[]
+  limit: any,
+  chunk: any,
+  data: any
 ) => {
-  return (v) => {
-    let composition = null
-    for (let i = 0; i < limit; i += chunk) {
-      if (!composition) {
-        composition = step(fn, [data.slice(i, i + chunk)])
-      } else {
-        composition(step(fn, [data.slice(i, i + chunk)]))
-      }
-    }
+  return (v: StepContainer) => {
+    const vLimit = limit(v)
+    const vChunk = chunk(v)
+    const vData = data(v)
 
-    if (composition) {
-      composition(v)
+    for (let i = 0; i < vLimit; i += vChunk) {
+      const slice = vData.slice(i, i + vChunk)
+      v.set('prevResult', slice)
+      fn(v)
     }
 
     return v

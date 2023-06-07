@@ -3,7 +3,7 @@ import isObject from 'lodash/isObject'
 import get from 'lodash/get'
 import set from 'lodash/set'
 
-class StepContainer {
+export class StepContainer {
   private state: Record<string, any>
 
   constructor(state) {
@@ -24,9 +24,16 @@ const DEFAULT_RESULT_KEY = 'prevResult'
 const log = (...args: string[]) => console.log(...args)
 
 export type Step = {
-  (fn: Function, args?: any[], saveTo?: string): any
   (fn: Function, saveTo?: string): any
+  (fn: Function, args?: any[], saveTo?: string): any
   (fn: Function, args?: any[]): any
+}
+
+export const aliases = {
+  $: step,
+  $s: stepper,
+  $r: stepperResult,
+  $c: clearStep,
 }
 
 export function stepper(args, vars) {
@@ -50,7 +57,7 @@ export function clearStep(fn: any, args: any[]) {
   return (value: any) => {
     const realArgs = args.map((arg) => {
       if (arg === DEFAULT_RESULT_KEY) {
-        args = value
+        arg = value
       }
       return arg
     })
@@ -70,7 +77,9 @@ export function step(fn: any, args?: any, saveTo?: any): Step {
     if (!(value instanceof StepContainer)) {
       throw new TypeError('step can be used only with StepContainer')
     }
-
+    if (!args || !args.length) {
+      args = [DEFAULT_RESULT_KEY]
+    }
     const callArgs = args.map((arg, index) => {
       if (typeof arg !== 'undefined' && !isFunction(arg) && isObject(arg)) {
         throw new Error(
@@ -95,18 +104,18 @@ export function step(fn: any, args?: any, saveTo?: any): Step {
         JSON.stringify(callArgs),
         '\n ---------- \n',
         `saveTo(${saveTo}):`,
-        value.get(saveTo)
+        JSON.stringify(value.get(saveTo))
       )
     }
     return value
   }
 }
 
-export function stepperResult(
-  key: string = DEFAULT_RESULT_KEY,
-  defaultValue = ''
-) {
+export function stepperResult(key?: string, defaultValue?: string[]) {
+  if (!key) {
+    key = DEFAULT_RESULT_KEY
+  }
   return (value: StepContainer) => {
-    return value.get(key, defaultValue)
+    return value.get(key as string, defaultValue)
   }
 }

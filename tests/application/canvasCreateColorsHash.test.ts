@@ -8,7 +8,7 @@ describe('Создания хэша раскраски', () => {
     const vMap = clone(map)
     vMap.structure.settings.colored = true
     const colors = canvasCreateColorsHash(vMap.structure)
-    expect(colors).toStrictEqual({
+    expect({
       '1676308867689': 'darkred',
       '1676308874549': 'darkred',
       '1676308899194': 'darkred',
@@ -20,6 +20,6 @@ describe('Создания хэша раскраски', () => {
       '1678121363077': 'darkgreen',
       '1678698312380': 'darkgreen',
       '1681045834245': 'darkgreen',
-    })
+    }).toStrictEqual(colors)
   })
 })

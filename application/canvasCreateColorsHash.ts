@@ -1,7 +1,7 @@
 import flow from 'lodash/flow'
 import get from 'lodash/get'
 import set from 'lodash/set'
-import { stepper, step, stepperResult, clearStep } from '~/libraries/stepper/v2'
+import { aliases } from '~/libraries/stepper/v2'
 import { colorsMap } from '~/constants'
 import {
   arrayForEach,
@@ -21,44 +21,38 @@ import {
 } from '~/utils/fp'
 import { isTruthy } from '~/utils/comparators'
 
+const { $, $s, $r, $c } = aliases
+
 export const canvasCreateColorsHash = flow(
-  stepper(
-    ['vMap'],
-    ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap', '__debug']
-  ),
-  step(objectCreate, 'groups'),
-  step(inject(clone(colorsMap)), 'colorsMap'),
-  step(get, ['vMap', 'settings.colored']),
+  $s(['vMap'], ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap']),
+  $(objectCreate, 'groups'),
+  $(inject(clone(colorsMap)), 'colorsMap'),
+  $(get, ['vMap', 'settings.colored']),
   ifElse(
-    flow(step(isTruthy, ['prevResult']), stepperResult()),
+    flow($(isTruthy, ['prevResult']), $r()),
     flow(
-      step(objectCreate),
-      step(get, ['vMap', 'objects', 'prevResult']),
-      step(objectValues),
-      step(arrayMap(clearStep(get, ['prevResult', 'lastClick'])), [
-        'prevResult',
-      ]),
-      step(arraySort(sortAsc), ['prevResult'], 'clicks'),
-      step(get, ['clicks', 'length', 0], 'clicksLength'),
-      step(mathDivBy(3), ['clicksLength']),
-      step(mathCeil),
-      step(pass, ['prevResult'], 'chunkSize'),
-      step(iterateGroup, [
+      $(objectCreate),
+      $(get, ['vMap', 'objects', 'prevResult']),
+      $(objectValues),
+      $(arrayMap($c(get, ['prevResult', 'lastClick'])), ['prevResult']),
+      $(arraySort(sortAsc), ['prevResult'], 'clicks'),
+      $(get, ['clicks', 'length', 0], 'clicksLength'),
+      $(mathDivBy(3), ['clicksLength']),
+      $(mathCeil, 'chunkSize'),
+      iterateGroup(
         flow(
-          step(pass, ['prevResult'], 'currentGroup'),
-          step(arrayShift, ['colorsMap'], 'currentColor'),
-          step(
-            arrayForEach(
-              clearStep(set, ['groups', 'prevResult', 'currentColor'])
-            ),
-            ['currentGroup']
+          $(pass, ['prevResult'], 'currentGroup'),
+          $(arrayShift, ['colorsMap'], 'currentColor'),
+          arrayForEach(
+            $(set, ['groups', 'prevResult', 'currentColor']),
+            $r('currentGroup')
           )
         ),
-        'clicksLength',
-        'chunkSize',
-        'clicks',
-      ])
+        $r('clicksLength'),
+        $r('chunkSize'),
+        $r('clicks')
+      )
     )
   ),
-  stepperResult('groups')
+  $r('groups')
 )
