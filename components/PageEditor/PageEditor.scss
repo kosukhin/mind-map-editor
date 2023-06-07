@@ -23,10 +23,10 @@
 
     @media (max-width: $tabletMW) {
       position: absolute;
-      top: 50px;
       z-index: 9;
       left: -250px;
       transition: left linear 0.1s;
+      height: 100vh;
 
       &.opened {
         left: 0;
