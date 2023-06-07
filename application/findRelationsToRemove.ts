@@ -1,7 +1,21 @@
+import flow from 'lodash/flow'
+import get from 'lodash/get'
+import set from 'lodash/set'
 import { MapObject, MapStructure } from '~/entities'
-import { Maybe } from '~/utils'
+import { arrayForEach, Maybe, objectCreate, objectValues } from '~/utils'
+import { aliases } from '~/libraries/stepper/v2'
 
 type RelativeObject = { objectId: string; indexes: string[] }
+
+const { $, $s, $r } = aliases
+
+export const findRelationsToRemove2 = flow(
+  $s(['vObject', 'vMap'], ['relations', 'objects']),
+  $(objectCreate),
+  $(get, ['vMap', 'objects', 'prevResult']),
+  $(objectValues, 'objects'),
+  arrayForEach($(set, ['groups', 'prevResult', 'currentColor']), $r('objects'))
+)
 
 export const findRelationsToRemove = (
   vObject: MapObject,
