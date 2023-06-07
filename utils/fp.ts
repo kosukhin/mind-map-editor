@@ -1,4 +1,6 @@
-import { StepContainer } from '~/libraries/stepper/v2'
+import { aliases, StepContainer } from '~/libraries/stepper/v2'
+
+const { $, $s, $r } = aliases
 
 export function ifElse<T>(
   comparator: (T) => boolean,
@@ -58,7 +60,10 @@ export const iterateGroup = (
     return v
   }
 }
-export const and = (a, b) => a && b
+export const and = (a, b) => (v) => {
+  v.set('prevResult', a(v) && b(v))
+  return v
+}
 export const or = (a, b) => a || b
 export const gt = (a, b) => a > b
 export const lt = (a, b) => a < b

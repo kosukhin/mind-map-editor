@@ -3,69 +3,94 @@ import set from 'lodash/set'
 import get from 'lodash/get'
 import curry from 'lodash/curry'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '~/constants'
-import { createStepper } from '~/libraries/stepper'
 import { and, gt, ifElse, mathMultiply, mathSub, pass } from '~/utils/fp'
+import { aliases } from '~/libraries/stepper/v2'
 
-const {
-  entryPoint,
-  step: s,
-  argsCount,
-} = createStepper(
-  ['pos', 'canvasSize'],
-  [
-    'maxRight',
-    'nMaxRight',
-    'maxBottom',
-    'nMaxBottom',
-    'posX',
-    'posY',
-    'right',
-    'bottom',
-    'size',
-  ]
-)
+const { $, $s, $r, $v } = aliases
+
+const args = ['pos', 'canvasSize']
 export const canvasRestrictBoundaries = curry(
   flow(
-    entryPoint,
-    s(get, ['canvasSize', 'w']),
-    s(mathSub, [CANVAS_WIDTH, 'prevResult'], 'maxRight'),
-    s(mathMultiply, ['maxRight', -1], 'nMaxRight'),
-    s(get, ['canvasSize', 'h']),
-    s(mathSub, [CANVAS_HEIGHT, 'prevResult'], 'maxBottom'),
-    s(mathMultiply, ['maxBottom', -1], 'nMaxBottom'),
-    s(get, ['pos', 'x'], 'posX'),
-    s(get, ['pos', 'y'], 'posY'),
-    s(mathMultiply, ['posX', -1], 'right'),
-    s(mathMultiply, ['posY', -1], 'bottom'),
-    s(pass, ['pos'], 'size'),
-    s(set, ['size', 'x', 0]),
-    s(set, ['size', 'y', 0]),
-    and(s(gt, ['maxBottom', 0]), s(gt, ['maxRight', 0])),
+    $s(args, [
+      'maxRight',
+      'nMaxRight',
+      'maxBottom',
+      'nMaxBottom',
+      'posX',
+      'posY',
+      'right',
+      'bottom',
+      'size',
+    ]),
+    calculateMaximums('w', CANVAS_WIDTH, 'maxRight', 'nMaxRight'),
+    calculateMaximums('h', CANVAS_HEIGHT, 'maxBottom', 'nMaxBottom'),
+    extractKey('pos', 'x', 'posX'),
+    extractKey('pos', 'y', 'posY'),
+    negate('posX', 'right'),
+    negate('posY', 'bottom'),
+    transferKey('pos', 'size'),
+    setKey('size', 'x', 0),
+    setKey('size', 'y', 0),
+    and(value(gt, ['maxBottom', 0]), value(gt, ['maxRight', 0])),
     ifElse(
-      s(pass, ['prevResult']),
+      value(pass, ['prevResult']),
       flow(
-        s(pass, ['pos'], 'size'),
-        ifElse(
-          s(gt, ['posX', 0]),
-          s(set, ['size', 'x', 0]),
-          ifElse(
-            s(gt, ['right', 'maxRight']),
-            s(set, ['size', 'x', 'nMaxRight']),
-            s(set, ['size', 'x', 'posX'])
-          )
-        ),
-        ifElse(
-          s(gt, ['posY', 0]),
-          s(set, ['size', 'y', 0]),
-          ifElse(
-            s(gt, ['bottom', 'maxBottom']),
-            s(set, ['size', 'y', 'nMaxBottom']),
-            s(set, ['size', 'y', 'posY'])
-          )
-        )
+        restrictSide('posX', 'nMaxRight', 'x', 'right', 'maxRight'),
+        restrictSide('posY', 'nMaxBottom', 'y', 'bottom', 'maxBottom')
       )
     ),
-    s(pass, ['size'])
+    $r('size')
   ),
-  argsCount
+  args.length
 )
+
+function restrictSide(
+  side: string,
+  maxSide: string,
+  sideParam: string,
+  sideName: string,
+  maxSideName: string
+) {
+  return ifElse(
+    value(gt, [side, 0]),
+    setKey('size', sideParam, 0),
+    ifElse(
+      value(gt, [sideName, maxSideName]),
+      setKey('size', sideParam, maxSide),
+      setKey('size', sideParam, side)
+    )
+  )
+}
+
+function calculateMaximums(
+  canvasMetric: 'w' | 'h',
+  canvasMetricSize: number,
+  maxSizeKey: string,
+  negatedMaxSizeKey: string
+) {
+  return flow(
+    $(get, ['canvasSize', canvasMetric]),
+    $(mathSub, [canvasMetricSize, 'prevResult'], maxSizeKey),
+    $(mathMultiply, [maxSizeKey, -1], negatedMaxSizeKey)
+  )
+}
+
+function value(fn: Function, args?: any[], saveTo?: string) {
+  return $v($(fn, args, saveTo))
+}
+
+function negate(key: string, saveTo: string) {
+  return $(mathMultiply, [key, -1], saveTo)
+}
+
+function extractKey(object: string, key: string, saveTo: string) {
+  return $(get, [object, key], saveTo)
+}
+
+function setKey(object: string, key: string, value: any) {
+  return $(set, [object, key, value])
+}
+
+function transferKey(from: string, to: string) {
+  return $(pass, [from], to)
+}

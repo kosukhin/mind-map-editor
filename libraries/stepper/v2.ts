@@ -1,7 +1,8 @@
-import isFunction from 'lodash/isFunction'
-import isObject from 'lodash/isObject'
-import get from 'lodash/get'
-import set from 'lodash/set'
+import isFunction from 'lodash/isFunction.js'
+import isObject from 'lodash/isObject.js'
+import get from 'lodash/get.js'
+import set from 'lodash/set.js'
+import flow from 'lodash/flow.js'
 
 export class StepContainer {
   private state: Record<string, any>
@@ -34,9 +35,10 @@ export const aliases = {
   $s: stepper,
   $r: stepperResult,
   $c: clearStep,
+  $v: stepValue,
 }
 
-export function stepper(args, vars) {
+export function stepper(args = [], vars = []) {
   return (...realArgs) => {
     const state = {}
     vars.forEach((variable) => {
@@ -75,7 +77,14 @@ export function step(fn: any, args?: any, saveTo?: any): Step {
   }
   return (value: any) => {
     if (!(value instanceof StepContainer)) {
-      throw new TypeError('step can be used only with StepContainer')
+      throw new TypeError(
+        'step can be used only with StepContainer, given: ' +
+          JSON.stringify(value) +
+          ' ,fn:' +
+          fn.name +
+          ', args:' +
+          JSON.stringify(args)
+      )
     }
     if (!args || !args.length) {
       args = [DEFAULT_RESULT_KEY]
@@ -118,4 +127,8 @@ export function stepperResult(key?: string, defaultValue?: string[]) {
   return (value: StepContainer) => {
     return value.get(key as string, defaultValue)
   }
+}
+
+export function stepValue(fn: Function) {
+  return flow(fn, stepperResult())
 }
