@@ -21,7 +21,8 @@
   &-SideBar {
     grid-area: nav;
 
-    @media (max-width: $tabletMW) {    bottom: 0;
+    @media (max-width: $tabletMW) {
+      bottom: 0;
       height: auto;
       top: 50px;
       position: absolute;
