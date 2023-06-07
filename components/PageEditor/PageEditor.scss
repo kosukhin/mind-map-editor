@@ -21,12 +21,13 @@
   &-SideBar {
     grid-area: nav;
 
-    @media (max-width: $tabletMW) {
+    @media (max-width: $tabletMW) {    bottom: 0;
+      height: auto;
+      top: 50px;
       position: absolute;
       z-index: 9;
       left: -250px;
       transition: left linear 0.1s;
-      height: 100vh;
 
       &.opened {
         left: 0;
