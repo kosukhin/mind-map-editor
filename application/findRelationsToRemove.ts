@@ -1,26 +1,29 @@
 import flow from 'lodash/flow'
 import get from 'lodash/get'
 import set from 'lodash/set'
-import { MapObject, MapStructure } from '~/entities'
+import { MapObject, MapStructure } from '~/entities/Map'
 import {
   arrayForEach,
   arrayPush,
   eq,
   fromJson,
   ifElse,
-  Maybe,
   objectCreate,
   objectValues,
   pass,
-} from '~/utils'
+} from '~/utils/fp'
+import { Maybe } from '~/utils/maybe'
 import { aliases } from '~/libraries/stepper/v2'
 
 type RelativeObject = { objectId: string; indexes: string[] }
 
 const { $, $s, $r, $v, $prev } = aliases
 
+export const findRelationsToRemove3 = flow()
+
 export const findRelationsToRemove2 = flow(
-  $s(['vObject', 'vMap']),
+  $s(['vObject', 'vMap'], ['__debug']),
+  $(fromJson, ['[]'], '$defaultRelations'),
   $(Maybe, '$relations'),
   $(get, ['vObject', 'id'], '$objectId'),
   $(objectCreate),
@@ -43,11 +46,20 @@ export const findRelationsToRemove2 = flow(
               $(get, [$prev, 'id'], '$currObjectId'),
               ifElse(
                 $v($(eq, ['$currObjectId', '$objectId'])),
-                flow($(arrayPush, ['$indexes', 'relationINdex']))
+                $(arrayPush, ['$indexes', '$index'])
               )
             ),
             $r('$arrows')
           )
+        )
+      ),
+      $(get, ['$indexes', 'length']),
+      ifElse(
+        $v($(pass, [$prev])),
+        flow(
+          $(get, ['$relations', 'value', '$defaultRelations'], '$value'),
+          $(arrayPush, ['$value', '$objectRelation']),
+          $(set, ['$relations', 'value', '$value'])
         )
       )
     ),

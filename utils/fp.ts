@@ -1,6 +1,6 @@
 import { aliases, StepContainer } from '~/libraries/stepper/v2'
 
-const { $, $s, $r } = aliases
+const { $, $s, $r, $prev } = aliases
 
 export function ifElse<T>(
   comparator: (T) => boolean,
@@ -35,8 +35,9 @@ export const pass = (v) => v
 export const arrayForEach = (fn: Function, data: any) => {
   return (v: StepContainer) => {
     const vData = data(v)
-    vData.forEach((item) => {
-      v.set('prevResult', item)
+    vData.forEach((item, index) => {
+      v.set($prev, item)
+      v.set('$index', index)
       fn(v)
     })
   }

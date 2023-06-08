@@ -1,5 +1,6 @@
 import { reactive, shallowReactive } from '@vue/reactivity'
-import { MaybeErrorInst, MaybeInst, Nullable } from '~/entities'
+import { MaybeErrorInst, MaybeInst } from '~/entities/Maybe'
+import { Nullable } from '~/entities/Nullable'
 
 export function reMaybe<T>() {
   return reactive(Maybe<T>()) as MaybeInst<T>
