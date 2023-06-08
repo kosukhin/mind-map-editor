@@ -43,11 +43,11 @@ function restrictSide(
 ) {
   return ifElse(
     value(gt, [side, 0]),
-    setKey('size', sideParam, 0),
+    setKey('$size', sideParam, 0),
     ifElse(
       value(gt, [sideName, maxSideName]),
-      setKey('size', sideParam, maxSide),
-      setKey('size', sideParam, side)
+      setKey('$size', sideParam, maxSide),
+      setKey('$size', sideParam, side)
     )
   )
 }

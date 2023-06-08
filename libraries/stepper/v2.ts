@@ -51,7 +51,7 @@ export function stepper(args = [], vars = []) {
     })
     const container = new StepContainer(state)
     if (container.get(DEBUG_KEY)) {
-      log('--- BEGIN --- ')
+      log('--- BEGIN --- ', '\n', 'RealArgs:', JSON.stringify(args))
     }
     return new StepContainer(state)
   }
