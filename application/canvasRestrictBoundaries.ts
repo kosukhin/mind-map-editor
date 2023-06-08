@@ -6,40 +6,30 @@ import { CANVAS_HEIGHT, CANVAS_WIDTH } from '~/constants'
 import { and, gt, ifElse, mathMultiply, mathSub, pass } from '~/utils/fp'
 import { aliases } from '~/libraries/stepper/v2'
 
-const { $, $s, $r, $v } = aliases
+const { $, $s, $r, $v, $prev } = aliases
 
-const args = ['pos', 'canvasSize']
+const args = ['_pos', '_canvasSize']
 export const canvasRestrictBoundaries = curry(
   flow(
-    $s(args, [
-      'maxRight',
-      'nMaxRight',
-      'maxBottom',
-      'nMaxBottom',
-      'posX',
-      'posY',
-      'right',
-      'bottom',
-      'size',
-    ]),
-    calculateMaximums('w', CANVAS_WIDTH, 'maxRight', 'nMaxRight'),
-    calculateMaximums('h', CANVAS_HEIGHT, 'maxBottom', 'nMaxBottom'),
-    extractKey('pos', 'x', 'posX'),
-    extractKey('pos', 'y', 'posY'),
-    negate('posX', 'right'),
-    negate('posY', 'bottom'),
-    transferKey('pos', 'size'),
-    setKey('size', 'x', 0),
-    setKey('size', 'y', 0),
-    and(value(gt, ['maxBottom', 0]), value(gt, ['maxRight', 0])),
+    $s(args),
+    calculateMaximums('w', CANVAS_WIDTH, '$maxRight', '$nMaxRight'),
+    calculateMaximums('h', CANVAS_HEIGHT, '$maxBottom', '$nMaxBottom'),
+    extractKey('_pos', 'x', '$posX'),
+    extractKey('_pos', 'y', '$posY'),
+    negate('$posX', '$right'),
+    negate('$posY', '$bottom'),
+    transferKey('_pos', '$size'),
+    setKey('$size', 'x', 0),
+    setKey('$size', 'y', 0),
+    and(value(gt, ['$maxBottom', 0]), value(gt, ['$maxRight', 0])),
     ifElse(
-      value(pass, ['prevResult']),
+      value(pass, [$prev]),
       flow(
-        restrictSide('posX', 'nMaxRight', 'x', 'right', 'maxRight'),
-        restrictSide('posY', 'nMaxBottom', 'y', 'bottom', 'maxBottom')
+        restrictSide('$posX', '$nMaxRight', 'x', '$right', '$maxRight'),
+        restrictSide('$posY', '$nMaxBottom', 'y', '$bottom', '$maxBottom')
       )
     ),
-    $r('size')
+    $r('$size')
   ),
   args.length
 )
@@ -69,8 +59,8 @@ function calculateMaximums(
   negatedMaxSizeKey: string
 ) {
   return flow(
-    $(get, ['canvasSize', canvasMetric]),
-    $(mathSub, [canvasMetricSize, 'prevResult'], maxSizeKey),
+    $(get, ['_canvasSize', canvasMetric]),
+    $(mathSub, [canvasMetricSize, $prev], maxSizeKey),
     $(mathMultiply, [maxSizeKey, -1], negatedMaxSizeKey)
   )
 }

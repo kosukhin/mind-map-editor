@@ -36,11 +36,13 @@ export const aliases = {
   $r: stepperResult,
   $c: clearStep,
   $v: stepValue,
+  $prev: DEFAULT_RESULT_KEY,
 }
 
 export function stepper(args = [], vars = []) {
   return (...realArgs) => {
     const state = {}
+    vars.push(DEFAULT_RESULT_KEY)
     vars.forEach((variable) => {
       state[variable] = variable === DEBUG_KEY ? true : null
     })
@@ -76,6 +78,9 @@ export function step(fn: any, args?: any, saveTo?: any): Step {
     saveTo = DEFAULT_RESULT_KEY
   }
   return (value: any) => {
+    if (!value[saveTo]) {
+      value[saveTo] = null
+    }
     if (!(value instanceof StepContainer)) {
       throw new TypeError(
         'step can be used only with StepContainer, given: ' +

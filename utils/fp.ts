@@ -25,6 +25,7 @@ export const objectCreate = () => ({})
 export const arrayMap = (fn: Function) => (v: any[]) => v.map(fn)
 export const arraySort = (fn: Function) => (v: any[]) => v.sort(fn)
 export const arrayShift = (v: any[]) => v.shift()
+export const arrayPush = (v: any[], val: any) => v.push(val)
 export const sortAsc = (a, b) => a - b
 export const mathCeil = Math.ceil
 export const mathSub = (a, b) => a - b
@@ -70,3 +71,5 @@ export const lt = (a, b) => a < b
 export const gte = (a, b) => a >= b
 export const lte = (a, b) => a <= b
 export const eq = (a, b) => a === b
+
+export const fromJson = (json: string) => JSON.parse(json)
