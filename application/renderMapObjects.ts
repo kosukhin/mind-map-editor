@@ -1,4 +1,4 @@
-import { addObjectToLayer } from '~/utils'
+import { addObjectToLayer } from '~/utils/konva'
 import { KonvaLayerObject, Layer, MapStructure } from '~/entities'
 
 type Params = [Layer, MapStructure, boolean]

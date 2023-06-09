@@ -19,8 +19,6 @@ type RelativeObject = { objectId: string; indexes: string[] }
 
 const { $, $s, $r, $v, $prev } = aliases
 
-export const findRelationsToRemove3 = flow()
-
 export const findRelationsToRemove2 = flow(
   $s(['vObject', 'vMap'], ['__debug']),
   $(fromJson, ['[]'], '$defaultRelations'),

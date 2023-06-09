@@ -1,7 +1,6 @@
 export * from './map'
 export * from './server'
 export * from './maybe'
-export * from './konva'
 export * from './dom'
 export * from './common'
 export * from './fp'

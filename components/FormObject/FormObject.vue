@@ -22,14 +22,12 @@ import {
   SHOW_OBJECT,
 } from '~/constants'
 import { KonvaLayerObject, MapObject } from '~/entities'
+import { all, createMapObjectUrl, setValue } from '~/utils'
 import {
   addObjectToLayer,
-  all,
-  createMapObjectUrl,
   removeObjectOnLayer,
-  setValue,
   updateObjectOnLayer,
-} from '~/utils'
+} from '~/utils/konva'
 import { findRelationsToRemove } from '~/application'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 import BaseTextarea from '~/components/BaseTextarea/BaseTextarea.vue'

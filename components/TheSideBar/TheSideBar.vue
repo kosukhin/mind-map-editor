@@ -16,7 +16,8 @@ import {
   SIDEBAR_WIDTH,
 } from '~/constants'
 import { KonvaLayerObject, MapObject } from '~/entities'
-import { addObjectToLayer, createObject, all } from '~/utils'
+import { createObject, all } from '~/utils'
+import { addObjectToLayer } from '~/utils/konva'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 import TheLinker from '~/components/TheLinker/TheLinker.vue'
 import BaseGroup from '~/components/BaseGroup/BaseGroup.vue'
