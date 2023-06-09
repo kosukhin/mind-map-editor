@@ -1,17 +1,52 @@
 import flow from 'lodash/flow'
 import set from 'lodash/set'
 import get from 'lodash/get'
-import { aliases } from '~/libraries/stepper/v2'
-import { objectCreate } from '~/utils/fp'
+import curryRight from 'lodash/curryRight'
+import { objectCreate, pass } from '~/utils/fp'
 
-const { $, $s, $r } = aliases
+const cget = curryRight(get, 3)
+const ucget = cget(null)
 
 export const canvasCreateSize = flow(
-  $s(['canvasElement'], ['canvasWidth', 'canvasHeight', 'size']),
-  $(get, ['canvasElement', 'clientWidth'], 'canvasWidth'),
-  $(get, ['canvasElement', 'clientHeight'], 'canvasHeight'),
-  $(objectCreate, 'size'),
-  $(set, ['size', 'w', 'canvasWidth']),
-  $(set, ['size', 'h', 'canvasHeight']),
-  $r('size')
+  applyArgs(toPool, pass, objectCreate),
+  skipResult(applyArgs(set, ucget('[1]'), v('w'), ucget('[0].clientWidth'))),
+  skipResult(applyArgs(set, ucget('[1]'), v('h'), ucget('[0].clientHeight'))),
+  ucget('[1]')
 )
+
+function v(v) {
+  return () => v
+}
+
+function skipResult(fn) {
+  return (v) => {
+    fn(v)
+    return v
+  }
+}
+
+function applyArgs(fn: Function, ...argsFns: Function[]) {
+  return (v) => {
+    const realArgs = argsFns.map((argFn) => {
+      return argFn(v)
+    })
+    return fn(...realArgs)
+  }
+}
+
+function applyAll(...argsFns: Function[]) {
+  return (v) => {
+    return argsFns.map((argFn) => {
+      return argFn(v)
+    })
+  }
+}
+
+function debug(v) {
+  console.log('debug:', v)
+  return v
+}
+
+function toPool(...args: any[]) {
+  return [...args]
+}
