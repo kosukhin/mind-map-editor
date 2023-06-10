@@ -220,7 +220,7 @@
     },
     "document": "architecture",
     "settings": {
-      "colored": false,
+      "colored": true,
       "title": "Архитектура"
     }
   }

@@ -9,19 +9,52 @@ import {
   arrayShift,
   arraySort,
   clone,
+  debug,
   ifElse,
   inject,
   iterateGroup,
+  lift,
+  map,
   mathCeil,
   mathDivBy,
+  nArrayMap,
+  nArraySort,
+  nIfElse,
+  nIterateGroup,
+  nMathDivBy,
   objectCreate,
   objectValues,
   pass,
+  prevResult,
   sortAsc,
+  ucget,
 } from '~/utils/fp'
 import { isTruthy } from '~/utils/comparators'
 
 const { $, $s, $r, $c } = aliases
+
+export const canvasCreateColorsHash2 = flow(
+  map(
+    nIfElse,
+    ucget('settings.colored'),
+    flow(
+      ucget('objects'),
+      objectValues,
+      map(nArrayMap, ucget('lastClick')),
+      map(nArraySort, sortAsc),
+      map(
+        lift,
+        nIterateGroup,
+        debug,
+        ucget('length'),
+        flow(ucget('length'), map(nMathDivBy, 3), mathCeil),
+        prevResult
+      )
+    ),
+    objectCreate
+  ),
+  debug
+)
 
 export const canvasCreateColorsHash = flow(
   $s(['vMap'], ['clicks', 'clicksLength', 'chunkSize', 'groups', 'colorsMap']),
