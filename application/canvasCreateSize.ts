@@ -2,51 +2,49 @@ import flow from 'lodash/flow'
 import set from 'lodash/set'
 import get from 'lodash/get'
 import curryRight from 'lodash/curryRight'
-import { objectCreate, pass } from '~/utils/fp'
+import { objectCreate } from '~/utils/fp'
 
 const cget = curryRight(get, 3)
 const ucget = cget(null)
 
 export const canvasCreateSize = flow(
-  applyArgs(toPool, pass, objectCreate),
-  skipResult(applyArgs(set, ucget('[1]'), v('w'), ucget('[0].clientWidth'))),
-  skipResult(applyArgs(set, ucget('[1]'), v('h'), ucget('[0].clientHeight'))),
+  map(lift, toPool, prevResult, objectCreate),
+  silentMap(lift, set, ucget('[1]'), constant('w'), ucget('[0].clientWidth')),
+  silentMap(lift, set, ucget('[1]'), constant('h'), ucget('[0].clientHeight')),
   ucget('[1]')
 )
 
-function v(v) {
+function constant(v) {
   return () => v
 }
 
-function skipResult(fn) {
+function prevResult(v) {
+  return v
+}
+
+function map(fn, ...args) {
+  return (v) => fn(v, ...args)
+}
+
+function silentMap(fn, ...args) {
   return (v) => {
-    fn(v)
+    fn(v, ...args)
     return v
   }
 }
 
-function applyArgs(fn: Function, ...argsFns: Function[]) {
-  return (v) => {
-    const realArgs = argsFns.map((argFn) => {
+function lift(v, fn, ...argFns) {
+  return fn(
+    ...argFns.map((argFn) => {
       return argFn(v)
     })
-    return fn(...realArgs)
-  }
-}
-
-function applyAll(...argsFns: Function[]) {
-  return (v) => {
-    return argsFns.map((argFn) => {
-      return argFn(v)
-    })
-  }
-}
-
-function debug(v) {
-  console.log('debug:', v)
-  return v
+  )
 }
 
 function toPool(...args: any[]) {
+  if (Array.isArray(args[0])) {
+    const [first, ...rest] = args
+    return [].concat(first, rest)
+  }
   return [...args]
 }

@@ -1,9 +1,5 @@
 import { describe, it } from 'vitest'
-import set from 'lodash/set'
-import {
-  canvasCreateSize,
-  canvasCreateSize2,
-} from '~/application/canvasCreateSize'
+import { canvasCreateSize } from '~/application/canvasCreateSize'
 
 describe('Построение размера канвы', () => {
   it('тест группировки', () => {
