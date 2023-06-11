@@ -8,7 +8,8 @@ import {
   useSharedMapObject,
   useSharedLocks,
 } from '~/composables'
-import { updateObjectOnLayer, all } from '~/utils'
+import { all } from '~/utils'
+import { updateObjectOnLayer } from '~/utils/konva'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 
 const { layer, layerObjects } = useSharedLayer()

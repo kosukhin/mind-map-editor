@@ -2,15 +2,8 @@ import { onMounted, watch } from '@vue/runtime-core'
 import flow from 'lodash/flow'
 import { Size } from '~/entities'
 import { canvasCreateSize } from '~/application'
-import {
-  setValue,
-  reMaybe,
-  map,
-  ifElse,
-  isTruthy,
-  findById,
-  apply,
-} from '~/utils'
+import { setValue, reMaybe, map, isTruthy, findById, apply } from '~/utils'
+import { ifElse } from '~/utils/fp'
 import { CANVAS_DOM_ID } from '~/constants'
 
 export function useCanvas() {

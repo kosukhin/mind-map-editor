@@ -1,13 +1,7 @@
 import { Canvg } from 'canvg'
 import Konva from 'konva'
-import {
-  MapObject,
-  MapStructure,
-  KonvaLayerObject,
-  Arrow,
-  Layer,
-  Stage,
-} from '~/entities'
+import { KonvaLayerObject, Arrow, Layer, Stage } from '~/entities/Konva'
+import { MapObject, MapStructure } from '~/entities/Map'
 import { useSharedMapColors } from '~/composables'
 import { maxNewLineLength, newLineCount } from '~/utils/common'
 

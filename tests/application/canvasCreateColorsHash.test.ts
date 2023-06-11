@@ -1,9 +1,6 @@
 import { describe, it } from 'vitest'
 import map from '~/maps/demo.json'
-import {
-  canvasCreateColorsHash,
-  canvasCreateColorsHash2,
-} from '~/application/canvasCreateColorsHash'
+import { canvasCreateColorsHash } from '~/application/canvasCreateColorsHash'
 import { clone } from '~/utils/fp'
 
 describe('Создания хэша раскраски', () => {
@@ -11,7 +8,6 @@ describe('Создания хэша раскраски', () => {
     const vMap = clone(map)
     vMap.structure.settings.colored = true
     const colors = canvasCreateColorsHash(vMap.structure)
-    const colors2 = canvasCreateColorsHash2(vMap.structure)
     // console.log(colors2)
     expect({
       '1676308867689': 'darkred',

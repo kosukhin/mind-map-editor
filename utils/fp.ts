@@ -1,6 +1,7 @@
 import curryRight from 'lodash/curryRight'
 import get from 'lodash/get'
 import curry from 'lodash/curry'
+import flattenDepth from 'lodash/flattenDepth'
 import { aliases, StepContainer } from '~/libraries/stepper/v2'
 
 const { $prev } = aliases
@@ -30,6 +31,7 @@ export function ifElse<T>(
   }
 }
 
+export const cFlatten = curryRight(flattenDepth)
 export const clone = (v: any) => JSON.parse(JSON.stringify(v))
 export const inject = (obj: any) => () => obj
 export const objectValues = Object.values
@@ -49,6 +51,9 @@ export const mathMultiply = (a, b) => a * b
 export const mathDivBy = (by: number) => (v) => v / by
 export const nMathDivBy = (v, by: number) => v / by
 export const pass = (v) => v
+export const arrayReduce = (v: any[], fn, initialValue) => {
+  return v.reduce(fn, initialValue)
+}
 export const arrayForEach = (fn: Function, data: any) => {
   return (v: StepContainer) => {
     const vData = data(v)
@@ -96,6 +101,7 @@ export const iterateGroup = (
     return v
   }
 }
+export const cand = (a, b) => a && b
 export const and = (a, b) => (v) => {
   v.set('prevResult', a(v) && b(v))
   return v
@@ -121,6 +127,18 @@ export function map(fn, ...args) {
   return (v) => fn(v, ...args)
 }
 
+export function chain(fn, ...args) {
+  return (v) => (e) => fn([e, v], ...args)
+}
+
+export function args(...args) {
+  return args
+}
+
+export function wrap(fn) {
+  return () => fn
+}
+
 export function silentMap(fn, ...args) {
   return (v) => {
     fn(v, ...args)
@@ -137,15 +155,14 @@ export function lift(v, fn, ...argFns) {
 }
 
 export function toPool(...args: any[]) {
-  if (Array.isArray(args[0])) {
-    const [first, ...rest] = args
-    return [].concat(first, rest)
-  }
   return [...args]
 }
 
 export const cget = curryRight(get, 3)
 export const ucget = cget(null)
 
+export const strinify = JSON.stringify
+export const parse = JSON.parse
+
 export const log = curry(console.log, 2)
-export const debug = silentMap(log('[DEBUG]:'))
+export const debug = silentMap(lift, log('[DEBUG]:'), strinify)
