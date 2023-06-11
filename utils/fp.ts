@@ -123,12 +123,16 @@ export function prevResult(v) {
   return v
 }
 
-export function map(fn, ...args) {
+export function morphism(fn, ...args) {
   return (v) => fn(v, ...args)
 }
 
 export function chain(fn, ...args) {
   return (v) => (e) => fn([e, v], ...args)
+}
+
+export function morphismDeep(deep, fn, ...args) {
+  return curryRight((...vargs) => fn(vargs, ...args), deep)
 }
 
 export function args(...args) {

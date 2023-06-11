@@ -4,11 +4,10 @@ import {
   arrayShift,
   cand,
   cFlatten,
-  chain,
   clone,
   inject,
   lift,
-  map,
+  morphism,
   mathCeil,
   nArrayMap,
   nArraySort,
@@ -22,35 +21,46 @@ import {
   sortAsc,
   toPool,
   ucget,
+  morphismDeep,
+  args,
 } from '~/utils/fp'
 
+const fillArray = flow(
+  args,
+  morphism(
+    lift,
+    nArrayMap,
+    ucget('[0]'),
+    morphismDeep(2, lift, toPool, ucget('[0]'), ucget('[1][1]'))
+  )
+)
+
 export const canvasCreateColorsHash = flow(
-  map(
+  morphism(
     nIfElse,
-    map(lift, cand, ucget('settings'), ucget('settings.colored')),
+    morphism(lift, cand, ucget('settings'), ucget('settings.colored')),
     flow(
       ucget('objects'),
       objectValues,
-      map(nArrayMap, ucget('lastClick')),
-      map(nArraySort, sortAsc),
-      map(lift, toPool, prevResult, inject(clone(colorsMap))),
-      map(
+      morphism(nArrayMap, ucget('lastClick')),
+      morphism(nArraySort, sortAsc),
+      morphism(lift, toPool, prevResult, inject(clone(colorsMap))),
+      morphism(
         lift,
         nIterateGroup,
-        chain(
-          map(
+        morphismDeep(
+          2,
+          lift,
+          pass,
+          morphism(
             lift,
-            pass,
-            map(
-              lift,
-              fillArray,
-              ucget('[0]'),
-              flow(ucget('[1][1]'), arrayShift)
-            )
+            fillArray,
+            ucget('[0]'),
+            flow(ucget('[1][1]'), arrayShift)
           )
         ),
         ucget('[0].length'),
-        flow(ucget('[0].length'), map(nMathDivBy, 3), mathCeil),
+        flow(ucget('[0].length'), morphism(nMathDivBy, 3), mathCeil),
         ucget('[0]')
       )
     ),
@@ -59,7 +69,3 @@ export const canvasCreateColorsHash = flow(
   cFlatten(1),
   Object.fromEntries
 )
-
-function fillArray(arr, value) {
-  return arr.map((item) => [item, value])
-}

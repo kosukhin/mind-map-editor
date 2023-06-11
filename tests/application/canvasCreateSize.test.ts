@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { canvasCreateSize } from '~/application/canvasCreateSize'
 
 describe('Построение размера канвы', () => {
