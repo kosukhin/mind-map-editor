@@ -25,16 +25,6 @@ import {
   args,
 } from '~/utils/fp'
 
-const fillArray = flow(
-  args,
-  morphism(
-    lift,
-    nArrayMap,
-    ucget('[0]'),
-    morphismDeep(2, lift, toPool, ucget('[0]'), ucget('[1][1]'))
-  )
-)
-
 export const canvasCreateColorsHash = flow(
   morphism(
     nIfElse,
@@ -54,7 +44,15 @@ export const canvasCreateColorsHash = flow(
           pass,
           morphism(
             lift,
-            fillArray,
+            flow(
+              args,
+              morphism(
+                lift,
+                nArrayMap,
+                ucget('[0]'),
+                morphismDeep(2, lift, toPool, ucget('[0]'), ucget('[1][1]'))
+              )
+            ),
             ucget('[0]'),
             flow(ucget('[1][1]'), arrayShift)
           )
