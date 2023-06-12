@@ -1,9 +1,19 @@
 import { describe, it } from 'vitest'
-import { canvasRestrictBoundaries } from '~/application/canvasRestrictBoundaries'
+import {
+  calculateMaximums2,
+  canvasRestrictBoundaries,
+  canvasRestrictBoundaries2,
+} from '~/application/canvasRestrictBoundaries'
+import { CANVAS_WIDTH } from '~/constants'
 
 describe('Ограничение прокрутки', () => {
+  it('calc maximums', () => {
+    const r = calculateMaximums2({ w: 100 }, 'w', CANVAS_WIDTH)
+    expect(r).to.equals(-2900)
+  })
+
   it('Улетели вверх', () => {
-    const size = canvasRestrictBoundaries({
+    const size = canvasRestrictBoundaries2({
       x: 100,
       y: 100,
     })({ w: 500, h: 500 })

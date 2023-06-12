@@ -3,12 +3,61 @@ import set from 'lodash/set'
 import get from 'lodash/get'
 import curry from 'lodash/curry'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '~/constants'
-import { and, gt, ifElse, mathMultiply, mathSub, pass } from '~/utils/fp'
+import {
+  and,
+  args,
+  constant,
+  debug,
+  gt,
+  ifElse,
+  lift,
+  mathMultiply,
+  mathSub,
+  morphism,
+  pass,
+  concat,
+  ucget,
+  sconcat,
+  prevResult,
+  mlift,
+  toPool,
+} from '~/utils/fp'
 import { aliases } from '~/libraries/stepper/v2'
 
 const { $, $s, $r, $v, $prev } = aliases
 
-const args = ['_pos', '_canvasSize']
+export const calculateMaximums2 = flow(
+  args,
+  mlift(
+    mathSub,
+    ucget('[2]'),
+    mlift(ucget, prevResult, flow(ucget('[1]'), sconcat('[0].')))
+  ),
+  morphism(mathMultiply, -1)
+)
+
+export const canvasRestrictBoundaries2 = curry(
+  flow(
+    args,
+    mlift(
+      toPool,
+      mlift(
+        calculateMaximums2,
+        ucget('[1]'),
+        constant('w'),
+        constant(CANVAS_WIDTH)
+      ),
+      mlift(
+        calculateMaximums2,
+        ucget('[1]'),
+        constant('h'),
+        constant(CANVAS_HEIGHT)
+      )
+    ),
+    debug
+  )
+)
+
 export const canvasRestrictBoundaries = curry(
   flow(
     $s(args),

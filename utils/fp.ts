@@ -5,6 +5,7 @@ import flattenDepth from 'lodash/flattenDepth'
 import { aliases, StepContainer } from '~/libraries/stepper/v2'
 
 const { $prev } = aliases
+const isDebug = false
 
 export function nIfElse(v, comparator, thenBranch, elseBranch?) {
   if (comparator(v)) {
@@ -46,7 +47,10 @@ export const arrayShift = (v: any[]) => v.shift()
 export const arrayPush = (v: any[], val: any) => v.push(val)
 export const sortAsc = (a, b) => a - b
 export const mathCeil = Math.ceil
-export const mathSub = (a, b) => a - b
+export const mathSub = (a, b) => {
+  console.log('sub', a, b)
+  return a - b
+}
 export const mathMultiply = (a, b) => a * b
 export const mathDivBy = (by: number) => (v) => v / by
 export const nMathDivBy = (v, by: number) => v / by
@@ -115,6 +119,12 @@ export const eq = (a, b) => a === b
 
 export const fromJson = (json: string) => JSON.parse(json)
 
+export function concat(v, s) {
+  return v + s
+}
+export const sconcat = curry(concat)
+export const rconcat = curryRight(concat)
+
 export function constant(v) {
   return () => v
 }
@@ -150,12 +160,35 @@ export function silentMap(fn, ...args) {
   }
 }
 
+export function mlift(...args) {
+  return morphism(lift, ...args)
+}
+export function mliftDeep(deep, ...args) {
+  return morphismDeep(deep, lift, ...args)
+}
+export function silentLift(...args) {
+  return silentMap(lift, ...args)
+}
+
 export function lift(v, fn, ...argFns) {
-  return fn(
-    ...argFns.map((argFn) => {
-      return argFn(v)
-    })
-  )
+  const args = argFns.map((argFn) => {
+    return argFn(v)
+  })
+  const result = fn(...args)
+  if (isDebug) {
+    console.log(
+      '[LIFT]',
+      'name:',
+      fn.name,
+      'v:',
+      v,
+      'args:',
+      strinify(args),
+      'result:',
+      result
+    )
+  }
+  return result
 }
 
 export function toPool(...args: any[]) {
