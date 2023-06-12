@@ -1,19 +1,18 @@
 import { describe, it } from 'vitest'
 import {
-  calculateMaximums2,
+  calculateMaximums,
   canvasRestrictBoundaries,
-  canvasRestrictBoundaries2,
 } from '~/application/canvasRestrictBoundaries'
 import { CANVAS_WIDTH } from '~/constants'
 
 describe('Ограничение прокрутки', () => {
   it('calc maximums', () => {
-    const r = calculateMaximums2({ w: 100 }, 'w', CANVAS_WIDTH)
-    expect(r).to.equals(-2900)
+    const r = calculateMaximums({ w: 100 }, 'w', CANVAS_WIDTH)
+    expect(r).to.equals(2900)
   })
 
   it('Улетели вверх', () => {
-    const size = canvasRestrictBoundaries2({
+    const size = canvasRestrictBoundaries({
       x: 100,
       y: 100,
     })({ w: 500, h: 500 })

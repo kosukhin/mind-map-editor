@@ -48,7 +48,6 @@ export const arrayPush = (v: any[], val: any) => v.push(val)
 export const sortAsc = (a, b) => a - b
 export const mathCeil = Math.ceil
 export const mathSub = (a, b) => {
-  console.log('sub', a, b)
   return a - b
 }
 export const mathMultiply = (a, b) => a * b
