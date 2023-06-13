@@ -2,7 +2,7 @@ import flow from 'lodash/flow'
 import { colorsMap } from '~/constants'
 import {
   arrayShift,
-  cFlatten,
+  flatten,
   clone,
   inject,
   mathCeil,
@@ -16,40 +16,43 @@ import {
   pass,
   prevResult,
   sortAsc,
-  connectFn,
-  doFn,
-  doFnDeep,
   argsToArray,
   getOrFalse,
   and,
   getOrObject,
   getOrNull,
   getOrArray,
+  f,
 } from '~/utils/fp'
 
 export const canvasCreateColorsHash = flow(
-  connectFn(
+  f.do(
     ifEls,
     prevResult,
-    doFn(and, getOrFalse('settings'), getOrFalse('settings.colored')),
+    f.doCtx(and, getOrFalse('settings'), getOrFalse('settings.colored')),
     flow(
       getOrObject('objects'),
       objectValues,
-      connectFn(arrayMap, prevResult, getOrNull('lastClick')),
-      connectFn(arraySort, prevResult, sortAsc),
-      doFn(argsToArray, prevResult, inject(clone(colorsMap))),
-      doFn(
+      f.do(arrayMap, prevResult, getOrNull('lastClick')),
+      f.do(arraySort, prevResult, sortAsc),
+      f.doCtx(argsToArray, prevResult, inject(clone(colorsMap))),
+      f.doCtx(
         iterateGroup,
-        doFnDeep(
+        f.doCtxDeep(
           2,
           pass,
-          doFn(
+          f.doCtx(
             flow(
               argsToArray,
-              doFn(
+              f.doCtx(
                 arrayMap,
                 getOrArray('[0]'),
-                doFnDeep(2, argsToArray, getOrNull('[0]'), getOrNull('[1][1]'))
+                f.doCtxDeep(
+                  2,
+                  argsToArray,
+                  getOrNull('[0]'),
+                  getOrNull('[1][1]')
+                )
               )
             ),
             getOrArray('[0]'),
@@ -59,7 +62,7 @@ export const canvasCreateColorsHash = flow(
         getOrNull('[0].length'),
         flow(
           getOrNull('[0].length'),
-          connectFn(nMathDivBy, prevResult, 3),
+          f.do(nMathDivBy, prevResult, 3),
           mathCeil
         ),
         getOrArray('[0]')
@@ -67,6 +70,6 @@ export const canvasCreateColorsHash = flow(
     ),
     objectCreate
   ),
-  cFlatten(1),
+  flatten(1),
   Object.fromEntries
 )

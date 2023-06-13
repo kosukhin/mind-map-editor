@@ -1,11 +1,11 @@
 import flow from 'lodash/flow'
-import { argsToArray, constant, doFn, ucget } from '~/utils/fp'
+import { argsToArray, constant, f, getOrNull } from '~/utils/fp'
 
 export const canvasCreateSize = flow(
-  doFn(
+  f.doCtx(
     argsToArray,
-    doFn(argsToArray, constant('w'), ucget('clientWidth')),
-    doFn(argsToArray, constant('h'), ucget('clientHeight'))
+    f.doCtx(argsToArray, constant('w'), getOrNull('clientWidth')),
+    f.doCtx(argsToArray, constant('h'), getOrNull('clientHeight'))
   ),
   Object.fromEntries
 )

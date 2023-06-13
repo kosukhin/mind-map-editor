@@ -32,7 +32,7 @@ export function ifElse<T>(
   }
 }
 
-export const cFlatten = curryRight(flattenDepth)
+export const flatten = curryRight(flattenDepth)
 export const clone = (v: any) => JSON.parse(JSON.stringify(v))
 export const inject = (obj: any) => () => obj
 export const objectValues = Object.values
@@ -182,3 +182,9 @@ export const parse = JSON.parse
 
 export const log = curry(console.log, 2)
 export const debug = silentMap(lift, log('[DEBUG]:'), strinify)
+
+export const f = {
+  do: connectFn,
+  doCtx: doFn,
+  doCtxDeep: doFnDeep,
+}

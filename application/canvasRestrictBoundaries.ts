@@ -2,7 +2,6 @@ import flow from 'lodash/flow'
 import curry from 'lodash/curry'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '~/constants'
 import {
-  args,
   constant,
   gt,
   mathMultiply,
@@ -10,84 +9,90 @@ import {
   ucget,
   sconcat,
   prevResult,
-  doFn,
   toPool,
   ifEls,
-  cand,
-  connectFn,
+  and,
+  argsToArray,
+  f,
+  getOrNull,
 } from '~/utils/fp'
 
 export const calculateMaximums = flow(
-  args,
-  doFn(
+  argsToArray,
+  f.doCtx(
     mathSub,
-    ucget('[2]'),
-    doFn(ucget, prevResult, flow(ucget('[1]'), sconcat('[0].')))
+    getOrNull('[2]'),
+    f.doCtx(getOrNull, prevResult, flow(getOrNull('[1]'), sconcat('[0].')))
   )
 )
 
 export const canvasRestrictBoundaries = curry(
   flow(
-    args,
-    doFn(
+    argsToArray,
+    f.doCtx(
       toPool,
       ucget('[0]'),
-      doFn(
+      f.doCtx(
         calculateMaximums,
         ucget('[1]'),
         constant('w'),
         constant(CANVAS_WIDTH)
       ),
-      doFn(
+      f.doCtx(
         calculateMaximums,
         ucget('[1]'),
         constant('h'),
         constant(CANVAS_HEIGHT)
       )
     ),
-    connectFn(
+    f.do(
       ifEls,
-      doFn(
-        cand,
-        doFn(gt, ucget('[1]'), constant(0)),
-        doFn(gt, ucget('[2]'), constant(0))
+      prevResult,
+      f.doCtx(
+        and,
+        f.doCtx(gt, ucget('[1]'), constant(0)),
+        f.doCtx(gt, ucget('[2]'), constant(0))
       ),
-      doFn(
+      f.doCtx(
         toPool,
-        doFn(
+        f.doCtx(
           toPool,
           constant('x'),
-          connectFn(
+          f.do(
             ifEls,
-            doFn(gt, ucget('[0].x'), constant(0)),
+            prevResult,
+            f.doCtx(gt, ucget('[0].x'), constant(0)),
             constant(0),
-            connectFn(
+            f.do(
               ifEls,
-              doFn(
+              prevResult,
+              f.doCtx(
                 gt,
-                doFn(mathMultiply, ucget('[0].x'), constant(-1)),
+                f.doCtx(mathMultiply, ucget('[0].x'), constant(-1)),
                 ucget('[1]')
               ),
-              doFn(mathMultiply, ucget('[1]'), constant(-1)),
+              f.doCtx(mathMultiply, ucget('[1]'), constant(-1)),
               ucget('[0].x')
             )
           )
         ),
-        doFn(
+        f.doCtx(
           toPool,
           constant('y'),
-          connectFn(
+          f.do(
             ifEls,
-            doFn(gt, ucget('[0].y'), constant(0)),
+            prevResult,
+            f.doCtx(gt, ucget('[0].y'), constant(0)),
             constant(0),
-            connectFn(
+            f.do(
               ifEls,
-              doFn(
+              prevResult,
+              f.doCtx(
                 gt,
-                doFn(mathMultiply, ucget('[0].y'), constant(-1)),
+                f.doCtx(mathMultiply, ucget('[0].y'), constant(-1)),
                 ucget('[2]')
               ),
-              doFn(mathMultiply, ucget('[2]'), constant(-1)),
+              f.doCtx(mathMultiply, ucget('[2]'), constant(-1)),
               ucget('[0].y')
             )
           )
