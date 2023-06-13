@@ -28,12 +28,13 @@ import {
 export const canvasCreateColorsHash = flow(
   connectFn(
     nIfElse,
+    prevResult,
     doFn(cand, ucget('settings'), ucget('settings.colored')),
     flow(
       ucget('objects'),
       objectValues,
-      connectFn(nArrayMap, ucget('lastClick')),
-      connectFn(nArraySort, sortAsc),
+      connectFn(nArrayMap, prevResult, ucget('lastClick')),
+      connectFn(nArraySort, prevResult, sortAsc),
       doFn(toPool, prevResult, inject(clone(colorsMap))),
       doFn(
         nIterateGroup,
@@ -54,7 +55,11 @@ export const canvasCreateColorsHash = flow(
           )
         ),
         ucget('[0].length'),
-        flow(ucget('[0].length'), connectFn(nMathDivBy, 3), mathCeil),
+        flow(
+          ucget('[0].length'),
+          connectFn(nMathDivBy, prevResult, 3),
+          mathCeil
+        ),
         ucget('[0]')
       )
     ),

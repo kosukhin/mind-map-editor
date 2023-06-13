@@ -132,8 +132,8 @@ export function prevResult(v) {
   return v
 }
 
-export function morphism(fn, ...args) {
-  return (v) => fn(v, ...args)
+export function morphism(fn, vModifier: Function, ...args) {
+  return (v) => fn(vModifier(v), ...args)
 }
 export const connectFn = morphism
 
@@ -141,8 +141,8 @@ export function chain(fn, ...args) {
   return (v) => (e) => fn([e, v], ...args)
 }
 
-export function morphismDeep(deep, fn, ...args) {
-  return curryRight((...vargs) => fn(vargs, ...args), deep)
+export function morphismDeep(deep, fn, vModifier: Function, ...args) {
+  return curryRight((...vargs) => fn(vModifier(vargs), ...args), deep)
 }
 
 export function args(...args) {
@@ -161,10 +161,10 @@ export function silentMap(fn, ...args) {
 }
 
 export function doFn(...args) {
-  return morphism(lift, ...args)
+  return morphism(lift, pass, ...args)
 }
 export function doFnDeep(deep, ...args) {
-  return morphismDeep(deep, lift, ...args)
+  return morphismDeep(deep, lift, pass, ...args)
 }
 export function silentLift(...args) {
   return silentMap(lift, ...args)
