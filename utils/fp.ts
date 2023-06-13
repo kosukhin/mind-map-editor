@@ -7,7 +7,7 @@ import { aliases, StepContainer } from '~/libraries/stepper/v2'
 const { $prev } = aliases
 const isDebug = false
 
-export function nIfElse(v, comparator, thenBranch, elseBranch?) {
+export function ifEls(v, comparator, thenBranch, elseBranch?) {
   if (comparator(v)) {
     return thenBranch(v)
   } else if (elseBranch) {
@@ -37,12 +37,10 @@ export const clone = (v: any) => JSON.parse(JSON.stringify(v))
 export const inject = (obj: any) => () => obj
 export const objectValues = Object.values
 export const objectCreate = () => ({})
-export const arrayMap = (fn: Function) => (v: any[]) => v.map(fn)
-export const nArrayMap = (v, fn) => {
-  return v.map((v) => fn(v))
+export const arrayMap = (arr, fn) => {
+  return arr.map((v) => fn(v))
 }
-export const arraySort = (fn: Function) => (v: any[]) => v.sort(fn)
-export const nArraySort = (v: any[], fn) => v.sort(fn)
+export const arraySort = (arr: any[], fn) => arr.sort(fn)
 export const arrayShift = (v: any[]) => v.shift()
 export const arrayPush = (v: any[], val: any) => v.push(val)
 export const sortAsc = (a, b) => a - b
@@ -68,7 +66,7 @@ export const arrayForEach = (fn: Function, data: any) => {
   }
 }
 
-export const nIterateGroup = (
+export const iterateGroup = (
   fn: Function,
   limit: any,
   chunk: any,
@@ -84,31 +82,7 @@ export const nIterateGroup = (
   return result
 }
 
-export const iterateGroup = (
-  fn: Function,
-  limit: any,
-  chunk: any,
-  data: any
-) => {
-  return (v: StepContainer) => {
-    const vLimit = limit(v)
-    const vChunk = chunk(v)
-    const vData = data(v)
-
-    for (let i = 0; i < vLimit; i += vChunk) {
-      const slice = vData.slice(i, i + vChunk)
-      v.set('prevResult', slice)
-      fn(v)
-    }
-
-    return v
-  }
-}
-export const cand = (a, b) => a && b
-export const and = (a, b) => (v) => {
-  v.set('prevResult', a(v) && b(v))
-  return v
-}
+export const and = (a, b) => a && b
 export const or = (a, b) => a || b
 export const gt = (a, b) => a > b
 export const lt = (a, b) => a < b
@@ -194,9 +168,14 @@ export function lift(v, fn, ...argFns) {
 export function toPool(...args: any[]) {
   return [...args]
 }
+export const argsToArray = toPool
 
 export const cget = curryRight(get, 3)
 export const ucget = cget(null)
+export const getOrFalse = cget(false)
+export const getOrNull = cget(null)
+export const getOrObject = cget({})
+export const getOrArray = cget([])
 
 export const strinify = JSON.stringify
 export const parse = JSON.parse

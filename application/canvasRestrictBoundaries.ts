@@ -12,7 +12,7 @@ import {
   prevResult,
   doFn,
   toPool,
-  nIfElse,
+  ifEls,
   cand,
   connectFn,
 } from '~/utils/fp'
@@ -46,7 +46,7 @@ export const canvasRestrictBoundaries = curry(
       )
     ),
     connectFn(
-      nIfElse,
+      ifEls,
       doFn(
         cand,
         doFn(gt, ucget('[1]'), constant(0)),
@@ -58,11 +58,11 @@ export const canvasRestrictBoundaries = curry(
           toPool,
           constant('x'),
           connectFn(
-            nIfElse,
+            ifEls,
             doFn(gt, ucget('[0].x'), constant(0)),
             constant(0),
             connectFn(
-              nIfElse,
+              ifEls,
               doFn(
                 gt,
                 doFn(mathMultiply, ucget('[0].x'), constant(-1)),
@@ -77,11 +77,11 @@ export const canvasRestrictBoundaries = curry(
           toPool,
           constant('y'),
           connectFn(
-            nIfElse,
+            ifEls,
             doFn(gt, ucget('[0].y'), constant(0)),
             constant(0),
             connectFn(
-              nIfElse,
+              ifEls,
               doFn(
                 gt,
                 doFn(mathMultiply, ucget('[0].y'), constant(-1)),

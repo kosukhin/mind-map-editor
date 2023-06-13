@@ -2,65 +2,67 @@ import flow from 'lodash/flow'
 import { colorsMap } from '~/constants'
 import {
   arrayShift,
-  cand,
   cFlatten,
   clone,
   inject,
   mathCeil,
-  nArrayMap,
-  nArraySort,
-  nIfElse,
-  nIterateGroup,
+  arrayMap,
+  arraySort,
+  ifEls,
+  iterateGroup,
   nMathDivBy,
   objectCreate,
   objectValues,
   pass,
   prevResult,
   sortAsc,
-  toPool,
-  ucget,
-  args,
   connectFn,
   doFn,
   doFnDeep,
+  argsToArray,
+  getOrFalse,
+  and,
+  getOrObject,
+  getOrNull,
+  getOrArray,
 } from '~/utils/fp'
 
 export const canvasCreateColorsHash = flow(
   connectFn(
-    nIfElse,
+    ifEls,
     prevResult,
-    doFn(cand, ucget('settings'), ucget('settings.colored')),
+    doFn(and, getOrFalse('settings'), getOrFalse('settings.colored')),
     flow(
-      ucget('objects'),
+      getOrObject('objects'),
       objectValues,
-      connectFn(nArrayMap, prevResult, ucget('lastClick')),
-      connectFn(nArraySort, prevResult, sortAsc),
-      doFn(toPool, prevResult, inject(clone(colorsMap))),
+      connectFn(arrayMap, prevResult, getOrNull('lastClick')),
+      connectFn(arraySort, prevResult, sortAsc),
+      doFn(argsToArray, prevResult, inject(clone(colorsMap))),
       doFn(
-        nIterateGroup,
+        iterateGroup,
         doFnDeep(
           2,
           pass,
           doFn(
             flow(
-              args,
+              argsToArray,
               doFn(
-                nArrayMap,
-                ucget('[0]'),
-                doFnDeep(2, toPool, ucget('[0]'), ucget('[1][1]'))
+                arrayMap,
+                getOrArray('[0]'),
+                doFnDeep(2, argsToArray, getOrNull('[0]'), getOrNull('[1][1]'))
               )
             ),
-            ucget('[0]'),
-            flow(ucget('[1][1]'), arrayShift)
+            getOrArray('[0]'),
+            flow(getOrArray('[1][1]'), arrayShift)
           )
         ),
-        ucget('[0].length'),
+        getOrNull('[0].length'),
         flow(
-          ucget('[0].length'),
+          getOrNull('[0].length'),
           connectFn(nMathDivBy, prevResult, 3),
           mathCeil
         ),
-        ucget('[0]')
+        getOrArray('[0]')
       )
     ),
     objectCreate
