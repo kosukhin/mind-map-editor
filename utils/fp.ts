@@ -40,6 +40,9 @@ export const objectCreate = () => ({})
 export const arrayMap = (arr, fn) => {
   return arr.map((v) => fn(v))
 }
+export const arrayForEach = (arr, fn) => {
+  return arr.forEach((v, index) => fn([v, index]))
+}
 export const arraySort = (arr: any[], fn) => arr.sort(fn)
 export const arrayShift = (v: any[]) => v.shift()
 export const arrayPush = (v: any[], val: any) => v.push(val)
@@ -54,16 +57,6 @@ export const nMathDivBy = (v, by: number) => v / by
 export const pass = (v) => v
 export const arrayReduce = (v: any[], fn, initialValue) => {
   return v.reduce(fn, initialValue)
-}
-export const arrayForEach = (fn: Function, data: any) => {
-  return (v: StepContainer) => {
-    const vData = data(v)
-    vData.forEach((item, index) => {
-      v.set($prev, item)
-      v.set('$index', index)
-      fn(v)
-    })
-  }
 }
 
 export const iterateGroup = (
@@ -88,7 +81,8 @@ export const gt = (a, b) => a > b
 export const lt = (a, b) => a < b
 export const gte = (a, b) => a >= b
 export const lte = (a, b) => a <= b
-export const eq = (a, b) => a === b
+// eslint-disable-next-line eqeqeq
+export const eq = (a, b) => a == b
 
 export const fromJson = (json: string) => JSON.parse(json)
 
@@ -101,6 +95,7 @@ export const rconcat = curryRight(concat)
 export function constant(v) {
   return () => v
 }
+export const scalar = constant
 
 export function prevResult(v) {
   return v
@@ -182,6 +177,10 @@ export const parse = JSON.parse
 
 export const log = curry(console.log, 2)
 export const debug = silentMap(lift, log('[DEBUG]:'), strinify)
+export const debug2 = (enabled, ...args) =>
+  enabled
+    ? silentMap(lift, console.log, constant('[DEBUG]:'), ...args)
+    : silentMap(pass)
 
 export const f = {
   do: connectFn,
