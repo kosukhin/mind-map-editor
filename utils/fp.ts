@@ -135,6 +135,7 @@ export function prevResult(v) {
 export function morphism(fn, ...args) {
   return (v) => fn(v, ...args)
 }
+export const connectFn = morphism
 
 export function chain(fn, ...args) {
   return (v) => (e) => fn([e, v], ...args)
@@ -159,10 +160,10 @@ export function silentMap(fn, ...args) {
   }
 }
 
-export function mlift(...args) {
+export function doFn(...args) {
   return morphism(lift, ...args)
 }
-export function mliftDeep(deep, ...args) {
+export function doFnDeep(deep, ...args) {
   return morphismDeep(deep, lift, ...args)
 }
 export function silentLift(...args) {

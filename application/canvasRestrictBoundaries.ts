@@ -7,90 +7,88 @@ import {
   gt,
   mathMultiply,
   mathSub,
-  morphism,
   ucget,
   sconcat,
   prevResult,
-  mlift,
+  doFn,
   toPool,
   nIfElse,
   cand,
+  connectFn,
 } from '~/utils/fp'
 
 export const calculateMaximums = flow(
   args,
-  mlift(
+  doFn(
     mathSub,
     ucget('[2]'),
-    mlift(ucget, prevResult, flow(ucget('[1]'), sconcat('[0].')))
+    doFn(ucget, prevResult, flow(ucget('[1]'), sconcat('[0].')))
   )
 )
 
 export const canvasRestrictBoundaries = curry(
   flow(
     args,
-    mlift(
+    doFn(
       toPool,
       ucget('[0]'),
-      mlift(
+      doFn(
         calculateMaximums,
         ucget('[1]'),
         constant('w'),
         constant(CANVAS_WIDTH)
       ),
-      mlift(
+      doFn(
         calculateMaximums,
         ucget('[1]'),
         constant('h'),
         constant(CANVAS_HEIGHT)
       )
     ),
-    morphism(
+    connectFn(
       nIfElse,
-      mlift(
+      doFn(
         cand,
-        mlift(gt, ucget('[1]'), constant(0)),
-        mlift(gt, ucget('[2]'), constant(0))
+        doFn(gt, ucget('[1]'), constant(0)),
+        doFn(gt, ucget('[2]'), constant(0))
       ),
-      flow(
-        mlift(
+      doFn(
+        toPool,
+        doFn(
           toPool,
-          mlift(
-            toPool,
-            constant('x'),
-            morphism(
+          constant('x'),
+          connectFn(
+            nIfElse,
+            doFn(gt, ucget('[0].x'), constant(0)),
+            constant(0),
+            connectFn(
               nIfElse,
-              mlift(gt, ucget('[0].x'), constant(0)),
-              constant(0),
-              morphism(
-                nIfElse,
-                mlift(
-                  gt,
-                  mlift(mathMultiply, ucget('[0].x'), constant(-1)),
-                  ucget('[1]')
-                ),
-                mlift(mathMultiply, ucget('[1]'), constant(-1)),
-                ucget('[0].x')
-              )
+              doFn(
+                gt,
+                doFn(mathMultiply, ucget('[0].x'), constant(-1)),
+                ucget('[1]')
+              ),
+              doFn(mathMultiply, ucget('[1]'), constant(-1)),
+              ucget('[0].x')
             )
-          ),
-          mlift(
-            toPool,
-            constant('y'),
-            morphism(
+          )
+        ),
+        doFn(
+          toPool,
+          constant('y'),
+          connectFn(
+            nIfElse,
+            doFn(gt, ucget('[0].y'), constant(0)),
+            constant(0),
+            connectFn(
               nIfElse,
-              mlift(gt, ucget('[0].y'), constant(0)),
-              constant(0),
-              morphism(
-                nIfElse,
-                mlift(
-                  gt,
-                  mlift(mathMultiply, ucget('[0].y'), constant(-1)),
-                  ucget('[2]')
-                ),
-                mlift(mathMultiply, ucget('[2]'), constant(-1)),
-                ucget('[0].y')
-              )
+              doFn(
+                gt,
+                doFn(mathMultiply, ucget('[0].y'), constant(-1)),
+                ucget('[2]')
+              ),
+              doFn(mathMultiply, ucget('[2]'), constant(-1)),
+              ucget('[0].y')
             )
           )
         )
