@@ -101,6 +101,7 @@ const remove = () => {
   close()
   all([currentObject, map] as const).map(([vObj, vMap]) => {
     findRelationsToRemove(vObj, vMap).map((relations) => {
+      console.log(relations)
       relations.forEach((relation) => {
         relation.indexes.forEach((indexToRemove) => {
           vMap.objects[relation.objectId].arrows.splice(indexToRemove, 1)

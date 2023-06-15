@@ -40,6 +40,9 @@ export const objectCreate = () => ({})
 export const arrayMap = (arr, fn) => {
   return arr.map((v) => fn(v))
 }
+export const arrayFilter = (arr, fn) => {
+  return arr.filter((v) => fn(v))
+}
 export const arrayForEach = (arr, fn) => {
   return arr.forEach((v, index) => fn([v, index]))
 }
@@ -129,6 +132,10 @@ export function silentMap(fn, ...args) {
     fn(v, ...args)
     return v
   }
+}
+
+export function varType(variable) {
+  return typeof variable
 }
 
 export function doFn(...args) {

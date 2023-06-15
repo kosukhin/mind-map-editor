@@ -3,6 +3,7 @@ import set from 'lodash/set.js'
 import { Maybe } from '~/utils/maybe'
 import {
   argsToArray,
+  arrayFilter,
   arrayForEach,
   arrayMap,
   arrayPush,
@@ -22,6 +23,7 @@ import {
   scalar,
   silentMap,
   toPool,
+  varType,
 } from '~/utils/fp'
 
 const onDebug = 0
@@ -115,6 +117,16 @@ export const findRelationsToRemove = flow(
     )
   ),
   flatten(1),
+  f.do(
+    arrayFilter,
+    pass,
+    flow(
+      f.doCtx(varType, getOrNull('[0]')),
+      debug2(onDebug, scalar('Тип'), prevResult),
+      f.doCtx(eq, prevResult, constant('string'))
+    )
+  ),
+  debug2(onDebug, scalar('Перед map'), prevResult),
   f.do(
     arrayMap,
     pass,
