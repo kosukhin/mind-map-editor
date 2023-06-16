@@ -205,5 +205,9 @@ export const f = {
   doCtxDeep: doFnDeep,
 }
 
+export const d = connectFn
+export const dc = doFn
+export const dcd = doFnDeep
+
 export const argsToObject = (args: [string, string][]) =>
   flow(argsToArray, f.do(objectFromArray, pass, ...args))

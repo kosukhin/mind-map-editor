@@ -22,37 +22,34 @@ import {
   getOrObject,
   getOrNull,
   getOrArray,
-  f,
+  d,
+  dc,
+  dcd,
 } from '~/utils/fp'
 
 export const canvasCreateColorsHash = flow(
-  f.do(
+  d(
     ifEls,
     prevResult,
-    f.doCtx(and, getOrFalse('settings'), getOrFalse('settings.colored')),
+    dc(and, getOrFalse('settings'), getOrFalse('settings.colored')),
     flow(
       getOrObject('objects'),
       objectValues,
-      f.do(arrayMap, prevResult, getOrNull('lastClick')),
-      f.do(arraySort, prevResult, sortAsc),
-      f.doCtx(argsToArray, prevResult, inject(clone(colorsMap))),
-      f.doCtx(
+      d(arrayMap, prevResult, getOrNull('lastClick')),
+      d(arraySort, prevResult, sortAsc),
+      dc(argsToArray, prevResult, inject(clone(colorsMap))),
+      dc(
         iterateGroup,
-        f.doCtxDeep(
+        dcd(
           2,
           pass,
-          f.doCtx(
+          dc(
             flow(
               argsToArray,
-              f.doCtx(
+              dc(
                 arrayMap,
                 getOrArray('[0]'),
-                f.doCtxDeep(
-                  2,
-                  argsToArray,
-                  getOrNull('[0]'),
-                  getOrNull('[1][1]')
-                )
+                dcd(2, argsToArray, getOrNull('[0]'), getOrNull('[1][1]'))
               )
             ),
             getOrArray('[0]'),
@@ -60,11 +57,7 @@ export const canvasCreateColorsHash = flow(
           )
         ),
         getOrNull('[0].length'),
-        flow(
-          getOrNull('[0].length'),
-          f.do(nMathDivBy, prevResult, 3),
-          mathCeil
-        ),
+        flow(getOrNull('[0].length'), d(nMathDivBy, prevResult, 3), mathCeil),
         getOrArray('[0]')
       )
     ),

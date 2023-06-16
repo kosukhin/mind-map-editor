@@ -13,87 +13,88 @@ import {
   ifEls,
   and,
   argsToArray,
-  f,
   getOrNull,
+  dc,
+  d,
 } from '~/utils/fp'
 
 export const calculateMaximums = flow(
   argsToArray,
-  f.doCtx(
+  dc(
     mathSub,
     getOrNull('[2]'),
-    f.doCtx(getOrNull, prevResult, flow(getOrNull('[1]'), sconcat('[0].')))
+    dc(getOrNull, prevResult, flow(getOrNull('[1]'), sconcat('[0].')))
   )
 )
 
 export const canvasRestrictBoundaries = curry(
   flow(
     argsToArray,
-    f.doCtx(
+    dc(
       toPool,
       ucget('[0]'),
-      f.doCtx(
+      dc(
         calculateMaximums,
         ucget('[1]'),
         constant('w'),
         constant(CANVAS_WIDTH)
       ),
-      f.doCtx(
+      dc(
         calculateMaximums,
         ucget('[1]'),
         constant('h'),
         constant(CANVAS_HEIGHT)
       )
     ),
-    f.do(
+    d(
       ifEls,
       prevResult,
-      f.doCtx(
+      dc(
         and,
-        f.doCtx(gt, ucget('[1]'), constant(0)),
-        f.doCtx(gt, ucget('[2]'), constant(0))
+        dc(gt, getOrNull('[1]'), constant(0)),
+        dc(gt, getOrNull('[2]'), constant(0))
       ),
-      f.doCtx(
+      dc(
         toPool,
-        f.doCtx(
+        dc(
           toPool,
           constant('x'),
-          f.do(
+          d(
             ifEls,
             prevResult,
-            f.doCtx(gt, ucget('[0].x'), constant(0)),
+            dc(gt, getOrNull('[0].x'), constant(0)),
             constant(0),
-            f.do(
+            d(
               ifEls,
               prevResult,
-              f.doCtx(
+              dc(
                 gt,
-                f.doCtx(mathMultiply, ucget('[0].x'), constant(-1)),
-                ucget('[1]')
+                dc(mathMultiply, getOrNull('[0].x'), constant(-1)),
+                getOrNull('[1]')
               ),
-              f.doCtx(mathMultiply, ucget('[1]'), constant(-1)),
-              ucget('[0].x')
+              dc(mathMultiply, getOrNull('[1]'), constant(-1)),
+              getOrNull('[0].x')
             )
           )
         ),
-        f.doCtx(
+        dc(
           toPool,
           constant('y'),
-          f.do(
+          d(
             ifEls,
             prevResult,
-            f.doCtx(gt, ucget('[0].y'), constant(0)),
+            dc(gt, getOrNull('[0].y'), constant(0)),
             constant(0),
-            f.do(
+            d(
               ifEls,
               prevResult,
-              f.doCtx(
+              dc(
                 gt,
-                f.doCtx(mathMultiply, ucget('[0].y'), constant(-1)),
-                ucget('[2]')
+                dc(mathMultiply, getOrNull('[0].y'), constant(-1)),
+                getOrNull('[2]')
               ),
-              f.doCtx(mathMultiply, ucget('[2]'), constant(-1)),
-              ucget('[0].y')
+              dc(mathMultiply, getOrNull('[2]'), constant(-1)),
+              getOrNull('[0].y')
             )
           )
         )

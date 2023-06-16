@@ -3,7 +3,8 @@ import curry from 'lodash/curry'
 import {
   argsToObject,
   constant,
-  f,
+  d,
+  dc,
   getOrFalse,
   getOrNull,
   ifEls,
@@ -18,10 +19,10 @@ export const formDirtyCheck = curry(
       ['formName', '[1]'],
       ['overlayName', '[2]'],
     ]),
-    f.do(
+    d(
       ifEls,
       pass,
-      f.doCtx(neq, getOrNull('formName'), getOrNull('overlayName')),
+      dc(neq, getOrNull('formName'), getOrNull('overlayName')),
       constant(null),
       getOrFalse('isDirty')
     )

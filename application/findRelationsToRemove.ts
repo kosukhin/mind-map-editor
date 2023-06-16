@@ -8,8 +8,10 @@ import {
   arrayMap,
   arrayPush,
   constant,
+  d,
+  dc,
+  dcd,
   eq,
-  f,
   flatten,
   fromJson,
   getOrArray,
@@ -27,47 +29,43 @@ import {
 
 export const findRelationsToRemove = flow(
   argsToArray,
-  f.doCtx(
+  dc(
     toPool,
     flow(getOrArray('[1].objects'), objectValues),
     getOrNull('[0].id')
   ),
-  f.doCtx(
+  dc(
     arrayMap,
     getOrArray('[0]'),
-    f.doCtxDeep(
+    dcd(
       2,
       pass,
       flow(
-        f.doCtx(toPool, prevResult, f.do(fromJson, scalar('[]'))),
-        f.do(
+        dc(toPool, prevResult, d(fromJson, scalar('[]'))),
+        d(
           ifEls,
           pass,
           getOrNull('[0][0].arrows.length'),
           flow(
             silentMap(
-              f.doCtx(
+              dc(
                 arrayForEach,
                 getOrArray('[0][0].arrows'),
-                f.doCtxDeep(
+                dcd(
                   2,
                   pass,
                   flow(
-                    f.do(
+                    d(
                       ifEls,
                       pass,
-                      f.doCtx(
-                        eq,
-                        getOrNull('[0][0].id'),
-                        getOrNull('[1][0][1][1]')
-                      ),
+                      dc(eq, getOrNull('[0][0].id'), getOrNull('[1][0][1][1]')),
                       flow(
                         silentMap(
-                          f.doCtx(
+                          dc(
                             arrayPush,
                             getOrArray('[1][1]'),
                             flow(
-                              f.doCtx(
+                              dc(
                                 toPool,
                                 getOrNull('[1][0][0].id'),
                                 getOrNull('[0][1]')
@@ -88,33 +86,24 @@ export const findRelationsToRemove = flow(
     )
   ),
   flatten(1),
-  f.do(
+  d(
     arrayFilter,
     pass,
-    flow(
-      f.doCtx(varType, getOrNull('[0]')),
-      f.doCtx(eq, prevResult, constant('string'))
-    )
+    flow(dc(varType, getOrNull('[0]')), dc(eq, prevResult, constant('string')))
   ),
-  f.do(
+  d(
     arrayMap,
     pass,
     flow(
-      f.doCtx(
+      dc(
         argsToArray,
-        f.doCtx(argsToArray, constant('objectId'), getOrNull('[0]')),
-        f.doCtx(
-          argsToArray,
-          constant('indexes'),
-          f.doCtx(argsToArray, getOrNull('[1]'))
-        )
+        dc(argsToArray, constant('objectId'), getOrNull('[0]')),
+        dc(argsToArray, constant('indexes'), dc(argsToArray, getOrNull('[1]')))
       ),
       Object.fromEntries
     )
   ),
-  f.doCtx(toPool, prevResult, Maybe),
-  silentMap(
-    f.doCtx(set, getOrObject('[1]'), constant('value'), getOrNull('[0]'))
-  ),
+  dc(toPool, prevResult, Maybe),
+  silentMap(dc(set, getOrObject('[1]'), constant('value'), getOrNull('[0]'))),
   getOrObject('[1]')
 )

@@ -1,7 +1,8 @@
 import flow from 'lodash/flow'
 import {
   constant,
-  f,
+  d,
+  dc,
   getOrNull,
   getOrObject,
   objectFromArray,
@@ -11,23 +12,23 @@ import {
 } from '~/utils/fp'
 
 export const layerDragHandler = flow(
-  f.do(objectFromArray, pass, ['vDrag', '[0]'], ['vMap', '[1]']),
-  f.doCtx(
+  d(objectFromArray, pass, ['vDrag', '[0]'], ['vMap', '[1]']),
+  dc(
     toPool,
-    f.doCtx(
+    dc(
       getOrObject,
       pass,
-      f.doCtx(
+      dc(
         sconcat,
         constant('vMap.objects.'),
         getOrNull('vDrag.target.attrs.objectId')
       )
     ),
     flow(
-      f.doCtx(
+      dc(
         toPool,
-        f.doCtx(toPool, constant('x'), getOrNull('vDrag.target.attrs.x')),
-        f.doCtx(toPool, constant('y'), getOrNull('vDrag.target.attrs.y'))
+        dc(toPool, constant('x'), getOrNull('vDrag.target.attrs.x')),
+        dc(toPool, constant('y'), getOrNull('vDrag.target.attrs.y'))
       ),
       Object.fromEntries
     )
