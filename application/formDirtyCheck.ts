@@ -1,21 +1,19 @@
 import flow from 'lodash/flow'
 import curry from 'lodash/curry'
 import {
-  argsToArray,
+  argsToObject,
   constant,
   f,
   getOrFalse,
   getOrNull,
   ifEls,
   neq,
-  objectFromArray,
   pass,
 } from '~/utils/fp'
 
 export const formDirtyCheck = curry(
   flow(
-    argsToArray,
-    f.do(objectFromArray, pass, [
+    argsToObject([
       ['isDirty', '[0]'],
       ['formName', '[1]'],
       ['overlayName', '[2]'],

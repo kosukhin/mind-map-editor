@@ -2,6 +2,7 @@ import curryRight from 'lodash/curryRight'
 import get from 'lodash/get'
 import curry from 'lodash/curry'
 import flattenDepth from 'lodash/flattenDepth'
+import flow from 'lodash/flow'
 import { aliases, StepContainer } from '~/libraries/stepper/v2'
 
 const { $prev } = aliases
@@ -33,12 +34,11 @@ export function ifElse<T>(
 }
 
 export function objectFromArray(arr: any[], ...args) {
-  return Object.fromEntries(
-    args.map((item) => {
-      item[1] = getOrNull(item[1], arr)
-      return item
-    })
-  )
+  const result = args.map((item) => {
+    item[1] = getOrNull(arr, item[1])
+    return item
+  })
+  return Object.fromEntries(result)
 }
 export const flatten = curryRight(flattenDepth)
 export const clone = (v: any) => JSON.parse(JSON.stringify(v))
@@ -204,3 +204,6 @@ export const f = {
   doCtx: doFn,
   doCtxDeep: doFnDeep,
 }
+
+export const argsToObject = (args: [string, string][]) =>
+  flow(argsToArray, f.do(objectFromArray, pass, ...args))
