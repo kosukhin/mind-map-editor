@@ -8,18 +8,24 @@ import {
   getOrNull,
   ifEls,
   neq,
+  objectFromArray,
   pass,
 } from '~/utils/fp'
 
 export const formDirtyCheck = curry(
   flow(
     argsToArray,
+    f.do(objectFromArray, pass, [
+      ['isDirty', '[0]'],
+      ['formName', '[1]'],
+      ['overlayName', '[2]'],
+    ]),
     f.do(
       ifEls,
       pass,
-      f.doCtx(neq, getOrNull('[1]'), getOrNull('[2]')),
+      f.doCtx(neq, getOrNull('formName'), getOrNull('overlayName')),
       constant(null),
-      getOrFalse('[0]')
+      getOrFalse('isDirty')
     )
   ),
   3

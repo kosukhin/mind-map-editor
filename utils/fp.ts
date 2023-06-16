@@ -32,6 +32,14 @@ export function ifElse<T>(
   }
 }
 
+export function objectFromArray(arr: any[], ...args) {
+  return Object.fromEntries(
+    args.map((item) => {
+      item[1] = getOrNull(item[1], arr)
+      return item
+    })
+  )
+}
 export const flatten = curryRight(flattenDepth)
 export const clone = (v: any) => JSON.parse(JSON.stringify(v))
 export const inject = (obj: any) => () => obj
