@@ -3,6 +3,7 @@ import get from 'lodash/get'
 import curry from 'lodash/curry'
 import flattenDepth from 'lodash/flattenDepth'
 import flow from 'lodash/flow'
+import isFunction from 'lodash/isFunction.js'
 import { aliases, StepContainer } from '~/libraries/stepper/v2'
 
 const { $prev } = aliases
@@ -35,8 +36,7 @@ export function ifElse<T>(
 
 export function objectFromArray(arr: any[], ...args) {
   const result = args.map((item) => {
-    item[1] = getOrNull(arr, item[1])
-    return item
+    return [item[0], getOrNull(arr, item[1])]
   })
   return Object.fromEntries(result)
 }
@@ -145,6 +145,8 @@ export function silentMap(fn, ...args) {
 export function varType(variable) {
   return typeof variable
 }
+
+export const call = (fn, context) => (isFunction(fn) ? fn.call(context) : fn)
 
 export function doFn(...args) {
   return morphism(lift, pass, ...args)

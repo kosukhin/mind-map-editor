@@ -1,5 +1,9 @@
 import { watch } from '@vue/runtime-core'
-import { useSharedLayer, useSharedLayerEvents, useCanvasBoundaries } from '~/composables'
+import {
+  useSharedLayer,
+  useSharedLayerEvents,
+  useCanvasBoundaries,
+} from '~/composables'
 import { all } from '~/utils'
 import { layerWheelHandler } from '~/application'
 
