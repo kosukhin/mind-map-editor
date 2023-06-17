@@ -22,6 +22,7 @@ import BaseButton from '~/components/BaseButton/BaseButton.vue'
 import TheLinker from '~/components/TheLinker/TheLinker.vue'
 import BaseGroup from '~/components/BaseGroup/BaseGroup.vue'
 import BaseIcon from '~/components/BaseIcon/BaseIcon.vue'
+import TheGrouper from '~/components/TheGrouper/TheGrouper.vue'
 
 const { overlayName } = useSharedOverlay()
 const { currentTypeId } = useSharedMapType()
@@ -134,6 +135,7 @@ const addToCanvas = (e: DragEvent, type: string, useStagePosition = false) => {
         </BaseButton>
       </BaseGroup>
       <TheLinker />
+      <TheGrouper />
     </div>
   </div>
 </template>
