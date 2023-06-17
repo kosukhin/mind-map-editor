@@ -44,6 +44,7 @@ export interface MapStructure {
   settings: MapSettings
   types: MapStructureTypes
   objects: Dictionary<MapObject>
+  position?: [number, number]
 }
 
 export interface Map {

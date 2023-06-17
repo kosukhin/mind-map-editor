@@ -29,6 +29,7 @@ export const useSharedLayerListenerClick = createSharedComposable(() => {
         all([result.currentObjectId, map] as const).map(([objectId, vMap]) => {
           if (vMap.objects[objectId]) {
             vMap.objects[objectId].lastClick = Date.now()
+            vMap.position = vMap.objects[objectId].position
           }
         })
         result.currentObjectId.map(setValue(currentObjectId))

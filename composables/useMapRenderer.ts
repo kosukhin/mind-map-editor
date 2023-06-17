@@ -11,13 +11,21 @@ import { renderMapObjects } from '~/application'
 
 export function useMapRenderer() {
   const { triggerPartialRendering } = useMapPartialRenderer()
-  const { layer, layerObjects } = useSharedLayer()
+  const { layer, stage, layerObjects } = useSharedLayer()
   const { map } = useSharedMap()
   const { maybeDragLocked } = useSharedLocks()
   const allInit = computed(
     () => all([layer, map] as const).map(() => true).value
   )
   watchOnce(allInit, () => {
+    all([stage, map] as const).map(([vStage, vMap]) => {
+      if (vMap.position) {
+        vStage.position({
+          x: -vMap.position[0] + 50,
+          y: -vMap.position[1] + 50,
+        })
+      }
+    })
     all([layer, map, maybeDragLocked] as const)
       .map(renderMapObjects)
       .map((dispatch) => {
