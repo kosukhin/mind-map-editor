@@ -32,6 +32,7 @@ function createSelection(nodes: any) {
     enabledAnchors: [],
   })
   transformer.rotateEnabled(false)
+  transformer.shouldOverdrawWholeArea(true)
   layer.map((vLayer) => {
     vLayer.add(transformer)
   })
