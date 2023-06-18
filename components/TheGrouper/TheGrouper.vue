@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from '@vue/reactivity'
+import { computed, ref } from '@vue/reactivity'
 import { useI18n } from 'vue-i18n'
 import { watch } from '@vue/runtime-core'
 import Konva from 'konva'
@@ -11,11 +11,13 @@ import {
   useSharedMap,
   useSharedMapObject,
 } from '~/composables'
+import { all, cloneObject } from '~/utils'
 
 const { layer, layerObjects } = useSharedLayer()
 const i18n = useI18n()
 const title = ref(i18n.t('theGrouper.group'))
 const type = ref('default')
+const isGrouping = computed(() => type.value === 'danger')
 const { map } = useSharedMap()
 const { currentObjectId } = useSharedMapObject()
 let stopNextObjectWatcher: Function | null = null
@@ -51,6 +53,15 @@ function createSelection(nodes: any) {
   })
 }
 
+const cloneGroup = () => {
+  all([map, layer] as const).map(([vMap, vLayer]) => {
+    ;[...groups].forEach(async (objectId) => {
+      const vObj = vMap.objects[objectId]
+      await cloneObject(vObj, vMap, vLayer, layerObjects)
+    })
+  })
+}
+
 const onClick = () => {
   if (stopNextObjectWatcher) {
     if (transformer) {
@@ -60,6 +71,7 @@ const onClick = () => {
       transformer = null
     }
     stopNextObjectWatcher()
+    stopNextObjectWatcher = null
     isClickLocked.value = false
     title.value = i18n.t('theGrouper.group')
     type.value = 'default'
@@ -97,5 +109,10 @@ const onClick = () => {
 </script>
 
 <template>
+  <div v-if="isGrouping" key="grouper-panel" class="TheGrouper-Panel">
+    <BaseButton type="primary" @click="cloneGroup">
+      {{ $t('theGrouper.clone') }}
+    </BaseButton>
+  </div>
   <BaseButton :type="type" @click="onClick"> {{ title }} </BaseButton>
 </template>

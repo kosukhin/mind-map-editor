@@ -21,13 +21,9 @@ import {
   NOTIFY_SUCCESS,
   SHOW_OBJECT,
 } from '~/constants'
-import { KonvaLayerObject, MapObject } from '~/entities'
-import { all, createMapObjectUrl, setValue } from '~/utils'
-import {
-  addObjectToLayer,
-  removeObjectOnLayer,
-  updateObjectOnLayer,
-} from '~/utils/konva'
+import { MapObject } from '~/entities'
+import { all, cloneObject, createMapObjectUrl, setValue } from '~/utils'
+import { removeObjectOnLayer, updateObjectOnLayer } from '~/utils/konva'
 import { findRelationsToRemove } from '~/application'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 import BaseTextarea from '~/components/BaseTextarea/BaseTextarea.vue'
@@ -158,12 +154,7 @@ const clone = () => {
   close()
   all([currentObject, map, layer] as const).map(
     async ([vObj, vMap, vLayer]) => {
-      const newId = Date.now().toString()
-      const clonedObject = cloneDeep(vObj)
-      clonedObject.id = newId
-      vMap.objects[newId] = clonedObject
-      const objects = await addObjectToLayer(vLayer, clonedObject, vMap)
-      layerObjects.set(clonedObject.id, objects as KonvaLayerObject[])
+      await cloneObject(vObj, vMap, vLayer, layerObjects)
     }
   )
 }
