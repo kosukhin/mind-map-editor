@@ -1,14 +1,16 @@
 <script lang="ts" setup>
-import { watchOnce } from '@vueuse/core'
+import { useStorage, watchOnce } from '@vueuse/core'
 import { ref } from '@vue/reactivity'
-import { SHOW_TRANSFER } from '~/constants'
+import { HISTORY_STORAGE_KEY, SHOW_TRANSFER } from '~/constants'
 import {
+  useObjectActions,
   useOverlayAutoClose,
   useSharedMap,
   useSharedMapObject,
+  useSharedOverlay,
 } from '~/composables'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
-import { createMapObjectUrl } from '~/utils'
+import { all, createMapObjectUrl } from '~/utils'
 import { useRequestTransfer } from '~/composables/useRequestTransfer'
 
 useOverlayAutoClose(SHOW_TRANSFER)
@@ -32,12 +34,26 @@ const getObjectLink = (object) => {
   return createMapObjectUrl(object)
 }
 
+const { close } = useSharedOverlay()
+const { removeCurrentObject } = useObjectActions(false)
 const { transferMap } = useRequestTransfer()
-const transfer = (toObj) => {
-  transferMap(getObjectLink(toObj), {
-    object: currentObject.value,
+const transfer = (url, remove = true) => {
+  all([currentObject, map] as const).map(async ([vCurObj, vMap]) => {
+    await transferMap(url, {
+      object: vCurObj,
+      type: { ...vMap.types[vCurObj.type], id: vCurObj.type },
+    })
+    if (remove) {
+      removeCurrentObject()
+    }
+    close()
   })
 }
+
+const mapsHistory = useStorage<{ url: string; title: string }[]>(
+  HISTORY_STORAGE_KEY,
+  []
+)
 </script>
 
 <template>
@@ -59,14 +75,52 @@ const transfer = (toObj) => {
         {{ getObjectLink(obj) }}
         <BaseButton
           class="TheObjectTransfer-Button"
-          type="primary"
+          type="danger"
           size="sm"
-          @click="transfer(obj)"
+          @click="transfer(getObjectLink(obj))"
         >
           {{ $t('theObjectTransfer.transfer') }}
         </BaseButton>
+        <BaseButton
+          class="TheObjectTransfer-Button"
+          type="primary"
+          size="sm"
+          @click="transfer(getObjectLink(obj), false)"
+        >
+          {{ $t('theObjectTransfer.copy') }}
+        </BaseButton>
       </li>
     </ul>
+    <p>&nbsp;</p>
+    <div>
+      <h3>История переходов</h3>
+      <p>&nbsp;</p>
+      <ul class="TheObjectTransfer-Items">
+        <li
+          v-for="(obj, index) in mapsHistory"
+          :key="index"
+          class="TheObjectTransfer-Item"
+        >
+          {{ obj.title }} {{ obj.url }}
+          <BaseButton
+            class="TheObjectTransfer-Button"
+            type="danger"
+            size="sm"
+            @click="transfer(obj.url)"
+          >
+            {{ $t('theObjectTransfer.transfer') }}
+          </BaseButton>
+          <BaseButton
+            class="TheObjectTransfer-Button"
+            type="primary"
+            size="sm"
+            @click="transfer(obj.url, false)"
+          >
+            {{ $t('theObjectTransfer.copy') }}
+          </BaseButton>
+        </li>
+      </ul>
+    </div>
   </BaseModal>
 </template>
 

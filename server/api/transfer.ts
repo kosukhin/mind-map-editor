@@ -18,15 +18,12 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const fileExists = existsSync(filePath)
 
-  console.log('try transfer', filePath)
-  console.log('body', body, 'exists', fileExists)
-
   if (fileExists) {
     console.log('file ', filePath)
     const map = JSON.parse(readFileSync(filePath).toString())
     const newObject = body.object
     map.structure.objects[newObject.id] = newObject
-    console.log(map)
+    map.structure.types[body.type.id] = body.type
     saveDocument(filePath, map)
   }
 

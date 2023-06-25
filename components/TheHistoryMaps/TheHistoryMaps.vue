@@ -2,7 +2,7 @@
 import { useStorage } from '@vueuse/core'
 import { useRoute } from 'vue-router'
 import { watch } from '@vue/runtime-core'
-import { SHOW_HISTORY_MAPS } from '~/constants'
+import { HISTORY_STORAGE_KEY, SHOW_HISTORY_MAPS } from '~/constants'
 import BaseDrawer from '~/components/BaseDrawer/BaseDrawer.vue'
 import { useOverlayAutoClose, useSharedMeta } from '~/composables'
 
@@ -10,7 +10,7 @@ useOverlayAutoClose(SHOW_HISTORY_MAPS)
 
 const MAX_HISTORY_ITEMS = 20
 const mapsHistory = useStorage<{ url: string; title: string }[]>(
-  'maps-history',
+  HISTORY_STORAGE_KEY,
   []
 )
 const route = useRoute()

@@ -3,7 +3,6 @@ import { watch } from '@vue/runtime-core'
 import { computed, ref } from '@vue/reactivity'
 import cloneDeep from 'lodash/cloneDeep'
 import { useClipboard } from '@vueuse/core'
-import { useI18n } from 'vue-i18n'
 import {
   useSharedMapObject,
   useSettings,
@@ -13,6 +12,7 @@ import {
   useSharedKeybindings,
   useSharedNotify,
   useFormDirtyCheck,
+  useObjectActions,
 } from '~/composables'
 import {
   COPIED,
@@ -24,8 +24,7 @@ import {
 } from '~/constants'
 import { MapObject } from '~/entities'
 import { all, cloneObject, createMapObjectUrl, setValue } from '~/utils'
-import { removeObjectOnLayer, updateObjectOnLayer } from '~/utils/konva'
-import { findRelationsToRemove } from '~/application'
+import { updateObjectOnLayer } from '~/utils/konva'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 import BaseTextarea from '~/components/BaseTextarea/BaseTextarea.vue'
 import BaseCheckbox from '~/components/BaseCheckbox/BaseCheckbox.vue'
@@ -88,32 +87,7 @@ const objectUrl = computed({
   },
 })
 
-const i18n = useI18n()
 const { layer, layerObjects } = useSharedLayer()
-const remove = () => {
-  if (!confirm(i18n.t('formObject.notifications.sureDelete'))) {
-    return
-  }
-
-  close()
-  all([currentObject, map, layer] as const).map(([vObj, vMap, vLayer]) => {
-    findRelationsToRemove(vObj, vMap).map((relations) => {
-      relations.forEach((relation) => {
-        relation.indexes.forEach((indexToRemove) => {
-          vMap.objects[relation.objectId].arrows.splice(indexToRemove, 1)
-        })
-        updateObjectOnLayer(
-          layerObjects,
-          vLayer,
-          vMap.objects[relation.objectId],
-          vMap
-        )
-      })
-    })
-    delete vMap.objects[vObj.id]
-    removeObjectOnLayer(layerObjects, vObj)
-  })
-}
 const save = () => {
   close()
   all([currentObject, map, layer] as const).map(
@@ -174,6 +148,7 @@ function onCopyUrl() {
 }
 
 const { settings } = useSettings()
+const { removeCurrentObject } = useObjectActions()
 </script>
 
 <template>
@@ -284,7 +259,10 @@ const { settings } = useSettings()
               :key="arrow.id"
               class="FormObject-Arrow"
             >
-              <span class="FormObject-ArrowName">
+              <span
+                v-if="map.value.objects[arrow.id]"
+                class="FormObject-ArrowName"
+              >
                 #{{ index + 1 }} {{ map.value.objects[arrow.id].name }}
               </span>
               <BaseButton
@@ -305,7 +283,7 @@ const { settings } = useSettings()
         <BaseButton type="success" @click="save">
           {{ $t('formObject.save') }}
         </BaseButton>
-        <BaseButton type="danger" @click="remove">
+        <BaseButton type="danger" @click="removeCurrentObject">
           {{ $t('formObject.delete') }}
         </BaseButton>
       </div>

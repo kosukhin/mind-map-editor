@@ -15,3 +15,4 @@ export const NOTIFY_SUCCESS = 'success'
 export const NOTIFY_ERROR = 'error'
 export const colorsMap = ['darkred', 'darkorange', 'darkgreen']
 export const MINI_MAP_UPDATE_FREQ = 10
+export const HISTORY_STORAGE_KEY = 'maps-history'

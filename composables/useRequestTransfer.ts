@@ -4,8 +4,8 @@ import { API_TRANSFER, POST } from '~/constants'
 
 export function useRequestTransfer() {
   const { http } = useRequest()
-  const transferMap = (mapName: string, payload: any) => {
-    http<Map>({
+  const transferMap = async (mapName: string, payload: any) => {
+    await http<Map>({
       method: POST,
       url: API_TRANSFER,
       params: {
