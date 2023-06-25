@@ -35,6 +35,7 @@ import TheKeybindings from '~/components/TheKeybindings/TheKeybindings.vue'
 import AppMenuObject from '~/components/AppMenuObject/AppMenuObject.vue'
 import BaseDrawer from '~/components/BaseDrawer/BaseDrawer.vue'
 import TheHistoryMaps from '~/components/TheHistoryMaps/TheHistoryMaps.vue'
+import TheObjectTransfer from '~/components/TheObjectTransfer/TheObjectTransfer.vue'
 
 useSharedMeta()
 
@@ -127,6 +128,7 @@ const { isSidebarOpen } = useSharedSideBar()
   <FormJson />
   <FormObject />
   <TheHistoryMaps />
+  <TheObjectTransfer />
 </template>
 
 <style scoped lang="scss">

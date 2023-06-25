@@ -20,6 +20,7 @@ import {
   NOTIFY_ERROR,
   NOTIFY_SUCCESS,
   SHOW_OBJECT,
+  SHOW_TRANSFER,
 } from '~/constants'
 import { MapObject } from '~/entities'
 import { all, cloneObject, createMapObjectUrl, setValue } from '~/utils'
@@ -50,7 +51,7 @@ const mapTypes = computed(() => {
   return result
 })
 
-const { close, isOpened } = useSharedOverlay()
+const { close, isOpened, open } = useSharedOverlay()
 const { ctrlSFired } = useSharedKeybindings()
 watch(ctrlSFired, () => {
   if (!isOpened(SHOW_OBJECT)) {
@@ -251,6 +252,16 @@ const { settings } = useSettings()
             @click="clone"
           >
             {{ $t('formObject.clone') }}
+          </BaseButton>
+        </div>
+        <div class="FormObject-Row">
+          <BaseButton
+            class="FormObject-ArrowButton"
+            type="primary"
+            size="md"
+            @click="open(SHOW_TRANSFER)"
+          >
+            {{ $t('formObject.transfer') }}
           </BaseButton>
         </div>
         <div class="FormObject-Row">

@@ -8,9 +8,19 @@ export const useSharedOverlay = createSharedComposable(() => {
   const overlayName = reMaybe<string>()
   const tryToClose = reMaybe<string>()
   const history = ref<string[]>([])
+  const onOpenCbs = {}
   const isClosed = computed(() => {
     return overlayName.value === OVERLAY_CLOSE
   })
+  const open = (newName: string) => {
+    overlayName.value = newName
+  }
+  const onOpen = (openName: string, cb: Function) => {
+    if (!onOpenCbs[openName]) {
+      onOpenCbs[openName] = []
+    }
+    onOpenCbs[openName].push(cb)
+  }
   const close = () => {
     setValue(overlayName, OVERLAY_CLOSE)
     setValue(tryToClose, OVERLAY_CLOSE)
@@ -21,6 +31,9 @@ export const useSharedOverlay = createSharedComposable(() => {
   watch(overlayName, () => {
     overlayName.map((vOverlay) => {
       if (vOverlay !== OVERLAY_CLOSE) {
+        if (onOpenCbs[vOverlay]) {
+          onOpenCbs[vOverlay].forEach((cb) => cb())
+        }
         history.value.push(vOverlay)
       } else {
         setValue(history, [])
@@ -33,6 +46,8 @@ export const useSharedOverlay = createSharedComposable(() => {
     tryToClose,
     history,
     isClosed,
+    onOpen,
+    open,
     close,
     isOpened,
   }
