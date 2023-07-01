@@ -8,17 +8,20 @@ import {
   useSharedLayer,
   useSharedLocks,
   useMapPartialRenderer,
+  useCanvas,
 } from '~/composables'
 import { all, applyArrowPoints, debug, setProperty } from '~/utils'
 import { layerDragHandler, layerDragObjectHandler } from '~/application'
 
 export function useLayerListenerDrag() {
+  const { canvasSize } = useCanvas()
   const { stage, layerObjects } = useSharedLayer()
   const { firstMapLoad, map } = useSharedMap()
   const { isDragLocked } = useSharedLocks()
   const { dragend, dragmove, wheel } = useSharedLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
   const { triggerPartialRendering } = useMapPartialRenderer()
+  let dragMoveInterval = null
 
   watch(dragend, () => {
     debug('debug fired', 'drag')
@@ -28,10 +31,31 @@ export function useLayerListenerDrag() {
       .map(([object, position]) => {
         setProperty(object, 'position', [position.x, position.y])
       })
+    dragMoveInterval && clearInterval(dragMoveInterval)
   })
 
   watch(dragmove, () => {
     if (isDragLocked.value) return
+    all([stage, dragmove, canvasSize] as const).map(
+      ([vLayer, vDMove, vSize]) => {
+        if (vDMove.evt instanceof PointerEvent) {
+          return
+        }
+        if (vDMove.target instanceof Konva.Image) {
+          const offsetX = (Math.round(vSize.w / 2) - vDMove.evt.offsetX) / 10
+          const offsetY = (Math.round(vSize.h / 2) - vDMove.evt.offsetY) / 10
+          dragMoveInterval && clearInterval(dragMoveInterval)
+          dragMoveInterval = setInterval(() => {
+            vLayer.position(
+              restrictBoundaries({
+                x: vLayer.x() + offsetX,
+                y: vLayer.y() + offsetY,
+              })
+            )
+          }, 30)
+        }
+      }
+    )
     all([dragmove, map] as const)
       .map(layerDragObjectHandler(layerObjects))
       .map(({ text, arrows, relatedArrows, additionalText }) => {
