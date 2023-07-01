@@ -38,6 +38,10 @@ export default defineEventHandler(() => {
       return
     }
 
+    if (!document.structure) {
+      return
+    }
+
     Object.values(document.structure.objects).forEach((object) => {
       let url
 

@@ -99,6 +99,7 @@ const onCreateMap = async () => {
       class="PageMain-Row"
     >
       <a :href="result.url">{{ result.name }}</a>
+      [{{ result.url }}]
     </div>
     <h3 class="PageMain-SubTitle">{{ $t('pageMain.existedMaps') }}</h3>
     <div class="PageMain-Files">

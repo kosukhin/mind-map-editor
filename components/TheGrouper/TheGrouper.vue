@@ -23,34 +23,25 @@ const { currentObjectId } = useSharedMapObject()
 let stopNextObjectWatcher: Function | null = null
 const { isClickLocked } = useSharedLocks()
 const groups = new Set()
-let transformer = null
+let transformer = new Konva.Group({})
 
 function createSelection(nodes: any) {
-  if (transformer) {
-    transformer.remove()
-  }
-  transformer = new Konva.Transformer({
-    nodes,
-    enabledAnchors: [],
-  })
-  transformer.rotateEnabled(false)
-  transformer.shouldOverdrawWholeArea(true)
-  layer.map((vLayer) => {
-    vLayer.add(transformer)
-  })
+  nodes.forEach((node) => {
+    node.draggable(false)
+    transformer.add(node)
 
-  transformer.on('dragend', () => {
-    const nodes = transformer.nodes()
+    if (node instanceof Konva.Text) {
+      node.fill('#f00')
+    }
+  })
+}
 
-    map.map((vMap) => {
-      nodes.forEach((node) => {
-        if (node instanceof Konva.Image) {
-          const object = vMap.objects[node.attrs.objectId]
-          object.position = [node.x(), node.y()]
-        }
-      })
+function findNodes() {
+  return flattenDeep(
+    [...groups].map((objectId) => {
+      return layerObjects.get(objectId)
     })
-  })
+  )
 }
 
 const cloneGroup = () => {
@@ -63,13 +54,28 @@ const cloneGroup = () => {
 }
 
 const onClick = () => {
+  transformer = new Konva.Group({
+    draggable: true,
+  })
+  transformer.on('dragend', () => {
+    const nodes = findNodes()
+    map.map((vMap) => {
+      nodes.forEach((node) => {
+        if (node instanceof Konva.Image) {
+          const object = vMap.objects[node.attrs.objectId]
+          object.position = [
+            node.x() + transformer.x(),
+            node.y() + transformer.y(),
+          ]
+        }
+      })
+    })
+  })
+  layer.map((vLayer) => {
+    vLayer.add(transformer)
+  })
+
   if (stopNextObjectWatcher) {
-    if (transformer) {
-      transformer.nodes([])
-      transformer.detach()
-      transformer.remove()
-      transformer = null
-    }
     stopNextObjectWatcher()
     stopNextObjectWatcher = null
     isClickLocked.value = false
@@ -94,11 +100,7 @@ const onClick = () => {
       groups.add(currentObjectId.value)
     }
 
-    const objects = flattenDeep(
-      [...groups].map((objectId) => {
-        return layerObjects.get(objectId)
-      })
-    )
+    const objects = findNodes()
 
     createSelection(objects)
     setTimeout(() => {
