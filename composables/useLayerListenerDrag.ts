@@ -38,7 +38,10 @@ export function useLayerListenerDrag() {
     if (isDragLocked.value) return
     all([stage, dragmove, canvasSize] as const).map(
       ([vLayer, vDMove, vSize]) => {
-        if (vDMove.evt instanceof PointerEvent) {
+        if (
+          vDMove.evt instanceof PointerEvent ||
+          vDMove.evt instanceof TouchEvent
+        ) {
           return
         }
         if (vDMove.target instanceof Konva.Image) {
