@@ -44,7 +44,10 @@ export function useLayerListenerDrag() {
         ) {
           return
         }
-        if (vDMove.target instanceof Konva.Image) {
+        if (
+          vDMove.target instanceof Konva.Image ||
+          vDMove.target instanceof Konva.Group
+        ) {
           const offsetX = (Math.round(vSize.w / 2) - vDMove.evt.offsetX) / 10
           const offsetY = (Math.round(vSize.h / 2) - vDMove.evt.offsetY) / 10
           dragMoveInterval && clearInterval(dragMoveInterval)

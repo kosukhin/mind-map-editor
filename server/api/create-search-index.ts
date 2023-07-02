@@ -51,7 +51,11 @@ export default defineEventHandler(() => {
 
       documents.push({
         name: object.name + '|' + (url ?? 'no'),
-        text: object.description + ' ' + object.name,
+        text:
+          object.description +
+          ' ' +
+          object.name +
+          (object.additionalName ? ' ' + object.additionalName : ''),
       })
     })
   })

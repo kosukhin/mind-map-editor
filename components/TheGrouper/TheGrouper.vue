@@ -7,6 +7,7 @@ import flattenDeep from 'lodash/flattenDeep'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 import {
   useSharedLayer,
+  useSharedLayerEvents,
   useSharedLocks,
   useSharedMap,
   useSharedMapObject,
@@ -53,6 +54,22 @@ const cloneGroup = () => {
   })
 }
 
+const stopWatcher = () => {
+  if (!stopNextObjectWatcher) {
+    return
+  }
+  stopNextObjectWatcher()
+  stopNextObjectWatcher = null
+  isClickLocked.value = false
+  title.value = i18n.t('theGrouper.group')
+  type.value = 'default'
+  groups.clear()
+}
+const { dragend } = useSharedLayerEvents()
+watch(dragend, () => {
+  stopWatcher()
+})
+
 const onClick = () => {
   transformer = new Konva.Group({
     draggable: true,
@@ -76,12 +93,7 @@ const onClick = () => {
   })
 
   if (stopNextObjectWatcher) {
-    stopNextObjectWatcher()
-    stopNextObjectWatcher = null
-    isClickLocked.value = false
-    title.value = i18n.t('theGrouper.group')
-    type.value = 'default'
-    groups.clear()
+    stopWatcher()
     return
   }
 
