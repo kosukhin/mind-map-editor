@@ -21,7 +21,7 @@ export function useLayerListenerDrag() {
   const { dragend, dragmove, wheel } = useSharedLayerEvents()
   const { restrictBoundaries } = useCanvasBoundaries()
   const { triggerPartialRendering } = useMapPartialRenderer()
-  let dragMoveInterval = null
+  let dragMoveInterval: any = null
 
   watch(dragend, () => {
     debug('debug fired', 'drag')
@@ -48,6 +48,15 @@ export function useLayerListenerDrag() {
           vDMove.target instanceof Konva.Image ||
           vDMove.target instanceof Konva.Group
         ) {
+          const { offsetX: ofx, offsetY: ofy } = vDMove.evt
+          const mustMove =
+            ofx < 50 || ofx > vSize.w - 50 || ofy < 50 || ofy > vSize.h - 50
+
+          if (!mustMove) {
+            dragMoveInterval && clearInterval(dragMoveInterval)
+            return
+          }
+
           const offsetX = (Math.round(vSize.w / 2) - vDMove.evt.offsetX) / 10
           const offsetY = (Math.round(vSize.h / 2) - vDMove.evt.offsetY) / 10
           dragMoveInterval && clearInterval(dragMoveInterval)
