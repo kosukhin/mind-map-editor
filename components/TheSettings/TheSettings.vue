@@ -22,13 +22,14 @@ import BaseInput from '~/components/BaseInput/BaseInput.vue'
 
 const { stringify } = JSON
 
-const form = ref({})
+const form = ref<Partial<MapSettings>>({})
 const { map, mapName, firstMapLoad, parentTypes } = useSharedMap()
 watch(
   firstMapLoad,
   () => {
     map.map((vMap) => {
       form.value = { ...vMap.settings }
+      form.value.prevFavoriteGroup = form.value.favoriteGroup
     })
   },
   {
@@ -113,6 +114,10 @@ useFormDirtyCheck(isDirty, SHOW_SETTINGS)
         <a href="https://github.com/kosukhin/mind-map-creator" target="_blank">
           {{ $t('theSettings.githubRepo') }}
         </a>
+      </div>
+      <div class="TheSettings-Row">
+        <b>{{ $t('theSettings.favorites') }}</b>
+        <BaseInput v-model="form.favoriteGroup" />
       </div>
     </div>
     <div class="TheSettings-ButtonGroup">

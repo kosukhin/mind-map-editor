@@ -3,6 +3,7 @@ import {
   currentDate,
   incrementProgress,
   saveDocument,
+  saveToFavorite,
 } from '~/utils/server-only'
 
 export default defineEventHandler(async (event) => {
@@ -15,10 +16,16 @@ export default defineEventHandler(async (event) => {
   }
 
   const { req } = event.node
-  const filePath = createFilePathByUrl(req.url)
+  const filePath = createFilePathByUrl(String(req.url))
 
   const body = await readBody(event)
+  if (body.structure.settings.favoriteGroup) {
+    const { favoriteGroup, prevFavoriteGroup } = body.structure.settings
+    saveToFavorite(favoriteGroup, prevFavoriteGroup, body.structure)
+  }
+
   saveDocument(filePath, body)
+
   const date = currentDate()
   incrementProgress('__progress', date)
 

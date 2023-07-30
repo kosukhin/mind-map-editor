@@ -47,10 +47,12 @@ export default defineEventHandler(() => {
       }
     })
   const progress = parseFileByName('__progress')
+  const favorites = parseFileByName('__favorites')
 
   return {
     ok: true,
     progress,
+    favorites,
     files,
   }
 })

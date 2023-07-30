@@ -101,6 +101,20 @@ const onCreateMap = async () => {
       <a :href="result.url">{{ result.name }}</a>
       [{{ result.url }}]
     </div>
+    <h3 class="PageMain-SubTitle">Избранное</h3>
+    <div>
+      <div v-for="(links, group) in maps.favorites" :key="group">
+        <b>{{ group }}</b
+        >:
+        <span v-for="(title, url) in links" :key="url">
+          <a v-for="(title, url) in links" :key="url" :href="url">{{
+            title
+          }}</a>
+          &nbsp;
+        </span>
+        <p>&nbsp;</p>
+      </div>
+    </div>
     <h3 class="PageMain-SubTitle">{{ $t('pageMain.existedMaps') }}</h3>
     <div class="PageMain-Files">
       <div

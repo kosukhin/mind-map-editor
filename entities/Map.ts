@@ -33,6 +33,8 @@ export type MapStructureTypes = Dictionary<MapType>
 export interface MapSettings {
   colored: boolean
   title: string
+  favoriteGroup?: string
+  prevFavoriteGroup?: string
 }
 
 export interface MapStructure {
