@@ -107,9 +107,7 @@ const onCreateMap = async () => {
         <b>{{ group }}</b
         >:
         <span v-for="(title, url) in links" :key="url">
-          <a v-for="(title, url) in links" :key="url" :href="url">{{
-            title
-          }}</a>
+          <a :href="url">{{ title }}</a>
           &nbsp;
         </span>
         <p>&nbsp;</p>
