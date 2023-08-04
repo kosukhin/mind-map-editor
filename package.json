@@ -7,6 +7,7 @@
     "dev": "nuxt dev",
     "test": "npx vitest --config vitest.config.ts",
     "generate": "nuxt generate",
+    "cz": "git add . && git cz",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint --ext \".ts,.js,.vue\" --ignore-path .eslintignore .",

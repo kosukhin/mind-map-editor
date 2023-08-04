@@ -24,19 +24,21 @@ const progress = computed(() => {
   const max = Math.max(...Object.values(maps.progress))
 
   return Object.fromEntries(
-    Object.entries(maps.progress).map(([key, value]) => {
-      value = Math.round((value * 100) / max)
-      const decimal = value / 100
-      const color = calculateProgressBg(decimal)
-      return [
-        key,
-        {
-          value,
-          decimal,
-          color: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
-        },
-      ]
-    })
+    Object.entries(maps.progress)
+      .map(([key, value]) => {
+        value = Math.round((value * 100) / max)
+        const decimal = value / 100
+        const color = calculateProgressBg(decimal)
+        return [
+          key,
+          {
+            value,
+            decimal,
+            color: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
+          },
+        ]
+      })
+      .reverse()
   )
 })
 
