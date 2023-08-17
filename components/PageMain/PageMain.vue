@@ -4,6 +4,7 @@ import debounce from 'lodash/debounce'
 import { watch } from '@vue/runtime-core'
 import { useSeoMeta } from '@vueuse/head'
 import { useI18n } from 'vue-i18n'
+import { useStorage } from '@vueuse/core'
 import { calculateProgressBg, urlTrim } from '~/utils'
 import {
   useRequestCreateMap,
@@ -12,6 +13,7 @@ import {
 } from '~/composables'
 import BaseButton from '~/components/BaseButton/BaseButton.vue'
 import BaseInput from '~/components/BaseInput/BaseInput.vue'
+import { HISTORY_STORAGE_KEY } from '~/constants'
 
 const i18n = useI18n()
 useSeoMeta({
@@ -79,6 +81,11 @@ const onCreateMap = async () => {
     location.href = `/${response.document}`
   }
 }
+
+const mapsHistory = useStorage<{ url: string; title: string }[]>(
+  HISTORY_STORAGE_KEY,
+  []
+)
 </script>
 
 <template>
@@ -139,6 +146,18 @@ const onCreateMap = async () => {
     </div>
     <br />
     <hr />
+    <br />
+    <h3 class="PageMain-SubTitle">{{ $t('pageMain.visitHistory') }}</h3>
+    <div class="PageMain-Files">
+      <a
+        v-for="(his, index) in mapsHistory"
+        :key="'history' + index"
+        :href="his.url"
+        class="PageMain-File"
+      >
+        {{ his.title }}
+      </a>
+    </div>
     <br />
     <h3 class="PageMain-SubTitle">{{ $t('pageMain.progressStatistic') }}</h3>
     <div class="PageMain-Bars">

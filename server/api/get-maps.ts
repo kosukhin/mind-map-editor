@@ -20,7 +20,7 @@ export default defineEventHandler(() => {
 
   const files = readdirSync(path.join('.', '/public/maps/'))
     .filter((file) => {
-      return file[0] !== '_' && !['README.md'].includes(file)
+      return file[0] !== '_' && file[0] !== '.' && !['README.md'].includes(file)
     })
     .map((file) => {
       let content = {}
