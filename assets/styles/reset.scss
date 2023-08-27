@@ -11,6 +11,11 @@
 body {
   font-family: Arial, sans-serif;
   background: var(--editorBackground);
+  overflow: hidden;
+
+  &:has(.scrollable) {
+    overflow: visible;
+  }
 }
 
 a {

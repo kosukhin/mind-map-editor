@@ -89,7 +89,7 @@ const mapsHistory = useStorage<{ url: string; title: string }[]>(
 </script>
 
 <template>
-  <div class="PageMain">
+  <div class="PageMain scrollable">
     <h2 class="PageMain-Title">Mind-Map-Creator</h2>
     <div class="PageMain-Row">
       <a href="/api/create-search-index" target="_blank">
