@@ -65,10 +65,6 @@ const stopWatcher = () => {
   type.value = 'default'
   groups.clear()
 }
-const { dragend } = useSharedLayerEvents()
-watch(dragend, () => {
-  stopWatcher()
-})
 
 const onClick = () => {
   transformer = new Konva.Group({
@@ -76,6 +72,7 @@ const onClick = () => {
   })
   transformer.on('dragend', () => {
     const nodes = findNodes()
+
     map.map((vMap) => {
       nodes.forEach((node) => {
         if (node instanceof Konva.Image) {

@@ -19,7 +19,6 @@ export default defineEventHandler(async (event) => {
   const fileExists = existsSync(filePath)
 
   if (fileExists) {
-    console.log('file ', filePath)
     const map = JSON.parse(readFileSync(filePath).toString())
     const newObject = body.object
     map.structure.objects[newObject.id] = newObject

@@ -11,6 +11,7 @@ import {
 import { MAP_DEFAULT_TITLE } from '~/constants'
 import { urlTrim } from '~/utils'
 import { addObjectToLayer } from '~/utils/konva'
+import { generateUniqString } from '~/utils/string'
 
 export const createMap = (
   document: string,
@@ -94,7 +95,7 @@ export async function cloneObject(
   vLayer: Layer,
   layerObjects: Map<string, any>
 ) {
-  const newId = Date.now().toString()
+  const newId = generateUniqString()
   const clonedObject = cloneDeep(vObj)
   clonedObject.id = newId
   vMap.objects[newId] = clonedObject
