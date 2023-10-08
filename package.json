@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "test": "npx vitest --config vitest.config.ts",
     "generate": "nuxt generate",
     "cz": "git add . && git cz",
@@ -19,7 +19,7 @@
     "@mapbox/stylelint-processor-arbitrary-tags": "^0.4.0",
     "@nuxtjs/eslint-config-typescript": "^10.0.0",
     "@nuxtjs/eslint-module": "^3.1.0",
-    "@nuxtjs/i18n": "^8.0.0-beta.12",
+    "@nuxtjs/i18n": "^8.0.0-rc.5",
     "@types/lodash": "^4.14.191",
     "@types/lunr": "^2.3.4",
     "cz-conventional-changelog": "^3.3.0",
@@ -27,7 +27,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-nuxt": "^3.2.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "nuxt": "^3.3.1",
+    "nuxt": "^3.7.4",
     "prettier": "^2.8.7",
     "sass": "^1.59.3",
     "sass-loader": "^13.2.0",
@@ -43,7 +43,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@nuxt/test-utils": "^3.5.2",
-    "@nuxtjs/i18n-edge": "^8.0.0-beta.12-28090693.c8406ad",
     "@vueuse/core": "^9.13.0",
     "@vueuse/head": "^1.1.26",
     "canvg": "^4.0.1",
@@ -57,6 +56,9 @@
     "svgedit": "^7.3.0",
     "transliteration": "^2.3.5",
     "vitest": "^0.31.4"
+  },
+  "overrides": {
+    "mlly": "1.4.0"
   },
   "config": {
     "commitizen": {

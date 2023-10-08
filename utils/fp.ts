@@ -195,7 +195,6 @@ export const strinify = JSON.stringify
 export const parse = JSON.parse
 
 export const log = curry(console.log, 2)
-export const debug = silentMap(lift, log('[DEBUG]:'), strinify)
 export const debug2 = (enabled, ...args) =>
   enabled
     ? silentMap(lift, console.log, constant('[DEBUG]:'), ...args)

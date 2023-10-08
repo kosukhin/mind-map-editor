@@ -18,7 +18,9 @@ export default defineEventHandler(async (event) => {
   const { req } = event.node
   const filePath = createFilePathByUrl(String(req.url))
 
-  const body = await readBody(event)
+  let body = await readBody(event)
+  body = JSON.parse(body)
+
   if (body.structure.settings.favoriteGroup) {
     const { favoriteGroup, prevFavoriteGroup } = body.structure.settings
     saveToFavorite(favoriteGroup, prevFavoriteGroup, body.structure)
