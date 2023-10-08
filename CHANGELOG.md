@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/kosukhin/mind-map-creator/compare/v0.0.3...v0.0.4) (2023-10-08)
+
+
+### Features
+
+* добавил пропуск индекс по галочке ([e9d2f6a](https://github.com/kosukhin/mind-map-creator/commit/e9d2f6a38c0f0b7a14fa7631e005462f40a0004d))
+
+
+### Bug Fixes
+
+* поправил ошибку при выборе тапом ([aceed13](https://github.com/kosukhin/mind-map-creator/commit/aceed136a8c5d6cee6a512a4304e1803279bd223))
+
 ### 0.0.3 (2023-10-08)
 
 
