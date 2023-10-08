@@ -20,6 +20,7 @@ export const mapObjectClick =
       overlayName: Maybe<string>(),
     }
     const objectId = e.target.attrs.objectId
+
     if (e.target.attrs.text && objectId) {
       const object = vMap.objects[objectId]
       if (object.linked) {

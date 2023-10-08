@@ -22,8 +22,25 @@ export const useSharedLayerListenerClick = createSharedComposable(() => {
   watch(stageClick, () => {
     isSidebarOpen.value = false
   })
-  watch([tap, click], () => {
-    all([any([click, tap] as const), map] as const)
+
+  watch(click, () => {
+    all([click, map] as const)
+      .map(mapObjectClick(isClickLocked.value))
+      .map((result) => {
+        all([result.currentObjectId, map] as const).map(([objectId, vMap]) => {
+          if (vMap.objects[objectId]) {
+            vMap.objects[objectId].lastClick = Date.now()
+            vMap.position = vMap.objects[objectId].position
+          }
+        })
+        result.currentObjectId.map(setValue(currentObjectId))
+        result.overlayName.map(setValue(overlayName))
+        result.openUrlByObject.map(openUrlByObject)
+      })
+  })
+
+  watch(tap, () => {
+    all([tap, map] as const)
       .map(mapObjectClick(isClickLocked.value))
       .map((result) => {
         all([result.currentObjectId, map] as const).map(([objectId, vMap]) => {
