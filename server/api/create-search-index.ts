@@ -42,6 +42,10 @@ export default defineEventHandler(() => {
       return
     }
 
+    if (document.structure.settings.skipSearchIndex) {
+      return
+    }
+
     Object.values(document.structure.objects).forEach((object) => {
       let url
 

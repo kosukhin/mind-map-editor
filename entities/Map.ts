@@ -35,6 +35,7 @@ export interface MapSettings {
   title: string
   favoriteGroup?: string
   prevFavoriteGroup?: string
+  skipSearchIndex?: boolean
 }
 
 export interface MapStructure {

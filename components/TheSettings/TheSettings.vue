@@ -105,6 +105,12 @@ useFormDirtyCheck(isDirty, SHOW_SETTINGS)
         />
       </div>
       <div class="TheSettings-Row">
+        <BaseCheckbox
+          v-model="form.skipSearchIndex"
+          label="Пропустить индексацию поиском"
+        />
+      </div>
+      <div class="TheSettings-Row">
         <label>
           <b>{{ $t('theSettings.mapName') }}</b>
           <BaseInput v-model="form.title" />
