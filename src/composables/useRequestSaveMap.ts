@@ -1,8 +1,8 @@
 import { idbEdit } from '@/application/idbAction';
 import { idbFindDb } from '@/application/idbGet';
 import { useRequestCreateMap } from '@/composables/useRequestCreateMap';
-import { MapStructure } from '@/entities';
 import { getFileBlobByName, updateBlobContent } from '@/libraries/browser-fs';
+import { MapStructure } from '@/entities';
 
 // FIXME убрать в функции
 export function useRequestSaveMap() {

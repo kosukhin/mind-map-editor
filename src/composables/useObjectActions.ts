@@ -1,11 +1,11 @@
 import { createSharedComposable } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
-import { findRelationsToRemove } from '@/application';
 import { useSharedLayer } from '@/composables/useSharedLayer';
 import { useSharedMap } from '@/composables/useSharedMap';
 import { useSharedMapObject } from '@/composables/useSharedMapObject';
 import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import { removeObjectOnLayer, updateObjectOnLayer } from '@/utils/konva';
+import { findRelationsToRemove } from '@/application';
 
 export const useObjectActions = createSharedComposable((needConfirm = true) => {
   const i18n = useI18n();

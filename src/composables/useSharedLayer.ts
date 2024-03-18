@@ -1,10 +1,10 @@
 import { createSharedComposable } from '@vueuse/core';
+import { createLayer } from '@/utils/konva';
+import { shallowRef } from 'vue';
 import { useCanvas, useLayerListeners, useSharedMap } from '@/composables';
 import { CANVAS_DOM_ID } from '@/constants';
 import { Layer, MapLayerObjects, Stage } from '@/entities';
 import { findById, setValue } from '@/utils';
-import { createLayer } from '@/utils/konva';
-import { shallowRef } from 'vue';
 
 export const useSharedLayer = createSharedComposable(() => {
   const { canvas } = useCanvas();

@@ -1,22 +1,5 @@
 <script setup lang="ts">
 import { watch } from '@vue/runtime-core';
-import {
-  SHOW_SETTINGS,
-  SHOW_SEARCH,
-  SHOW_PARENT_TYPES,
-  SHOW_KEYBINDINGS,
-  SHOW_OBJECT_MENU,
-  SHOW_HISTORY_MAPS,
-} from '@/constants';
-import {
-  useSharedLocks,
-  useSharedSideBar,
-  useSharedHashChange,
-  useMoveToObject,
-  useSharedKeybindings,
-  useSharedOverlay,
-  useSharedMeta,
-} from '@/composables';
 import TheHeader from '@/components/TheHeader/TheHeader.vue';
 import TheEditor from '@/components/TheEditor/TheEditor.vue';
 import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
@@ -35,6 +18,23 @@ import AppMenuObject from '@/components/AppMenuObject/AppMenuObject.vue';
 import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
 import TheHistoryMaps from '@/components/TheHistoryMaps/TheHistoryMaps.vue';
 import TheObjectTransfer from '@/components/TheObjectTransfer/TheObjectTransfer.vue';
+import {
+  useSharedLocks,
+  useSharedSideBar,
+  useSharedHashChange,
+  useMoveToObject,
+  useSharedKeybindings,
+  useSharedOverlay,
+  useSharedMeta,
+} from '@/composables';
+import {
+  SHOW_SETTINGS,
+  SHOW_SEARCH,
+  SHOW_PARENT_TYPES,
+  SHOW_KEYBINDINGS,
+  SHOW_OBJECT_MENU,
+  SHOW_HISTORY_MAPS,
+} from '@/constants';
 
 useSharedMeta();
 

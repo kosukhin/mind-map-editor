@@ -2,8 +2,8 @@
 import { useStorage } from '@vueuse/core';
 import { useRoute } from 'vue-router';
 import { watch } from '@vue/runtime-core';
-import { HISTORY_STORAGE_KEY, SHOW_HISTORY_MAPS } from '@/constants';
 import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
+import { HISTORY_STORAGE_KEY, SHOW_HISTORY_MAPS } from '@/constants';
 import { useOverlayAutoClose, useSharedMeta } from '@/composables';
 
 useOverlayAutoClose(SHOW_HISTORY_MAPS);

@@ -1,4 +1,4 @@
-import { MapStructure } from '@/entities';
+import { MapStructure } from '@/entities/Map';
 
 export const mapNormalizeBeforeSave = (
   vMap: MapStructure,

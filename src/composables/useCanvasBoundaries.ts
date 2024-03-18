@@ -1,9 +1,9 @@
 import partial from 'lodash/partial';
+import { FType } from '@/entities/Utils';
 import { canvasRestrictBoundaries } from '@/application';
 import { useCanvas } from '@/composables';
 import { DEFAULT_BOUNDARIES } from '@/constants';
 import { Size, Vector2d } from '@/entities';
-import { FType } from '@/entities/Utils';
 
 const { canvasSize } = useCanvas();
 

@@ -3,6 +3,9 @@ import { computed, ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import { omit } from 'lodash';
+import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import BaseCheckbox from '@/components/BaseCheckbox/BaseCheckbox.vue';
+import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import {
   SHOW_SETTINGS,
   SHOW_JSON,
@@ -17,9 +20,6 @@ import {
   useFormDirtyCheck,
 } from '@/composables';
 import { MapSettings } from '@/entities';
-import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import BaseCheckbox from '@/components/BaseCheckbox/BaseCheckbox.vue';
-import BaseInput from '@/components/BaseInput/BaseInput.vue';
 
 const { stringify } = JSON;
 

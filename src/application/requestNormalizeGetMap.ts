@@ -1,5 +1,5 @@
-import { MapResponse, MapStructure, MapType } from '@/entities';
-import { createMap } from '@/utils';
+import { MapResponse, MapStructure, MapType } from '@/entities/Map';
+import { createMap } from '@/utils/map';
 
 export const requestNormalizeGetMap = (
   response: MapResponse,

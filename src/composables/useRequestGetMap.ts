@@ -1,6 +1,6 @@
+import { readFileByName } from '@/libraries/browser-fs';
 import { requestNormalizeGetMap } from '@/application';
 import { MapStructure, MapType } from '@/entities';
-import { readFileByName } from '@/libraries/browser-fs';
 
 // FIXME убрать в функции
 export function useRequestGetMap() {

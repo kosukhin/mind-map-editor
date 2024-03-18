@@ -1,14 +1,11 @@
 <script lang="ts" setup>
-import { ref } from '@vue/reactivity';
-import { watch } from '@vue/runtime-core';
-import {
-  useSharedMap,
-  useMoveToObject,
-  useSharedOverlay,
-  useOverlayAutoClose,
-} from '@/composables';
-import { SHOW_OBJECT_MENU } from '@/constants';
-import { MapObject } from '@/entities';
+import { useMoveToObject } from '@/composables/useMoveToObject';
+import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { SHOW_OBJECT_MENU } from '@/constants/overlays';
+import { MapObject } from '@/entities/Map';
+import { ref, watch } from 'vue';
 
 useOverlayAutoClose(SHOW_OBJECT_MENU);
 

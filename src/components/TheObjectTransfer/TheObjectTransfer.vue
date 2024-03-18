@@ -2,6 +2,7 @@
 import { ref } from '@vue/reactivity';
 import { useStorage, watchOnce } from '@vueuse/core';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import { useRequestTransfer } from '@/composables/useRequestTransfer';
 import {
   useObjectActions,
   useOverlayAutoClose,
@@ -9,7 +10,6 @@ import {
   useSharedMapObject,
   useSharedOverlay,
 } from '@/composables';
-import { useRequestTransfer } from '@/composables/useRequestTransfer';
 import { HISTORY_STORAGE_KEY, SHOW_TRANSFER } from '@/constants';
 import { MapObject } from '@/entities';
 import { createMapObjectUrl } from '@/utils';

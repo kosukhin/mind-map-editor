@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import { useMapRenderer, useSharedLayer } from '@/composables';
 import { CANVAS_DOM_ID } from '@/constants';
-import { onMounted, ref } from 'vue';
 
 useMapRenderer();
 const counter = ref(0);

@@ -1,5 +1,5 @@
-import { Size } from '@/entities';
-import { CANVAS_HEIGHT, CANVAS_WIDTH, MINIMAP_SCALE } from '@/constants';
+import { CANVAS_HEIGHT, CANVAS_WIDTH, MINIMAP_SCALE } from '@/constants/system';
+import { Size } from '@/entities/Size';
 
 type Params = [Size]
 type Result = [Size, Size]

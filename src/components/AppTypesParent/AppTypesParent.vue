@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import svg64 from 'svg64';
-import { useSharedMap, useOverlayAutoClose } from '@/composables';
-import { SHOW_PARENT_TYPES } from '@/constants';
-import { MapType } from '@/entities';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
+import { SHOW_PARENT_TYPES } from '@/constants/overlays';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { MapType } from '@/entities/Map';
 
 useOverlayAutoClose(SHOW_PARENT_TYPES);
 

@@ -10,6 +10,7 @@ import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
+import { updateObjectOnLayer } from '@/utils/konva';
 import {
   useFormDirtyCheck,
   useObjectActions,
@@ -31,7 +32,6 @@ import {
 } from '@/constants';
 import { MapObject } from '@/entities';
 import { cloneObject, createMapObjectUrl, setValue } from '@/utils';
-import { updateObjectOnLayer } from '@/utils/konva';
 
 const { stringify } = JSON;
 

@@ -1,5 +1,5 @@
 import { KonvaEventObject } from 'konva/lib/Node';
-import { Stage } from '@/entities';
+import { Stage } from 'konva/lib/Stage';
 
 type Params = [Stage, KonvaEventObject<WheelEvent>]
 

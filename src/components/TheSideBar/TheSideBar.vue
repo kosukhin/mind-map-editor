@@ -6,6 +6,7 @@ import BaseGroup from '@/components/BaseGroup/BaseGroup.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
 import TheGrouper from '@/components/TheGrouper/TheGrouper.vue';
 import TheLinker from '@/components/TheLinker/TheLinker.vue';
+import { addObjectToLayer } from '@/utils/konva';
 import {
   useSharedLayer,
   useSharedMap,
@@ -22,7 +23,6 @@ import {
 } from '@/constants';
 import { KonvaLayerObject, MapObject } from '@/entities';
 import { createObject } from '@/utils';
-import { addObjectToLayer } from '@/utils/konva';
 
 const { overlayName } = useSharedOverlay();
 const { currentTypeId } = useSharedMapType();

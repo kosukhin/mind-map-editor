@@ -1,19 +1,12 @@
-import { slugify } from 'transliteration';
-import cloneDeep from 'lodash/cloneDeep';
-import debounce from 'lodash/debounce';
-import {
-  Arrow,
-  KonvaLayerObject,
-  Layer,
-  MapObject,
-  MapStructure,
-  Nullable,
-} from '@/entities';
-import { MAP_DEFAULT_TITLE } from '@/constants';
+import { MAP_DEFAULT_TITLE } from '@/constants/messages';
+import { Arrow } from '@/entities/Konva';
+import { MapObject, MapStructure } from '@/entities/Map';
+import { Nullable } from '@/entities/Nullable';
 import { urlTrim } from '@/utils/common';
-import { generateUniqString } from '@/utils/string';
+import { getLocation } from '@/utils/globals';
+import debounce from 'lodash/debounce';
+import { slugify } from 'transliteration';
 import { useRouter } from 'vue-router';
-import { addObjectToLayer } from '@/utils/konva';
 
 export const createMap = (
   document: string,
@@ -57,9 +50,10 @@ export const createObject = (
 export function createMapObjectUrl(object: MapObject) {
   let link = object.outlink
     ? object.outlink
-    : `${location.pathname
+    : `${getLocation().pathname
     }/${
       slugify(
+        // eslint-disable-next-line no-nested-ternary
         object.name
           ? object.name
           : object.additionalName
@@ -104,17 +98,3 @@ export const applyArrowPoints = (
 ) => {
   arrows.forEach(([arrow, points]) => arrow.points(points));
 };
-
-export async function cloneObject(
-  vObj: MapObject,
-  vMap: MapStructure,
-  vLayer: Layer,
-  layerObjects: Map<string, any>,
-) {
-  const newId = generateUniqString();
-  const clonedObject = cloneDeep(vObj);
-  clonedObject.id = newId;
-  vMap.objects[newId] = clonedObject;
-  const objects = await addObjectToLayer(vLayer, clonedObject, vMap);
-  layerObjects.set(clonedObject.id, objects as KonvaLayerObject[]);
-}

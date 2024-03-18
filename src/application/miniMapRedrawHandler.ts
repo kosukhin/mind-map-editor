@@ -1,6 +1,6 @@
-import { MINIMAP_SCALE } from '@/constants';
-import { Stage } from '@/entities';
-import { setElementPosition } from '@/utils';
+import { MINIMAP_SCALE } from '@/constants/system';
+import { setElementPosition } from '@/utils/dom';
+import { Stage } from 'konva/lib/Stage';
 
 type Params = [Stage, HTMLElement]
 

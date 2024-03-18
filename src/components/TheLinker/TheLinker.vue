@@ -3,14 +3,14 @@ import { ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import { useI18n } from 'vue-i18n';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import { updateObjectOnLayer } from '@/utils/konva';
+import { AnyFn } from '@vueuse/core';
 import {
   useSharedLayer,
   useSharedLocks,
   useSharedMap,
   useSharedMapObject,
 } from '@/composables';
-import { updateObjectOnLayer } from '@/utils/konva';
-import { AnyFn } from '@vueuse/core';
 
 const { layer, layerObjects } = useSharedLayer();
 const { map } = useSharedMap();

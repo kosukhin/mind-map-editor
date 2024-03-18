@@ -1,5 +1,6 @@
-import { Dictionary, MapStructure } from '@/entities';
-import { colorsMap } from '@/constants';
+import { colorsMap } from '@/constants/system';
+import { Dictionary } from '@/entities/Dictionary';
+import { MapStructure } from '@/entities/Map';
 
 export const canvasCreateColorsHash = (
   vMap: MapStructure,

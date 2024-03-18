@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity';
 import { nextTick, watch } from '@vue/runtime-core';
+import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
+import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import BaseModal from '@/components/BaseModal/BaseModal.vue';
+import FormJsonTypes from '@/components/FormJson/FormJsonTypes.vue';
+import { SHOW_JSON, SHOW_JSON_TYPES } from '@/constants';
 import {
   useSharedMap,
   useSharedOverlay,
   useFormDirtyCheck,
 } from '@/composables';
-import { SHOW_JSON, SHOW_JSON_TYPES } from '@/constants';
-import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
-import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import BaseModal from '@/components/BaseModal/BaseModal.vue';
-import FormJsonTypes from '@/components/FormJson/FormJsonTypes.vue';
 
 const { stringify } = JSON;
 

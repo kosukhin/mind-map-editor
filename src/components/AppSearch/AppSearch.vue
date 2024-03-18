@@ -1,14 +1,12 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity';
-import {
-  useSharedMap,
-  useSharedOverlay,
-  useOverlayAutoClose,
-  useMoveToObject,
-} from '@/composables';
-import { SHOW_SEARCH } from '@/constants';
-import { MapObject } from '@/entities';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
+import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
+import { SHOW_SEARCH } from '@/constants/overlays';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useMoveToObject } from '@/composables/useMoveToObject';
+import { MapObject } from '@/entities/Map';
 
 useOverlayAutoClose(SHOW_SEARCH);
 

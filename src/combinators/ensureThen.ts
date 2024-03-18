@@ -1,5 +1,6 @@
 import { AnyFn } from '@/entities/Utils';
-import { apply } from './_helpers';
+
+export const apply = (fn: () => void) => fn();
 
 export const ensureTemplate = (action: 'every' | 'some', flip = false) => (...ensureFns: AnyFn[]) => (...thenFns: AnyFn[]) => {
   if (flip) {

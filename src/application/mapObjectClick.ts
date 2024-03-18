@@ -1,7 +1,7 @@
+import { MapObject, MapStructure } from '@/entities/Map';
 import { KonvaEventObject } from 'konva/lib/Node';
-import { SHOW_OBJECT } from '@/constants';
-import { MapObject, MapStructure } from '@/entities';
-import { Nullable } from '../entities/Nullable';
+import { Nullable } from '@/entities/Nullable';
+import { SHOW_OBJECT } from '@/constants/overlays';
 
 interface Result {
   currentObjectId: Nullable<number>

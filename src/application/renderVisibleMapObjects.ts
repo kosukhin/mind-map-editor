@@ -1,6 +1,6 @@
 import { calculateVisibleObjects } from '@/application/layerDragObjectHandler';
+import { KonvaLayerObject } from '@/entities/Konva';
 import { addObjectToLayer, removeObjectOnLayer } from '@/utils/konva';
-import { KonvaLayerObject } from '@/entities';
 
 export const renderVisibleMapObjects = (
   layerObjects: any,

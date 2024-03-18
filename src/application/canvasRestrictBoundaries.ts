@@ -1,6 +1,6 @@
-/* eslint-disable no-nested-ternary */
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '@/constants';
-import { Size, Vector2d } from '@/entities';
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from '@/constants/system';
+import { Vector2d } from '@/entities/Konva';
+import { Size } from '@/entities/Size';
 
 export const canvasRestrictBoundaries = (pos: Vector2d) => (canvasSize: Size): Vector2d => {
   const maxRight = CANVAS_WIDTH - canvasSize.w;

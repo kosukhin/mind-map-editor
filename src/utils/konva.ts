@@ -4,8 +4,10 @@ import {
   KonvaLayerObject, Arrow, Layer, Stage,
 } from '@/entities/Konva';
 import { MapObject, MapStructure } from '@/entities/Map';
-import { useSharedMapColors } from '@/composables';
 import { maxNewLineLength, newLineCount } from '@/utils/common';
+import { generateUniqString } from '@/utils/string';
+import { cloneDeep } from 'lodash';
+import { useSharedMapColors } from '@/composables/useSharedMapColors';
 
 export async function addObjectToLayer(
   layer: Layer,
@@ -143,3 +145,17 @@ export const updateObjectOnLayer = async (
   const newObjects = await addObjectToLayer(layer, object, vMap);
   layerObjects.set(object.id, newObjects);
 };
+
+export async function cloneObject(
+  vObj: MapObject,
+  vMap: MapStructure,
+  vLayer: Layer,
+  layerObjects: Map<string, any>,
+) {
+  const newId = generateUniqString();
+  const clonedObject = cloneDeep(vObj);
+  clonedObject.id = newId;
+  vMap.objects[newId] = clonedObject;
+  const objects = await addObjectToLayer(vLayer, clonedObject, vMap);
+  layerObjects.set(clonedObject.id, objects as KonvaLayerObject[]);
+}

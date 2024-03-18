@@ -9,12 +9,6 @@ import { windowReload } from '@/application/windowReload';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import {
-  useRequestCreateMap,
-  useRequestSearch,
-  useIdbGetProject,
-  useIdbSaveProject,
-} from '@/composables';
-import {
   directoryHandler,
   getDirectoryHandler,
   onMapsChanged,
@@ -22,6 +16,12 @@ import {
   setFiles,
   topMaps,
 } from '@/libraries/browser-fs';
+import {
+  useRequestCreateMap,
+  useRequestSearch,
+  useIdbGetProject,
+  useIdbSaveProject,
+} from '@/composables';
 import { urlTrim } from '@/utils';
 import { DEFAULT_PROJECT_NAME } from '@/providers/project';
 import { dbGetCurrent } from '@/application/dbGetCurrent';

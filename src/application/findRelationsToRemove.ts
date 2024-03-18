@@ -1,4 +1,4 @@
-import { MapObject, MapStructure } from '@/entities';
+import { MapObject, MapStructure } from '@/entities/Map';
 
 type RelativeObject = { objectId: string; indexes: string[] }
 

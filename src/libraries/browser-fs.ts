@@ -1,9 +1,9 @@
 import {
   computed, ref, reactive, watch,
 } from 'vue';
+import { AnyFn } from '@vueuse/core';
 import { GetMapsResponse } from '@/entities';
 import { documentNormalize } from '@/utils';
-import { AnyFn } from '@vueuse/core';
 
 export const directoryHandler = ref<FileSystemDirectoryHandle | null>(null);
 const files: Record<string, File> = {};

@@ -1,14 +1,10 @@
-import { KonvaEventObject } from 'konva/lib/Node';
-import {
-  Arrow,
-  MapLayerObjects,
-  MapStructure,
-  Stage,
-  Text,
-  Vector2d,
-} from '@/entities';
-import { debug, maxNewLineLength, newLineCount } from '@/utils';
+import { Arrow, Vector2d } from '@/entities/Konva';
+import { MapStructure } from '@/entities/Map';
+import { MapLayerObjects } from '@/entities/MapLayerObjects';
 import { Nullable } from '@/entities/Nullable';
+import { debug, maxNewLineLength, newLineCount } from '@/utils/common';
+import { KonvaEventObject } from 'konva/lib/Node';
+import { Stage } from 'konva/lib/Stage';
 
 interface Result {
   text: Nullable<[Text, Vector2d]>

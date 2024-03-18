@@ -1,6 +1,7 @@
 import { computed } from '@vue/reactivity';
 import { createSharedComposable } from '@vueuse/core';
 import debounce from 'lodash/debounce';
+import { watch } from 'vue';
 import { canvasRestrictBoundaries, renderMapObjects } from '@/application';
 import {
   useCanvas,
@@ -9,7 +10,6 @@ import {
   useSharedLocks,
   useSharedMap,
 } from '@/composables';
-import { watch } from 'vue';
 
 export const useMapRenderer = createSharedComposable(() => {
   const { triggerPartialRendering } = useMapPartialRenderer();

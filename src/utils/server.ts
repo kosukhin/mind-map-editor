@@ -1,4 +1,4 @@
-import { BASE_HOST, MAP_PARAM_NAME } from '@/constants';
+import { BASE_HOST, MAP_PARAM_NAME } from '@/constants/server';
 import { trim } from 'lodash';
 
 export const documentNormalize = (document: string | null) => {

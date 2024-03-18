@@ -5,6 +5,7 @@ import Konva from 'konva';
 import flattenDeep from 'lodash/flattenDeep';
 import { useI18n } from 'vue-i18n';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import { AnyFn } from '@vueuse/core';
 import {
   useSharedLayer,
   useSharedLocks,
@@ -13,7 +14,6 @@ import {
 } from '@/composables';
 import { MapStructure } from '@/entities';
 import { cloneObject } from '@/utils';
-import { AnyFn } from '@vueuse/core';
 
 const { layer, layerObjects } = useSharedLayer();
 const i18n = useI18n();

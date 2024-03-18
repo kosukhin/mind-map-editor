@@ -1,4 +1,4 @@
-import { Size } from '@/entities';
+import { Size } from '@/entities/Size';
 
 export const canvasCreateSize = (canvasElement: HTMLElement): Size => ({
   w: canvasElement.clientWidth,

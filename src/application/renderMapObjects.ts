@@ -1,5 +1,7 @@
+import { KonvaLayerObject } from '@/entities/Konva';
+import { MapStructure } from '@/entities/Map';
 import { addObjectToLayer } from '@/utils/konva';
-import { KonvaLayerObject, Layer, MapStructure } from '@/entities';
+import { Layer } from 'konva/lib/Layer';
 
 type Params = [Layer, MapStructure, boolean]
 type Result = Array<[string, KonvaLayerObject[]]>

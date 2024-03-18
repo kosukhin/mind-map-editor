@@ -1,9 +1,9 @@
 import { addFiles, getDirectoryHandler } from '@/libraries/browser-fs';
-import { createMap as newMap } from '@/utils';
 import { useRouter } from 'vue-router';
 import { useIdbGetProject } from '@/composables/useIdbGetProject';
 import { DEFAULT_PROJECT_NAME } from '@/constants/project';
 import { useIdbSaveProject } from '@/composables/useIdbSaveProject';
+import { createMap as newMap } from '@/utils';
 
 const { getByName } = useIdbGetProject();
 
