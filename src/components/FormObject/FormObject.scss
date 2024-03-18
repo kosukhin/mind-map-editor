@@ -1,0 +1,48 @@
+.FormObject {
+  &-Title {
+    @include title;
+    margin-bottom: var(--defaultPadding);
+  }
+
+  &-MainTitle {
+    margin-bottom: var(--mbSm);
+  }
+
+  &-MainSubTitle {
+    margin-bottom: var(--defaultPadding);
+    display: flex;
+    align-items: center;
+    gap: var(--mbExLg);
+
+    * {
+      white-space: nowrap;
+    }
+  }
+
+  &-Row,
+  &-Description {
+    margin-bottom: var(--defaultPadding);
+  }
+
+  &-Arrow {
+    display: flex;
+    margin-bottom: var(--mbSm);
+    align-items: flex-start;
+  }
+
+  &-ArrowName {
+    font-size: 12px;
+  }
+
+  &-ArrowButton {
+    flex-basis: 80px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  &-ButtonsGroup {
+    display: flex;
+    gap: var(--mbMd);
+    margin-bottom: var(--mbMd);
+  }
+}

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '@/constants';
 import { Size, Vector2d } from '@/entities';
 

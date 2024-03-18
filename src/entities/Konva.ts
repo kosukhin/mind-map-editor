@@ -1,4 +1,4 @@
-import Konva from 'konva'
+import Konva from 'konva';
 
 export type Vector2d = Konva.Vector2d
 export type Layer = Konva.Layer

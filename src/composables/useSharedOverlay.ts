@@ -1,46 +1,42 @@
-import { computed, ref } from '@vue/reactivity'
-import { watch } from '@vue/runtime-core'
-import { createSharedComposable } from '@vueuse/core'
-import { OVERLAY_CLOSE } from '@/constants'
-import { Dictionary } from '@/entities'
-import { setValue } from '@/utils'
+import { computed, ref } from '@vue/reactivity';
+import { watch } from '@vue/runtime-core';
+import { AnyFn, createSharedComposable } from '@vueuse/core';
+import { OVERLAY_CLOSE } from '@/constants';
+import { Dictionary } from '@/entities';
+import { setValue } from '@/utils';
 
 export const useSharedOverlay = createSharedComposable(() => {
-  const overlayName = ref<string>()
-  const tryToClose = ref<string>()
-  const history = ref<string[]>([])
-  const onOpenCbs: Dictionary<any> = {}
-  const isClosed = computed(() => {
-    return overlayName.value === OVERLAY_CLOSE
-  })
+  const overlayName = ref<string>();
+  const tryToClose = ref<string>();
+  const history = ref<string[]>([]);
+  const onOpenCbs: Dictionary<any> = {};
+  const isClosed = computed(() => overlayName.value === OVERLAY_CLOSE);
   const open = (newName: string) => {
-    overlayName.value = newName
-  }
-  const onOpen = (openName: string, cb: Function) => {
+    overlayName.value = newName;
+  };
+  const onOpen = (openName: string, cb: AnyFn) => {
     if (!onOpenCbs[openName]) {
-      onOpenCbs[openName] = []
+      onOpenCbs[openName] = [];
     }
-    onOpenCbs[openName].push(cb)
-  }
+    onOpenCbs[openName].push(cb);
+  };
   const close = () => {
-    setValue(overlayName, OVERLAY_CLOSE)
-    setValue(tryToClose, OVERLAY_CLOSE)
-  }
-  const isOpened = (maybeName: string) => {
-    return overlayName.value === maybeName
-  }
+    setValue(overlayName, OVERLAY_CLOSE);
+    setValue(tryToClose, OVERLAY_CLOSE);
+  };
+  const isOpened = (maybeName: string) => overlayName.value === maybeName;
   watch(overlayName, () => {
     if (overlayName.value) {
       if (overlayName.value !== OVERLAY_CLOSE) {
         if (onOpenCbs[overlayName.value]) {
-          onOpenCbs[overlayName.value].forEach((cb: any) => cb())
+          onOpenCbs[overlayName.value].forEach((cb: any) => cb());
         }
-        history.value.push(overlayName.value)
+        history.value.push(overlayName.value);
       } else {
-        setValue(history, [])
+        setValue(history, []);
       }
     }
-  })
+  });
 
   return {
     overlayName,
@@ -51,5 +47,5 @@ export const useSharedOverlay = createSharedComposable(() => {
     open,
     close,
     isOpened,
-  }
-})
+  };
+});

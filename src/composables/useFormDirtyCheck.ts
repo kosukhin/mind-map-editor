@@ -1,56 +1,57 @@
-import { Ref } from '@vue/reactivity'
-import { watch } from '@vue/runtime-core'
-import partial from 'lodash/partial'
-import { useSharedOverlay } from '@/composables'
-import { OVERLAY_CLOSE, OVERLAY_CLOSE_ALERT } from '@/constants'
-import { setValue } from '@/utils'
+import { Ref } from '@vue/reactivity';
+import { watch } from '@vue/runtime-core';
+import partial from 'lodash/partial';
+import { useSharedOverlay } from '@/composables';
+import { OVERLAY_CLOSE, OVERLAY_CLOSE_ALERT } from '@/constants';
+import { setValue } from '@/utils';
 
-const { tryToClose, close } = useSharedOverlay()
+const { tryToClose, close } = useSharedOverlay();
 
 type Subscriber = {
   isDirty: Ref<boolean>
   formName: string
 }
-const subscribers: Subscriber[] = []
+const subscribers: Subscriber[] = [];
 
-const closeOverlay = partial(setValue, tryToClose, OVERLAY_CLOSE)
-const overlayConfirmation = partial(confirm, OVERLAY_CLOSE_ALERT)
-const closeWhenConfirmed = () => overlayConfirmation() && close()
+const closeOverlay = partial(setValue, tryToClose, OVERLAY_CLOSE);
+// eslint-disable-next-line no-restricted-globals
+const overlayConfirmation = partial(confirm, OVERLAY_CLOSE_ALERT);
+const closeWhenConfirmed = () => overlayConfirmation() && close();
 
 const actions = {
   close,
   closeOverlay,
   closeWhenConfirmed,
-}
+};
 type Actions = (keyof typeof actions)[]
 
 const resolveTryToClose = (
   whatToClose: string,
   isDirty: boolean,
-  formName: string
+  formName: string,
 ): Actions => {
   if (whatToClose !== formName) {
-    return []
+    return [];
   }
 
   if (!isDirty) {
-    return ['close', 'closeOverlay']
+    return ['close', 'closeOverlay'];
   }
 
-  return ['closeWhenConfirmed']
-}
+  return ['closeWhenConfirmed'];
+};
 
 watch(tryToClose, (whatToClose) => {
   subscribers.forEach(({ isDirty, formName }) => {
     resolveTryToClose(whatToClose as string, isDirty.value, formName).forEach(
-      (action) => actions[action]()
-    )
-  })
-})
+      (action) => actions[action](),
+    );
+  });
+});
 
 export const useFormDirtyCheck = (isDirty: Ref<boolean>, formName: string) => {
   subscribers.push({
     isDirty,
     formName,
-  })
-}
+  });
+};

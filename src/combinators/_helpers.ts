@@ -1,1 +1,1 @@
-export const apply = (fn: Function) => fn()
+export const apply = (fn: () => void) => fn();

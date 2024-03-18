@@ -1,4 +1,4 @@
-import { Dictionary } from '@/entities/Dictionary'
+import { Dictionary } from '@/entities/Dictionary';
 
 export interface MapObjectRelation {
   id: string

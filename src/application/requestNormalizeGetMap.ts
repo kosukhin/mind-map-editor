@@ -1,36 +1,34 @@
-import { MapResponse, MapStructure, MapType } from '@/entities'
-import { createMap } from '@/utils'
-import { MAP_DEFAULT_TITLE } from '@/constants'
+import { MapResponse, MapStructure, MapType } from '@/entities';
+import { createMap } from '@/utils';
 
 export const requestNormalizeGetMap = (
   response: MapResponse,
-  mapName: string
+  mapName: string,
 ) => {
-  let result
+  let result: MapStructure;
   if (!response.ok) {
-    result = createMap(mapName)
+    result = createMap(mapName);
   } else {
-    result = response.data.structure
+    result = response.data.structure;
   }
-  result.document = response.data.document
-  result.settings = Object.assign(
-    {
-      colored: false,
-      title: MAP_DEFAULT_TITLE,
-    },
-    result.settings ?? {}
-  )
-  for (const typeId of Object.keys(result.types)) {
+  result.document = response.data.document;
+  result.settings = {
+    ...result.settings ?? {},
+  };
+
+  Object.keys(result.types).forEach((typeId) => {
     result.types[typeId] = {
       ...result.types[typeId],
       name: result.types[typeId].name ? result.types[typeId].name : typeId,
-    }
-  }
-  for (const objectId of Object.keys(result.objects)) {
+    };
+  });
+
+  Object.keys(result.objects).forEach((objectId) => {
     result.objects[objectId] = {
       ...result.objects[objectId],
       id: objectId,
-    }
-  }
-  return [result as MapStructure, response.parentTypes as MapType[]] as const
-}
+    };
+  });
+
+  return [result as MapStructure, response.parentTypes as MapType[]] as const;
+};

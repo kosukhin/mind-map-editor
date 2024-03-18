@@ -10,12 +10,11 @@ export const findRelationsToRemove = (
   Object.values(vMap.objects).forEach((currentObject) => {
     const result: RelativeObject = { objectId: currentObject.id, indexes: [] };
     if (currentObject.arrows?.length) {
-      for (const relationIndex in currentObject.arrows) {
-        if (currentObject.arrows[relationIndex].id === vObject.id) {
+      Object.keys(currentObject.arrows).forEach((relationIndex) => {
+        if (currentObject.arrows[Number(relationIndex)].id === vObject.id) {
           result.indexes.push(relationIndex);
-          break;
         }
-      }
+      });
     }
     if (result.indexes.length) {
       if (!relations) {

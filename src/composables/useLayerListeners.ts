@@ -3,11 +3,11 @@ import {
   useLayerListenerDrag,
   useLayerListenerMouse,
   useLayerListenerWheel,
-} from '@/composables'
+} from '@/composables';
 
 export function useLayerListeners() {
-  useSharedLayerListenerClick()
-  useLayerListenerDrag()
-  useLayerListenerMouse()
-  useLayerListenerWheel()
+  useSharedLayerListenerClick();
+  useLayerListenerDrag();
+  useLayerListenerMouse();
+  useLayerListenerWheel();
 }

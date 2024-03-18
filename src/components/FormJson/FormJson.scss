@@ -1,0 +1,18 @@
+.FormJson {
+  &-Title {
+    margin-bottom: var(--mbExMd);
+  }
+
+  &-Text {
+    margin-bottom: var(--mbExMd);
+  }
+
+  &-Buttons {
+    display: flex;
+    gap: var(--mbMd);
+  }
+
+  &-Button {
+    max-width: 200px;
+  }
+}

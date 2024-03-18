@@ -1,0 +1,29 @@
+.TheSettings {
+  &-ButtonGroup {
+    display: flex;
+    gap: var(--mbMd);
+
+    @media (max-width: $tabletMW) {
+      flex-direction: column;
+
+      .Settings-Button {
+        max-width: none;
+      }
+    }
+  }
+
+  &-Title {
+    margin-bottom: var(--mbExLg);
+  }
+
+  &-Content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mbExMd);
+    margin-bottom: var(--mbExLg);
+  }
+
+  &-Button {
+    max-width: 200px;
+  }
+}

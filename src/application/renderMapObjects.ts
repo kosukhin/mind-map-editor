@@ -5,10 +5,9 @@ type Params = [Layer, MapStructure, boolean]
 type Result = Array<[string, KonvaLayerObject[]]>
 
 export const renderMapObjects = ([vLayer, vMap, vDragLocked]: Params) => {
-  const promises: Promise<any>[] = [];
-  for (const object of Object.values(vMap.objects)) {
-    promises.push(addObjectToLayer(vLayer, object, vMap, vDragLocked));
-  }
+  const promises: Promise<any>[] = Object.values(vMap.objects).map(
+    (object) => addObjectToLayer(vLayer, object, vMap, vDragLocked),
+  );
   return (fn: (values: Result) => void) => {
     Promise.all(promises).then((results) => {
       const resultValue: any = [];

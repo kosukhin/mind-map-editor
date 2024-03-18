@@ -1,0 +1,58 @@
+.BaseModal {
+  display: flex;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: var(--overlayBG);
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: var(--defaultPadding);
+  overflow: hidden;
+
+  &-Inner {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90%;
+    background: var(--overlayInnerBG);
+    border-radius: var(--defaultRadius);
+    box-sizing: border-box;
+    padding: var(--defaultPadding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--mbExMd);
+  }
+
+  &-Back,
+  &-Close {
+    position: absolute;
+    top: 0;
+    right: -20px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 100%;
+    cursor: pointer;
+    color: var(--dangerBG);
+    padding: var(--mbSm);
+    background: rgba(256, 256, 256, .6);
+    display: flex;
+    width: 30px;
+    justify-content: flex-end;
+  }
+
+  &-Back {
+    left: -20px;
+    justify-content: flex-start;
+    right: auto;
+    color: var(--primaryBG);
+  }
+
+  &-Content {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+}

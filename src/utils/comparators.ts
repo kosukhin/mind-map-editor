@@ -1,3 +1,3 @@
 export function isTruthy(value: any) {
-  return !!value
+  return !!value;
 }
