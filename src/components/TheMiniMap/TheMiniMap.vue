@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { useMiniMap, useSharedMap } from '@/composables';
-import { MINIMAP_SCALE } from '@/constants';
+import { useMiniMap } from '@/composables/useMiniMap';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { MINIMAP_SCALE } from '@/constants/system';
 
 const { miniMap, miniMapScreen } = useMiniMap();
 const { map } = useSharedMap();

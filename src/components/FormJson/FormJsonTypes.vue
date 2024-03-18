@@ -5,12 +5,11 @@ import merge from 'lodash/merge';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import {
-  useFormDirtyCheck,
-  useSharedMap,
-  useSharedOverlay,
-} from '@/composables';
-import { SHOW_JSON_TYPES } from '@/constants';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
+import { SHOW_JSON_TYPES } from '@/constants/overlays';
+import { getLocation } from '@/utils/globals';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
 
 const { stringify } = JSON;
 
@@ -34,7 +33,7 @@ const onSave = () => {
   if (map.value) {
     map.value.types = merge(map.value.types, JSON.parse(form.value));
     nextTick().then(() => {
-      location.reload();
+      getLocation().reload();
     });
   }
 };

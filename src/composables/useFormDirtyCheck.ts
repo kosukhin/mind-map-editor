@@ -1,9 +1,10 @@
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { OVERLAY_CLOSE_ALERT } from '@/constants/messages';
+import { OVERLAY_CLOSE } from '@/constants/overlays';
+import { setValue } from '@/utils/common';
 import { Ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import partial from 'lodash/partial';
-import { useSharedOverlay } from '@/composables';
-import { OVERLAY_CLOSE, OVERLAY_CLOSE_ALERT } from '@/constants';
-import { setValue } from '@/utils';
 
 const { tryToClose, close } = useSharedOverlay();
 

@@ -1,11 +1,9 @@
+import { layerWheelHandler } from '@/application/layerWheelHandler';
+import { useCanvasBoundaries } from '@/composables/useCanvasBoundaries';
+import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useSharedLayerEvents } from '@/composables/useSharedLayerEvents';
 import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
-import { layerWheelHandler } from '@/application';
-import {
-  useCanvasBoundaries,
-  useSharedLayer,
-  useSharedLayerEvents,
-} from '@/composables';
 
 export const useLayerListenerWheel = createSharedComposable(() => {
   const { stage } = useSharedLayer();

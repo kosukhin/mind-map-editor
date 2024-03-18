@@ -6,14 +6,12 @@ import flattenDeep from 'lodash/flattenDeep';
 import { useI18n } from 'vue-i18n';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { AnyFn } from '@vueuse/core';
-import {
-  useSharedLayer,
-  useSharedLocks,
-  useSharedMap,
-  useSharedMapObject,
-} from '@/composables';
-import { MapStructure } from '@/entities';
-import { cloneObject } from '@/utils';
+import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { useSharedMapObject } from '@/composables/useSharedMapObject';
+import { useSharedLocks } from '@/composables/useSharedLocks';
+import { cloneObject } from '@/utils/konva';
+import { MapStructure } from '@/entities/Map';
 
 const { layer, layerObjects } = useSharedLayer();
 const i18n = useI18n();

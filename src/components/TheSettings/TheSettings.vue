@@ -6,20 +6,17 @@ import { omit } from 'lodash';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseCheckbox from '@/components/BaseCheckbox/BaseCheckbox.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
+import { MapSettings } from '@/entities/Map';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { useRequestRemoveMap } from '@/composables/useRequestRemoveMap';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
 import {
-  SHOW_SETTINGS,
-  SHOW_JSON,
-  SHOW_PARENT_TYPES,
-  SHOW_KEYBINDINGS,
-} from '@/constants';
-import {
-  useSharedKeybindings,
-  useSharedMap,
-  useSharedOverlay,
-  useRequestRemoveMap,
-  useFormDirtyCheck,
-} from '@/composables';
-import { MapSettings } from '@/entities';
+ SHOW_JSON, SHOW_KEYBINDINGS, SHOW_PARENT_TYPES, SHOW_SETTINGS 
+} from '@/constants/overlays';
+import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
+import { downloadFile } from '@/utils/dom';
+import { createMapFileNameFromUrl } from '@/utils/map';
 
 const { stringify } = JSON;
 

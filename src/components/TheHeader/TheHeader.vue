@@ -2,13 +2,10 @@
 import BaseBreadcrumbs from '@/components/BaseBreadcrumbs/BaseBreadcrumbs.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
-import { useSharedOverlay } from '@/composables';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import {
-  SHOW_HISTORY_MAPS,
-  SHOW_OBJECT_MENU,
-  SHOW_SEARCH,
-  SHOW_TEXT,
-} from '@/constants';
+  SHOW_HISTORY_MAPS, SHOW_OBJECT_MENU, SHOW_SEARCH, SHOW_TEXT,
+} from '@/constants/overlays';
 
 const { overlayName } = useSharedOverlay();
 </script>

@@ -18,23 +18,19 @@ import AppMenuObject from '@/components/AppMenuObject/AppMenuObject.vue';
 import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
 import TheHistoryMaps from '@/components/TheHistoryMaps/TheHistoryMaps.vue';
 import TheObjectTransfer from '@/components/TheObjectTransfer/TheObjectTransfer.vue';
+import { useSharedMeta } from '@/composables/useSharedMeta';
+import { useMoveToObject } from '@/composables/useMoveToObject';
+import { useSharedHashChange } from '@/composables/useSharedHashChange';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
 import {
-  useSharedLocks,
-  useSharedSideBar,
-  useSharedHashChange,
-  useMoveToObject,
-  useSharedKeybindings,
-  useSharedOverlay,
-  useSharedMeta,
-} from '@/composables';
-import {
-  SHOW_SETTINGS,
-  SHOW_SEARCH,
-  SHOW_PARENT_TYPES,
-  SHOW_KEYBINDINGS,
-  SHOW_OBJECT_MENU,
   SHOW_HISTORY_MAPS,
-} from '@/constants';
+  SHOW_KEYBINDINGS,
+  SHOW_OBJECT_MENU, SHOW_PARENT_TYPES, SHOW_SEARCH, SHOW_SETTINGS,
+} from '@/constants/overlays';
+import { useSharedLocks } from '@/composables/useSharedLocks';
+import { getLocation } from '@/utils/globals';
+import { useSharedSideBar } from '@/composables/useSharedSideBar';
 
 useSharedMeta();
 
@@ -61,7 +57,7 @@ watch(ctrlHFired, () => {
 const { isDragLocked } = useSharedLocks();
 const handleLock = () => {
   isDragLocked.value = !isDragLocked.value;
-  setTimeout(() => location.reload());
+  setTimeout(() => getLocation().reload());
 };
 
 const version = '0.1';

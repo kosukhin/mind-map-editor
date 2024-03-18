@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import { useSharedMap } from '@/composables/useSharedMap';
 import { computed } from '@vue/reactivity';
 import uniqueId from 'lodash/uniqueId';
-import { useSharedMap } from '@/composables';
 
 const { mapName, map } = useSharedMap();
 

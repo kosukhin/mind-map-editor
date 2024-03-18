@@ -1,5 +1,5 @@
-import { useRequest } from '@/composables';
-import { API_SEARCH, GET } from '@/constants';
+import { useRequest } from '@/composables/useRequest';
+import { API_SEARCH, GET } from '@/constants/api';
 
 type SearchResponse = { response: Array<{ ref: string }> }
 

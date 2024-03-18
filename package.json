@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port=8881",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "lint-fix": "vue-cli-service lint --fix"
@@ -15,9 +15,11 @@
     "color-blend": "^4.0.0",
     "core-js": "^3.8.3",
     "dexie": "^3.2.6",
-    "konva": "^9.3.6",
+    "konva": "^8.4.2",
     "lodash": "^4.17.21",
     "register-service-worker": "^1.7.2",
+    "sass": "^1.35.2",
+    "sass-loader": "10.1.1",
     "svg64": "^2.0.0",
     "svgedit": "^7.3.0",
     "transliteration": "^2.3.5",

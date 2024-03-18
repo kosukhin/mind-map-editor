@@ -1,9 +1,9 @@
+import { OVERLAY_CLOSE } from '@/constants/overlays';
+import { Dictionary } from '@/entities/Dictionary';
+import { setValue } from '@/utils/common';
 import { computed, ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import { AnyFn, createSharedComposable } from '@vueuse/core';
-import { OVERLAY_CLOSE } from '@/constants';
-import { Dictionary } from '@/entities';
-import { setValue } from '@/utils';
 
 export const useSharedOverlay = createSharedComposable(() => {
   const overlayName = ref<string>();

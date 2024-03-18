@@ -1,7 +1,7 @@
 import { ref, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
-import { NOTIFY_DELAY } from '@/constants';
-import { setValue } from '@/utils';
+import { setValue } from '@/utils/common';
+import { NOTIFY_DELAY } from '@/constants/system';
 
 export const useSharedNotify = createSharedComposable(() => {
   const message = ref<[string, string]>();

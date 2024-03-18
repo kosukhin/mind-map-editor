@@ -1,18 +1,18 @@
+import { layerDragHandler } from '@/application/layerDragHandler';
+import { layerDragObjectHandler } from '@/application/layerDragObjectHandler';
+import { useCanvas } from '@/composables/useCanvas';
+import { useCanvasBoundaries } from '@/composables/useCanvasBoundaries';
+import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
+import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useSharedLayerEvents } from '@/composables/useSharedLayerEvents';
+import { useSharedLocks } from '@/composables/useSharedLocks';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { setProperty } from '@/utils/common';
+import { applyArrowPoints } from '@/utils/map';
 import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
 import Konva from 'konva';
 import debounce from 'lodash/debounce';
-import { layerDragHandler, layerDragObjectHandler } from '@/application';
-import {
-  useCanvas,
-  useCanvasBoundaries,
-  useMapPartialRenderer,
-  useSharedLayer,
-  useSharedLayerEvents,
-  useSharedLocks,
-  useSharedMap,
-} from '@/composables';
-import { applyArrowPoints, setProperty } from '@/utils';
 
 // FIXME выделить вотчеры вынуть их из функции
 export const useLayerListenerDrag = createSharedComposable(() => {

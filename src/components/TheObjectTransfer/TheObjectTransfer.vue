@@ -3,16 +3,15 @@ import { ref } from '@vue/reactivity';
 import { useStorage, watchOnce } from '@vueuse/core';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { useRequestTransfer } from '@/composables/useRequestTransfer';
-import {
-  useObjectActions,
-  useOverlayAutoClose,
-  useSharedMap,
-  useSharedMapObject,
-  useSharedOverlay,
-} from '@/composables';
-import { HISTORY_STORAGE_KEY, SHOW_TRANSFER } from '@/constants';
-import { MapObject } from '@/entities';
-import { createMapObjectUrl } from '@/utils';
+import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
+import { SHOW_TRANSFER } from '@/constants/overlays';
+import { useSharedMapObject } from '@/composables/useSharedMapObject';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { MapObject } from '@/entities/Map';
+import { createMapObjectUrl } from '@/utils/map';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useObjectActions } from '@/composables/useObjectActions';
+import { HISTORY_STORAGE_KEY } from '@/constants/system';
 
 useOverlayAutoClose(SHOW_TRANSFER);
 const { currentObject } = useSharedMapObject();

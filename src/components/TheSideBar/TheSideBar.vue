@@ -7,22 +7,17 @@ import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
 import TheGrouper from '@/components/TheGrouper/TheGrouper.vue';
 import TheLinker from '@/components/TheLinker/TheLinker.vue';
 import { addObjectToLayer } from '@/utils/konva';
-import {
-  useSharedLayer,
-  useSharedMap,
-  useSharedMapType,
-  useSharedOverlay,
-  useSharedSideBar,
-} from '@/composables';
-import {
-  DEFAULT_SVG,
-  HEADER_HEIGHT,
-  SHOW_SETTINGS,
-  SHOW_TYPE,
-  SIDEBAR_WIDTH,
-} from '@/constants';
-import { KonvaLayerObject, MapObject } from '@/entities';
-import { createObject } from '@/utils';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useSharedMapType } from '@/composables/useSharedMapType';
+import { SHOW_SETTINGS, SHOW_TYPE } from '@/constants/overlays';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { DEFAULT_SVG } from '@/constants/svg';
+import { useSharedSideBar } from '@/composables/useSharedSideBar';
+import { useSharedLayer } from '@/composables/useSharedLayer';
+import { HEADER_HEIGHT, SIDEBAR_WIDTH } from '@/constants/system';
+import { createObject } from '@/utils/map';
+import { MapObject } from '@/entities/Map';
+import { KonvaLayerObject } from '@/entities/Konva';
 
 const { overlayName } = useSharedOverlay();
 const { currentTypeId } = useSharedMapType();

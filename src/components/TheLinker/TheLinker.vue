@@ -5,12 +5,10 @@ import { useI18n } from 'vue-i18n';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { updateObjectOnLayer } from '@/utils/konva';
 import { AnyFn } from '@vueuse/core';
-import {
-  useSharedLayer,
-  useSharedLocks,
-  useSharedMap,
-  useSharedMapObject,
-} from '@/composables';
+import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { useSharedMapObject } from '@/composables/useSharedMapObject';
+import { useSharedLocks } from '@/composables/useSharedLocks';
 
 const { layer, layerObjects } = useSharedLayer();
 const { map } = useSharedMap();

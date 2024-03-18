@@ -16,15 +16,16 @@ import {
   setFiles,
   topMaps,
 } from '@/libraries/browser-fs';
-import {
-  useRequestCreateMap,
-  useRequestSearch,
-  useIdbGetProject,
-  useIdbSaveProject,
-} from '@/composables';
-import { urlTrim } from '@/utils';
-import { DEFAULT_PROJECT_NAME } from '@/providers/project';
-import { dbGetCurrent } from '@/application/dbGetCurrent';
+import { DEFAULT_PROJECT_NAME } from '@/constants/project';
+import { useRequestSearch } from '@/composables/useRequestSearch';
+import { urlTrim } from '@/utils/common';
+import { useRequestGetMap } from '@/composables/useRequestGetMap';
+import { useRequestCreateMap } from '@/composables/useRequestCreateMap';
+import { useIdbGetProject } from '@/composables/useIdbGetProject';
+import { useIdbSaveProject } from '@/composables/useIdbSaveProject';
+import { useRouter } from 'vue-router';
+import { useIdbGetMap } from '@/composables/useIdbGetMap';
+import { idbGet } from '@/application/idbGet';
 
 // TODO перевести проект на vue-cli, тк с накст есть проблемы с настройками
 // TODO интегрировать в вскод редактор
@@ -127,7 +128,7 @@ getByName(DEFAULT_PROJECT_NAME).then((v) => {
     setDeirectoryHandle(v[0].directoryHandle);
     isProjectOpened.value = true;
     Promise.all(
-      v[0].blobs.map(async (blobHandle: FileSystemFileHandle) => {
+      v[0].blobs.map(async (blobHandle: any) => {
         const file = (await blobHandle.getFile()) as any;
         file.handle = blobHandle;
         return file;
@@ -170,7 +171,7 @@ const onOpenOneFile = async () => {
 };
 
 const onCloseProject = () => {
-  dbGetCurrent().delete().then(windowReload);
+  idbGet().delete().then(windowReload);
 };
 
 useIdbGetMap()

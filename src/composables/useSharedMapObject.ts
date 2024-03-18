@@ -1,8 +1,8 @@
 import { ref, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
-import { useSharedMap } from '@/composables';
-import { MapObject } from '@/entities';
-import { setValue } from '@/utils';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { MapObject } from '@/entities/Map';
+import { setValue } from '@/utils/common';
 
 export const useSharedMapObject = createSharedComposable(() => {
   const { map } = useSharedMap();

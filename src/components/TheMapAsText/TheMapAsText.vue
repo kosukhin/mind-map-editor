@@ -4,9 +4,10 @@ import { computed, ref } from '@vue/reactivity';
 import { useI18n } from 'vue-i18n';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import { useSharedMap, useOverlayAutoClose } from '@/composables';
-import { SHOW_TEXT } from '@/constants';
-import { nl2br, stripHtml } from '@/utils';
+import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
+import { SHOW_TEXT } from '@/constants/overlays';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { nl2br, stripHtml } from '@/utils/common';
 
 useOverlayAutoClose(SHOW_TEXT);
 

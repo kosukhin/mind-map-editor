@@ -5,7 +5,7 @@ import { useSharedMap } from '@/composables/useSharedMap';
 import { useSharedMapObject } from '@/composables/useSharedMapObject';
 import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import { removeObjectOnLayer, updateObjectOnLayer } from '@/utils/konva';
-import { findRelationsToRemove } from '@/application';
+import { findRelationsToRemove } from '@/application/findRelationsToRemove';
 
 export const useObjectActions = createSharedComposable((needConfirm = true) => {
   const i18n = useI18n();
@@ -26,8 +26,8 @@ export const useObjectActions = createSharedComposable((needConfirm = true) => {
     close();
     if (currentObject.value && map.value && layer.value) {
       const relations = findRelationsToRemove(currentObject.value, map.value);
-      relations?.map((relations: any) => {
-        relations.forEach((relation: any) => {
+      relations?.map((relationsObj: any) => {
+        relationsObj.forEach((relation: any) => {
           relation.indexes.forEach((indexToRemove: any) => {
             map.value?.objects[relation.objectId].arrows.splice(
               indexToRemove,

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useOverlayAutoClose } from '@/composables';
-import { SHOW_KEYBINDINGS } from '@/constants';
+import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
+import { SHOW_KEYBINDINGS } from '@/constants/overlays';
 
 useOverlayAutoClose(SHOW_KEYBINDINGS);
 </script>

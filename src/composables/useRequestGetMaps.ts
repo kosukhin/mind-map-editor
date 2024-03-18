@@ -1,8 +1,8 @@
-import { GetMapsResponse } from '@/entities';
+import { GetMapsResponse } from '@/entities/GetMapsResponse';
 
 // FIXME убрать в функции
 export function useRequestGetMaps() {
-  const getMaps = async (): Promise<GetMapsResponse> => await Promise.resolve({
+  const getMaps = (): Promise<GetMapsResponse> => Promise.resolve({
     ok: true,
     progress: {},
     favorites: {},

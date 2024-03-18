@@ -2,7 +2,6 @@
 import { watch } from '@vue/runtime-core';
 import { computed, ref } from '@vue/reactivity';
 import { useMagicKeys } from '@vueuse/core';
-import { useSharedOverlay } from '@/composables';
 
 const props = defineProps({
   name: {

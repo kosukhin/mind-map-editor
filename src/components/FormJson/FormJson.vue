@@ -5,12 +5,11 @@ import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import FormJsonTypes from '@/components/FormJson/FormJsonTypes.vue';
-import { SHOW_JSON, SHOW_JSON_TYPES } from '@/constants';
-import {
-  useSharedMap,
-  useSharedOverlay,
-  useFormDirtyCheck,
-} from '@/composables';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { getLocation } from '@/utils/globals';
+import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
+import { SHOW_JSON, SHOW_JSON_TYPES } from '@/constants/overlays';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
 
 const { stringify } = JSON;
 
@@ -30,7 +29,7 @@ watch(
 const onSave = async () => {
   map.value = JSON.parse(form.value);
   await nextTick();
-  location.reload();
+  getLocation().reload();
 };
 const isDirty = computed(() => form.value !== stringify(map.value));
 useFormDirtyCheck(isDirty, SHOW_JSON);

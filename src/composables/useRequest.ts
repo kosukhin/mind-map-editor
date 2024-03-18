@@ -1,5 +1,5 @@
-import { Request } from '@/entities';
-import { POST, PUT } from '@/constants';
+import { POST, PUT } from '@/constants/api';
+import { Request } from '@/entities/Request';
 
 // FIXME убрать в функции
 export function useRequest() {

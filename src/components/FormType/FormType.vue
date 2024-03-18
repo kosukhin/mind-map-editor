@@ -5,14 +5,12 @@ import AppSvgEditor from '@/components/AppSvgEditor/AppSvgEditor.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
-import {
-  useFormDirtyCheck,
-  useSharedKeybindings,
-  useSharedMap,
-  useSharedMapType,
-  useSharedOverlay,
-} from '@/composables';
-import { SHOW_TYPE } from '@/constants';
+import { useSharedMapType } from '@/composables/useSharedMapType';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { SHOW_TYPE } from '@/constants/overlays';
+import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
 
 const { stringify } = JSON;
 

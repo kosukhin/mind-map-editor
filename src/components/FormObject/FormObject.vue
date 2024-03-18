@@ -10,28 +10,23 @@ import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
-import { updateObjectOnLayer } from '@/utils/konva';
-import {
-  useFormDirtyCheck,
-  useObjectActions,
-  useSettings,
-  useSharedKeybindings,
-  useSharedLayer,
-  useSharedMap,
-  useSharedMapObject,
-  useSharedNotify,
-  useSharedOverlay,
-} from '@/composables';
-import {
-  COPIED,
-  NOTIFY_ERROR,
-  NOTIFY_SUCCESS,
-  NOT_SUPPOERTED,
-  SHOW_OBJECT,
-  SHOW_TRANSFER,
-} from '@/constants';
-import { MapObject } from '@/entities';
-import { cloneObject, createMapObjectUrl, setValue } from '@/utils';
+import { cloneObject, updateObjectOnLayer } from '@/utils/konva';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
+import { SHOW_OBJECT, SHOW_TRANSFER } from '@/constants/overlays';
+import { useSharedMapObject } from '@/composables/useSharedMapObject';
+import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
+import { createMapObjectUrl } from '@/utils/map';
+import { useSharedLayer } from '@/composables/useSharedLayer';
+import { MapObject } from '@/entities/Map';
+import { useSharedNotify } from '@/composables/useSharedNotify';
+import { setValue } from '@/utils/common';
+import { COPIED, NOT_SUPPOERTED } from '@/constants/messages';
+import { NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants/system';
+import { getLocation } from '@/utils/globals';
+import { useSettings } from '@/composables/useSettings';
+import { useObjectActions } from '@/composables/useObjectActions';
 
 const { stringify } = JSON;
 
@@ -138,7 +133,7 @@ function onCopyUrl() {
     return;
   }
   if (currentObject.value) {
-    copy(`${location.pathname}#${currentObject.value.id}`);
+    copy(`${getLocation().pathname}#${currentObject.value.id}`);
     setValue(message, [COPIED, NOTIFY_SUCCESS]);
   }
 }

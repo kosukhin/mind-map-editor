@@ -1,6 +1,6 @@
 import { useRequest } from '@/composables/useRequest';
-import { Map } from '@/entities';
-import { API_TRANSFER, POST } from '@/constants';
+import { API_TRANSFER, POST } from '@/constants/api';
+import { Map } from '@/entities/Map';
 
 // FIXME убрать в функции
 export function useRequestTransfer() {

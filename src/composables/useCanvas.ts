@@ -1,5 +1,5 @@
+import { Size } from '@/entities/Size';
 import { ref, watch } from 'vue';
-import { Size } from '@/entities';
 
 const canvas = ref<HTMLElement>();
 const canvasSize = ref<Size>();

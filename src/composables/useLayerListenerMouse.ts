@@ -1,6 +1,7 @@
+import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useSharedLayerEvents } from '@/composables/useSharedLayerEvents';
 import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
-import { useSharedLayer, useSharedLayerEvents } from '@/composables';
 
 export const useLayerListenerMouse = createSharedComposable(() => {
   const { stage } = useSharedLayer();

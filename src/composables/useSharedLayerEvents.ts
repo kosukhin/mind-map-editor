@@ -1,8 +1,8 @@
 import { shallowRef, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
 import { KonvaEventObject } from 'konva/lib/Node';
-import { useSharedLayer } from '@/composables';
-import { setValue } from '@/utils';
+import { useSharedLayer } from '@/composables/useSharedLayer';
+import { setValue } from '@/utils/common';
 
 export const useSharedLayerEvents = createSharedComposable(() => {
   const { layer, stage } = useSharedLayer();

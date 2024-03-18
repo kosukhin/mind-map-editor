@@ -5,6 +5,7 @@ import { Nullable } from '@/entities/Nullable';
 import { debug, maxNewLineLength, newLineCount } from '@/utils/common';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { Stage } from 'konva/lib/Stage';
+import { Text } from 'konva/lib/shapes/Text';
 
 interface Result {
   text: Nullable<[Text, Vector2d]>

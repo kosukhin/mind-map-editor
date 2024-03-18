@@ -1,16 +1,15 @@
+import { mapNormalizeBeforeSave } from '@/application/mapNormalizeBeforeSave';
+import { useRequestGetMap } from '@/composables/useRequestGetMap';
+import { useRequestSaveMap } from '@/composables/useRequestSaveMap';
+import { useSharedNotify } from '@/composables/useSharedNotify';
+import { MAP_UPDATED } from '@/constants/messages';
+import { NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants/system';
+import { MapStructure, MapType } from '@/entities/Map';
+import { setError, setValue, setValues } from '@/utils/common';
 import { ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
 import { useRoute } from 'vue-router';
-import { mapNormalizeBeforeSave } from '@/application';
-import {
-  useRequestGetMap,
-  useRequestSaveMap,
-  useSharedNotify,
-} from '@/composables';
-import { MAP_UPDATED, NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants';
-import { MapStructure, MapType } from '@/entities';
-import { setError, setValue, setValues } from '@/utils';
 
 export const useSharedMap = createSharedComposable(() => {
   const { message } = useSharedNotify();

@@ -11,7 +11,9 @@ export const canvasRestrictBoundaries = (pos: Vector2d) => (canvasSize: Size): V
     return { x: 0, y: 0 };
   }
   return {
+    // eslint-disable-next-line no-nested-ternary
     x: pos.x > 0 ? 0 : right > maxRight ? maxRight * -1 : pos.x,
+    // eslint-disable-next-line no-nested-ternary
     y: pos.y > 0 ? 0 : bottom > maxBottom ? maxBottom * -1 : pos.y,
   };
 };

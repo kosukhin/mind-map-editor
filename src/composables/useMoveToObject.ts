@@ -1,9 +1,7 @@
+import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
+import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useSharedMap } from '@/composables/useSharedMap';
 import { createSharedComposable } from '@vueuse/core';
-import {
-  useMapPartialRenderer,
-  useSharedLayer,
-  useSharedMap,
-} from '@/composables';
 
 export const useMoveToObject = createSharedComposable(() => {
   const { stage } = useSharedLayer();

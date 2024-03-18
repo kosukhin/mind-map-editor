@@ -1,16 +1,14 @@
 import { Ref, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
 import debounce from 'lodash/debounce';
-import { mapObjectClick } from '@/application';
-import {
-  useSharedLayerEvents,
-  useSharedLocks,
-  useSharedMap,
-  useSharedMapObject,
-  useSharedOverlay,
-  useSharedSideBar,
-} from '@/composables';
-import { openUrlByObject } from '@/utils';
+import { useSharedLayerEvents } from '@/composables/useSharedLayerEvents';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { useSharedSideBar } from '@/composables/useSharedSideBar';
+import { useSharedMapObject } from '@/composables/useSharedMapObject';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useSharedLocks } from '@/composables/useSharedLocks';
+import { mapObjectClick } from '@/application/mapObjectClick';
+import { openUrlByObject } from '@/utils/map';
 
 export const useSharedLayerListenerClick = createSharedComposable(() => {
   const { click, tap, stageClick } = useSharedLayerEvents();

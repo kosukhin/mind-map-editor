@@ -42,7 +42,6 @@ const moveToObject = (object: MapObject) => {
   <div class="AppSearch">
     <BaseInput
       v-model="query"
-      autofocus
       class="AppSearch-Input"
       placeholder="Введите запрос"
     />

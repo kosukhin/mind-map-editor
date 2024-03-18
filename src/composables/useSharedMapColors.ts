@@ -1,8 +1,8 @@
+import { canvasCreateColorsHash } from '@/application/canvasCreateColorsHash';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { Dictionary } from '@/entities/Dictionary';
 import { computed } from '@vue/reactivity';
 import { createSharedComposable } from '@vueuse/core';
-import { useSharedMap } from '@/composables';
-import { Dictionary } from '@/entities';
-import { canvasCreateColorsHash } from '@/application';
 
 export const useSharedMapColors = createSharedComposable(() => {
   const { map } = useSharedMap();

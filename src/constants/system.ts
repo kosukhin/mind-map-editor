@@ -1,4 +1,4 @@
-import { Vector2d } from '@/entities';
+import { Vector2d } from "@/entities/Konva";
 
 export const NOTIFY_DELAY = 2000;
 export const HEADER_HEIGHT = 50;
