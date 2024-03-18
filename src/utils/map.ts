@@ -5,31 +5,31 @@ import {
   Arrow,
   KonvaLayerObject,
   Layer,
-  Map,
   MapObject,
   MapStructure,
   Nullable,
 } from '@/entities';
 import { MAP_DEFAULT_TITLE } from '@/constants';
-import { urlTrim } from '@/utils';
-import { addObjectToLayer } from '@/utils/konva';
+import { urlTrim } from '@/utils/common';
 import { generateUniqString } from '@/utils/string';
+import { useRouter } from 'vue-router';
+import { addObjectToLayer } from '@/utils/konva';
 
 export const createMap = (
   document: string,
   title: Nullable<string> = null,
 ): MapStructure => {
-  document = title ? slugify(title) : document;
+  const innerDocument = title ? slugify(title) : document;
   return {
     progress: 0,
     settings: {
       colored: false,
       title: title ?? MAP_DEFAULT_TITLE,
     },
-    document,
+    document: innerDocument,
     objects: {},
     types: {},
-    url: document,
+    url: innerDocument,
     parent: '',
   };
 };

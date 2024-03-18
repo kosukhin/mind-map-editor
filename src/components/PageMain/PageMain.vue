@@ -22,8 +22,8 @@ import {
   setFiles,
   topMaps,
 } from '@/libraries/browser-fs';
-import { urlTrim } from '@/utils'
-import { DEFAULT_PROJECT_NAME } from '@/providers/project'
+import { urlTrim } from '@/utils';
+import { DEFAULT_PROJECT_NAME } from '@/providers/project';
 import { dbGetCurrent } from '@/application/dbGetCurrent';
 
 // TODO перевести проект на vue-cli, тк с накст есть проблемы с настройками

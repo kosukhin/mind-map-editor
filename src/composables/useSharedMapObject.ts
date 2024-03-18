@@ -1,4 +1,4 @@
-import { watch } from '@vue/runtime-core';
+import { ref, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
 import { useSharedMap } from '@/composables';
 import { MapObject } from '@/entities';

@@ -2,7 +2,7 @@ import { getDirectoryHandler, getFileBlobByName } from '@/libraries/browser-fs';
 import { useRouter } from 'vue-router';
 import { useIdbGetProject } from '@/composables/useIdbGetProject';
 import { useIdbSaveProject } from '@/composables/useIdbSaveProject';
-import { DEFAULT_PROJECT_NAME } from '@/providers/project';
+import { DEFAULT_PROJECT_NAME } from '@/constants/project';
 
 // FIXME убрать в функции
 export function useRequestRemoveMap() {
