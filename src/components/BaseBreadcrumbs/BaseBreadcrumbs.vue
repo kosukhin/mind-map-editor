@@ -25,15 +25,15 @@ const mapHistory = computed(() => {
 
 <template>
   <div v-if="mapHistory">
-    <NuxtLink to="/">{{ $t('breadcrumbs.home') }}</NuxtLink>
+    <RouterLink to="/">{{ $t('general.home') }}</RouterLink>
     <span
       v-for="history in mapHistory"
       :key="history ? history.link : uniqueId('history_')"
     >
       /
-      <NuxtLink v-if="history" :to="history.link.join('/')">
+      <RouterLink v-if="history" :to="history.link.join('/')">
         {{ history.name }}
-      </NuxtLink>
+      </RouterLink>
     </span>
   </div>
 </template>

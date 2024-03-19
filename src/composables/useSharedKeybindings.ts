@@ -18,7 +18,7 @@ export const useSharedKeybindings = createSharedComposable(() => {
     (e) => {
       if (e.ctrlKey && keysMap[e.code]) {
         e.preventDefault();
-        keysMap[e.code].value++;
+        keysMap[e.code].value += 1;
       }
     },
     true,

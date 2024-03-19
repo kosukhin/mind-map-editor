@@ -15,7 +15,7 @@ import { MapStructure } from '@/entities/Map';
 
 const { layer, layerObjects } = useSharedLayer();
 const i18n = useI18n();
-const title = ref(i18n.t('theGrouper.group'));
+const title = ref(i18n.t('general.group'));
 const type = ref('default');
 const isGrouping = computed(() => type.value === 'danger');
 const { map } = useSharedMap();
@@ -58,7 +58,7 @@ const stopWatcher = () => {
   stopNextObjectWatcher();
   stopNextObjectWatcher = null;
   isClickLocked.value = false;
-  title.value = i18n.t('theGrouper.group');
+  title.value = i18n.t('general.group');
   type.value = 'default';
   groups.clear();
 };
@@ -122,7 +122,7 @@ const onClick = () => {
 <template>
   <div v-if="isGrouping" key="grouper-panel" class="TheGrouper-Panel">
     <BaseButton type="primary" @click="cloneGroup">
-      {{ $t('theGrouper.clone') }}
+      {{ $t('general.clone') }}
     </BaseButton>
   </div>
   <BaseButton :type="type" @click="onClick"> {{ title }} </BaseButton>

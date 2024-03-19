@@ -36,6 +36,8 @@ const isDirty = computed(
 );
 useFormDirtyCheck(isDirty, SHOW_TYPE);
 
+const { close, isOpened } = useSharedOverlay();
+
 const save = () => {
   close();
   if (map.value && currentTypeId.value) {
@@ -45,8 +47,6 @@ const save = () => {
     };
   }
 };
-
-const { close, isOpened } = useSharedOverlay();
 const { ctrlSFired } = useSharedKeybindings();
 watch(ctrlSFired, () => {
   if (!isOpened(SHOW_TYPE)) {
@@ -59,7 +59,7 @@ watch(ctrlSFired, () => {
 <template>
   <BaseModal :name="SHOW_TYPE">
     <template #header>
-      <h2>{{ $t('formType.mapType') }}</h2>
+      <h2>{{ $t('general.mapType') }}</h2>
     </template>
     <div v-if="currentType" class="FormType">
       <BaseInput v-model="form.name" class="FormType-Row" />
@@ -68,10 +68,10 @@ watch(ctrlSFired, () => {
     <template #footer>
       <div class="FormType-Controls">
         <BaseButton type="success" @click="save">
-          {{ $t('formType.save') }}
+          {{ $t('general.save') }}
         </BaseButton>
         <BaseButton @click="close">
-          {{ $t('formType.cancel') }}
+          {{ $t('general.cancel') }}
         </BaseButton>
       </div>
     </template>

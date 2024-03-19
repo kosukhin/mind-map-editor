@@ -40,7 +40,7 @@ import { idbGet } from '@/application/idbGet';
 
 const i18n = useI18n();
 useSeoMeta({
-  title: i18n.t('pageMain.mainTitle'),
+  title: i18n.t('general.mainTitle'),
 });
 
 const { search } = useRequestSearch();
@@ -207,16 +207,16 @@ useIdbGetMap()
     <div v-if="directoryHandler" class="PageMain-NewMap">
       <BaseInput
         v-model="newMapName"
-        :placeholder="$t('pageMain.specifyNewCardName')"
+        :placeholder="$t('general.specifyNewCardName')"
       />
       <BaseButton class="PageMain-Button" type="primary" @click="onCreateMap">
-        {{ $t('pageMain.create') }}
+        {{ $t('general.create') }}
       </BaseButton>
     </div>
     <template v-if="topMaps.length">
       <br />
       <div v-if="lastSearchDate" class="PageMain-Row">
-        {{ $t('pageMain.lastSearchTime') }}: {{ lastSearchDate }}
+        {{ $t('general.lastSearchTime') }}: {{ lastSearchDate }}
       </div>
       <div
         v-for="result in searchResults"
@@ -232,20 +232,20 @@ useIdbGetMap()
           <b>{{ group }}</b
           >:
           <span v-for="favorite in favorites[group]" :key="favorite.url">
-            <NuxtLink :to="favorite.url">{{ favorite.title }}</NuxtLink>
+            <RouterLink :to="favorite.url">{{ favorite.title }}</RouterLink>
             &nbsp;
           </span>
           <p>&nbsp;</p>
         </div>
       </div>
-      <h3 class="PageMain-SubTitle">{{ $t('pageMain.existedMaps') }}</h3>
+      <h3 class="PageMain-SubTitle">{{ $t('general.existedMaps') }}</h3>
       <div class="PageMain-Files">
         <div
           v-for="file in topMapsWithNames"
           :key="file.url + file.title"
           class="PageMain-File"
         >
-          <NuxtLink :to="file.url">{{ file.title }}</NuxtLink>
+          <RouterLink :to="file.url">{{ file.title }}</RouterLink>
         </div>
       </div>
       <br />
@@ -256,5 +256,5 @@ useIdbGetMap()
 </template>
 
 <style lang="scss" scoped>
-@import 'PageMain';
+@import './PageMain.scss';
 </style>

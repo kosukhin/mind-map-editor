@@ -88,32 +88,32 @@ const { isSidebarOpen } = useSharedSideBar();
   <FormType />
   <BaseDrawer :name="SHOW_OBJECT_MENU" direction="rtl">
     <template #header>
-      <h2>{{ $t('pageEditor.menu') }}</h2>
+      <h2>{{ $t('general.menu') }}</h2>
     </template>
     <AppMenuObject />
   </BaseDrawer>
   <BaseModal :name="SHOW_KEYBINDINGS">
     <template #header>
-      <h2>{{ $t('pageEditor.keybindings') }}</h2>
+      <h2>{{ $t('general.keybindings') }}</h2>
     </template>
     <TheKeybindings />
   </BaseModal>
   <BaseModal :name="SHOW_PARENT_TYPES">
     <template #header>
-      <h2>{{ $t('pageEditor.parentTypes') }}</h2>
+      <h2>{{ $t('general.parentTypes') }}</h2>
     </template>
     <AppTypesParent />
   </BaseModal>
   <TheMapAsText />
   <BaseModal :name="SHOW_SETTINGS">
     <template #header>
-      <h2>{{ $t('pageEditor.mapSettings') }}, {{ version }}</h2>
+      <h2>{{ $t('general.mapSettings') }}, {{ version }}</h2>
     </template>
     <TheSettings />
   </BaseModal>
   <BaseModal :name="SHOW_SEARCH">
     <template #header>
-      <h2>{{ $t('pageEditor.mapSearch') }}</h2>
+      <h2>{{ $t('general.mapSearch') }}</h2>
     </template>
     <AppSearch />
   </BaseModal>

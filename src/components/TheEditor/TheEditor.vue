@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useLayerListeners } from '@/composables/useLayerListeners';
 import { useMapRenderer } from '@/composables/useMapRenderer';
 import { useSharedLayer } from '@/composables/useSharedLayer';
 import { CANVAS_DOM_ID } from '@/constants/system';
@@ -17,7 +18,7 @@ onMounted(() => {
     stage.value.destroy();
   }
 
-  createLayer();
+  createLayer(useLayerListeners);
 });
 </script>
 

@@ -44,7 +44,7 @@ const openTypes = () => {
   <FormJsonTypes />
   <BaseModal :name="SHOW_JSON">
     <template #header>
-      <h2>{{ $t('formJson.exportOrImport') }}</h2>
+      <h2>{{ $t('general.exportOrImport') }}</h2>
     </template>
     <div class="FormJson">
       <BaseTextarea v-model="form" class="FormJson-Text" />
@@ -52,13 +52,13 @@ const openTypes = () => {
     <template #footer>
       <div class="FormJson-Buttons">
         <BaseButton class="FormJson-Button" type="success" @click="onSave">
-          {{ $t('formJson.save') }}
+          {{ $t('general.save') }}
         </BaseButton>
         <BaseButton class="FormJson-Button" type="primary" @click="openTypes">
-          {{ $t('formJson.types') }}
+          {{ $t('general.types') }}
         </BaseButton>
         <BaseButton class="FormJson-Button" @click="close">
-          {{ $t('formJson.cancel') }}
+          {{ $t('general.cancel') }}
         </BaseButton>
       </div>
     </template>

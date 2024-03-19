@@ -48,12 +48,6 @@ const mapTypes = computed(() => {
 
 const { close, isOpened, open } = useSharedOverlay();
 const { ctrlSFired } = useSharedKeybindings();
-watch(ctrlSFired, () => {
-  if (!isOpened(SHOW_OBJECT)) {
-    return;
-  }
-  save();
-});
 
 const form = ref<any>({});
 const { currentObject } = useSharedMapObject();
@@ -101,6 +95,14 @@ const save = async () => {
     );
   }
 };
+
+watch(ctrlSFired, () => {
+  if (!isOpened(SHOW_OBJECT)) {
+    return;
+  }
+  save();
+});
+
 const removeRelation = async (index: number) => {
   if (!(form.value as MapObject).arrows) return;
   if (currentObject.value && map.value && layer.value) {
@@ -145,24 +147,24 @@ const { removeCurrentObject } = useObjectActions();
 <template>
   <BaseDrawer :name="SHOW_OBJECT">
     <template #header>
-      <h2 class="FormObject-MainTitle">{{ $t('formObject.mapObject') }}</h2>
+      <h2 class="FormObject-MainTitle">{{ $t('general.mapObject') }}</h2>
       <small v-if="currentObject" class="FormObject-MainSubTitle">
         <span> ID #{{ currentObject.id }} </span>
         <BaseButton size="sm" type="primary" @click="onCopyUrl">
-          {{ $t('formObject.copy') }}
+          {{ $t('general.copy') }}
         </BaseButton>
       </small>
     </template>
     <div v-if="settings && form && currentObject" class="FormObject">
       <div v-if="!settings.isEditable" class="FormObject-Inner">
-        <div class="FormObject-Title">{{ $t('formObject.name') }}</div>
+        <div class="FormObject-Title">{{ $t('general.name') }}</div>
         <div class="FormObject-Description">{{ currentObject.name }}</div>
-        <div class="FormObject-Title">{{ $t('formObject.description') }}</div>
+        <div class="FormObject-Title">{{ $t('general.description') }}</div>
         <div class="FormObject-Description">
           {{
             currentObject.description
               ? currentObject.description
-              : $t('formObject.noDescription')
+              : $t('general.noDescription')
           }}
         </div>
       </div>
@@ -170,30 +172,30 @@ const { removeCurrentObject } = useObjectActions();
         <div class="FormObject-Row">
           <BaseCheckbox
             v-model="form.linked"
-            :label="$t('formObject.nameAsLink')"
+            :label="$t('general.nameAsLink')"
           />
         </div>
         <template v-if="form.linked">
-          <div class="FormObject-Title">{{ $t('formObject.outerLink') }}</div>
+          <div class="FormObject-Title">{{ $t('general.outerLink') }}</div>
           <div class="FormObject-Row">
             <BaseInput v-model="objectUrl" />
           </div>
           <div class="FormObject-Row">
             <BaseCheckbox
               v-model="form.targetBlank"
-              :label="$t('formObject.inNewTab')"
+              :label="$t('general.inNewTab')"
             />
           </div>
         </template>
-        <div class="FormObject-Title">{{ $t('formObject.topName') }}</div>
+        <div class="FormObject-Title">{{ $t('general.topName') }}</div>
         <div class="FormObject-Row">
           <BaseTextarea v-model="form.additionalName" />
         </div>
-        <div class="FormObject-Title">{{ $t('formObject.bottomName') }}</div>
+        <div class="FormObject-Title">{{ $t('general.bottomName') }}</div>
         <div class="FormObject-Row">
           <BaseTextarea v-model="form.name" />
         </div>
-        <div class="FormObject-Title">{{ $t('formObject.description') }}</div>
+        <div class="FormObject-Title">{{ $t('general.description') }}</div>
         <div class="FormObject-Row">
           <BaseTextarea v-model="form.description" />
         </div>
@@ -201,7 +203,7 @@ const { removeCurrentObject } = useObjectActions();
         <div class="FormObject-Row">
           <BaseInput v-model="form.zindex" type="number" />
         </div>
-        <div class="FormObject-Title">{{ $t('formObject.objectType') }}</div>
+        <div class="FormObject-Title">{{ $t('general.objectType') }}</div>
         <div class="FormObject-Row">
           <BaseSelect
             v-model="form.type"
@@ -217,7 +219,7 @@ const { removeCurrentObject } = useObjectActions();
             size="md"
             @click="clone"
           >
-            {{ $t('formObject.clone') }}
+            {{ $t('general.clone') }}
           </BaseButton>
         </div>
         <div class="FormObject-Row">
@@ -227,23 +229,23 @@ const { removeCurrentObject } = useObjectActions();
             size="md"
             @click="open(SHOW_TRANSFER)"
           >
-            {{ $t('formObject.transfer') }}
+            {{ $t('general.transfer') }}
           </BaseButton>
         </div>
         <div class="FormObject-Row">
           <BaseCheckbox
             v-model="form.inMenu"
-            :label="$t('formObject.useInMenu')"
+            :label="$t('general.useInMenu')"
           />
         </div>
         <template v-if="form.inMenu">
-          <div class="FormObject-Title">{{ $t('formObject.menuOrder') }}</div>
+          <div class="FormObject-Title">{{ $t('general.menuOrder') }}</div>
           <div class="FormObject-Row">
             <BaseInput v-model="form.menuOrder" type="number" />
           </div>
         </template>
         <template v-if="form.arrows && form.arrows.length">
-          <div class="FormObject-Title">{{ $t('formObject.relations') }}</div>
+          <div class="FormObject-Title">{{ $t('general.relations') }}</div>
           <div class="FormObject-Row">
             <div
               v-for="(arrow, index) in form.arrows"
@@ -259,7 +261,7 @@ const { removeCurrentObject } = useObjectActions();
                 size="sm"
                 @click="removeRelation(index)"
               >
-                {{ $t('formObject.delete') }}
+                {{ $t('general.delete') }}
               </BaseButton>
             </div>
           </div>
@@ -269,15 +271,15 @@ const { removeCurrentObject } = useObjectActions();
     <template #footer>
       <div class="FormObject-ButtonsGroup">
         <BaseButton type="success" @click="save">
-          {{ $t('formObject.save') }}
+          {{ $t('general.save') }}
         </BaseButton>
         <BaseButton type="danger" @click="removeCurrentObject">
-          {{ $t('formObject.delete') }}
+          {{ $t('general.delete') }}
         </BaseButton>
       </div>
       <div class="FormObject-ButtonsGroup">
         <BaseButton @click="cancel">
-          {{ $t('formObject.cancel') }}
+          {{ $t('general.cancel') }}
         </BaseButton>
       </div>
     </template>

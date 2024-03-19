@@ -39,7 +39,9 @@ export function useRequestCreateMap() {
         }
       });
 
-      withPush && useRouter().push(`/${map.url}`);
+      if (withPush) {
+        useRouter().push(`/${map.url}`);
+      }
     }
   };
 

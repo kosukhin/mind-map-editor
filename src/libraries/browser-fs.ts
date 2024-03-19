@@ -22,8 +22,6 @@ export const onMapsChanged = (fn: AnyFn) => {
   });
 };
 
-export const openDirectory = () => {};
-
 export const addFiles = (blobs: File[]) => {
   blobs.forEach((blob) => {
     files[blob.name] = blob;

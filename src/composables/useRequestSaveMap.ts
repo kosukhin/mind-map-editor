@@ -23,7 +23,9 @@ export function useRequestSaveMap() {
             content,
           },
         ];
-        v[0] && payload.unshift(v[0].id);
+        if (v[0]) {
+          payload.unshift(v[0].id);
+        }
         idbEdit('maps', payload);
       });
     } else {

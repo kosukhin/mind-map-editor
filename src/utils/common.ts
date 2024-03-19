@@ -1,6 +1,7 @@
 import curry from 'lodash/fp/curry';
 import sum from 'lodash/sum';
 import { normal } from 'color-blend';
+import { AnyFn } from '@/entities/Utils';
 
 interface ErrorFull {
   error: any
@@ -45,7 +46,7 @@ export const maxNewLineLength = (str: string): number => {
   }
   return Math.max.apply(
     null,
-    str.split('\n').map((str) => str.length),
+    str.split('\n').map((s) => s.length),
   );
 };
 
@@ -77,7 +78,9 @@ export const debug = (string: string, tag = 'DEBUG') => {
     return;
   }
   const { log } = console;
-  log && log(`['${tag}'] ${string}`);
+  if (log) {
+    log(`['${tag}'] ${string}`);
+  }
 };
 
 export function objectToValues(obj: object) {
@@ -88,7 +91,7 @@ export function average(values: number[]) {
   return Math.round(sum(values) / values.length);
 }
 
-export function apply(args: any[] | any, fn: Function) {
+export function apply(args: any[] | any, fn: AnyFn) {
   if (Array.isArray(args)) {
     return fn(...args);
   }

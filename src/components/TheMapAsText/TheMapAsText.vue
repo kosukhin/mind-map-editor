@@ -34,7 +34,7 @@ const i18n = useI18n();
 const { share, isSupported } = useShare();
 const onShare = () => {
   if (!isSupported.value) {
-    alert(i18n.t('theMapAsText.notifications.sharingDontSupported'));
+    alert(i18n.t('general.notifications.sharingDontSupported'));
   }
 
   share({
@@ -58,14 +58,14 @@ const onSelectAll = () => {
   <BaseModal :name="SHOW_TEXT">
     <template #header>
       <h2 class="TheMapAsText-ModalTitle">
-        {{ $t('theMapAsText.mapAsText') }}
+        {{ $t('general.mapAsText') }}
         <BaseButton
           size="sm"
           type="success"
           class="TheMapAsText-Share"
           @click="onShare"
         >
-          {{ $t('theMapAsText.share') }}
+          {{ $t('general.share') }}
         </BaseButton>
         <BaseButton
           size="sm"
@@ -73,7 +73,7 @@ const onSelectAll = () => {
           class="TheMapAsText-Share"
           @click="onSelectAll"
         >
-          {{ $t('theMapAsText.selectAll') }}
+          {{ $t('general.selectAll') }}
         </BaseButton>
       </h2>
     </template>

@@ -15,7 +15,7 @@ const { map } = useSharedMap();
 const { currentObjectId } = useSharedMapObject();
 const { isClickLocked } = useSharedLocks();
 const i18n = useI18n();
-const title = ref(i18n.t('theLinker.makeRelation'));
+const title = ref(i18n.t('general.makeRelation'));
 const type = ref('default');
 let stopNextObjectWatcher: AnyFn | null = null;
 const startRelation = () => {
@@ -23,26 +23,26 @@ const startRelation = () => {
     if (stopNextObjectWatcher) {
       stopNextObjectWatcher();
     }
-    title.value = i18n.t('theLinker.makeRelation');
+    title.value = i18n.t('general.makeRelation');
     isClickLocked.value = false;
     type.value = 'default';
     return;
   }
   currentObjectId.value = undefined;
-  title.value = i18n.t('theLinker.chooseSource');
+  title.value = i18n.t('general.chooseSource');
   isClickLocked.value = true;
   type.value = 'danger';
   stopNextObjectWatcher = watch(currentObjectId, () => {
     if (!stopNextObjectWatcher) return;
     stopNextObjectWatcher();
-    title.value = i18n.t('theLinker.chooseTarget');
+    title.value = i18n.t('general.chooseTarget');
     type.value = 'success';
     const fromObjectId = currentObjectId.value ?? '';
 
     const stopSecond = watch(currentObjectId, () => {
       stopSecond();
       const toObjectId = String(currentObjectId.value ?? '');
-      title.value = i18n.t('theLinker.makeRelation');
+      title.value = i18n.t('general.makeRelation');
       isClickLocked.value = false;
       type.value = 'default';
 

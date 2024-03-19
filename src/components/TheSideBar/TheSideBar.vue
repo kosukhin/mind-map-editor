@@ -32,7 +32,7 @@ const addType = () => {
   if (map.value) {
     const newTypeId = Date.now().toString();
     map.value.types[newTypeId] = {
-      name: i18n.t('theSideBar.newType'),
+      name: i18n.t('general.newType'),
       svg: DEFAULT_SVG,
       width: 100,
       height: 100,
@@ -52,7 +52,7 @@ const removeType = (typeId: string) => {
     });
 
     if (isTypeUsed) {
-      alert(i18n.t('theSideBar.notifications.impossibleToRemoveType'));
+      alert(i18n.t('general.notifications.impossibleToRemoveType'));
       return;
     }
 
@@ -98,20 +98,20 @@ const addToCanvas = async (
       >
         <div class="TheSideBar-ItemName">{{ type.name }}</div>
         <img
-          :alt="$t('theSideBar.notifications.dragToCanvasToAdd')"
+          :alt="$t('general.notifications.dragToCanvasToAdd')"
           :src="svg64(type.svg)"
           class="TheSideBar-ItemImage"
           draggable="true"
-          :title="$t('theSideBar.notifications.dragToCanvasToAdd')"
+          :title="$t('general.notifications.dragToCanvasToAdd')"
           @dblclick="addToCanvas($event as any, name, true)"
           @dragend="addToCanvas($event, name)"
         />
         <div class="TheSideBar-ItemButtons">
           <BaseButton size="sm" type="primary" @click="selectType(name)">
-            {{ $t('theSideBar.change') }}
+            {{ $t('general.change') }}
           </BaseButton>
           <BaseButton size="sm" type="danger" @click="removeType(name)">
-            {{ $t('theSideBar.delete') }}
+            {{ $t('general.delete') }}
           </BaseButton>
         </div>
       </div>
@@ -119,14 +119,14 @@ const addToCanvas = async (
     <div class="TheSideBar-Footer">
       <BaseGroup>
         <BaseButton
-          :title="$t('theSideBar.addType')"
+          :title="$t('general.addType')"
           type="success"
           @click="addType"
         >
           <BaseIcon icon="fa-plus-square" />
         </BaseButton>
         <BaseButton
-          :title="$t('theSideBar.settings')"
+          :title="$t('general.settings')"
           type="primary"
           @click="overlayName = SHOW_SETTINGS"
         >

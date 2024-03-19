@@ -12,7 +12,10 @@ import { useRequestRemoveMap } from '@/composables/useRequestRemoveMap';
 import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
 import {
- SHOW_JSON, SHOW_KEYBINDINGS, SHOW_PARENT_TYPES, SHOW_SETTINGS 
+  SHOW_JSON,
+  SHOW_KEYBINDINGS,
+  SHOW_PARENT_TYPES,
+  SHOW_SETTINGS,
 } from '@/constants/overlays';
 import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
 import { downloadFile } from '@/utils/dom';
@@ -41,7 +44,7 @@ const i18n = useI18n();
 const { removeMap } = useRequestRemoveMap();
 const onRemove = async () => {
   // eslint-disable-next-line no-restricted-globals
-  if (confirm(i18n.t('theSettings.notifications.thisWillTotallyRemoveMap'))) {
+  if (confirm(i18n.t('general.notifications.thisWillTotallyRemoveMap'))) {
     await removeMap(mapName.value);
   }
 };
@@ -88,14 +91,14 @@ const onDownloadMap = () => {
             type="primary"
             @click="overlayName = SHOW_JSON"
           >
-            {{ $t('theSettings.jsonExportImport') }}
+            {{ $t('general.jsonExportImport') }}
           </BaseButton>
           <BaseButton
             class="TheSettings-Button"
             type="primary"
             @click="overlayName = SHOW_KEYBINDINGS"
           >
-            {{ $t('theSettings.keybindings') }}
+            {{ $t('general.keybindings') }}
           </BaseButton>
           <BaseButton
             v-if="parentTypes.length"
@@ -103,14 +106,14 @@ const onDownloadMap = () => {
             class="TheSettings-Button"
             @click="overlayName = SHOW_PARENT_TYPES"
           >
-            {{ $t('theSettings.parentTypes') }}
+            {{ $t('general.parentTypes') }}
           </BaseButton>
         </div>
       </div>
       <div class="TheSettings-Row">
         <BaseCheckbox
           v-model="form.colored"
-          :label="$t('theSettings.useLabelsColoring')"
+          :label="$t('general.useLabelsColoring')"
         />
       </div>
       <div class="TheSettings-Row">
@@ -121,29 +124,29 @@ const onDownloadMap = () => {
       </div>
       <div class="TheSettings-Row">
         <label>
-          <b>{{ $t('theSettings.mapName') }}</b>
+          <b>{{ $t('general.mapName') }}</b>
           <BaseInput v-model="form.title" />
         </label>
       </div>
       <div class="TheSettings-Row">
         <a href="https://github.com/kosukhin/mind-map-creator" target="_blank">
-          {{ $t('theSettings.githubRepo') }}
+          {{ $t('general.githubRepo') }}
         </a>
       </div>
       <div class="TheSettings-Row">
-        <b>{{ $t('theSettings.favorites') }}</b>
+        <b>{{ $t('general.favorites') }}</b>
         <BaseInput v-model="form.favoriteGroup" />
       </div>
     </div>
     <div class="TheSettings-ButtonGroup">
       <BaseButton class="TheSettings-Button" type="success" @click="onSave">
-        {{ $t('theSettings.save') }}
+        {{ $t('general.save') }}
       </BaseButton>
       <BaseButton class="TheSettings-Button" @click="close">
-        {{ $t('theSettings.cancel') }}
+        {{ $t('general.cancel') }}
       </BaseButton>
       <BaseButton class="TheSettings-Button" type="danger" @click="onRemove">
-        {{ $t('theSettings.removeMap') }}
+        {{ $t('general.removeMap') }}
       </BaseButton>
     </div>
   </div>

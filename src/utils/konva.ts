@@ -20,7 +20,7 @@ export async function addObjectToLayer(
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   const additionalObjects = [];
-  if (!ctx) return;
+  if (!ctx) return [];
   const type = types[object.type];
   const v = await Canvg.fromString(ctx, type.svg);
   await v.render();
@@ -50,11 +50,11 @@ export async function addObjectToLayer(
   });
   layer.add(text);
   if (object.additionalName) {
-    const labelWidth = maxNewLineLength(object.additionalName) * 7;
+    const labelAdditionalWidth = maxNewLineLength(object.additionalName) * 7;
     const labelHeight = newLineCount(object.additionalName) * 11;
     const additionalText = new Konva.Text({
       name: object.id,
-      x: object.position[0] + type.width / 2 - labelWidth / 2,
+      x: object.position[0] + type.width / 2 - labelAdditionalWidth / 2,
       y: object.position[1] - labelHeight - 4,
       text: object.additionalName,
       fontSize: 11,
@@ -124,13 +124,13 @@ export const removeObjectOnLayer = (
   if (!objects) {
     return;
   }
-  objects.forEach((object: any) => {
-    if (Array.isArray(object)) {
-      object.forEach((innerObject: any) => {
+  objects.forEach((objectToRemove: any) => {
+    if (Array.isArray(objectToRemove)) {
+      objectToRemove.forEach((innerObject: any) => {
         innerObject.remove();
       });
     } else {
-      object.remove();
+      objectToRemove.remove();
     }
   });
 };

@@ -18,7 +18,7 @@ export const useObjectActions = createSharedComposable((needConfirm = true) => {
     if (
       needConfirm
       // eslint-disable-next-line no-restricted-globals
-      && !confirm(i18n.t('formObject.notifications.sureDelete'))
+      && !confirm(i18n.t('general.notifications.sureDelete'))
     ) {
       return;
     }
@@ -26,7 +26,7 @@ export const useObjectActions = createSharedComposable((needConfirm = true) => {
     close();
     if (currentObject.value && map.value && layer.value) {
       const relations = findRelationsToRemove(currentObject.value, map.value);
-      relations?.map((relationsObj: any) => {
+      relations?.forEach((relationsObj: any) => {
         relationsObj.forEach((relation: any) => {
           relation.indexes.forEach((indexToRemove: any) => {
             map.value?.objects[relation.objectId].arrows.splice(

@@ -36,7 +36,7 @@ watch(head, () => {
   <BaseDrawer :name="SHOW_HISTORY_MAPS" direction="rtl">
     <template #header>
       <h2 class="TheHistoryMaps-Title">
-        {{ $t('theHistoryMaps.visitHistory') }}
+        {{ $t('general.visitHistory') }}
       </h2>
     </template>
     <div>
@@ -46,7 +46,7 @@ watch(head, () => {
           :key="index"
           class="TheHistoryMaps-Item"
         >
-          <NuxtLink :to="history.url">{{ history.title }}</NuxtLink>
+          <RouterLink :to="history.url">{{ history.title }}</RouterLink>
           ({{ history.url }})
         </li>
       </ul>

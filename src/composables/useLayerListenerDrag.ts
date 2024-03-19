@@ -12,7 +12,7 @@ import { applyArrowPoints } from '@/utils/map';
 import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
 import Konva from 'konva';
-import debounce from 'lodash/debounce';
+import { throttle } from 'lodash';
 
 // FIXME выделить вотчеры вынуть их из функции
 export const useLayerListenerDrag = createSharedComposable(() => {
@@ -31,7 +31,9 @@ export const useLayerListenerDrag = createSharedComposable(() => {
       const [object, position] = layerDragHandler([dragend.value, map.value]);
       setProperty(object, 'position', [position.x, position.y]);
     }
-    dragMoveInterval && clearInterval(dragMoveInterval);
+    if (dragMoveInterval) {
+      clearInterval(dragMoveInterval);
+    }
   });
 
   watch(dragmove, () => {
@@ -76,13 +78,19 @@ export const useLayerListenerDrag = createSharedComposable(() => {
           || ofy > canvasSize.value.h - 50;
 
         if (!mustMove) {
-          dragMoveInterval && clearInterval(dragMoveInterval);
+          if (dragMoveInterval) {
+            clearInterval(dragMoveInterval);
+          }
           return;
         }
 
         const offsetX = (Math.round(canvasSize.value.w / 2) - dragmove.value.evt.offsetX) / 10;
         const offsetY = (Math.round(canvasSize.value.h / 2) - dragmove.value.evt.offsetY) / 10;
-        dragMoveInterval && clearInterval(dragMoveInterval);
+
+        if (dragMoveInterval) {
+          clearInterval(dragMoveInterval);
+        }
+
         dragMoveInterval = setInterval(() => {
           if (layer.value) {
             layer.value.position(
@@ -100,7 +108,7 @@ export const useLayerListenerDrag = createSharedComposable(() => {
   const partialRenderingDelay = 250;
   watch(
     dragmove,
-    debounce((e) => {
+    throttle((e) => {
       if (e.target && e.target instanceof Konva.Stage) {
         triggerPartialRendering();
       }
@@ -109,7 +117,7 @@ export const useLayerListenerDrag = createSharedComposable(() => {
 
   watch(
     wheel,
-    debounce(() => {
+    throttle(() => {
       triggerPartialRendering();
     }, partialRenderingDelay),
   );

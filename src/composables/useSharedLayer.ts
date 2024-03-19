@@ -1,4 +1,4 @@
-import { createSharedComposable } from '@vueuse/core';
+import { AnyFn, createSharedComposable } from '@vueuse/core';
 import { createLayer } from '@/utils/konva';
 import { shallowRef } from 'vue';
 import { useCanvas } from '@/composables/useCanvas';
@@ -6,7 +6,6 @@ import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
 import { MapLayerObjects } from '@/entities/MapLayerObjects';
 import { useSharedMap } from '@/composables/useSharedMap';
-import { useLayerListeners } from '@/composables/useLayerListeners';
 import { findById } from '@/utils/dom';
 import { CANVAS_DOM_ID } from '@/constants/system';
 import { setValue } from '@/utils/common';
@@ -18,11 +17,7 @@ export const useSharedLayer = createSharedComposable(() => {
   const layerObjects: MapLayerObjects = new Map();
   const { firstMapLoad } = useSharedMap();
 
-  setTimeout(() => {
-    useLayerListeners();
-  });
-
-  const doCreateLayer = () => {
+  const doCreateLayer = (afterCreatedCb: AnyFn) => {
     setTimeout(() => {
       firstMapLoad.value = false;
       const wrapper = findById(CANVAS_DOM_ID);
@@ -36,6 +31,7 @@ export const useSharedLayer = createSharedComposable(() => {
 
       setTimeout(() => {
         firstMapLoad.value = true;
+        afterCreatedCb();
       }, 100);
     }, 0);
   };
