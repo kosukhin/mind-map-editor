@@ -98,6 +98,7 @@ export function apply(args: any[] | any, fn: AnyFn) {
 
   return fn(args);
 }
+export const cApply = curry(apply);
 
 export function calculateProgressBg(progress: number) {
   const progressRest = 1 - progress;
@@ -109,3 +110,7 @@ export function calculateProgressBg(progress: number) {
   };
   return normal(red, green);
 }
+
+export const delayResetToNull = (val: Valuable) => {
+  setTimeout(() => { val.value = null; });
+};

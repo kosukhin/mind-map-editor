@@ -1,3 +1,4 @@
+import { useRouter } from '@/composables/useRouter';
 import { MAP_DEFAULT_TITLE } from '@/constants/messages';
 import { Arrow } from '@/entities/Konva';
 import { MapObject, MapStructure } from '@/entities/Map';
@@ -6,7 +7,6 @@ import { urlTrim } from '@/utils/common';
 import { getLocation } from '@/utils/globals';
 import debounce from 'lodash/debounce';
 import { slugify } from 'transliteration';
-import { useRouter } from 'vue-router';
 
 export const createMap = (
   document: string,

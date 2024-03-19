@@ -27,7 +27,6 @@ import { useRouter } from 'vue-router';
 import { useIdbGetMap } from '@/composables/useIdbGetMap';
 import { idbGet } from '@/application/idbGet';
 
-// TODO перевести проект на vue-cli, тк с накст есть проблемы с настройками
 // TODO интегрировать в вскод редактор
 // TODO нужно сделать чтобы SVG в canvas вставлялся как HTML
 // TODO Нужно сделать чтобы стрелки можно было изламывать

@@ -83,7 +83,7 @@ const mapsHistory = useStorage<{ url: string; title: string }[]>(
           size="sm"
           @click="transfer(getObjectLink(obj))"
         >
-          {{ $t('theObjectTransfer.transfer') }}
+          {{ $t('general.transfer') }}
         </BaseButton>
         <BaseButton
           class="TheObjectTransfer-Button"
@@ -91,7 +91,7 @@ const mapsHistory = useStorage<{ url: string; title: string }[]>(
           size="sm"
           @click="transfer(getObjectLink(obj), false)"
         >
-          {{ $t('theObjectTransfer.copy') }}
+          {{ $t('general.copy') }}
         </BaseButton>
       </li>
     </ul>
@@ -112,7 +112,7 @@ const mapsHistory = useStorage<{ url: string; title: string }[]>(
             size="sm"
             @click="transfer(obj.url)"
           >
-            {{ $t('theObjectTransfer.transfer') }}
+            {{ $t('general.transfer') }}
           </BaseButton>
           <BaseButton
             class="TheObjectTransfer-Button"
@@ -120,7 +120,7 @@ const mapsHistory = useStorage<{ url: string; title: string }[]>(
             size="sm"
             @click="transfer(obj.url, false)"
           >
-            {{ $t('theObjectTransfer.copy') }}
+            {{ $t('general.copy') }}
           </BaseButton>
         </li>
       </ul>

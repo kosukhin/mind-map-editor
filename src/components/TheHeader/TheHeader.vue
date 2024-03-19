@@ -17,13 +17,13 @@ const { overlayName } = useSharedOverlay();
       <BaseButton
         type="success"
         size="sm"
-        :title="$t('theHeader.menu')"
+        :title="$t('general.menu')"
         @click="overlayName = SHOW_OBJECT_MENU"
       >
         <BaseIcon icon="fa-bars" />
       </BaseButton>
       <BaseButton
-        :title="$t('theHeader.byText')"
+        :title="$t('general.byText')"
         type="primary"
         size="sm"
         @click="overlayName = SHOW_TEXT"
@@ -35,7 +35,7 @@ const { overlayName } = useSharedOverlay();
       </BaseButton>
       <BaseButton
         size="sm"
-        :title="$t('theHeader.visitHistory')"
+        :title="$t('general.visitHistory')"
         @click="overlayName = SHOW_HISTORY_MAPS"
       >
         <BaseIcon icon="fa-history" />
