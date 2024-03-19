@@ -46,7 +46,6 @@ export const calculateVisibleObjects = (vMap: MapStructure, vStage: Stage) => {
 export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
   [dragEvent, vMap]: Params,
 ): Result => {
-  debug('dragmove fired', 'dragmove');
   const result = {
     text: null as any,
     additionalText: null as any,
@@ -54,7 +53,6 @@ export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
     relatedArrows: null as any,
   };
   if (!dragEvent.target.attrs.image) {
-    debug('not image object', 'dragmove');
     return result;
   }
   const { objectId } = dragEvent.target.attrs;

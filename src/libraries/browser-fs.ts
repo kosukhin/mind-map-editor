@@ -86,9 +86,14 @@ export const readFileByName = (name: string): Promise<string | null> => {
   return readFile(files[name]);
 };
 
-export const getFileBlobByName = (name: string) => {
-  name += '.json';
-  return files[name];
+const normalizeName = (name: string) => `${name}.json`;
+
+export const getFileBlobByName = (name: string) => files[normalizeName(name)];
+
+export const removeFileBlobByName = (name: string) => {
+  if (files[normalizeName(name)]) {
+    delete files[normalizeName(name)];
+  }
 };
 
 export const getFileNames = () => Object.keys(files);

@@ -36,6 +36,7 @@ export const useSharedLayerListenerClick = createSharedComposable(() => {
       }
       if (result.openUrlByObject) {
         openUrlByObject(result.openUrlByObject);
+        return;
       }
       if (
         result.currentObjectId

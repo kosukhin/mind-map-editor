@@ -1,4 +1,4 @@
-import { getDirectoryHandler, getFileBlobByName } from '@/libraries/browser-fs';
+import { getDirectoryHandler, getFileBlobByName, removeFileBlobByName } from '@/libraries/browser-fs';
 import { useRouter } from 'vue-router';
 import { useIdbGetProject } from '@/composables/useIdbGetProject';
 import { useIdbSaveProject } from '@/composables/useIdbSaveProject';
@@ -11,7 +11,6 @@ export function useRequestRemoveMap() {
   const removeMap = (mapName: string) => {
     const fileBlob = getFileBlobByName(mapName) as any;
     const { name } = fileBlob.handle;
-    fileBlob.handle.remove();
 
     const { getByName } = useIdbGetProject();
     return getByName(DEFAULT_PROJECT_NAME).then((v) => {
@@ -26,6 +25,9 @@ export function useRequestRemoveMap() {
         );
         router.back();
       }
+
+      fileBlob.handle.remove();
+      removeFileBlobByName(mapName);
     });
   };
 

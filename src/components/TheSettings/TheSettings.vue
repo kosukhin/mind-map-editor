@@ -40,16 +40,18 @@ watch(
   },
 );
 
+const { close, overlayName, isOpened } = useSharedOverlay();
+
 const i18n = useI18n();
 const { removeMap } = useRequestRemoveMap();
 const onRemove = async () => {
   // eslint-disable-next-line no-restricted-globals
   if (confirm(i18n.t('general.notifications.thisWillTotallyRemoveMap'))) {
     await removeMap(mapName.value);
+    close();
   }
 };
 
-const { close, overlayName, isOpened } = useSharedOverlay();
 const onSave = () => {
   close();
   if (map.value) {

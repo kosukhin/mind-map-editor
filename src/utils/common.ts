@@ -70,7 +70,7 @@ export const nl2br = (str: string, isXhtml = false) => {
 
 export const stripHtml = (string: string) => string.replace(/<\/?[^>]+>/gi, ' ');
 
-export const debug = (string: string, tag = 'DEBUG') => {
+export const debug = (tag: string, string: any) => {
   if (process.env.NODE_ENV === 'production') {
     return;
   }
@@ -81,6 +81,13 @@ export const debug = (string: string, tag = 'DEBUG') => {
   if (log) {
     log(`['${tag}'] ${string}`);
   }
+};
+
+export const cDebug = curry(debug);
+
+export const tap = (fn: AnyFn) => (v: any) => {
+  fn(v);
+  return v;
 };
 
 export function objectToValues(obj: object) {
