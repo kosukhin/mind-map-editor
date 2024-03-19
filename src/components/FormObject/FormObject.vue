@@ -63,9 +63,11 @@ watch(
     immediate: true,
   },
 );
+
+const omittedProps = ['lastClick', 'position'];
 const isDirty = computed(
-  () => stringify(omit(form.value, ['lastClick']))
-    !== stringify(omit(currentObject.value, ['lastClick'])),
+  () => stringify(omit(form.value, omittedProps))
+    !== stringify(omit(currentObject.value, omittedProps)),
 );
 useFormDirtyCheck(isDirty, SHOW_OBJECT);
 

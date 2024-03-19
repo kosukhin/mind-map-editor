@@ -2,8 +2,7 @@ import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import { OVERLAY_CLOSE_ALERT } from '@/constants/messages';
 import { OVERLAY_CLOSE } from '@/constants/overlays';
 import { setValue } from '@/utils/common';
-import { Ref } from '@vue/reactivity';
-import { watch } from '@vue/runtime-core';
+import { watch, nextTick, Ref } from 'vue';
 import partial from 'lodash/partial';
 
 const { tryToClose, close } = useSharedOverlay();
@@ -43,10 +42,12 @@ const resolveTryToClose = (
 };
 
 watch(tryToClose, (whatToClose) => {
-  subscribers.forEach(({ isDirty, formName }) => {
-    resolveTryToClose(whatToClose as string, isDirty.value, formName).forEach(
-      (action) => actions[action](),
-    );
+  nextTick(() => {
+    subscribers.forEach(({ isDirty, formName }) => {
+      resolveTryToClose(whatToClose as string, isDirty.value, formName).forEach(
+        (action) => actions[action](),
+      );
+    });
   });
 });
 
