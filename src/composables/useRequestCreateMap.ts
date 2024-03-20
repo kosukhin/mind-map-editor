@@ -1,4 +1,4 @@
-import { addFiles, getDirectoryHandler } from '@/libraries/browser-fs';
+import { addFiles, getDirectoryHandler, updateBlobContent } from '@/libraries/browser-fs';
 import { useRouter } from 'vue-router';
 import { useIdbGetProject } from '@/composables/useIdbGetProject';
 import { DEFAULT_PROJECT_NAME } from '@/constants/project';
@@ -27,6 +27,7 @@ export function useRequestCreateMap() {
       const file: any = await fileHandle.getFile();
       file.handle = fileHandle;
       addFiles([file]);
+      updateBlobContent(file, JSON.stringify(map));
 
       getByName(DEFAULT_PROJECT_NAME).then((v: any) => {
         if (v[0]) {

@@ -17,42 +17,54 @@ export const useMiniMap = createSharedComposable(() => {
   const miniMap = ref<HTMLElement>();
   const miniMapScreen = ref<HTMLElement>();
 
+  const calculateMiniMapPosition = () => {
+    if (
+      layer.value
+      && stage.value
+      && miniMap
+      && miniMapScreen.value
+      && canvasSize.value
+    ) {
+      const { calculateMiniScreen } = miniMapRedrawHandler([
+        stage.value,
+        miniMapScreen.value,
+      ]);
+      const [vMiniMapScreen, miniScreenX, miniScreenY] = calculateMiniScreen();
+      vMiniMapScreen.style.top = `${miniScreenY}px`;
+      vMiniMapScreen.style.left = `${miniScreenX}px`;
+    }
+  };
+
+  const calculateMiniMapSize = () => {
+    if (canvasSize.value) {
+      const [miniMapSizes, miniMapScreenSizes] = miniMapCalculateSizes([
+        canvasSize.value,
+      ]);
+
+      if (miniMap.value && miniMapScreen.value) {
+        miniMap.value.style.width = `${miniMapSizes.w}px`;
+        miniMap.value.style.height = `${miniMapSizes.h}px`;
+        miniMapScreen.value.style.width = `${miniMapScreenSizes.w}px`;
+        miniMapScreen.value.style.height = `${miniMapScreenSizes.h}px`;
+      }
+    }
+  };
+
   watchOnce(firstMapLoad, () => {
     setTimeout(() => {
-      if (canvasSize.value) {
-        const [miniMapSizes, miniMapScreenSizes] = miniMapCalculateSizes([
-          canvasSize.value,
-        ]);
-
-        if (miniMap.value && miniMapScreen.value) {
-          miniMap.value.style.width = `${miniMapSizes.w}px`;
-          miniMap.value.style.height = `${miniMapSizes.h}px`;
-          miniMapScreen.value.style.width = `${miniMapScreenSizes.w}px`;
-          miniMapScreen.value.style.height = `${miniMapScreenSizes.h}px`;
-        }
-      }
+      calculateMiniMapSize();
     });
+
+    setTimeout(() => {
+      calculateMiniMapPosition();
+    }, 300);
   });
 
   watch(
     [dragmove, wheel],
     debounce(() => {
       if (dragmove.value || wheel.value) {
-        if (
-          layer.value
-          && stage.value
-          && miniMap
-          && miniMapScreen.value
-          && canvasSize.value
-        ) {
-          const { calculateMiniScreen } = miniMapRedrawHandler([
-            stage.value,
-            miniMapScreen.value,
-          ]);
-          const [vMiniMapScreen, miniScreenX, miniScreenY] = calculateMiniScreen();
-          vMiniMapScreen.style.top = `${miniScreenY}px`;
-          vMiniMapScreen.style.left = `${miniScreenX}px`;
-        }
+        calculateMiniMapPosition();
       }
     }, MINI_MAP_UPDATE_FREQ),
   );

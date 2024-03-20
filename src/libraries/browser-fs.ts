@@ -71,9 +71,7 @@ export const readFile = async (blob: File) => {
 };
 
 export const updateBlobContent = (blob: File, content: string) => {
-  if (filesContents.has(blob)) {
-    filesContents.set(blob, content);
-  }
+  filesContents.set(blob, content);
 };
 
 export const readFileByName = (name: string): Promise<string | null> => {

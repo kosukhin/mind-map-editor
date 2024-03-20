@@ -27,8 +27,6 @@ import { useRouter } from 'vue-router';
 import { useIdbGetMap } from '@/composables/useIdbGetMap';
 import { idbGet } from '@/application/idbGet';
 
-// FIXME при открытии карты миникарта в неправильной позиции
-// FIXME при создании карты невозможно зайти в неё после навигации по хлебным крошкам
 // FIXME вернуть родительские типы
 // FIXME если проект открыт то обновление PageEditor должно подгружать проект
 // TODO интегрировать в вскод редактор
