@@ -22,8 +22,6 @@ import debounce from 'lodash/debounce';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-// FIXME поправить кривые хлебные крошки
-// FIXME если проект открыт с ошибкой очистить idb
 // FIXME не работает перемещение объектов на другие карты
 // FIXME при открытии новой карты сделать прелоадер
 // FIXME сделать деплой на прод

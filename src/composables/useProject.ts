@@ -1,14 +1,17 @@
+import { idbRemoveAll } from '@/application/idbRemoveAll';
 import { useIdbGetProject } from '@/composables/useIdbGetProject';
 import { useIdbSaveProject } from '@/composables/useIdbSaveProject';
 import { DEFAULT_PROJECT_NAME } from '@/constants/project';
 import { getDirectoryHandler, setDeirectoryHandle, setFiles } from '@/libraries/browser-fs';
 import { doLater } from '@/utils/doLater';
 import { set } from 'lodash';
+import { compose } from 'lodash/fp';
 import { ref } from 'vue';
 
 const { getByName } = useIdbGetProject();
 const isProjectOpened = ref(false);
 const setProjectOff = doLater(set, isProjectOpened, 'value', false);
+const loadErrorHandler = compose(idbRemoveAll, setProjectOff);
 
 const loadProjectFiles = () => getByName(DEFAULT_PROJECT_NAME).then((v) => {
   if (v.length) {
@@ -22,7 +25,7 @@ const loadProjectFiles = () => getByName(DEFAULT_PROJECT_NAME).then((v) => {
       }),
     )
       .then(setFiles)
-      .catch(setProjectOff);
+      .catch(loadErrorHandler);
   }
   return v;
 });
