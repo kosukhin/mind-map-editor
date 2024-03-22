@@ -22,6 +22,8 @@ import debounce from 'lodash/debounce';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
+// FIXME поправить кривые хлебные крошки
+// FIXME если проект открыт с ошибкой очистить idb
 // FIXME не работает перемещение объектов на другие карты
 // FIXME при открытии новой карты сделать прелоадер
 // FIXME сделать деплой на прод
@@ -33,6 +35,7 @@ import { useRouter } from 'vue-router';
 // TODO сделать шаблоны внутри SVG чтобы писать текст внутри картинок
 // TODO открытие json  файлов с помощью PWA приложения
 // TODO убрать any из типов
+// TODO реорганизовать стиль кода в applications - utils - composables
 
 const i18n = useI18n();
 useSeoMeta({
