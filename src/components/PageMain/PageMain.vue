@@ -9,7 +9,6 @@ import { useRequestCreateMap } from '@/composables/useRequestCreateMap';
 import { useRequestGetMap } from '@/composables/useRequestGetMap';
 import { useRequestSearch } from '@/composables/useRequestSearch';
 import {
-  directoryHandler,
   onMapsChanged,
   setFiles,
   topMaps,
@@ -23,9 +22,9 @@ import debounce from 'lodash/debounce';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-// FIXME сделать деплой на прод
-// FIXME при первом открытии ошибка на проекте открытом раньше
+// FIXME не работает перемещение объектов на другие карты
 // FIXME при открытии новой карты сделать прелоадер
+// FIXME сделать деплой на прод
 // TODO для работы ФС нужна абстракция с интеграциями с облачными дисками
 // TODO интегрировать в вскод редактор
 // TODO нужно сделать чтобы SVG в canvas вставлялся как HTML
@@ -175,7 +174,7 @@ useIdbGetMap()
     <div v-if="isProjectOpened" class="PageMain-ButtonGroup">
       <BaseButton @click="onCloseProject"> Закрыть проект </BaseButton>
     </div>
-    <div v-if="directoryHandler" class="PageMain-NewMap">
+    <div v-if="isProjectOpened" class="PageMain-NewMap">
       <BaseInput
         v-model="newMapName"
         :placeholder="$t('general.specifyNewCardName')"

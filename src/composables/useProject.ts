@@ -2,10 +2,13 @@ import { useIdbGetProject } from '@/composables/useIdbGetProject';
 import { useIdbSaveProject } from '@/composables/useIdbSaveProject';
 import { DEFAULT_PROJECT_NAME } from '@/constants/project';
 import { getDirectoryHandler, setDeirectoryHandle, setFiles } from '@/libraries/browser-fs';
+import { doLater } from '@/utils/doLater';
+import { set } from 'lodash';
 import { ref } from 'vue';
 
 const { getByName } = useIdbGetProject();
 const isProjectOpened = ref(false);
+const setProjectOff = doLater(set, isProjectOpened, 'value', false);
 
 const loadProjectFiles = () => getByName(DEFAULT_PROJECT_NAME).then((v) => {
   if (v.length) {
@@ -17,9 +20,9 @@ const loadProjectFiles = () => getByName(DEFAULT_PROJECT_NAME).then((v) => {
         file.handle = blobHandle;
         return file;
       }),
-    ).then((files) => {
-      setFiles(files);
-    });
+    )
+      .then(setFiles)
+      .catch(setProjectOff);
   }
   return v;
 });
