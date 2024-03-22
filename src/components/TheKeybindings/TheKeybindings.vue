@@ -7,11 +7,11 @@ useOverlayAutoClose(SHOW_KEYBINDINGS);
 
 <template>
   <pre class="TheKeybindings">
-    Esc - {{ $t('theKeybindings.closeModal') }}
-    Ctrl+<em>S</em> - {{ $t('theKeybindings.saveForm') }}
-    Ctrl+<em>F</em> - {{ $t('theKeybindings.openSearchWindow') }}
-    Ctrl+<em>M</em> - {{ $t('theKeybindings.openMenu') }}
-    Ctrl+<em>H</em> - {{ $t('theKeybindings.openTabsHistory') }}
+    Esc - {{ $t('general.closeModal') }}
+    Ctrl+<em>S</em> - {{ $t('general.saveForm') }}
+    Ctrl+<em>F</em> - {{ $t('general.openSearchWindow') }}
+    Ctrl+<em>M</em> - {{ $t('general.openMenu') }}
+    Ctrl+<em>H</em> - {{ $t('general.openTabsHistory') }}
   </pre>
 </template>
 

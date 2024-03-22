@@ -99,12 +99,9 @@ export function average(values: number[]) {
 }
 
 export function apply(args: any[] | any, fn: AnyFn) {
-  if (Array.isArray(args)) {
-    return fn(...args);
-  }
-
   return fn(args);
 }
+
 export const cApply = curry(apply);
 
 export function calculateProgressBg(progress: number) {

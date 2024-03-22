@@ -1,36 +1,38 @@
 <script setup lang="ts">
-import { watch } from '@vue/runtime-core';
-import TheHeader from '@/components/TheHeader/TheHeader.vue';
-import TheEditor from '@/components/TheEditor/TheEditor.vue';
-import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
-import TheMiniMap from '@/components/TheMiniMap/TheMiniMap.vue';
-import BaseNotify from '@/components/BaseNotify/BaseNotify.vue';
-import FormType from '@/components/FormType/FormType.vue';
-import FormObject from '@/components/FormObject/FormObject.vue';
-import BaseModal from '@/components/BaseModal/BaseModal.vue';
-import TheMapAsText from '@/components/TheMapAsText/TheMapAsText.vue';
-import TheSettings from '@/components/TheSettings/TheSettings.vue';
-import AppSearch from '@/components/AppSearch/AppSearch.vue';
-import FormJson from '@/components/FormJson/FormJson.vue';
-import AppTypesParent from '@/components/AppTypesParent/AppTypesParent.vue';
-import TheKeybindings from '@/components/TheKeybindings/TheKeybindings.vue';
 import AppMenuObject from '@/components/AppMenuObject/AppMenuObject.vue';
+import AppSearch from '@/components/AppSearch/AppSearch.vue';
+import AppTypesParent from '@/components/AppTypesParent/AppTypesParent.vue';
 import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
+import BaseModal from '@/components/BaseModal/BaseModal.vue';
+import BaseNotify from '@/components/BaseNotify/BaseNotify.vue';
+import FormJson from '@/components/FormJson/FormJson.vue';
+import FormObject from '@/components/FormObject/FormObject.vue';
+import FormType from '@/components/FormType/FormType.vue';
+import TheEditor from '@/components/TheEditor/TheEditor.vue';
+import TheHeader from '@/components/TheHeader/TheHeader.vue';
 import TheHistoryMaps from '@/components/TheHistoryMaps/TheHistoryMaps.vue';
+import TheKeybindings from '@/components/TheKeybindings/TheKeybindings.vue';
+import TheMapAsText from '@/components/TheMapAsText/TheMapAsText.vue';
+import TheMiniMap from '@/components/TheMiniMap/TheMiniMap.vue';
 import TheObjectTransfer from '@/components/TheObjectTransfer/TheObjectTransfer.vue';
-import { useSharedMeta } from '@/composables/useSharedMeta';
+import TheSettings from '@/components/TheSettings/TheSettings.vue';
+import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
 import { useMoveToObject } from '@/composables/useMoveToObject';
+import { useProject } from '@/composables/useProject';
 import { useSharedHashChange } from '@/composables/useSharedHashChange';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
+import { useSharedLocks } from '@/composables/useSharedLocks';
+import { useSharedMap } from '@/composables/useSharedMap';
+import { useSharedMeta } from '@/composables/useSharedMeta';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useSharedSideBar } from '@/composables/useSharedSideBar';
 import {
   SHOW_HISTORY_MAPS,
   SHOW_KEYBINDINGS,
   SHOW_OBJECT_MENU, SHOW_PARENT_TYPES, SHOW_SEARCH, SHOW_SETTINGS,
 } from '@/constants/overlays';
-import { useSharedLocks } from '@/composables/useSharedLocks';
 import { getLocation } from '@/utils/globals';
-import { useSharedSideBar } from '@/composables/useSharedSideBar';
+import { watch } from '@vue/runtime-core';
 
 useSharedMeta();
 
@@ -62,6 +64,14 @@ const handleLock = () => {
 
 const version = '0.1';
 const { isSidebarOpen } = useSharedSideBar();
+
+const { isProjectOpened, loadProjectFiles } = useProject();
+const { openMapOfCurrentUrl } = useSharedMap();
+[!isProjectOpened.value].filter(Boolean).forEach(() => {
+  loadProjectFiles().then(() => {
+    openMapOfCurrentUrl();
+  });
+});
 </script>
 
 <template>

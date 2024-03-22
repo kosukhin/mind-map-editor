@@ -59,7 +59,7 @@ const moveToObject = (object: MapObject) => {
         </b>
       </div>
     </div>
-    <div v-else-if="query">{{ $t('search.noResults') }}</div>
+    <div v-else-if="query">{{ $t('general.noResults') }}</div>
   </div>
 </template>
 

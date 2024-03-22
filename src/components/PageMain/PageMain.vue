@@ -1,40 +1,39 @@
 <script lang="ts" setup>
+import { idbGet } from '@/application/idbGet';
+import { windowReload } from '@/application/windowReload';
+import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import BaseInput from '@/components/BaseInput/BaseInput.vue';
+import { useIdbGetMap } from '@/composables/useIdbGetMap';
+import { useProject } from '@/composables/useProject';
+import { useRequestCreateMap } from '@/composables/useRequestCreateMap';
+import { useRequestGetMap } from '@/composables/useRequestGetMap';
+import { useRequestSearch } from '@/composables/useRequestSearch';
+import {
+  directoryHandler,
+  onMapsChanged,
+  setFiles,
+  topMaps,
+} from '@/libraries/browser-fs';
+import { cApply, urlTrim } from '@/utils/common';
 import { ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import { useSeoMeta } from '@vueuse/head';
 import { directoryOpen, fileOpen } from 'browser-fs-access';
 import debounce from 'lodash/debounce';
 import { useI18n } from 'vue-i18n';
-import { windowReload } from '@/application/windowReload';
-import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import BaseInput from '@/components/BaseInput/BaseInput.vue';
-import {
-  directoryHandler,
-  getDirectoryHandler,
-  onMapsChanged,
-  setDeirectoryHandle,
-  setFiles,
-  topMaps,
-} from '@/libraries/browser-fs';
-import { DEFAULT_PROJECT_NAME } from '@/constants/project';
-import { useRequestSearch } from '@/composables/useRequestSearch';
-import { urlTrim } from '@/utils/common';
-import { useRequestGetMap } from '@/composables/useRequestGetMap';
-import { useRequestCreateMap } from '@/composables/useRequestCreateMap';
-import { useIdbGetProject } from '@/composables/useIdbGetProject';
-import { useIdbSaveProject } from '@/composables/useIdbSaveProject';
 import { useRouter } from 'vue-router';
-import { useIdbGetMap } from '@/composables/useIdbGetMap';
-import { idbGet } from '@/application/idbGet';
 
-// FIXME вернуть родительские типы
-// FIXME если проект открыт то обновление PageEditor должно подгружать проект
+// FIXME сделать деплой на прод
+// FIXME при первом открытии ошибка на проекте открытом раньше
+// FIXME при открытии новой карты сделать прелоадер
+// TODO для работы ФС нужна абстракция с интеграциями с облачными дисками
 // TODO интегрировать в вскод редактор
 // TODO нужно сделать чтобы SVG в canvas вставлялся как HTML
 // TODO Нужно сделать чтобы стрелки можно было изламывать
 // TODO поисковый индекс нужно исправить, сохранять индекс в проекте
 // TODO сделать шаблоны внутри SVG чтобы писать текст внутри картинок
 // TODO открытие json  файлов с помощью PWA приложения
+// TODO убрать any из типов
 
 const i18n = useI18n();
 useSeoMeta({
@@ -119,41 +118,15 @@ const onCreateMap = async () => {
   await createMap(newMapName.value);
 };
 
-const { getByName } = useIdbGetProject();
-const isProjectOpened = ref(false);
-getByName(DEFAULT_PROJECT_NAME).then((v) => {
-  if (v.length) {
-    setDeirectoryHandle(v[0].directoryHandle);
-    isProjectOpened.value = true;
-    Promise.all(
-      v[0].blobs.map(async (blobHandle: any) => {
-        const file = (await blobHandle.getFile()) as any;
-        file.handle = blobHandle;
-        return file;
-      }),
-    ).then((files) => {
-      setFiles(files);
-    });
-  }
+const { isProjectOpened, loadProjectFiles, saveProjectFiles } = useProject();
+[!isProjectOpened.value].filter(Boolean).forEach(loadProjectFiles);
+
+const onOpenFiles = () => directoryOpen({
+  recursive: false,
+  mode: 'readwrite',
+}).then((blobs) => {
+  [setFiles, saveProjectFiles].forEach(cApply(blobs));
 });
-
-const onOpenFiles = async () => {
-  const blobs = await directoryOpen({
-    recursive: true,
-    mode: 'readwrite',
-  });
-  setFiles(blobs as File[]);
-
-  const project = await getByName(DEFAULT_PROJECT_NAME);
-  if (!project.length) {
-    isProjectOpened.value = true;
-    useIdbSaveProject(
-      DEFAULT_PROJECT_NAME,
-      blobs.map((blob: any) => blob.handle),
-      getDirectoryHandler(),
-    );
-  }
-};
 
 const router = useRouter();
 const onOpenOneFile = async () => {

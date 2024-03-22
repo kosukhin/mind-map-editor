@@ -28,7 +28,6 @@ const data = useVModel(props, 'modelValue', emit);
 <template>
   <select label="select" v-model="data" class="BaseSelect">
     <option
-      label="select-option"
       v-for="item in props.items"
       :key="item[props.optionId]"
       :value="item[props.optionId]"

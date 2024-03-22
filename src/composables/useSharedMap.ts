@@ -43,26 +43,28 @@ export const useSharedMap = createSharedComposable(() => {
     },
   );
 
+  const openMapOfCurrentUrl = () => {
+    firstMapLoad.value = false;
+    mapName.value = route.path.replace('/', '').replaceAll('/', '_');
+
+    if (mapName.value.match('_')) {
+      mapName.value = `_${mapName.value}`;
+    }
+
+    getMap(mapName.value)
+      .then(([vMap, vParentTypes]) => {
+        setValues([
+          [map, vMap],
+          [parentTypes, vParentTypes],
+          [firstMapLoad, true],
+        ]);
+      })
+      .catch(setError(mapError.value));
+  };
+
   watch(
     route,
-    () => {
-      firstMapLoad.value = false;
-      mapName.value = route.path.replace('/', '').replaceAll('/', '_');
-
-      if (mapName.value.match('_')) {
-        mapName.value = `_${mapName.value}`;
-      }
-
-      getMap(mapName.value)
-        .then(([vMap, vParentTypes]) => {
-          setValues([
-            [map, vMap],
-            [parentTypes, vParentTypes],
-            [firstMapLoad, true],
-          ]);
-        })
-        .catch(setError(mapError.value));
-    },
+    openMapOfCurrentUrl,
     {
       immediate: true,
     },
@@ -73,5 +75,6 @@ export const useSharedMap = createSharedComposable(() => {
     firstMapLoad,
     parentTypes,
     mapName,
+    openMapOfCurrentUrl,
   };
 });
