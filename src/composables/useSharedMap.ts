@@ -6,6 +6,7 @@ import { MAP_UPDATED } from '@/constants/messages';
 import { NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants/system';
 import { MapStructure, MapType } from '@/entities/Map';
 import { setError, setValue, setValues } from '@/utils/common';
+import { mapUrlToName } from '@/utils/mapUrlToName';
 import { ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
@@ -45,11 +46,7 @@ export const useSharedMap = createSharedComposable(() => {
 
   const openMapOfCurrentUrl = () => {
     firstMapLoad.value = false;
-    mapName.value = route.path.replace('/', '').replaceAll('/', '_');
-
-    if (mapName.value.match('_')) {
-      mapName.value = `_${mapName.value}`;
-    }
+    mapName.value = mapUrlToName(route.path);
 
     getMap(mapName.value)
       .then(([vMap, vParentTypes]) => {

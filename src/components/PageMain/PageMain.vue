@@ -22,7 +22,6 @@ import debounce from 'lodash/debounce';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-// FIXME не работает перемещение объектов на другие карты
 // FIXME при открытии новой карты сделать прелоадер
 // FIXME сделать деплой на прод
 // TODO для работы ФС нужна абстракция с интеграциями с облачными дисками
