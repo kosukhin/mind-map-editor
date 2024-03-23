@@ -1,13 +1,15 @@
 .TheHeader {
-  padding: var(--defaultPadding);
+  padding-inline: var(--defaultPadding);
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
   border-bottom: 1px solid var(--borderColor);
   position: relative;
   background: transparent;
 
   &-Actions {
+    margin-left: auto;
     display: flex;
     gap: var(--mbSm);
   }

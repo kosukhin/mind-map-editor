@@ -12,6 +12,9 @@ const { overlayName } = useSharedOverlay();
 
 <template>
   <div class="TheHeader">
+    <RouterLink to="/">
+      <img src="/icon-top-bar.png" width="57" height="42" alt="mmc" />
+    </RouterLink>
     <BaseBreadcrumbs class="TheHeader-Breadcrumbs" />
     <div class="TheHeader-Actions">
       <BaseButton

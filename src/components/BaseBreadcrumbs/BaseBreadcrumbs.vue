@@ -7,7 +7,6 @@ const { map } = useSharedMap();
 
 <template>
   <div>
-    <RouterLink to="/">{{ $t('general.home') }}</RouterLink>
     <span
       v-for="(title, url) in map?.parentNames"
       :key="url || uniqueId('history_')"
