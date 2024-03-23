@@ -66,7 +66,7 @@ const version = '0.1';
 const { isSidebarOpen } = useSharedSideBar();
 
 const { isProjectOpened, loadProjectFiles } = useProject();
-const { openMapOfCurrentUrl } = useSharedMap();
+const { openMapOfCurrentUrl, isLoading } = useSharedMap();
 [!isProjectOpened.value].filter(Boolean).forEach(() => {
   loadProjectFiles().then(() => {
     openMapOfCurrentUrl();
@@ -75,6 +75,11 @@ const { openMapOfCurrentUrl } = useSharedMap();
 </script>
 
 <template>
+  <transition name="slide-fade">
+    <div class="PageEditor-Loading" v-if="isLoading">
+      Карта загружается...
+    </div>
+  </transition>
   <div
     class="PageEditor-SelectionLocker"
     :class="{ 'PageEditor-SelectionLocker_Locked': isDragLocked }"

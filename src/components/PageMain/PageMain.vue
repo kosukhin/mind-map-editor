@@ -22,7 +22,6 @@ import debounce from 'lodash/debounce';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-// FIXME при открытии новой карты сделать прелоадер
 // FIXME сделать деплой на прод
 // TODO для работы ФС нужна абстракция с интеграциями с облачными дисками
 // TODO интегрировать в вскод редактор
@@ -33,6 +32,7 @@ import { useRouter } from 'vue-router';
 // TODO открытие json  файлов с помощью PWA приложения
 // TODO убрать any из типов
 // TODO реорганизовать стиль кода в applications - utils - composables
+// и нейминг поправить от общего к частному всех функций\констант\компонентов
 
 const i18n = useI18n();
 useSeoMeta({

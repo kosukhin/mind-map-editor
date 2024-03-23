@@ -7,9 +7,10 @@ import { NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants/system';
 import { MapStructure, MapType } from '@/entities/Map';
 import { setError, setValue, setValues } from '@/utils/common';
 import { mapUrlToName } from '@/utils/mapUrlToName';
-import { ref } from '@vue/reactivity';
+import { ref, computed } from 'vue';
 import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
+import { debounce } from 'lodash';
 import { useRoute } from 'vue-router';
 
 export const useSharedMap = createSharedComposable(() => {
@@ -44,9 +45,17 @@ export const useSharedMap = createSharedComposable(() => {
     },
   );
 
+  const isLoading = ref(false);
+  const isLoadingDeffered = computed({
+    get: () => isLoading.value,
+    set: debounce((v) => {
+      isLoading.value = v;
+    }, 1000),
+  });
   const openMapOfCurrentUrl = () => {
     firstMapLoad.value = false;
     mapName.value = mapUrlToName(route.path);
+    isLoading.value = true;
 
     getMap(mapName.value)
       .then(([vMap, vParentTypes]) => {
@@ -55,6 +64,7 @@ export const useSharedMap = createSharedComposable(() => {
           [parentTypes, vParentTypes],
           [firstMapLoad, true],
         ]);
+        isLoadingDeffered.value = false;
       })
       .catch(setError(mapError.value));
   };
@@ -73,5 +83,6 @@ export const useSharedMap = createSharedComposable(() => {
     parentTypes,
     mapName,
     openMapOfCurrentUrl,
+    isLoading,
   };
 });

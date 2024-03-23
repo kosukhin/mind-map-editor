@@ -13,6 +13,22 @@
   grid-template-rows: 50px 1fr;
   grid-template-columns: 200px 1fr;
 
+  &-Loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    background: #fff;
+    opacity: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+  }
+
   &-Header {
     grid-area: header;
     height: 50px  ;
