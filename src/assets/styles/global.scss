@@ -1,3 +1,21 @@
 @import './reset.scss';
 @import './transitions.scss';
 @import './variables.scss';
+
+body {
+    color: #000 !important
+}
+
+.Common {
+    &-Flex {
+        display: flex;
+
+        &-Column {
+            flex-direction: column;
+        }
+    }
+
+    &-Gap {
+        gap: var(--mbMd)
+    }
+}

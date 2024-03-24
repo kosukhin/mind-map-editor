@@ -22,18 +22,6 @@ import debounce from 'lodash/debounce';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-// FIXME сделать деплой на прод
-// TODO для работы ФС нужна абстракция с интеграциями с облачными дисками
-// TODO интегрировать в вскод редактор
-// TODO нужно сделать чтобы SVG в canvas вставлялся как HTML
-// TODO Нужно сделать чтобы стрелки можно было изламывать
-// TODO поисковый индекс нужно исправить, сохранять индекс в проекте
-// TODO сделать шаблоны внутри SVG чтобы писать текст внутри картинок
-// TODO открытие json  файлов с помощью PWA приложения
-// TODO убрать any из типов
-// TODO реорганизовать стиль кода в applications - utils - composables
-// и нейминг поправить от общего к частному всех функций\констант\компонентов
-
 const i18n = useI18n();
 useSeoMeta({
   title: i18n.t('general.mainTitle'),
@@ -117,7 +105,9 @@ const onCreateMap = async () => {
   await createMap(newMapName.value);
 };
 
-const { isProjectOpened, loadProjectFiles, saveProjectFiles } = useProject();
+const {
+  isProjectOpened, loadProjectFiles, saveProjectFiles, setProjectOff,
+} = useProject();
 [!isProjectOpened.value].filter(Boolean).forEach(loadProjectFiles);
 
 const onOpenFiles = () => directoryOpen({
@@ -125,12 +115,10 @@ const onOpenFiles = () => directoryOpen({
   mode: 'readwrite',
 }).then((blobs) => {
   [setFiles, saveProjectFiles].forEach(cApply(blobs));
-});
+}).catch(setProjectOff);
 
 const router = useRouter();
-const onOpenOneFile = async () => {
-  const blob = await fileOpen();
-
+const onOpenOneFile = () => fileOpen().then((blob) => {
   onMapsChanged(async (maps: any) => {
     const lastIndex = maps.files.length - 1;
     const mapObject = await getMap(maps.files[lastIndex].url);
@@ -138,7 +126,7 @@ const onOpenOneFile = async () => {
   });
 
   setFiles([blob]);
-};
+}).catch(setProjectOff);
 
 const onCloseProject = () => {
   idbGet().delete().then(windowReload);

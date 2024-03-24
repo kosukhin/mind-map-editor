@@ -46,4 +46,5 @@ export const useProject = () => ({
   isProjectOpened,
   loadProjectFiles,
   saveProjectFiles,
+  setProjectOff,
 });
