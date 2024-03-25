@@ -4,11 +4,13 @@ import { windowReload } from '@/application/windowReload';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import { useIdbGetMap } from '@/composables/useIdbGetMap';
+import { useOpenFile } from '@/composables/useOpenFile';
 import { useProject } from '@/composables/useProject';
 import { useRequestCreateMap } from '@/composables/useRequestCreateMap';
 import { useRequestGetMap } from '@/composables/useRequestGetMap';
 import { useRequestSearch } from '@/composables/useRequestSearch';
 import {
+  addFiles,
   onMapsChanged,
   setFiles,
   topMaps,
@@ -143,6 +145,16 @@ useIdbGetMap()
 
     setFiles(files);
   });
+
+const { openedFile, forceFile } = useOpenFile();
+if (openedFile.value) {
+  openedFile.value.getFile().then(async (file) => {
+    (file as any).handle = openedFile.value;
+    forceFile.value = file;
+    router.push('/current');
+  });
+}
+
 </script>
 
 <template>
@@ -150,15 +162,8 @@ useIdbGetMap()
     <h2 class="PageMain-Title">
       <img src="/icon-192x192.png" width="100" height="100" alt="mmc" />
       Mind Map Creator
+      {{ JSON.stringify(openedFile) }}
     </h2>
-    <div v-if="!isProjectOpened" class="PageMain-ButtonGroup">
-      <BaseButton @click="onOpenFiles">
-        {{ $t('general.openProject') }}
-      </BaseButton>
-      <BaseButton @click="onOpenOneFile">
-        {{ $t('general.openFile') }}
-      </BaseButton>
-    </div>
     <div v-if="isProjectOpened" class="PageMain-ButtonGroup">
       <BaseButton @click="onCloseProject"> Закрыть проект </BaseButton>
     </div>

@@ -10,7 +10,7 @@
     "file_handlers": [{
       "action": "/",
       "accept": {
-        "text/json": [".mmc.json"]
+        "text/json": [".json"]
       },
       "launch_type": "single-client"
     }],

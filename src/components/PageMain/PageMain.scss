@@ -8,6 +8,8 @@
   background: var(--defaultBG);
   min-height: calc(100vh - 52px);
   border-radius: var(--defaultRadius);
+  justify-content: center;
+  align-items: center;
 
   &-Row {
     margin-bottom: var(--mbExMd);

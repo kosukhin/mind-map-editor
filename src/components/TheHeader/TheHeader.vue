@@ -2,20 +2,21 @@
 import BaseBreadcrumbs from '@/components/BaseBreadcrumbs/BaseBreadcrumbs.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
+import { useDebugString } from '@/composables/useDebugString';
 import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import {
   SHOW_HISTORY_MAPS, SHOW_OBJECT_MENU, SHOW_SEARCH, SHOW_TEXT,
 } from '@/constants/overlays';
 
 const { overlayName } = useSharedOverlay();
+const { debugString } = useDebugString();
 </script>
 
 <template>
   <div class="TheHeader">
-    <RouterLink to="/">
-      <img src="/icon-top-bar.png" width="57" height="42" alt="mmc" />
-    </RouterLink>
+    <img src="/icon-top-bar.png" width="57" height="42" alt="mmc" />
     <BaseBreadcrumbs class="TheHeader-Breadcrumbs" />
+    {{ debugString }}
     <div class="TheHeader-Actions">
       <BaseButton
         type="success"
