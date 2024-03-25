@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 
-const debugString = ref('initial');
+const debugString = ref('');
 const append = (step: string) => {
   debugString.value += `/${step}`;
 };

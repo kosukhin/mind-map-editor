@@ -1,8 +1,10 @@
+import { mapBuildParentMapNames } from '@/application/mapBuildParentMapNames';
 import { requestNormalizeGetMap } from '@/application/requestNormalizeGetMap';
 import { useOpenFile } from '@/composables/useOpenFile';
 import { MapStructure, MapType } from '@/entities/Map';
-import { readFile, readFileByName } from '@/libraries/browser-fs';
+import { readFile } from '@/libraries/browser-fs';
 import { isNotNullish } from '@/utils/isNotNullish';
+import { iterateeHash } from '@/utils/iterateeHash';
 import { jsonParse } from '@/utils/jsonParse';
 import { createMap } from '@/utils/map';
 import { compose, property } from 'lodash/fp';
@@ -16,37 +18,33 @@ export function useRequestGetMap() {
     mapName: string,
   ): Promise<readonly [MapStructure, MapType[]]> => {
     let data: any = null;
+    let allMaps: any = null;
     try {
-      if (forceFile.value) {
-        data = jsonParse(String(await readFile(forceFile.value))) as MapStructure;
-        data = data[mapName] ?? createMap('', mapName);
-      } else {
-        data = jsonParse(String(await readFileByName(mapName))) as MapStructure;
-      }
+      allMaps = jsonParse(String(await readFile(forceFile.value))) as MapStructure;
+      data = allMaps[mapName] ?? createMap('', mapName);
     } catch (e) {
       data = createMap('', mapName);
     }
 
-    // TODO переделать логику эту
-    // const parentNames = mapBuildParentMapNames(mapName);
-    // const parentsData = await Promise.all(
-    //   parentNames.map(readFileByName),
-    // ) as string[];
-    // const parsedParentsData = parentsData.map(jsonParse);
-    // const parentTypes = parsedParentsData
-    //   .filter(isTypesNotNullish)
-    //   .map((parent) => Object.values(parent.types) as MapType[])
-    //   .flat();
-    // const parentNamesDictionary = parsedParentsData
-    // .reduce(iterateeHash('url', 'settings.title'), {});
-    // [data].filter(isNotNullish).forEach(() => {
-    //   data.parentNames = parentNamesDictionary;
-    // });
+    const parentNames = mapBuildParentMapNames(mapName);
+    let parentTypes: any[] = [];
+    if (allMaps) {
+      const parentsData = parentNames.map((parentMapName) => allMaps[parentMapName]);
+      const parentNamesDictionary = parentsData
+        .reduce(iterateeHash('url', 'settings.title'), {});
+      [data].filter(isNotNullish).forEach(() => {
+        data.parentNames = parentNamesDictionary;
+      });
+      parentTypes = parentsData
+        .filter(isTypesNotNullish)
+        .map((parent) => Object.values(parent.types) as MapType[])
+        .flat();
+    }
 
     const response = {
       document: mapName,
       ok: !!data,
-      parentTypes: [],
+      parentTypes,
       data: data && 'structure' in data ? data : ({ structure: data } as any),
     };
 
