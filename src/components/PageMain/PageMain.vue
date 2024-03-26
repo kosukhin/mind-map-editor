@@ -162,7 +162,6 @@ if (openedFile.value) {
     <h2 class="PageMain-Title">
       <img src="/icon-192x192.png" width="100" height="100" alt="mmc" />
       Mind Map Creator
-      {{ JSON.stringify(openedFile) }}
     </h2>
     <div v-if="isProjectOpened" class="PageMain-ButtonGroup">
       <BaseButton @click="onCloseProject"> Закрыть проект </BaseButton>

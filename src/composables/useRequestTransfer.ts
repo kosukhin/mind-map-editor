@@ -16,8 +16,8 @@ const transferMap = async (mapUrl: string, payload: any) => {
     [map].forEach((v) => {
       v.objects[Date.now()] = unref(payload.object);
 
-      [v.types[payload.type.name]].filter(isNullish).forEach(() => {
-        v.types[payload.type.name] = payload.type;
+      [v.types[payload.type.id]].filter(isNullish).forEach(() => {
+        v.types[payload.type.id] = payload.type;
       });
 
       saveMap(v, mapName).then(partial(push, mapUrl));

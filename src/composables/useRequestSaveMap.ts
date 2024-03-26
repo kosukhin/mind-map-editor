@@ -13,10 +13,7 @@ const { forceFile } = useOpenFile();
 // FIXME убрать в функции
 export function useRequestSaveMap() {
   const saveMap = async (map: MapStructure, mapName: string): Promise<void> => {
-    console.log('save map', mapName, map);
-
     let fileBlob = getFileBlobByName(mapName) as any;
-    console.log('before read file');
     if (forceFile.value) {
       fileBlob = forceFile.value;
     }
@@ -30,20 +27,15 @@ export function useRequestSaveMap() {
     }
     // console.log('saved map', savedMap);
 
-    debugger;
     const mapToSave = omit(Object.assign(savedMap, { [mapName]: map }), Object.keys(map));
     const content = jsonStringify(mapToSave);
 
     if (fileBlob && fileBlob.handle) {
-      console.log('normal save');
-
       const writable = await fileBlob.handle.createWritable();
       await writable.write(content);
       await writable.close();
       updateBlobContent(fileBlob, content);
     } else if (fileBlob) {
-      console.log('save to idb');
-
       idbFindDb('maps', 'name', 'equals', fileBlob.name).then((v: any) => {
         const payload = [
           {

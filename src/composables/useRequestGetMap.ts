@@ -20,7 +20,9 @@ export function useRequestGetMap() {
     let data: any = null;
     let allMaps: any = null;
     try {
-      allMaps = jsonParse(String(await readFile(forceFile.value))) as MapStructure;
+      if (forceFile.value) {
+        allMaps = jsonParse(String(await readFile(forceFile.value))) as MapStructure;
+      }
       data = allMaps[mapName] ?? createMap('', mapName);
     } catch (e) {
       data = createMap('', mapName);
