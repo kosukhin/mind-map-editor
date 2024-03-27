@@ -62,7 +62,13 @@ watch(ctrlSFired, () => {
       <h2>{{ $t('general.mapType') }}</h2>
     </template>
     <div v-if="currentType" class="FormType">
+      <b>Название типа</b>
       <BaseInput v-model="form.name" class="FormType-Row" />
+      <b>Ширина</b>
+      <BaseInput v-model="form.width" class="FormType-Row" />
+      <b>Высота</b>
+      <BaseInput v-model="form.height" class="FormType-Row" />
+      <b>SVG</b>
       <BaseTextarea v-model="form.svg" class="FormJson-Text" />
     </div>
     <template #footer>
