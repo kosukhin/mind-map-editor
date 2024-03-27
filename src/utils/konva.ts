@@ -1,4 +1,3 @@
-import { Canvg } from 'canvg';
 import Konva from 'konva';
 import {
   KonvaLayerObject, Arrow, Layer, Stage,
@@ -22,11 +21,10 @@ export async function addObjectToLayer(
   const additionalObjects = [];
   if (!ctx) return [];
   const type = types[object.type];
-  const v = await Canvg.fromString(ctx, type.svg);
-  await v.render();
+  const imageObj = new Image();
   const img = new Konva.Image({
     name: object.id,
-    image: canvas,
+    image: imageObj,
     x: object.position[0],
     y: object.position[1],
     width: type.width,
@@ -34,6 +32,7 @@ export async function addObjectToLayer(
     draggable: !clickLocked,
     objectId: object.id,
   });
+  imageObj.src = `data:image/svg+xml,${encodeURIComponent(type.svg)}`;
   layer.add(img);
   const labelWidth = maxNewLineLength(object.name) * 7;
   const text = new Konva.Text({

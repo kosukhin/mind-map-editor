@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
-import AppSvgEditor from '@/components/AppSvgEditor/AppSvgEditor.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
@@ -11,6 +10,7 @@ import { SHOW_TYPE } from '@/constants/overlays';
 import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
 import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
+import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 
 const { stringify } = JSON;
 
@@ -63,7 +63,7 @@ watch(ctrlSFired, () => {
     </template>
     <div v-if="currentType" class="FormType">
       <BaseInput v-model="form.name" class="FormType-Row" />
-      <AppSvgEditor v-model="form" />
+      <BaseTextarea v-model="form.svg" class="FormJson-Text" />
     </div>
     <template #footer>
       <div class="FormType-Controls">
