@@ -40,6 +40,8 @@ export const createObject = (
   id: Date.now().toString(),
   lastClick: Date.now(),
   position,
+  width: 100,
+  height: 100,
   type,
   zindex: 0,
   inMenu: false,

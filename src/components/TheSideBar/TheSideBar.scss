@@ -24,7 +24,8 @@
 
   &-ItemName, &-ItemImage {
     text-align: center;
-    object-fit: none;
+    object-fit: contain;
+    object-position: center center;
     align-self: center;
     margin: var(--mbMd) 0;
     background: transparent;

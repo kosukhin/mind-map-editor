@@ -1,1 +1,3 @@
-export const isNotNullish = (v: any) => v !== null && v !== undefined;
+export const isNotNullish = <T>(
+  v: T | undefined,
+): v is T => v !== null && v !== undefined;

@@ -27,12 +27,22 @@ export async function addObjectToLayer(
     image: imageObj,
     x: object.position[0],
     y: object.position[1],
-    width: type.width,
-    height: type.height,
+    width: object.width || type.width,
+    height: object.height || type.height,
     draggable: !clickLocked,
     objectId: object.id,
   });
-  imageObj.src = `data:image/svg+xml,${encodeURIComponent(type.svg)}`;
+  let { svg } = type;
+  if (object.additionalFields) {
+    Object.entries(object.additionalFields).forEach(([key, value]) => {
+      svg = svg.replaceAll(`\${${key}}`, value);
+    });
+  }
+  ['width', 'height'].forEach((key) => {
+    svg = svg.replaceAll(`\${${key}}`, (object as any)[key]);
+  });
+
+  imageObj.src = `data:image/svg+xml,${encodeURIComponent(svg)}`;
   layer.add(img);
   const labelWidth = maxNewLineLength(object.name) * 7;
   const text = new Konva.Text({

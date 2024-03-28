@@ -2,7 +2,6 @@
 import { computed, ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import { useClipboard } from '@vueuse/core';
-import { omit } from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseCheckbox from '@/components/BaseCheckbox/BaseCheckbox.vue';
@@ -16,7 +15,6 @@ import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
 import { SHOW_OBJECT, SHOW_TRANSFER } from '@/constants/overlays';
 import { useSharedMapObject } from '@/composables/useSharedMapObject';
-import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
 import { createMapObjectUrl } from '@/utils/map';
 import { useSharedLayer } from '@/composables/useSharedLayer';
 import { MapObject } from '@/entities/Map';
@@ -64,12 +62,12 @@ watch(
   },
 );
 
-const omittedProps = ['lastClick', 'position'];
-const isDirty = computed(
-  () => stringify(omit(form.value, omittedProps))
-    !== stringify(omit(currentObject.value, omittedProps)),
-);
-useFormDirtyCheck(isDirty, SHOW_OBJECT);
+// const omittedProps = ['lastClick', 'position'];
+// const isDirty = computed(
+//   () => stringify(omit(form.value, omittedProps))
+//     !== stringify(omit(currentObject.value, omittedProps)),
+// );
+// useFormDirtyCheck(isDirty, SHOW_OBJECT);
 
 const objectUrl = computed({
   get() {
@@ -189,6 +187,12 @@ const { removeCurrentObject } = useObjectActions();
             />
           </div>
         </template>
+        <div :key="key" v-for="(_, key) in form.additionalFields">
+          <div class="FormObject-Title">{{ key }}</div>
+          <div class="FormObject-Row">
+            <BaseTextarea v-model="form.additionalFields[key]" />
+          </div>
+        </div>
         <div class="FormObject-Title">{{ $t('general.topName') }}</div>
         <div class="FormObject-Row">
           <BaseTextarea v-model="form.additionalName" />
@@ -204,6 +208,14 @@ const { removeCurrentObject } = useObjectActions();
         <div class="FormObject-Title">Z-Index</div>
         <div class="FormObject-Row">
           <BaseInput v-model="form.zindex" type="number" />
+        </div>
+        <div class="FormObject-Title">Width</div>
+        <div class="FormObject-Row">
+          <BaseInput v-model="form.width" type="number" />
+        </div>
+        <div class="FormObject-Title">Height</div>
+        <div class="FormObject-Row">
+          <BaseInput v-model="form.height" type="number" />
         </div>
         <div class="FormObject-Title">{{ $t('general.objectType') }}</div>
         <div class="FormObject-Row">

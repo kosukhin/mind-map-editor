@@ -19,6 +19,9 @@ export interface MapObject {
   lastClick: number
   inMenu: boolean
   menuOrder: number
+  width: number
+  height: number
+  additionalFields?: Record<string, string>
 }
 
 export interface MapType {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import svg64 from 'svg64';
 import { useI18n } from 'vue-i18n';
+import svg64 from 'svg64';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseGroup from '@/components/BaseGroup/BaseGroup.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
@@ -18,6 +18,7 @@ import { HEADER_HEIGHT, SIDEBAR_WIDTH } from '@/constants/system';
 import { createObject } from '@/utils/map';
 import { MapObject } from '@/entities/Map';
 import { KonvaLayerObject } from '@/entities/Konva';
+import { svgRenderDefault } from '@/utils/svgRenderDefault';
 
 const { overlayName } = useSharedOverlay();
 const { currentTypeId } = useSharedMapType();
@@ -99,7 +100,7 @@ const addToCanvas = async (
         <div class="TheSideBar-ItemName">{{ type.name }}</div>
         <img
           :alt="$t('general.notifications.dragToCanvasToAdd')"
-          :src="svg64(type.svg)"
+          :src="svg64(svgRenderDefault(type.svg))"
           class="TheSideBar-ItemImage"
           draggable="true"
           :title="$t('general.notifications.dragToCanvasToAdd')"
