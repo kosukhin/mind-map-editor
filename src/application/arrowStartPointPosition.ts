@@ -16,8 +16,6 @@ export const arrowStartPointPosition = (
   const bottom = isModuleDYGreater && dy < 0;
   const left = !isModuleDYGreater && dx < 0;
 
-  console.log('arr pos', top, right, bottom, left);
-
   if (top) {
     x += Math.round(shapeGeometry.width / 2);
   } else if (left) {

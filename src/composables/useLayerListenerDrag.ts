@@ -17,13 +17,22 @@ import { debounce } from 'lodash';
 // FIXME выделить вотчеры вынуть их из функции
 export const useLayerListenerDrag = createSharedComposable(() => {
   const { canvasSize } = useCanvas();
-  const { stage, layer, layerObjects } = useSharedLayer();
-  const { firstMapLoad, map } = useSharedMap();
   const { isDragLocked } = useSharedLocks();
   const { dragend, dragmove, wheel } = useSharedLayerEvents();
-  const { restrictBoundaries } = useCanvasBoundaries();
   const { triggerPartialRendering } = useMapPartialRenderer();
   let dragMoveInterval: any = null;
+
+  const { firstMapLoad, map } = useSharedMap();
+  const { restrictBoundaries } = useCanvasBoundaries();
+  const { stage, layer, layerObjects } = useSharedLayer();
+
+  watch(firstMapLoad, () => {
+    setTimeout(() => {
+      if (stage.value) {
+        stage.value.dragBoundFunc(restrictBoundaries);
+      }
+    }, 100);
+  });
 
   watch(dragend, () => {
     if (isDragLocked.value) return;
@@ -121,10 +130,4 @@ export const useLayerListenerDrag = createSharedComposable(() => {
       triggerPartialRendering();
     }, partialRenderingDelay),
   );
-
-  watch(firstMapLoad, () => {
-    if (stage.value) {
-      stage.value.dragBoundFunc(restrictBoundaries);
-    }
-  });
 });
