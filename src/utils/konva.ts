@@ -7,6 +7,7 @@ import { maxNewLineLength, newLineCount } from '@/utils/common';
 import { generateUniqString } from '@/utils/string';
 import { cloneDeep } from 'lodash';
 import { useSharedMapColors } from '@/composables/useSharedMapColors';
+import { arrowStartPointPosition } from '@/application/arrowStartPointPosition';
 
 export async function addObjectToLayer(
   layer: Layer,
@@ -22,13 +23,16 @@ export async function addObjectToLayer(
   if (!ctx) return [];
   const type = types[object.type];
   const imageObj = new Image();
+  const objectWidth = object.width || type.width;
+  const objectHeight = object.height || type.height;
+
   const img = new Konva.Image({
     name: object.id,
     image: imageObj,
     x: object.position[0],
     y: object.position[1],
-    width: object.width || type.width,
-    height: object.height || type.height,
+    width: objectWidth,
+    height: objectHeight,
     draggable: !clickLocked,
     objectId: object.id,
   });
@@ -47,8 +51,8 @@ export async function addObjectToLayer(
   const labelWidth = maxNewLineLength(object.name) * 7;
   const text = new Konva.Text({
     name: object.id,
-    x: object.position[0] + type.width / 2 - labelWidth / 2,
-    y: object.position[1] + type.height + 5,
+    x: object.position[0] + objectWidth / 2 - labelWidth / 2,
+    y: object.position[1] + objectHeight + 5,
     text: object.name,
     fontSize: 11,
     fontFamily: 'Monospace',
@@ -63,7 +67,7 @@ export async function addObjectToLayer(
     const labelHeight = newLineCount(object.additionalName) * 11;
     const additionalText = new Konva.Text({
       name: object.id,
-      x: object.position[0] + type.width / 2 - labelAdditionalWidth / 2,
+      x: object.position[0] + objectWidth / 2 - labelAdditionalWidth / 2,
       y: object.position[1] - labelHeight - 4,
       text: object.additionalName,
       fontSize: 11,
@@ -84,15 +88,37 @@ export async function addObjectToLayer(
         return;
       }
       const toObjectType = map.types[toObject.type];
+
+      const startPoint = arrowStartPointPosition({
+        width: objectWidth,
+        height: objectHeight,
+      }, {
+        x: object.position[0],
+        y: object.position[1],
+      }, {
+        x: toObject.position[0],
+        y: toObject.position[1],
+      });
+      const endPoint = arrowStartPointPosition({
+        width: toObject.width || toObjectType.width,
+        height: toObject.height || toObjectType.height,
+      }, {
+        x: toObject.position[0],
+        y: toObject.position[1],
+      }, {
+        x: object.position[0],
+        y: object.position[1],
+      });
+
       const arrow = new Konva.Arrow({
         x: 0,
         y: 0,
         toObjectId: toObjectRelation.id,
         points: [
-          object.position[0] + type.width / 2,
-          object.position[1] + type.height / 2,
-          toObject.position[0] + toObjectType.width / 2,
-          toObject.position[1] + toObjectType.height / 2,
+          startPoint.x,
+          startPoint.y,
+          endPoint.x,
+          endPoint.y,
         ],
         pointerLength: 20,
         pointerWidth: 10,
