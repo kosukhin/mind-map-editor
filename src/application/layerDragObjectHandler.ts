@@ -2,10 +2,11 @@ import { Arrow, Vector2d } from '@/entities/Konva';
 import { MapStructure } from '@/entities/Map';
 import { MapLayerObjects } from '@/entities/MapLayerObjects';
 import { Nullable } from '@/entities/Nullable';
-import { debug, maxNewLineLength, newLineCount } from '@/utils/common';
+import { maxNewLineLength, newLineCount } from '@/utils/common';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { Stage } from 'konva/lib/Stage';
 import { Text } from 'konva/lib/shapes/Text';
+import { arrowStartPointPosition } from '@/application/arrowStartPointPosition';
 
 interface Result {
   text: Nullable<[Text, Vector2d]>
@@ -85,9 +86,25 @@ export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
   ];
   const resultArrows: [Arrow, number[]][] = [];
   (arrows as any).forEach((arrow: any) => {
+    const toObject = vMap.objects[arrow.attrs.toObjectId];
+    if (!toObject) {
+      return;
+    }
     const points = arrow.points();
-    points[0] = dragEvent.target.attrs.x + type.width / 2;
-    points[1] = dragEvent.target.attrs.y + type.height / 2;
+    const width = object.width || type.width;
+    const height = object.height || type.height;
+    const point = arrowStartPointPosition({
+      width,
+      height,
+    }, {
+      x: dragEvent.target.attrs.x,
+      y: dragEvent.target.attrs.y,
+    }, {
+      x: toObject.position[0],
+      y: toObject.position[1],
+    });
+    points[0] = point.x;
+    points[1] = point.y;
     resultArrows.push([arrow, points]);
   });
   result.arrows = resultArrows;
