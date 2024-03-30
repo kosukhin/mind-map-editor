@@ -81,7 +81,7 @@ const addToCanvas = async (
       position = [stage.value.x() * -1, stage.value.y() * -1];
     }
 
-    const newObject: MapObject = createObject(position, type);
+    const newObject: MapObject = createObject(position, type, vType);
 
     isSidebarOpen.value = false;
     map.value.objects[newObject.id] = newObject;
@@ -101,7 +101,7 @@ const addToCanvas = async (
         <div class="TheSideBar-ItemName">{{ type.name }}</div>
         <img
           :alt="$t('general.notifications.dragToCanvasToAdd')"
-          :src="svg64(svgRenderDefault(type.svg))"
+          :src="svg64(svgRenderDefault(type))"
           class="TheSideBar-ItemImage"
           draggable="true"
           :title="$t('general.notifications.dragToCanvasToAdd')"

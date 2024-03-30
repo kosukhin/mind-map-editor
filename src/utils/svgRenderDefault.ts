@@ -1,5 +1,7 @@
-export const svgRenderDefault = (svg: string) => svg
+import { MapType } from '@/entities/Map';
+
+export const svgRenderDefault = (type: MapType) => type.svg
   // eslint-disable-next-line no-template-curly-in-string
-  .replaceAll('${width}', '100')
+  .replaceAll('${width}', type.width.toString())
 // eslint-disable-next-line no-template-curly-in-string
-  .replaceAll('${height}', '100');
+  .replaceAll('${height}', type.height.toString());

@@ -166,9 +166,7 @@ export function createLayer(editorWrapper: HTMLElement): [Layer, Stage] {
 }
 
 export const removeAllLayerObjects = (layerObjects: Map<string, any>) => {
-  console.log('lobj', Array.from(layerObjects));
   Array.from(layerObjects.values()).flat().forEach((objectToRemove: any) => {
-    console.log('objectToRemove', objectToRemove);
     if (Array.isArray(objectToRemove)) {
       objectToRemove.forEach((innerObject: any) => {
         innerObject.remove();

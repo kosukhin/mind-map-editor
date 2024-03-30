@@ -1,7 +1,7 @@
 import { useRouter } from '@/composables/useRouter';
 import { MAP_DEFAULT_TITLE } from '@/constants/messages';
 import { Arrow } from '@/entities/Konva';
-import { MapObject, MapStructure } from '@/entities/Map';
+import { MapObject, MapStructure, MapType } from '@/entities/Map';
 import { Nullable } from '@/entities/Nullable';
 import { urlTrim } from '@/utils/common';
 import { getLocation } from '@/utils/globals';
@@ -30,6 +30,7 @@ export const createMap = (
 export const createObject = (
   position: [number, number],
   type: string,
+  typeModel: MapType,
 ): MapObject => ({
   name: '',
   outlink: '',
@@ -40,8 +41,8 @@ export const createObject = (
   id: Date.now().toString(),
   lastClick: Date.now(),
   position,
-  width: 100,
-  height: 100,
+  width: typeModel.width,
+  height: typeModel.height,
   type,
   zindex: 0,
   inMenu: false,
