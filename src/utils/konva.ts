@@ -114,6 +114,7 @@ export async function addObjectToLayer(
         x: 0,
         y: 0,
         toObjectId: toObjectRelation.id,
+        formObjectId: object.id,
         points: [
           startPoint.x,
           startPoint.y,

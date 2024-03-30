@@ -90,10 +90,11 @@ export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
     if (!toObject) {
       return;
     }
+    const toObjectType = vMap.types[toObject.type];
     const points = arrow.points();
     const width = object.width || type.width;
     const height = object.height || type.height;
-    const point = arrowStartPointPosition({
+    const pointStart = arrowStartPointPosition({
       width,
       height,
     }, {
@@ -103,8 +104,20 @@ export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
       x: toObject.position[0],
       y: toObject.position[1],
     });
-    points[0] = point.x;
-    points[1] = point.y;
+    const pointEnd = arrowStartPointPosition({
+      width: toObject.width || toObjectType.width,
+      height: toObject.height || toObjectType.height,
+    }, {
+      x: toObject.position[0],
+      y: toObject.position[1],
+    }, {
+      x: dragEvent.target.attrs.x,
+      y: dragEvent.target.attrs.y,
+    });
+    points[0] = pointStart.x;
+    points[1] = pointStart.y;
+    points[2] = pointEnd.x;
+    points[3] = pointEnd.y;
     resultArrows.push([arrow, points]);
   });
   result.arrows = resultArrows;
@@ -129,9 +142,39 @@ export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
   });
   const resultRelatedArrows: [Arrow, number[]][] = [];
   relatedArrows.forEach((relArrow) => {
+    const toObject = vMap.objects[relArrow.attrs.formObjectId];
+    if (!toObject) {
+      return;
+    }
+    const toObjectType = vMap.types[toObject.type];
+    const width = toObject.width || toObjectType.width;
+    const height = toObject.height || toObjectType.height;
+    const pointEnd = arrowStartPointPosition({
+      width,
+      height,
+    }, {
+      x: dragEvent.target.attrs.x,
+      y: dragEvent.target.attrs.y,
+    }, {
+      x: toObject.position[0],
+      y: toObject.position[1],
+    });
+    const pointStart = arrowStartPointPosition({
+      width: object.width || type.width,
+      height: object.height || type.height,
+    }, {
+      x: toObject.position[0],
+      y: toObject.position[1],
+    }, {
+      x: dragEvent.target.attrs.x,
+      y: dragEvent.target.attrs.y,
+    });
+
     const points = relArrow.points();
-    points[2] = dragEvent.target.attrs.x + type.width / 2;
-    points[3] = dragEvent.target.attrs.y + type.height / 2;
+    points[0] = pointStart.x;
+    points[1] = pointStart.y;
+    points[2] = pointEnd.x;
+    points[3] = pointEnd.y;
     resultRelatedArrows.push([relArrow, points]);
   });
   result.relatedArrows = resultRelatedArrows;
