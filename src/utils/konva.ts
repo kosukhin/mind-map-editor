@@ -146,16 +146,45 @@ export function createLayer(editorWrapper: HTMLElement): [Layer, Stage] {
     draggable: true,
   });
   const layer = new Konva.Layer();
+  const img = new Image();
+  img.src = '/editor-background.jpg';
+  img.onload = () => {
+    const background = new Konva.Rect({
+      width: 3000,
+      height: 3000,
+      x: 0,
+      y: 0,
+      fillPatternImage: img,
+    });
+    layer.add(background);
+  };
   stage.add(layer);
   layer.draw();
+  console.log('layer created');
   return [layer, stage];
 }
+
+export const removeAllLayerObjects = (layerObjects: Map<string, any>) => {
+  console.log('lobj', Array.from(layerObjects));
+  Array.from(layerObjects.values()).flat().forEach((objectToRemove: any) => {
+    console.log('objectToRemove', objectToRemove);
+    if (Array.isArray(objectToRemove)) {
+      objectToRemove.forEach((innerObject: any) => {
+        innerObject.remove();
+      });
+    } else {
+      objectToRemove.remove();
+    }
+  });
+  layerObjects.clear();
+};
 
 export const removeObjectOnLayer = (
   layerObjects: Map<string, any>,
   object: MapObject,
 ) => {
   const objects = layerObjects.get(object.id);
+  console.log('objects to remove', objects, layerObjects);
   if (!objects) {
     return;
   }

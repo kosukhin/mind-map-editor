@@ -211,11 +211,11 @@ const { removeCurrentObject } = useObjectActions();
         </div>
         <div class="FormObject-Title">Width</div>
         <div class="FormObject-Row">
-          <BaseInput v-model="form.width" type="number" />
+          <BaseInput v-model="form.width" step="20" type="number" />
         </div>
         <div class="FormObject-Title">Height</div>
         <div class="FormObject-Row">
-          <BaseInput v-model="form.height" type="number" />
+          <BaseInput v-model="form.height" step="20" type="number" />
         </div>
         <div class="FormObject-Title">{{ $t('general.objectType') }}</div>
         <div class="FormObject-Row">

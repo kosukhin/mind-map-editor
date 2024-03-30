@@ -40,9 +40,7 @@ export const useMapRenderer = createSharedComposable(() => {
           vObjects.forEach(([objectId, objects]) => {
             layerObjects.set(objectId, objects);
           });
-          setTimeout(() => {
-            triggerPartialRendering();
-          }, 1000);
+          triggerPartialRendering();
         });
       }
     }, 100),

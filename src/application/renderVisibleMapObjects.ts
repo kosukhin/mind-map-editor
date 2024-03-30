@@ -1,6 +1,7 @@
 import { calculateVisibleObjects } from '@/application/layerDragObjectHandler';
 import { KonvaLayerObject } from '@/entities/Konva';
-import { addObjectToLayer, removeObjectOnLayer } from '@/utils/konva';
+import { addObjectToLayer, removeAllLayerObjects, removeObjectOnLayer } from '@/utils/konva';
+import Konva from 'konva';
 
 export const renderVisibleMapObjects = (
   layerObjects: any,
@@ -8,19 +9,14 @@ export const renderVisibleMapObjects = (
   vMap: any,
   vLayer: any,
 ) => {
-  const [visible, invisible] = calculateVisibleObjects(vMap, vStage);
+  const [visible] = calculateVisibleObjects(vMap, vStage);
   requestAnimationFrame(() => {
-    vLayer.destroyChildren();
-    layerObjects.clear();
+    removeAllLayerObjects(layerObjects);
   });
   requestAnimationFrame(() => {
     visible.forEach(async (object) => {
-      removeObjectOnLayer(layerObjects, object);
       const objects = await addObjectToLayer(vLayer, object, vMap, false);
       layerObjects.set(object.id, objects as KonvaLayerObject[]);
-    });
-    invisible.forEach((object) => {
-      removeObjectOnLayer(layerObjects, object);
     });
   });
 };

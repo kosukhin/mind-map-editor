@@ -12,7 +12,7 @@ import { applyArrowPoints } from '@/utils/map';
 import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
 import Konva from 'konva';
-import { debounce } from 'lodash';
+import { debounce, throttle } from 'lodash';
 
 // FIXME выделить вотчеры вынуть их из функции
 export const useLayerListenerDrag = createSharedComposable(() => {
@@ -117,7 +117,7 @@ export const useLayerListenerDrag = createSharedComposable(() => {
   const partialRenderingDelay = 250;
   watch(
     dragmove,
-    debounce((e) => {
+    throttle((e) => {
       if (e.target && e.target instanceof Konva.Stage) {
         triggerPartialRendering();
       }

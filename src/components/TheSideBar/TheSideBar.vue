@@ -17,8 +17,8 @@ import { useSharedLayer } from '@/composables/useSharedLayer';
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from '@/constants/system';
 import { createObject } from '@/utils/map';
 import { MapObject } from '@/entities/Map';
-import { KonvaLayerObject } from '@/entities/Konva';
 import { svgRenderDefault } from '@/utils/svgRenderDefault';
+import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
 
 const { overlayName } = useSharedOverlay();
 const { currentTypeId } = useSharedMapType();
@@ -63,6 +63,8 @@ const removeType = (typeId: string) => {
 
 const { isSidebarOpen } = useSharedSideBar();
 const { layer, stage, layerObjects } = useSharedLayer();
+const { triggerPartialRendering } = useMapPartialRenderer();
+
 const addToCanvas = async (
   e: DragEvent,
   type: string,
@@ -83,8 +85,7 @@ const addToCanvas = async (
 
     isSidebarOpen.value = false;
     map.value.objects[newObject.id] = newObject;
-    const objects = await addObjectToLayer(layer.value, newObject, map.value);
-    layerObjects.set(newObject.id, objects as KonvaLayerObject[]);
+    triggerPartialRendering();
   }
 };
 </script>
