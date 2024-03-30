@@ -150,8 +150,8 @@ export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
     const width = toObject.width || toObjectType.width;
     const height = toObject.height || toObjectType.height;
     const pointEnd = arrowStartPointPosition({
-      width,
-      height,
+      width: object.width || type.width,
+      height: object.height || type.height,
     }, {
       x: dragEvent.target.attrs.x,
       y: dragEvent.target.attrs.y,
@@ -160,8 +160,8 @@ export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
       y: toObject.position[1],
     });
     const pointStart = arrowStartPointPosition({
-      width: object.width || type.width,
-      height: object.height || type.height,
+      width,
+      height,
     }, {
       x: toObject.position[0],
       y: toObject.position[1],
