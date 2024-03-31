@@ -14,7 +14,7 @@ export const useSharedLayerListenerClick = createSharedComposable(() => {
   const { click, tap, stageClick } = useSharedLayerEvents();
   const { map } = useSharedMap();
   const { isSidebarOpen } = useSharedSideBar();
-  const { currentObjectId, fastPreviewObjectId } = useSharedMapObject();
+  const { currentObjectId, fastPreviewObjectId, fastPreviewIsLocked } = useSharedMapObject();
   const { overlayName } = useSharedOverlay();
   const { isClickLocked } = useSharedLocks();
 
@@ -49,7 +49,10 @@ export const useSharedLayerListenerClick = createSharedComposable(() => {
         && !result.openUrlByObject
         && map.value.objects[result.currentObjectId]
       ) {
-        if (!fastPreviewObjectId.value || fastPreviewObjectId.value !== result.currentObjectId) {
+        if (
+          !fastPreviewIsLocked.value
+          && (!fastPreviewObjectId.value
+            || fastPreviewObjectId.value !== result.currentObjectId)) {
           // eslint-disable-next-line no-unused-expressions
           eventRef.value && (eventRef.value.cancelBubble = true);
           console.log('set fast object');

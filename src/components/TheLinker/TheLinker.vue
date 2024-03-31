@@ -12,7 +12,7 @@ import { useSharedLocks } from '@/composables/useSharedLocks';
 
 const { layer, layerObjects } = useSharedLayer();
 const { map } = useSharedMap();
-const { currentObjectId } = useSharedMapObject();
+const { currentObjectId, fastPreviewIsLocked } = useSharedMapObject();
 const { isClickLocked } = useSharedLocks();
 const i18n = useI18n();
 const title = ref(i18n.t('general.makeRelation'));
@@ -28,6 +28,7 @@ const startRelation = () => {
     type.value = 'default';
     return;
   }
+  fastPreviewIsLocked.value = true;
   currentObjectId.value = undefined;
   title.value = i18n.t('general.chooseSource');
   isClickLocked.value = true;
@@ -40,6 +41,7 @@ const startRelation = () => {
     const fromObjectId = currentObjectId.value ?? '';
 
     const stopSecond = watch(currentObjectId, () => {
+      fastPreviewIsLocked.value = false;
       stopSecond();
       const toObjectId = String(currentObjectId.value ?? '');
       title.value = i18n.t('general.makeRelation');

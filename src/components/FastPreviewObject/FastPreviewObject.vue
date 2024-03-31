@@ -4,11 +4,11 @@ import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { useSharedMap } from '@/composables/useSharedMap';
 import { useSharedLayer } from '@/composables/useSharedLayer';
 import Konva from 'konva';
-import { updateObjectOnLayer } from '@/utils/konva';
 import { nextTick } from '@vue/runtime-core';
 import { watch } from 'vue';
 import { useObjectActions } from '@/composables/useObjectActions';
 import { useMagicKeys } from '@vueuse/core';
+import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
 
 const { map } = useSharedMap();
 const { fastPreviewObjectId, currentObjectId } = useSharedMapObject();
@@ -30,6 +30,8 @@ const detachTransform = () => {
 };
 
 watch(fastPreviewObjectId, detachTransform);
+
+const { triggerPartialRendering } = useMapPartialRenderer();
 
 const transform = () => {
   if (isInTransform) {
@@ -56,17 +58,12 @@ const transform = () => {
       object.width = newWidth;
       object.height = newHeight;
       if (layer.value && map.value) {
-        updateObjectOnLayer(
-          layerObjects,
-          layer.value,
-          object,
-          map.value,
-        );
         detachTransform();
-        maybeImage.remove();
-        nextTick(() => {
+        triggerPartialRendering();
+        setTimeout(() => {
+          isInTransform = false;
           transform();
-        });
+        }, 200);
       }
     });
   }
