@@ -18,4 +18,32 @@ body {
     &-Gap {
         gap: var(--mbMd)
     }
+
+    &-Mb {
+        &-Md {
+            margin-bottom: var(--mbMd);
+        }
+    }
+
+    &-Ml {
+        &-auto {
+            margin-left: auto;
+        }
+    }
+
+    &-Display {
+        &-Iblock {
+            display: inline-block;
+        }
+    }
+
+    &-MaxWidth {
+        &-200 {
+            max-width: 200px;
+        }
+
+        &-150 {
+            max-width: 150px;
+        }
+    }
 }
