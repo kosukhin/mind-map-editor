@@ -14,12 +14,18 @@ export const useSharedLayerListenerClick = createSharedComposable(() => {
   const { click, tap, stageClick } = useSharedLayerEvents();
   const { map } = useSharedMap();
   const { isSidebarOpen } = useSharedSideBar();
-  const { currentObjectId } = useSharedMapObject();
+  const { currentObjectId, fastPreviewObjectId } = useSharedMapObject();
   const { overlayName } = useSharedOverlay();
   const { isClickLocked } = useSharedLocks();
 
   watch(stageClick, () => {
     isSidebarOpen.value = false;
+    if (fastPreviewObjectId.value) {
+      console.log('stage clicked');
+      // eslint-disable-next-line no-unused-expressions
+      stageClick.value && (stageClick.value.cancelBubble = true);
+      fastPreviewObjectId.value = undefined;
+    }
   });
 
   const onClick = (eventRef: Ref<any>) => {
@@ -43,8 +49,19 @@ export const useSharedLayerListenerClick = createSharedComposable(() => {
         && !result.openUrlByObject
         && map.value.objects[result.currentObjectId]
       ) {
+        if (!fastPreviewObjectId.value || fastPreviewObjectId.value !== result.currentObjectId) {
+          // eslint-disable-next-line no-unused-expressions
+          eventRef.value && (eventRef.value.cancelBubble = true);
+          console.log('set fast object');
+          fastPreviewObjectId.value = result.currentObjectId;
+          return;
+        }
+        console.log('clicked');
+        // eslint-disable-next-line no-unused-expressions
+        eventRef.value && (eventRef.value.cancelBubble = true);
         currentObjectId.value = result.currentObjectId ?? undefined;
         overlayName.value = result.overlayName ?? undefined;
+        fastPreviewObjectId.value = undefined;
       }
     }
   };

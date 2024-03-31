@@ -9,6 +9,7 @@ import { vueWithList } from '@/utils/vueWithList';
 
 export const useSharedMapObject = createSharedComposable(() => {
   const { map } = useSharedMap();
+  const fastPreviewObjectId = ref<number>();
   const currentObjectId = ref<number>();
   const currentObject = ref<MapObject>();
 
@@ -23,5 +24,6 @@ export const useSharedMapObject = createSharedComposable(() => {
   return {
     currentObjectId,
     currentObject,
+    fastPreviewObjectId,
   };
 });

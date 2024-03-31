@@ -33,6 +33,7 @@ import {
 } from '@/constants/overlays';
 import { getLocation } from '@/utils/globals';
 import { watch } from '@vue/runtime-core';
+import FastPreviewObject from '@/components/FastPreviewObject/FastPreviewObject.vue';
 
 useSharedMeta();
 
@@ -134,6 +135,7 @@ const { openMapOfCurrentUrl, isLoading } = useSharedMap();
   </BaseModal>
   <FormJson />
   <FormObject />
+  <FastPreviewObject />
   <TheHistoryMaps />
   <TheObjectTransfer />
 </template>

@@ -25,6 +25,7 @@ import { NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants/system';
 import { getLocation } from '@/utils/globals';
 import { useSettings } from '@/composables/useSettings';
 import { useObjectActions } from '@/composables/useObjectActions';
+import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 
 const { stringify } = JSON;
 
@@ -62,6 +63,7 @@ watch(
   },
 );
 
+useOverlayAutoClose(SHOW_OBJECT);
 // const omittedProps = ['lastClick', 'position'];
 // const isDirty = computed(
 //   () => stringify(omit(form.value, omittedProps))

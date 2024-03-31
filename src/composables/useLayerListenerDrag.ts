@@ -114,7 +114,7 @@ export const useLayerListenerDrag = createSharedComposable(() => {
     }
   });
 
-  const partialRenderingDelay = 250;
+  const partialRenderingDelay = 1000;
   watch(
     dragmove,
     throttle((e) => {

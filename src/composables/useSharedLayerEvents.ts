@@ -3,6 +3,7 @@ import { createSharedComposable } from '@vueuse/core';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { useSharedLayer } from '@/composables/useSharedLayer';
 import { setValue } from '@/utils/common';
+import Konva from 'konva';
 
 export const useSharedLayerEvents = createSharedComposable(() => {
   const { layer, stage } = useSharedLayer();
@@ -19,7 +20,12 @@ export const useSharedLayerEvents = createSharedComposable(() => {
   watch(layer, (newLayer, oldLayer) => {
     const setDragend = setValue(dragend);
     const setDragstart = setValue(dragstart);
-    const setClick = setValue(click);
+    const setClick = (e: KonvaEventObject<any>) => {
+      if (!(e.target instanceof Konva.Rect)) {
+        e.cancelBubble = true;
+      }
+      setValue(click, e);
+    };
     const setTap = setValue(tap);
     const setMouseenter = setValue(mouseenter);
     const setMouseleave = setValue(mouseleave);
