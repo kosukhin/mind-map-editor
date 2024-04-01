@@ -55,11 +55,9 @@ export const useSharedLayerListenerClick = createSharedComposable(() => {
             || fastPreviewObjectId.value !== result.currentObjectId)) {
           // eslint-disable-next-line no-unused-expressions
           eventRef.value && (eventRef.value.cancelBubble = true);
-          console.log('set fast object');
           fastPreviewObjectId.value = result.currentObjectId;
           return;
         }
-        console.log('clicked');
         // eslint-disable-next-line no-unused-expressions
         eventRef.value && (eventRef.value.cancelBubble = true);
         currentObjectId.value = result.currentObjectId ?? undefined;
@@ -79,4 +77,8 @@ export const useSharedLayerListenerClick = createSharedComposable(() => {
   watch(tap, () => {
     onClick(tap);
   });
+
+  return {
+    onClick,
+  };
 });

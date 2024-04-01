@@ -7,12 +7,21 @@ import Konva from 'konva';
 import { nextTick } from '@vue/runtime-core';
 import { watch } from 'vue';
 import { useObjectActions } from '@/composables/useObjectActions';
-import { useMagicKeys } from '@vueuse/core';
+import { useMagicKeys, useMouse } from '@vueuse/core';
 import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
+import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { SHOW_OBJECT } from '@/constants/overlays';
 
 const { map } = useSharedMap();
 const { fastPreviewObjectId, currentObjectId } = useSharedMapObject();
 const { layerObjects, layer } = useSharedLayer();
+
+const { overlayName } = useSharedOverlay();
+const edit = () => {
+  currentObjectId.value = fastPreviewObjectId.value;
+  fastPreviewObjectId.value = undefined;
+  overlayName.value = SHOW_OBJECT;
+};
 
 const tr = new Konva.Transformer({
   rotateEnabled: false,
@@ -87,6 +96,13 @@ watch(current, () => {
     fastPreviewObjectId.value = undefined;
   }
 });
+
+const { x, y } = useMouse();
+const mousePosition = { x: x.value, y: y.value };
+watch(fastPreviewObjectId, () => {
+  mousePosition.x = x.value + 20;
+  mousePosition.y = y.value + 20;
+});
 </script>
 
 <template>
@@ -94,11 +110,12 @@ watch(current, () => {
     <div
       v-if="fastPreviewObjectId"
       class="FastPreviewObject Common-Flex-Column Common-Gap"
+      :style="`top: ${mousePosition.y}px;left: ${mousePosition.x}px`"
     >
-      <div class="Common-Mb-Md">
-        Объект
-        #{{fastPreviewObjectId}},
-        Нажмите второй раз на объект для редактиования
+      <div class="Common-Flex Common-Gap Common-Mb-Md">
+        <BaseButton @click="edit" class="Common-MaxWidth-150">
+          Редактировать
+        </BaseButton>
       </div>
       <div class="Common-Flex Common-Gap">
         <BaseButton @click="transform" class="Common-MaxWidth-150">
@@ -114,7 +131,7 @@ watch(current, () => {
         <BaseButton
           class="Common-MaxWidth-150 Common-Ml-auto" @click="cancel"
         >
-          Отмена
+          &times;
         </BaseButton>
       </div>
     </div>
