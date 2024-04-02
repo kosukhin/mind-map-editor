@@ -11,6 +11,7 @@ import { useMagicKeys, useMouse } from '@vueuse/core';
 import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
 import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import { SHOW_OBJECT } from '@/constants/overlays';
+import { useObjectLinker } from '@/composables/useObjectLinker';
 
 const { map } = useSharedMap();
 const { fastPreviewObjectId, currentObjectId, clone } = useSharedMapObject();
@@ -103,6 +104,8 @@ watch(fastPreviewObjectId, () => {
   mousePosition.x = x.value + 20;
   mousePosition.y = y.value + 20;
 });
+
+const { startToRelation, title, type } = useObjectLinker('Связать');
 </script>
 
 <template>
@@ -115,6 +118,14 @@ watch(fastPreviewObjectId, () => {
       <div class="Common-Flex Common-Gap Common-Mb-Md">
         <BaseButton @click="edit" class="Common-MaxWidth-150">
           Редактировать
+        </BaseButton>
+        <BaseButton
+          :disabled="type !== 'default'"
+          :type="type"
+          @click="startToRelation(fastPreviewObjectId)"
+          class="Common-MaxWidth-150"
+        >
+          {{ title }}
         </BaseButton>
       </div>
       <div class="Common-Flex Common-Gap">
