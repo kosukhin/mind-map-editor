@@ -13,7 +13,7 @@ import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import { SHOW_OBJECT } from '@/constants/overlays';
 
 const { map } = useSharedMap();
-const { fastPreviewObjectId, currentObjectId } = useSharedMapObject();
+const { fastPreviewObjectId, currentObjectId, clone } = useSharedMapObject();
 const { layerObjects, layer } = useSharedLayer();
 
 const { overlayName } = useSharedOverlay();
@@ -120,6 +120,9 @@ watch(fastPreviewObjectId, () => {
       <div class="Common-Flex Common-Gap">
         <BaseButton @click="transform" class="Common-MaxWidth-150">
           Трансформ
+        </BaseButton>
+        <BaseButton @click="clone(fastPreviewObjectId);cancel()" class="Common-MaxWidth-150">
+          Клонировать
         </BaseButton>
         <BaseButton
           type="danger"

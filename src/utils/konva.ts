@@ -5,7 +5,7 @@ import {
 import { MapObject, MapStructure } from '@/entities/Map';
 import { maxNewLineLength, newLineCount } from '@/utils/common';
 import { generateUniqString } from '@/utils/string';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, omit } from 'lodash';
 import { useSharedMapColors } from '@/composables/useSharedMapColors';
 import { arrowStartPointPosition } from '@/application/arrowStartPointPosition';
 
@@ -216,7 +216,7 @@ export async function cloneObject(
   layerObjects: Map<string, any>,
 ) {
   const newId = generateUniqString();
-  const clonedObject = cloneDeep(vObj);
+  const clonedObject = cloneDeep({ ...omit(vObj, ['arrows']), arrows: [] });
   clonedObject.id = newId;
   vMap.objects[newId] = clonedObject;
   const objects = await addObjectToLayer(vLayer, clonedObject, vMap);

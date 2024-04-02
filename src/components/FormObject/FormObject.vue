@@ -64,12 +64,6 @@ watch(
 );
 
 useOverlayAutoClose(SHOW_OBJECT);
-// const omittedProps = ['lastClick', 'position'];
-// const isDirty = computed(
-//   () => stringify(omit(form.value, omittedProps))
-//     !== stringify(omit(currentObject.value, omittedProps)),
-// );
-// useFormDirtyCheck(isDirty, SHOW_OBJECT);
 
 const objectUrl = computed({
   get() {
@@ -122,12 +116,7 @@ const cancel = () => {
   close();
 };
 
-const clone = async () => {
-  close();
-  if (currentObject.value && map.value && layer.value) {
-    await cloneObject(currentObject.value, map.value, layer.value, layerObjects);
-  }
-};
+const { clone } = useSharedMapObject();
 
 const { message } = useSharedNotify();
 const { copy, isSupported } = useClipboard();
