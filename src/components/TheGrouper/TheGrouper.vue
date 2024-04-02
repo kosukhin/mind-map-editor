@@ -19,7 +19,7 @@ const title = ref(i18n.t('general.group'));
 const type = ref('default');
 const isGrouping = computed(() => type.value === 'danger');
 const { map } = useSharedMap();
-const { currentObjectId } = useSharedMapObject();
+const { currentObjectId, fastPreviewIsLocked } = useSharedMapObject();
 let stopNextObjectWatcher: AnyFn | null = null;
 const { isClickLocked } = useSharedLocks();
 const groups = new Set();
@@ -61,9 +61,11 @@ const stopWatcher = () => {
   title.value = i18n.t('general.group');
   type.value = 'default';
   groups.clear();
+  fastPreviewIsLocked.value = false;
 };
 
 const onClick = () => {
+  fastPreviewIsLocked.value = true;
   transformer = new Konva.Group({
     draggable: true,
   });
