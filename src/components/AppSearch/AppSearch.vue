@@ -10,6 +10,12 @@ import { MapObject } from '@/entities/Map';
 
 useOverlayAutoClose(SHOW_SEARCH);
 
+const isFoundInAdditionalFilters = (
+  object: MapObject,
+  searchQuery: string,
+) => object.additionalFields
+  && Object.values(object.additionalFields).some((v) => v.toLowerCase().includes(searchQuery));
+
 const query = ref('');
 const { map } = useSharedMap();
 const searchResults = computed(() => {
@@ -20,8 +26,10 @@ const searchResults = computed(() => {
   if (query.value) {
     const searchQuery = query.value.toLowerCase();
     const objects = Object.values(map.value.objects);
+
     return objects.filter((object) => (
       object.name.toLowerCase().includes(searchQuery)
+        || isFoundInAdditionalFilters(object, searchQuery)
         || (object.additionalName
           && object.additionalName.toLowerCase().includes(searchQuery))
     ));
@@ -36,6 +44,10 @@ const moveToObject = (object: MapObject) => {
   close();
   scrollToObject(object.id);
 };
+
+const showFirstAdditionalField = (additionalFields: any) => Object
+  .values(additionalFields)
+  .filter(Boolean).shift();
 </script>
 
 <template>
@@ -57,6 +69,9 @@ const moveToObject = (object: MapObject) => {
           &nbsp;
           {{ result.additionalName }}
         </b>
+        <div v-else>
+          {{ showFirstAdditionalField(result.additionalFields ?? {}) }}
+        </div>
       </div>
     </div>
     <div v-else-if="query">{{ $t('general.noResults') }}</div>

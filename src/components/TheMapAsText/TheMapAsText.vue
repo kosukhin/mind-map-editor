@@ -25,6 +25,9 @@ const mapAsString = computed(() => (
           <p>
           ${nl2br(object.description || '')}
           </p>
+          <p>
+            ${object.additionalFields && Object.values(object.additionalFields).join('</p><p>')}
+          </p>
         </div>`)
         .join(''))
     ?? ''
