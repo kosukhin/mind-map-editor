@@ -7,6 +7,7 @@ import { useSharedMap } from '@/composables/useSharedMap';
 import { useSharedOverlay } from '@/composables/useSharedOverlay';
 import { useMoveToObject } from '@/composables/useMoveToObject';
 import { MapObject } from '@/entities/Map';
+import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 
 useOverlayAutoClose(SHOW_SEARCH);
 
@@ -16,16 +17,39 @@ const isFoundInAdditionalFilters = (
 ) => object.additionalFields
   && Object.values(object.additionalFields).some((v) => v.toLowerCase().includes(searchQuery));
 
+const type = ref(null);
 const query = ref('');
 const { map } = useSharedMap();
+
+// TODO убрать дублирование
+const mapTypes = computed(() => {
+  const result: { id: string; name: string }[] = [];
+
+  if (map.value) {
+    Object.entries(map.value.types).forEach(([typeId, mapType]) => {
+      result.push({
+        id: typeId,
+        name: mapType.name,
+      });
+    });
+  }
+
+  return [{ id: null, name: 'Любой тип узла' }, ...result];
+});
+
 const searchResults = computed(() => {
   if (!map.value) {
     return [];
   }
 
+  let objects = Object.values(map.value.objects);
+
+  if (type.value) {
+    objects = objects.filter((object) => object.type === type.value);
+  }
+
   if (query.value) {
     const searchQuery = query.value.toLowerCase();
-    const objects = Object.values(map.value.objects);
 
     return objects.filter((object) => (
       object.name.toLowerCase().includes(searchQuery)
@@ -33,6 +57,10 @@ const searchResults = computed(() => {
         || (object.additionalName
           && object.additionalName.toLowerCase().includes(searchQuery))
     ));
+  }
+
+  if (type.value) {
+    return objects;
   }
 
   return [];
@@ -57,6 +85,14 @@ const showFirstAdditionalField = (additionalFields: any) => Object
       class="AppSearch-Input"
       placeholder="Введите запрос"
     />
+    <div class="Common-Mb-Md">
+      <BaseSelect
+        v-model="type"
+        :items="mapTypes"
+        option-id="id"
+        option-label="name"
+      />
+    </div>
     <div v-if="searchResults.length" class="AppSearch-Items">
       <div
         v-for="result in searchResults"
