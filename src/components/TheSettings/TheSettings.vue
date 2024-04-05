@@ -14,7 +14,7 @@ import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
 import {
   SHOW_JSON,
   SHOW_KEYBINDINGS,
-  SHOW_PARENT_TYPES,
+  SHOW_PARENT_TYPES, SHOW_PRESETS,
   SHOW_SETTINGS,
 } from '@/constants/overlays';
 import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
@@ -109,6 +109,13 @@ const onDownloadMap = () => {
             @click="overlayName = SHOW_PARENT_TYPES"
           >
             {{ $t('general.parentTypes') }}
+          </BaseButton>
+          <BaseButton
+            type="primary"
+            class="TheSettings-Button"
+            @click="overlayName = SHOW_PRESETS"
+          >
+            Пресеты
           </BaseButton>
         </div>
       </div>

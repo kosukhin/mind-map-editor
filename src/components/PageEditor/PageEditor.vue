@@ -29,11 +29,12 @@ import { useSharedSideBar } from '@/composables/useSharedSideBar';
 import {
   SHOW_HISTORY_MAPS,
   SHOW_KEYBINDINGS,
-  SHOW_OBJECT_MENU, SHOW_PARENT_TYPES, SHOW_SEARCH, SHOW_SETTINGS,
+  SHOW_OBJECT_MENU, SHOW_PARENT_TYPES, SHOW_PRESETS, SHOW_SEARCH, SHOW_SETTINGS,
 } from '@/constants/overlays';
 import { getLocation } from '@/utils/globals';
 import { watch } from '@vue/runtime-core';
 import FastPreviewObject from '@/components/FastPreviewObject/FastPreviewObject.vue';
+import AppPresets from '@/components/AppPresets/AppPresets.vue';
 
 useSharedMeta();
 
@@ -132,6 +133,12 @@ const { openMapOfCurrentUrl, isLoading } = useSharedMap();
       <h2>{{ $t('general.mapSearch') }}</h2>
     </template>
     <AppSearch />
+  </BaseModal>
+  <BaseModal :name="SHOW_PRESETS">
+    <template #header>
+      <h2>Пресеты узлов карт</h2>
+    </template>
+    <AppPresets />
   </BaseModal>
   <FormJson />
   <FormObject />

@@ -11,3 +11,4 @@ export const OVERLAY_CLOSE = 'closeOverlay';
 export const SHOW_OBJECT_MENU = 'showObjectMenu';
 export const SHOW_HISTORY_MAPS = 'showHistoryMaps';
 export const SHOW_TRANSFER = 'showTransfer';
+export const SHOW_PRESETS = 'showPresets';

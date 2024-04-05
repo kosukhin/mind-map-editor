@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import svg64 from 'svg64';
-import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
-import { SHOW_PARENT_TYPES } from '@/constants/overlays';
+import { SHOW_PRESETS } from '@/constants/overlays';
+import { presetsCommon } from '@/constants/presets';
+import svg64 from 'svg64';
+import { svgRender } from '@/utils/svgRenderDefault';
 import { useSharedMap } from '@/composables/useSharedMap';
 import { MapType } from '@/entities/Map';
-import { svgRender } from '@/utils/svgRenderDefault';
+import BaseButton from '@/components/BaseButton/BaseButton.vue';
 
-useOverlayAutoClose(SHOW_PARENT_TYPES);
+useOverlayAutoClose(SHOW_PRESETS);
 
-const { map, parentTypes } = useSharedMap();
+const { map } = useSharedMap();
 const addType = (type: MapType) => {
   if (map.value) {
     map.value.types[type.name] = type;
@@ -18,11 +19,11 @@ const addType = (type: MapType) => {
 </script>
 
 <template>
-  <div class="AppTypesParent">
-    <div v-if="!parentTypes.length">{{ $t('general.noTypes') }}</div>
-    <div v-else class="AppTypesParent-Items">
+  <div class="AppPresets">
+    <div class="Common-H3 Common-Mb-Md">Общие</div>
+    <div class="Common-Flex Common-Mb-Md Common-Gap">
       <div
-        v-for="item in parentTypes"
+        v-for="item in presetsCommon"
         :key="item.name"
         class="AppTypesParent-Item"
       >
@@ -45,7 +46,3 @@ const addType = (type: MapType) => {
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@import 'AppTypesParent';
-</style>

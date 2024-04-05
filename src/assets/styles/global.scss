@@ -7,6 +7,21 @@ body {
 }
 
 .Common {
+    &-H1 {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    &-H2 {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    &-H3 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
     &-Flex {
         display: flex;
 
