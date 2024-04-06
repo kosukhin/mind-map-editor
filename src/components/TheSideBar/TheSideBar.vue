@@ -7,28 +7,28 @@ import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
 import TheGrouper from '@/components/TheGrouper/TheGrouper.vue';
 import TheLinker from '@/components/TheLinker/TheLinker.vue';
 import { addObjectToLayer } from '@/utils/konva';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
-import { useSharedMapType } from '@/composables/useSharedMapType';
+import { useOverlay } from '@/composables/useOverlay';
+import { useMapType } from '@/composables/useMapType';
 import { SHOW_SETTINGS, SHOW_TYPE } from '@/constants/overlays';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 import { DEFAULT_SVG } from '@/constants/svg';
-import { useSharedSideBar } from '@/composables/useSharedSideBar';
-import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useSideBar } from '@/composables/useSideBar';
+import { useLayer } from '@/composables/useLayer';
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from '@/constants/system';
 import { createObject } from '@/utils/map';
 import { MapObject } from '@/entities/Map';
 import { svgRenderDefault } from '@/utils/svgRenderDefault';
 import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
 
-const { overlayName } = useSharedOverlay();
-const { currentTypeId } = useSharedMapType();
+const { overlayName } = useOverlay();
+const { currentTypeId } = useMapType();
 const selectType = (name: string) => {
   overlayName.value = SHOW_TYPE;
   currentTypeId.value = name;
 };
 
 const i18n = useI18n();
-const { map } = useSharedMap();
+const { map } = useMap();
 const addType = () => {
   if (map.value) {
     const newTypeId = Date.now().toString();
@@ -61,8 +61,8 @@ const removeType = (typeId: string) => {
   }
 };
 
-const { isSidebarOpen } = useSharedSideBar();
-const { layer, stage, layerObjects } = useSharedLayer();
+const { isSidebarOpen } = useSideBar();
+const { layer, stage, layerObjects } = useLayer();
 const { triggerPartialRendering } = useMapPartialRenderer();
 
 const addToCanvas = async (
@@ -104,6 +104,8 @@ const addToCanvas = async (
           :src="svg64(svgRenderDefault(type))"
           class="TheSideBar-ItemImage"
           draggable="true"
+          :height="type.height"
+          :width="type.width"
           :title="$t('general.notifications.dragToCanvasToAdd')"
           @dblclick="addToCanvas($event as any, name, true)"
           @dragend="addToCanvas($event, name)"

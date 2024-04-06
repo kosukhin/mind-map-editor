@@ -4,13 +4,13 @@ import { SHOW_PRESETS } from '@/constants/overlays';
 import { presetsCommon } from '@/constants/presets';
 import svg64 from 'svg64';
 import { svgRender } from '@/utils/svgRenderDefault';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 import { MapType } from '@/entities/Map';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 
 useOverlayAutoClose(SHOW_PRESETS);
 
-const { map } = useSharedMap();
+const { map } = useMap();
 const addType = (type: MapType) => {
   if (map.value) {
     map.value.types[type.name] = type;

@@ -3,8 +3,8 @@ import { computed, ref } from '@vue/reactivity';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_SEARCH } from '@/constants/overlays';
-import { useSharedMap } from '@/composables/useSharedMap';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useMap } from '@/composables/useMap';
+import { useOverlay } from '@/composables/useOverlay';
 import { useMoveToObject } from '@/composables/useMoveToObject';
 import { MapObject } from '@/entities/Map';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
@@ -19,7 +19,7 @@ const isFoundInAdditionalFilters = (
 
 const type = ref(null);
 const query = ref('');
-const { map } = useSharedMap();
+const { map } = useMap();
 
 // TODO убрать дублирование
 const mapTypes = computed(() => {
@@ -66,7 +66,7 @@ const searchResults = computed(() => {
   return [];
 });
 
-const { close } = useSharedOverlay();
+const { close } = useOverlay();
 const { scrollToObject } = useMoveToObject();
 const moveToObject = (object: MapObject) => {
   close();

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { useLayerListeners } from '@/composables/useLayerListeners';
 import { useMapRenderer } from '@/composables/useMapRenderer';
-import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useLayer } from '@/composables/useLayer';
 import { CANVAS_DOM_ID } from '@/constants/system';
 import { onMounted, ref } from 'vue';
 
 useMapRenderer();
 const counter = ref(0);
 
-const { createLayer, layer, stage } = useSharedLayer();
+const { createLayer, layer, stage } = useLayer();
 onMounted(() => {
   if (layer.value) {
     layer.value.destroy();

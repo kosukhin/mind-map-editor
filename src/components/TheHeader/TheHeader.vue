@@ -2,22 +2,31 @@
 import BaseBreadcrumbs from '@/components/BaseBreadcrumbs/BaseBreadcrumbs.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
-import { useDebugString } from '@/composables/useDebugString';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useOverlay } from '@/composables/useOverlay';
 import {
-  SHOW_HISTORY_MAPS, SHOW_OBJECT_MENU, SHOW_SEARCH, SHOW_TEXT,
+  SHOW_HISTORY_MAPS,
+  SHOW_OBJECT_MENU,
+  SHOW_SEARCH,
+  SHOW_SESSION_LOG,
+  SHOW_TEXT,
 } from '@/constants/overlays';
 
-const { overlayName } = useSharedOverlay();
-const { debugString } = useDebugString();
+const { overlayName } = useOverlay();
 </script>
 
 <template>
   <div class="TheHeader">
     <img src="/icon-top-bar.png" width="57" height="42" alt="mmc" />
     <BaseBreadcrumbs class="TheHeader-Breadcrumbs" />
-    {{ debugString }}
     <div class="TheHeader-Actions">
+      <BaseButton
+        type="success"
+        size="sm"
+        title="Показать лог сессии"
+        @click="overlayName = SHOW_SESSION_LOG"
+      >
+        <BaseIcon icon="fa-file-text" />
+      </BaseButton>
       <BaseButton
         type="success"
         size="sm"

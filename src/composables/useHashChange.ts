@@ -1,11 +1,11 @@
 import { ref, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
 import debounce from 'lodash/debounce';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 
-export const useSharedHashChange = createSharedComposable(() => {
+export const useHashChange = createSharedComposable(() => {
   const hashChanged = ref<string>();
-  const { firstMapLoad } = useSharedMap();
+  const { firstMapLoad } = useMap();
   const getHashFromUrl = (url: string) => url.split('#')[1] ?? null;
   const clearHash = debounce(() => {
     // eslint-disable-next-line no-restricted-globals

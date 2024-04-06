@@ -1,7 +1,7 @@
 import { mapNormalizeBeforeSave } from '@/application/mapNormalizeBeforeSave';
 import { useRequestGetMap } from '@/composables/useRequestGetMap';
 import { useRequestSaveMap } from '@/composables/useRequestSaveMap';
-import { useSharedNotify } from '@/composables/useSharedNotify';
+import { useNotify } from '@/composables/useNotify';
 import { MAP_UPDATED } from '@/constants/messages';
 import { NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants/system';
 import { MapStructure, MapType } from '@/entities/Map';
@@ -13,8 +13,8 @@ import { createSharedComposable } from '@vueuse/core';
 import { debounce } from 'lodash';
 import { useRoute } from 'vue-router';
 
-export const useSharedMap = createSharedComposable(() => {
-  const { message } = useSharedNotify();
+export const useMap = createSharedComposable(() => {
+  const { message } = useNotify();
   const firstMapLoad = ref(false);
   const parentTypes = ref<MapType[]>([]);
   const map = ref<MapStructure>();

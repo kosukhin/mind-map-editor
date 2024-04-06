@@ -10,15 +10,15 @@ import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 import { cloneObject, updateObjectOnLayer } from '@/utils/konva';
-import { useSharedMap } from '@/composables/useSharedMap';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
-import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
+import { useMap } from '@/composables/useMap';
+import { useOverlay } from '@/composables/useOverlay';
+import { useKeybindings } from '@/composables/useKeybindings';
 import { SHOW_OBJECT, SHOW_TRANSFER } from '@/constants/overlays';
-import { useSharedMapObject } from '@/composables/useSharedMapObject';
+import { useMapObject } from '@/composables/useMapObject';
 import { createMapObjectUrl } from '@/utils/map';
-import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useLayer } from '@/composables/useLayer';
 import { MapObject } from '@/entities/Map';
-import { useSharedNotify } from '@/composables/useSharedNotify';
+import { useNotify } from '@/composables/useNotify';
 import { setValue } from '@/utils/common';
 import { COPIED, NOT_SUPPOERTED } from '@/constants/messages';
 import { NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants/system';
@@ -29,7 +29,7 @@ import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 
 const { stringify } = JSON;
 
-const { map } = useSharedMap();
+const { map } = useMap();
 const mapTypes = computed(() => {
   const result: { id: string; name: string }[] = [];
 
@@ -45,11 +45,11 @@ const mapTypes = computed(() => {
   return result;
 });
 
-const { close, isOpened, open } = useSharedOverlay();
-const { ctrlSFired } = useSharedKeybindings();
+const { close, isOpened, open } = useOverlay();
+const { ctrlSFired } = useKeybindings();
 
 const form = ref<any>({});
-const { currentObject } = useSharedMapObject();
+const { currentObject } = useMapObject();
 watch(
   currentObject,
   () => {
@@ -74,7 +74,7 @@ const objectUrl = computed({
   },
 });
 
-const { layer, layerObjects } = useSharedLayer();
+const { layer, layerObjects } = useLayer();
 const save = async () => {
   close();
   if (currentObject.value && map.value && layer.value) {
@@ -116,9 +116,9 @@ const cancel = () => {
   close();
 };
 
-const { clone } = useSharedMapObject();
+const { clone } = useMapObject();
 
-const { message } = useSharedNotify();
+const { message } = useNotify();
 const { copy, isSupported } = useClipboard();
 function onCopyUrl() {
   if (!isSupported) {

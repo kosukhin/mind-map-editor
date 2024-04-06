@@ -1,12 +1,14 @@
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useOverlay } from '@/composables/useOverlay';
 import { OVERLAY_CLOSE_ALERT } from '@/constants/messages';
 import { OVERLAY_CLOSE } from '@/constants/overlays';
 import { setValue } from '@/utils/common';
 import { watch, nextTick, Ref } from 'vue';
 import partial from 'lodash/partial';
+import { useSessionLog } from '@/composables/useSessionLog';
 
-const { tryToClose, close } = useSharedOverlay();
+const { tryToClose, close } = useOverlay();
 
+// TODO вынести в types
 type Subscriber = {
   isDirty: Ref<boolean>
   formName: string
@@ -51,7 +53,9 @@ watch(tryToClose, (whatToClose) => {
   });
 });
 
+const { sessionLog } = useSessionLog();
 export const useFormDirtyCheck = (isDirty: Ref<boolean>, formName: string) => {
+  sessionLog('[useFormDirtyCheck.ts]', 'subscribe to check dirty', formName);
   subscribers.push({
     isDirty,
     formName,

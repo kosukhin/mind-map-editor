@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import { useSharedMapObject } from '@/composables/useSharedMapObject';
+import { useMapObject } from '@/composables/useMapObject';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import { useSharedMap } from '@/composables/useSharedMap';
-import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useMap } from '@/composables/useMap';
+import { useLayer } from '@/composables/useLayer';
 import Konva from 'konva';
 import { nextTick } from '@vue/runtime-core';
 import { watch } from 'vue';
 import { useObjectActions } from '@/composables/useObjectActions';
 import { useMagicKeys, useMouse } from '@vueuse/core';
 import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useOverlay } from '@/composables/useOverlay';
 import { SHOW_OBJECT } from '@/constants/overlays';
 import { useObjectLinker } from '@/composables/useObjectLinker';
 
-const { map } = useSharedMap();
-const { fastPreviewObjectId, currentObjectId, clone } = useSharedMapObject();
-const { layerObjects, layer } = useSharedLayer();
+const { map } = useMap();
+const { fastPreviewObjectId, currentObjectId, clone } = useMapObject();
+const { layerObjects, layer } = useLayer();
 
-const { overlayName } = useSharedOverlay();
+const { overlayName } = useOverlay();
 const edit = () => {
   currentObjectId.value = fastPreviewObjectId.value;
   fastPreviewObjectId.value = undefined;

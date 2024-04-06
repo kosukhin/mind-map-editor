@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { useMiniMap } from '@/composables/useMiniMap';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 import { MINIMAP_SCALE } from '@/constants/system';
 
 const { miniMap, miniMapScreen } = useMiniMap();
-const { map } = useSharedMap();
+const { map } = useMap();
 
 const scaledPos = (pos: number) => `${(pos * MINIMAP_SCALE).toFixed(2)}px`;
 </script>

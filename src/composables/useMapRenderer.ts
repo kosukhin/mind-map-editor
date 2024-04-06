@@ -2,9 +2,9 @@ import { canvasRestrictBoundaries } from '@/application/canvasRestrictBoundaries
 import { renderMapObjects } from '@/application/renderMapObjects';
 import { useCanvas } from '@/composables/useCanvas';
 import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
-import { useSharedLayer } from '@/composables/useSharedLayer';
-import { useSharedLocks } from '@/composables/useSharedLocks';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useLayer } from '@/composables/useLayer';
+import { useLocks } from '@/composables/useLocks';
+import { useMap } from '@/composables/useMap';
 import { computed } from '@vue/reactivity';
 import { createSharedComposable } from '@vueuse/core';
 import debounce from 'lodash/debounce';
@@ -12,9 +12,9 @@ import { watch } from 'vue';
 
 export const useMapRenderer = createSharedComposable(() => {
   const { triggerPartialRendering } = useMapPartialRenderer();
-  const { layer, stage, layerObjects } = useSharedLayer();
-  const { map } = useSharedMap();
-  const { maybeDragLocked } = useSharedLocks();
+  const { layer, stage, layerObjects } = useLayer();
+  const { map } = useMap();
+  const { maybeDragLocked } = useLocks();
   const allInit = computed(() => !!layer.value && !!map.value);
   const { canvasSize } = useCanvas();
 

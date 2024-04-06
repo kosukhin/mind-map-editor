@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 import uniqueId from 'lodash/uniqueId';
 
-const { map } = useSharedMap();
+const { map } = useMap();
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-  faBars, faTextWidth, faSearch, faHistory, faPlusSquare, faCog,
+  faBars, faTextWidth, faFileText, faSearch, faHistory, faPlusSquare, faCog,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons: Record<string, any> = {
@@ -11,6 +11,7 @@ const icons: Record<string, any> = {
   'fa-history': faHistory,
   'fa-plus-square': faPlusSquare,
   'fa-cog': faCog,
+  'fa-file-text': faFileText,
 };
 
 defineProps({

@@ -5,7 +5,7 @@ import { computed, ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import { AnyFn, createSharedComposable } from '@vueuse/core';
 
-export const useSharedOverlay = createSharedComposable(() => {
+export const useOverlay = createSharedComposable(() => {
   const overlayName = ref<string>();
   const tryToClose = ref<string>();
   const history = ref<string[]>([]);

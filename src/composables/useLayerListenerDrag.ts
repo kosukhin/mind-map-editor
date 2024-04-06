@@ -3,10 +3,10 @@ import { layerDragObjectHandler } from '@/application/layerDragObjectHandler';
 import { useCanvas } from '@/composables/useCanvas';
 import { useCanvasBoundaries } from '@/composables/useCanvasBoundaries';
 import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
-import { useSharedLayer } from '@/composables/useSharedLayer';
-import { useSharedLayerEvents } from '@/composables/useSharedLayerEvents';
-import { useSharedLocks } from '@/composables/useSharedLocks';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useLayer } from '@/composables/useLayer';
+import { useLayerEvents } from '@/composables/useLayerEvents';
+import { useLocks } from '@/composables/useLocks';
+import { useMap } from '@/composables/useMap';
 import { setProperty } from '@/utils/common';
 import { applyArrowPoints } from '@/utils/map';
 import { watch } from '@vue/runtime-core';
@@ -17,14 +17,14 @@ import { debounce, throttle } from 'lodash';
 // FIXME выделить вотчеры вынуть их из функции
 export const useLayerListenerDrag = createSharedComposable(() => {
   const { canvasSize } = useCanvas();
-  const { isDragLocked } = useSharedLocks();
-  const { dragend, dragmove, wheel } = useSharedLayerEvents();
+  const { isDragLocked } = useLocks();
+  const { dragend, dragmove, wheel } = useLayerEvents();
   const { triggerPartialRendering } = useMapPartialRenderer();
   let dragMoveInterval: any = null;
 
-  const { firstMapLoad, map } = useSharedMap();
+  const { firstMapLoad, map } = useMap();
   const { restrictBoundaries } = useCanvasBoundaries();
-  const { stage, layer, layerObjects } = useSharedLayer();
+  const { stage, layer, layerObjects } = useLayer();
 
   watch(firstMapLoad, () => {
     setTimeout(() => {

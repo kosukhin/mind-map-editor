@@ -6,7 +6,7 @@ import { MapObject, MapStructure } from '@/entities/Map';
 import { maxNewLineLength, newLineCount } from '@/utils/common';
 import { generateUniqString } from '@/utils/string';
 import { cloneDeep, omit } from 'lodash';
-import { useSharedMapColors } from '@/composables/useSharedMapColors';
+import { useMapColors } from '@/composables/useMapColors';
 import { arrowStartPointPosition } from '@/application/arrowStartPointPosition';
 
 export async function addObjectToLayer(
@@ -15,7 +15,7 @@ export async function addObjectToLayer(
   map: MapStructure,
   clickLocked = false,
 ) {
-  const { colorsHash } = useSharedMapColors();
+  const { colorsHash } = useMapColors();
   const { types } = map;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');

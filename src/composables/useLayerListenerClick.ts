@@ -1,22 +1,22 @@
 import { Ref, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
 import debounce from 'lodash/debounce';
-import { useSharedLayerEvents } from '@/composables/useSharedLayerEvents';
-import { useSharedMap } from '@/composables/useSharedMap';
-import { useSharedSideBar } from '@/composables/useSharedSideBar';
-import { useSharedMapObject } from '@/composables/useSharedMapObject';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
-import { useSharedLocks } from '@/composables/useSharedLocks';
+import { useLayerEvents } from '@/composables/useLayerEvents';
+import { useMap } from '@/composables/useMap';
+import { useSideBar } from '@/composables/useSideBar';
+import { useMapObject } from '@/composables/useMapObject';
+import { useOverlay } from '@/composables/useOverlay';
+import { useLocks } from '@/composables/useLocks';
 import { mapObjectClick } from '@/application/mapObjectClick';
 import { openUrlByObject } from '@/utils/map';
 
-export const useSharedLayerListenerClick = createSharedComposable(() => {
-  const { click, tap, stageClick } = useSharedLayerEvents();
-  const { map } = useSharedMap();
-  const { isSidebarOpen } = useSharedSideBar();
-  const { currentObjectId, fastPreviewObjectId, fastPreviewIsLocked } = useSharedMapObject();
-  const { overlayName } = useSharedOverlay();
-  const { isClickLocked } = useSharedLocks();
+export const useLayerListenerClick = createSharedComposable(() => {
+  const { click, tap, stageClick } = useLayerEvents();
+  const { map } = useMap();
+  const { isSidebarOpen } = useSideBar();
+  const { currentObjectId, fastPreviewObjectId, fastPreviewIsLocked } = useMapObject();
+  const { overlayName } = useOverlay();
+  const { isClickLocked } = useLocks();
 
   watch(stageClick, () => {
     isSidebarOpen.value = false;

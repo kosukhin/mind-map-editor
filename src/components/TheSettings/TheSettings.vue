@@ -7,10 +7,10 @@ import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseCheckbox from '@/components/BaseCheckbox/BaseCheckbox.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import { MapSettings } from '@/entities/Map';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 import { useRequestRemoveMap } from '@/composables/useRequestRemoveMap';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
-import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
+import { useOverlay } from '@/composables/useOverlay';
+import { useKeybindings } from '@/composables/useKeybindings';
 import {
   SHOW_JSON,
   SHOW_KEYBINDINGS,
@@ -26,7 +26,7 @@ const { stringify } = JSON;
 const form = ref<Partial<MapSettings>>({});
 const {
   map, mapName, firstMapLoad, parentTypes,
-} = useSharedMap();
+} = useMap();
 watch(
   firstMapLoad,
   () => {
@@ -40,7 +40,7 @@ watch(
   },
 );
 
-const { close, overlayName, isOpened } = useSharedOverlay();
+const { close, overlayName, isOpened } = useOverlay();
 
 const i18n = useI18n();
 const { removeMap } = useRequestRemoveMap();
@@ -59,7 +59,7 @@ const onSave = () => {
   }
 };
 
-const { ctrlSFired } = useSharedKeybindings();
+const { ctrlSFired } = useKeybindings();
 watch(ctrlSFired, () => {
   if (!isOpened(SHOW_SETTINGS)) {
     return;

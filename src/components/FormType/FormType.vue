@@ -4,19 +4,19 @@ import { watch } from '@vue/runtime-core';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
-import { useSharedMapType } from '@/composables/useSharedMapType';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMapType } from '@/composables/useMapType';
+import { useMap } from '@/composables/useMap';
 import { SHOW_TYPE } from '@/constants/overlays';
 import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
-import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
+import { useOverlay } from '@/composables/useOverlay';
+import { useKeybindings } from '@/composables/useKeybindings';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 
 const { stringify } = JSON;
 
 const form = ref<any>({});
-const { currentTypeId, currentType } = useSharedMapType();
-const { map } = useSharedMap();
+const { currentTypeId, currentType } = useMapType();
+const { map } = useMap();
 watch(
   currentType,
   () => {
@@ -36,7 +36,7 @@ const isDirty = computed(
 );
 useFormDirtyCheck(isDirty, SHOW_TYPE);
 
-const { close, isOpened } = useSharedOverlay();
+const { close, isOpened } = useOverlay();
 
 const save = () => {
   close();
@@ -47,7 +47,7 @@ const save = () => {
     };
   }
 };
-const { ctrlSFired } = useSharedKeybindings();
+const { ctrlSFired } = useKeybindings();
 watch(ctrlSFired, () => {
   if (!isOpened(SHOW_TYPE)) {
     return;

@@ -1,11 +1,11 @@
 import { createSharedComposable } from '@vueuse/core';
 import { renderVisibleMapObjects } from '@/application/renderVisibleMapObjects';
-import { useSharedLayer } from '@/composables/useSharedLayer';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useLayer } from '@/composables/useLayer';
+import { useMap } from '@/composables/useMap';
 
 export const useMapPartialRenderer = createSharedComposable(() => {
-  const { layer, stage, layerObjects } = useSharedLayer();
-  const { map: sharedMap } = useSharedMap();
+  const { layer, stage, layerObjects } = useLayer();
+  const { map: sharedMap } = useMap();
 
   const triggerPartialRendering = () => {
     if (stage.value && sharedMap.value && layer.value) {

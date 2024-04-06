@@ -6,12 +6,12 @@ import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_TEXT } from '@/constants/overlays';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 import { nl2br, stripHtml } from '@/utils/common';
 
 useOverlayAutoClose(SHOW_TEXT);
 
-const { map } = useSharedMap();
+const { map } = useMap();
 const mapAsString = computed(() => (
   (map.value
       && Object.values(map.value.objects)

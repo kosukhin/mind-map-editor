@@ -1,7 +1,7 @@
 import { createSharedComposable } from '@vueuse/core';
 import { Ref, ref } from 'vue';
 
-export const useSharedKeybindings = createSharedComposable(() => {
+export const useKeybindings = createSharedComposable(() => {
   const ctrlSFired = ref(0);
   const ctrlFFired = ref(0);
   const ctrlMFired = ref(0);

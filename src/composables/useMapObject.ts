@@ -1,21 +1,21 @@
 import { ref, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 import { MapObject } from '@/entities/Map';
 import { isNotNullish } from '@/utils/isNotNullish';
 import { currentObjectSet } from '@/application/currentObjectSet';
 import { currentObjectSetAdditionalFields } from '@/application/currentObjectSetAdditionalFields';
 import { vueWithList } from '@/utils/vueWithList';
 import { cloneObject } from '@/utils/konva';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
-import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useOverlay } from '@/composables/useOverlay';
+import { useLayer } from '@/composables/useLayer';
 
-export const useSharedMapObject = createSharedComposable(() => {
+export const useMapObject = createSharedComposable(() => {
   const fastPreviewIsLocked = ref(false);
   const fastPreviewObjectId = ref<number>();
   const currentObjectId = ref<number>();
   const currentObject = ref<MapObject>();
-  const { map } = useSharedMap();
+  const { map } = useMap();
 
   watch([currentObjectId, map], () => {
     vueWithList([currentObjectId, map])
@@ -25,8 +25,8 @@ export const useSharedMapObject = createSharedComposable(() => {
       .ensureEvery(isNotNullish).apply(currentObjectSetAdditionalFields);
   });
 
-  const { close } = useSharedOverlay();
-  const { layer, layerObjects } = useSharedLayer();
+  const { close } = useOverlay();
+  const { layer, layerObjects } = useLayer();
 
   const clone = async (objectId: number | null = null) => {
     let object = currentObject.value;

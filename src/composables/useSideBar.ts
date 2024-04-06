@@ -1,7 +1,7 @@
 import { ref } from '@vue/reactivity';
 import { createSharedComposable } from '@vueuse/core';
 
-export const useSharedSideBar = createSharedComposable(() => {
+export const useSideBar = createSharedComposable(() => {
   const isSidebarOpen = ref(false);
 
   return {

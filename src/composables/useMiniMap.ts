@@ -1,19 +1,19 @@
 import { ref, watch } from 'vue';
 import { createSharedComposable, watchOnce } from '@vueuse/core';
 import debounce from 'lodash/debounce';
-import { useSharedMap } from '@/composables/useSharedMap';
-import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useMap } from '@/composables/useMap';
+import { useLayer } from '@/composables/useLayer';
 import { useCanvas } from '@/composables/useCanvas';
-import { useSharedLayerEvents } from '@/composables/useSharedLayerEvents';
+import { useLayerEvents } from '@/composables/useLayerEvents';
 import { miniMapCalculateSizes } from '@/application/miniMapCalculateSizes';
 import { miniMapRedrawHandler } from '@/application/miniMapRedrawHandler';
 import { MINI_MAP_UPDATE_FREQ } from '@/constants/system';
 
 export const useMiniMap = createSharedComposable(() => {
-  const { firstMapLoad } = useSharedMap();
-  const { layer, stage } = useSharedLayer();
+  const { firstMapLoad } = useMap();
+  const { layer, stage } = useLayer();
   const { canvasSize } = useCanvas();
-  const { dragmove, wheel } = useSharedLayerEvents();
+  const { dragmove, wheel } = useLayerEvents();
   const miniMap = ref<HTMLElement>();
   const miniMapScreen = ref<HTMLElement>();
 

@@ -3,7 +3,7 @@ import { createSharedComposable } from '@vueuse/core';
 import { setValue } from '@/utils/common';
 import { NOTIFY_DELAY } from '@/constants/system';
 
-export const useSharedNotify = createSharedComposable(() => {
+export const useNotify = createSharedComposable(() => {
   const message = ref<[string, string]>();
   watch(message, () => {
     if (message.value) {

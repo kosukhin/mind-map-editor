@@ -4,9 +4,9 @@ import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import { useObjectActions } from '@/composables/useObjectActions';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { useRequestTransfer } from '@/composables/useRequestTransfer';
-import { useSharedMap } from '@/composables/useSharedMap';
-import { useSharedMapObject } from '@/composables/useSharedMapObject';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useMap } from '@/composables/useMap';
+import { useMapObject } from '@/composables/useMapObject';
+import { useOverlay } from '@/composables/useOverlay';
 import { SHOW_TRANSFER } from '@/constants/overlays';
 import { HISTORY_STORAGE_KEY } from '@/constants/system';
 import { MapObject } from '@/entities/Map';
@@ -15,8 +15,8 @@ import { ref } from '@vue/reactivity';
 import { useStorage, watchOnce } from '@vueuse/core';
 
 useOverlayAutoClose(SHOW_TRANSFER);
-const { currentObject } = useSharedMapObject();
-const { map, firstMapLoad } = useSharedMap();
+const { currentObject } = useMapObject();
+const { map, firstMapLoad } = useMap();
 const linkedObjects = ref<any>([]);
 
 watchOnce(firstMapLoad, () => {
@@ -35,7 +35,7 @@ const getObjectLink = (object: MapObject) => {
   return createMapObjectUrl(object);
 };
 
-const { close } = useSharedOverlay();
+const { close } = useOverlay();
 const { removeCurrentObject } = useObjectActions(false);
 const { transferMap } = useRequestTransfer();
 const transfer = (url: string, remove = true) => {

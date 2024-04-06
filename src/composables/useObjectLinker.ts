@@ -1,18 +1,18 @@
 import { AnyFn, createSharedComposable } from '@vueuse/core';
 import { watch } from '@vue/runtime-core';
 import { updateObjectOnLayer } from '@/utils/konva';
-import { useSharedLayer } from '@/composables/useSharedLayer';
-import { useSharedMap } from '@/composables/useSharedMap';
-import { useSharedMapObject } from '@/composables/useSharedMapObject';
-import { useSharedLocks } from '@/composables/useSharedLocks';
+import { useLayer } from '@/composables/useLayer';
+import { useMap } from '@/composables/useMap';
+import { useMapObject } from '@/composables/useMapObject';
+import { useLocks } from '@/composables/useLocks';
 import { useI18n } from 'vue-i18n';
 import { ref } from '@vue/reactivity';
 
 export const useObjectLinker = createSharedComposable((defaultTitle?: string) => {
-  const { layer, layerObjects } = useSharedLayer();
-  const { map } = useSharedMap();
-  const { currentObjectId, fastPreviewIsLocked } = useSharedMapObject();
-  const { isClickLocked } = useSharedLocks();
+  const { layer, layerObjects } = useLayer();
+  const { map } = useMap();
+  const { currentObjectId, fastPreviewIsLocked } = useMapObject();
+  const { isClickLocked } = useLocks();
   const i18n = useI18n();
   const title = ref(defaultTitle ?? i18n.t('general.makeRelation'));
   const type = ref('default');

@@ -1,4 +1,4 @@
-import { Ref, ref } from 'vue';
+import { ref } from 'vue';
 import { FileWithHandle } from '../types/fileWithHandle';
 
 const openedFile = ref<FileSystemFileHandle | undefined>();

@@ -1,11 +1,11 @@
 import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
-import { useSharedLayer } from '@/composables/useSharedLayer';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useLayer } from '@/composables/useLayer';
+import { useMap } from '@/composables/useMap';
 import { createSharedComposable } from '@vueuse/core';
 
 export const useMoveToObject = createSharedComposable(() => {
-  const { stage } = useSharedLayer();
-  const { map } = useSharedMap();
+  const { stage } = useLayer();
+  const { map } = useMap();
   const { triggerPartialRendering } = useMapPartialRenderer();
 
   const scrollToObject = (id: string) => {

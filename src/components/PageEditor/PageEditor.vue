@@ -19,35 +19,36 @@ import TheSettings from '@/components/TheSettings/TheSettings.vue';
 import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
 import { useMoveToObject } from '@/composables/useMoveToObject';
 import { useProject } from '@/composables/useProject';
-import { useSharedHashChange } from '@/composables/useSharedHashChange';
-import { useSharedKeybindings } from '@/composables/useSharedKeybindings';
-import { useSharedLocks } from '@/composables/useSharedLocks';
-import { useSharedMap } from '@/composables/useSharedMap';
-import { useSharedMeta } from '@/composables/useSharedMeta';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
-import { useSharedSideBar } from '@/composables/useSharedSideBar';
+import { useHashChange } from '@/composables/useHashChange';
+import { useKeybindings } from '@/composables/useKeybindings';
+import { useLocks } from '@/composables/useLocks';
+import { useMap } from '@/composables/useMap';
+import { useMeta } from '@/composables/useMeta';
+import { useOverlay } from '@/composables/useOverlay';
+import { useSideBar } from '@/composables/useSideBar';
 import {
   SHOW_HISTORY_MAPS,
   SHOW_KEYBINDINGS,
-  SHOW_OBJECT_MENU, SHOW_PARENT_TYPES, SHOW_PRESETS, SHOW_SEARCH, SHOW_SETTINGS,
+  SHOW_OBJECT_MENU, SHOW_PARENT_TYPES, SHOW_PRESETS, SHOW_SEARCH, SHOW_SESSION_LOG, SHOW_SETTINGS,
 } from '@/constants/overlays';
 import { getLocation } from '@/utils/globals';
 import { watch } from '@vue/runtime-core';
 import FastPreviewObject from '@/components/FastPreviewObject/FastPreviewObject.vue';
 import AppPresets from '@/components/AppPresets/AppPresets.vue';
+import AppSessionLog from '@/components/AppSessionLog/AppSessionLog.vue';
 
-useSharedMeta();
+useMeta();
 
 const { scrollToObject } = useMoveToObject();
-const { hashChanged } = useSharedHashChange();
+const { hashChanged } = useHashChange();
 watch(hashChanged, () => {
   if (hashChanged.value) {
     scrollToObject(hashChanged.value);
   }
 });
 
-const { overlayName } = useSharedOverlay();
-const { ctrlFFired, ctrlMFired, ctrlHFired } = useSharedKeybindings();
+const { overlayName } = useOverlay();
+const { ctrlFFired, ctrlMFired, ctrlHFired } = useKeybindings();
 watch(ctrlFFired, () => {
   overlayName.value = SHOW_SEARCH;
 });
@@ -58,17 +59,17 @@ watch(ctrlHFired, () => {
   overlayName.value = SHOW_HISTORY_MAPS;
 });
 
-const { isDragLocked } = useSharedLocks();
+const { isDragLocked } = useLocks();
 const handleLock = () => {
   isDragLocked.value = !isDragLocked.value;
   setTimeout(() => getLocation().reload());
 };
 
 const version = '0.1';
-const { isSidebarOpen } = useSharedSideBar();
+const { isSidebarOpen } = useSideBar();
 
 const { isProjectOpened, loadProjectFiles } = useProject();
-const { openMapOfCurrentUrl, isLoading } = useSharedMap();
+const { openMapOfCurrentUrl, isLoading } = useMap();
 [!isProjectOpened.value].filter(Boolean).forEach(() => {
   loadProjectFiles().then(() => {
     openMapOfCurrentUrl();
@@ -139,6 +140,12 @@ const { openMapOfCurrentUrl, isLoading } = useSharedMap();
       <h2>Пресеты узлов карт</h2>
     </template>
     <AppPresets />
+  </BaseModal>
+  <BaseModal :name="SHOW_SESSION_LOG">
+    <template #header>
+      <h2>Логи сессии</h2>
+    </template>
+    <AppSessionLog />
   </BaseModal>
   <FormJson />
   <FormObject />

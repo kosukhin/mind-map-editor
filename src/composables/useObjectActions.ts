@@ -1,18 +1,18 @@
 import { createSharedComposable } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
-import { useSharedLayer } from '@/composables/useSharedLayer';
-import { useSharedMap } from '@/composables/useSharedMap';
-import { useSharedMapObject } from '@/composables/useSharedMapObject';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useLayer } from '@/composables/useLayer';
+import { useMap } from '@/composables/useMap';
+import { useMapObject } from '@/composables/useMapObject';
+import { useOverlay } from '@/composables/useOverlay';
 import { removeObjectOnLayer, updateObjectOnLayer } from '@/utils/konva';
 import { findRelationsToRemove } from '@/application/findRelationsToRemove';
 
 export const useObjectActions = createSharedComposable((needConfirm = true) => {
   const i18n = useI18n();
-  const { layer, layerObjects } = useSharedLayer();
-  const { map } = useSharedMap();
-  const { currentObject } = useSharedMapObject();
-  const { close } = useSharedOverlay();
+  const { layer, layerObjects } = useLayer();
+  const { map } = useMap();
+  const { currentObject } = useMapObject();
+  const { close } = useOverlay();
 
   const removeCurrentObject = () => {
     if (

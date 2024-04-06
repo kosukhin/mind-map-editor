@@ -5,17 +5,17 @@ import { useCanvas } from '@/composables/useCanvas';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
 import { MapLayerObjects } from '@/entities/MapLayerObjects';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 import { findById } from '@/utils/dom';
 import { CANVAS_DOM_ID } from '@/constants/system';
 import { setValue } from '@/utils/common';
 
-export const useSharedLayer = createSharedComposable(() => {
+export const useLayer = createSharedComposable(() => {
   const { canvas } = useCanvas();
   const layer = shallowRef<Layer>();
   const stage = shallowRef<Stage>();
   const layerObjects: MapLayerObjects = new Map();
-  const { firstMapLoad } = useSharedMap();
+  const { firstMapLoad } = useMap();
 
   const doCreateLayer = (afterCreatedCb: AnyFn) => {
     setTimeout(() => {

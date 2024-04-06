@@ -5,15 +5,15 @@ import merge from 'lodash/merge';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
 import { SHOW_JSON_TYPES } from '@/constants/overlays';
 import { getLocation } from '@/utils/globals';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useOverlay } from '@/composables/useOverlay';
 
 const { stringify } = JSON;
 
-const { map } = useSharedMap();
+const { map } = useMap();
 const form = ref('');
 watch(
   map,
@@ -38,7 +38,7 @@ const onSave = () => {
   }
 };
 
-const { close } = useSharedOverlay();
+const { close } = useOverlay();
 </script>
 
 <template>

@@ -1,12 +1,12 @@
 import { shallowRef, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
 import { KonvaEventObject } from 'konva/lib/Node';
-import { useSharedLayer } from '@/composables/useSharedLayer';
+import { useLayer } from '@/composables/useLayer';
 import { setValue } from '@/utils/common';
 import Konva from 'konva';
 
-export const useSharedLayerEvents = createSharedComposable(() => {
-  const { layer, stage } = useSharedLayer();
+export const useLayerEvents = createSharedComposable(() => {
+  const { layer, stage } = useLayer();
   const dragend = shallowRef<KonvaEventObject<DragEvent>>();
   const dragstart = shallowRef<KonvaEventObject<DragEvent>>();
   const click = shallowRef<KonvaEventObject<MouseEvent>>();

@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import { useMoveToObject } from '@/composables/useMoveToObject';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
-import { useSharedMap } from '@/composables/useSharedMap';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useMap } from '@/composables/useMap';
+import { useOverlay } from '@/composables/useOverlay';
 import { SHOW_OBJECT_MENU } from '@/constants/overlays';
 import { MapObject } from '@/entities/Map';
 import { ref, watch } from 'vue';
 
 useOverlayAutoClose(SHOW_OBJECT_MENU);
 
-const { firstMapLoad, map } = useSharedMap();
+const { firstMapLoad, map } = useMap();
 const menuItems = ref<MapObject[]>([]);
 watch(
   firstMapLoad,
@@ -25,7 +25,7 @@ watch(
   },
 );
 
-const { close } = useSharedOverlay();
+const { close } = useOverlay();
 const { scrollToObject } = useMoveToObject();
 const selectMenuItem = (id: string) => {
   scrollToObject(id);

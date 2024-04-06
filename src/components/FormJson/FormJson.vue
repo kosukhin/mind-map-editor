@@ -5,16 +5,16 @@ import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import FormJsonTypes from '@/components/FormJson/FormJsonTypes.vue';
-import { useSharedMap } from '@/composables/useSharedMap';
+import { useMap } from '@/composables/useMap';
 import { getLocation } from '@/utils/globals';
 import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
 import { SHOW_JSON, SHOW_JSON_TYPES } from '@/constants/overlays';
-import { useSharedOverlay } from '@/composables/useSharedOverlay';
+import { useOverlay } from '@/composables/useOverlay';
 
 const { stringify } = JSON;
 
 const form = ref('');
-const { map } = useSharedMap();
+const { map } = useMap();
 watch(
   map,
   () => {
@@ -34,7 +34,7 @@ const onSave = async () => {
 const isDirty = computed(() => form.value !== stringify(map.value));
 useFormDirtyCheck(isDirty, SHOW_JSON);
 
-const { close, overlayName } = useSharedOverlay();
+const { close, overlayName } = useOverlay();
 const openTypes = () => {
   overlayName.value = SHOW_JSON_TYPES;
 };

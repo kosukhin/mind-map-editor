@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import MainPage from '@/components/PageMain/PageMain.vue';
-import { useSharedMeta } from '@/composables/useSharedMeta';
+import { useMeta } from '@/composables/useMeta';
 import { onMounted } from 'vue';
 
-const { head } = useSharedMeta();
+const { head } = useMeta();
 
 onMounted(() => {
   setTimeout(() => {
