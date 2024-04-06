@@ -105,6 +105,10 @@ const namedSearchApplyIndex = (index: number) => {
     type.value = search.type;
   }
 };
+
+const namedSearchRemoveByIndex = (index: number) => {
+  map.value?.namedSearches?.splice(index, 1);
+};
 </script>
 
 <template>
@@ -117,7 +121,10 @@ const namedSearchApplyIndex = (index: number) => {
       >
         Создать
       </BaseButton>
-      <div v-if="namedSearchFormShowed">
+      <div
+        v-if="namedSearchFormShowed"
+        style="display: flex;gap: 8px;align-items: center;margin-bottom: 16px"
+      >
         <b>Имя</b>
         <BaseInput v-model="namedSearchForm.name" />
         <b>Строка поиска</b>
@@ -134,14 +141,19 @@ const namedSearchApplyIndex = (index: number) => {
         </BaseButton>
       </div>
       <div v-if="map" style="display: flex;gap: 16px">
-        <a
-          href="#"
+        <span
           :key="`nsearch-${index}`"
           v-for="(nSearch, index) in map.namedSearches"
-          @click.prevent="namedSearchApplyIndex(index)"
+          style="display: flex; gap: 4px"
         >
-          {{nSearch.name}}
-        </a>
+          <a
+            href="#"
+            @click.prevent="namedSearchApplyIndex(index)"
+          >
+            {{nSearch.name}}
+          </a>
+          <a href="#" @click.prevent="namedSearchRemoveByIndex(index)">&times;</a>
+        </span>
       </div>
     </div>
     <BaseInput
