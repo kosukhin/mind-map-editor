@@ -90,7 +90,7 @@ const addToCanvas = async (
 </script>
 
 <template>
-  <div class="TheSideBar">
+  <div class="p-3">
     <div v-if="map" class="TheSideBar-Items">
       <div
         v-for="(type, name) in map.types"

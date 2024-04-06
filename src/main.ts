@@ -1,10 +1,10 @@
-import '@/assets/main.scss';
 import { useOpenFile } from '@/composables/useOpenFile';
 import i18n from '@/plugins/i18n';
 import { createApp } from 'vue';
 import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
+import '@/assets/styles.scss';
 
 const { openedFile } = useOpenFile();
 if ('launchQueue' in window) {

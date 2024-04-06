@@ -15,10 +15,10 @@ const { overlayName } = useOverlay();
 </script>
 
 <template>
-  <div class="TheHeader">
+  <div class="flex items-center p-3 gap-3">
     <img src="/icon-top-bar.png" width="57" height="42" alt="mmc" />
     <BaseBreadcrumbs class="TheHeader-Breadcrumbs" />
-    <div class="TheHeader-Actions">
+    <div class="ml-auto gap-2 flex">
       <BaseButton
         type="success"
         size="sm"

@@ -83,24 +83,16 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
       Карта загружается...
     </div>
   </transition>
-  <div
-    class="PageEditor-SelectionLocker"
-    :class="{ 'PageEditor-SelectionLocker_Locked': isDragLocked }"
-    @click="handleLock"
-  >
-    <div v-if="!isDragLocked" class="opened">&#128275;</div>
-    <div v-if="isDragLocked" class="closed">&#128274;</div>
-  </div>
   <div class="PageEditor-SideBarOpener" @click="isSidebarOpen = !isSidebarOpen">
     <hr />
     <hr />
     <hr />
   </div>
-  <div class="PageEditor">
-    <TheHeader class="PageEditor-Header" />
-    <TheSideBar :class="['PageEditor-SideBar', { opened: isSidebarOpen }]" />
-    <TheEditor class="PageEditor-Editor" />
-    <TheMiniMap class="PageEditor-MiniMap" />
+  <div class="grid grid-cols-[200px_1fr]">
+    <TheHeader class="col-span-2" />
+    <TheSideBar />
+    <TheEditor class="w-auto col-auto h-full " />
+    <TheMiniMap class="absolute" />
   </div>
   <BaseNotify />
   <FormType />

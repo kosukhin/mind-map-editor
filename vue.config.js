@@ -4,13 +4,6 @@ const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  css: {
-    loaderOptions: {
-      sass: {
-        additionalData: '@import "@/assets/styles/mixins.scss";',
-      },
-    },
-  },
   pwa: {
     manifestOptions: {
       theme_color: '#838282',
