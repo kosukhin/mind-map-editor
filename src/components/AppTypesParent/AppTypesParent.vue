@@ -45,7 +45,3 @@ const addType = (type: MapType) => {
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@import 'AppTypesParent';
-</style>

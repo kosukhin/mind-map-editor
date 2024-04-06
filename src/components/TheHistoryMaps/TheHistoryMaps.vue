@@ -53,7 +53,3 @@ watch(head, () => {
     </div>
   </BaseDrawer>
 </template>
-
-<style lang="scss" scoped>
-@import 'TheHistoryMaps';
-</style>

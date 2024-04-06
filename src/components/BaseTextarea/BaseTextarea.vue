@@ -20,7 +20,3 @@ const { textarea, input } = useTextareaAutosize({
     <textarea ref="textarea" v-model="input" class="BaseTextarea-Input" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import 'BaseTextarea';
-</style>

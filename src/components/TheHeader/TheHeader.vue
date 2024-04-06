@@ -56,7 +56,3 @@ const { overlayName } = useOverlay();
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@import 'TheHeader';
-</style>

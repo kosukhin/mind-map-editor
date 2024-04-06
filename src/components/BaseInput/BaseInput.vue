@@ -16,7 +16,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue']);
 
-const input = ref(null);
+const input = ref<HTMLInputElement | null>(null);
 watch(
   input,
   debounce(() => {
@@ -32,7 +32,3 @@ const data = useVModel(props, 'modelValue', emit);
 <template>
   <input ref="input" v-model="data" class="BaseInput" type="text" />
 </template>
-
-<style lang="scss" scoped>
-@import 'BaseInput';
-</style>

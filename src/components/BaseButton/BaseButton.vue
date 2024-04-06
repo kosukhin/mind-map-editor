@@ -24,7 +24,3 @@ const classes = computed(() => ({
 <template>
   <button type="button" :class="classes"><slot /></button>
 </template>
-
-<style lang="scss" scoped>
-@import 'BaseButton';
-</style>

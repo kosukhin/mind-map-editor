@@ -63,7 +63,3 @@ const { close } = useOverlay();
     </template>
   </BaseModal>
 </template>
-
-<style scoped lang="scss">
-@import 'FormJson';
-</style>

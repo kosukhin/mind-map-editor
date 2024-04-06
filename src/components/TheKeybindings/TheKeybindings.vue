@@ -14,7 +14,3 @@ useOverlayAutoClose(SHOW_KEYBINDINGS);
     Ctrl+<em>H</em> - {{ $t('general.openTabsHistory') }}
   </pre>
 </template>
-
-<style scoped lang="scss">
-@import 'TheKeybindings';
-</style>

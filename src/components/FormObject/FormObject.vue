@@ -9,7 +9,7 @@ import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
-import { cloneObject, updateObjectOnLayer } from '@/utils/konva';
+import { updateObjectOnLayer } from '@/utils/konva';
 import { useMap } from '@/composables/useMap';
 import { useOverlay } from '@/composables/useOverlay';
 import { useKeybindings } from '@/composables/useKeybindings';
@@ -290,7 +290,3 @@ const { removeCurrentObject } = useObjectActions();
     </template>
   </BaseDrawer>
 </template>
-
-<style scoped lang="scss">
-@import 'FormObject';
-</style>

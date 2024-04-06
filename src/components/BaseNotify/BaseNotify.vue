@@ -9,7 +9,3 @@ const { message } = useNotify();
     {{ message[0] }}
   </div>
 </template>
-
-<style scoped lang="scss">
-@import 'BaseNotify';
-</style>

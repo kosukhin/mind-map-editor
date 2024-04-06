@@ -83,7 +83,3 @@ watch(ctrlSFired, () => {
     </template>
   </BaseModal>
 </template>
-
-<style lang="scss" scoped>
-@import 'FormType';
-</style>

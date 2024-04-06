@@ -128,7 +128,3 @@ const mapsHistory = useStorage<{ url: string; title: string }[]>(
     </div>
   </BaseModal>
 </template>
-
-<style lang="scss" scoped>
-@import './TheObjectTransfer';
-</style>

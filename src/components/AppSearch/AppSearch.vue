@@ -189,7 +189,3 @@ const namedSearchRemoveByIndex = (index: number) => {
     <div v-else-if="query">{{ $t('general.noResults') }}</div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@import 'AppSearch';
-</style>

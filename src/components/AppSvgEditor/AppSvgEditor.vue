@@ -39,7 +39,3 @@ onMounted(() => {
 <template>
   <div id="svg-editor" class="AppSvgEditor"></div>
 </template>
-
-<style lang="scss" scoped>
-@import 'AppSvgEditor';
-</style>

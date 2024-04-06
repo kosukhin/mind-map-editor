@@ -65,7 +65,3 @@ const back = () => {
     </div>
   </Transition>
 </template>
-
-<style scoped lang="scss">
-@import 'BaseModal';
-</style>

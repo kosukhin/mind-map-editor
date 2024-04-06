@@ -51,7 +51,3 @@ const selectMenuItem = (id: string) => {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import 'AppMenuObject';
-</style>

@@ -160,7 +160,3 @@ const onDownloadMap = () => {
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@import 'TheSettings';
-</style>

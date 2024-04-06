@@ -26,7 +26,3 @@ const scaledPos = (pos: number) => `${(pos * MINIMAP_SCALE).toFixed(2)}px`;
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@import 'TheMiniMap';
-</style>

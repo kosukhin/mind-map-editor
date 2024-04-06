@@ -60,7 +60,3 @@ watch(current, () => {
     </div>
   </Transition>
 </template>
-
-<style scoped lang="scss">
-@import 'BaseDrawer';
-</style>

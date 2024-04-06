@@ -9,20 +9,13 @@ import { useProject } from '@/composables/useProject';
 import { useRequestCreateMap } from '@/composables/useRequestCreateMap';
 import { useRequestGetMap } from '@/composables/useRequestGetMap';
 import { useRequestSearch } from '@/composables/useRequestSearch';
-import {
-  addFiles,
-  onMapsChanged,
-  setFiles,
-  topMaps,
-} from '@/libraries/browser-fs';
-import { cApply, urlTrim } from '@/utils/common';
+import { setFiles, topMaps } from '@/libraries/browser-fs';
+import { urlTrim } from '@/utils/common';
 import { ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import { useSeoMeta } from '@vueuse/head';
-import { directoryOpen, fileOpen } from 'browser-fs-access';
 import debounce from 'lodash/debounce';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
 
 const i18n = useI18n();
 useSeoMeta({
@@ -112,24 +105,6 @@ const {
 } = useProject();
 [!isProjectOpened.value].filter(Boolean).forEach(loadProjectFiles);
 
-const onOpenFiles = () => directoryOpen({
-  recursive: false,
-  mode: 'readwrite',
-}).then((blobs) => {
-  [setFiles, saveProjectFiles].forEach(cApply(blobs));
-}).catch(setProjectOff);
-
-const router = useRouter();
-const onOpenOneFile = () => fileOpen().then((blob) => {
-  onMapsChanged(async (maps: any) => {
-    const lastIndex = maps.files.length - 1;
-    const mapObject = await getMap(maps.files[lastIndex].url);
-    router.push(mapObject[0].url);
-  });
-
-  setFiles([blob]);
-}).catch(setProjectOff);
-
 const onCloseProject = () => {
   idbGet().delete().then(windowReload);
 };
@@ -216,7 +191,3 @@ if (openedFile.value) {
     </template>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import './PageMain.scss';
-</style>

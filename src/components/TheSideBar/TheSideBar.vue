@@ -6,7 +6,6 @@ import BaseGroup from '@/components/BaseGroup/BaseGroup.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
 import TheGrouper from '@/components/TheGrouper/TheGrouper.vue';
 import TheLinker from '@/components/TheLinker/TheLinker.vue';
-import { addObjectToLayer } from '@/utils/konva';
 import { useOverlay } from '@/composables/useOverlay';
 import { useMapType } from '@/composables/useMapType';
 import { SHOW_SETTINGS, SHOW_TYPE } from '@/constants/overlays';
@@ -107,7 +106,7 @@ const addToCanvas = async (
           :height="type.height"
           :width="type.width"
           :title="$t('general.notifications.dragToCanvasToAdd')"
-          @dblclick="addToCanvas($event as any, name, true)"
+          @dblclick="addToCanvas($event , name, true)"
           @dragend="addToCanvas($event, name)"
         />
         <div class="TheSideBar-ItemButtons">
@@ -142,7 +141,3 @@ const addToCanvas = async (
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@import 'TheSideBar';
-</style>

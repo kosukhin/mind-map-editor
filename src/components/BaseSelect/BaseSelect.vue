@@ -36,7 +36,3 @@ const data = useVModel(props, 'modelValue', emit);
     </option>
   </select>
 </template>
-
-<style lang="scss" scoped>
-@import 'BaseSelect';
-</style>

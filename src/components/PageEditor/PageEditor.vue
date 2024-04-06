@@ -153,7 +153,3 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
   <TheHistoryMaps />
   <TheObjectTransfer />
 </template>
-
-<style scoped lang="scss">
-@import 'PageEditor';
-</style>

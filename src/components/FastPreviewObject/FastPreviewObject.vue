@@ -151,7 +151,3 @@ const { startToRelation, title, type } = useObjectLinker('Связать');
     </div>
   </transition>
 </template>
-
-<style lang="scss">
-@import "FastPreviewObject";
-</style>

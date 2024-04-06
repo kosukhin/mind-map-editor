@@ -85,17 +85,3 @@ const onSelectAll = () => {
     </article>
   </BaseModal>
 </template>
-
-<style lang="scss">
-.TheMapAsText-Item {
-  margin-bottom: var(--defaultPadding);
-
-  * {
-    user-select: all;
-  }
-}
-</style>
-
-<style lang="scss" scoped>
-@import 'TheMapAsText';
-</style>
