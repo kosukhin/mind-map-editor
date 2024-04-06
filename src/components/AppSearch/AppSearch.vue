@@ -8,6 +8,8 @@ import { useOverlay } from '@/composables/useOverlay';
 import { useMoveToObject } from '@/composables/useMoveToObject';
 import { MapObject } from '@/entities/Map';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
+import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import { clone } from 'lodash';
 
 useOverlayAutoClose(SHOW_SEARCH);
 
@@ -17,7 +19,7 @@ const isFoundInAdditionalFilters = (
 ) => object.additionalFields
   && Object.values(object.additionalFields).some((v) => v.toLowerCase().includes(searchQuery));
 
-const type = ref(null);
+const type = ref<string>('');
 const query = ref('');
 const { map } = useMap();
 
@@ -76,10 +78,72 @@ const moveToObject = (object: MapObject) => {
 const showFirstAdditionalField = (additionalFields: any) => Object
   .values(additionalFields)
   .filter(Boolean).shift();
+
+const namedSearchFormShowed = ref(false);
+const namedSearchForm = ref({
+  name: '',
+  query: '',
+  type: '',
+});
+const namedSearchSave = () => {
+  if (map.value) {
+    if (!map.value.namedSearches) {
+      map.value.namedSearches = [];
+    }
+    map.value?.namedSearches.push(clone(namedSearchForm.value));
+    Object.keys(namedSearchForm.value).forEach((key) => {
+      (namedSearchForm.value as any)[key] = '';
+    });
+    namedSearchFormShowed.value = false;
+  }
+};
+
+const namedSearchApplyIndex = (index: number) => {
+  const search = map.value?.namedSearches?.[index];
+  if (search) {
+    query.value = search.query;
+    type.value = search.type;
+  }
+};
 </script>
 
 <template>
   <div class="AppSearch">
+    <div style="border: solid 1px #000;padding:10px;margin-bottom: 10px">
+      <h4 style="margin-bottom: 6px">Сохраненные поиски</h4>
+      <BaseButton
+        style="max-width: 150px;margin-bottom: 12px"
+        @click="namedSearchFormShowed=!namedSearchFormShowed"
+      >
+        Создать
+      </BaseButton>
+      <div v-if="namedSearchFormShowed">
+        <b>Имя</b>
+        <BaseInput v-model="namedSearchForm.name" />
+        <b>Строка поиска</b>
+        <BaseInput v-model="namedSearchForm.query" />
+        <b>Тип</b>
+        <BaseSelect
+          v-model="namedSearchForm.type"
+          :items="mapTypes"
+          option-id="id"
+          option-label="name"
+        />
+        <BaseButton type="success" @click="namedSearchSave">
+          Сохранить
+        </BaseButton>
+      </div>
+      <div v-if="map" style="display: flex;gap: 16px">
+        <a
+          href="#"
+          :key="`nsearch-${index}`"
+          v-for="(nSearch, index) in map.namedSearches"
+          @click.prevent="namedSearchApplyIndex(index)"
+        >
+          {{nSearch.name}}
+        </a>
+      </div>
+    </div>
     <BaseInput
       v-model="query"
       class="AppSearch-Input"

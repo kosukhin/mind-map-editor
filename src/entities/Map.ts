@@ -41,6 +41,12 @@ export interface MapSettings {
   skipSearchIndex?: boolean
 }
 
+export interface NamedSearch {
+  name: string,
+  query: string,
+  type: string
+}
+
 export interface MapStructure {
   document: string
   url: string
@@ -50,7 +56,8 @@ export interface MapStructure {
   settings: MapSettings
   types: MapStructureTypes
   objects: Dictionary<MapObject>
-  position?: [number, number]
+  position?: [number, number],
+  namedSearches?: NamedSearch[]
 }
 
 export interface Map {
