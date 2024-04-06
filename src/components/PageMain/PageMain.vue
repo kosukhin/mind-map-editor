@@ -16,6 +16,7 @@ import { watch } from '@vue/runtime-core';
 import { useSeoMeta } from '@vueuse/head';
 import debounce from 'lodash/debounce';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 const i18n = useI18n();
 useSeoMeta({
@@ -121,6 +122,7 @@ useIdbGetMap()
     setFiles(files);
   });
 
+const router = useRouter();
 const { openedFile, forceFile } = useOpenFile();
 if (openedFile.value) {
   openedFile.value.getFile().then(async (file) => {

@@ -1,4 +1,4 @@
-import '@/assets/styles/global.scss';
+import '@/assets/main.scss';
 import { useOpenFile } from '@/composables/useOpenFile';
 import i18n from '@/plugins/i18n';
 import { createApp } from 'vue';
