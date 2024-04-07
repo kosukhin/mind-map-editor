@@ -39,17 +39,17 @@ const back = () => {
 
 <template>
   <Transition name="fade">
-    <div v-if="isOpened" class="absolute overflow-y-auto flex justify-center items-center top-0 left-0 bg-black/10 z-20 h-full w-full" @click="close">
-      <div class="w-full max-w-[600px] bg-white p-3" @click.stop>
+    <div v-if="isOpened" class="absolute rounded-main overflow-y-auto flex justify-center items-center top-0 left-0 bg-black/10 z-20 h-full w-full" @click="close">
+      <div class="w-full relative max-w-[600px] bg-white p-3" @click.stop>
         <div
           v-if="history.length > 1"
           title="Назад"
-          class="BaseModal-Back"
+          class="absolute left-0 top-0 -ml-5 flex justify-center items-center bg-primary/50 cursor-pointer w-5"
           @click="back"
         >
           &lt;
         </div>
-        <div title="Закрыть" class="BaseModal-Close" @click="close">
+        <div title="Закрыть" class="absolute right-0 top-0 -mr-5 flex justify-center items-center bg-danger/50 cursor-pointer w-5" @click="close">
           &times;
         </div>
         <div v-if="$slots.header" class="BaseModal-Header">

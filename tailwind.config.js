@@ -2,20 +2,24 @@
 module.exports = {
   content: ['./src/**/*.{html,js,vue}', './public/index.html'],
   theme: {
+    colors: {
+      black: '#000000',
+      white: '#ffffff',
+      'body-dark': '#9ca3af',
+      body: '#f3f4f6',
+      default: '#ffffff',
+      standard: '#ffffff',
+      primary: '#22bdff',
+      success: '#7dff67',
+      danger: '#f55',
+      'standard-second': '#d9d9d9',
+      'primary-second': '#0e9fdc',
+      'success-second': '#57db42',
+      'danger-second': '#d93434',
+    },
     extend: {
       width: {
         sidebar: '150px',
-      },
-      borderColor: {
-        'body-dark': '#9ca3af',
-      },
-      backgroundColor: {
-        body: '#f3f4f6',
-        default: '#ffffff',
-        standard: '#ffffff',
-        primary: '#22bdff',
-        success: '#7dff67',
-        danger: '#f55',
       },
       borderRadius: {
         main: '4px',

@@ -82,12 +82,12 @@ const onDownloadMap = () => {
 
 <template>
   <div class="TheSettings">
-    <div class="TheSettings-Content">
+    <div class="mb-2">
       <a href="#" class="PageEditor-Download" @click.prevent="onDownloadMap">
         Скачать карту
       </a>
       <div class="TheSettings-Row">
-        <div class="TheSettings-ButtonGroup">
+        <div class="flex gap-2">
           <BaseButton
             class="TheSettings-Button"
             type="primary"
@@ -147,7 +147,7 @@ const onDownloadMap = () => {
         <BaseInput v-model="form.favoriteGroup" />
       </div>
     </div>
-    <div class="TheSettings-ButtonGroup">
+    <div class="flex gap-2">
       <BaseButton class="TheSettings-Button" type="success" @click="onSave">
         {{ $t('general.save') }}
       </BaseButton>

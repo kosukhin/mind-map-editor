@@ -13,13 +13,12 @@ const props = defineProps({
 });
 
 // Классы bg-standard bg-primary bg-success bg-danger
+// Классы hover:bg-standard-second hover:bg-primary-second hover:bg-success-second hover:bg-danger-second
 // Размеры p-sm p-md p-lg
 // Тексты text-sm text-md text-lg
-const classes = ['rounded-main', `text-${props.size}`, `p-${props.size}`, `bg-${props.type}`];
+const classes = ['rounded-main', `text-${props.size}`, `p-${props.size}`, `bg-${props.type} hover:bg-${props.type}-second`];
 
-if (props.type === 'standard') {
-  classes.push('border border-solid border-body-dark box-border');
-}
+classes.push('border border-solid border-body-dark box-border');
 </script>
 
 <template>
