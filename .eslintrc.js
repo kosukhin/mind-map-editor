@@ -21,5 +21,6 @@ module.exports = {
     'vuejs-accessibility/label-has-for': 'off',
     'vuejs-accessibility/click-events-have-key-events': 'off',
     'no-param-reassign': 'off',
+    'max-len': 'off',
   },
 };

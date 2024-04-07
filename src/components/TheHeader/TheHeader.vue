@@ -18,11 +18,12 @@ const { overlayName } = useOverlay();
   <div class="flex items-center p-3 gap-3">
     <img src="/icon-top-bar.png" width="57" height="42" alt="mmc" />
     <BaseBreadcrumbs class="TheHeader-Breadcrumbs" />
-    <div class="ml-auto gap-2 flex">
+    <div class="ml-auto gap-1 flex">
       <BaseButton
         type="success"
         size="sm"
         title="Показать лог сессии"
+        class="aspect-square"
         @click="overlayName = SHOW_SESSION_LOG"
       >
         <BaseIcon icon="fa-file-text" />
@@ -30,6 +31,7 @@ const { overlayName } = useOverlay();
       <BaseButton
         type="success"
         size="sm"
+        class="aspect-square"
         :title="$t('general.menu')"
         @click="overlayName = SHOW_OBJECT_MENU"
       >

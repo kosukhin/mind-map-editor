@@ -3,3 +3,8 @@
 @tailwind utilities;
 
 @import "transitions";
+
+#app {
+  height: 100dvh;
+  overflow: hidden;
+}

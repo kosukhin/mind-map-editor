@@ -51,13 +51,13 @@ const openTypes = () => {
     </div>
     <template #footer>
       <div class="FormJson-Buttons">
-        <BaseButton class="FormJson-Button" type="success" @click="onSave">
+        <BaseButton type="success" @click="onSave">
           {{ $t('general.save') }}
         </BaseButton>
-        <BaseButton class="FormJson-Button" type="primary" @click="openTypes">
+        <BaseButton type="primary" @click="openTypes">
           {{ $t('general.types') }}
         </BaseButton>
-        <BaseButton class="FormJson-Button" @click="close">
+        <BaseButton @click="close">
           {{ $t('general.cancel') }}
         </BaseButton>
       </div>

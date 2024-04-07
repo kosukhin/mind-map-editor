@@ -15,7 +15,7 @@ export const useObjectLinker = createSharedComposable((defaultTitle?: string) =>
   const { isClickLocked } = useLocks();
   const i18n = useI18n();
   const title = ref(defaultTitle ?? i18n.t('general.makeRelation'));
-  const type = ref('default');
+  const type = ref('standard');
   let stopNextObjectWatcher: AnyFn | null = null;
 
   const startToRelation = (fromObjectId: number) => {
@@ -31,7 +31,7 @@ export const useObjectLinker = createSharedComposable((defaultTitle?: string) =>
       const toObjectId = String(currentObjectId.value ?? '');
       title.value = i18n.t('general.makeRelation');
       isClickLocked.value = false;
-      type.value = 'default';
+      type.value = 'standard';
 
       if (map.value && layer.value) {
         map.value.objects[fromObjectId].arrows.push({ id: toObjectId });
@@ -52,7 +52,7 @@ export const useObjectLinker = createSharedComposable((defaultTitle?: string) =>
       }
       title.value = i18n.t('general.makeRelation');
       isClickLocked.value = false;
-      type.value = 'default';
+      type.value = 'standard';
       return;
     }
     fastPreviewIsLocked.value = true;
@@ -73,7 +73,7 @@ export const useObjectLinker = createSharedComposable((defaultTitle?: string) =>
         const toObjectId = String(currentObjectId.value ?? '');
         title.value = i18n.t('general.makeRelation');
         isClickLocked.value = false;
-        type.value = 'default';
+        type.value = 'standard';
 
         if (map.value && layer.value) {
           map.value.objects[fromObjectId].arrows.push({ id: toObjectId });

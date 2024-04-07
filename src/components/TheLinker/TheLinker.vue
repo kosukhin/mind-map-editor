@@ -6,7 +6,7 @@ const { startRelation, title, type } = useObjectLinker();
 </script>
 
 <template>
-  <BaseButton class="TheLinker" :type="type" @click="startRelation">
+  <BaseButton :type="type" @click="startRelation">
     {{ title }}
   </BaseButton>
 </template>

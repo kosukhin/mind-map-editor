@@ -116,7 +116,7 @@ const namedSearchRemoveByIndex = (index: number) => {
     <div style="border: solid 1px #000;padding:10px;margin-bottom: 10px">
       <h4 style="margin-bottom: 6px">Сохраненные поиски</h4>
       <BaseButton
-        style="max-width: 150px;margin-bottom: 12px"
+        class="mb-3 max-w-[150px]"
         @click="namedSearchFormShowed=!namedSearchFormShowed"
       >
         Создать

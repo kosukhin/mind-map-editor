@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
-
 const props = defineProps({
   size: {
     type: String,
@@ -9,16 +7,19 @@ const props = defineProps({
   },
   type: {
     type: String,
-    default: 'default',
-    validator: (value: string) => ['default', 'primary', 'success', 'danger'].includes(value),
+    default: 'standard',
+    validator: (value: string) => ['primary', 'success', 'danger'].includes(value),
   },
 });
 
-const classes = computed(() => ({
-  BaseButton: true,
-  [`BaseButton_size_${props.size}`]: true,
-  [`BaseButton_type_${props.type}`]: true,
-}));
+// Классы bg-standard bg-primary bg-success bg-danger
+// Размеры p-sm p-md p-lg
+// Тексты text-sm text-md text-lg
+const classes = ['rounded-main', `text-${props.size}`, `p-${props.size}`, `bg-${props.type}`];
+
+if (props.type === 'standard') {
+  classes.push('border border-solid border-body-dark box-border');
+}
 </script>
 
 <template>

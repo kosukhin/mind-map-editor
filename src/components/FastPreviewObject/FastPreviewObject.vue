@@ -112,38 +112,38 @@ const { startToRelation, title, type } = useObjectLinker('Связать');
   <transition name="fade">
     <div
       v-if="fastPreviewObjectId"
-      class="FastPreviewObject Common-Flex-Column Common-Gap"
+      class="absolute flex flex-col gap-1 p-2 rounded-main bg-body"
       :style="`top: ${mousePosition.y}px;left: ${mousePosition.x}px`"
     >
-      <div class="Common-Flex Common-Gap Common-Mb-Md">
-        <BaseButton @click="edit" class="Common-MaxWidth-150">
+      <div class="flex gap-1">
+        <BaseButton @click="edit" class="max-w-[150px]">
           Редактировать
         </BaseButton>
         <BaseButton
-          :disabled="type !== 'default'"
+          :disabled="type !== 'standard'"
           :type="type"
           @click="startToRelation(fastPreviewObjectId)"
-          class="Common-MaxWidth-150"
+          class="max-w-[150px]"
         >
           {{ title }}
         </BaseButton>
       </div>
-      <div class="Common-Flex Common-Gap">
-        <BaseButton @click="transform" class="Common-MaxWidth-150">
+      <div class="flex gap-1">
+        <BaseButton @click="transform" class="max-w-[150px]">
           Трансформ
         </BaseButton>
-        <BaseButton @click="clone(fastPreviewObjectId);cancel()" class="Common-MaxWidth-150">
+        <BaseButton @click="clone(fastPreviewObjectId);cancel()" class="max-w-[150px]">
           Клонировать
         </BaseButton>
         <BaseButton
           type="danger"
           @click="objectDelete"
-          class="Common-MaxWidth-150"
+          class="text-white"
         >
           Удалить
         </BaseButton>
         <BaseButton
-          class="Common-MaxWidth-150 Common-Ml-auto" @click="cancel"
+          class="max-w-[150px] ml-auto" @click="cancel"
         >
           &times;
         </BaseButton>

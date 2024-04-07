@@ -16,7 +16,7 @@ import { MapStructure } from '@/entities/Map';
 const { layer, layerObjects } = useLayer();
 const i18n = useI18n();
 const title = ref(i18n.t('general.group'));
-const type = ref('default');
+const type = ref('standard');
 const isGrouping = computed(() => type.value === 'danger');
 const { map } = useMap();
 const { currentObjectId, fastPreviewIsLocked } = useMapObject();
@@ -59,7 +59,7 @@ const stopWatcher = () => {
   stopNextObjectWatcher = null;
   isClickLocked.value = false;
   title.value = i18n.t('general.group');
-  type.value = 'default';
+  type.value = 'standard';
   groups.clear();
   fastPreviewIsLocked.value = false;
 };
@@ -123,9 +123,9 @@ const onClick = () => {
 
 <template>
   <div v-if="isGrouping" key="grouper-panel" class="TheGrouper-Panel">
-    <BaseButton type="primary" @click="cloneGroup">
+    <BaseButton class="w-full" type="primary" @click="cloneGroup">
       {{ $t('general.clone') }}
     </BaseButton>
   </div>
-  <BaseButton :type="type" @click="onClick"> {{ title }} </BaseButton>
+  <BaseButton class="w-full" :type="type" @click="onClick"> {{ title }} </BaseButton>
 </template>

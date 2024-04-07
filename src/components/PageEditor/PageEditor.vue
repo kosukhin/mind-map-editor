@@ -79,7 +79,8 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
 
 <template>
   <transition name="slide-fade">
-    <div class="PageEditor-Loading" v-if="isLoading">
+    <div
+      class="absolute bg-black/40 text-white h-full w-full z-10 flex items-center justify-center" v-if="isLoading">
       Карта загружается...
     </div>
   </transition>
@@ -88,7 +89,7 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
     <hr />
     <hr />
   </div>
-  <div class="grid grid-cols-[200px_1fr]">
+  <div class="grid grid-cols-[200px_1fr] grid-rows-[50px_1fr] h-dvh">
     <TheHeader class="col-span-2" />
     <TheSideBar />
     <TheEditor class="w-auto col-auto h-full " />

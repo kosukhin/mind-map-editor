@@ -39,8 +39,8 @@ const back = () => {
 
 <template>
   <Transition name="fade">
-    <div v-if="isOpened" class="BaseModal" @click="close">
-      <div class="BaseModal-Inner" @click.stop>
+    <div v-if="isOpened" class="absolute overflow-y-auto flex justify-center items-center top-0 left-0 bg-black/10 z-20 h-full w-full" @click="close">
+      <div class="w-full max-w-[600px] bg-white p-3" @click.stop>
         <div
           v-if="history.length > 1"
           title="Назад"

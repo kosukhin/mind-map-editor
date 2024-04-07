@@ -53,12 +53,12 @@ const { close } = useOverlay();
     </div>
     <template #footer>
       <div class="FormJson-Buttons">
-        <BaseButton class="FormJson-Button" type="success" @click="onSave">
+        <BaseButton type="success" @click="onSave">
           {{ $t('formJsonTypes.save') }}
         </BaseButton>
-        <BaseButton class="FormJson-Button" @click="close">{{
-          $t('formJsonTypes.cancel')
-        }}</BaseButton>
+        <BaseButton @click="close">
+          {{ $t('formJsonTypes.cancel') }}
+        </BaseButton>
       </div>
     </template>
   </BaseModal>

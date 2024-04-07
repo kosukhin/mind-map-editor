@@ -90,12 +90,12 @@ const addToCanvas = async (
 </script>
 
 <template>
-  <div class="p-3">
-    <div v-if="map" class="TheSideBar-Items">
+  <div class="flex flex-col items-center gap-3 max-h-[100%] overflow-hidden">
+    <div v-if="map" class="flex flex-col gap-3 flex-grow w-full overflow-y-auto">
       <div
         v-for="(type, name) in map.types"
         :key="name"
-        class="TheSideBar-Item"
+        class="flex flex-col items-center justify-center gap-2"
       >
         <div class="TheSideBar-ItemName">{{ type.name }}</div>
         <img
@@ -109,18 +109,18 @@ const addToCanvas = async (
           @dblclick="addToCanvas($event , name, true)"
           @dragend="addToCanvas($event, name)"
         />
-        <div class="TheSideBar-ItemButtons">
-          <BaseButton size="sm" type="primary" @click="selectType(name)">
+        <div class="flex gap-1">
+          <BaseButton class="text-white" size="sm" type="primary" @click="selectType(name)">
             {{ $t('general.change') }}
           </BaseButton>
-          <BaseButton size="sm" type="danger" @click="removeType(name)">
+          <BaseButton class="text-white" size="sm" type="danger" @click="removeType(name)">
             {{ $t('general.delete') }}
           </BaseButton>
         </div>
       </div>
     </div>
-    <div class="TheSideBar-Footer">
-      <BaseGroup>
+    <div class="mt-auto p-3 pt-0">
+      <BaseGroup class="mb-1 grid gap-1 grid-cols-2">
         <BaseButton
           :title="$t('general.addType')"
           type="success"
@@ -136,8 +136,8 @@ const addToCanvas = async (
           <BaseIcon icon="fa-cog" />
         </BaseButton>
       </BaseGroup>
-      <TheLinker />
-      <TheGrouper />
+      <TheLinker class="w-full mb-1" />
+      <TheGrouper class="w-full" />
     </div>
   </div>
 </template>
