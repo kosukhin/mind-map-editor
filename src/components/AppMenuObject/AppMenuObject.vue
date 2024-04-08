@@ -38,7 +38,7 @@ const selectMenuItem = (id: string) => {
     <div v-if="!menuItems.length" class="AppMenuObject-Empty">
       {{ $t('appMenuObject.noItems') }}
     </div>
-    <div v-else class="AppMenuObject-List">
+    <div v-else class="flex flex-col gap-1">
       <a
         v-for="item in menuItems"
         :key="item.id"

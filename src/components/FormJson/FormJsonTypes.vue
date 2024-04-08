@@ -10,6 +10,7 @@ import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
 import { SHOW_JSON_TYPES } from '@/constants/overlays';
 import { getLocation } from '@/utils/globals';
 import { useOverlay } from '@/composables/useOverlay';
+import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 
 const { stringify } = JSON;
 
@@ -44,20 +45,20 @@ const { close } = useOverlay();
 <template>
   <BaseModal :name="SHOW_JSON_TYPES">
     <template #header>
-      <h2>
+      <BaseTextTitle>
         {{ $t('formJsonTypes.exportOrImport') }}
-      </h2>
+      </BaseTextTitle>
     </template>
-    <div class="FormJson">
+    <div class="mb-3">
       <BaseTextarea v-model="form" class="FormJson-Text" />
     </div>
     <template #footer>
-      <div class="FormJson-Buttons">
+      <div class="flex gap-2">
         <BaseButton type="success" @click="onSave">
-          {{ $t('formJsonTypes.save') }}
+          {{ $t('general.save') }}
         </BaseButton>
         <BaseButton @click="close">
-          {{ $t('formJsonTypes.cancel') }}
+          {{ $t('general.cancel') }}
         </BaseButton>
       </div>
     </template>

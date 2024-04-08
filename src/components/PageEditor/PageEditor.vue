@@ -106,7 +106,9 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
   </BaseDrawer>
   <BaseModal :name="SHOW_KEYBINDINGS">
     <template #header>
-      <h2 class="text-lg">{{ $t('general.keybindings') }}</h2>
+      <BaseTextTitle class="block">
+        {{ $t('general.keybindings') }}
+      </BaseTextTitle>
     </template>
     <TheKeybindings />
   </BaseModal>
@@ -125,13 +127,17 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
   </BaseModal>
   <BaseModal :name="SHOW_SEARCH">
     <template #header>
-      <h2 class="text-lg">{{ $t('general.mapSearch') }}</h2>
+      <BaseTextTitle>
+        {{ $t('general.mapSearch') }}
+      </BaseTextTitle>
     </template>
     <AppSearch />
   </BaseModal>
   <BaseModal :name="SHOW_PRESETS">
     <template #header>
-      <h2 class="text-lg">Пресеты узлов карт</h2>
+      <BaseTextTitle class="block">
+        Пресеты узлов карт
+      </BaseTextTitle>
     </template>
     <AppPresets />
   </BaseModal>

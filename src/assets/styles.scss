@@ -8,3 +8,9 @@
   height: 100dvh;
   overflow: hidden;
 }
+
+@layer components {
+  a {
+    @apply text-primary underline underline-offset-1
+  }
+}

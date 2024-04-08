@@ -13,6 +13,7 @@ import { MapObject } from '@/entities/Map';
 import { createMapObjectUrl } from '@/utils/map';
 import { ref } from '@vue/reactivity';
 import { useStorage, watchOnce } from '@vueuse/core';
+import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 
 useOverlayAutoClose(SHOW_TRANSFER);
 const { currentObject } = useMapObject();
@@ -64,10 +65,10 @@ const mapsHistory = useStorage<{ url: string; title: string }[]>(
 <template>
   <BaseModal :name="SHOW_TRANSFER">
     <template #header>
-      <h2>
+      <BaseTextTitle class="block">
         Перенести объект {{ currentObject?.name }}
         {{ currentObject?.additionalName }}
-      </h2>
+      </BaseTextTitle>
     </template>
     <ul class="TheObjectTransfer-Items">
       <li
@@ -78,22 +79,24 @@ const mapsHistory = useStorage<{ url: string; title: string }[]>(
         {{ obj.name }}
         {{ obj.additionalName ? `(${obj.additionalName})` : '' }}
         {{ getObjectLink(obj) }}
-        <BaseButton
-          class="TheObjectTransfer-Button"
-          type="danger"
-          size="sm"
-          @click="transfer(getObjectLink(obj))"
-        >
-          {{ $t('general.transfer') }}
-        </BaseButton>
-        <BaseButton
-          class="TheObjectTransfer-Button"
-          type="primary"
-          size="sm"
-          @click="transfer(getObjectLink(obj), false)"
-        >
-          {{ $t('general.copy') }}
-        </BaseButton>
+        <div class="flex gap-2">
+          <BaseButton
+            class="TheObjectTransfer-Button"
+            type="danger"
+            size="sm"
+            @click="transfer(getObjectLink(obj))"
+          >
+            {{ $t('general.transfer') }}
+          </BaseButton>
+          <BaseButton
+            class="TheObjectTransfer-Button"
+            type="primary"
+            size="sm"
+            @click="transfer(getObjectLink(obj), false)"
+          >
+            {{ $t('general.copy') }}
+          </BaseButton>
+        </div>
       </li>
     </ul>
     <p>&nbsp;</p>
@@ -107,22 +110,24 @@ const mapsHistory = useStorage<{ url: string; title: string }[]>(
           class="TheObjectTransfer-Item"
         >
           {{ obj.title }} {{ obj.url }}
-          <BaseButton
-            class="TheObjectTransfer-Button"
-            type="danger"
-            size="sm"
-            @click="transfer(obj.url)"
-          >
-            {{ $t('general.transfer') }}
-          </BaseButton>
-          <BaseButton
-            class="TheObjectTransfer-Button"
-            type="primary"
-            size="sm"
-            @click="transfer(obj.url, false)"
-          >
-            {{ $t('general.copy') }}
-          </BaseButton>
+          <div class="flex gap-2">
+            <BaseButton
+              class="TheObjectTransfer-Button"
+              type="danger"
+              size="sm"
+              @click="transfer(obj.url)"
+            >
+              {{ $t('general.transfer') }}
+            </BaseButton>
+            <BaseButton
+              class="TheObjectTransfer-Button"
+              type="primary"
+              size="sm"
+              @click="transfer(obj.url, false)"
+            >
+              {{ $t('general.copy') }}
+            </BaseButton>
+          </div>
         </li>
       </ul>
     </div>

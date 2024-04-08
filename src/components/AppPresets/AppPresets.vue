@@ -20,12 +20,12 @@ const addType = (type: MapType) => {
 
 <template>
   <div class="AppPresets">
-    <div class="Common-H3 Common-Mb-Md">Общие</div>
-    <div class="Common-Flex Common-Mb-Md Common-Gap">
+    <div class="text-md font-bold mb-2">Общие</div>
+    <div class="flex gap-2 items-end">
       <div
         v-for="item in presetsCommon"
         :key="item.name"
-        class="AppTypesParent-Item"
+        class="flex flex-col gap-2"
       >
         <div class="AppTypesParent-ItemTitle">{{ item.name }}</div>
         <img
@@ -38,6 +38,7 @@ const addType = (type: MapType) => {
         <BaseButton
           class="AppTypesParent-ItemButton"
           type="success"
+          size="sm"
           @click="addType(item)"
         >
           {{ $t('general.addToMap') }}

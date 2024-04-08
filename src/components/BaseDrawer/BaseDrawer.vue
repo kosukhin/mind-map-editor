@@ -21,7 +21,7 @@ const positions = {
   ltr: 'top-0 left-0 w-[50%] max-w-[900px] ',
   rtl: 'top-0 right-0 w-[50%] max-w-[900px] ',
   ttb: 'top-0 right-0 left-0',
-  btt: 'top-auto max-h-[900px] h-[50%] bottom-0 right-0 left-0',
+  btt: 'top-auto h-[900px] max-h-[50%] bottom-0 right-0 left-0',
 };
 
 const { overlayName, tryToClose } = useOverlay();

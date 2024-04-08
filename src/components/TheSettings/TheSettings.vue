@@ -87,16 +87,16 @@ const onDownloadMap = () => {
         Скачать карту
       </a>
       <div class="TheSettings-Row">
-        <div class="flex gap-2">
+        <div class="flex gap-2 mb-2">
           <BaseButton
-            class="TheSettings-Button"
+            class="text-white"
             type="primary"
             @click="overlayName = SHOW_JSON"
           >
             {{ $t('general.jsonExportImport') }}
           </BaseButton>
           <BaseButton
-            class="TheSettings-Button"
+            class="text-white"
             type="primary"
             @click="overlayName = SHOW_KEYBINDINGS"
           >
@@ -105,14 +105,14 @@ const onDownloadMap = () => {
           <BaseButton
             v-if="parentTypes.length"
             type="primary"
-            class="TheSettings-Button"
+            class="text-white"
             @click="overlayName = SHOW_PARENT_TYPES"
           >
             {{ $t('general.parentTypes') }}
           </BaseButton>
           <BaseButton
             type="primary"
-            class="TheSettings-Button"
+            class="text-white"
             @click="overlayName = SHOW_PRESETS"
           >
             Пресеты
@@ -125,24 +125,24 @@ const onDownloadMap = () => {
           :label="$t('general.useLabelsColoring')"
         />
       </div>
-      <div class="TheSettings-Row">
+      <div class="mb-2">
         <BaseCheckbox
           v-model="form.skipSearchIndex"
           label="Пропустить индексацию поиском"
         />
       </div>
-      <div class="TheSettings-Row">
+      <div class="mb-2">
         <label>
           <b>{{ $t('general.mapName') }}</b>
           <BaseInput v-model="form.title" />
         </label>
       </div>
-      <div class="TheSettings-Row">
+      <div class="mb-2">
         <a href="https://github.com/kosukhin/mind-map-creator" target="_blank">
           {{ $t('general.githubRepo') }}
         </a>
       </div>
-      <div class="TheSettings-Row">
+      <div class="mb-4">
         <b>{{ $t('general.favorites') }}</b>
         <BaseInput v-model="form.favoriteGroup" />
       </div>

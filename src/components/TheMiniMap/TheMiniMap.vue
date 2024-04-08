@@ -10,7 +10,7 @@ const scaledPos = (pos: number) => `${(pos * MINIMAP_SCALE).toFixed(2)}px`;
 </script>
 
 <template>
-  <div class="absolute bg-white top-[50px] mt-3 right-3 z-10 w-30 h-30 border border-solid border-body-dark">
+  <div class="absolute bg-white top-[50px] mt-3 right-3 z-1 w-30 h-30 border border-solid border-body-dark">
     <div ref="miniMap" class="TheMiniMap"></div>
     <div ref="miniMapScreen" class="absolute bg-primary/50"></div>
     <div v-if="map">

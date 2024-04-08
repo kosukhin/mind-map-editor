@@ -16,7 +16,7 @@ const data = useVModel(props, 'modelValue', emit);
 </script>
 
 <template>
-  <label>
+  <label class="flex gap-2">
     <input v-model="data" type="checkbox" />
     <slot v-if="$slots.default" />
     <template v-else>

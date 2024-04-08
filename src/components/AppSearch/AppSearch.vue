@@ -113,17 +113,17 @@ const namedSearchRemoveByIndex = (index: number) => {
 
 <template>
   <div class="AppSearch">
-    <div style="border: solid 1px #000;padding:10px;margin-bottom: 10px">
-      <h4 style="margin-bottom: 6px">Сохраненные поиски</h4>
+    <div class="rounded-main mb-2 w-full p-2 border border-solid border-body-dark">
+      <h4 class="text-md font-bold mb-1">Сохраненные поиски</h4>
       <BaseButton
-        class="mb-3 max-w-[150px]"
+        class="max-w-[150px]"
         @click="namedSearchFormShowed=!namedSearchFormShowed"
       >
         Создать
       </BaseButton>
       <div
         v-if="namedSearchFormShowed"
-        style="display: flex;gap: 8px;align-items: center;margin-bottom: 16px"
+        class="flex gap-2 items-center my-2"
       >
         <b>Имя</b>
         <BaseInput v-model="namedSearchForm.name" />
@@ -140,7 +140,7 @@ const namedSearchRemoveByIndex = (index: number) => {
           Сохранить
         </BaseButton>
       </div>
-      <div v-if="map" style="display: flex;gap: 16px">
+      <div v-if="map" class="flex py-3 gap-4">
         <span
           :key="`nsearch-${index}`"
           v-for="(nSearch, index) in map.namedSearches"
@@ -158,22 +158,23 @@ const namedSearchRemoveByIndex = (index: number) => {
     </div>
     <BaseInput
       v-model="query"
-      class="AppSearch-Input"
+      class="mb-2"
       placeholder="Введите запрос"
     />
-    <div class="Common-Mb-Md">
+    <div class="mb-2">
       <BaseSelect
         v-model="type"
         :items="mapTypes"
         option-id="id"
         option-label="name"
+        placeholder="Выберите тип"
       />
     </div>
     <div v-if="searchResults.length" class="AppSearch-Items">
       <div
         v-for="result in searchResults"
         :key="result.name"
-        class="AppSearch-Item"
+        class="cursor-pointer"
         @click="moveToObject(result)"
       >
         <b class="AppSearch-ItemName">{{ result.name }}</b>

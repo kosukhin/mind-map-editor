@@ -7,6 +7,7 @@ import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_HISTORY_MAPS } from '@/constants/overlays';
 import { HISTORY_STORAGE_KEY } from '@/constants/system';
 import { useMeta } from '@/composables/useMeta';
+import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 
 useOverlayAutoClose(SHOW_HISTORY_MAPS);
 
@@ -35,9 +36,9 @@ watch(head, () => {
 <template>
   <BaseDrawer :name="SHOW_HISTORY_MAPS" direction="rtl">
     <template #header>
-      <h2 class="TheHistoryMaps-Title">
+      <BaseTextTitle>
         {{ $t('general.visitHistory') }}
-      </h2>
+      </BaseTextTitle>
     </template>
     <div>
       <ul>

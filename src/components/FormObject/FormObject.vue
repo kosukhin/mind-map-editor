@@ -27,8 +27,7 @@ import { useSettings } from '@/composables/useSettings';
 import { useObjectActions } from '@/composables/useObjectActions';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
-
-const { stringify } = JSON;
+import BaseInputRow from '@/components/BaseInput/BaseInputRow.vue';
 
 const { map } = useMap();
 const mapTypes = computed(() => {
@@ -167,56 +166,61 @@ const { removeCurrentObject } = useObjectActions();
             />
           </div>
         </template>
-        <div :key="key" v-for="(_, key) in form.additionalFields">
-          <div class="FormObject-Title">{{ key }}</div>
-          <div class="FormObject-Row">
-            <BaseTextarea v-model="form.additionalFields[key]" />
-          </div>
-        </div>
-        <div class="FormObject-Title">{{ $t('general.topName') }}</div>
-        <div class="FormObject-Row">
+        <BaseInputRow class="mb-2" :key="key" v-for="(_, key) in form.additionalFields">
+          <BaseInputTitle class="mb-1">
+            {{ key }}
+          </BaseInputTitle>
+          <BaseTextarea v-model="form.additionalFields[key]" />
+        </BaseInputRow>
+        <BaseInputRow>
+          <BaseInputTitle>
+            {{ $t('general.topName') }}
+          </BaseInputTitle>
           <BaseTextarea v-model="form.additionalName" />
-        </div>
-        <div class="FormObject-Title">{{ $t('general.bottomName') }}</div>
-        <div class="FormObject-Row">
+        </BaseInputRow>
+        <BaseInputRow>
+          <BaseInputTitle>
+            {{ $t('general.bottomName') }}
+          </BaseInputTitle>
           <BaseTextarea v-model="form.name" />
-        </div>
-        <div class="FormObject-Title">{{ $t('general.description') }}</div>
-        <div class="FormObject-Row">
+        </BaseInputRow>
+        <BaseInputRow>
+          <BaseInputTitle>
+            {{ $t('general.description') }}
+          </BaseInputTitle>
           <BaseTextarea v-model="form.description" />
-        </div>
-        <div class="FormObject-Title">Z-Index</div>
-        <div class="FormObject-Row">
+        </BaseInputRow>
+        <BaseInputRow>
+          <BaseInputTitle>
+            Z-Index
+          </BaseInputTitle>
           <BaseInput v-model="form.zindex" type="number" />
-        </div>
-        <div class="FormObject-Title">Width</div>
-        <div class="FormObject-Row">
+        </BaseInputRow>
+        <BaseInputRow>
+          <BaseInputTitle>
+            Width
+          </BaseInputTitle>
           <BaseInput v-model="form.width" step="20" type="number" />
-        </div>
-        <div class="FormObject-Title">Height</div>
-        <div class="FormObject-Row">
+        </BaseInputRow>
+        <BaseInputRow>
+          <BaseInputTitle>
+            Height
+          </BaseInputTitle>
           <BaseInput v-model="form.height" step="20" type="number" />
-        </div>
-        <div class="FormObject-Title">{{ $t('general.objectType') }}</div>
-        <div class="FormObject-Row">
+        </BaseInputRow>
+        <BaseInputRow>
+          <BaseInputTitle>
+            {{ $t('general.objectType') }}
+          </BaseInputTitle>
           <BaseSelect
             v-model="form.type"
             :items="mapTypes"
             option-id="id"
             option-label="name"
           />
-        </div>
-        <div class="FormObject-Row">
-          <BaseButton
-            class="FormObject-ArrowButton"
-            type="primary"
-            size="md"
-            @click="clone"
-          >
-            {{ $t('general.clone') }}
-          </BaseButton>
-        </div>
-        <div class="FormObject-Row">
+        </BaseInputRow>
+
+        <div class="my-2">
           <BaseButton
             class="FormObject-ArrowButton"
             type="primary"
@@ -226,7 +230,7 @@ const { removeCurrentObject } = useObjectActions();
             {{ $t('general.transfer') }}
           </BaseButton>
         </div>
-        <div class="FormObject-Row">
+        <div class="my-2">
           <BaseCheckbox
             v-model="form.inMenu"
             :label="$t('general.useInMenu')"
