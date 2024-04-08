@@ -11,7 +11,9 @@ sessionLog('[AppSessionLog.vue]', 'setup');
 </script>
 
 <template>
-  <div v-for="(message, index) in sessionMessages" :key="index" class="Common-Mb-Md">
-    {{message}}
+  <div class="overflow-y-auto">
+    <div v-for="(message, index) in sessionMessages" :key="index" class="text-sm">
+      {{message}}
+    </div>
   </div>
 </template>

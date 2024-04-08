@@ -18,6 +18,9 @@ const data = useVModel(props, 'modelValue', emit);
 <template>
   <label>
     <input v-model="data" type="checkbox" />
-    {{ label }}
+    <slot v-if="$slots.default" />
+    <template v-else>
+      {{ label }}
+    </template>
   </label>
 </template>

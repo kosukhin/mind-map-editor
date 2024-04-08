@@ -10,13 +10,11 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 const data = useVModel(props, 'modelValue', emit);
-const { textarea, input } = useTextareaAutosize({
-  input: data,
-});
+
 </script>
 
 <template>
   <div class="BaseTextarea">
-    <textarea ref="textarea" v-model="input" class="BaseTextarea-Input" />
+    <textarea ref="textarea" v-model="data" class="rounded-main block w-full p-2 border min-h-[300px] border-solid border-body-dark" />
   </div>
 </template>

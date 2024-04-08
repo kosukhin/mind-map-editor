@@ -36,6 +36,7 @@ import { watch } from '@vue/runtime-core';
 import FastPreviewObject from '@/components/FastPreviewObject/FastPreviewObject.vue';
 import AppPresets from '@/components/AppPresets/AppPresets.vue';
 import AppSessionLog from '@/components/AppSessionLog/AppSessionLog.vue';
+import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 
 useMeta();
 
@@ -134,12 +135,12 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
     </template>
     <AppPresets />
   </BaseModal>
-  <BaseModal :name="SHOW_SESSION_LOG">
+  <BaseDrawer direction="btt" :name="SHOW_SESSION_LOG">
     <template #header>
-      <h2 class="text-lg">Логи сессии</h2>
+      <BaseTextTitle>Логи сессии</BaseTextTitle>
     </template>
     <AppSessionLog />
-  </BaseModal>
+  </BaseDrawer>
   <FormJson />
   <FormObject />
   <FastPreviewObject />

@@ -11,6 +11,8 @@ import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
 import { useOverlay } from '@/composables/useOverlay';
 import { useKeybindings } from '@/composables/useKeybindings';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
+import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
+import BaseInputRow from '@/components/BaseInput/BaseInputRow.vue';
 
 const { stringify } = JSON;
 
@@ -61,18 +63,34 @@ watch(ctrlSFired, () => {
     <template #header>
       <h2 class="text-lg font-bold">{{ $t('general.mapType') }}</h2>
     </template>
-    <div v-if="currentType" class="FormType">
-      <b>Название типа</b>
-      <BaseInput v-model="form.name" class="FormType-Row" />
-      <b>SVG</b>
-      <BaseTextarea v-model="form.svg" class="FormJson-Text" />
-      <b>Ширина</b>
-      <BaseInput v-model="form.width" class="FormType-Row" />
-      <b>Высота</b>
-      <BaseInput v-model="form.height" class="FormType-Row" />
+    <div v-if="currentType" class="flex flex-col">
+      <BaseInputRow>
+        <BaseInputTitle>
+          Название типа
+        </BaseInputTitle>
+        <BaseInput v-model="form.name" />
+      </BaseInputRow>
+      <BaseInputRow>
+        <BaseInputTitle>
+          SVG
+        </BaseInputTitle>
+        <BaseTextarea v-model="form.svg" />
+      </BaseInputRow>
+      <BaseInputRow>
+        <BaseInputTitle>
+          Ширина
+        </BaseInputTitle>
+        <BaseInput v-model="form.width" />
+      </BaseInputRow>
+      <BaseInputRow>
+        <BaseInputTitle>
+          Высота
+        </BaseInputTitle>
+        <BaseInput v-model="form.height" />
+      </BaseInputRow>
     </div>
     <template #footer>
-      <div class="flex justify-end gap-2">
+      <div class="flex justify-end pt-4 gap-2">
         <BaseButton type="success" @click="save">
           {{ $t('general.save') }}
         </BaseButton>

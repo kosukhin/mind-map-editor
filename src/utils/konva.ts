@@ -124,9 +124,8 @@ export async function addObjectToLayer(
         pointerLength: 20,
         pointerWidth: 10,
         fill: '#ccc',
-        stroke: '#888',
+        stroke: '#bbb',
         strokeWidth: 2,
-        opacity: 0.5,
       });
       layer.add(arrow);
       arrows.push(arrow);

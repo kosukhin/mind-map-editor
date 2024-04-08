@@ -26,6 +26,7 @@ import { getLocation } from '@/utils/globals';
 import { useSettings } from '@/composables/useSettings';
 import { useObjectActions } from '@/composables/useObjectActions';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
+import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
 
 const { stringify } = JSON;
 
@@ -139,27 +140,15 @@ const { removeCurrentObject } = useObjectActions();
   <BaseDrawer :name="SHOW_OBJECT">
     <template #header>
       <h2 class="text-lg font-bold">{{ $t('general.mapObject') }}</h2>
-      <small v-if="currentObject" class="FormObject-MainSubTitle">
+      <small v-if="currentObject" class="flex gap-2 items-center">
         <span> ID #{{ currentObject.id }} </span>
         <BaseButton size="sm" type="primary" @click="onCopyUrl">
           {{ $t('general.copy') }}
         </BaseButton>
       </small>
     </template>
-    <div v-if="settings && form && currentObject" class="FormObject">
-      <div v-if="!settings.isEditable" class="FormObject-Inner">
-        <div class="FormObject-Title">{{ $t('general.name') }}</div>
-        <div class="FormObject-Description">{{ currentObject.name }}</div>
-        <div class="FormObject-Title">{{ $t('general.description') }}</div>
-        <div class="FormObject-Description">
-          {{
-            currentObject.description
-              ? currentObject.description
-              : $t('general.noDescription')
-          }}
-        </div>
-      </div>
-      <div v-else class="FormObject-Inner">
+    <div v-if="settings && form && currentObject" class="flex flex-col gap-2">
+      <div class="FormObject-Inner">
         <div class="FormObject-Row">
           <BaseCheckbox
             v-model="form.linked"
@@ -167,7 +156,7 @@ const { removeCurrentObject } = useObjectActions();
           />
         </div>
         <template v-if="form.linked">
-          <div class="FormObject-Title">{{ $t('general.outerLink') }}</div>
+          <BaseInputTitle>{{ $t('general.outerLink') }}</BaseInputTitle>
           <div class="FormObject-Row">
             <BaseInput v-model="objectUrl" />
           </div>
@@ -274,15 +263,13 @@ const { removeCurrentObject } = useObjectActions();
       </div>
     </div>
     <template #footer>
-      <div class="FormObject-ButtonsGroup">
+      <div class="py-3 flex gap-1">
         <BaseButton type="success" @click="save">
           {{ $t('general.save') }}
         </BaseButton>
         <BaseButton type="danger" @click="removeCurrentObject">
           {{ $t('general.delete') }}
         </BaseButton>
-      </div>
-      <div class="FormObject-ButtonsGroup">
         <BaseButton @click="cancel">
           {{ $t('general.cancel') }}
         </BaseButton>

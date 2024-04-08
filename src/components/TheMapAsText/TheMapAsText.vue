@@ -8,6 +8,7 @@ import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_TEXT } from '@/constants/overlays';
 import { useMap } from '@/composables/useMap';
 import { nl2br, stripHtml } from '@/utils/common';
+import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 
 useOverlayAutoClose(SHOW_TEXT);
 
@@ -60,25 +61,27 @@ const onSelectAll = () => {
 <template>
   <BaseModal :name="SHOW_TEXT">
     <template #header>
-      <h2 class="TheMapAsText-ModalTitle">
+      <BaseTextTitle class="block mb-3">
         {{ $t('general.mapAsText') }}
-        <BaseButton
-          size="sm"
-          type="success"
-          class="TheMapAsText-Share"
-          @click="onShare"
-        >
-          {{ $t('general.share') }}
-        </BaseButton>
-        <BaseButton
-          size="sm"
-          type="primary"
-          class="TheMapAsText-Share"
-          @click="onSelectAll"
-        >
-          {{ $t('general.selectAll') }}
-        </BaseButton>
-      </h2>
+        <div class="flex gap-1">
+          <BaseButton
+            size="sm"
+            type="success"
+            class="font-normal"
+            @click="onShare"
+          >
+            {{ $t('general.share') }}
+          </BaseButton>
+          <BaseButton
+            size="sm"
+            type="primary"
+            class="font-normal"
+            @click="onSelectAll"
+          >
+            {{ $t('general.selectAll') }}
+          </BaseButton>
+        </div>
+      </BaseTextTitle>
     </template>
     <article v-if="map" class="TheMapAsText">
       <div ref="textRef" v-html="mapAsString"></div>
