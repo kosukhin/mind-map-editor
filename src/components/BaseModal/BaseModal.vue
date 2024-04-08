@@ -44,12 +44,12 @@ const back = () => {
         <div
           v-if="history.length > 1"
           title="Назад"
-          class="absolute left-0 top-0 -ml-5 flex justify-center items-center bg-primary/50 cursor-pointer w-5"
+          class="absolute text-white left-0 top-0 -ml-5 flex justify-center items-center bg-primary/70 cursor-pointer w-5"
           @click="back"
         >
           &lt;
         </div>
-        <div title="Закрыть" class="absolute right-0 top-0 -mr-5 flex justify-center items-center bg-danger/50 cursor-pointer w-5" @click="close">
+        <div title="Закрыть" class="absolute text-white right-0 top-0 -mr-5 flex justify-center items-center bg-danger/70 cursor-pointer w-5" @click="close">
           &times;
         </div>
         <div v-if="$slots.header" class="BaseModal-Header">

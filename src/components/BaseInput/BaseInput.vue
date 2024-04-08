@@ -30,5 +30,5 @@ const data = useVModel(props, 'modelValue', emit);
 </script>
 
 <template>
-  <input ref="input" v-model="data" class="BaseInput" type="text" />
+  <input ref="input" v-model="data" class="block border border-solid border-body-dark" type="text" />
 </template>

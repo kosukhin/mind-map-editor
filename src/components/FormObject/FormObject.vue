@@ -138,7 +138,7 @@ const { removeCurrentObject } = useObjectActions();
 <template>
   <BaseDrawer :name="SHOW_OBJECT">
     <template #header>
-      <h2 class="FormObject-MainTitle">{{ $t('general.mapObject') }}</h2>
+      <h2 class="text-lg font-bold">{{ $t('general.mapObject') }}</h2>
       <small v-if="currentObject" class="FormObject-MainSubTitle">
         <span> ID #{{ currentObject.id }} </span>
         <BaseButton size="sm" type="primary" @click="onCopyUrl">

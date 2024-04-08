@@ -89,17 +89,17 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
     <hr />
     <hr />
   </div>
-  <div class="grid grid-cols-[200px_1fr] grid-rows-[50px_1fr] h-dvh">
+  <div class="grid grid-cols-[200px_1fr] grid-rows-[50px_1fr] h-dvh relative">
     <TheHeader class="col-span-2" />
     <TheSideBar />
     <TheEditor class="w-auto col-auto h-full " />
-    <TheMiniMap class="absolute" />
+    <TheMiniMap />
   </div>
   <BaseNotify />
   <FormType />
   <BaseDrawer :name="SHOW_OBJECT_MENU" direction="rtl">
     <template #header>
-      <h2 class="text-lg">{{ $t('general.menu') }}</h2>
+      <h2 class="text-lg font-bold">{{ $t('general.menu') }}</h2>
     </template>
     <AppMenuObject />
   </BaseDrawer>
@@ -118,7 +118,7 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
   <TheMapAsText />
   <BaseModal :name="SHOW_SETTINGS">
     <template #header>
-      <h2 class="text-lg">{{ $t('general.mapSettings') }}, {{ version }}</h2>
+      <h2 class="text-lg font-bold">{{ $t('general.mapSettings') }}, {{ version }}</h2>
     </template>
     <TheSettings />
   </BaseModal>

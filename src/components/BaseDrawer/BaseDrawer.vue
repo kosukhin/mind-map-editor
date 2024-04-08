@@ -16,10 +16,7 @@ const props = defineProps({
   },
 });
 
-const classes = computed(() => ({
-  BaseDrawer: true,
-  [`BaseDrawer_Direction_${props.direction}`]: true,
-}));
+const classes = computed(() => (['absolute top-0 left-0 w-full h-full bg-black/50']));
 
 const { overlayName, tryToClose } = useOverlay();
 const close = () => {
@@ -46,7 +43,7 @@ watch(current, () => {
 <template>
   <Transition name="fade">
     <div v-if="isOpened" :class="classes" @click="close">
-      <div class="BaseDrawer-Inner" @click.stop>
+      <div class="absolute top-0 left-0 w-[50%] max-w-[900px] bg-white h-full p-3" @click.stop>
         <div v-if="$slots.header">
           <slot name="header" class="BaseDrawer-Header" />
         </div>

@@ -59,7 +59,7 @@ watch(ctrlSFired, () => {
 <template>
   <BaseModal :name="SHOW_TYPE">
     <template #header>
-      <h2>{{ $t('general.mapType') }}</h2>
+      <h2 class="text-lg font-bold">{{ $t('general.mapType') }}</h2>
     </template>
     <div v-if="currentType" class="FormType">
       <b>Название типа</b>
@@ -72,7 +72,7 @@ watch(ctrlSFired, () => {
       <BaseInput v-model="form.height" class="FormType-Row" />
     </div>
     <template #footer>
-      <div class="FormType-Controls">
+      <div class="flex justify-end gap-2">
         <BaseButton type="success" @click="save">
           {{ $t('general.save') }}
         </BaseButton>
