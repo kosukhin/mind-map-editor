@@ -23,9 +23,13 @@ export async function addObjectToLayer(
   const rect = new Konva.Rect({
     x: object.position[0],
     y: object.position[1],
+    image: true,
     width: objectWidth,
     height: objectHeight,
     fill: '#eee',
+    name: object.id,
+    draggable: !clickLocked,
+    objectId: object.id,
   });
   layer.add(rect);
 

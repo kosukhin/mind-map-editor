@@ -112,7 +112,7 @@ const { startToRelation, title, type } = useObjectLinker('Связать');
   <transition name="fade">
     <div
       v-if="fastPreviewObjectId"
-      class="absolute flex flex-col gap-1 p-2 rounded-main bg-body"
+      class="absolute flex flex-col gap-1 p-2 rounded-main z-10 bg-body"
       :style="`top: ${mousePosition.y}px;left: ${mousePosition.x}px`"
     >
       <div class="flex gap-1">

@@ -64,26 +64,7 @@ export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
   if (!konvaObjects) {
     return result;
   }
-  const [, text, arrows, additionalObjects] = konvaObjects;
-  const additionalText = (additionalObjects as any)[0];
-  if (additionalText) {
-    const labelAdditionalWidth = maxNewLineLength(String(object.additionalName)) * 7;
-    const labelHeight = newLineCount(String(object.additionalName)) * 11;
-    result.additionalText = [
-      additionalText,
-      {
-        x: dragEvent.target.attrs.x + type.width / 2 - labelAdditionalWidth / 2,
-        y: dragEvent.target.attrs.y - labelHeight - 4,
-      },
-    ];
-  }
-  result.text = [
-    text,
-    {
-      x: dragEvent.target.attrs.x + type.width / 2 - labelWidth / 2,
-      y: dragEvent.target.attrs.y + type.height + 5,
-    },
-  ];
+  const [, arrows] = konvaObjects;
   const resultArrows: [Arrow, number[]][] = [];
   (arrows as any).forEach((arrow: any) => {
     const toObject = vMap.objects[arrow.attrs.toObjectId];
@@ -132,7 +113,7 @@ export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
       if (!relatedObjectsList) {
         return;
       }
-      const [, , relatedObjArrows] = relatedObjectsList;
+      const [, relatedObjArrows] = relatedObjectsList;
       (relatedObjArrows as any).forEach((arrow: any) => {
         if (arrow.attrs.toObjectId === object.id) {
           relatedArrows.push(arrow);
@@ -178,5 +159,6 @@ export const layerDragObjectHandler = (layerObjects: MapLayerObjects) => (
     resultRelatedArrows.push([relArrow, points]);
   });
   result.relatedArrows = resultRelatedArrows;
+
   return result;
 };

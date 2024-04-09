@@ -8,7 +8,6 @@ import { useMap } from '@/composables/useMap';
 import { calculateVisibleObjects } from '@/application/layerDragObjectHandler';
 import { MapObject } from '@/entities/Map';
 import { useLayerEvents } from '@/composables/useLayerEvents';
-import { debounce } from 'lodash';
 import { renderSvgTemplate } from '@/utils/svgRenderDefault';
 import { useFps } from '@vueuse/core';
 
@@ -30,10 +29,11 @@ onMounted(() => {
 
 const objectsRendered = ref<any>([]);
 const { map } = useMap();
-const { dragmove, wheel } = useLayerEvents();
-watch([map, dragmove, wheel], () => {
+const { dragmove, dragend, wheel } = useLayerEvents();
+watch([map, dragmove, dragend, wheel], () => {
   objectsRendered.value = [];
 
+  console.log('dragmove in editor', dragmove.value?.target);
   if (!map.value || !stage.value) {
     return;
   }
@@ -41,15 +41,23 @@ watch([map, dragmove, wheel], () => {
   const [visible] = calculateVisibleObjects(map.value, stage.value);
   const stagePosition = stage.value.position();
 
-  objectsRendered.value = visible.map((obj: MapObject) => ({
-    obj,
-    viewPosition: stage.value?.position(),
-    width: obj.width,
-    height: obj.height,
-    top: obj.position[1] + stagePosition.y,
-    left: obj.position[0] + stagePosition.x,
-    html: renderSvgTemplate(obj, vMap),
-  }));
+  objectsRendered.value = visible.map((obj: MapObject) => {
+    const position = [...obj.position];
+    if (dragmove.value?.target && dragmove.value.target.attrs.objectId === obj.id) {
+      const targetPosition = dragmove.value.target.position();
+      position[0] = targetPosition.x;
+      position[1] = targetPosition.y;
+    }
+    return {
+      obj,
+      viewPosition: stage.value?.position(),
+      width: obj.width,
+      height: obj.height,
+      top: position[1] + stagePosition.y,
+      left: position[0] + stagePosition.x,
+      html: renderSvgTemplate(obj, vMap),
+    };
+  });
 });
 const fps = useFps();
 </script>
@@ -66,6 +74,8 @@ const fps = useFps();
         class="absolute"
         :style="`width:${obj.obj.width}px;height: ${obj.obj.height}px;top: ${obj.top}px;left:${obj.left}px`"
       >
+        <div class="absolute -top-[100%] pb-2 pointer-events-auto text-sm" v-html="obj.obj.additionalName"></div>
+        <div class="absolute -bottom-[100%] pt-2 text-sm" v-html="obj.obj.name"></div>
         <div v-html="obj.html"></div>
       </div>
     </div>

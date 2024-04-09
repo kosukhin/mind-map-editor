@@ -50,22 +50,14 @@ export const useLayerListenerDrag = createSharedComposable(() => {
 
     if (dragmove.value && map.value) {
       const {
-        text, arrows, relatedArrows, additionalText,
+        arrows, relatedArrows,
       } = layerDragObjectHandler(layerObjects)([dragmove.value, map.value]);
 
-      if (text) {
-        const [vText, position] = text;
-        vText.position(position);
-      }
       if (arrows) {
         applyArrowPoints(arrows);
       }
       if (relatedArrows) {
         applyArrowPoints(relatedArrows);
-      }
-      if (additionalText) {
-        const [vText, position] = additionalText;
-        vText.position(position);
       }
     }
 
