@@ -54,7 +54,7 @@ const transform = () => {
   }
   const objects = layerObjects.get(String(fastPreviewObjectId.value));
   const maybeImage = objects?.[0];
-  if (layer.value && map.value?.objects && maybeImage instanceof Konva.Image) {
+  if (layer.value && map.value?.objects && maybeImage instanceof Konva.Rect) {
     const object = map.value.objects[String(fastPreviewObjectId.value)];
     tr.nodes([maybeImage]);
     isInTransform = true;

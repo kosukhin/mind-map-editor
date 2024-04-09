@@ -74,7 +74,7 @@ const onClick = () => {
 
     if (map.value) {
       nodes.forEach((node) => {
-        if (node instanceof Konva.Image) {
+        if (node instanceof Konva.Rect) {
           const object = (map.value as MapStructure).objects[
             node.attrs.objectId
           ];

@@ -15,71 +15,20 @@ export async function addObjectToLayer(
   map: MapStructure,
   clickLocked = false,
 ) {
-  const { colorsHash } = useMapColors();
   const { types } = map;
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  const additionalObjects = [];
-  if (!ctx) return [];
   const type = types[object.type];
-  const imageObj = new Image();
   const objectWidth = object.width || type.width;
   const objectHeight = object.height || type.height;
 
-  const img = new Konva.Image({
-    name: object.id,
-    image: imageObj,
+  const rect = new Konva.Rect({
     x: object.position[0],
     y: object.position[1],
     width: objectWidth,
     height: objectHeight,
-    draggable: !clickLocked,
-    objectId: object.id,
+    fill: '#eee',
   });
-  let { svg } = type;
-  if (object.additionalFields) {
-    Object.entries(object.additionalFields).forEach(([key, value]) => {
-      svg = svg.replaceAll(`\${${key}}`, value);
-    });
-  }
-  ['width', 'height'].forEach((key) => {
-    svg = svg.replaceAll(`\${${key}}`, (object as any)[key]);
-  });
+  layer.add(rect);
 
-  imageObj.src = `data:image/svg+xml,${encodeURIComponent(svg)}`;
-  layer.add(img);
-  const labelWidth = maxNewLineLength(object.name) * 7;
-  const text = new Konva.Text({
-    name: object.id,
-    x: object.position[0] + objectWidth / 2 - labelWidth / 2,
-    y: object.position[1] + objectHeight + 5,
-    text: object.name,
-    fontSize: 11,
-    fontFamily: 'Monospace',
-    textDecoration: object.linked && !object.additionalName ? 'underline' : '',
-    fontStyle: object.description ? 'bold' : '',
-    fill: colorsHash.value[object.lastClick] ?? 'black',
-    objectId: object.id,
-  });
-  layer.add(text);
-  if (object.additionalName) {
-    const labelAdditionalWidth = maxNewLineLength(object.additionalName) * 7;
-    const labelHeight = newLineCount(object.additionalName) * 11;
-    const additionalText = new Konva.Text({
-      name: object.id,
-      x: object.position[0] + objectWidth / 2 - labelAdditionalWidth / 2,
-      y: object.position[1] - labelHeight - 4,
-      text: object.additionalName,
-      fontSize: 11,
-      fontFamily: 'Monospace',
-      textDecoration: object.linked ? 'underline' : '',
-      fontStyle: object.description ? 'bold' : '',
-      fill: colorsHash.value[object.lastClick] ?? 'black',
-      objectId: object.id,
-    });
-    layer.add(additionalText);
-    additionalObjects.push(additionalText);
-  }
   const arrows: Arrow[] = [];
   if (object.arrows) {
     object.arrows.forEach((toObjectRelation) => {
@@ -131,7 +80,7 @@ export async function addObjectToLayer(
       arrows.push(arrow);
     });
   }
-  return [img, text, arrows, additionalObjects] as KonvaLayerObject[];
+  return [rect, arrows] as KonvaLayerObject[];
 }
 
 export function createLayer(editorWrapper: HTMLElement): [Layer, Stage] {

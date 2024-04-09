@@ -77,7 +77,7 @@ export const useLayerListenerDrag = createSharedComposable(() => {
         return;
       }
       if (
-        dragmove.value.target instanceof Konva.Image
+        dragmove.value.target instanceof Konva.Rect
         || dragmove.value.target instanceof Konva.Group
       ) {
         const { offsetX: ofx, offsetY: ofy } = dragmove.value.evt;

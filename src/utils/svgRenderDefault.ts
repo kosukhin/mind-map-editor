@@ -1,9 +1,24 @@
-import { MapType } from '@/entities/Map';
+import { MapObject, MapStructure, MapType } from '@/entities/Map';
 
 const defaultType = {
   svg: '',
   width: '100',
   height: '100',
+};
+
+export const renderSvgTemplate = (object: MapObject, vMap: MapStructure) => {
+  const type = vMap.types[object.type];
+  let { svg } = type;
+  if (object.additionalFields) {
+    Object.entries(object.additionalFields).forEach(([key, value]) => {
+      svg = svg.replaceAll(`\${${key}}`, value);
+    });
+  }
+  ['width', 'height'].forEach((key) => {
+    svg = svg.replaceAll(`\${${key}}`, (object as any)[key]);
+  });
+
+  return svg;
 };
 
 export const svgRender = (svg: string, width?: string, height?: string) => svg

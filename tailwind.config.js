@@ -18,6 +18,9 @@ module.exports = {
       'danger-second': '#d93434',
     },
     extend: {
+      zIndex: {
+        1: 1,
+      },
       width: {
         sidebar: '150px',
       },
