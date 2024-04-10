@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useTextareaAutosize, useVModel } from '@vueuse/core';
+import { useVModel } from '@vueuse/core';
 
 const props = defineProps({
   modelValue: {

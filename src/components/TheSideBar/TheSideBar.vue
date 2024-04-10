@@ -98,17 +98,15 @@ const addToCanvas = async (
         class="flex flex-col items-center justify-center gap-2"
       >
         <div class="TheSideBar-ItemName">{{ type.name }}</div>
-        <img
-          :alt="$t('general.notifications.dragToCanvasToAdd')"
-          :src="svg64(svgRenderDefault(type))"
+        <div
+          v-html="svgRenderDefault(type)"
           class="TheSideBar-ItemImage"
           draggable="true"
-          :height="type.height"
-          :width="type.width"
+          :style="`width:${type.width}px;height:${type.height}px`"
           :title="$t('general.notifications.dragToCanvasToAdd')"
           @dblclick="addToCanvas($event , name, true)"
           @dragend="addToCanvas($event, name)"
-        />
+        ></div>
         <div class="flex gap-1">
           <BaseButton class="text-white" size="sm" type="primary" @click="selectType(name)">
             {{ $t('general.change') }}

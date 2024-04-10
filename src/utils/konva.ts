@@ -21,12 +21,12 @@ export async function addObjectToLayer(
   const objectHeight = object.height || type.height;
 
   const rect = new Konva.Rect({
-    x: object.position[0],
-    y: object.position[1],
+    x: +object.position[0],
+    y: +object.position[1],
     image: true,
-    width: objectWidth,
-    height: objectHeight,
-    fill: '#eee',
+    width: +objectWidth,
+    height: +objectHeight,
+    // fill: '#eee',
     name: object.id,
     draggable: !clickLocked,
     objectId: object.id,
@@ -69,10 +69,10 @@ export async function addObjectToLayer(
         toObjectId: toObjectRelation.id,
         formObjectId: object.id,
         points: [
-          startPoint.x,
-          startPoint.y,
-          endPoint.x,
-          endPoint.y,
+          +startPoint.x,
+          +startPoint.y,
+          +endPoint.x,
+          +endPoint.y,
         ],
         pointerLength: 20,
         pointerWidth: 10,

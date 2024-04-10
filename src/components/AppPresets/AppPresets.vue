@@ -28,13 +28,11 @@ const addType = (type: MapType) => {
         class="flex flex-col gap-2"
       >
         <div class="AppTypesParent-ItemTitle">{{ item.name }}</div>
-        <img
+        <div
           class="AppTypesParent-ItemImage"
-          :src="svg64(svgRender(item.svg))"
-          height="100px"
-          width="100px"
-          alt=""
-        />
+          v-html="svgRender(item.svg)"
+          :style="`width:${item.width}px;height:${item.height}px`"
+        ></div>
         <BaseButton
           class="AppTypesParent-ItemButton"
           type="success"

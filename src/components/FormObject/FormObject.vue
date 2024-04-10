@@ -28,6 +28,7 @@ import { useObjectActions } from '@/composables/useObjectActions';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
 import BaseInputRow from '@/components/BaseInput/BaseInputRow.vue';
+import BaseEditor from '@/components/BaseEditor/BaseEditor.vue';
 
 const { map } = useMap();
 const mapTypes = computed(() => {
@@ -170,25 +171,25 @@ const { removeCurrentObject } = useObjectActions();
           <BaseInputTitle class="mb-1">
             {{ key }}
           </BaseInputTitle>
-          <BaseTextarea v-model="form.additionalFields[key]" />
+          <BaseEditor v-model="form.additionalFields[key]" />
         </BaseInputRow>
         <BaseInputRow>
           <BaseInputTitle>
             {{ $t('general.topName') }}
           </BaseInputTitle>
-          <BaseTextarea v-model="form.additionalName" />
+          <BaseEditor v-model="form.additionalName" />
         </BaseInputRow>
         <BaseInputRow>
           <BaseInputTitle>
             {{ $t('general.bottomName') }}
           </BaseInputTitle>
-          <BaseTextarea v-model="form.name" />
+          <BaseEditor v-model="form.name" />
         </BaseInputRow>
         <BaseInputRow>
           <BaseInputTitle>
             {{ $t('general.description') }}
           </BaseInputTitle>
-          <BaseTextarea v-model="form.description" />
+          <BaseEditor v-model="form.description" />
         </BaseInputRow>
         <BaseInputRow>
           <BaseInputTitle>

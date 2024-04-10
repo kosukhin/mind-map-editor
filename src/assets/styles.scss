@@ -9,6 +9,10 @@
   overflow: hidden;
 }
 
+* {
+  outline: none;
+}
+
 @layer components {
   a {
     @apply text-primary underline underline-offset-1

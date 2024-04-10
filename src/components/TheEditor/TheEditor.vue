@@ -3,13 +3,17 @@ import { useLayerListeners } from '@/composables/useLayerListeners';
 import { useMapRenderer } from '@/composables/useMapRenderer';
 import { useLayer } from '@/composables/useLayer';
 import { CANVAS_DOM_ID } from '@/constants/system';
-import { onMounted, ref, watch } from 'vue';
+import {
+  onMounted, onUpdated, ref, watch,
+} from 'vue';
 import { useMap } from '@/composables/useMap';
 import { calculateVisibleObjects } from '@/application/layerDragObjectHandler';
 import { MapObject } from '@/entities/Map';
 import { useLayerEvents } from '@/composables/useLayerEvents';
 import { renderSvgTemplate } from '@/utils/svgRenderDefault';
 import { useFps } from '@vueuse/core';
+import debounce from 'lodash/debounce';
+import { openUrlByObject } from '@/utils/map';
 
 useMapRenderer();
 const counter = ref(0);
@@ -30,10 +34,10 @@ onMounted(() => {
 const objectsRendered = ref<any>([]);
 const { map } = useMap();
 const { dragmove, dragend, wheel } = useLayerEvents();
-watch([map, dragmove, dragend, wheel], () => {
+
+const recalcObjectsRendered = () => {
   objectsRendered.value = [];
 
-  console.log('dragmove in editor', dragmove.value?.target);
   if (!map.value || !stage.value) {
     return;
   }
@@ -58,8 +62,32 @@ watch([map, dragmove, dragend, wheel], () => {
       html: renderSvgTemplate(obj, vMap),
     };
   });
+};
+
+watch([dragmove, dragend, wheel], recalcObjectsRendered);
+
+watch(map, recalcObjectsRendered, {
+  deep: true,
 });
+
 const fps = useFps();
+
+onUpdated(debounce(() => {
+  const rendered = document.querySelectorAll('.rendered-object');
+  Array.from(rendered).forEach((el) => {
+    const objId = el.getAttribute('data-object-id') as string;
+
+    if (map.value && map.value.objects[objId]) {
+      const obj = map.value.objects[objId];
+      if (el.clientWidth !== obj.width || el.clientHeight !== obj.height) {
+        console.log('update size', el);
+        obj.height = el.clientHeight;
+      }
+    }
+  });
+}, 1000));
+
+const onObjectClick = openUrlByObject;
 </script>
 
 <template>
@@ -72,11 +100,17 @@ const fps = useFps();
         v-for="obj in objectsRendered"
         :key="obj.obj.id"
         class="absolute"
-        :style="`width:${obj.obj.width}px;height: ${obj.obj.height}px;top: ${obj.top}px;left:${obj.left}px`"
+        :style="`width:${obj.obj.width}px;height: ${obj.obj.height}px;top: ${obj.top}px;left:${obj.left}px;z-index:${obj.obj.zindex}`"
       >
-        <div class="absolute -top-[100%] pb-2 pointer-events-auto text-sm" v-html="obj.obj.additionalName"></div>
+        <div class="absolute -top-[100%] pb-2 pointer-events-auto text-sm">
+          <span
+            v-html="obj.obj.additionalName"
+            @click="onObjectClick(obj.obj)"
+            :class="[obj.obj.linked && 'cursor-pointer underline']"
+          ></span>
+        </div>
         <div class="absolute -bottom-[100%] pt-2 text-sm" v-html="obj.obj.name"></div>
-        <div v-html="obj.html"></div>
+        <div :data-object-id="obj.obj.id" class="rendered-object" v-html="obj.html"></div>
       </div>
     </div>
     <div class="h-full" :id="CANVAS_DOM_ID" :key="'editor-canvas' + counter"></div>

@@ -11,7 +11,6 @@ export const useLayerListenerMouse = createSharedComposable(() => {
     if (stage.value && mouseenter.value) {
       if (
         mouseenter.value.target.attrs.image
-        || mouseenter.value.target.attrs.text
       ) {
         stage.value.container().style.cursor = 'pointer';
       }
