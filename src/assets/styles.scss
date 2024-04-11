@@ -13,6 +13,10 @@
   outline: none;
 }
 
+.rendered-object p {
+  min-height: 14px;
+}
+
 @layer components {
   a {
     @apply text-primary underline underline-offset-1
