@@ -102,14 +102,14 @@ const onObjectClick = openUrlByObject;
         class="absolute"
         :style="`width:${obj.obj.width}px;height: ${obj.obj.height}px;top: ${obj.top}px;left:${obj.left}px;z-index:${obj.obj.zindex}`"
       >
-        <div class="absolute -top-[100%] pb-2 pointer-events-auto text-sm">
+        <div class="absolute bottom-[100%] text-nowrap left-0 translate-x-[-25%] pb-2 pointer-events-auto text-sm">
           <span
             v-html="obj.obj.additionalName"
             @click="onObjectClick(obj.obj)"
             :class="[obj.obj.linked && 'cursor-pointer underline']"
           ></span>
         </div>
-        <div class="absolute -bottom-[100%] pt-2 text-sm" v-html="obj.obj.name"></div>
+        <div class="absolute top-[100%] text-nowrap left-0 translate-x-[-25%] pt-2 text-sm" v-html="obj.obj.name"></div>
         <div :data-object-id="obj.obj.id" class="rendered-object" v-html="obj.html"></div>
       </div>
     </div>

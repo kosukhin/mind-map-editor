@@ -1,11 +1,28 @@
 <template>
   <div class="rounded-main p-2 border border-solid border-body-dark">
     <editor-content :editor="editor" />
+    <bubble-menu
+      :editor="editor"
+      :tippy-options="{ duration: 100 }"
+      v-if="editor"
+    >
+      <div class="flex gap-2 p-2 bg-white border border-solid border-body-dark rounded-main">
+        <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'font-bold': editor.isActive('bold') }">
+          bold
+        </button>
+        <button @click="editor.chain().focus().toggleItalic().run()" :class="{ 'font-bold': editor.isActive('italic') }">
+          italic
+        </button>
+        <button @click="editor.chain().focus().toggleStrike().run()" :class="{ 'font-bold': editor.isActive('strike') }">
+          strike
+        </button>
+      </div>
+    </bubble-menu>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { EditorContent, useEditor } from '@tiptap/vue-3';
+import { EditorContent, BubbleMenu, useEditor } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
 import { onBeforeUnmount, watch } from 'vue';
 
