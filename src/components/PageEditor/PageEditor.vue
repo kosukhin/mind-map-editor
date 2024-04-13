@@ -29,7 +29,12 @@ import { useSideBar } from '@/composables/useSideBar';
 import {
   SHOW_HISTORY_MAPS,
   SHOW_KEYBINDINGS,
-  SHOW_OBJECT_MENU, SHOW_PARENT_TYPES, SHOW_PRESETS, SHOW_SEARCH, SHOW_SESSION_LOG, SHOW_SETTINGS,
+  SHOW_OBJECT_MENU,
+  SHOW_PARENT_TYPES,
+  SHOW_PRESETS,
+  SHOW_SEARCH,
+  SHOW_SESSION_LOG,
+  SHOW_SETTINGS,
 } from '@/constants/overlays';
 import { getLocation } from '@/utils/globals';
 import { watch } from '@vue/runtime-core';
@@ -37,6 +42,10 @@ import FastPreviewObject from '@/components/FastPreviewObject/FastPreviewObject.
 import AppPresets from '@/components/AppPresets/AppPresets.vue';
 import AppSessionLog from '@/components/AppSessionLog/AppSessionLog.vue';
 import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
+import { useMapHistory } from '@/composables/useMapHistory';
+import { computed } from 'vue';
+import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
 
 useMeta();
 
@@ -76,6 +85,15 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
     openMapOfCurrentUrl();
   });
 });
+
+const {
+  history,
+  canUndo,
+  canRedo,
+  undo,
+  redo,
+} = useMapHistory();
+const historyFiltered = computed(() => history.value.map((h: any) => new Date(h.timestamp).toLocaleString()));
 </script>
 
 <template>
@@ -142,10 +160,38 @@ const { openMapOfCurrentUrl, isLoading } = useMap();
     <AppPresets />
   </BaseModal>
   <BaseDrawer direction="btt" :name="SHOW_SESSION_LOG">
-    <template #header>
-      <BaseTextTitle>Логи сессии</BaseTextTitle>
-    </template>
-    <AppSessionLog />
+    <div class="flex">
+      <div class="flex-grow w-1/2">
+        <BaseTextTitle>Логи сессии</BaseTextTitle>
+        <AppSessionLog />
+      </div>
+      <div class="flex-grow w-1/2">
+        <BaseTextTitle class="flex items-center gap-2 ">
+          История изменений
+          <BaseButton
+            v-if="canUndo"
+            size="sm"
+            title="Отменить последнее действие"
+            class="aspect-square"
+            @click="undo"
+          >
+            <BaseIcon icon="fa-rotate-left" />
+          </BaseButton>
+          <BaseButton
+            v-if="canRedo"
+            size="sm"
+            title="Вернуть отмененное действие"
+            class="aspect-square"
+            @click="redo"
+          >
+            <BaseIcon icon="fa-rotate-right" />
+          </BaseButton>
+        </BaseTextTitle>
+        <div :key="changeDate" v-for="changeDate in historyFiltered">
+          Изменение от {{ changeDate }}
+        </div>
+      </div>
+    </div>
   </BaseDrawer>
   <FormJson />
   <FormObject />

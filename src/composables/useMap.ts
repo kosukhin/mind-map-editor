@@ -12,6 +12,7 @@ import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
 import { debounce } from 'lodash';
 import { useRoute } from 'vue-router';
+import { AnyFn } from '@/entities/Utils';
 
 export const useMap = createSharedComposable(() => {
   const { message } = useNotify();
@@ -23,6 +24,7 @@ export const useMap = createSharedComposable(() => {
   const mapName = ref(route.path.replace('/', ''));
   const { getMap } = useRequestGetMap();
   const { saveMap } = useRequestSaveMap();
+  const afterMapSavedFns: AnyFn[] = [];
 
   watch(
     map,
@@ -33,6 +35,7 @@ export const useMap = createSharedComposable(() => {
         saveMap(normalMap, mapName.value)
           .then(() => {
             setValue(message, [MAP_UPDATED, NOTIFY_SUCCESS]);
+            afterMapSavedFns.forEach((fn) => fn());
           })
           .catch((e) => {
             setError(mapError.value, String(e));
@@ -84,5 +87,6 @@ export const useMap = createSharedComposable(() => {
     mapName,
     openMapOfCurrentUrl,
     isLoading,
+    afterMapSavedFns,
   };
 });

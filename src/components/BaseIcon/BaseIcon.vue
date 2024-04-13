@@ -1,7 +1,16 @@
 <script lang="ts" setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-  faBars, faTextWidth, faFileText, faSearch, faHistory, faPlusSquare, faCog, IconDefinition,
+  faBars,
+  faTextWidth,
+  faFileText,
+  faSearch,
+  faRotateLeft,
+  faRotateRight,
+  faHistory,
+  faPlusSquare,
+  faCog,
+  IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons: Record<string, IconDefinition> = {
@@ -12,6 +21,8 @@ const icons: Record<string, IconDefinition> = {
   'fa-plus-square': faPlusSquare,
   'fa-cog': faCog,
   'fa-file-text': faFileText,
+  'fa-rotate-left': faRotateLeft,
+  'fa-rotate-right': faRotateRight,
 };
 
 defineProps({

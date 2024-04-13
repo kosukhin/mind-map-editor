@@ -10,8 +10,12 @@ import {
   SHOW_SESSION_LOG,
   SHOW_TEXT,
 } from '@/constants/overlays';
+import { useMapHistory } from '@/composables/useMapHistory';
 
 const { overlayName } = useOverlay();
+const {
+  undo, redo, canUndo, canRedo,
+} = useMapHistory();
 </script>
 
 <template>
@@ -19,6 +23,24 @@ const { overlayName } = useOverlay();
     <img src="/icon-top-bar.png" width="57" height="42" alt="mmc" />
     <BaseBreadcrumbs class="TheHeader-Breadcrumbs" />
     <div class="ml-auto gap-1 flex">
+      <BaseButton
+        v-if="canUndo"
+        size="sm"
+        title="Отменить последнее действие"
+        class="aspect-square"
+        @click="undo"
+      >
+        <BaseIcon icon="fa-rotate-left" />
+      </BaseButton>
+      <BaseButton
+        v-if="canRedo"
+        size="sm"
+        title="Вернуть отмененное действие"
+        class="aspect-square"
+        @click="redo"
+      >
+        <BaseIcon icon="fa-rotate-right" />
+      </BaseButton>
       <BaseButton
         type="success"
         size="sm"
