@@ -96,6 +96,14 @@ const onObjectClick = openUrlByObject;
       <div class="text-sm p-2 absolute bottom-0 left-0">
         Видимых объектов: {{objectsRendered.length}}, FPS: {{ fps }}
       </div>
+      <div class="absolute bottom-3 shadow-standard-second shadow-md drop-shadow right-3 z-10">
+        <div class="grid-example grid grid-rows-2 grid-cols-2 bg-standard-second border border-standard-second gap-[1px] border-t-0 border-l-0">
+          <div class="w-[14px] h-[14px] bg-white"></div>
+          <div class="w-[14px] h-[14px] bg-white"></div>
+          <div class="w-[14px] h-[14px] bg-white"></div>
+          <div class="w-[14px] h-[14px] bg-white"></div>
+        </div>
+      </div>
       <div
         v-for="obj in objectsRendered"
         :key="obj.obj.id"

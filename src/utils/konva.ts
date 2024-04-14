@@ -1,13 +1,12 @@
 import Konva from 'konva';
 import {
-  KonvaLayerObject, Arrow, Layer, Stage,
+  Arrow, KonvaLayerObject, Layer, Stage,
 } from '@/entities/Konva';
 import { MapObject, MapStructure } from '@/entities/Map';
-import { maxNewLineLength, newLineCount } from '@/utils/common';
 import { generateUniqString } from '@/utils/string';
 import { cloneDeep, omit } from 'lodash';
-import { useMapColors } from '@/composables/useMapColors';
 import { arrowStartPointPosition } from '@/application/arrowStartPointPosition';
+import html2canvas from 'html2canvas';
 
 export async function addObjectToLayer(
   layer: Layer,
@@ -100,17 +99,22 @@ export function createLayer(editorWrapper: HTMLElement): [Layer, Stage] {
   });
   const layer = new Konva.Layer();
   const img = new Image();
-  img.src = '/editor-background.jpg';
-  img.onload = () => {
-    const background = new Konva.Rect({
-      width: 3000,
-      height: 3000,
-      x: 0,
-      y: 0,
-      fillPatternImage: img,
+  const gridPattern = document.querySelector('.grid-example') as HTMLElement;
+  if (gridPattern) {
+    html2canvas(gridPattern).then((canvas) => {
+      img.src = canvas.toDataURL();
+      img.onload = () => {
+        const background = new Konva.Rect({
+          width: 3000,
+          height: 3000,
+          x: 0,
+          y: 0,
+          fillPatternImage: img,
+        });
+        layer.add(background);
+      };
     });
-    layer.add(background);
-  };
+  }
   stage.add(layer);
   layer.draw();
   console.log('layer created');

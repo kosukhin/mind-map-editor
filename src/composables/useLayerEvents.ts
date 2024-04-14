@@ -4,6 +4,8 @@ import { KonvaEventObject } from 'konva/lib/Node';
 import { useLayer } from '@/composables/useLayer';
 import { setValue } from '@/utils/common';
 import Konva from 'konva';
+import { gridGap } from '@/constants/grid';
+import { gridFitSize } from '@/utils/gridFitSize';
 
 export const useLayerEvents = createSharedComposable(() => {
   const { layer, stage } = useLayer();
@@ -50,15 +52,13 @@ export const useLayerEvents = createSharedComposable(() => {
     }
   });
 
-  const gridGap = 15;
-
   const setWheel = setValue(wheel);
   // const setDragmove = setValue(dragmove);
   const setDragmove = (e: any) => {
     if (e.target.attrs.image) {
       e.target.setPosition({
-        x: Math.round(e.target.x() / gridGap) * gridGap,
-        y: Math.round(e.target.y() / gridGap) * gridGap,
+        x: gridFitSize(e.target.x()),
+        y: gridFitSize(e.target.y()),
       });
     }
     setValue(dragmove, e);

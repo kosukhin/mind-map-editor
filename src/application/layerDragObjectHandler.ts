@@ -2,7 +2,7 @@ import { Arrow, Vector2d } from '@/entities/Konva';
 import { MapStructure } from '@/entities/Map';
 import { MapLayerObjects } from '@/entities/MapLayerObjects';
 import { Nullable } from '@/entities/Nullable';
-import { maxNewLineLength, newLineCount } from '@/utils/common';
+import { maxNewLineLength } from '@/utils/common';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { Stage } from 'konva/lib/Stage';
 import { Text } from 'konva/lib/shapes/Text';
@@ -20,9 +20,9 @@ type Params = [KonvaEventObject<DragEvent>, MapStructure]
 export const calculateVisibleObjects = (vMap: MapStructure, vStage: Stage) => {
   const { objects } = vMap;
   const isInBoundings = (position: [number, number]) => {
-    const stageStartX = vStage.x();
+    const stageStartX = vStage.x() + 100;
     const stageEndX = vStage.x() - vStage.width();
-    const stageStartY = vStage.y();
+    const stageStartY = vStage.y() + 100;
     const stageEndY = vStage.y() - vStage.height();
     const [objectX, objectY] = position;
     return (

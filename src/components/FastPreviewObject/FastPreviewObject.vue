@@ -12,6 +12,7 @@ import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
 import { useOverlay } from '@/composables/useOverlay';
 import { SHOW_OBJECT } from '@/constants/overlays';
 import { useObjectLinker } from '@/composables/useObjectLinker';
+import { gridFitSize } from '@/utils/gridFitSize';
 
 const { map } = useMap();
 const { fastPreviewObjectId, currentObjectId, clone } = useMapObject();
@@ -28,6 +29,7 @@ const tr = new Konva.Transformer({
   rotateEnabled: false,
   keepRatio: false,
   ignoreStroke: false,
+  draggable: false,
 });
 
 let isTransformerAddedToLayer = false;
@@ -62,8 +64,8 @@ const transform = () => {
 
     maybeImage.on('transformend', (e) => {
       e.cancelBubble = true;
-      const newHeight = Math.round(e.target.height() * e.target.scaleY());
-      const newWidth = Math.round(e.target.width() * e.target.scaleX());
+      const newHeight = gridFitSize(Math.round(e.target.height() * e.target.scaleY()));
+      const newWidth = gridFitSize(Math.round(e.target.width() * e.target.scaleX()));
 
       object.width = newWidth;
       object.height = newHeight;

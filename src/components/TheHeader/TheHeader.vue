@@ -27,7 +27,7 @@ const {
         v-if="canUndo"
         size="sm"
         title="Отменить последнее действие"
-        class="aspect-square"
+        class="w-7 block"
         @click="undo"
       >
         <BaseIcon icon="fa-rotate-left" />
@@ -36,7 +36,7 @@ const {
         v-if="canRedo"
         size="sm"
         title="Вернуть отмененное действие"
-        class="aspect-square"
+        class="w-7 block"
         @click="redo"
       >
         <BaseIcon icon="fa-rotate-right" />
@@ -45,7 +45,7 @@ const {
         type="success"
         size="sm"
         title="Показать лог сессии"
-        class="aspect-square"
+        class="w-7 block"
         @click="overlayName = SHOW_SESSION_LOG"
       >
         <BaseIcon icon="fa-file-text" />
@@ -53,7 +53,7 @@ const {
       <BaseButton
         type="success"
         size="sm"
-        class="aspect-square"
+        class="w-7 block"
         :title="$t('general.menu')"
         @click="overlayName = SHOW_OBJECT_MENU"
       >
@@ -63,17 +63,23 @@ const {
         :title="$t('general.byText')"
         type="primary"
         size="sm"
+        class="w-7 block"
         @click="overlayName = SHOW_TEXT"
       >
         <BaseIcon icon="fa-text-width" />
       </BaseButton>
-      <BaseButton size="sm" @click="overlayName = SHOW_SEARCH">
+      <BaseButton
+        class="w-7 block"
+        size="sm"
+        @click="overlayName = SHOW_SEARCH"
+      >
         <BaseIcon icon="fa-search" />
       </BaseButton>
       <BaseButton
         size="sm"
         :title="$t('general.visitHistory')"
         @click="overlayName = SHOW_HISTORY_MAPS"
+        class="w-7 block"
       >
         <BaseIcon icon="fa-history" />
       </BaseButton>
