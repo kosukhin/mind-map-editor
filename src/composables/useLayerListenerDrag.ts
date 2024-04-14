@@ -68,6 +68,7 @@ export const useLayerListenerDrag = createSharedComposable(() => {
       ) {
         return;
       }
+      // Логика автопрокрутки
       if (
         dragmove.value.target instanceof Konva.Rect
         || dragmove.value.target instanceof Konva.Group
