@@ -1,6 +1,7 @@
 import { MapStructure } from '@/entities/Map';
 import { Stage } from 'konva/lib/Stage';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
+import { renderingMath } from '@/modules/rendering/renderingMath';
 
 export const mapController = {
   scrollToObject(id: string) {
@@ -8,10 +9,11 @@ export const mapController = {
     const stage = modelsPoolGet<Stage>('stage');
     const object = map.objects[id];
     if (object) {
-      // TODO Магическая математика в modules вынести
-      const x = object.position[0] * -1 + 20;
-      const y = object.position[1] * -1 + 20;
-      stage.position({ x, y });
+      const [x, y] = object.position;
+      stage.position({
+        x: renderingMath.objectPositionOffset(x),
+        y: renderingMath.objectPositionOffset(y),
+      });
     }
   },
 };

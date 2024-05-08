@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_OBJECT_MENU } from '@/constants/overlays';
 import { useMapMenu } from '@/app/useMapMenu';
 import { mapController } from '@/modulesHigh/map/mapController';
 import { overlayController } from '@/modulesHigh/overlay/overlayController';
 import { compose } from 'lodash/fp';
 
-useOverlayAutoClose(SHOW_OBJECT_MENU);
+overlayController.autoClose(SHOW_OBJECT_MENU);
 const { menuItems } = useMapMenu();
 const selectMenuItem = compose(overlayController.close, mapController.scrollToObject);
 </script>
