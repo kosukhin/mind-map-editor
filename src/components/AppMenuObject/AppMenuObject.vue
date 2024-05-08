@@ -1,36 +1,14 @@
 <script lang="ts" setup>
-import { useMoveToObject } from '@/composables/useMoveToObject';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
-import { useMap } from '@/composables/useMap';
-import { useOverlay } from '@/composables/useOverlay';
 import { SHOW_OBJECT_MENU } from '@/constants/overlays';
-import { MapObject } from '@/entities/Map';
-import { ref, watch } from 'vue';
+import { useMapMenu } from '@/app/useMapMenu';
+import { mapController } from '@/modulesHigh/map/mapController';
+import { overlayController } from '@/modulesHigh/overlay/overlayController';
+import { compose } from 'lodash/fp';
 
 useOverlayAutoClose(SHOW_OBJECT_MENU);
-
-const { firstMapLoad, map } = useMap();
-const menuItems = ref<MapObject[]>([]);
-watch(
-  firstMapLoad,
-  () => {
-    if (map.value) {
-      menuItems.value = Object.values(map.value.objects)
-        .filter((object) => object.inMenu)
-        .sort((a, b) => a.menuOrder - b.menuOrder);
-    }
-  },
-  {
-    immediate: true,
-  },
-);
-
-const { close } = useOverlay();
-const { scrollToObject } = useMoveToObject();
-const selectMenuItem = (id: string) => {
-  scrollToObject(id);
-  close();
-};
+const { menuItems } = useMapMenu();
+const selectMenuItem = compose(overlayController.close, mapController.scrollToObject);
 </script>
 
 <template>

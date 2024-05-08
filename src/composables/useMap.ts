@@ -13,12 +13,14 @@ import { createSharedComposable } from '@vueuse/core';
 import { debounce } from 'lodash';
 import { useRoute } from 'vue-router';
 import { AnyFn } from '@/entities/Utils';
+import { modelsPool } from '@/modulesHigh/models/modelsPool';
 
 export const useMap = createSharedComposable(() => {
   const { message } = useNotify();
   const firstMapLoad = ref(false);
   const parentTypes = ref<MapType[]>([]);
   const map = ref<MapStructure>();
+  modelsPool.map = map;
   const mapError = ref({ error: null });
   const route = useRoute();
   const mapName = ref(route.path.replace('/', ''));
