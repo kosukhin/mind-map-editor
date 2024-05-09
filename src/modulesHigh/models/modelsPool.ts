@@ -3,6 +3,7 @@ import { MapStructure } from '@/entities/Map';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
 import { get, set } from 'lodash';
+import { FileWithHandle } from '@/types/fileWithHandle';
 
 export const modelsPool = reactive({
   map: ref<MapStructure>(),
@@ -10,6 +11,8 @@ export const modelsPool = reactive({
   stage: shallowRef<Stage>(),
   overlayName: ref<string>(),
   overlayNameToClose: ref<string>(),
+  openedFile: ref<FileSystemFileHandle>(),
+  forceFile: ref<FileWithHandle>(),
 } as const);
 type ModelsPool = typeof modelsPool;
 

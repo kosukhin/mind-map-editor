@@ -4,6 +4,9 @@ import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 import { MapStructure } from '@/entities/Map';
 import { mapTransformer } from '@/modules/map/mapTransformer';
 
+/**
+ * Меню карты открытой
+ */
 export const useMapMenu = () => {
   const menuItems = computed(
     () => {
