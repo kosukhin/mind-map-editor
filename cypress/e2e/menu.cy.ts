@@ -1,0 +1,8 @@
+describe('Menu', () => {
+  it('Открыть меню', () => {
+    cy.visit('http://localhost:8881/?view=/e2e/map.json');
+    cy.get('.e2e-open-menu').click();
+    cy.contains('Меню');
+    cy.get('.e2e-drawer-back').click();
+  });
+});

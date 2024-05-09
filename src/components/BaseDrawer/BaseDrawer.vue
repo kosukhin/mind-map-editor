@@ -16,7 +16,7 @@ const props = defineProps({
   },
 });
 
-const classes = computed(() => (['absolute z-10 top-0 left-0 w-full h-full bg-black/50']));
+const classes = computed(() => (['e2e-drawer-back absolute z-10 top-0 left-0 w-full h-full bg-black/50']));
 const positions = {
   ltr: 'top-0 left-0 w-[50%] max-w-[900px] ',
   rtl: 'top-0 right-0 w-[50%] max-w-[900px] ',

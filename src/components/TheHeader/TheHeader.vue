@@ -53,7 +53,7 @@ const {
       <BaseButton
         type="success"
         size="sm"
-        class="w-7 block"
+        class="w-7 block e2e-open-menu"
         :title="$t('general.menu')"
         @click="overlayName = SHOW_OBJECT_MENU"
       >
