@@ -4,6 +4,9 @@ const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  configureWebpack: {
+    devtool: 'source-map',
+  },
   pwa: {
     manifestOptions: {
       theme_color: '#838282',

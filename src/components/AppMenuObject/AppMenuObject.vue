@@ -23,7 +23,7 @@ const selectMenuItem = compose(overlayController.close, mapController.scrollToOb
         href="#"
         @click.prevent="selectMenuItem(item.id)"
       >
-        {{ item.additionalName ? item.additionalName : item.name }}
+        <span v-html="item.additionalName ? item.additionalName : item.name"></span>
       </a>
     </div>
   </div>

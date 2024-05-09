@@ -4,10 +4,13 @@ import { setValue } from '@/utils/common';
 import { computed, ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 import { AnyFn, createSharedComposable } from '@vueuse/core';
+import { modelsPoolSet } from '@/modulesHigh/models/modelsPool';
 
 export const useOverlay = createSharedComposable(() => {
   const overlayName = ref<string>();
   const tryToClose = ref<string>();
+  modelsPoolSet('overlayName', overlayName);
+  modelsPoolSet('overlayNameToClose', tryToClose);
   const history = ref<string[]>([]);
   const onOpenCbs: Dictionary<any> = {};
   const isClosed = computed(() => overlayName.value === OVERLAY_CLOSE);

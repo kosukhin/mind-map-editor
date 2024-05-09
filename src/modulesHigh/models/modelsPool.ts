@@ -1,21 +1,18 @@
-import { ref, shallowRef, Ref } from 'vue';
+import { reactive, ref, shallowRef } from 'vue';
 import { MapStructure } from '@/entities/Map';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
+import { get, set } from 'lodash';
 
-export const modelsPool = {
+export const modelsPool = reactive({
   map: ref<MapStructure>(),
   layer: shallowRef<Layer>(),
   stage: shallowRef<Stage>(),
   overlayName: ref<string>(),
   overlayNameToClose: ref<string>(),
-} as const;
+} as const);
 type ModelsPool = typeof modelsPool;
 
-export const modelsPoolGet = <T>(key: keyof ModelsPool) => modelsPool[key].value as T;
+export const modelsPoolGet = <T>(key: keyof ModelsPool, defaultValue: unknown = null) => get(modelsPool, key, defaultValue) as T;
 
-export const modelsPoolGetRef = <T>(key: keyof ModelsPool) => modelsPool[key] as Ref<T>;
-
-export const modelsPoolSet = (key: keyof typeof modelsPool, value: any) => {
-  modelsPool[key].value = value;
-};
+export const modelsPoolSet = (key: keyof typeof modelsPool, value: any) => set(modelsPool, key, value);

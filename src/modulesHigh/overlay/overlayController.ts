@@ -1,4 +1,4 @@
-import { modelsPoolGetRef, modelsPoolSet } from '@/modulesHigh/models/modelsPool';
+import { modelsPoolGet, modelsPoolSet } from '@/modulesHigh/models/modelsPool';
 import { OVERLAY_CLOSE } from '@/constants/overlays';
 import { watch } from '@vue/runtime-core';
 
@@ -9,11 +9,13 @@ export const overlayController = {
   },
 
   autoClose(formName: string) {
-    const nameToCloseRef = modelsPoolGetRef<string>('overlayNameToClose');
-    watch(nameToCloseRef, (nameToClose) => {
-      if (nameToClose && nameToClose === formName) {
-        overlayController.close();
-      }
-    });
+    watch(
+      () => modelsPoolGet<string>('overlayNameToClose'),
+      (nameToClose) => {
+        if (nameToClose && nameToClose === formName) {
+          overlayController.close();
+        }
+      },
+    );
   },
 };

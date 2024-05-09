@@ -9,11 +9,14 @@ import { useMap } from '@/composables/useMap';
 import { findById } from '@/utils/dom';
 import { CANVAS_DOM_ID } from '@/constants/system';
 import { setValue } from '@/utils/common';
+import { modelsPoolSet } from '@/modulesHigh/models/modelsPool';
 
 export const useLayer = createSharedComposable(() => {
   const { canvas } = useCanvas();
   const layer = shallowRef<Layer>();
   const stage = shallowRef<Stage>();
+  modelsPoolSet('layer', layer);
+  modelsPoolSet('stage', stage);
   const layerObjects: MapLayerObjects = new Map();
   const { firstMapLoad } = useMap();
 

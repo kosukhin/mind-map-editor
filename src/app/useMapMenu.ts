@@ -6,9 +6,10 @@ import { mapTransformer } from '@/modules/map/mapTransformer';
 
 export const useMapMenu = () => {
   const menuItems = computed(
-    () => branchCombinator.when(modelsPoolGet('map'), (mapValue: MapStructure) => {
-      mapTransformer.menuItems(mapValue);
-    }, []),
+    () => {
+      const mapModel = modelsPoolGet<MapStructure>('map');
+      return branchCombinator.when(mapModel, () => mapTransformer.menuItems(mapModel), []);
+    },
   );
 
   return {
