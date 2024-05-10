@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from '@vue/reactivity';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
-import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_SEARCH } from '@/constants/overlays';
 import { useMap } from '@/composables/useMap';
 import { useOverlay } from '@/composables/useOverlay';
@@ -10,8 +9,9 @@ import { MapObject } from '@/entities/Map';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { clone } from 'lodash';
+import { overlayController } from '@/modulesHigh/overlay/overlayController';
 
-useOverlayAutoClose(SHOW_SEARCH);
+overlayController.autoClose(SHOW_SEARCH);
 
 const isFoundInAdditionalFilters = (
   object: MapObject,
