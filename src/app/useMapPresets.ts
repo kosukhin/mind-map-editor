@@ -3,7 +3,7 @@ import { MapStructure, MapType } from '@/entities/Map';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 
 /**
- * Типы узлов заранее заданные в приложении
+ * MapTypes included in application as presets
  */
 export const useMapPresets = () => ({
   addType(type: MapType) {

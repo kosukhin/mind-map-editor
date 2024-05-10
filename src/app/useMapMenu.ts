@@ -8,7 +8,7 @@ import { overlayController } from '@/modulesHigh/overlay/overlayController';
 import { mapController } from '@/modulesHigh/map/mapController';
 
 /**
- * Меню карты открытой
+ * Menu of current opened map
  */
 export const useMapMenu = () => {
   const menuItems = computed(

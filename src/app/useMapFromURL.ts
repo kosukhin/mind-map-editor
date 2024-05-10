@@ -4,7 +4,7 @@ import { branchCombinator } from '@/modules/combinators/branchCombinator';
 import { modelsPoolSet } from '@/modulesHigh/models/modelsPool';
 
 /**
- * Возмовжность открыть карту по ссылке
+ * Ability to open map from url
  */
 export const useMapFromURL = () => {
   const route = useRoute();
