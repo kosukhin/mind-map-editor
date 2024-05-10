@@ -10,6 +10,7 @@ import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { clone } from 'lodash';
 import { overlayController } from '@/modulesHigh/overlay/overlayController';
+import { useSearch } from '@/app/useSearch';
 
 overlayController.autoClose(SHOW_SEARCH);
 
@@ -23,21 +24,7 @@ const type = ref<string>('');
 const query = ref('');
 const { map } = useMap();
 
-// TODO убрать дублирование
-const mapTypes = computed(() => {
-  const result: { id: string; name: string }[] = [];
-
-  if (map.value) {
-    Object.entries(map.value.types).forEach(([typeId, mapType]) => {
-      result.push({
-        id: typeId,
-        name: mapType.name,
-      });
-    });
-  }
-
-  return [{ id: null, name: 'Любой тип узла' }, ...result];
-});
+const { mapTypes } = useSearch();
 
 const searchResults = computed(() => {
   if (!map.value) {
