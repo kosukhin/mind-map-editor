@@ -112,7 +112,7 @@ const onDownloadMap = () => {
           </BaseButton>
           <BaseButton
             type="primary"
-            class="text-white"
+            class="text-white e2e-open-presets"
             @click="overlayName = SHOW_PRESETS"
           >
             Пресеты

@@ -49,7 +49,7 @@ const back = () => {
         >
           &lt;
         </div>
-        <div title="Закрыть" class="absolute text-white right-0 top-0 -mr-5 flex justify-center items-center bg-danger/70 hover:bg-danger-second/70 cursor-pointer w-5" @click="close">
+        <div title="Закрыть" class="e2e-modal-close absolute text-white right-0 top-0 -mr-5 flex justify-center items-center bg-danger/70 hover:bg-danger-second/70 cursor-pointer w-5" @click="close">
           &times;
         </div>
         <div v-if="$slots.header" class="BaseModal-Header">

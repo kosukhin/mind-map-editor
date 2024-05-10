@@ -1,21 +1,13 @@
 <script lang="ts" setup>
-import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_PRESETS } from '@/constants/overlays';
 import { presetsCommon } from '@/constants/presets';
-import svg64 from 'svg64';
 import { svgRender } from '@/utils/svgRenderDefault';
-import { useMap } from '@/composables/useMap';
-import { MapType } from '@/entities/Map';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import { overlayController } from '@/modulesHigh/overlay/overlayController';
+import { mapMutator } from '@/modules/map/mapMutator';
 
-useOverlayAutoClose(SHOW_PRESETS);
-
-const { map } = useMap();
-const addType = (type: MapType) => {
-  if (map.value) {
-    map.value.types[type.name] = type;
-  }
-};
+overlayController.autoClose(SHOW_PRESETS);
+const { addType } = mapMutator;
 </script>
 
 <template>
@@ -34,7 +26,7 @@ const addType = (type: MapType) => {
           :style="`width:${item.width}px;height:${item.height}px`"
         ></div>
         <BaseButton
-          class="AppTypesParent-ItemButton"
+          class="AppTypesParent-ItemButton e2e-add-preset-type"
           type="success"
           size="sm"
           @click="addType(item)"

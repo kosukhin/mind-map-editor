@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import svg64 from 'svg64';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseGroup from '@/components/BaseGroup/BaseGroup.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
@@ -90,7 +89,7 @@ const addToCanvas = async (
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-3 max-h-[100%] overflow-hidden">
+  <div class="flex e2e-sidebar flex-col items-center gap-3 max-h-[100%] overflow-hidden">
     <div v-if="map" class="flex flex-col gap-3 flex-grow w-full overflow-y-auto">
       <div
         v-for="(type, name) in map.types"
@@ -127,6 +126,7 @@ const addToCanvas = async (
           <BaseIcon icon="fa-plus-square" />
         </BaseButton>
         <BaseButton
+          class="e2e-show-settings"
           :title="$t('general.settings')"
           type="primary"
           @click="overlayName = SHOW_SETTINGS"
