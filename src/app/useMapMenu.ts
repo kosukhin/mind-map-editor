@@ -3,9 +3,6 @@ import { branchCombinator } from '@/modules/combinators/branchCombinator';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 import { MapStructure } from '@/entities/Map';
 import { mapTransformer } from '@/modules/map/mapTransformer';
-import { compose } from 'lodash/fp';
-import { overlayController } from '@/modulesHigh/overlay/overlayController';
-import { mapController } from '@/modulesHigh/map/mapController';
 
 /**
  * Menu of current opened map
@@ -18,13 +15,7 @@ export const useMapMenu = () => {
     },
   );
 
-  const selectMenuItem = compose(
-    overlayController.close,
-    mapController.scrollToObject,
-  );
-
   return {
     menuItems,
-    selectMenuItem,
   };
 };

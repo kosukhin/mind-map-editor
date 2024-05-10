@@ -2,9 +2,11 @@
 import { SHOW_OBJECT_MENU } from '@/constants/overlays';
 import { useMapMenu } from '@/app/useMapMenu';
 import { overlayController } from '@/modulesHigh/overlay/overlayController';
+import { useMapBehaviour } from '@/app/useMapBehaviour';
 
 overlayController.autoClose(SHOW_OBJECT_MENU);
-const { menuItems, selectMenuItem } = useMapMenu();
+const { menuItems } = useMapMenu();
+const { moveToObject } = useMapBehaviour();
 </script>
 
 <template>
@@ -18,7 +20,7 @@ const { menuItems, selectMenuItem } = useMapMenu();
         :key="item.id"
         class="AppMenuObject-Item"
         href="#"
-        @click.prevent="selectMenuItem(item.id)"
+        @click.prevent="moveToObject(item.id)"
       >
         <span v-html="item.additionalName ? item.additionalName : item.name"></span>
       </a>

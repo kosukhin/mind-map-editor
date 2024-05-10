@@ -22,4 +22,9 @@ export const mapObjectTransformer = {
   ) {
     return objects.filter((object) => object.type === typeName);
   },
+  firstAdditionalField(object: MapObject) {
+    return Object
+      .values(object.additionalFields ?? {})
+      .filter(Boolean).shift();
+  },
 };

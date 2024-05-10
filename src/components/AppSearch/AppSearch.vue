@@ -1,65 +1,43 @@
 <script lang="ts" setup>
-import { ref } from '@vue/reactivity';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import { SHOW_SEARCH } from '@/constants/overlays';
-import { useMap } from '@/composables/useMap';
-import { useOverlay } from '@/composables/useOverlay';
-import { useMoveToObject } from '@/composables/useMoveToObject';
-import { MapObject } from '@/entities/Map';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import { clone } from 'lodash';
 import { overlayController } from '@/modulesHigh/overlay/overlayController';
 import { useSearch } from '@/app/useSearch';
+import { useMapBehaviour } from '@/app/useMapBehaviour';
+import { mapObjectTransformer } from '@/modules/map/mapObjectTransformer';
+import { useSearchNamed } from '@/app/useSearchNamed';
+import { branchCombinator } from '@/modules/combinators/branchCombinator';
+import { MapStructure, NamedSearch } from '@/entities/Map';
+import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 
 overlayController.autoClose(SHOW_SEARCH);
 
-const { map } = useMap();
-
 const {
-  typeField, queryField, mapTypes, searchResults, isSearchedAnything,
+  typeField,
+  queryField,
+  mapTypes,
+  searchResults,
+  isSearchedAnything,
 } = useSearch();
-
-const { close } = useOverlay();
-const { scrollToObject } = useMoveToObject();
-const moveToObject = (object: MapObject) => {
-  close();
-  scrollToObject(object.id);
-};
-
-const showFirstAdditionalField = (additionalFields: any) => Object
-  .values(additionalFields)
-  .filter(Boolean).shift();
-
-const namedSearchFormShowed = ref(false);
-const namedSearchForm = ref({
-  name: '',
-  query: '',
-  type: '',
-});
-const namedSearchSave = () => {
-  if (map.value) {
-    if (!map.value.namedSearches) {
-      map.value.namedSearches = [];
-    }
-    map.value?.namedSearches.push(clone(namedSearchForm.value));
-    Object.keys(namedSearchForm.value).forEach((key) => {
-      (namedSearchForm.value as any)[key] = '';
-    });
-    namedSearchFormShowed.value = false;
-  }
-};
+const { moveToObject } = useMapBehaviour();
+const {
+  namedSearches,
+  namedSearchRemoveByIndex,
+  namedSearchSave,
+  namedSearchFormShowed,
+  namedSearchForm,
+} = useSearchNamed();
+const { firstAdditionalField } = mapObjectTransformer;
 
 const namedSearchApplyIndex = (index: number) => {
-  const search = map.value?.namedSearches?.[index];
-  if (search) {
+  const map = modelsPoolGet<MapStructure>('map');
+  const search = map.namedSearches?.[index] as NamedSearch;
+  branchCombinator.when(search, () => {
     queryField.value = search.query;
     typeField.value = search.type;
-  }
-};
-
-const namedSearchRemoveByIndex = (index: number) => {
-  map.value?.namedSearches?.splice(index, 1);
+  });
 };
 </script>
 
@@ -92,10 +70,10 @@ const namedSearchRemoveByIndex = (index: number) => {
           {{ $t('general.save') }}
         </BaseButton>
       </div>
-      <div v-if="map" class="flex py-3 gap-4">
+      <div class="flex py-3 gap-4">
         <span
           :key="`nsearch-${index}`"
-          v-for="(nSearch, index) in map.namedSearches"
+          v-for="(nSearch, index) in namedSearches"
           style="display: flex; gap: 4px"
         >
           <a
@@ -127,7 +105,7 @@ const namedSearchRemoveByIndex = (index: number) => {
         v-for="result in searchResults"
         :key="result.name"
         class="cursor-pointer"
-        @click="moveToObject(result)"
+        @click="moveToObject(result.id)"
       >
         <b class="AppSearch-ItemName" v-html="result.name"></b>
         <b
@@ -135,7 +113,7 @@ const namedSearchRemoveByIndex = (index: number) => {
           class="AppSearch-ItemName"
           v-html="result.additionalName"
         ></b>
-        <div v-else v-html="showFirstAdditionalField(result.additionalFields ?? {})"></div>
+        <div v-else v-html="firstAdditionalField(result)"></div>
       </div>
     </div>
     <div v-else-if="queryField">{{ $t('general.noResults') }}</div>
