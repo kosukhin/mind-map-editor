@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { defineEmits } from '@vue/runtime-core';
 import { useVModel } from '@vueuse/core';
+import { PropType } from 'vue';
 
 const props = defineProps({
   modelValue: {
-    type: [String, Number],
+    type: [String, Number] as PropType<string | number | null | undefined>,
     default: '',
   },
   items: {

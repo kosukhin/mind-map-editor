@@ -1,4 +1,4 @@
-import { MapStructure } from '@/entities/Map';
+import { MapObject, MapStructure } from '@/entities/Map';
 import { ListItem } from '@/modules/types/ListItem';
 
 export const mapTransformer = {
@@ -14,5 +14,9 @@ export const mapTransformer = {
       id: typeId,
       name: mapType.name,
     }));
+  },
+  // Array of map's objects
+  getObjects(map: MapStructure): MapObject[] {
+    return Object.values(map.objects);
   },
 };

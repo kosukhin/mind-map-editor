@@ -16,4 +16,10 @@ export const mapObjectTransformer = {
     const fieldValue = object[fieldName];
     return String(fieldValue).toLowerCase().includes(searchQuery);
   },
+  filterObjectsByType(
+    objects: MapObject[],
+    typeName: string,
+  ) {
+    return objects.filter((object) => object.type === typeName);
+  },
 };

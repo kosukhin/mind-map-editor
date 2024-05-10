@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref } from '@vue/reactivity';
+import { ref } from '@vue/reactivity';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import { SHOW_SEARCH } from '@/constants/overlays';
 import { useMap } from '@/composables/useMap';
@@ -14,46 +14,11 @@ import { useSearch } from '@/app/useSearch';
 
 overlayController.autoClose(SHOW_SEARCH);
 
-const isFoundInAdditionalFilters = (
-  object: MapObject,
-  searchQuery: string,
-) => object.additionalFields
-  && Object.values(object.additionalFields).some((v) => v.toLowerCase().includes(searchQuery));
-
-const type = ref<string>('');
-const query = ref('');
 const { map } = useMap();
 
-const { mapTypes } = useSearch();
-
-const searchResults = computed(() => {
-  if (!map.value) {
-    return [];
-  }
-
-  let objects = Object.values(map.value.objects);
-
-  if (type.value) {
-    objects = objects.filter((object) => object.type === type.value);
-  }
-
-  if (query.value) {
-    const searchQuery = query.value.toLowerCase();
-
-    return objects.filter((object) => (
-      object.name.toLowerCase().includes(searchQuery)
-        || isFoundInAdditionalFilters(object, searchQuery)
-        || (object.additionalName
-          && object.additionalName.toLowerCase().includes(searchQuery))
-    ));
-  }
-
-  if (type.value) {
-    return objects;
-  }
-
-  return [];
-});
+const {
+  typeField, queryField, mapTypes, searchResults, isSearchedAnything,
+} = useSearch();
 
 const { close } = useOverlay();
 const { scrollToObject } = useMoveToObject();
@@ -88,8 +53,8 @@ const namedSearchSave = () => {
 const namedSearchApplyIndex = (index: number) => {
   const search = map.value?.namedSearches?.[index];
   if (search) {
-    query.value = search.query;
-    type.value = search.type;
+    queryField.value = search.query;
+    typeField.value = search.type;
   }
 };
 
@@ -101,22 +66,22 @@ const namedSearchRemoveByIndex = (index: number) => {
 <template>
   <div class="AppSearch">
     <div class="rounded-main mb-2 w-full p-2 border border-solid border-body-dark">
-      <h4 class="text-md font-bold mb-1">Сохраненные поиски</h4>
+      <h4 class="text-md font-bold mb-1">{{ $t('general.savedSearches') }}</h4>
       <BaseButton
         class="max-w-[150px]"
         @click="namedSearchFormShowed=!namedSearchFormShowed"
       >
-        Создать
+        {{ $t('general.create') }}
       </BaseButton>
       <div
         v-if="namedSearchFormShowed"
         class="flex gap-2 items-center my-2"
       >
-        <b>Имя</b>
+        <b>{{ $t('general.named') }}</b>
         <BaseInput v-model="namedSearchForm.name" />
-        <b>Строка поиска</b>
+        <b>{{ $t('general.searchString') }}</b>
         <BaseInput v-model="namedSearchForm.query" />
-        <b>Тип</b>
+        <b>{{ $t('general.type') }}</b>
         <BaseSelect
           v-model="namedSearchForm.type"
           :items="mapTypes"
@@ -124,7 +89,7 @@ const namedSearchRemoveByIndex = (index: number) => {
           option-label="name"
         />
         <BaseButton type="success" @click="namedSearchSave">
-          Сохранить
+          {{ $t('general.save') }}
         </BaseButton>
       </div>
       <div v-if="map" class="flex py-3 gap-4">
@@ -144,36 +109,36 @@ const namedSearchRemoveByIndex = (index: number) => {
       </div>
     </div>
     <BaseInput
-      v-model="query"
+      v-model="queryField"
       class="mb-2"
-      placeholder="Введите запрос"
+      :placeholder="$t('general.specifyQuery')"
     />
     <div class="mb-2">
       <BaseSelect
-        v-model="type"
+        v-model="typeField"
         :items="mapTypes"
         option-id="id"
         option-label="name"
-        placeholder="Выберите тип"
+        :placeholder="$t('general.specifyType')"
       />
     </div>
-    <div v-if="searchResults.length" class="AppSearch-Items">
+    <div v-if="isSearchedAnything && searchResults.length" class="AppSearch-Items">
       <div
         v-for="result in searchResults"
         :key="result.name"
         class="cursor-pointer"
         @click="moveToObject(result)"
       >
-        <b class="AppSearch-ItemName">{{ result.name }}</b>
-        <b v-if="result.additionalName" class="AppSearch-ItemName">
-          &nbsp;
-          {{ result.additionalName }}
-        </b>
-        <div v-else>
-          {{ showFirstAdditionalField(result.additionalFields ?? {}) }}
-        </div>
+        <b class="AppSearch-ItemName" v-html="result.name"></b>
+        <b
+          v-if="result.additionalName"
+          class="AppSearch-ItemName"
+          v-html="result.additionalName"
+        ></b>
+        <div v-else v-html="showFirstAdditionalField(result.additionalFields ?? {})"></div>
       </div>
     </div>
-    <div v-else-if="query">{{ $t('general.noResults') }}</div>
+    <div v-else-if="queryField">{{ $t('general.noResults') }}</div>
+    <div v-else>{{ $t('general.resultsWillBeHere') }}</div>
   </div>
 </template>

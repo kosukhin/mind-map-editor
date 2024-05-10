@@ -16,7 +16,8 @@
 
   },
   "general": {
-    "noResults": "Нет результатов",
+    "noResults": "Ничего не найдено",
+    "resultsWillBeHere": "Здесь будет результат",
     "noTypes": "Нет типов",
     "addToMap": "Добавить на карту",
     "home": "Главная",
@@ -77,6 +78,12 @@
     "favorites": "Избранное",
     "openProject": "Открыть проект",
     "openFile": "Открыть файл",
+    "savedSearches": "Сохраненные поиски",
+    "named": "Имя",
+    "searchString": "Строка поиска",
+    "type": "Тип",
+    "specifyQuery": "Введите запрос",
+    "specifyType": "Выберите тип",
     "notifications": {
       "sureDelete": "Вы уверены что нужно удалить?",
       "sharingDontSupported": "Шаринг не поддерживается",
