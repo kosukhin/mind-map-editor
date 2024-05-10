@@ -69,7 +69,7 @@ const {
         <BaseIcon icon="fa-text-width" />
       </BaseButton>
       <BaseButton
-        class="w-7 block"
+        class="w-7 block e2e-search"
         size="sm"
         @click="overlayName = SHOW_SEARCH"
       >

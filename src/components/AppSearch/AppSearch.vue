@@ -11,6 +11,7 @@ import { useSearchNamed } from '@/app/useSearchNamed';
 import { branchCombinator } from '@/modules/combinators/branchCombinator';
 import { MapStructure, NamedSearch } from '@/entities/Map';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
+import { get } from 'lodash';
 
 overlayController.autoClose(SHOW_SEARCH);
 
@@ -33,7 +34,7 @@ const { firstAdditionalField } = mapObjectTransformer;
 
 const namedSearchApplyIndex = (index: number) => {
   const map = modelsPoolGet<MapStructure>('map');
-  const search = map.namedSearches?.[index] as NamedSearch;
+  const search = get(map, ['namedSearch', index]) as NamedSearch;
   branchCombinator.when(search, () => {
     queryField.value = search.query;
     typeField.value = search.type;
@@ -46,7 +47,7 @@ const namedSearchApplyIndex = (index: number) => {
     <div class="rounded-main mb-2 w-full p-2 border border-solid border-body-dark">
       <h4 class="text-md font-bold mb-1">{{ $t('general.savedSearches') }}</h4>
       <BaseButton
-        class="max-w-[150px]"
+        class="max-w-[150px] e2e-named-search-create"
         @click="namedSearchFormShowed=!namedSearchFormShowed"
       >
         {{ $t('general.create') }}
@@ -56,17 +57,18 @@ const namedSearchApplyIndex = (index: number) => {
         class="flex gap-2 items-center my-2"
       >
         <b>{{ $t('general.named') }}</b>
-        <BaseInput v-model="namedSearchForm.name" />
+        <BaseInput class="e2e-named-search-name" v-model="namedSearchForm.name" />
         <b>{{ $t('general.searchString') }}</b>
-        <BaseInput v-model="namedSearchForm.query" />
+        <BaseInput class="e2e-named-search-query" v-model="namedSearchForm.query" />
         <b>{{ $t('general.type') }}</b>
         <BaseSelect
+          class="e2e-named-search-type"
           v-model="namedSearchForm.type"
           :items="mapTypes"
           option-id="id"
           option-label="name"
         />
-        <BaseButton type="success" @click="namedSearchSave">
+        <BaseButton class="e2e-named-search-save" type="success" @click="namedSearchSave">
           {{ $t('general.save') }}
         </BaseButton>
       </div>
@@ -78,21 +80,29 @@ const namedSearchApplyIndex = (index: number) => {
         >
           <a
             href="#"
+            class="e2e-named-search-variant"
             @click.prevent="namedSearchApplyIndex(index)"
           >
             {{nSearch.name}}
           </a>
-          <a href="#" @click.prevent="namedSearchRemoveByIndex(index)">&times;</a>
+          <a
+            href="#"
+            @click.prevent="namedSearchRemoveByIndex(index)"
+            class="e2e-named-search-remove"
+          >
+            &times;
+          </a>
         </span>
       </div>
     </div>
     <BaseInput
       v-model="queryField"
-      class="mb-2"
+      class="mb-2 e2e-query-input"
       :placeholder="$t('general.specifyQuery')"
     />
     <div class="mb-2">
       <BaseSelect
+        class="e2e-type-input"
         v-model="typeField"
         :items="mapTypes"
         option-id="id"
