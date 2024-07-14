@@ -21,6 +21,8 @@ module.exports = {
     'vuejs-accessibility/label-has-for': 'off',
     'vuejs-accessibility/click-events-have-key-events': 'off',
     'no-param-reassign': 'off',
+    'no-useless-constructor': 'off',
+    'class-methods-use-this': 'off',
     'max-len': 'off',
   },
 };
