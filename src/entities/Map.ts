@@ -65,6 +65,8 @@ export interface Map {
   structure: MapStructure
 }
 
+export type MapFile = Record<string, MapStructure>;
+
 export interface MapResponse {
   ok: boolean
   data: Map

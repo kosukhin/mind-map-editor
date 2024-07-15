@@ -7,11 +7,13 @@ export class TruthyOptional<T, Truthy = Exclude<T, null>> {
     if (this.value) {
       cb(this.value as Truthy);
     }
+    return this;
   }
 
   empty(cb: Procedure) {
     if (!this.value) {
       cb();
     }
+    return this;
   }
 }

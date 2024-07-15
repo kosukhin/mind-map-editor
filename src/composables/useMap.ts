@@ -1,30 +1,40 @@
 import { mapNormalizeBeforeSave } from '@/application/mapNormalizeBeforeSave';
-import { useRequestGetMap } from '@/composables/useRequestGetMap';
-import { useRequestSaveMap } from '@/composables/useRequestSaveMap';
 import { useNotify } from '@/composables/useNotify';
+import { useRequestSaveMap } from '@/composables/useRequestSaveMap';
 import { MAP_UPDATED } from '@/constants/messages';
 import { NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants/system';
-import { MapStructure, MapType } from '@/entities/Map';
-import { setError, setValue, setValues } from '@/utils/common';
+import { MapFile, MapStructure, MapType } from '@/entities/Map';
+import { AnyFn } from '@/entities/Utils';
+import { OptionalAsyncExpression } from '@/modules/eo/OptionalAsyncExpression';
+import { WatchedExpression } from '@/modules/eo/WatchedExpression';
+import { modelsPoolSet } from '@/modulesHigh/models/modelsPool';
+import { useEditor } from '@/plugins/editor';
+import { setError, setValue } from '@/utils/common';
 import { mapUrlToName } from '@/utils/mapUrlToName';
-import { computed, ref } from 'vue';
 import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
 import { debounce } from 'lodash';
-import { useRoute } from 'vue-router';
-import { AnyFn } from '@/entities/Utils';
-import { modelsPoolSet } from '@/modulesHigh/models/modelsPool';
+import { computed, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 export const useMap = createSharedComposable(() => {
+  const editor = useEditor();
+  const optionalMap = editor.chainFilled((edt) => edt.currentMap());
+  const mapFile = new OptionalAsyncExpression(optionalMap).waitFullfillment();
+
+  const map = new WatchedExpression<MapStructure>(
+    mapFile.valueRef(),
+    (mapFileLocal: MapFile) => mapFileLocal.current,
+  ).beginWatch().valueRef();
+
   const { message } = useNotify();
   const firstMapLoad = ref(false);
   const parentTypes = ref<MapType[]>([]);
-  const map = ref<MapStructure>();
   modelsPoolSet('map', map);
   const mapError = ref({ error: null });
   const route = useRoute();
+  const router = useRouter();
   const mapName = ref(route.path.replace('/', ''));
-  const { getMap } = useRequestGetMap();
   const { saveMap } = useRequestSaveMap();
   const afterMapSavedFns: AnyFn[] = [];
 
@@ -32,6 +42,11 @@ export const useMap = createSharedComposable(() => {
     map,
     () => {
       if (map.value) {
+        if (map.value.url !== route.path) {
+          router.push(map.value.url);
+        }
+        console.log('map filled', map.value);
+
         // eslint-disable-next-line no-restricted-globals
         const normalMap = mapNormalizeBeforeSave(map.value, location.pathname);
         saveMap(normalMap, mapName.value)
@@ -60,18 +75,6 @@ export const useMap = createSharedComposable(() => {
   const openMapOfCurrentUrl = () => {
     firstMapLoad.value = false;
     mapName.value = mapUrlToName(route.path);
-    isLoading.value = true;
-
-    getMap(mapName.value)
-      .then(([vMap, vParentTypes]) => {
-        setValues([
-          [map, vMap],
-          [parentTypes, vParentTypes],
-          [firstMapLoad, true],
-        ]);
-        isLoadingDeffered.value = false;
-      })
-      .catch(setError(mapError.value));
   };
 
   watch(
