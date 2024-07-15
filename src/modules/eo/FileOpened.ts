@@ -1,11 +1,11 @@
-import { TruthyAsyncOptional } from '@/modules/eo/TruthyAsyncOptional';
+import { OptionalAsync } from '@/modules/eo/OptionalAsync';
 
 export class FileOpened {
   private filesContents = new WeakMap();
 
   constructor(private fileHandler: FileSystemFileHandle) {}
 
-  public content(): TruthyAsyncOptional<string> {
+  public content(): OptionalAsync<string> {
     const file = this.fileHandler.getFile();
     const promise = file.then((realFile) => {
       const cachedContent = this.filesContents.get(realFile);
@@ -15,6 +15,6 @@ export class FileOpened {
       });
     });
 
-    return new TruthyAsyncOptional(promise);
+    return new OptionalAsync(promise);
   }
 }

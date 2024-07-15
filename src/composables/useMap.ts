@@ -5,7 +5,7 @@ import { MAP_UPDATED } from '@/constants/messages';
 import { NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants/system';
 import { MapFile, MapStructure, MapType } from '@/entities/Map';
 import { AnyFn } from '@/entities/Utils';
-import { OptionalAsyncExpression } from '@/modules/eo/OptionalAsyncExpression';
+import { OptionalExpression } from '@/modules/eo/OptionalExpression';
 import { WatchedExpression } from '@/modules/eo/WatchedExpression';
 import { modelsPoolSet } from '@/modulesHigh/models/modelsPool';
 import { useEditor } from '@/plugins/editor';
@@ -20,7 +20,7 @@ import { useRoute, useRouter } from 'vue-router';
 export const useMap = createSharedComposable(() => {
   const editor = useEditor();
   const optionalMap = editor.chainFilled((edt) => edt.currentMap());
-  const mapFile = new OptionalAsyncExpression(optionalMap).waitFullfillment();
+  const mapFile = new OptionalExpression(optionalMap).waitFullfillment();
 
   const map = new WatchedExpression<MapStructure>(
     mapFile.valueRef(),
