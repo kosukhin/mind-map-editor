@@ -4,9 +4,9 @@ import { OptionalSync } from '@/modules/eo/OptionalSync';
 import { ref, Ref } from 'vue';
 
 export class OptionalExpression<T> {
-  private ref: Ref<T | null>
+  private readonly ref: Ref<T | null>
 
-  constructor(private optionalAsync: Optional<T>) {
+  public constructor(private optionalAsync: Optional<T>) {
     this.ref = ref(null);
   }
 
@@ -21,16 +21,16 @@ export class OptionalExpression<T> {
   }
 
   // Умеет разворачивать вложенные друг в друга Optional
-  waitFullfillment() {
+  public subscribeToSettled() {
     this.handleOptional(this.optionalAsync);
     return this;
   }
 
-  value() {
+  public value() {
     return this.ref.value;
   }
 
-  valueRef() {
+  public valueRef() {
     return this.ref;
   }
 }

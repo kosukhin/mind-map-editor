@@ -3,9 +3,9 @@ import { FileOpened } from '@/modules/eo/FileOpened';
 import { JSONContent } from '@/modules/eo/JSONContent';
 
 export class Editor {
-  constructor(private file: FileOpened) {}
+  public constructor(private file: FileOpened) {}
 
-  currentMap() {
+  public currentMap() {
     return this.file.content().chainFilled<MapFile>((content) => new JSONContent(content).parse());
   }
 }

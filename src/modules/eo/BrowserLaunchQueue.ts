@@ -11,7 +11,7 @@ declare const window: {
 };
 
 export class BrowserLaunchQueue {
-  launchParams(): OptionalAsync<LaunchParams | null> {
+  public launchParams(): OptionalAsync<LaunchParams | null> {
     return new OptionalAsync(new Promise((resolve) => {
       if ('launchQueue' in window) {
         window.launchQueue.setConsumer((launchParams: LaunchParams) => {

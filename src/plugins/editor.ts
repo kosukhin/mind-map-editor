@@ -4,6 +4,7 @@ import { FileFromFS } from '@/modules/eo/FileFromFS';
 import { FileOpened } from '@/modules/eo/FileOpened';
 import { OptionalAsync } from '@/modules/eo/OptionalAsync';
 import { App, inject } from 'vue';
+import { FileOpenedCache } from '@/modules/eo/FileOpenedCache';
 
 export const useEditor = () => {
   const editor = inject<OptionalAsync<Editor | null>>('editor');
@@ -11,10 +12,12 @@ export const useEditor = () => {
   return editor ?? new OptionalAsync(Promise.resolve(null));
 };
 
+const fileCache = new FileOpenedCache();
+
 export default {
   install: (app: App<unknown>) => {
     app.provide('editor', new FileFromFS(new BrowserLaunchQueue())
       .fileHandler()
-      .chainFilled((file) => new Editor(new FileOpened(file))));
+      .chainFilled((file) => new Editor(new FileOpened(file, fileCache))));
   },
 };

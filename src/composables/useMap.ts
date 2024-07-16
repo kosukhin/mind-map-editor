@@ -13,18 +13,18 @@ import { setError, setValue } from '@/utils/common';
 import { mapUrlToName } from '@/utils/mapUrlToName';
 import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
-import { debounce } from 'lodash';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 export const useMap = createSharedComposable(() => {
   const editor = useEditor();
   const optionalMap = editor.chainFilled((edt) => edt.currentMap());
-  const mapFile = new OptionalExpression(optionalMap).waitFullfillment();
+  const mapFile = new OptionalExpression(optionalMap).subscribeToSettled();
 
   const map = new WatchedExpression<MapStructure>(
     mapFile.valueRef(),
     (mapFileLocal: MapFile) => mapFileLocal.current,
+    { immediate: true },
   ).beginWatch().valueRef();
 
   const { message } = useNotify();
@@ -45,7 +45,6 @@ export const useMap = createSharedComposable(() => {
         if (map.value.url !== route.path) {
           router.push(map.value.url);
         }
-        console.log('map filled', map.value);
 
         // eslint-disable-next-line no-restricted-globals
         const normalMap = mapNormalizeBeforeSave(map.value, location.pathname);
@@ -66,12 +65,7 @@ export const useMap = createSharedComposable(() => {
   );
 
   const isLoading = ref(false);
-  const isLoadingDeffered = computed({
-    get: () => isLoading.value,
-    set: debounce((v) => {
-      isLoading.value = v;
-    }, 1000),
-  });
+
   const openMapOfCurrentUrl = () => {
     firstMapLoad.value = false;
     mapName.value = mapUrlToName(route.path);

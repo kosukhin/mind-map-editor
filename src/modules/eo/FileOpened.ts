@@ -1,20 +1,23 @@
 import { OptionalAsync } from '@/modules/eo/OptionalAsync';
+import { FileOpenedCache } from '@/modules/eo/FileOpenedCache';
 
 export class FileOpened {
-  private filesContents = new WeakMap();
-
-  constructor(private fileHandler: FileSystemFileHandle) {}
+  public constructor(private fileHandler: FileSystemFileHandle, private cache: FileOpenedCache) {}
 
   public content(): OptionalAsync<string> {
     const file = this.fileHandler.getFile();
-    const promise = file.then((realFile) => {
-      const cachedContent = this.filesContents.get(realFile);
-      return cachedContent || new Response(realFile).text().then((content) => {
-        this.filesContents.set(realFile, content);
-        return content;
-      });
+    const promise: Promise<string> = new Promise((resolve, reject) => {
+      file.then((realFile) => {
+        this.cache.cachedContent(realFile).filled((realContent) => {
+          resolve(realContent);
+        }).empty(() => {
+          new Response(realFile).text().then((content) => {
+            this.cache.remember(realFile, content);
+            resolve(content);
+          }).catch(reject);
+        });
+      }).catch(reject);
     });
-
     return new OptionalAsync(promise);
   }
 }

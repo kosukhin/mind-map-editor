@@ -1,14 +1,14 @@
 export class JSONContent {
-  constructor(private content: string | object) {}
+  public constructor(private content: string | object) {}
 
-  string() {
+  public string() {
     if (typeof this.content !== 'object') {
       throw new Error('JSON: content must be object for stringify!');
     }
     return JSON.stringify(this.content);
   }
 
-  parse() {
+  public parse() {
     if (typeof this.content !== 'string') {
       throw new Error('JSON: content must be string for parse!');
     }
