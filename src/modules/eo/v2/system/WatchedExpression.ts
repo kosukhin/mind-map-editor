@@ -16,7 +16,13 @@ export class WatchedExpression<T> implements ComputedExpression<T> {
   public init() {
     watch(this.watchableDeps, (newValue: any) => {
       this.ref.value = newValue === null ? this.defaultValue : this.expression(newValue);
-    }, this.watchOptions);
+      console.log('inside watcher', this.ref.value, newValue, new Date().getTime());
+    }, {
+      ...this.watchOptions,
+      onTrigger(e) {
+        console.log('trigger', e);
+      },
+    });
     return this;
   }
 

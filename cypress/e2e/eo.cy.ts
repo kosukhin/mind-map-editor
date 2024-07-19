@@ -1,7 +1,7 @@
 import { OptionalSync } from '@/modules/eo/v2/system/OptionalSync';
 import { OptionalAsync } from '@/modules/eo/v2/system/OptionalAsync';
 
-const timeout = (delay: number, result: string) => new Promise((resolve) => {
+const timeout = (delay: number, result: string | null) => new Promise((resolve) => {
   setTimeout(() => {
     resolve(result);
   }, delay);
@@ -30,5 +30,44 @@ describe('EO', () => {
       console.log('async result', value);
       expect(value).to.eq('one-two');
     });
+  });
+
+  it('То что возвращается методами empty filled оборачивается в новый Optional', () => {
+    new OptionalAsync(timeout(500, null)).empty(
+      () => new OptionalAsync(timeout(500, '222333')),
+    ).filled((value) => {
+      console.log('filled', value);
+    });
+  });
+
+  it('Несколько filled обработчиков асинхронно', () => {
+    new OptionalAsync(timeout(500, 'many filled async'))
+      .filled((value) => {
+        console.log('filled1 async', value);
+        return value;
+      })
+      .filled((value) => {
+        console.log('filled2 async', value);
+        return value;
+      })
+      .filled((value) => {
+        console.log('filled3 async', value);
+        return value;
+      });
+  });
+
+  it('Несколько filled обработчиков синхронно', () => {
+    new OptionalSync('many filled sync')
+      .filled((value) => {
+        console.log('filled1 sync', value);
+      })
+      .filled((value) => {
+        console.log('filled2 sync', value);
+        return '1111';
+      })
+      .filled((value) => {
+        console.log('filled3 sync', value);
+        return value;
+      });
   });
 });

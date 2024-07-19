@@ -8,16 +8,12 @@ export class OptionalAsync<T> extends OptionalSync<T> implements Optional<T> {
   }
 
   public filled(cb: UnaryFn<Exclude<T, null>>): this {
-    this.asyncValue.then((value) => {
-      new OptionalSync<T>(value).filled(cb as UnaryFn<Exclude<T, null>>);
-    });
+    this.asyncValue = this.asyncValue.then((value) => new OptionalSync<T>(value).filled(cb as UnaryFn<Exclude<T, null>>)) as Promise<T | null>;
     return this;
   }
 
   public empty(cb: Procedure): this {
-    this.asyncValue.then((value) => {
-      new OptionalSync<T>(value).empty(cb);
-    });
+    this.asyncValue = this.asyncValue.then((value) => new OptionalSync<T>(value).empty(cb)) as Promise<T | null>;
     return this;
   }
 }

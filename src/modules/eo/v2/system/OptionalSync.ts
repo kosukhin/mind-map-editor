@@ -7,7 +7,10 @@ export class OptionalSync<T> implements Optional<T> {
   filled(cb: UnaryFn<Exclude<T, null>>): this {
     this.unwrapOptionalChain((value) => {
       if (value) {
-        cb(value as Exclude<T, null>);
+        const newValue = cb(value as Exclude<T, null>);
+        if (newValue !== undefined && newValue !== null) {
+          this.value = newValue;
+        }
       }
     }, 'filled');
     return this;
@@ -16,7 +19,10 @@ export class OptionalSync<T> implements Optional<T> {
   empty(cb: Procedure): this {
     this.unwrapOptionalChain((value) => {
       if (!value) {
-        cb();
+        const newValue = cb();
+        if (newValue !== undefined && newValue !== null) {
+          this.value = newValue as T | null;
+        }
       }
     }, 'empty');
     return this;

@@ -27,6 +27,7 @@ const selectType = (name: string) => {
 
 const i18n = useI18n();
 const { map } = useMap();
+
 const addType = () => {
   if (map.value) {
     const newTypeId = Date.now().toString();

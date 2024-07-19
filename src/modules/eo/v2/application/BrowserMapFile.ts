@@ -14,16 +14,15 @@ export class BrowserMapFile implements Saveable<MapStructure>, Valueable<Optiona
   ) {}
 
   value() {
-    return this.fileHandler.value().filled((fileHandler) => this.cache.key(fileHandler).empty(() => {
-      const file = fileHandler.getFile();
-      return new OptionalAsync(
-        file
-          .then((realFile) => new Response(realFile).text())
-          .then((fileText) => {
-            this.cache.setByKey(fileHandler, this.toMapStructure.convert(fileText));
-          }),
-      );
-    })) as unknown as Optional<MapFile>;
+    return this.fileHandler.value().filled((fileHandler) => this.cache.key(fileHandler).empty(() => new OptionalAsync(
+      fileHandler.getFile()
+        .then((realFile) => new Response(realFile).text())
+        .then((fileText) => {
+          const object = this.toMapStructure.convert(fileText);
+          this.cache.setByKey(fileHandler, object);
+          return object;
+        }),
+    ))) as unknown as Optional<MapFile>;
   }
 
   save(value: MapStructure): this {

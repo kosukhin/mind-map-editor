@@ -6,7 +6,7 @@ export class MemoryCache<Key extends object, T> implements Hashable<Key, T> {
   private cache = new WeakMap<Key, T>();
 
   key(key: Key): Optional<T> {
-    return new OptionalSync(this.cache.get(key) as T);
+    return new OptionalSync(this.cache.get(key) ?? null as T);
   }
 
   setByKey(key: Key, value: T): this {
