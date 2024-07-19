@@ -7,7 +7,7 @@ import './registerServiceWorker';
 import router from './router';
 
 createApp(App)
-  .use(router)
   .use(i18n)
+  .use(router)
   .use(editor)
   .mount('#app');

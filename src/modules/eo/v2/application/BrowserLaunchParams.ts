@@ -1,6 +1,8 @@
+import { Optional } from '@/modules/eo/targets/system/Optional';
+import { Valueable } from '@/modules/eo/targets/system/Valueable';
 import { OptionalAsync } from '@/modules/eo/v2/system/OptionalAsync';
 
-type LaunchParams = {
+export type LaunchParams = {
   files: FileSystemFileHandle[]
 }
 
@@ -10,8 +12,8 @@ declare const window: {
   }
 };
 
-export class BrowserLaunchQueue {
-  public launchParams(): OptionalAsync<LaunchParams | null> {
+export class BrowserLaunchParams implements Valueable<Optional<LaunchParams>> {
+  public value(): Optional<LaunchParams> {
     return new OptionalAsync(new Promise((resolve) => {
       if ('launchQueue' in window) {
         window.launchQueue.setConsumer((launchParams: LaunchParams) => {

@@ -5,8 +5,8 @@ import { MAP_UPDATED } from '@/constants/messages';
 import { NOTIFY_ERROR, NOTIFY_SUCCESS } from '@/constants/system';
 import { MapFile, MapStructure, MapType } from '@/entities/Map';
 import { AnyFn } from '@/entities/Utils';
-import { OptionalExpression } from '@/modules/eo/OptionalExpression';
-import { WatchedExpression } from '@/modules/eo/WatchedExpression';
+import { OptionalExpression } from '@/modules/eo/v2/system/OptionalExpression';
+import { WatchedExpression } from '@/modules/eo/v2/system/WatchedExpression';
 import { modelsPoolSet } from '@/modulesHigh/models/modelsPool';
 import { useEditor } from '@/plugins/editor';
 import { setError, setValue } from '@/utils/common';
@@ -17,15 +17,14 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 export const useMap = createSharedComposable(() => {
-  const editor = useEditor();
-  const optionalMap = editor.chainFilled((edt) => edt.currentMap());
-  const mapFile = new OptionalExpression(optionalMap).subscribeToSettled();
+  const { optionalMapFile } = useEditor();
+  const mapFile = new OptionalExpression(optionalMapFile.value()).init().valueRef();
 
   const map = new WatchedExpression<MapStructure>(
-    mapFile.valueRef(),
+    mapFile,
     (mapFileLocal: MapFile) => mapFileLocal.current,
     { immediate: true },
-  ).beginWatch().valueRef();
+  ).init().valueRef();
 
   const { message } = useNotify();
   const firstMapLoad = ref(false);

@@ -1,23 +1,23 @@
-import { BrowserLaunchQueue } from '@/modules/eo/BrowserLaunchQueue';
-import { Editor } from '@/modules/eo/Editor';
-import { FileFromFS } from '@/modules/eo/FileFromFS';
-import { FileOpened } from '@/modules/eo/FileOpened';
-import { OptionalAsync } from '@/modules/eo/OptionalAsync';
-import { App, inject } from 'vue';
-import { FileOpenedCache } from '@/modules/eo/FileOpenedCache';
+import { BrowserLaunchParams } from '@/modules/eo/v2/application/BrowserLaunchParams';
+import { BrowserMapFile } from '@/modules/eo/v2/application/BrowserMapFile';
+import { App } from 'vue';
+import { MemoryCache } from '@/modules/eo/v2/system/MemoryCache';
+import { JSONObjectFromString } from '@/modules/eo/v2/application/JSONObjectFromString';
+import { MapFile } from '@/entities/Map';
+import { PropertyPath } from '../modules/eo/v2/system/PropertyPath';
 
-export const useEditor = () => {
-  const editor = inject<OptionalAsync<Editor | null>>('editor');
-
-  return editor ?? new OptionalAsync(Promise.resolve(null));
+const editor = {
+  optionalMapFile: new BrowserMapFile(
+    new PropertyPath('files[0]', new BrowserLaunchParams()),
+    new MemoryCache<FileSystemFileHandle, MapFile>(),
+    new JSONObjectFromString(),
+  ),
 };
 
-const fileCache = new FileOpenedCache();
+export const useEditor = () => editor;
 
 export default {
   install: (app: App<unknown>) => {
-    app.provide('editor', new FileFromFS(new BrowserLaunchQueue())
-      .fileHandler()
-      .chainFilled((file) => new Editor(new FileOpened(file, fileCache))));
+    app.provide('editor', editor);
   },
 };
