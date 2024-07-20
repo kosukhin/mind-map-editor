@@ -12,7 +12,7 @@ import { createSharedComposable } from '@vueuse/core';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-const { optionalMapFile, logger } = useEditor();
+const { optionalMapFile, log } = useEditor();
 const mapFile = new OptionalExpression(optionalMapFile.value()).init().valueRef();
 
 export const useMap = createSharedComposable(() => {
@@ -44,13 +44,13 @@ export const useMap = createSharedComposable(() => {
       });
       ensureMapExisted.ensure().filled(() => {
         mapName.value = mapUrlToName(map.value?.url as string);
-        logger.do(['useMap', 'try to save']);
+        log.do(['useMap', 'try to save']);
 
         optionalMapFile.save({
           ...mapFile.value,
           [mapName.value]: map.value,
         } as MapFile).filled((saveResult) => {
-          logger.do(['useMap', 'Сохранено! пытаемся уведомить']);
+          log.do(['useMap', 'Сохранено! пытаемся уведомить']);
           message.value = ['Успешно сохранена карта', saveResult ? 'success' : 'error'];
         });
       });

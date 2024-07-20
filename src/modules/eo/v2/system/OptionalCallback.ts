@@ -29,9 +29,11 @@ export class OptionalCallback<T> implements Optional<T> {
     return new OptionalCallback((resolve) => {
       this.pendingQueue.push(() => {
         this.unwrapOptionalChain((value) => {
-          if (value !== null || value !== undefined) {
+          if (!this.isValueEmpty(value)) {
             const newValue = cb(value as Exclude<T, null>);
             resolve(newValue ?? null);
+          } else {
+            resolve(null);
           }
         }, 'filled');
       });
@@ -43,14 +45,20 @@ export class OptionalCallback<T> implements Optional<T> {
     return new OptionalCallback((resolve) => {
       this.pendingQueue.push(() => {
         this.unwrapOptionalChain((value) => {
-          if (value === null || value === undefined) {
+          if (this.isValueEmpty(value)) {
             const newValue = cb() as T | null;
             resolve(newValue ?? null as T);
+          } else {
+            resolve(value);
           }
         }, 'empty');
       });
       this.releasePendingQueue();
     });
+  }
+
+  protected isValueEmpty(value: unknown) {
+    return value === null || value === undefined;
   }
 
   protected unwrapOptionalChain(cb: UnaryFn<T | null>, operationType: 'filled' | 'empty') {
