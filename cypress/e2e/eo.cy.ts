@@ -26,9 +26,13 @@ describe('EO', () => {
 
   it('Проверить вложенность async optional', () => {
     const obj = new OptionalAsync(timeout(1000, 'one-').then((result) => new OptionalAsync(timeout(2000, `${result}two`))));
+
     obj.filled((value) => {
       console.log('async result', value);
       expect(value).to.eq('one-two');
+      return value;
+    }).empty(() => {
+      console.log('PROMBLEM!!! async is empty');
     });
   });
 
@@ -60,6 +64,7 @@ describe('EO', () => {
     new OptionalSync('many filled sync')
       .filled((value) => {
         console.log('filled1 sync', value);
+        return value;
       })
       .filled((value) => {
         console.log('filled2 sync', value);

@@ -79,12 +79,7 @@ const version = '0.1';
 const { isSidebarOpen } = useSideBar();
 
 const { isProjectOpened, loadProjectFiles } = useProject();
-const { openMapOfCurrentUrl, isLoading } = useMap();
-[!isProjectOpened.value].filter(Boolean).forEach(() => {
-  loadProjectFiles().then(() => {
-    openMapOfCurrentUrl();
-  });
-});
+const { isLoading } = useMap();
 
 const {
   history,

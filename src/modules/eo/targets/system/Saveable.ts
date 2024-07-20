@@ -1,3 +1,3 @@
-export interface Saveable<T> {
-  save(value: T): this;
+export interface Saveable<T, R> {
+  save(value: T): R;
 }

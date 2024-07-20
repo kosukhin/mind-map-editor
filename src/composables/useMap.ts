@@ -1,7 +1,7 @@
 import { useNotify } from '@/composables/useNotify';
-import { useRequestSaveMap } from '@/composables/useRequestSaveMap';
 import { MapFile, MapStructure, MapType } from '@/entities/Map';
 import { AnyFn } from '@/entities/Utils';
+import { Condition } from '@/modules/eo/v2/system/Condition';
 import { OptionalExpression } from '@/modules/eo/v2/system/OptionalExpression';
 import { WatchedExpression } from '@/modules/eo/v2/system/WatchedExpression';
 import { modelsPoolSet } from '@/modulesHigh/models/modelsPool';
@@ -12,17 +12,13 @@ import { createSharedComposable } from '@vueuse/core';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-const { optionalMapFile } = useEditor();
+const { optionalMapFile, logger } = useEditor();
 const mapFile = new OptionalExpression(optionalMapFile.value()).init().valueRef();
 
 export const useMap = createSharedComposable(() => {
   const map = new WatchedExpression<MapStructure>(
     mapFile,
-    (mapFileLocal: MapFile) => {
-      console.log('map watched', mapFileLocal.current);
-
-      return mapFileLocal.current;
-    },
+    (mapFileLocal: MapFile) => mapFileLocal.current,
     {
       immediate: true,
     },
@@ -37,17 +33,27 @@ export const useMap = createSharedComposable(() => {
   const mapName = ref(route.path.replace('/', ''));
   const afterMapSavedFns: AnyFn[] = [];
 
+  const ensureMapNameChanged = new Condition(() => Boolean(map.value && map.value.url !== route.path));
+  const ensureMapExisted = new Condition(() => Boolean(map.value));
+
   watch(
     map,
     () => {
-      setTimeout(() => {
-        if (map.value) {
-          if (map.value.url !== route.path) {
-            router.push(map.value.url);
-            mapName.value = mapUrlToName(map.value.url);
-          }
-        }
-      }, 200);
+      ensureMapNameChanged.ensure().filled(() => {
+        router.push(map.value?.url as string);
+      });
+      ensureMapExisted.ensure().filled(() => {
+        mapName.value = mapUrlToName(map.value?.url as string);
+        logger.do(['useMap', 'try to save']);
+
+        optionalMapFile.save({
+          ...mapFile.value,
+          [mapName.value]: map.value,
+        } as MapFile).filled((saveResult) => {
+          logger.do(['useMap', 'Сохранено! пытаемся уведомить']);
+          message.value = ['Успешно сохранена карта', saveResult ? 'success' : 'error'];
+        });
+      });
     },
     {
       deep: true,
@@ -56,17 +62,11 @@ export const useMap = createSharedComposable(() => {
 
   const isLoading = ref(false);
 
-  const openMapOfCurrentUrl = () => {
-    firstMapLoad.value = false;
-    mapName.value = mapUrlToName(route.path);
-  };
-
   return {
     map,
     firstMapLoad,
     parentTypes,
     mapName,
-    openMapOfCurrentUrl,
     isLoading,
     afterMapSavedFns,
   };
