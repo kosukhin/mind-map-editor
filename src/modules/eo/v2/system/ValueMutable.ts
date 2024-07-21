@@ -6,7 +6,9 @@ import { Valueable } from '@/modules/eo/targets/system/Valueable';
 export class ValueMutable<T> implements Valueable<T>, Mutable<T>, Observable<T> {
   private observers: Observer<T>[] = [];
 
-  constructor(private innerValue: T) {}
+  constructor(
+    private innerValue: T,
+  ) {}
 
   value(): T {
     return this.innerValue;
