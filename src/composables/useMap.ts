@@ -12,12 +12,12 @@ import { createSharedComposable } from '@vueuse/core';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-const { optionalMapFile, log } = useEditor();
-const mapFile = new OptionalExpression(optionalMapFile.value()).init().valueRef();
+const { mapFile, log } = useEditor();
+const mapFileRef = new OptionalExpression(mapFile.value()).init().valueRef();
 
 export const useMap = createSharedComposable(() => {
   const map = new WatchedExpression<MapStructure>(
-    mapFile,
+    mapFileRef,
     (mapFileLocal: MapFile) => mapFileLocal.current,
     {
       immediate: true,
@@ -46,7 +46,7 @@ export const useMap = createSharedComposable(() => {
         mapName.value = mapUrlToName(map.value?.url as string);
         log.do(['useMap', 'try to save']);
 
-        optionalMapFile.save({
+        mapFile.save({
           ...mapFile.value,
           [mapName.value]: map.value,
         } as MapFile).filled((saveResult) => {

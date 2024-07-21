@@ -35,13 +35,24 @@ export class BrowserMapFile implements Saveable<MapFile, Optional<boolean>>, Val
   }
 
   save(value: MapFile) {
-    this.log.do(['BrowserMapFile', 'inside save']);
+    this.log.do(['BrowserMapFile', 'inside save', this.fileHandler]);
     return this.fileHandler.value()
-      .filled((fileHandler) => new OptionalAsync(fileHandler.createWritable()
-        .then((writable) => {
-          this.log.do(['BrowserMapFile', 'writable ready!']);
-          writable.write(this.mapFileToString.convert(value)).finally(() => writable.close());
-          return true;
-        }).catch(() => false))) as unknown as Optional<boolean>;
+      .filled((vv) => {
+        this.log.do(['BrowserMapFile', 'filled sep', vv]);
+        return vv;
+      })
+      .empty(() => {
+        this.log.do(['BrowserMapFile', 'no file handler']);
+      })
+      .filled((fileHandler) => {
+        this.log.do(['BrowserMapFile', 'handler is received']);
+        return new OptionalAsync(fileHandler.createWritable()
+          .then((writable) => {
+            this.log.do(['BrowserMapFile', 'writable ready!']);
+            this.cache.setByKey(fileHandler, value);
+            writable.write(this.mapFileToString.convert(value)).finally(() => writable.close());
+            return true;
+          }).catch(() => false));
+      }) as unknown as Optional<boolean>;
   }
 }

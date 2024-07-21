@@ -1,3 +1,4 @@
+import { createMap } from '@/utils/map';
 import { MapFile } from '@/entities/Map';
 import { Factory } from '@/modules/eo/targets/system/Factory';
 import { Optional } from '@/modules/eo/targets/system/Optional';
@@ -9,6 +10,7 @@ import { JSONString } from '../../src/modules/eo/v2/application/JSONString';
 import { PropertyPath } from '../../src/modules/eo/v2/system/PropertyPath';
 import { Value } from '../../src/modules/eo/v2/system/Value';
 
+const log = new ConsoleLog(new OptionalSync(true));
 const fileHandler = { fileHandler: true };
 const fakeLaunchParams = new Value(new OptionalSync({
   files: [
@@ -19,11 +21,16 @@ const fakeLaunchParams = new Value(new OptionalSync({
       getFile() {
         return Promise.resolve(fileHandler);
       },
+      createWritable() {
+        return Promise.resolve({
+          write(content: any) {
+            log.do(['write content', content]);
+          },
+        });
+      },
     },
   ],
 }));
-
-const log = new ConsoleLog(new OptionalSync(true));
 
 const fakeFileResponse = new class implements Factory<[File], Optional<string>> {
   create() {
@@ -69,5 +76,18 @@ describe('BrowserMapFile', () => {
 
   it('mapfile write', () => {
     console.log('try to write');
+    const mapFile = new BrowserMapFile(
+      handlerValue,
+      new MemoryCache<FileSystemFileHandle, MapFile>(log),
+      new JSONString(),
+      log,
+      fakeFileResponse,
+    );
+
+    mapFile.save({
+      now: {
+        ...createMap('name'),
+      },
+    });
   });
 });

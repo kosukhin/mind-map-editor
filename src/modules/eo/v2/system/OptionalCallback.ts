@@ -2,7 +2,7 @@ import { Optional } from '@/modules/eo/targets/system/Optional';
 import { Procedure, UnaryFn } from '@/modules/eo/TypesFunctions';
 
 export class OptionalCallback<T> implements Optional<T> {
-  private value: T | null = null;
+  private innerValue: T | null = null;
 
   private isPending = true;
 
@@ -11,7 +11,7 @@ export class OptionalCallback<T> implements Optional<T> {
   ;
   public constructor(executor: (resolver: (realValue: T | null) => void) => void) {
     const resolver = (realValue: T | null) => {
-      this.value = realValue;
+      this.innerValue = realValue;
       this.isPending = false;
       this.releasePendingQueue();
     };
@@ -25,7 +25,7 @@ export class OptionalCallback<T> implements Optional<T> {
     }
   }
 
-  filled(cb: UnaryFn<Exclude<T, null>>): Optional<T> {
+  public filled(cb: UnaryFn<Exclude<T, null>>): Optional<T> {
     return new OptionalCallback((resolve) => {
       this.pendingQueue.push(() => {
         this.unwrapOptionalChain((value) => {
@@ -41,7 +41,7 @@ export class OptionalCallback<T> implements Optional<T> {
     });
   }
 
-  empty(cb: Procedure): Optional<T> {
+  public empty(cb: Procedure): Optional<T> {
     return new OptionalCallback((resolve) => {
       this.pendingQueue.push(() => {
         this.unwrapOptionalChain((value) => {
@@ -62,10 +62,10 @@ export class OptionalCallback<T> implements Optional<T> {
   }
 
   protected unwrapOptionalChain(cb: UnaryFn<T | null>, operationType: 'filled' | 'empty') {
-    if (this.value instanceof OptionalCallback) {
-      this.value[operationType](cb as any);
+    if (this.innerValue instanceof OptionalCallback) {
+      this.innerValue[operationType](cb as any);
     } else {
-      cb(this.value);
+      cb(this.innerValue);
     }
   }
 }
