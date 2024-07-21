@@ -14,11 +14,8 @@ import { OptionalSync } from '@/modules/eo/v2/system/OptionalSync';
 import { PropertyPath } from '@/modules/eo/v2/system/PropertyPath';
 import { ValueCached } from '@/modules/eo/v2/system/ValueCached';
 import { ValueMutable } from '@/modules/eo/v2/system/ValueMutable';
+import { KonvaEventObject } from 'konva/lib/Node';
 import { App } from 'vue';
-
-// TOOD Композиция всей программы будет здесь!
-// Будут созданые Observable к которым можно подписаться и
-// Таким образом будет связана вся система.
 
 const isProduction = false;
 const log = new ConsoleLog(new OptionalSync(!isProduction));
@@ -50,6 +47,16 @@ const mapObjectObserver = new MapObjectObserver(map);
 mapNewObject.subscribe(mapObjectObserver);
 mapEditObject.subscribe(mapObjectObserver);
 
+const layerDragend = new ValueMutable<KonvaEventObject<DragEvent> | null>(null);
+const layerDragstart = new ValueMutable<KonvaEventObject<DragEvent> | null>(null);
+const layerClick = new ValueMutable<KonvaEventObject<DragEvent> | null>(null);
+const layerStageClick = new ValueMutable<KonvaEventObject<DragEvent> | null>(null);
+const layerTap = new ValueMutable<KonvaEventObject<DragEvent> | null>(null);
+const layerMouseenter = new ValueMutable<KonvaEventObject<DragEvent> | null>(null);
+const layerMouseleave = new ValueMutable<KonvaEventObject<DragEvent> | null>(null);
+const layerWheel = new ValueMutable<KonvaEventObject<DragEvent> | null>(null);
+const layerDragmove = new ValueMutable<KonvaEventObject<DragEvent> | null>(null);
+
 const editor = {
   log,
   mapFile,
@@ -58,6 +65,15 @@ const editor = {
   mapEditType,
   mapNewObject,
   mapEditObject,
+  layerDragend,
+  layerDragstart,
+  layerClick,
+  layerStageClick,
+  layerTap,
+  layerMouseenter,
+  layerMouseleave,
+  layerWheel,
+  layerDragmove,
 };
 
 export const useEditor = () => editor;
