@@ -6,16 +6,20 @@ import { MapType } from '@/objects/mapType/MapType';
 /**
  * Конвертация структуры типа карты в объект
  */
-export class MapTypeOf implements MapType {
+export class MapTypeNull implements MapType {
   private innerChannel = new BaseChannelOf<MapTypeStructure>()
 
-  public constructor(private mapTypeStructure: MapTypeStructure) {}
+  private mapTypeStructure: MapTypeStructure | null = null;
 
   public channel(): BaseChannel<MapTypeStructure> {
     return this.innerChannel;
   }
 
   public entity(): MapTypeStructure {
+    if (!this.mapTypeStructure) {
+      throw new Error('MapTypeNull: no map type!');
+    }
+
     return this.mapTypeStructure;
   }
 }

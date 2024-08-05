@@ -1,16 +1,12 @@
 import { MapObjectStructure } from '@/entities/MapStructures';
-import { BaseChannel } from '@/objects/base/BaseChannel';
+import { BaseResult } from '@/objects/base/BaseResult';
 import { MapObject } from '@/objects/mapObject/MapObject';
 
 /**
  * Представление Объекта карты с связью с другим объектом
  */
 export class MapObjectWithRelation implements MapObject {
-  channel(): BaseChannel<MapObjectStructure> {
-    throw new Error('Method not implemented.');
-  }
-
-  entity(): MapObjectStructure {
+  entity(): BaseResult<MapObjectStructure> {
     throw new Error('Method not implemented.');
   }
 }

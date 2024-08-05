@@ -1,16 +1,18 @@
-import { MapStructure } from '@/entities/MapStructures';
-import { BaseChannel } from '@/objects/base/BaseChannel';
+import { BaseResult } from '@/objects/base/BaseResult';
+import { BaseResultParam } from '@/objects/base/BaseResultEntity';
 import { Map } from '@/objects/map/Map';
 
 /**
- * Конвертация структура данных карты в объект
+ * Конвертация структуры данных карты в объект
  */
 export class MapOf implements Map {
-  channel(): BaseChannel<MapStructure> {
-    throw new Error('Method not implemented.');
+  private canvas: BaseResult<BaseResultParam<Map>>;
+
+  public constructor(mapStructure: BaseResultParam<Map>) {
+    this.canvas = new BaseResult(mapStructure);
   }
 
-  entity(): MapStructure {
-    throw new Error('Method not implemented.');
+  public entity() {
+    return this.canvas;
   }
 }

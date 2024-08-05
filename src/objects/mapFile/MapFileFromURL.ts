@@ -1,13 +1,9 @@
 import { MapFileStructure } from '@/entities/MapStructures';
-import { BaseChannel } from '@/objects/base/BaseChannel';
+import { BaseResult } from '@/objects/base/BaseResult';
 import { MapFile } from '@/objects/mapFile/MapFile';
 
 export class MapFileFromURL implements MapFile {
-  channel(): BaseChannel<MapFileStructure> {
-    throw new Error('Method not implemented.');
-  }
-
-  entity(): MapFileStructure {
+  entity(): BaseResult<MapFileStructure> {
     throw new Error('Method not implemented.');
   }
 }

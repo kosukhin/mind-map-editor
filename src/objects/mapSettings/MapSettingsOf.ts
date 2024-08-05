@@ -1,16 +1,21 @@
 import { MapSettingsStructure } from '@/entities/MapStructures';
 import { BaseChannel } from '@/objects/base/BaseChannel';
+import { BaseChannelOf } from '@/objects/base/BaseChannelOf';
 import { MapSettings } from '@/objects/mapSettings/MapSettings';
 
 /**
  * Конвертация структуры настроек карты в объект
  */
 export class MapSettingsOf implements MapSettings {
-  channel(): BaseChannel<MapSettingsStructure> {
-    throw new Error('Method not implemented.');
+  private innerChannel = new BaseChannelOf<MapSettingsStructure>()
+
+  constructor(private mapSettingsStructure: MapSettingsStructure) {}
+
+  public channel(): BaseChannel<MapSettingsStructure> {
+    return this.innerChannel;
   }
 
-  entity(): MapSettingsStructure {
-    throw new Error('Method not implemented.');
+  public entity(): MapSettingsStructure {
+    return this.mapSettingsStructure;
   }
 }

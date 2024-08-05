@@ -52,7 +52,6 @@ export interface MapStructure {
   parent: string
   progress: number
   parentNames?: Record<string, string>
-  settings: MapSettingsStructure
   types: Record<string, MapTypeStructure>
   objects: Record<string, MapObjectStructure>
   position?: [number, number],

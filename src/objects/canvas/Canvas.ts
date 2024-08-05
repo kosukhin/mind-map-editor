@@ -1,4 +1,4 @@
 import { CanvasStructure } from '@/entities/CanvasStructure';
-import { BaseChannelEntity } from '@/objects/base/BaseChannelEntity';
+import { BaseResultEntity } from '@/objects/base/BaseResultEntity';
 
-export type Canvas = BaseChannelEntity<CanvasStructure>;
+export type Canvas = BaseResultEntity<CanvasStructure>;

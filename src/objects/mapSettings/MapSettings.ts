@@ -1,4 +1,4 @@
 import { MapSettingsStructure } from '@/entities/MapStructures';
-import { BaseChannelEntity } from '@/objects/base/BaseChannelEntity';
+import { BaseResultEntity } from '@/objects/base/BaseResultEntity';
 
-export type MapSettings = BaseChannelEntity<MapSettingsStructure>;
+export type MapSettings = BaseResultEntity<MapSettingsStructure>;
