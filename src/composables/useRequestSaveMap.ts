@@ -2,11 +2,12 @@ import { idbEdit } from '@/application/idbAction';
 import { idbFindDb } from '@/application/idbGet';
 import { useOpenFile } from '@/composables/useOpenFile';
 import { useRequestCreateMap } from '@/composables/useRequestCreateMap';
-import { MapStructure } from '@/entities/Map';
 import { getFileBlobByName, readFile, updateBlobContent } from '@/libraries/browser-fs';
 import { jsonParse } from '@/utils/jsonParse';
 import { jsonStringify } from '@/utils/jsonStringify';
 import { omit } from 'lodash';
+import { MapStructure } from '@/entities/Map';
+'lodash';
 
 const { forceFile } = useOpenFile();
 

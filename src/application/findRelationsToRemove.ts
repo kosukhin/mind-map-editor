@@ -1,9 +1,9 @@
-import { MapObject, MapStructure } from '@/entities/Map';
+import { MapObjectStructure, MapStructure } from '@/entities/MapStructures';
 
 type RelativeObject = { objectId: string; indexes: string[] }
 
 export const findRelationsToRemove = (
-  vObject: MapObject,
+  vObject: MapObjectStructure,
   vMap: MapStructure,
 ): any => {
   let relations: any[] | null = null;

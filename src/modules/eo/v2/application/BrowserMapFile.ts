@@ -1,4 +1,3 @@
-import { MapFile } from '@/entities/Map';
 import { ConvertableRevertable } from '@/modules/eo/targets/system/ConvertableRevertable';
 import { Doable } from '@/modules/eo/targets/system/Doable';
 import { Factory } from '@/modules/eo/targets/system/Factory';
@@ -7,6 +6,8 @@ import { Optional } from '@/modules/eo/targets/system/Optional';
 import { Saveable } from '@/modules/eo/targets/system/Saveable';
 import { Valueable } from '@/modules/eo/targets/system/Valueable';
 import { OptionalAsync } from '@/modules/eo/v2/system/OptionalAsync';
+import { MapFile } from '@/entities/Map';
+alAsync';
 
 export class BrowserMapFile implements Saveable<MapFile, Optional<boolean>>, Valueable<Optional<MapFile>> {
   constructor(

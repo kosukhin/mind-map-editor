@@ -1,11 +1,11 @@
-import { MapObject, MapStructure } from '@/entities/Map';
+import { MapObjectStructure, MapStructure } from '@/entities/MapStructures';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { Nullable } from '@/entities/Nullable';
 import { SHOW_OBJECT } from '@/constants/overlays';
 
 interface Result {
   currentObjectId: Nullable<number>
-  openUrlByObject: Nullable<MapObject>
+  openUrlByObject: Nullable<MapObjectStructure>
   overlayName: Nullable<string>
 }
 

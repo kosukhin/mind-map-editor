@@ -1,28 +1,28 @@
-import { MapObject } from '@/entities/Map';
+import { MapObjectStructure } from '@/entities/MapStructures';
 
 export const mapObjectTransformer = {
   isIncludesInAdditionalFields(
-    object: MapObject,
+    object: MapObjectStructure,
     searchQuery: string,
   ) {
     return !!object.additionalFields
       && Object.values(object.additionalFields).some((v) => v.toLowerCase().includes(searchQuery));
   },
   isIncludesInField(
-    object: MapObject,
-    fieldName: keyof MapObject,
+    object: MapObjectStructure,
+    fieldName: keyof MapObjectStructure,
     searchQuery: string,
   ) {
     const fieldValue = object[fieldName];
     return String(fieldValue).toLowerCase().includes(searchQuery);
   },
   filterObjectsByType(
-    objects: MapObject[],
+    objects: MapObjectStructure[],
     typeName: string,
   ) {
     return objects.filter((object) => object.type === typeName);
   },
-  firstAdditionalField(object: MapObject) {
+  firstAdditionalField(object: MapObjectStructure) {
     return Object
       .values(object.additionalFields ?? {})
       .filter(Boolean).shift();

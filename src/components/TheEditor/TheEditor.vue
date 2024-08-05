@@ -8,7 +8,7 @@ import {
 } from 'vue';
 import { useMap } from '@/composables/useMap';
 import { calculateVisibleObjects } from '@/application/layerDragObjectHandler';
-import { MapObject } from '@/entities/Map';
+import { MapObjectStructure } from '@/entities/MapStructures';
 import { useLayerEvents } from '@/composables/useLayerEvents';
 import { renderSvgTemplate } from '@/utils/svgRenderDefault';
 import { useFps } from '@vueuse/core';
@@ -45,7 +45,7 @@ const recalcObjectsRendered = () => {
   const [visible] = calculateVisibleObjects(map.value, stage.value);
   const stagePosition = stage.value.position();
 
-  objectsRendered.value = visible.map((obj: MapObject) => {
+  objectsRendered.value = visible.map((obj: MapObjectStructure) => {
     const position = [...obj.position];
     if (dragmove.value?.target && dragmove.value.target.attrs.objectId === obj.id) {
       const targetPosition = dragmove.value.target.position();

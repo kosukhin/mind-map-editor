@@ -1,4 +1,4 @@
-import { MapObject, MapStructure, MapType } from '@/entities/Map';
+import { MapObjectStructure, MapStructure, MapTypeStructure } from '@/entities/MapStructures';
 
 const defaultType = {
   svg: '',
@@ -6,7 +6,7 @@ const defaultType = {
   height: '100',
 };
 
-export const renderSvgTemplate = (object: MapObject, vMap: MapStructure) => {
+export const renderSvgTemplate = (object: MapObjectStructure, vMap: MapStructure) => {
   const type = vMap.types[object.type];
   let { svg } = type;
   if (object.additionalFields) {
@@ -27,7 +27,7 @@ export const svgRender = (svg: string, width?: string, height?: string) => svg
   // eslint-disable-next-line no-template-curly-in-string
   .replaceAll('${height}', height || defaultType.height);
 
-export const svgRenderDefault = (type: MapType) => svgRender(
+export const svgRenderDefault = (type: MapTypeStructure) => svgRender(
   type.svg,
   type.width.toString(),
   type.height.toString(),

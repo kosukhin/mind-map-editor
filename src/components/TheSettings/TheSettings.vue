@@ -6,7 +6,7 @@ import { omit } from 'lodash';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseCheckbox from '@/components/BaseCheckbox/BaseCheckbox.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
-import { MapSettings } from '@/entities/Map';
+import { MapSettingsStructure } from '@/entities/MapStructures';
 import { useMap } from '@/composables/useMap';
 import { useRequestRemoveMap } from '@/composables/useRequestRemoveMap';
 import { useOverlay } from '@/composables/useOverlay';
@@ -23,7 +23,7 @@ import { createMapFileNameFromUrl } from '@/utils/map';
 
 const { stringify } = JSON;
 
-const form = ref<Partial<MapSettings>>({});
+const form = ref<Partial<MapSettingsStructure>>({});
 const {
   map, mapName, firstMapLoad, parentTypes,
 } = useMap();
@@ -55,7 +55,7 @@ const onRemove = async () => {
 const onSave = () => {
   close();
   if (map.value) {
-    map.value.settings = { ...form.value } as MapSettings;
+    map.value.settings = { ...form.value } as MapSettingsStructure;
   }
 };
 

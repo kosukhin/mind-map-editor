@@ -1,15 +1,16 @@
+import { CanvasStructure } from '@/entities/CanvasStructure';
+import { BaseChannel } from '@/objects/base/BaseChannel';
 import { Canvas } from '@/objects/canvas/Canvas';
-import { TextOf } from '@/objects/text/TextOf';
-import { TextUppercase } from '@/objects/text/TextUppercase';
-import { TextAngry } from '@/objects/text/TextAngry';
 
+/**
+ * Конвертация структуры данных холста в объект
+ */
 export class CanvasOf implements Canvas {
-  private titleTemplate = new TextAngry(new TextUppercase(new TextOf('')));
+  channel(): BaseChannel<CanvasStructure> {
+    throw new Error('Method not implemented.');
+  }
 
-  public constructor(private canvasElement: HTMLElement) {}
-
-  render(): void {
-    const title = this.titleTemplate.clone('Приложение');
-    console.log(title.string());
+  entity(): CanvasStructure {
+    throw new Error('Method not implemented.');
   }
 }

@@ -1,6 +1,3 @@
-import {
-  MapFile, MapObject, MapStructure, MapType,
-} from '@/entities/Map';
 import { BrowserLaunchParams } from '@/modules/eo/v2/application/BrowserLaunchParams';
 import { BrowserMapFile } from '@/modules/eo/v2/application/BrowserMapFile';
 import { FileResponseFactory } from '@/modules/eo/v2/application/FileResponseFactory';
@@ -16,6 +13,10 @@ import { ValueCached } from '@/modules/eo/v2/system/ValueCached';
 import { ValueMutable } from '@/modules/eo/v2/system/ValueMutable';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { App } from 'vue';
+import {
+  MapFile, MapObject, MapStructure, MapType,
+} from '@/entities/Map';
+om 'vue';
 
 const isProduction = false;
 const log = new ConsoleLog(new OptionalSync(!isProduction));

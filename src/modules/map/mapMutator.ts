@@ -1,10 +1,10 @@
-import { MapStructure, MapType, NamedSearch } from '@/entities/Map';
+import { MapStructure, MapTypeStructure, NamedSearchStructure } from '@/entities/MapStructures';
 
 export const mapMutator = {
-  addType(map: MapStructure, type: MapType) {
+  addType(map: MapStructure, type: MapTypeStructure) {
     map.types[type.name] = type;
   },
-  addNamedSearch(map: MapStructure, search: NamedSearch) {
+  addNamedSearch(map: MapStructure, search: NamedSearchStructure) {
     if (!map.namedSearches) {
       map.namedSearches = [];
     }

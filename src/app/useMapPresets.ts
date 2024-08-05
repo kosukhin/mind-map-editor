@@ -1,12 +1,12 @@
 import { mapMutator } from '@/modules/map/mapMutator';
-import { MapStructure, MapType } from '@/entities/Map';
+import { MapStructure, MapTypeStructure } from '@/entities/MapStructures';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 
 /**
  * MapTypes included in application as presets
  */
 export const useMapPresets = () => ({
-  addType(type: MapType) {
+  addType(type: MapTypeStructure) {
     const map = modelsPoolGet<MapStructure>('map');
     mapMutator.addType(map, type);
   },

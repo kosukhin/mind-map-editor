@@ -9,7 +9,7 @@ import { useMapBehaviour } from '@/app/useMapBehaviour';
 import { mapObjectTransformer } from '@/modules/map/mapObjectTransformer';
 import { useSearchNamed } from '@/app/useSearchNamed';
 import { branchCombinator } from '@/modules/combinators/branchCombinator';
-import { MapStructure, NamedSearch } from '@/entities/Map';
+import { MapStructure, NamedSearchStructure } from '@/entities/MapStructures';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 import { get } from 'lodash';
 
@@ -34,7 +34,7 @@ const { firstAdditionalField } = mapObjectTransformer;
 
 const namedSearchApplyIndex = (index: number) => {
   const map = modelsPoolGet<MapStructure>('map');
-  const search = get(map, ['namedSearch', index]) as NamedSearch;
+  const search = get(map, ['namedSearch', index]) as NamedSearchStructure;
   branchCombinator.when(search, () => {
     queryField.value = search.query;
     typeField.value = search.type;

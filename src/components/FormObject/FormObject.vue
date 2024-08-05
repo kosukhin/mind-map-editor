@@ -17,7 +17,7 @@ import { SHOW_OBJECT, SHOW_TRANSFER } from '@/constants/overlays';
 import { useMapObject } from '@/composables/useMapObject';
 import { createMapObjectUrl } from '@/utils/map';
 import { useLayer } from '@/composables/useLayer';
-import { MapObject } from '@/entities/Map';
+import { MapObjectStructure } from '@/entities/MapStructures';
 import { useNotify } from '@/composables/useNotify';
 import { setValue } from '@/utils/common';
 import { COPIED, NOT_SUPPOERTED } from '@/constants/messages';
@@ -101,9 +101,9 @@ watch(ctrlSFired, () => {
 });
 
 const removeRelation = async (index: number) => {
-  if (!(form.value as MapObject).arrows) return;
+  if (!(form.value as MapObjectStructure).arrows) return;
   if (currentObject.value && map.value && layer.value) {
-    (form.value as MapObject).arrows.splice(index, 1);
+    (form.value as MapObjectStructure).arrows.splice(index, 1);
     await updateObjectOnLayer(
       layerObjects,
       layer.value,

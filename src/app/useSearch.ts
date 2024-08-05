@@ -2,7 +2,7 @@ import { ref } from '@vue/reactivity';
 import { computed } from 'vue';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 import { mapTransformer } from '@/modules/map/mapTransformer';
-import { MapObject, MapStructure } from '@/entities/Map';
+import { MapObjectStructure, MapStructure } from '@/entities/MapStructures';
 import { listItemAny } from '@/modules/common/constants';
 import { branchCombinator } from '@/modules/combinators/branchCombinator';
 import { mapObjectTransformer } from '@/modules/map/mapObjectTransformer';
@@ -31,7 +31,7 @@ export const useSearch = () => {
   const searchResults = computed(() => {
     const map = modelsPoolGet<MapStructure>('map');
     const allObjects = mapTransformer.getObjects(map);
-    let objects: MapObject[] = when(typeField.value, () => mapObjectTransformer.filterObjectsByType(
+    let objects: MapObjectStructure[] = when(typeField.value, () => mapObjectTransformer.filterObjectsByType(
       allObjects,
       typeField.value as string,
     ), allObjects);
@@ -40,7 +40,7 @@ export const useSearch = () => {
       const searchQuery = stringHelper.toLower(queryField.value);
       return arrayHelper.filter(
         objects,
-        (object: MapObject) => isIncludesInAdditionalFields(object, searchQuery)
+        (object: MapObjectStructure) => isIncludesInAdditionalFields(object, searchQuery)
         || isIncludesInField(object, 'name', searchQuery)
         || isIncludesInField(object, 'additionalName', searchQuery),
       );

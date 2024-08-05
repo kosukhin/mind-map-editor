@@ -1,7 +1,7 @@
 import { useRouter } from '@/composables/useRouter';
 import { MAP_DEFAULT_TITLE } from '@/constants/messages';
 import { Arrow } from '@/entities/Konva';
-import { MapObject, MapStructure, MapType } from '@/entities/Map';
+import { MapObjectStructure, MapStructure, MapTypeStructure } from '@/entities/MapStructures';
 import { Nullable } from '@/entities/Nullable';
 import { urlTrim } from '@/utils/common';
 import { getLocation } from '@/utils/globals';
@@ -30,8 +30,8 @@ export const createMap = (
 export const createObject = (
   position: [number, number],
   type: string,
-  typeModel: MapType,
-): MapObject => ({
+  typeModel: MapTypeStructure,
+): MapObjectStructure => ({
   name: '',
   outlink: '',
   linked: false,
@@ -50,7 +50,7 @@ export const createObject = (
   additionalName: '',
 });
 
-export function createMapObjectUrl(object: MapObject) {
+export function createMapObjectUrl(object: MapObjectStructure) {
   let link = object.outlink
     ? object.outlink
     : `${getLocation().pathname
@@ -81,7 +81,7 @@ const openExternalLink = debounce((link: string) => {
   window.open(link);
 }, 200);
 
-export const openUrlByObject = (object: MapObject) => {
+export const openUrlByObject = (object: MapObjectStructure) => {
   if (object?.linked) {
     const link = createMapObjectUrl(object);
     if (object.targetBlank) {

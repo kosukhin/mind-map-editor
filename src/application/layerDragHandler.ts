@@ -1,4 +1,4 @@
-import { MapStructure } from '@/entities/Map';
+import { MapStructure } from '@/entities/MapStructures';
 import { KonvaEventObject } from 'konva/lib/Node';
 
 type Params = [KonvaEventObject<DragEvent>, MapStructure]

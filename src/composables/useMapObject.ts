@@ -1,7 +1,7 @@
 import { ref, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
 import { useMap } from '@/composables/useMap';
-import { MapObject } from '@/entities/Map';
+import { MapObjectStructure } from '@/entities/MapStructures';
 import { isNotNullish } from '@/utils/isNotNullish';
 import { currentObjectSet } from '@/application/currentObjectSet';
 import { currentObjectSetAdditionalFields } from '@/application/currentObjectSetAdditionalFields';
@@ -14,7 +14,7 @@ export const useMapObject = createSharedComposable(() => {
   const fastPreviewIsLocked = ref(false);
   const fastPreviewObjectId = ref<number>();
   const currentObjectId = ref<number>();
-  const currentObject = ref<MapObject>();
+  const currentObject = ref<MapObjectStructure>();
   const { map } = useMap();
 
   watch([currentObjectId, map], () => {

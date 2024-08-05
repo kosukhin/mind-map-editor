@@ -1,9 +1,10 @@
-import { MapFile, MapStructure } from '@/entities/Map';
 import { Observer } from '@/modules/eo/targets/system/Observer';
 import { Optional } from '@/modules/eo/targets/system/Optional';
 import { Saveable } from '@/modules/eo/targets/system/Saveable';
 import { Valueable } from '@/modules/eo/targets/system/Valueable';
 import { mapUrlToName } from '@/utils/mapUrlToName';
+import { MapFile, MapStructure } from '@/entities/Map';
+lToName';
 
 export class MapObserver implements Observer<MapStructure> {
   constructor(private mapFile: Saveable<MapFile, Optional<boolean>> & Valueable<Optional<MapFile>>) {}

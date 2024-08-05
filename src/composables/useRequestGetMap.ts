@@ -1,13 +1,14 @@
 import { mapBuildParentMapNames } from '@/application/mapBuildParentMapNames';
 import { requestNormalizeGetMap } from '@/application/requestNormalizeGetMap';
 import { useOpenFile } from '@/composables/useOpenFile';
-import { MapStructure, MapType } from '@/entities/Map';
 import { readFile } from '@/libraries/browser-fs';
 import { isNotNullish } from '@/utils/isNotNullish';
 import { iterateeHash } from '@/utils/iterateeHash';
 import { jsonParse } from '@/utils/jsonParse';
 import { createMap } from '@/utils/map';
 import { compose, property } from 'lodash/fp';
+import { MapStructure, MapType } from '@/entities/Map';
+dash/fp';
 
 const isTypesNotNullish = compose(isNotNullish, property('types'));
 const { forceFile } = useOpenFile();

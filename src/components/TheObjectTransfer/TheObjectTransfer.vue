@@ -9,7 +9,7 @@ import { useMapObject } from '@/composables/useMapObject';
 import { useOverlay } from '@/composables/useOverlay';
 import { SHOW_TRANSFER } from '@/constants/overlays';
 import { HISTORY_STORAGE_KEY } from '@/constants/system';
-import { MapObject } from '@/entities/Map';
+import { MapObjectStructure } from '@/entities/MapStructures';
 import { createMapObjectUrl } from '@/utils/map';
 import { ref } from '@vue/reactivity';
 import { useStorage, watchOnce } from '@vueuse/core';
@@ -28,7 +28,7 @@ watchOnce(firstMapLoad, () => {
   }
 });
 
-const getObjectLink = (object: MapObject) => {
+const getObjectLink = (object: MapObjectStructure) => {
   if (object.outlink) {
     return object.outlink;
   }

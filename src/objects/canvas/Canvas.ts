@@ -1,6 +1,4 @@
-/**
- * Работа по отображению Группы элементов
- */
-export interface Canvas {
-  render(): void;
-}
+import { CanvasStructure } from '@/entities/CanvasStructure';
+import { BaseChannelEntity } from '@/objects/base/BaseChannelEntity';
+
+export type Canvas = BaseChannelEntity<CanvasStructure>;

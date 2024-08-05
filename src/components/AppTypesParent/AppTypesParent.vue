@@ -4,13 +4,13 @@ import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_PARENT_TYPES } from '@/constants/overlays';
 import { useMap } from '@/composables/useMap';
-import { MapType } from '@/entities/Map';
+import { MapTypeStructure } from '@/entities/MapStructures';
 import { svgRender } from '@/utils/svgRenderDefault';
 
 useOverlayAutoClose(SHOW_PARENT_TYPES);
 
 const { map, parentTypes } = useMap();
-const addType = (type: MapType) => {
+const addType = (type: MapTypeStructure) => {
   if (map.value) {
     map.value.types[type.name] = type;
   }

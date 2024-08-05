@@ -1,5 +1,4 @@
 import { useNotify } from '@/composables/useNotify';
-import { MapFile, MapStructure, MapType } from '@/entities/Map';
 import { AnyFn } from '@/entities/Utils';
 import { Condition } from '@/modules/eo/v2/system/Condition';
 import { OptionalExpression } from '@/modules/eo/v2/system/OptionalExpression';
@@ -11,6 +10,8 @@ import { watch } from '@vue/runtime-core';
 import { createSharedComposable } from '@vueuse/core';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { MapFile, MapStructure, MapType } from '@/entities/Map';
+-router';
 
 const { mapFile, log } = useEditor();
 const mapFileRef = new OptionalExpression(mapFile.value()).init().valueRef();

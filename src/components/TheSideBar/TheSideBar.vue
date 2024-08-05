@@ -14,9 +14,10 @@ import { useSideBar } from '@/composables/useSideBar';
 import { useLayer } from '@/composables/useLayer';
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from '@/constants/system';
 import { createObject } from '@/utils/map';
-import { MapObject } from '@/entities/Map';
 import { svgRenderDefault } from '@/utils/svgRenderDefault';
 import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
+import { MapObject } from '@/entities/Map';
+enderer';
 
 const { overlayName } = useOverlay();
 const { currentTypeId } = useMapType();

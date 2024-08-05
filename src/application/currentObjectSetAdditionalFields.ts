@@ -1,4 +1,4 @@
-import { MapObject, MapStructure } from '@/entities/Map';
+import { MapObjectStructure, MapStructure } from '@/entities/MapStructures';
 import { withList } from '@/utils/withList';
 import { isNullish } from '@/utils/isNullish';
 import { doLater } from '@/utils/doLater';
@@ -11,7 +11,7 @@ const variableRegexp = /\$\{([a-zA-Z1-9]+)\}/g;
  * В шаблонах SVG типов узлов могут быть переменные
  * нужно эти переменные сделать моделью объекта карты
  */
-export const currentObjectSetAdditionalFields = (theMap: MapStructure, theObject: MapObject) => {
+export const currentObjectSetAdditionalFields = (theMap: MapStructure, theObject: MapObjectStructure) => {
   const type = theMap.types[theObject.type];
 
   withList([theObject.additionalFields])

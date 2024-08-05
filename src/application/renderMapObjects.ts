@@ -1,5 +1,5 @@
 import { KonvaLayerObject } from '@/entities/Konva';
-import { MapStructure } from '@/entities/Map';
+import { MapStructure } from '@/entities/MapStructures';
 import { addObjectToLayer } from '@/utils/konva';
 import { Layer } from 'konva/lib/Layer';
 

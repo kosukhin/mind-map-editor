@@ -1,12 +1,13 @@
 import Konva from 'konva';
-import {
-  Arrow, KonvaLayerObject, Layer, Stage,
-} from '@/entities/Konva';
 import { MapObject, MapStructure } from '@/entities/Map';
 import { generateUniqString } from '@/utils/string';
 import { cloneDeep, omit } from 'lodash';
 import { arrowStartPointPosition } from '@/application/arrowStartPointPosition';
 import html2canvas from 'html2canvas';
+import {
+  Arrow, KonvaLayerObject, Layer, Stage,
+} from '@/entities/Konva';
+2canvas';
 
 export async function addObjectToLayer(
   layer: Layer,

@@ -1,4 +1,3 @@
-export interface Text {
-  clone(str: string): Text;
-  string(): string;
-}
+import { BaseEntity } from '@/objects/base/BaseEntity';
+
+export type Text = BaseEntity<string>
