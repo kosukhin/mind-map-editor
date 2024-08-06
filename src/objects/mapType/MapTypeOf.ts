@@ -1,21 +1,18 @@
-import { MapTypeStructure } from '@/entities/MapStructures';
-import { BaseChannel } from '@/objects/base/BaseChannel';
-import { BaseChannelOf } from '@/objects/base/BaseChannelOf';
+import { BaseResult } from '@/objects/base/BaseResult';
+import { BaseResultParam } from '@/objects/base/BaseResultEntity';
 import { MapType } from '@/objects/mapType/MapType';
 
 /**
  * Конвертация структуры типа карты в объект
  */
 export class MapTypeOf implements MapType {
-  private innerChannel = new BaseChannelOf<MapTypeStructure>()
+  private mapType: BaseResult<BaseResultParam<MapType>>;
 
-  public constructor(private mapTypeStructure: MapTypeStructure) {}
-
-  public channel(): BaseChannel<MapTypeStructure> {
-    return this.innerChannel;
+  public constructor(mapType: BaseResultParam<MapType>) {
+    this.mapType = new BaseResult(mapType);
   }
 
-  public entity(): MapTypeStructure {
-    return this.mapTypeStructure;
+  public entity() {
+    return this.mapType;
   }
 }
