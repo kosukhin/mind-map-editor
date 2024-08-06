@@ -1,4 +1,4 @@
-import { MapObjectStructure, MapStructure } from '@/entities/MapStructures';
+import { MapObjectStructure, MapStructure } from '@/objects/entities/MapStructures';
 import { ListItem } from '@/modules/types/ListItem';
 
 export const mapTransformer = {

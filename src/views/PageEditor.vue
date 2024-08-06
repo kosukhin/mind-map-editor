@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { ApplicationBase } from '@/objects/application/ApplicationBase';
-import { onMounted, ref } from 'vue';
+import { useApplication } from '@/composables/useApplication';
+import { ref } from 'vue';
 
 const canvas = ref<HTMLElement>();
-
-onMounted(() => {
-  new ApplicationBase(canvas.value).setup();
-});
+const { mapFile } = useApplication();
 </script>
 
 <template>

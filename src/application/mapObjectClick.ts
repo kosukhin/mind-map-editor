@@ -1,4 +1,4 @@
-import { MapObjectStructure, MapStructure } from '@/entities/MapStructures';
+import { MapObjectStructure, MapStructure } from '@/objects/entities/MapStructures';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { Nullable } from '@/entities/Nullable';
 import { SHOW_OBJECT } from '@/constants/overlays';

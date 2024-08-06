@@ -1,5 +1,5 @@
 import { mapMutator } from '@/modules/map/mapMutator';
-import { MapStructure, MapTypeStructure } from '@/entities/MapStructures';
+import { MapStructure, MapTypeStructure } from '@/objects/entities/MapStructures';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 
 /**

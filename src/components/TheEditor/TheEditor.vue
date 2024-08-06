@@ -8,7 +8,7 @@ import {
 } from 'vue';
 import { useMap } from '@/composables/useMap';
 import { calculateVisibleObjects } from '@/application/layerDragObjectHandler';
-import { MapObjectStructure } from '@/entities/MapStructures';
+import { MapObjectStructure } from '@/objects/entities/MapStructures';
 import { useLayerEvents } from '@/composables/useLayerEvents';
 import { renderSvgTemplate } from '@/utils/svgRenderDefault';
 import { useFps } from '@vueuse/core';

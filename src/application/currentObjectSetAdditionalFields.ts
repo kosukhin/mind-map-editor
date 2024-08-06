@@ -1,4 +1,4 @@
-import { MapObjectStructure, MapStructure } from '@/entities/MapStructures';
+import { MapObjectStructure, MapStructure } from '@/objects/entities/MapStructures';
 import { withList } from '@/utils/withList';
 import { isNullish } from '@/utils/isNullish';
 import { doLater } from '@/utils/doLater';

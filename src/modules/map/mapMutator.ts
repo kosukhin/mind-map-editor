@@ -1,4 +1,4 @@
-import { MapStructure, MapTypeStructure, NamedSearchStructure } from '@/entities/MapStructures';
+import { MapStructure, MapTypeStructure, NamedSearchStructure } from '@/objects/entities/MapStructures';
 
 export const mapMutator = {
   addType(map: MapStructure, type: MapTypeStructure) {

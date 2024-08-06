@@ -1,7 +1,7 @@
-import { BaseChannelOf } from '@/objects/base/BaseChannelOf';
+import { ChannelOf } from '@/objects/system/channel/ChannelOf';
 
 export const useEditor = () => {
-  const canvasChannel = new BaseChannelOf();
+  const canvasChannel = new ChannelOf();
 
   return {
     canvasChannel,

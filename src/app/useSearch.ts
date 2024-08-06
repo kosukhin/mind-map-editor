@@ -2,7 +2,7 @@ import { ref } from '@vue/reactivity';
 import { computed } from 'vue';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 import { mapTransformer } from '@/modules/map/mapTransformer';
-import { MapObjectStructure, MapStructure } from '@/entities/MapStructures';
+import { MapObjectStructure, MapStructure } from '@/objects/entities/MapStructures';
 import { listItemAny } from '@/modules/common/constants';
 import { branchCombinator } from '@/modules/combinators/branchCombinator';
 import { mapObjectTransformer } from '@/modules/map/mapObjectTransformer';

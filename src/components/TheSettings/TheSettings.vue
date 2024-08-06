@@ -6,7 +6,7 @@ import { omit } from 'lodash';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseCheckbox from '@/components/BaseCheckbox/BaseCheckbox.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
-import { MapSettingsStructure } from '@/entities/MapStructures';
+import { MapSettingsStructure } from '@/objects/entities/MapStructures';
 import { useMap } from '@/composables/useMap';
 import { useRequestRemoveMap } from '@/composables/useRequestRemoveMap';
 import { useOverlay } from '@/composables/useOverlay';

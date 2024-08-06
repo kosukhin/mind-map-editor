@@ -1,4 +1,4 @@
-import { MapObjectStructure } from '@/entities/MapStructures';
+import { MapObjectStructure } from '@/objects/entities/MapStructures';
 
 export const mapObjectTransformer = {
   isIncludesInAdditionalFields(

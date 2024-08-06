@@ -9,7 +9,7 @@ import { useMapBehaviour } from '@/app/useMapBehaviour';
 import { mapObjectTransformer } from '@/modules/map/mapObjectTransformer';
 import { useSearchNamed } from '@/app/useSearchNamed';
 import { branchCombinator } from '@/modules/combinators/branchCombinator';
-import { MapStructure, NamedSearchStructure } from '@/entities/MapStructures';
+import { MapStructure, NamedSearchStructure } from '@/objects/entities/MapStructures';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 import { get } from 'lodash';
 

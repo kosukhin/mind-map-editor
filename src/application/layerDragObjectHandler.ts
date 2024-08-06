@@ -1,5 +1,5 @@
 import { Arrow, Vector2d } from '@/entities/Konva';
-import { MapStructure } from '@/entities/MapStructures';
+import { MapStructure } from '@/objects/entities/MapStructures';
 import { MapLayerObjects } from '@/entities/MapLayerObjects';
 import { Nullable } from '@/entities/Nullable';
 import { maxNewLineLength } from '@/utils/common';

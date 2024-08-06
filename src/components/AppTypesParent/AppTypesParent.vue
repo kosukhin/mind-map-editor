@@ -4,7 +4,7 @@ import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_PARENT_TYPES } from '@/constants/overlays';
 import { useMap } from '@/composables/useMap';
-import { MapTypeStructure } from '@/entities/MapStructures';
+import { MapTypeStructure } from '@/objects/entities/MapStructures';
 import { svgRender } from '@/utils/svgRenderDefault';
 
 useOverlayAutoClose(SHOW_PARENT_TYPES);

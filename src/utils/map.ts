@@ -1,7 +1,7 @@
 import { useRouter } from '@/composables/useRouter';
 import { MAP_DEFAULT_TITLE } from '@/constants/messages';
 import { Arrow } from '@/entities/Konva';
-import { MapObjectStructure, MapStructure, MapTypeStructure } from '@/entities/MapStructures';
+import { MapObjectStructure, MapStructure, MapTypeStructure } from '@/objects/entities/MapStructures';
 import { Nullable } from '@/entities/Nullable';
 import { urlTrim } from '@/utils/common';
 import { getLocation } from '@/utils/globals';

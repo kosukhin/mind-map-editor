@@ -1,4 +1,4 @@
-import { MapStructure } from '@/entities/MapStructures';
+import { MapStructure } from '@/objects/entities/MapStructures';
 import { Stage } from 'konva/lib/Stage';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
 import { renderingMath } from '@/modules/rendering/renderingMath';

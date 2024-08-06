@@ -1,7 +1,7 @@
 import { computed } from 'vue';
 import { branchCombinator } from '@/modules/combinators/branchCombinator';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
-import { MapStructure } from '@/entities/MapStructures';
+import { MapStructure } from '@/objects/entities/MapStructures';
 import { mapTransformer } from '@/modules/map/mapTransformer';
 
 /**

@@ -1,7 +1,7 @@
 import { ref, watch } from 'vue';
 import { createSharedComposable } from '@vueuse/core';
 import { useMap } from '@/composables/useMap';
-import { MapObjectStructure } from '@/entities/MapStructures';
+import { MapObjectStructure } from '@/objects/entities/MapStructures';
 import { isNotNullish } from '@/utils/isNotNullish';
 import { currentObjectSet } from '@/application/currentObjectSet';
 import { currentObjectSetAdditionalFields } from '@/application/currentObjectSetAdditionalFields';

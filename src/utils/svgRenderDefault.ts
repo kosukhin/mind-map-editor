@@ -1,4 +1,4 @@
-import { MapObjectStructure, MapStructure, MapTypeStructure } from '@/entities/MapStructures';
+import { MapObjectStructure, MapStructure, MapTypeStructure } from '@/objects/entities/MapStructures';
 
 const defaultType = {
   svg: '',

@@ -1,5 +1,5 @@
 import { reactive, ref, shallowRef } from 'vue';
-import { MapStructure } from '@/entities/MapStructures';
+import { MapStructure } from '@/objects/entities/MapStructures';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
 import { get, set } from 'lodash';

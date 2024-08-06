@@ -1,7 +1,7 @@
 import { ref } from '@vue/reactivity';
 import { clone } from 'lodash';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
-import { MapStructure } from '@/entities/MapStructures';
+import { MapStructure } from '@/objects/entities/MapStructures';
 import { mapMutator } from '@/modules/map/mapMutator';
 import { objectHelper } from '@/modules/common/objectHelper';
 import { computed } from 'vue';
