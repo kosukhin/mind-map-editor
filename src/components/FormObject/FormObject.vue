@@ -17,7 +17,7 @@ import { SHOW_OBJECT, SHOW_TRANSFER } from '@/constants/overlays';
 import { useMapObject } from '@/composables/useMapObject';
 import { createMapObjectUrl } from '@/utils/map';
 import { useLayer } from '@/composables/useLayer';
-import { MapObjectStructure } from '@/objects/entities/MapStructures';
+import { MapObjectStructure } from '@/modules/entities/MapStructures';
 import { useNotify } from '@/composables/useNotify';
 import { setValue } from '@/utils/common';
 import { COPIED, NOT_SUPPOERTED } from '@/constants/messages';

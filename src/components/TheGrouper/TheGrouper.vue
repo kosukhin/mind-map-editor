@@ -11,7 +11,7 @@ import { useMap } from '@/composables/useMap';
 import { useMapObject } from '@/composables/useMapObject';
 import { useLocks } from '@/composables/useLocks';
 import { cloneObject } from '@/utils/konva';
-import { MapStructure } from '@/objects/entities/MapStructures';
+import { MapStructure } from '@/modules/entities/MapStructures';
 
 const { layer, layerObjects } = useLayer();
 const i18n = useI18n();
