@@ -1,18 +1,23 @@
+import { Channel } from '@/modules/system/channel/Channel';
 import { ChannelOf } from '@/modules/system/channel/ChannelOf';
 import { Result } from '@/modules/system/result/Result';
 
 export class ResultOf<T> implements Result<T> {
-  private innerChannel = new ChannelOf<T>()
+  private innerChannel: Channel<Result<T>> | null = null;
 
-  public constructor(private value: T | null) {
-    this.innerChannel.subscribe({
-      notify: (valueFromChannel) => {
-        this.value = valueFromChannel;
-      },
-    });
-  }
+  public constructor(private value: T | null) {}
 
   public channel() {
+    // Создаем канал только если он нужен
+    if (!this.innerChannel) {
+      this.innerChannel = new ChannelOf<Result<T>>();
+      this.innerChannel.subscribe({
+        notify: (valueFromChannel) => {
+          this.value = valueFromChannel.result();
+        },
+      });
+    }
+
     return this.innerChannel;
   }
 
@@ -30,7 +35,7 @@ export class ResultOf<T> implements Result<T> {
 
   public replace(newResult: Result<T>): this {
     this.value = newResult.result();
-    this.channel().notify(this.value);
+    this.channel().notify(this);
     return this;
   }
 }

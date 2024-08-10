@@ -8,6 +8,11 @@ import { MapFile } from '@/modules/application/mapFile/MapFile';
 export class MapFileFromURL implements MapFile {
   public constructor(private parent: MapFile) {}
 
+  public setup(): MapFile {
+    console.log('read from url', this.parent.value());
+    return this;
+  }
+
   public value(): Result<MapFileStructure> {
     return this.parent.value();
   }

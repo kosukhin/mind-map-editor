@@ -5,7 +5,7 @@ import { ref } from 'vue';
 
 const canvas = ref<HTMLElement>();
 const { mapFile } = useApplication();
-const mapsCount = computed(() => Object.keys(mapFile).length);
+const mapsCount = computed(() => Object.keys(mapFile.value ?? {}).length);
 </script>
 
 <template>

@@ -10,6 +10,10 @@ export class MapFileOf implements MapFile {
     this.mapFileStructure = new ResultOf(mapStructure);
   }
 
+  public setup(): MapFile {
+    return this;
+  }
+
   public value() {
     return this.mapFileStructure;
   }

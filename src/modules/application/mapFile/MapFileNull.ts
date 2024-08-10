@@ -5,6 +5,10 @@ import { MapFile } from '@/modules/application/mapFile/MapFile';
 export class MapFileNull implements MapFile {
   private mapFile = new ResultOf<ResultValuableParam<MapFile>>(null);
 
+  public setup(): MapFile {
+    return this;
+  }
+
   public value() {
     return this.mapFile;
   }

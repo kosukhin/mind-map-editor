@@ -16,7 +16,7 @@ export class VueRefResult<T> implements VueRef<T | undefined> {
 
     this.result.channel().subscribe({
       notify: (newValue) => {
-        this.innerRef.value = newValue;
+        this.innerRef.value = newValue.result();
       },
     });
 

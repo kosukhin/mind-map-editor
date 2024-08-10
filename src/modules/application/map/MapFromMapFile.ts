@@ -10,12 +10,12 @@ export class MapFromMapFile implements Map {
   public constructor(private parent: Map, mapFile: MapFile) {
     mapFile.value().channel().subscribe({
       notify: (mapFileValue) => {
-        console.log('MapFromMapFile', mapFileValue);
+        console.log('MapFromMapFile', mapFileValue.result());
       },
     });
   }
 
   public value(): Result<MapStructure> {
-    return this.value();
+    return this.parent.value();
   }
 }
