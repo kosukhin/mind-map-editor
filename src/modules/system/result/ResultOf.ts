@@ -7,10 +7,10 @@ export class ResultOf<T> implements Result<T> {
 
   public constructor(private value: T | null) {}
 
-  public channel() {
+  public channel(): Channel<Result<T>> {
     // Создаем канал только если он нужен
     if (!this.innerChannel) {
-      this.innerChannel = new ChannelOf<Result<T>>();
+      this.innerChannel = new ChannelOf<Result<T>>(this.value ? this : null);
       this.innerChannel.subscribe({
         notify: (valueFromChannel) => {
           this.value = valueFromChannel.result();

@@ -6,6 +6,10 @@ export class ChannelOf<T> implements Channel<T> {
 
   private lastValue: T | null = null;
 
+  public constructor(initialValue?: T | null) {
+    this.lastValue = initialValue ?? null;
+  }
+
   public notify(value: T): void {
     this.lastValue = value;
     this.observers.forEach((observer) => observer.notify(value));

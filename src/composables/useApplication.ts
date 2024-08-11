@@ -10,8 +10,9 @@ import { MapFileFromURL } from '@/modules/application/mapFile/MapFileFromURL';
 import { MapFileFromFS } from '@/modules/application/mapFile/MapFileFromFS';
 import { VueRefResult } from '@/modules/integration/vue/VueRefResult';
 import { MapFromMapFile } from '@/modules/application/map/MapFromMapFile';
+import { Ref } from 'vue';
 
-export const useApplication = () => {
+export const useApplication = (canvasRef: Ref<HTMLElement | undefined>) => {
   const mapObject = new MapObjectNull();
   const mapType = new MapTypeNull();
   const mapSettings = new MapSettingsNull();
@@ -24,7 +25,7 @@ export const useApplication = () => {
   );
 
   return {
-    map: new VueRefResult(mapFile.value()).ref(),
+    map: new VueRefResult(map.value()).ref(),
     mapObject: new VueRefResult(mapObject.value()).ref(),
     mapType: new VueRefResult(mapType.value()).ref(),
     mapSettings: new VueRefResult(mapSettings.value()).ref(),
