@@ -1,19 +1,9 @@
-import { ResultOf } from '@/modules/system/result/ResultOf';
-import { ResultValuableParam } from '@/modules/system/result/ResultValuable';
-import { MapType } from '@/modules/application/mapType/MapType';
-import { Result } from '@/modules/system/result/Result';
+import { MapTypeStructure } from '@/modules/entities/MapStructures';
+import { ResultObservableOf } from '@/modules/system/result/ResultObservableOf';
 
 /**
  * Конвертация структуры типа карты в объект
  */
-export class MapTypeOf implements MapType {
-  private mapType: Result<ResultValuableParam<MapType>>;
+export class MapTypeOf extends ResultObservableOf<MapTypeStructure> {
 
-  public constructor(mapType: ResultValuableParam<MapType>) {
-    this.mapType = new ResultOf(mapType);
-  }
-
-  public value() {
-    return this.mapType;
-  }
 }

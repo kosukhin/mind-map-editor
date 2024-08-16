@@ -1,14 +1,11 @@
-import { ResultOf } from '@/modules/system/result/ResultOf';
-import { ResultValuableParam } from '@/modules/system/result/ResultValuable';
-import { MapSettings } from '@/modules/application/mapSettings/MapSettings';
+import { MapSettingsStructure } from '@/modules/entities/MapStructures';
+import { ResultObservableOf } from '@/modules/system/result/ResultObservableOf';
 
 /**
  * Конвертация структуры настроек карты в объект
  */
-export class MapSettingsNull implements MapSettings {
-  private mapObject = new ResultOf<ResultValuableParam<MapSettings>>(null);
-
-  public value() {
-    return this.mapObject;
+export class MapSettingsNull extends ResultObservableOf<MapSettingsStructure> {
+  constructor() {
+    super(null);
   }
 }

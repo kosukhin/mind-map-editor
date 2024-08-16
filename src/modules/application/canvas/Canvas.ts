@@ -1,4 +1,4 @@
 import { CanvasStructure } from '@/modules/entities/CanvasStructure';
-import { ResultValuable } from '@/modules/system/result/ResultValuable';
+import { ResultObservable } from '@/modules/system/result/ResultObservable';
 
-export type Canvas = ResultValuable<CanvasStructure>;
+export type Canvas = ResultObservable<CanvasStructure>;

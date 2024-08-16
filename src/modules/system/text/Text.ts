@@ -1,3 +1,3 @@
-import { Valuable } from '@/modules/system/valuable/Valuable';
+import { Result } from '@/modules/system/result/Result';
 
-export type Text = Valuable<string>
+export type Text = Result<string>

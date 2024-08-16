@@ -1,4 +1,4 @@
 import { MapObjectStructure } from '@/modules/entities/MapStructures';
-import { ResultValuable } from '@/modules/system/result/ResultValuable';
+import { ResultObservable } from '@/modules/system/result/ResultObservable';
 
-export type MapObject = ResultValuable<MapObjectStructure>;
+export type MapObject = ResultObservable<MapObjectStructure>;

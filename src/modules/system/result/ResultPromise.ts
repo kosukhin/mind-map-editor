@@ -1,12 +1,18 @@
 import { Channel } from '@/modules/system/channel/Channel';
 import { Result } from '@/modules/system/result/Result';
-import { ResultOf } from '@/modules/system/result/ResultOf';
+import { ResultObservable } from '@/modules/system/result/ResultObservable';
+import { ResultObservableOf } from '@/modules/system/result/ResultObservableOf';
 
-export class ResultPromise<T> implements Result<T> {
-  private innerResult = new ResultOf<T>(null);
+export class ResultPromise<T> implements ResultObservable<T> {
+  private innerResult = new ResultObservableOf<T>(null);
 
   public constructor(promise: Promise<T>) {
-    promise.then((value) => this.innerResult.replace(new ResultOf(value)));
+    promise.then((value) => this.innerResult.replaceResult(value));
+  }
+
+  replaceResult(newResult: T): this {
+    this.innerResult.replaceResult(newResult);
+    return this;
   }
 
   public channel(): Channel<Result<T>> {
@@ -19,10 +25,5 @@ export class ResultPromise<T> implements Result<T> {
 
   public result(): T {
     return this.innerResult.result();
-  }
-
-  public replace(newResult: Result<T>): this {
-    this.innerResult.replace(newResult);
-    return this;
   }
 }

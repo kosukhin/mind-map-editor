@@ -1,14 +1,12 @@
-import { ResultOf } from '@/modules/system/result/ResultOf';
-import { ResultValuableParam } from '@/modules/system/result/ResultValuable';
 import { MapObject } from '@/modules/application/mapObject/MapObject';
+import { MapObjectStructure } from '@/modules/entities/MapStructures';
+import { ResultObservableOf } from '@/modules/system/result/ResultObservableOf';
 
 /**
  * Конвертация структура объекта карты в объект
  */
-export class MapObjectNull implements MapObject {
-  private mapObject = new ResultOf<ResultValuableParam<MapObject>>(null);
-
-  public value() {
-    return this.mapObject;
+export class MapObjectNull extends ResultObservableOf<MapObjectStructure> implements MapObject {
+  constructor() {
+    super(null);
   }
 }

@@ -1,8 +1,8 @@
-import { MapStructure } from '@/modules/entities/MapStructures';
-import { Result } from '@/modules/system/result/Result';
 import { Map } from '@/modules/application/map/Map';
 import { MapObject } from '@/modules/application/mapObject/MapObject';
-import { ResultOf } from '@/modules/system/result/ResultOf';
+import { MapStructure } from '@/modules/entities/MapStructures';
+import { Channel } from '@/modules/system/channel/Channel';
+import { ResultObservable } from '@/modules/system/result/ResultObservable';
 
 /**
  * Связь карты и объекта карты
@@ -11,13 +11,19 @@ export class MapWithObject implements Map {
   public constructor(private parent: Map, private mapObject: MapObject) {
   }
 
-  public value(): Result<MapStructure> {
-    const mapStructure = this.value().result();
-    const objectStructure = this.mapObject.value().result();
-    const objects = { ...mapStructure.objects, [objectStructure.id]: objectStructure };
-    return new ResultOf({
-      ...mapStructure,
-      objects,
-    });
+  channel(): Channel<ResultObservable<MapStructure>> {
+    throw new Error('Method not implemented.');
+  }
+
+  exists(): boolean {
+    throw new Error('Method not implemented.');
+  }
+
+  result(): MapStructure {
+    throw new Error('Method not implemented.');
+  }
+
+  replaceResult(newResult: MapStructure): this {
+    throw new Error('Method not implemented.');
   }
 }

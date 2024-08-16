@@ -1,5 +1,5 @@
 import { VueRef } from '@/modules/integration/vue/VueRef';
-import { Result } from '@/modules/system/result/Result';
+import { ResultObservable } from '@/modules/system/result/ResultObservable';
 import {
   ref,
 } from 'vue';
@@ -7,7 +7,7 @@ import {
 export class VueRefResult<T> implements VueRef<T | undefined> {
   private innerRef = ref<T>();
 
-  constructor(private result: Result<T>) {}
+  constructor(private result: ResultObservable<T>) {}
 
   ref() {
     if (this.result.exists()) {

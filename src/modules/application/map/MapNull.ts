@@ -1,14 +1,11 @@
-import { ResultOf } from '@/modules/system/result/ResultOf';
-import { ResultValuableParam } from '@/modules/system/result/ResultValuable';
-import { Map } from '@/modules/application/map/Map';
+import { MapStructure } from '@/modules/entities/MapStructures';
+import { ResultObservableOf } from '@/modules/system/result/ResultObservableOf';
 
 /**
  * Нулевой объект карты
  */
-export class MapNull implements Map {
-  private map = new ResultOf<ResultValuableParam<Map>>(null);
-
-  public value() {
-    return this.map;
+export class MapNull extends ResultObservableOf<MapStructure> {
+  constructor() {
+    super(null);
   }
 }

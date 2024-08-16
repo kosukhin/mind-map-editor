@@ -1,12 +1,11 @@
 import { File as AppFile } from '@/modules/system/file/File';
-import { Result } from '@/modules/system/result/Result';
 import { ResultPromise } from '@/modules/system/result/ResultPromise';
 
 const filesContents = new WeakMap();
 export class FileFromHandler implements AppFile {
   public constructor(private fileHandler: FileSystemFileHandle) {}
 
-  public content(): Result<string> {
+  public content() {
     return new ResultPromise(
       this.fileHandler.getFile().then(
         (file) => this.readFile(file),
