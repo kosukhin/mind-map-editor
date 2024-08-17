@@ -1,11 +1,12 @@
-import { MapFileContent } from "@/modules/application/mapFileContent/MapFileContent";
-import { BrowserLaunchQueue } from "@/modules/integration/browser/launchQueue/BrowserLaunchQueue";
-import { FileFromHandler } from "@/modules/system/file/FileFromHandler";
-import { Target } from "@/modules/system/target/Target";
-import { TargetPool } from "@/modules/system/target/TargetPool";
+import { MapFileContent } from '@/modules/application/mapFileContent/MapFileContent';
+import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueue';
+import { FileFromHandler } from '@/modules/system/file/FileFromHandler';
+import { Target } from '@/modules/system/target/Target';
+import { TargetPool } from '@/modules/system/target/TargetPool';
 
 export class MapFileContentFS implements MapFileContent, Target<string> {
   private contentTargets = new TargetPool();
+
   private fileHandler: FileSystemFileHandle | null = null;
 
   public content(target: Target<string>): this {
@@ -24,7 +25,7 @@ export class MapFileContentFS implements MapFileContent, Target<string> {
 
       return this;
     } catch (e) {
-      throw new Error('Cant get content for map file FS', {cause: e});
+      throw new Error('Cant get content for map file FS', { cause: e });
     }
   }
 
@@ -33,7 +34,7 @@ export class MapFileContentFS implements MapFileContent, Target<string> {
       console.log('write to file', this.fileHandler, value);
       return this;
     } catch (e) {
-      throw new Error('Cant handle receive for map file FS', {cause: e})
+      throw new Error('Cant handle receive for map file FS', { cause: e });
     }
   }
 

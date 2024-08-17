@@ -1,5 +1,5 @@
-import { Target } from "@/modules/system/target/Target";
-import { ref } from "vue";
+import { Target } from '@/modules/system/target/Target';
+import { ref } from 'vue';
 
 export class VueRefTarget<T> implements Target<T> {
   private innerRef = ref<T>();

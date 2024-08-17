@@ -1,4 +1,4 @@
-import { Target } from "@/modules/system/target/Target";
+import { Target } from '@/modules/system/target/Target';
 
 /**
  * Пул постоянных посетителей для источника
@@ -11,7 +11,7 @@ export class TargetPool<T> implements Target<T> {
   }
 
   receive(value: T): this {
-    this.targets.forEach(target => {
+    this.targets.forEach((target) => {
       target.receive(value);
     });
     return this;

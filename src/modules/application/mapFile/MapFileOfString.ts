@@ -1,13 +1,14 @@
-import { MapFile } from "@/modules/application/mapFile/MapFile";
-import { MapFileContent } from "@/modules/application/mapFileContent/MapFileContent";
-import { MapFileStructure, MapStructure } from "@/modules/entities/MapStructures";
-import { Target } from "@/modules/system/target/Target";
-import { TargetDynamic } from "@/modules/system/target/TargetDynamic";
-import { TargetPool } from "@/modules/system/target/TargetPool";
-import { TransformedFromJSON } from "@/modules/system/transformed/TransformedFromJSON";
+import { MapFile } from '@/modules/application/mapFile/MapFile';
+import { MapFileContent } from '@/modules/application/mapFileContent/MapFileContent';
+import { MapFileStructure, MapStructure } from '@/modules/entities/MapStructures';
+import { Target } from '@/modules/system/target/Target';
+import { TargetDynamic } from '@/modules/system/target/TargetDynamic';
+import { TargetPool } from '@/modules/system/target/TargetPool';
+import { TransformedFromJSON } from '@/modules/system/transformed/TransformedFromJSON';
 
 export class MapFileOfString implements MapFile, Target<MapFileStructure> {
   private currentMapTargets = new TargetPool<MapStructure>();
+
   private mapFileTargets = new TargetPool<MapFileStructure>();
 
   public constructor(private mapFileContent: MapFileContent) {}
@@ -21,8 +22,8 @@ export class MapFileOfString implements MapFile, Target<MapFileStructure> {
       this.mapFile(mapFileTarget);
 
       return this;
-    } catch(e) {
-      throw new Error('Problem while building current map in MapFileBase', {cause: e})
+    } catch (e) {
+      throw new Error('Problem while building current map in MapFileBase', { cause: e });
     }
   }
 
@@ -36,8 +37,8 @@ export class MapFileOfString implements MapFile, Target<MapFileStructure> {
     try {
       console.log('save map file', value);
       return this;
-    } catch(e) {
-      throw new Error('Problem while receiving map file structure in MapFileBase', {cause: e})
+    } catch (e) {
+      throw new Error('Problem while receiving map file structure in MapFileBase', { cause: e });
     }
   }
 
@@ -51,8 +52,8 @@ export class MapFileOfString implements MapFile, Target<MapFileStructure> {
       this.mapFileContent.content(contentTarget);
 
       return this;
-    } catch(e) {
-      throw new Error('Problem while building map file document in MapFileBase', {cause: e})
+    } catch (e) {
+      throw new Error('Problem while building map file document in MapFileBase', { cause: e });
     }
   }
 
