@@ -1,7 +1,5 @@
-import { Target } from '@/modules/system/target/Target';
-import { TargetPool } from '@/modules/system/target/TargetPool';
+import { Guest } from '@/modules/system/guest/Guest';
 
-export interface MapFileContent {
-  content(target: Target<string>): this;
-  contentPool(): TargetPool<string>;
+export interface MapFileContent extends Guest<string> {
+  content(target: Guest<string>): this;
 }

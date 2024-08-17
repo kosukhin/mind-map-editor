@@ -1,12 +1,12 @@
 import { SystemFile as AppFile } from '@/modules/system/file/SystemFile';
-import { Target } from '@/modules/system/target/Target';
+import { Guest } from '@/modules/system/guest/Guest';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
 
 const filesContents = new WeakMap();
 export class SystemFileFromHandler implements AppFile {
   public constructor(private fileHandler: FileSystemFileHandle) {}
 
-  public content(target: Target<string>) {
+  public content(target: Guest<string>) {
     this.fileHandler.getFile()
       .then(
         (file) => this.readFile(file),

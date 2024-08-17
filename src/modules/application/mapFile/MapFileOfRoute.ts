@@ -1,22 +1,30 @@
 import { MapFile } from '@/modules/application/mapFile/MapFile';
 import { MapDocument, MapFileDocument } from '@/modules/entities/MapStructures';
-import { Target } from '@/modules/system/target/Target';
+import { Guest } from '@/modules/system/guest/Guest';
 
 // TODO сделать позже файл который строит по текущему роуту
 export class MapFileOfRoute implements MapFile {
-  currentMapPool(target: Target<MapDocument>): this {
+  currentMapPool(target: Guest<MapDocument>): this {
     throw new Error('Method not implemented.');
   }
 
-  mapFile(target: Target<MapFileDocument>): this {
+  mapFile(target: Guest<MapFileDocument>): this {
     throw new Error('Method not implemented.');
   }
 
-  mapFilePool(target: Target<MapFileDocument>): this {
+  mapFilePool(target: Guest<MapFileDocument>): this {
     throw new Error('Method not implemented.');
   }
 
-  currentMap(target: Target<MapDocument>): this {
+  currentMap(target: Guest<MapDocument>): this {
     throw new Error('Method not implemented.');
+  }
+
+  receive(value: MapFileDocument): this {
+    throw new Error('Method not implemented.');
+  }
+
+  introduction() {
+    return 'guest' as const;
   }
 }

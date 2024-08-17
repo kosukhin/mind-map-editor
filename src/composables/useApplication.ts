@@ -1,21 +1,20 @@
-import { MapFileOfString } from '@/modules/application/mapFile/MapFileOfString';
+import { MapFileOfContent } from '@/modules/application/mapFile/MapFileOfContent';
 import { MapFileContentFS } from '@/modules/application/mapFileContent/MapFIleContentFS';
 import { MapFileDocument, MapDocument } from '@/modules/entities/MapStructures';
-import { VueRefTarget } from '@/modules/integration/vue/VueRefTarget';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { Ref } from 'vue';
+import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueue';
 
-export const useApplication = (canvasRef: Ref<HTMLElement | undefined>) => {
-  const mapFileContent = new MapFileContentFS();
-  const mapFile = new MapFileOfString(mapFileContent);
+const mapFileContent = new MapFileContentFS(new BrowserLaunchQueue());
+const mapFile = new MapFileOfContent(mapFileContent);
 
-  const currentMapTarget = new VueRefTarget<MapDocument>();
-  mapFile.currentMapPool(currentMapTarget);
+const currentMapPatron = new VueRefPatron<MapDocument>();
+mapFile.currentMap(currentMapPatron);
 
-  const mapFileTarget = new VueRefTarget<MapFileDocument>();
-  mapFile.mapFilePool(mapFileTarget);
+const mapFilePatron = new VueRefPatron<MapFileDocument>();
+mapFile.mapFile(mapFilePatron);
 
-  return {
-    map: currentMapTarget.ref(),
-    mapFile: mapFileTarget.ref(),
-  };
-};
+export const useApplication = (canvasRef: Ref<HTMLElement | undefined>) => ({
+  map: currentMapPatron.ref(),
+  mapFile: mapFilePatron.ref(),
+});

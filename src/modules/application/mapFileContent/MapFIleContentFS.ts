@@ -1,27 +1,33 @@
 import { MapFileContent } from '@/modules/application/mapFileContent/MapFileContent';
 import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueue';
 import { SystemFileFromHandler } from '@/modules/system/file/SystemFileFromHandler';
-import { Target } from '@/modules/system/target/Target';
-import { TargetPool } from '@/modules/system/target/TargetPool';
+import { Guest } from '@/modules/system/guest/Guest';
+import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
-import { TargetDynamic } from '@/modules/system/target/TargetDynamic';
+import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
 
-export class MapFileContentFS implements MapFileContent, Target<string> {
-  private contentTargets = new TargetPool();
+export class MapFileContentFS implements MapFileContent {
+  private contentPatrons = new PatronPool();
 
   private fileHandler: FileSystemFileHandle | null = null;
 
-  public content(target: Target<string>): this {
+  public constructor(private launchQueue: BrowserLaunchQueue) {}
+
+  public content(target: Guest<string>): this {
     try {
-      new BrowserLaunchQueue().fileHandler(
-        new TargetDynamic((value: FileSystemFileHandle) => {
-          new SystemFileFromHandler(value)
-            .content(new TargetDynamic((content: string) => {
-              target.receive(content);
-              this.contentTargets.receive(content);
-            }));
-        }),
-      );
+      const fileHandlerGuest = new GuestDynamic((value: FileSystemFileHandle) => {
+        this.fileHandler = value;
+        new SystemFileFromHandler(value)
+          .content(new GuestDynamic((content: string) => {
+            this.contentPatrons.distributeReceiving(content, target);
+          }));
+      });
+
+      if (!this.fileHandler) {
+        this.launchQueue.fileHandler(fileHandlerGuest);
+      } else {
+        fileHandlerGuest.receive(this.fileHandler);
+      }
 
       return this;
     } catch (e) {
@@ -31,14 +37,13 @@ export class MapFileContentFS implements MapFileContent, Target<string> {
 
   public receive(value: string): this {
     try {
-      console.log('write to file', this.fileHandler, value);
       return this;
     } catch (e) {
       throw new RuntimeError('Cant handle receive for map file FS', { cause: e });
     }
   }
 
-  public contentPool(): TargetPool<string> {
-    return this.contentTargets;
+  public introduction() {
+    return 'guest' as const;
   }
 }

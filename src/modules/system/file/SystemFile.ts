@@ -1,6 +1,6 @@
-import { Target } from '@/modules/system/target/Target';
+import { Guest } from '@/modules/system/guest/Guest';
 
 export interface SystemFile {
-  content(target: Target<string>): this;
+  content(target: Guest<string>): this;
   save(content: string): this;
 }

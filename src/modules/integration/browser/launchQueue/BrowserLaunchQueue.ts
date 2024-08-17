@@ -1,12 +1,12 @@
-import { Target } from '@/modules/system/target/Target';
+import { Guest } from '@/modules/system/guest/Guest';
 
 export class BrowserLaunchQueue {
-  fileHandler(target: Target<FileSystemFileHandle>) {
+  fileHandler(guest: Guest<FileSystemFileHandle>) {
     if ('launchQueue' in window) {
       (window as any).launchQueue.setConsumer((launchParams: any) => {
         if (launchParams.files && launchParams.files.length) {
-          const [file] = launchParams.files;
-          target.receive(file);
+          const [fileHandler] = launchParams.files;
+          guest.receive(fileHandler);
         }
       });
     }
