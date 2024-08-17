@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
-import { SHOW_SEARCH } from '@/constants/overlays';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import { MapDocument, NamedSearchDocument } from '@/modules/entities/MapStructures';
+import { get } from 'lodash';
+import { SHOW_SEARCH } from '@/constants/overlays';
 import { overlayController } from '@/modulesHigh/overlay/overlayController';
 import { useSearch } from '@/app/useSearch';
 import { useMapBehaviour } from '@/app/useMapBehaviour';
 import { mapObjectTransformer } from '@/modules/map/mapObjectTransformer';
 import { useSearchNamed } from '@/app/useSearchNamed';
 import { branchCombinator } from '@/modules/combinators/branchCombinator';
-import { MapStructure, NamedSearchStructure } from '@/modules/entities/MapStructures';
 import { modelsPoolGet } from '@/modulesHigh/models/modelsPool';
-import { get } from 'lodash';
 
 overlayController.autoClose(SHOW_SEARCH);
 
@@ -33,8 +33,8 @@ const {
 const { firstAdditionalField } = mapObjectTransformer;
 
 const namedSearchApplyIndex = (index: number) => {
-  const map = modelsPoolGet<MapStructure>('map');
-  const search = get(map, ['namedSearch', index]) as NamedSearchStructure;
+  const map = modelsPoolGet<MapDocument>('map');
+  const search = get(map, ['namedSearch', index]) as NamedSearchDocument;
   branchCombinator.when(search, () => {
     queryField.value = search.query;
     typeField.value = search.type;

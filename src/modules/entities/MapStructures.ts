@@ -1,18 +1,18 @@
-export interface MapTypeStructure {
+export interface MapTypeDocument {
   name: string
   svg: string
   width: number
   height: number
 }
 
-export interface MapObjectRelationStructure {
+export interface MapObjectRelationDocument {
   id: string
   label: string
-  beginMapType?: MapTypeStructure,
-  endMapType?: MapTypeStructure,
+  beginMapType?: MapTypeDocument,
+  endMapType?: MapTypeDocument,
 }
 
-export interface MapObjectStructure {
+export interface MapObjectDocument {
   id: string
   type: string
   position: [number, number]
@@ -22,7 +22,7 @@ export interface MapObjectStructure {
   linked: boolean
   description: string
   zindex: number
-  arrows: MapObjectRelationStructure[]
+  arrows: MapObjectRelationDocument[]
   targetBlank: boolean
   lastClick: number
   inMenu: boolean
@@ -32,7 +32,7 @@ export interface MapObjectStructure {
   additionalFields?: Record<string, string>
 }
 
-export interface MapSettingsStructure {
+export interface MapSettingsDocument {
   colored: boolean
   title: string
   favoriteGroup?: string
@@ -40,22 +40,23 @@ export interface MapSettingsStructure {
   skipSearchIndex?: boolean
 }
 
-export interface NamedSearchStructure {
+export interface NamedSearchDocument {
   name: string,
   query: string,
   type: string
 }
 
-export interface MapStructure {
+export interface MapDocument {
   document: string
   url: string
   parent: string
   progress: number
   parentNames?: Record<string, string>
-  types: Record<string, MapTypeStructure>
-  objects: Record<string, MapObjectStructure>
+  types: Record<string, MapTypeDocument>
+  objects: Record<string, MapObjectDocument>
   position?: [number, number],
-  namedSearches?: NamedSearchStructure[]
+  namedSearches?: NamedSearchDocument[],
+  settings: MapSettingsDocument
 }
 
-export type MapFileStructure = Record<string, MapStructure>;
+export type MapFileDocument = Record<string, MapDocument>;

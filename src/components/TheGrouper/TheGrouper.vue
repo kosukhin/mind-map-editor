@@ -6,12 +6,12 @@ import flattenDeep from 'lodash/flattenDeep';
 import { useI18n } from 'vue-i18n';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { AnyFn } from '@vueuse/core';
+import { MapDocument } from '@/modules/entities/MapStructures';
 import { useLayer } from '@/composables/useLayer';
 import { useMap } from '@/composables/useMap';
 import { useMapObject } from '@/composables/useMapObject';
 import { useLocks } from '@/composables/useLocks';
 import { cloneObject } from '@/utils/konva';
-import { MapStructure } from '@/modules/entities/MapStructures';
 
 const { layer, layerObjects } = useLayer();
 const i18n = useI18n();
@@ -75,7 +75,7 @@ const onClick = () => {
     if (map.value) {
       nodes.forEach((node) => {
         if (node instanceof Konva.Rect) {
-          const object = (map.value as MapStructure).objects[
+          const object = (map.value as MapDocument).objects[
             node.attrs.objectId
           ];
           object.position = [

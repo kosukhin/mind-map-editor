@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
+import { MapObjectDocument } from '@/modules/entities/MapStructures';
+import { ref } from '@vue/reactivity';
+import { useStorage, watchOnce } from '@vueuse/core';
+import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 import { useObjectActions } from '@/composables/useObjectActions';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { useRequestTransfer } from '@/composables/useRequestTransfer';
@@ -9,11 +13,7 @@ import { useMapObject } from '@/composables/useMapObject';
 import { useOverlay } from '@/composables/useOverlay';
 import { SHOW_TRANSFER } from '@/constants/overlays';
 import { HISTORY_STORAGE_KEY } from '@/constants/system';
-import { MapObjectStructure } from '@/modules/entities/MapStructures';
 import { createMapObjectUrl } from '@/utils/map';
-import { ref } from '@vue/reactivity';
-import { useStorage, watchOnce } from '@vueuse/core';
-import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 
 useOverlayAutoClose(SHOW_TRANSFER);
 const { currentObject } = useMapObject();
@@ -28,7 +28,7 @@ watchOnce(firstMapLoad, () => {
   }
 });
 
-const getObjectLink = (object: MapObjectStructure) => {
+const getObjectLink = (object: MapObjectDocument) => {
   if (object.outlink) {
     return object.outlink;
   }

@@ -1,18 +1,18 @@
 <script setup lang="ts">
+import {
+  onMounted, onUpdated, ref, watch,
+} from 'vue';
+import { MapObjectDocument } from '@/modules/entities/MapStructures';
+import { useFps } from '@vueuse/core';
+import debounce from 'lodash/debounce';
 import { useLayerListeners } from '@/composables/useLayerListeners';
 import { useMapRenderer } from '@/composables/useMapRenderer';
 import { useLayer } from '@/composables/useLayer';
 import { CANVAS_DOM_ID } from '@/constants/system';
-import {
-  onMounted, onUpdated, ref, watch,
-} from 'vue';
 import { useMap } from '@/composables/useMap';
 import { calculateVisibleObjects } from '@/application/layerDragObjectHandler';
-import { MapObjectStructure } from '@/modules/entities/MapStructures';
 import { useLayerEvents } from '@/composables/useLayerEvents';
 import { renderSvgTemplate } from '@/utils/svgRenderDefault';
-import { useFps } from '@vueuse/core';
-import debounce from 'lodash/debounce';
 import { openUrlByObject } from '@/utils/map';
 
 useMapRenderer();
@@ -45,7 +45,7 @@ const recalcObjectsRendered = () => {
   const [visible] = calculateVisibleObjects(map.value, stage.value);
   const stagePosition = stage.value.position();
 
-  objectsRendered.value = visible.map((obj: MapObjectStructure) => {
+  objectsRendered.value = visible.map((obj: MapObjectDocument) => {
     const position = [...obj.position];
     if (dragmove.value?.target && dragmove.value.target.attrs.objectId === obj.id) {
       const targetPosition = dragmove.value.target.position();

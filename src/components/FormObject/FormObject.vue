@@ -9,6 +9,10 @@ import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
+import { MapObjectDocument } from '@/modules/entities/MapStructures';
+import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
+import BaseInputRow from '@/components/BaseInput/BaseInputRow.vue';
+import BaseEditor from '@/components/BaseEditor/BaseEditor.vue';
 import { updateObjectOnLayer } from '@/utils/konva';
 import { useMap } from '@/composables/useMap';
 import { useOverlay } from '@/composables/useOverlay';
@@ -17,7 +21,6 @@ import { SHOW_OBJECT, SHOW_TRANSFER } from '@/constants/overlays';
 import { useMapObject } from '@/composables/useMapObject';
 import { createMapObjectUrl } from '@/utils/map';
 import { useLayer } from '@/composables/useLayer';
-import { MapObjectStructure } from '@/modules/entities/MapStructures';
 import { useNotify } from '@/composables/useNotify';
 import { setValue } from '@/utils/common';
 import { COPIED, NOT_SUPPOERTED } from '@/constants/messages';
@@ -26,9 +29,6 @@ import { getLocation } from '@/utils/globals';
 import { useSettings } from '@/composables/useSettings';
 import { useObjectActions } from '@/composables/useObjectActions';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
-import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
-import BaseInputRow from '@/components/BaseInput/BaseInputRow.vue';
-import BaseEditor from '@/components/BaseEditor/BaseEditor.vue';
 
 const { map } = useMap();
 const mapTypes = computed(() => {
@@ -101,9 +101,9 @@ watch(ctrlSFired, () => {
 });
 
 const removeRelation = async (index: number) => {
-  if (!(form.value as MapObjectStructure).arrows) return;
+  if (!(form.value as MapObjectDocument).arrows) return;
   if (currentObject.value && map.value && layer.value) {
-    (form.value as MapObjectStructure).arrows.splice(index, 1);
+    (form.value as MapObjectDocument).arrows.splice(index, 1);
     await updateObjectOnLayer(
       layerObjects,
       layer.value,

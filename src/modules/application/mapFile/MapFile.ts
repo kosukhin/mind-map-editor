@@ -1,10 +1,10 @@
-import { MapFileStructure, MapStructure } from '@/modules/entities/MapStructures';
+import { MapFileDocument, MapDocument } from '@/modules/entities/MapStructures';
 import { Target } from '@/modules/system/target/Target';
 
 export interface MapFile {
-  currentMap(target: Target<MapStructure>): this;
-  currentMapPool(target: Target<MapStructure>): this;
+  currentMap(target: Target<MapDocument>): this;
+  currentMapPool(target: Target<MapDocument>): this;
 
-  mapFile(target: Target<MapFileStructure>): this;
-  mapFilePool(target: Target<MapFileStructure>): this;
+  mapFile(target: Target<MapFileDocument>): this;
+  mapFilePool(target: Target<MapFileDocument>): this;
 }

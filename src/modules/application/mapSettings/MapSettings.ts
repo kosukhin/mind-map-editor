@@ -1,6 +1,6 @@
-import { MapSettingsStructure } from '@/modules/entities/MapStructures';
+import { MapSettingsDocument } from '@/modules/entities/MapStructures';
 
 export interface MapSettings {
-  content(): MapSettingsStructure
-  save(value: MapSettingsStructure): this;
+  content(): MapSettingsDocument
+  save(value: MapSettingsDocument): this;
 }

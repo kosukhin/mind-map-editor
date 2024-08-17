@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import svg64 from 'svg64';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import { MapTypeDocument } from '@/modules/entities/MapStructures';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_PARENT_TYPES } from '@/constants/overlays';
 import { useMap } from '@/composables/useMap';
-import { MapTypeStructure } from '@/modules/entities/MapStructures';
 import { svgRender } from '@/utils/svgRenderDefault';
 
 useOverlayAutoClose(SHOW_PARENT_TYPES);
 
 const { map, parentTypes } = useMap();
-const addType = (type: MapTypeStructure) => {
+const addType = (type: MapTypeDocument) => {
   if (map.value) {
     map.value.types[type.name] = type;
   }
