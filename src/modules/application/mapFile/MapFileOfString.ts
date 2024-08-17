@@ -5,6 +5,7 @@ import { Target } from '@/modules/system/target/Target';
 import { TargetDynamic } from '@/modules/system/target/TargetDynamic';
 import { TargetPool } from '@/modules/system/target/TargetPool';
 import { TransformedFromJSON } from '@/modules/system/transformed/TransformedFromJSON';
+import { RuntimeError } from '@/modules/system/error/RuntimeError';
 
 export class MapFileOfString implements MapFile, Target<MapFileStructure> {
   private currentMapTargets = new TargetPool<MapStructure>();
@@ -23,7 +24,7 @@ export class MapFileOfString implements MapFile, Target<MapFileStructure> {
 
       return this;
     } catch (e) {
-      throw new Error('Problem while building current map in MapFileBase', { cause: e });
+      throw new RuntimeError('Problem while building current map in MapFileBase', { cause: e });
     }
   }
 
@@ -38,7 +39,7 @@ export class MapFileOfString implements MapFile, Target<MapFileStructure> {
       console.log('save map file', value);
       return this;
     } catch (e) {
-      throw new Error('Problem while receiving map file structure in MapFileBase', { cause: e });
+      throw new RuntimeError('Problem while receiving map file structure in MapFileBase', { cause: e });
     }
   }
 
@@ -53,7 +54,7 @@ export class MapFileOfString implements MapFile, Target<MapFileStructure> {
 
       return this;
     } catch (e) {
-      throw new Error('Problem while building map file document in MapFileBase', { cause: e });
+      throw new RuntimeError('Problem while building map file document in MapFileBase', { cause: e });
     }
   }
 

@@ -1,18 +1,16 @@
-import { FileHandlerSource } from '@/modules/system/file/FileHandlerSource';
-import { ResultObservableOf } from '@/modules/system/result/ResultObservableOf';
+import { Target } from '@/modules/system/target/Target';
 
-export class BrowserLaunchQueue implements FileHandlerSource {
-  fileHandler() {
-    const result = new ResultObservableOf<FileSystemFileHandle>(null);
+export class BrowserLaunchQueue {
+  fileHandler(target: Target<FileSystemFileHandle>) {
     if ('launchQueue' in window) {
       (window as any).launchQueue.setConsumer((launchParams: any) => {
         if (launchParams.files && launchParams.files.length) {
           const [file] = launchParams.files;
-          result.replaceResult(file);
+          target.receive(file);
         }
       });
     }
 
-    return result;
+    return this;
   }
 }
