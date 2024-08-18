@@ -5,7 +5,7 @@ import { RuntimeError } from '@/modules/system/error/RuntimeError';
  * Пул постоянных посетителей для источника - патронов
  */
 export class PatronPool<T> implements Guest<T> {
-  private patrons: Guest<T>[] = [];
+  private patrons = new Set<Guest<T>>();
 
   /**
    * Добавить гостя в пул патронов, если гость представился патроном
@@ -13,7 +13,7 @@ export class PatronPool<T> implements Guest<T> {
   public add(shouldBePatron: Guest<T>) {
     try {
       if (shouldBePatron.introduction() === 'patron') {
-        this.patrons.push(shouldBePatron);
+        this.patrons.add(shouldBePatron);
       }
     } catch (e) {
       throw new RuntimeError('Cant add patron to pool', { cause: e });

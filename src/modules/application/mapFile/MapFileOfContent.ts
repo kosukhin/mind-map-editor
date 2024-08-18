@@ -1,6 +1,6 @@
 import { MapFile } from '@/modules/application/mapFile/MapFile';
 import { MapFileContent } from '@/modules/application/mapFileContent/MapFileContent';
-import { MapFileDocument, MapDocument } from '@/modules/entities/MapStructures';
+import { MapDocument, MapFileDocument } from '@/modules/entities/MapStructures';
 import { Guest } from '@/modules/system/guest/Guest';
 import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
 import { PatronPool } from '@/modules/system/guest/PatronPool';

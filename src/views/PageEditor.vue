@@ -5,7 +5,7 @@ import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 
 const {
-  mapFile, map, mapSettings, mapSettingsGuest, canvas,
+  mapFile, map, mapSettings, mapSettingsGuest, canvas, notification,
 } = useApplication();
 const mapsCount = computed(() => Object.keys(mapFile.value ?? {}).length);
 </script>
@@ -34,6 +34,9 @@ const mapsCount = computed(() => Object.keys(mapFile.value ?? {}).length);
         <hr />
         <BaseButton @click="mapSettingsGuest.receive(mapSettings)">Сохранить</BaseButton>
       </div>
+    </div>
+    <div>
+      {{ notification }}
     </div>
     <canvas ref="canvas"></canvas>
   </div>

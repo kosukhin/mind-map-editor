@@ -6,13 +6,17 @@ import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
 import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
 import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFileSaved';
+import { Notification } from '@/modules/application/notification/Notification';
 
 export class MapFileContentFS implements MapFileContent {
   private contentPatrons = new PatronPool();
 
   private fileHandler: FileSystemFileHandle | null = null;
 
-  public constructor(private launchQueue: BrowserLaunchQueue) {}
+  public constructor(
+    private launchQueue: BrowserLaunchQueue,
+    private notiffication: Notification,
+  ) {}
 
   public content(target: Guest<string>): this {
     try {
@@ -45,6 +49,11 @@ export class MapFileContentFS implements MapFileContent {
       return this;
     } catch (e) {
       throw new RuntimeError('Cant handle receive for map file FS', { cause: e });
+    } finally {
+      this.notiffication.receive({
+        type: 'success',
+        text: 'Успешно сохранен файл карты!',
+      });
     }
   }
 
