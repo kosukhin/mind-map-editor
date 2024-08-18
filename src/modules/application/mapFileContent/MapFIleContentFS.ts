@@ -5,6 +5,7 @@ import { Guest } from '@/modules/system/guest/Guest';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
 import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
+import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFileSaved';
 
 export class MapFileContentFS implements MapFileContent {
   private contentPatrons = new PatronPool();
@@ -36,8 +37,11 @@ export class MapFileContentFS implements MapFileContent {
   }
 
   public receive(value: string): this {
+    if (!this.fileHandler) {
+      throw new RuntimeError('Cant save file because no fileHandler', {});
+    }
     try {
-      console.log('write value', value);
+      new BrowserFileSaved(this.fileHandler).save(value);
       return this;
     } catch (e) {
       throw new RuntimeError('Cant handle receive for map file FS', { cause: e });
