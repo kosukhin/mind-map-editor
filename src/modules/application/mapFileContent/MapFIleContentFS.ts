@@ -37,6 +37,7 @@ export class MapFileContentFS implements MapFileContent {
 
   public receive(value: string): this {
     try {
+      console.log('write value', value);
       return this;
     } catch (e) {
       throw new RuntimeError('Cant handle receive for map file FS', { cause: e });

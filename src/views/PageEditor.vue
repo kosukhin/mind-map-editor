@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useApplication } from '@/composables/useApplication';
 import { computed } from '@vue/reactivity';
-import { ref } from 'vue';
+import BaseInput from '@/components/BaseInput/BaseInput.vue';
+import BaseButton from '@/components/BaseButton/BaseButton.vue';
 
-const canvas = ref<HTMLElement>();
-const { mapFile, map } = useApplication(canvas);
+const {
+  mapFile, map, mapSettings, mapSettingsGuest, canvas,
+} = useApplication();
 const mapsCount = computed(() => Object.keys(mapFile.value ?? {}).length);
 </script>
 
@@ -20,6 +22,17 @@ const mapsCount = computed(() => Object.keys(mapFile.value ?? {}).length);
       </div>
       <div>
         Кол-во типов: {{ Object.keys(map.types).length }}
+      </div>
+    </div>
+    <div>
+      <div>настройки</div>
+      <pre>
+        {{mapSettings}}
+      </pre>
+      <div v-if="mapSettings">
+        <BaseInput v-model="mapSettings.title" />
+        <hr />
+        <BaseButton @click="mapSettingsGuest.receive(mapSettings)">Сохранить</BaseButton>
       </div>
     </div>
     <canvas ref="canvas"></canvas>

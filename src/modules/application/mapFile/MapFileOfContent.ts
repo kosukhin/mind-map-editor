@@ -6,6 +6,7 @@ import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { TransformedFromJSON } from '@/modules/system/transformed/TransformedFromJSON';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
+import { TransformedToJSON } from '@/modules/system/transformed/TransformedToJSON';
 
 export class MapFileOfContent implements MapFile {
   private currentMapPatrons = new PatronPool<MapDocument>();
@@ -28,6 +29,7 @@ export class MapFileOfContent implements MapFile {
 
   public receive(value: MapFileDocument): this {
     try {
+      this.mapFileContent.receive(new TransformedToJSON(value).result());
       return this;
     } catch (e) {
       throw new RuntimeError('Problem while receiving map file structure in MapFileBase', { cause: e });
