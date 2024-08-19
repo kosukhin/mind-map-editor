@@ -3,11 +3,18 @@ import { useApplication } from '@/composables/useApplication';
 import { computed } from '@vue/reactivity';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import { onMounted, ref } from 'vue';
 
 const {
-  mapFile, map, mapSettings, mapSettingsGuest, canvas, notification,
+  mapFile, map, mapSettings, mapSettingsGuest, canvasGuest, notification,
 } = useApplication();
 const mapsCount = computed(() => Object.keys(mapFile.value ?? {}).length);
+
+const canvas = ref();
+
+onMounted((() => {
+  canvasGuest.receive(canvas.value);
+}));
 </script>
 
 <template>

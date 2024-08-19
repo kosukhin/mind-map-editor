@@ -7,11 +7,20 @@ import { MapCurrent } from '@/modules/application/map/MapCurrent';
 import { MapSettingsGuest } from '@/modules/application/mapSettings/MapSettingsGuest';
 import { NotificationMemory } from '@/modules/application/notification/NotificationMemory';
 import { NotificationDocument } from '@/modules/application/notification/Notification';
+import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
+import { KonvaCanvas } from '@/modules/integration/konva/KonvaCanvas';
+import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
 
 const notification = new NotificationMemory();
 const mapFile = new MapFileOfContent(new MapFileContentFS(new BrowserLaunchQueue(), notification));
 const mapCurrent = new MapCurrent(mapFile);
 const mapSettings = new MapSettingsGuest(mapFile, mapCurrent);
+const canvas = new BrowserCanvas();
+const konvaCanvas = new KonvaCanvas(mapFile, canvas);
+
+konvaCanvas.stage(new GuestDynamic((stageTest) => {
+  console.log('stage test is', stageTest);
+}));
 
 const mapSettingsPatron = new VueRefPatron<MapSettingsDocument>();
 mapCurrent.mapSettings(mapSettingsPatron);
@@ -22,8 +31,6 @@ mapFile.currentMap(currentMapPatron);
 const mapFilePatron = new VueRefPatron<MapFileDocument>();
 mapFile.mapFile(mapFilePatron);
 
-const canvasPatron = new VueRefPatron<HTMLElement>();
-
 const notificationPatron = new VueRefPatron<NotificationDocument>();
 notification.message(notificationPatron);
 
@@ -32,6 +39,6 @@ export const useApplication = () => ({
   mapFile: mapFilePatron.ref(),
   mapSettings: mapSettingsPatron.ref(),
   mapSettingsGuest: mapSettings,
-  canvas: canvasPatron.ref(),
+  canvasGuest: canvas,
   notification: notificationPatron.ref(),
 });
