@@ -9,7 +9,7 @@ import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFile
 import { Notification } from '@/modules/application/notification/Notification';
 
 export class MapFileContentFS implements MapFileContent {
-  private contentPatrons = new PatronPool();
+  private contentPatrons = new PatronPool(this);
 
   private fileHandler: FileSystemFileHandle | null = null;
 
@@ -55,9 +55,5 @@ export class MapFileContentFS implements MapFileContent {
         text: 'Успешно сохранен файл карты!',
       });
     }
-  }
-
-  public introduction() {
-    return 'guest' as const;
   }
 }

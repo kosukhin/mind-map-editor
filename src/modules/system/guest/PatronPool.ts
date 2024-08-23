@@ -18,7 +18,7 @@ export class PatronPool<T> implements Guest<T>, Pool<T> {
    */
   public add(shouldBePatron: Guest<T>) {
     try {
-      if (shouldBePatron.introduction() === 'patron') {
+      if (shouldBePatron.introduction && shouldBePatron.introduction() === 'patron') {
         this.patrons.add(shouldBePatron);
       }
       return this;
@@ -70,9 +70,5 @@ export class PatronPool<T> implements Guest<T>, Pool<T> {
     this.receive(receiving, options);
     possiblePatrons.forEach((patron) => this.add(patron));
     return this;
-  }
-
-  public introduction() {
-    return 'guest' as const;
   }
 }

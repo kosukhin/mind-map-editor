@@ -12,10 +12,6 @@ export class Value<T> implements Guest<T>, GuestAware<T> {
     this.pool = new PatronPool<T>(initiator);
   }
 
-  introduction() {
-    return 'guest' as const;
-  }
-
   receive(value: T, options?: ReceiveOptions): this {
     this.theValue = value;
     this.pool.receive(value, options);

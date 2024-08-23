@@ -6,14 +6,14 @@ import { Visitant } from '@/modules/system/guest/Visitant';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 
 export class MapCurrent implements Map {
-  private mapSettingsPatrons = new PatronPool<MapSettingsDocument>();
+  private mapSettingsPatrons = new PatronPool<MapSettingsDocument>(this);
 
   public constructor(private mapFile: MapFile) {}
 
   public mapSettings(guest: Guest<MapSettingsDocument>) {
     this.mapFile.currentMap(new Visitant((value: MapDocument) => {
       this.mapSettingsPatrons.distributeReceiving(value.settings, guest);
-    }, 'mapSettingGuest'));
+    }));
 
     return this;
   }
@@ -27,11 +27,7 @@ export class MapCurrent implements Map {
         ...latestMapFile,
         [name]: value,
       });
-    }, 'mapCurrentObjectGuest'));
+    }));
     return this;
-  }
-
-  public introduction() {
-    return 'guest' as const;
   }
 }

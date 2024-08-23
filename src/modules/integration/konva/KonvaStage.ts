@@ -8,12 +8,11 @@ import { Patron } from '@/modules/system/guest/Patron';
 import Stage = Konva.Stage;
 
 export class KonvaStage {
-  private guestChain = new GuestChain(2);
+  private guestChain = new GuestChain();
 
   public constructor(private mapFile: MapFile, private canvas: BrowserCanvas) {
-    const chainGuest = new Patron(this.guestChain);
-    this.canvas.canvas(chainGuest);
-    this.mapFile.currentMap(chainGuest);
+    this.canvas.canvas(new Patron(this.guestChain.receiveKey('canvas')));
+    this.mapFile.currentMap(new Patron(this.guestChain.receiveKey('map')));
   }
 
   public stage(guest: Guest<Stage>): this {

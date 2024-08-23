@@ -10,10 +10,6 @@ export class NotificationMemory implements Notification {
 
   private notificationsPool = new PatronPool<NotificationDocument>();
 
-  public introduction() {
-    return 'guest' as const;
-  }
-
   public message(guest: Guest<NotificationDocument>): this {
     if (this.messageDocument) {
       this.notificationsPool.distributeReceiving(this.messageDocument, guest);

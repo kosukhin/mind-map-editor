@@ -7,10 +7,6 @@ import { Visitant } from '@/modules/system/guest/Visitant';
 export class MapSettingsGuest implements Guest<MapSettingsDocument> {
   public constructor(private mapFile: MapFile, private map: Map) {}
 
-  public introduction() {
-    return 'guest' as const;
-  }
-
   public receive(newSettings: MapSettingsDocument): this {
     this.mapFile.currentMap(new Visitant((latestMapDocument: MapDocument) => {
       console.log('send map changed');

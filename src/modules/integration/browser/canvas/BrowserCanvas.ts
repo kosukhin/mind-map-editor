@@ -4,7 +4,7 @@ import { PatronPool } from '@/modules/system/guest/PatronPool';
 export class BrowserCanvas implements Guest<HTMLElement> {
   private theCanvas: HTMLElement | null = null;
 
-  private canvasPool = new PatronPool<HTMLElement>();
+  private canvasPool = new PatronPool<HTMLElement>(this);
 
   public canvas(guest: Guest<HTMLElement>): this {
     if (this.theCanvas) {
@@ -13,10 +13,6 @@ export class BrowserCanvas implements Guest<HTMLElement> {
       this.canvasPool.add(guest);
     }
     return this;
-  }
-
-  introduction() {
-    return 'guest' as const;
   }
 
   receive(value: HTMLElement): this {

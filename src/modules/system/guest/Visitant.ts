@@ -10,8 +10,4 @@ export class Visitant<T> implements Guest<T> {
     this.receiver(value, options);
     return this;
   }
-
-  introduction() {
-    return 'guest' as const;
-  }
 }

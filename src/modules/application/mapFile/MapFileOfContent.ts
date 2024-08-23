@@ -9,9 +9,9 @@ import { RuntimeError } from '@/modules/system/error/RuntimeError';
 import { TransformedToJSON } from '@/modules/system/transformed/TransformedToJSON';
 
 export class MapFileOfContent implements MapFile {
-  private currentMapPatrons = new PatronPool<MapDocument>();
+  private currentMapPatrons = new PatronPool<MapDocument>(this);
 
-  private mapFilePatrons = new PatronPool<MapFileDocument>();
+  private mapFilePatrons = new PatronPool<MapFileDocument>(this);
 
   public constructor(private mapFileContent: MapFileContent) {}
 
@@ -19,7 +19,7 @@ export class MapFileOfContent implements MapFile {
     try {
       const mapFileTarget = new Visitant((value: MapFileDocument) => {
         this.currentMapPatrons.distributeReceiving(value.current, currentMapGuest);
-      }, 'mapCurrentFromMapFile');
+      });
       this.mapFile(mapFileTarget);
       return this;
     } catch (e) {
@@ -41,15 +41,11 @@ export class MapFileOfContent implements MapFile {
       const contentTarget = new Visitant<string>((value) => {
         const mapFile = new TransformedFromJSON<MapFileDocument>(value).result();
         this.mapFilePatrons.distributeReceiving(mapFile, mapFileTarget);
-      }, 'mapFileGuestFromMapFile');
+      });
       this.mapFileContent.content(contentTarget);
       return this;
     } catch (e) {
       throw new RuntimeError('Problem while building map file document in MapFileBase', { cause: e });
     }
-  }
-
-  public introduction() {
-    return 'guest' as const;
   }
 }

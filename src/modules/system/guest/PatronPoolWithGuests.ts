@@ -14,10 +14,6 @@ export class PatronPoolWithGuests<T> implements Guest<T>, Pool<T> {
     this.patronPool = new PatronPool(initiator);
   }
 
-  public introduction() {
-    return 'guest' as const;
-  }
-
   public receive(value: T, options?: ReceiveOptions): this {
     this.deliverToGuests(value, options);
     this.patronPool.receive(value, options);
@@ -25,7 +21,7 @@ export class PatronPoolWithGuests<T> implements Guest<T>, Pool<T> {
   }
 
   public add(guest: Guest<T>): this {
-    if (guest.introduction() === 'guest') {
+    if (!guest.introduction || guest.introduction() === 'guest') {
       this.guests.add(guest);
     }
     this.patronPool.add(guest);

@@ -7,5 +7,5 @@ export interface ReceiveOptions {
 
 export interface Guest<T> {
   receive(value: T, options?: ReceiveOptions): this;
-  introduction(): GuestIntroduction;
+  introduction?(): GuestIntroduction;
 }
