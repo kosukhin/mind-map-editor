@@ -1,14 +1,17 @@
-import { Guest } from '@/modules/system/guest/Guest';
+import {
+  Guest,
+  ReceiveOptions,
+} from '@/modules/system/guest/Guest';
 
 export class GuestDynamic<T> implements Guest<T> {
-  public constructor(private receiver: (value: T) => void, private label?: string) {}
+  constructor(private receiver: (value: T, options?: ReceiveOptions) => void) {}
 
-  public receive(value: T) {
-    this.receiver(value);
+  receive(value: T, options?: ReceiveOptions) {
+    this.receiver(value, options);
     return this;
   }
 
-  public introduction() {
+  introduction() {
     return 'guest' as const;
   }
 }

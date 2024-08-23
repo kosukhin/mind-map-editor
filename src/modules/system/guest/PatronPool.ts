@@ -1,11 +1,17 @@
-import { Guest } from '@/modules/system/guest/Guest';
+import {
+  Guest,
+  ReceiveOptions,
+} from '@/modules/system/guest/Guest';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
+import { Pool } from '@/modules/system/guest/Pool';
 
 /**
  * Пул постоянных посетителей для источника - патронов
  */
-export class PatronPool<T> implements Guest<T> {
+export class PatronPool<T> implements Guest<T>, Pool<T> {
   private patrons = new Set<Guest<T>>();
+
+  public constructor(private initiator: unknown) {}
 
   /**
    * Добавить гостя в пул патронов, если гость представился патроном
@@ -15,6 +21,7 @@ export class PatronPool<T> implements Guest<T> {
       if (shouldBePatron.introduction() === 'patron') {
         this.patrons.add(shouldBePatron);
       }
+      return this;
     } catch (e) {
       throw new RuntimeError('Cant add patron to pool', { cause: e });
     }
@@ -23,10 +30,16 @@ export class PatronPool<T> implements Guest<T> {
   /**
    * Передать один документ всем известным патронам
    */
-  public receive(value: T) {
+  public receive(value: T, options?: ReceiveOptions) {
     try {
       this.patrons.forEach((target) => {
-        target.receive(value);
+        target.receive(value, {
+          ...options,
+          specificData: {
+            ...(options?.specificData ?? {}),
+            initiator: this.initiator,
+          },
+        });
       });
       return this;
     } catch (e) {
@@ -34,15 +47,29 @@ export class PatronPool<T> implements Guest<T> {
     }
   }
 
+  public distributeReceivingOnce(receiving: T, possiblePatron: Guest<T>) {
+    this.add(possiblePatron);
+    possiblePatron.receive(receiving);
+  }
+
   /**
+   * ATTENTION! этот метод может быть опасен, если использовать его в
+   * местах где нужно данные отдать, может привести к записи старых данных
+   *
    * Передаст получение гостю и добавит его в патроны
    * если гость является патроном. Также передаст получение
    * другим уже существовавшим ранее патронам
    */
   public distributeReceiving(receiving: T, ...possiblePatrons: Guest<T>[]) {
-    possiblePatrons.forEach((patron) => patron.receive(receiving));
-    this.receive(receiving);
+    const options: ReceiveOptions = {
+      specificData: {
+        initiator: this.initiator,
+      },
+    };
+    possiblePatrons.forEach((patron) => patron.receive(receiving, options));
+    this.receive(receiving, options);
     possiblePatrons.forEach((patron) => this.add(patron));
+    return this;
   }
 
   public introduction() {

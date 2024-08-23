@@ -1,4 +1,7 @@
-import { Guest } from '@/modules/system/guest/Guest';
+import {
+  Guest,
+  ReceiveOptions,
+} from '@/modules/system/guest/Guest';
 
 /**
  * Патрон - это постоянный посетитель
@@ -10,8 +13,8 @@ export class Patron<T> implements Guest<T> {
     return 'patron' as const;
   }
 
-  public receive(value: T): this {
-    this.willBePatron.receive((value));
+  public receive(value: T, options?: ReceiveOptions): this {
+    this.willBePatron.receive(value, options);
     return this;
   }
 }

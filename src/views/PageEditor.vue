@@ -13,6 +13,7 @@ const mapsCount = computed(() => Object.keys(mapFile.value ?? {}).length);
 const canvas = ref();
 
 onMounted((() => {
+  console.log('mounted', canvas.value);
   canvasGuest.receive(canvas.value);
 }));
 </script>

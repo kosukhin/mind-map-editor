@@ -1,36 +1,54 @@
 import { Guest } from '@/modules/system/guest/Guest';
-import { RuntimeError } from '@/modules/system/error/RuntimeError';
+import { Value } from '@/modules/system/guest/Value';
+import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
+import { PatronPoolWithGuests } from '@/modules/system/guest/PatronPoolWithGuests';
 
-export class GuestChain<T> implements Guest<T> {
-  private chainResult: unknown[] = [];
+export class GuestChain<T> {
+  private theChain: Value<Record<string, any>>
 
-  private guestsPool: Guest<unknown>[] = [];
+  private keysKnown: string[] = [];
 
-  public constructor(private chainLength: number) {}
+  private keysFilled: string[] = [];
 
-  public result(guest: Guest<unknown[]>) {
-    this.guestsPool.push(guest);
-    this.notify();
+  private filledChainPool = new PatronPoolWithGuests(this);
+
+  public constructor() {
+    this.theChain = new Value<Record<string, any>>({}, this);
   }
 
-  public introduction() {
-    return 'guest' as const;
-  }
-
-  public receive(value: T): this {
-    if (this.chainLength <= this.chainResult.length) {
-      throw new RuntimeError('Guest chain is full! check your logic!', {});
+  public result(guest: Guest<T>) {
+    if (this.isChainFilled()) {
+      this.filledChainPool.add(guest);
+      this.theChain.receiving(new GuestDynamic((chain) => {
+        this.filledChainPool.receive(chain);
+      }));
+    } else {
+      this.filledChainPool.add(guest);
     }
-    this.chainResult.push(value);
-    this.notify();
     return this;
   }
 
-  private notify() {
-    if (this.chainLength === this.chainResult.length) {
-      this.guestsPool.forEach((guest) => {
-        guest.receive(this.chainResult);
+  public receiveKey(key: string): Guest<T> {
+    this.keysKnown.push(key);
+    return new GuestDynamic((value) => {
+      // Обернул в очередь чтобы можно было синхронно наполнить очередь известных ключей
+      queueMicrotask(() => {
+        this.theChain.receiving(new GuestDynamic((chain) => {
+          this.keysFilled.push(key);
+          const lastChain = {
+            ...chain,
+            [key]: value,
+          };
+          this.theChain.receive(lastChain as any);
+          if (this.isChainFilled()) {
+            this.filledChainPool.receive(lastChain);
+          }
+        }));
       });
-    }
+    });
+  }
+
+  private isChainFilled() {
+    return this.keysFilled.length > 0 && this.keysFilled.length === this.keysKnown.length;
   }
 }

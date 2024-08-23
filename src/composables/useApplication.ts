@@ -8,19 +8,20 @@ import { MapSettingsGuest } from '@/modules/application/mapSettings/MapSettingsG
 import { NotificationMemory } from '@/modules/application/notification/NotificationMemory';
 import { NotificationDocument } from '@/modules/application/notification/Notification';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
-import { KonvaCanvas } from '@/modules/integration/konva/KonvaCanvas';
+import { KonvaStage } from '@/modules/integration/konva/KonvaStage';
 import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
+import { Patron } from '@/modules/system/guest/Patron';
 
 const notification = new NotificationMemory();
 const mapFile = new MapFileOfContent(new MapFileContentFS(new BrowserLaunchQueue(), notification));
 const mapCurrent = new MapCurrent(mapFile);
 const mapSettings = new MapSettingsGuest(mapFile, mapCurrent);
 const canvas = new BrowserCanvas();
-const konvaCanvas = new KonvaCanvas(mapFile, canvas);
+const konvaCanvas = new KonvaStage(mapFile, canvas);
 
-konvaCanvas.stage(new GuestDynamic((stageTest) => {
+konvaCanvas.stage(new Patron(new GuestDynamic((stageTest) => {
   console.log('stage test is', stageTest);
-}));
+})));
 
 const mapSettingsPatron = new VueRefPatron<MapSettingsDocument>();
 mapCurrent.mapSettings(mapSettingsPatron);

@@ -2,7 +2,7 @@ import { Notification, NotificationDocument } from '@/modules/application/notifi
 import { Guest } from '@/modules/system/guest/Guest';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 
-let lastTimerHead: number | null = null;
+let lastTimerHead: NodeJS.Timeout | null = null;
 const notificationLifetimeDelay = 4000;
 
 export class NotificationMemory implements Notification {
