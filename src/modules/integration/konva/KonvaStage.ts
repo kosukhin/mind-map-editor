@@ -1,7 +1,7 @@
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { Guest } from '@/modules/system/guest/Guest';
 import Konva from 'konva';
-import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
+import { Visitant } from '@/modules/system/guest/Visitant';
 import { MapFile } from '@/modules/application/mapFile/MapFile';
 import { GuestChain } from '@/modules/system/guest/GuestChain';
 import { Patron } from '@/modules/system/guest/Patron';
@@ -18,7 +18,7 @@ export class KonvaStage {
 
   public stage(guest: Guest<Stage>): this {
     console.log('try stage');
-    this.guestChain.result(new GuestDynamic(([canvas, map]) => {
+    this.guestChain.result(new Visitant(([canvas, map]) => {
       console.log('result', canvas, map);
       const stage = new Konva.Stage({
         width: 300,

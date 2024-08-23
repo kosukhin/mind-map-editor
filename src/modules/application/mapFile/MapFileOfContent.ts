@@ -2,7 +2,7 @@ import { MapFile } from '@/modules/application/mapFile/MapFile';
 import { MapFileContent } from '@/modules/application/mapFileContent/MapFileContent';
 import { MapDocument, MapFileDocument } from '@/modules/entities/MapStructures';
 import { Guest } from '@/modules/system/guest/Guest';
-import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
+import { Visitant } from '@/modules/system/guest/Visitant';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { TransformedFromJSON } from '@/modules/system/transformed/TransformedFromJSON';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
@@ -17,7 +17,7 @@ export class MapFileOfContent implements MapFile {
 
   public currentMap(currentMapGuest: Guest<MapDocument>): this {
     try {
-      const mapFileTarget = new GuestDynamic((value: MapFileDocument) => {
+      const mapFileTarget = new Visitant((value: MapFileDocument) => {
         this.currentMapPatrons.distributeReceiving(value.current, currentMapGuest);
       }, 'mapCurrentFromMapFile');
       this.mapFile(mapFileTarget);
@@ -38,7 +38,7 @@ export class MapFileOfContent implements MapFile {
 
   public mapFile(mapFileTarget: Guest<MapFileDocument>): this {
     try {
-      const contentTarget = new GuestDynamic<string>((value) => {
+      const contentTarget = new Visitant<string>((value) => {
         const mapFile = new TransformedFromJSON<MapFileDocument>(value).result();
         this.mapFilePatrons.distributeReceiving(mapFile, mapFileTarget);
       }, 'mapFileGuestFromMapFile');

@@ -2,7 +2,7 @@ import { Map } from '@/modules/application/map/Map';
 import { Guest } from '@/modules/system/guest/Guest';
 import { MapDocument, MapFileDocument, MapSettingsDocument } from '@/modules/entities/MapStructures';
 import { MapFile } from '@/modules/application/mapFile/MapFile';
-import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
+import { Visitant } from '@/modules/system/guest/Visitant';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 
 export class MapCurrent implements Map {
@@ -11,7 +11,7 @@ export class MapCurrent implements Map {
   public constructor(private mapFile: MapFile) {}
 
   public mapSettings(guest: Guest<MapSettingsDocument>) {
-    this.mapFile.currentMap(new GuestDynamic((value: MapDocument) => {
+    this.mapFile.currentMap(new Visitant((value: MapDocument) => {
       this.mapSettingsPatrons.distributeReceiving(value.settings, guest);
     }, 'mapSettingGuest'));
 
@@ -21,7 +21,7 @@ export class MapCurrent implements Map {
   public receive(value: MapDocument) {
     // TODO тут временно current позже нужен объект Text которые будет представлять имя из ссылки
     const name = 'current';
-    this.mapFile.mapFile(new GuestDynamic((latestMapFile: MapFileDocument) => {
+    this.mapFile.mapFile(new Visitant((latestMapFile: MapFileDocument) => {
       console.log('send map file changed');
       this.mapFile.receive({
         ...latestMapFile,

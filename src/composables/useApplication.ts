@@ -9,7 +9,7 @@ import { NotificationMemory } from '@/modules/application/notification/Notificat
 import { NotificationDocument } from '@/modules/application/notification/Notification';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { KonvaStage } from '@/modules/integration/konva/KonvaStage';
-import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
+import { Visitant } from '@/modules/system/guest/Visitant';
 import { Patron } from '@/modules/system/guest/Patron';
 
 const notification = new NotificationMemory();
@@ -19,7 +19,7 @@ const mapSettings = new MapSettingsGuest(mapFile, mapCurrent);
 const canvas = new BrowserCanvas();
 const konvaCanvas = new KonvaStage(mapFile, canvas);
 
-konvaCanvas.stage(new Patron(new GuestDynamic((stageTest) => {
+konvaCanvas.stage(new Patron(new Visitant((stageTest) => {
   console.log('stage test is', stageTest);
 })));
 

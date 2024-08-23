@@ -1,12 +1,12 @@
 import { expect, test } from 'vitest';
 import { FakeSource } from '@/modules/system/fake/FakeSource';
-import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
 import { Patron } from '@/modules/system/guest/Patron';
+import { Visitant } from './Visitant';
 
 test('patron always guest', () => {
   const one = new FakeSource(1);
   let patronCalledTimes = 0;
-  const patron = new Patron(new GuestDynamic(() => {
+  const patron = new Patron(new Visitant(() => {
     patronCalledTimes += 1;
   }));
   one.data(patron);

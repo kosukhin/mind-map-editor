@@ -4,7 +4,7 @@ import { SystemFileFromHandler } from '@/modules/system/file/SystemFileFromHandl
 import { Guest } from '@/modules/system/guest/Guest';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
-import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
+import { Visitant } from '@/modules/system/guest/Visitant';
 import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFileSaved';
 import { Notification } from '@/modules/application/notification/Notification';
 
@@ -20,10 +20,10 @@ export class MapFileContentFS implements MapFileContent {
 
   public content(target: Guest<string>): this {
     try {
-      const fileHandlerGuest = new GuestDynamic((value: FileSystemFileHandle) => {
+      const fileHandlerGuest = new Visitant((value: FileSystemFileHandle) => {
         this.fileHandler = value;
         new SystemFileFromHandler(value)
-          .content(new GuestDynamic((content: string) => {
+          .content(new Visitant((content: string) => {
             this.contentPatrons.distributeReceiving(content, target);
           }));
       });

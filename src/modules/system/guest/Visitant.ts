@@ -3,7 +3,7 @@ import {
   ReceiveOptions,
 } from '@/modules/system/guest/Guest';
 
-export class GuestDynamic<T> implements Guest<T> {
+export class Visitant<T> implements Guest<T> {
   constructor(private receiver: (value: T, options?: ReceiveOptions) => void) {}
 
   receive(value: T, options?: ReceiveOptions) {

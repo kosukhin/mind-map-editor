@@ -1,6 +1,6 @@
 import { Guest } from '@/modules/system/guest/Guest';
 import { Value } from '@/modules/system/guest/Value';
-import { GuestDynamic } from '@/modules/system/guest/GuestDynamic';
+import { Visitant } from '@/modules/system/guest/Visitant';
 import { PatronPoolWithGuests } from '@/modules/system/guest/PatronPoolWithGuests';
 
 export class GuestChain<T> {
@@ -19,7 +19,7 @@ export class GuestChain<T> {
   public result(guest: Guest<T>) {
     if (this.isChainFilled()) {
       this.filledChainPool.add(guest);
-      this.theChain.receiving(new GuestDynamic((chain) => {
+      this.theChain.receiving(new Visitant((chain) => {
         this.filledChainPool.receive(chain);
       }));
     } else {
@@ -30,10 +30,10 @@ export class GuestChain<T> {
 
   public receiveKey(key: string): Guest<T> {
     this.keysKnown.push(key);
-    return new GuestDynamic((value) => {
+    return new Visitant((value) => {
       // Обернул в очередь чтобы можно было синхронно наполнить очередь известных ключей
       queueMicrotask(() => {
-        this.theChain.receiving(new GuestDynamic((chain) => {
+        this.theChain.receiving(new Visitant((chain) => {
           this.keysFilled.push(key);
           const lastChain = {
             ...chain,
