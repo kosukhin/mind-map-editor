@@ -8,7 +8,7 @@ const notificationLifetimeDelay = 4000;
 export class NotificationMemory implements Notification {
   private messageDocument: NotificationDocument | null = null;
 
-  private notificationsPool = new PatronPool<NotificationDocument>();
+  private notificationsPool = new PatronPool<NotificationDocument>(this);
 
   public message(guest: Guest<NotificationDocument>): this {
     if (this.messageDocument) {

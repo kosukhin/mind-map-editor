@@ -28,7 +28,7 @@ export class GuestChain<T> {
     return this;
   }
 
-  public receiveKey(key: string): Guest<T> {
+  public receiveKey<R>(key: string): Guest<R> {
     this.keysKnown.push(key);
     return new Visitant((value) => {
       // Обернул в очередь чтобы можно было синхронно наполнить очередь известных ключей

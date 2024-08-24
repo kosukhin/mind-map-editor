@@ -5,10 +5,11 @@ import { Visitant } from '@/modules/system/guest/Visitant';
 import { MapFile } from '@/modules/application/mapFile/MapFile';
 import { GuestChain } from '@/modules/system/guest/GuestChain';
 import { Patron } from '@/modules/system/guest/Patron';
+import { MapDocument } from '@/modules/entities/MapStructures';
 import Stage = Konva.Stage;
 
 export class KonvaStage {
-  private guestChain = new GuestChain();
+  private guestChain = new GuestChain<{canvas: HTMLElement, map: MapDocument}>();
 
   public constructor(private mapFile: MapFile, private canvas: BrowserCanvas) {
     this.canvas.canvas(new Patron(this.guestChain.receiveKey('canvas')));
@@ -17,7 +18,7 @@ export class KonvaStage {
 
   public stage(guest: Guest<Stage>): this {
     console.log('try stage');
-    this.guestChain.result(new Visitant(([canvas, map]) => {
+    this.guestChain.result(new Visitant(({ canvas, map }) => {
       console.log('result', canvas, map);
       const stage = new Konva.Stage({
         width: 300,
