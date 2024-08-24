@@ -46,6 +46,6 @@ onMounted((() => {
     <div>
       {{ notification }}
     </div>
-    <canvas ref="canvas"></canvas>
+    <div ref="canvas"></div>
   </div>
 </template>

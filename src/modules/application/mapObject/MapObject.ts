@@ -1,4 +1,6 @@
+import { Guest } from '@/modules/system/guest/Guest';
 import { MapObjectDocument } from '@/modules/entities/MapStructures';
-import { ResultObservable } from '@/modules/system/result/ResultObservable';
 
-export type MapObject = ResultObservable<MapObjectDocument>;
+export interface MapObjects {
+  objects(guest: Guest<MapObjectDocument[]>): this;
+}

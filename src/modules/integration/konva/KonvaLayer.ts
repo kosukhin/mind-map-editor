@@ -6,9 +6,10 @@ import { MapFile } from '@/modules/application/mapFile/MapFile';
 import { GuestChain } from '@/modules/system/guest/GuestChain';
 import { Patron } from '@/modules/system/guest/Patron';
 import { MapDocument } from '@/modules/entities/MapStructures';
-import Stage = Konva.Stage;
+import { Layer } from 'konva/lib/Layer';
+import { LayerBase } from '@/modules/application/layer/LayerBase';
 
-export class KonvaStage {
+export class KonvaLayer implements LayerBase {
   private guestChain = new GuestChain<{canvas: HTMLElement, map: MapDocument}>();
 
   public constructor(private mapFile: MapFile, private canvas: BrowserCanvas) {
@@ -16,19 +17,19 @@ export class KonvaStage {
     this.mapFile.currentMap(new Patron(this.guestChain.receiveKey('map')));
   }
 
-  public stage(guest: Guest<Stage>): this {
-    console.log('try stage');
+  public layer(guest: Guest<Layer>): this {
     this.guestChain.result(new Visitant(({ canvas, map }) => {
-      console.log('result', canvas, map);
       const stage = new Konva.Stage({
-        width: 300,
-        height: 300,
+        width: 450,
+        height: 450,
         container: canvas as HTMLDivElement,
-        fill: '#eee',
+        fill: '#ffeeee',
         draggable: true,
       });
-      console.log('result', canvas, map);
-      guest.receive(stage);
+      const layer = new Konva.Layer();
+      stage.add(layer);
+      layer.draw();
+      guest.receive(layer);
     }));
     return this;
   }

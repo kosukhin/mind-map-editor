@@ -20,7 +20,6 @@ export class VueRefPatronDuplex<T> implements Guest<T> {
     if (!this.refWatcherCreated) {
       this.refWatcherCreated = true;
       watch(this.basePatron.ref(), (newValue) => {
-        console.log('new value duples', newValue);
         if (newValue) {
           this.guest.receive(newValue);
         }

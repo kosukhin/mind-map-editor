@@ -8,20 +8,20 @@ import { MapSettingsGuest } from '@/modules/application/mapSettings/MapSettingsG
 import { NotificationMemory } from '@/modules/application/notification/NotificationMemory';
 import { NotificationDocument } from '@/modules/application/notification/Notification';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
-import { KonvaStage } from '@/modules/integration/konva/KonvaStage';
-import { Visitant } from '@/modules/system/guest/Visitant';
-import { Patron } from '@/modules/system/guest/Patron';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
+import { MapObjectsVisible } from '@/modules/application/mapObject/MapObjectsVisible';
+import { MapObjectsRectsPatron } from '@/modules/application/mapObject/MapObjectsRectsPatron';
 
 const notification = new NotificationMemory();
 const mapFile = new MapFileOfContent(new MapFileContentFS(new BrowserLaunchQueue(), notification));
 const mapCurrent = new MapCurrent(mapFile);
 const mapSettings = new MapSettingsGuest(mapFile, mapCurrent);
 const canvas = new BrowserCanvas();
-const konvaCanvas = new KonvaStage(mapFile, canvas);
-
-konvaCanvas.stage(new Patron(new Visitant((stageTest) => {
-  console.log('stage test is', stageTest);
-})));
+const konvaCanvas = new KonvaLayer(mapFile, canvas);
+const mapObjects = new MapObjectsVisible(konvaCanvas, mapCurrent);
+const mapObjectsPatron = new VueRefPatron();
+mapObjects.objects(mapObjectsPatron);
+mapObjects.objects(new MapObjectsRectsPatron(konvaCanvas));
 
 const mapSettingsPatron = new VueRefPatron<MapSettingsDocument>();
 mapCurrent.mapSettings(mapSettingsPatron);
@@ -39,6 +39,7 @@ export const useApplication = () => ({
   map: currentMapPatron.ref(),
   mapFile: mapFilePatron.ref(),
   mapSettings: mapSettingsPatron.ref(),
+  mapObjects: mapObjectsPatron.ref(),
   mapSettingsGuest: mapSettings,
   canvasGuest: canvas,
   notification: notificationPatron.ref(),

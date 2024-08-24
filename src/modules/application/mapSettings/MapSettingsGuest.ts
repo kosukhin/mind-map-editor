@@ -9,7 +9,6 @@ export class MapSettingsGuest implements Guest<MapSettingsDocument> {
 
   public receive(newSettings: MapSettingsDocument): this {
     this.mapFile.currentMap(new Visitant((latestMapDocument: MapDocument) => {
-      console.log('send map changed');
       this.map.receive({
         ...latestMapDocument,
         settings: newSettings,

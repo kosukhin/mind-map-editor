@@ -6,9 +6,9 @@ import { PatronPoolWithGuests } from '@/modules/system/guest/PatronPoolWithGuest
 export class GuestChain<T> {
   private theChain: Value<Record<string, any>>
 
-  private keysKnown: string[] = [];
+  private keysKnown = new Set();
 
-  private keysFilled: string[] = [];
+  private keysFilled = new Set();
 
   private filledChainPool = new PatronPoolWithGuests(this);
 
@@ -29,12 +29,12 @@ export class GuestChain<T> {
   }
 
   public receiveKey<R>(key: string): Guest<R> {
-    this.keysKnown.push(key);
+    this.keysKnown.add(key);
     return new Visitant((value) => {
       // Обернул в очередь чтобы можно было синхронно наполнить очередь известных ключей
       queueMicrotask(() => {
         this.theChain.receiving(new Visitant((chain) => {
-          this.keysFilled.push(key);
+          this.keysFilled.add(key);
           const lastChain = {
             ...chain,
             [key]: value,
@@ -49,6 +49,6 @@ export class GuestChain<T> {
   }
 
   private isChainFilled() {
-    return this.keysFilled.length > 0 && this.keysFilled.length === this.keysKnown.length;
+    return this.keysFilled.size > 0 && this.keysFilled.size === this.keysKnown.size;
   }
 }
