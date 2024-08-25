@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { useMap } from '@/composables/useMap';
 import uniqueId from 'lodash/uniqueId';
 
-const { map } = useMap();
+const parentNames = [];
+const settingsTitle = 'title';
 </script>
 
 <template>
   <div>
     <span
-      v-for="(title, url) in map?.parentNames"
+      v-for="(title, url) in parentNames"
       :key="url || uniqueId('history_')"
     >
       /
@@ -18,7 +18,7 @@ const { map } = useMap();
     </span>
     <span>
       /
-      {{ map?.settings.title }}
+      {{ settingsTitle }}
     </span>
   </div>
 </template>

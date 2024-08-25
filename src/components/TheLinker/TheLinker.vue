@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import { useObjectLinker } from '@/composables/useObjectLinker';
 
-const { startRelation, title, type } = useObjectLinker();
+const type = 'success';
+const title = 'title';
 </script>
 
 <template>
-  <BaseButton :type="type" @click="startRelation">
+  <BaseButton :type="type">
     {{ title }}
   </BaseButton>
 </template>

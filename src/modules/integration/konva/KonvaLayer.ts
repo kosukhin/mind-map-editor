@@ -20,8 +20,8 @@ export class KonvaLayer implements LayerBase {
   public layer(guest: Guest<Layer>): this {
     this.guestChain.result(new Visitant(({ canvas, map }) => {
       const stage = new Konva.Stage({
-        width: 900,
-        height: 400,
+        width: canvas.clientWidth,
+        height: canvas.clientHeight,
         container: canvas as HTMLDivElement,
         fill: '#ffeeee',
         draggable: true,
