@@ -11,6 +11,7 @@ import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanva
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { MapObjectsVisible } from '@/modules/application/mapObject/MapObjectsVisible';
 import { MapObjectsRectsPatron } from '@/modules/application/mapObject/MapObjectsRectsPatron';
+import { MapObjectBase } from '@/modules/application/mapObject/MapObjectBase';
 
 const notification = new NotificationMemory();
 const mapFile = new MapFileOfContent(new MapFileContentFS(new BrowserLaunchQueue(), notification));
@@ -18,10 +19,11 @@ const mapCurrent = new MapCurrent(mapFile);
 const mapSettings = new MapSettingsGuest(mapFile, mapCurrent);
 const canvas = new BrowserCanvas();
 const konvaCanvas = new KonvaLayer(mapFile, canvas);
+const mapObject = new MapObjectBase(mapCurrent, mapFile);
 const mapObjects = new MapObjectsVisible(konvaCanvas, mapCurrent);
 const mapObjectsPatron = new VueRefPatron();
 mapObjects.objects(mapObjectsPatron);
-mapObjects.objects(new MapObjectsRectsPatron(konvaCanvas));
+mapObjects.objects(new MapObjectsRectsPatron(konvaCanvas, mapObject));
 
 const mapSettingsPatron = new VueRefPatron<MapSettingsDocument>();
 mapCurrent.mapSettings(mapSettingsPatron);
