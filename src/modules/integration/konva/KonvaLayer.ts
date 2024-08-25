@@ -9,6 +9,8 @@ import { MapDocument } from '@/modules/entities/MapStructures';
 import { Layer } from 'konva/lib/Layer';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
 
+const LAYER_SIZE = 3000;
+
 export class KonvaLayer implements LayerBase {
   private guestChain = new GuestChain<{canvas: HTMLElement, map: MapDocument}>();
 

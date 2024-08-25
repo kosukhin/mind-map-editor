@@ -12,6 +12,7 @@ import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { MapObjectsVisible } from '@/modules/application/mapObject/MapObjectsVisible';
 import { MapObjectsRectsPatron } from '@/modules/application/mapObject/MapObjectsRectsPatron';
 import { MapObjectBase } from '@/modules/application/mapObject/MapObjectBase';
+import { MiniMap } from '@/modules/application/miniMap/MiniMap';
 
 const notification = new NotificationMemory();
 const mapFile = new MapFileOfContent(new MapFileContentFS(new BrowserLaunchQueue(), notification));
@@ -28,8 +29,8 @@ mapObjects.objects(new MapObjectsRectsPatron(konvaCanvas, mapObject));
 const mapSettingsPatron = new VueRefPatron<MapSettingsDocument>();
 mapCurrent.mapSettings(mapSettingsPatron);
 
-const currentMapPatron = new VueRefPatron<MapDocument>();
-mapFile.currentMap(currentMapPatron);
+const mapPatron = new VueRefPatron<MapDocument>();
+mapFile.currentMap(mapPatron);
 
 const mapFilePatron = new VueRefPatron<MapFileDocument>();
 mapFile.mapFile(mapFilePatron);
@@ -37,12 +38,16 @@ mapFile.mapFile(mapFilePatron);
 const notificationPatron = new VueRefPatron<NotificationDocument>();
 notification.message(notificationPatron);
 
+const miniMap = new MiniMap(mapCurrent, konvaCanvas);
+
 export const useApplication = () => ({
-  map: currentMapPatron.ref(),
+  map: mapPatron.ref(),
+  mapBehaviour: mapCurrent,
   mapFile: mapFilePatron.ref(),
   mapSettings: mapSettingsPatron.ref(),
   mapObjects: mapObjectsPatron.ref(),
   mapSettingsGuest: mapSettings,
   canvasGuest: canvas,
   notification: notificationPatron.ref(),
+  miniMapBehaviour: miniMap,
 });
