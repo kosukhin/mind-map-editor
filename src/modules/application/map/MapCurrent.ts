@@ -18,6 +18,7 @@ export class MapCurrent implements Map {
 
   public constructor(private mapFile: MapFile) {
     mapFile.currentMap(new Patron(new Visitant((latestMap: MapDocument) => {
+      console.log('cur map received', latestMap);
       this.theMapSettings.receive(latestMap.settings);
       this.theMapObjects.receive(Object.values(latestMap.objects));
     })));
@@ -36,6 +37,7 @@ export class MapCurrent implements Map {
   public receive(value: MapDocument) {
     // TODO тут временно current позже нужен объект Text которые будет представлять имя из ссылки
     const name = 'current';
+    console.log('current map save', value);
     this.mapFile.mapFile(new Visitant((latestMapFile: MapFileDocument) => {
       this.mapFile.receive({
         ...latestMapFile,

@@ -7,7 +7,7 @@ export class FakeSource implements Guest<any> {
   public constructor(private value: any) {}
 
   public data(guest: Guest<any>): this {
-    this.pool.distributeReceiving(this.value, guest);
+    this.pool.distributeReceivingOnce(this.value, guest);
     return this;
   }
 

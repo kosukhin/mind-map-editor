@@ -23,7 +23,6 @@ export class MapObjectsVisible implements MapObjects {
         return;
       }
       const visibleObjects = objects.filter((object) => this.isInBoundings(stage, object.position));
-      console.log('visible objects', visibleObjects);
       this.theMapObjects.receive(visibleObjects);
     })));
   }

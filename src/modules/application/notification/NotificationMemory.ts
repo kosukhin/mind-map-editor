@@ -12,7 +12,7 @@ export class NotificationMemory implements Notification {
 
   public message(guest: Guest<NotificationDocument>): this {
     if (this.messageDocument) {
-      this.notificationsPool.distributeReceiving(this.messageDocument, guest);
+      this.notificationsPool.distributeReceivingOnce(this.messageDocument, guest);
     } else {
       this.notificationsPool.add(guest);
     }

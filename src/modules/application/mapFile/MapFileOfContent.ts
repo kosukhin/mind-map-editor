@@ -18,7 +18,7 @@ export class MapFileOfContent implements MapFile {
   public currentMap(currentMapGuest: Guest<MapDocument>): this {
     try {
       const mapFileTarget = new Visitant((value: MapFileDocument) => {
-        this.currentMapPatrons.distributeReceiving(value.current, currentMapGuest);
+        this.currentMapPatrons.distributeReceivingOnce(value.current, currentMapGuest);
       });
       this.mapFile(mapFileTarget);
       return this;
@@ -40,7 +40,7 @@ export class MapFileOfContent implements MapFile {
     try {
       const contentTarget = new Visitant<string>((value) => {
         const mapFile = new TransformedFromJSON<MapFileDocument>(value).result();
-        this.mapFilePatrons.distributeReceiving(mapFile, mapFileTarget);
+        this.mapFilePatrons.distributeReceivingOnce(mapFile, mapFileTarget);
       });
       this.mapFileContent.content(contentTarget);
       return this;

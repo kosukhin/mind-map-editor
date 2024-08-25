@@ -8,7 +8,7 @@ export class BrowserCanvas implements Guest<HTMLElement> {
 
   public canvas(guest: Guest<HTMLElement>): this {
     if (this.theCanvas) {
-      this.canvasPool.distributeReceiving(this.theCanvas, guest);
+      this.canvasPool.distributeReceivingOnce(this.theCanvas, guest);
     } else {
       this.canvasPool.add(guest);
     }

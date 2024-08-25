@@ -24,7 +24,7 @@ export class MapFileContentFS implements MapFileContent {
         this.fileHandler = value;
         new SystemFileFromHandler(value)
           .content(new Visitant((content: string) => {
-            this.contentPatrons.distributeReceiving(content, target);
+            this.contentPatrons.distributeReceivingOnce(content, target);
           }));
       });
 
@@ -45,6 +45,7 @@ export class MapFileContentFS implements MapFileContent {
       throw new RuntimeError('Cant save file because no fileHandler', {});
     }
     try {
+      console.log('save string', value);
       new BrowserFileSaved(this.fileHandler).save(value);
       return this;
     } catch (e) {

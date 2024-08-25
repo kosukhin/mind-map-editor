@@ -14,7 +14,6 @@ export class MapObjectsRectsPatron implements Guest<MapObjectDocument[]> {
   public constructor(private konvaLayer: LayerBase, private mapObject: MapObject) {}
 
   public receive(objects: MapObjectDocument[]): this {
-    console.log('render rects', objects, 'on konva', this.konvaLayer);
     this.konvaLayer.layer(new Visitant((layer) => {
       objects.forEach((object) => {
         if (this.previouslyRenderedRects.has(object)) {
@@ -40,7 +39,6 @@ export class MapObjectsRectsPatron implements Guest<MapObjectDocument[]> {
         layer.add(rect);
 
         rect.on('dragend', (e) => {
-          console.log('rec drag end', e, rect.x(), rect.y());
           this.mapObject.receive({
             ...object,
             position: [rect.x(), rect.y()],
