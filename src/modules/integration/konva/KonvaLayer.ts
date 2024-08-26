@@ -21,9 +21,10 @@ export class KonvaLayer implements LayerBase {
 
   public layer(guest: Guest<Layer>): this {
     this.guestChain.result(new Visitant(({ canvas, map }) => {
+      console.log('calculate layer');
       const stage = new Konva.Stage({
-        width: canvas.clientWidth,
-        height: canvas.clientHeight,
+        width: LAYER_SIZE,
+        height: LAYER_SIZE,
         container: canvas as HTMLDivElement,
         fill: '#ffeeee',
         draggable: true,

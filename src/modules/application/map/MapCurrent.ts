@@ -8,29 +8,29 @@ import {
 } from '@/modules/entities/MapStructures';
 import { MapFile } from '@/modules/application/mapFile/MapFile';
 import { Visitant } from '@/modules/system/guest/Visitant';
-import { Value } from '@/modules/system/guest/Value';
+import { Cache } from '@/modules/system/guest/Cache';
 import { Patron } from '@/modules/system/guest/Patron';
 
 export class MapCurrent implements Map {
-  private theMapSettings = new Value({}, this);
+  private mapSettingsCache = new Cache(this);
 
-  private theMapObjects = new Value<MapObjectDocument[]>([], this);
+  private mapObjectsCache = new Cache<MapObjectDocument[]>(this);
 
   public constructor(private mapFile: MapFile) {
     mapFile.currentMap(new Patron(new Visitant((latestMap: MapDocument) => {
       console.log('cur map received', latestMap);
-      this.theMapSettings.receive(latestMap.settings);
-      this.theMapObjects.receive(Object.values(latestMap.objects));
+      this.mapSettingsCache.receive(latestMap.settings);
+      this.mapObjectsCache.receive(Object.values(latestMap.objects));
     })));
   }
 
   public mapSettings(guest: Guest<MapSettingsDocument>) {
-    this.theMapSettings.receiving(guest);
+    this.mapSettingsCache.receiving(guest);
     return this;
   }
 
   public mapObjects(guest: Guest<MapObjectDocument[]>) {
-    this.theMapObjects.receiving(guest);
+    this.mapObjectsCache.receiving(guest);
     return this;
   }
 

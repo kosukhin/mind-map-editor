@@ -21,7 +21,7 @@ const mapSettings = new MapSettingsGuest(mapFile, mapCurrent);
 const canvas = new BrowserCanvas();
 const konvaCanvas = new KonvaLayer(mapFile, canvas);
 const mapObject = new MapObjectBase(mapCurrent, mapFile);
-const mapObjects = new MapObjectsVisible(konvaCanvas, mapCurrent);
+const mapObjects = new MapObjectsVisible(konvaCanvas, canvas, mapCurrent);
 const mapObjectsPatron = new VueRefPatron();
 mapObjects.objects(mapObjectsPatron);
 mapObjects.objects(new MapObjectsRectsPatron(konvaCanvas, mapObject));

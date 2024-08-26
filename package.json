@@ -10,6 +10,7 @@
     "cz": "git add . && git cz",
     "cy:open": "cypress open",
     "test": "vitest",
+    "webstorm-integration": "vitest --watch --reporter=dot --reporter=json --outputFile=.vitest-result.json",
     "release": "standard-version --no-verify"
   },
   "config": {

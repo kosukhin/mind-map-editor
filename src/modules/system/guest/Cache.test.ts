@@ -1,9 +1,10 @@
 import { expect, test } from 'vitest';
-import { Value } from '@/modules/system/guest/Value';
+import { Cache } from '@/modules/system/guest/Cache';
 import { Visitant } from './Visitant';
 
 test('value works', () => {
-  const value = new Value(2, null);
+  const value = new Cache(null);
+  value.receive(2);
   value.receiving(new Visitant((latestValue: number) => {
     expect(latestValue).toBe(2);
   }));

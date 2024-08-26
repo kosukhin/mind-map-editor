@@ -10,6 +10,8 @@ const types = [];
 
 <template>
   <div class="flex e2e-sidebar flex-col items-center gap-3 max-h-[100%] overflow-hidden">
+    <div>Sidebar</div>
+    <div class="mt-auto">Footer</div>
     <div v-if="map" class="flex flex-col gap-3 flex-grow w-full overflow-y-auto">
       <div
         v-for="(type, name) in types"

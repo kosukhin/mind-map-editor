@@ -1,23 +1,28 @@
 import { Guest } from '@/modules/system/guest/Guest';
-import { PatronPool } from '@/modules/system/guest/PatronPool';
+import { Cache } from '@/modules/system/guest/Cache';
+import { SizeDocument } from '@/modules/entities/SizeDocument';
+import { GuestInTheMiddle } from '@/modules/system/guest/GuestInTheMiddle';
 
 export class BrowserCanvas implements Guest<HTMLElement> {
-  private theCanvas: HTMLElement | null = null;
-
-  private canvasPool = new PatronPool<HTMLElement>(this);
+  private canvasCache = new Cache<HTMLElement>(this);
 
   public canvas(guest: Guest<HTMLElement>): this {
-    if (this.theCanvas) {
-      this.canvasPool.distributeReceivingOnce(this.theCanvas, guest);
-    } else {
-      this.canvasPool.add(guest);
-    }
+    this.canvasCache.receiving(guest);
     return this;
   }
 
-  receive(value: HTMLElement): this {
-    this.theCanvas = value;
-    this.canvasPool.receive(value);
+  public size(guest: Guest<SizeDocument>): this {
+    this.canvasCache.receiving(new GuestInTheMiddle(guest, (value: HTMLElement) => {
+      guest.receive({
+        height: value.clientHeight,
+        width: value.clientWidth,
+      });
+    }));
+    return this;
+  }
+
+  public receive(value: HTMLElement): this {
+    this.canvasCache.receive(value);
     return this;
   }
 }

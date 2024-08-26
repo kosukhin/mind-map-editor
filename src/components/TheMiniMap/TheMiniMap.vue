@@ -14,6 +14,7 @@ const size = sizePatron.ref();
 
 <template>
   <div
+    v-if="size"
     :style="{
         width: `${size.width}px`,
         height: `${size.height}px`,

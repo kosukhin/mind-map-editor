@@ -1,10 +1,10 @@
 import { Guest } from '@/modules/system/guest/Guest';
-import { Value } from '@/modules/system/guest/Value';
+import { Cache } from '@/modules/system/guest/Cache';
 import { Visitant } from '@/modules/system/guest/Visitant';
 import { PatronPoolWithGuests } from '@/modules/system/guest/PatronPoolWithGuests';
 
 export class GuestChain<T> {
-  private theChain: Value<Record<string, any>>
+  private theChain: Cache<Record<string, any>>
 
   private keysKnown = new Set();
 
@@ -13,7 +13,7 @@ export class GuestChain<T> {
   private filledChainPool = new PatronPoolWithGuests(this);
 
   public constructor() {
-    this.theChain = new Value<Record<string, any>>({}, this);
+    this.theChain = new Cache<Record<string, any>>(this);
   }
 
   public result(guest: Guest<T>) {
@@ -31,9 +31,11 @@ export class GuestChain<T> {
   public receiveKey<R>(key: string): Guest<R> {
     this.keysKnown.add(key);
     return new Visitant((value) => {
+      console.log('visitant in chain', key, value);
       // Обернул в очередь чтобы можно было синхронно наполнить очередь известных ключей
       queueMicrotask(() => {
-        this.theChain.receiving(new Visitant((chain) => {
+        this.theChain.cache(new Visitant((chain) => {
+          console.log('received in chain', key, value);
           this.keysFilled.add(key);
           const lastChain = {
             ...chain,
@@ -43,7 +45,7 @@ export class GuestChain<T> {
           if (this.isChainFilled()) {
             this.filledChainPool.receive(lastChain);
           }
-        }));
+        }), {});
       });
     });
   }

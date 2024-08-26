@@ -53,6 +53,17 @@ export class PatronPool<T> implements Guest<T>, Pool<T> {
   }
 
   /**
+   * Позволяет распространить значение если оно имеет смысл
+   */
+  public distributeMeaningfulReceiving(meaningful: boolean, receiving: T, possiblePatron: Guest<T>) {
+    if (meaningful) {
+      this.distributeReceivingOnce(receiving, possiblePatron);
+    } else {
+      this.add(possiblePatron);
+    }
+  }
+
+  /**
    * ATTENTION! этот метод может быть опасен, если использовать его в
    * местах где нужно данные отдать, может привести к записи старых данных
    *

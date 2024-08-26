@@ -1,31 +1,19 @@
 import { Map } from '@/modules/application/map/Map';
 import { Guest } from '@/modules/system/guest/Guest';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
-import { Value } from '@/modules/system/guest/Value';
+import { Cache } from '@/modules/system/guest/Cache';
 import { Patron } from '@/modules/system/guest/Patron';
 import { Visitant } from '@/modules/system/guest/Visitant';
 import { GuestChain } from '@/modules/system/guest/GuestChain';
 import { MapObjectDocument } from '@/modules/entities/MapStructures';
 import { Layer } from 'konva/lib/Layer';
-
-interface PointDocument {
-  id: string,
-  x: number,
-  y: number
-}
-
-interface SizeDocument {
-  width: number;
-  height: number;
-}
+import { PointIdDocument } from '@/modules/entities/PointIdDocument';
+import { SizeDocument } from '@/modules/entities/SizeDocument';
 
 export class MiniMap {
-  private theSize = new Value({
-    width: 0,
-    height: 0,
-  }, this);
+  private theSize = new Cache(this);
 
-  private thePoints = new Value<PointDocument[]>([], this);
+  private thePoints = new Cache<PointIdDocument[]>(this);
 
   public constructor(private map: Map, private layer: LayerBase) {
     const minimapWidth = 130;
@@ -56,7 +44,7 @@ export class MiniMap {
     return this;
   }
 
-  points(guest: Guest<PointDocument[]>) {
+  points(guest: Guest<PointIdDocument[]>) {
     this.thePoints.receiving(guest);
     return this;
   }
