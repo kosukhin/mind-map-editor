@@ -31,11 +31,10 @@ export class GuestChain<T> {
   public receiveKey<R>(key: string): Guest<R> {
     this.keysKnown.add(key);
     return new Visitant((value) => {
-      console.log('visitant in chain', key, value);
+      console.log('new receive chain', key, value);
       // Обернул в очередь чтобы можно было синхронно наполнить очередь известных ключей
       queueMicrotask(() => {
         this.theChain.cache(new Visitant((chain) => {
-          console.log('received in chain', key, value);
           this.keysFilled.add(key);
           const lastChain = {
             ...chain,

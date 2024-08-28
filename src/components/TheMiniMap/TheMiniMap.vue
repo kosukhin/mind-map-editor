@@ -10,6 +10,14 @@ const points = pointsPatron.ref();
 const sizePatron = new VueRefPatron();
 miniMapBehaviour.size(sizePatron);
 const size = sizePatron.ref();
+
+const viewportSizePatron = new VueRefPatron();
+miniMapBehaviour.viewportSize(viewportSizePatron);
+const viewportSize = viewportSizePatron.ref();
+
+const viewportPositionPatron = new VueRefPatron();
+miniMapBehaviour.viewportPosition(viewportPositionPatron);
+const viewportPosition = viewportSizePatron.ref();
 </script>
 
 <template>
@@ -21,8 +29,14 @@ const size = sizePatron.ref();
       }"
     class="absolute block bg-white top-[50px] mt-3 right-3 z-1 border border-solid border-body-dark"
   >
-    <div ref="miniMap" class="TheMiniMap"></div>
-    <div ref="miniMapScreen" class="absolute bg-primary/50"></div>
+    <div
+      :style="{
+        width: `${viewportSize.width}px`,
+        height: `${viewportSize.height}px`,
+        top: `${viewportPosition.y}px`,
+        left: `${viewportPosition.x}px`,
+      }"
+      class="absolute bg-primary/50"></div>
     <div v-if="points">
       <div
         v-for="obj in points"
