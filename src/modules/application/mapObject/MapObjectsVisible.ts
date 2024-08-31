@@ -15,7 +15,6 @@ import { SizeDocument } from '@/modules/entities/SizeDocument';
 export class MapObjectsVisible implements MapObjects {
   private visibleObjectsCache = new Cache<MapObjectDocument[]>(this);
 
-  // TODO вместо konvaLayer нужно использовать canvas зависимость
   public constructor(konvaStage: LayerBase, canvas: BrowserCanvas, mapCurrent: MapCurrent) {
     const chain = new GuestChain<{layer: Layer, size: SizeDocument, objects: MapObjectDocument[]}>();
     canvas.size(new Patron(chain.receiveKey('size')));
