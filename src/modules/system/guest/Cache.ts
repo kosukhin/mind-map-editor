@@ -4,8 +4,8 @@ import { GuestType, ReceiveOptions } from './GuestType';
 
 export class Cache<T> implements CacheType<T> {
   public constructor(
-    private defaultValue: T,
     initiator: unknown,
+    private defaultValue: T | null = null,
     private theCache: T | null = null,
     private pool = new PatronPool<T>(initiator),
   ) {}
@@ -19,6 +19,8 @@ export class Cache<T> implements CacheType<T> {
   public receiving(guest: GuestType<T>): this {
     if (this.theCache !== null) {
       guest.receive(this.theCache);
+    } else if (this.defaultValue !== null) {
+      guest.receive(this.defaultValue);
     }
     this.pool.add(guest);
     return this;
