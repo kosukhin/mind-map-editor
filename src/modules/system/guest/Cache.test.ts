@@ -3,7 +3,7 @@ import { Cache } from '@/modules/system/guest/Cache';
 import { Guest } from './Guest';
 
 test('value works', () => {
-  const value = new Cache(0, null);
+  const value = new Cache(null);
   value.receive(2);
   value.receiving(new Guest((latestValue: number) => {
     expect(latestValue).toBe(2);

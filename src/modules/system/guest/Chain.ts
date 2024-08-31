@@ -14,7 +14,7 @@ export class Chain<T> implements ChainType<T> {
   private filledChainPool = new PatronPoolWithGuests(this);
 
   public constructor() {
-    this.theChain = new Cache<Record<string, any>>({}, this);
+    this.theChain = new Cache<Record<string, any>>(this, {});
   }
 
   public result(guest: GuestType<T>) {
