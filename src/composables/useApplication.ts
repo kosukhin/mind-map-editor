@@ -5,8 +5,8 @@ import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueue';
 import { MapCurrent } from '@/modules/application/map/MapCurrent';
 import { MapSettingsGuest } from '@/modules/application/mapSettings/MapSettingsGuest';
-import { NotificationMemory } from '@/modules/application/notification/NotificationMemory';
-import { NotificationDocument } from '@/modules/application/notification/Notification';
+import { Notification } from '@/modules/application/notification/Notification';
+import { NotificationDocument } from '@/modules/application/notification/NotificationType';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { MapObjectsVisible } from '@/modules/application/mapObject/MapObjectsVisible';
@@ -14,7 +14,7 @@ import { MapObjectsRectsPatron } from '@/modules/application/mapObject/MapObject
 import { MapObjectBase } from '@/modules/application/mapObject/MapObjectBase';
 import { MiniMap } from '@/modules/application/miniMap/MiniMap';
 
-const notification = new NotificationMemory();
+const notification = new Notification();
 const mapFile = new MapFileOfContent(new MapFileContentFS(new BrowserLaunchQueue(), notification));
 const mapCurrent = new MapCurrent(mapFile);
 const mapSettings = new MapSettingsGuest(mapFile, mapCurrent);

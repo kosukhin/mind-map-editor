@@ -5,7 +5,7 @@ import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
 import { Guest } from '@/modules/system/guest/Guest';
 import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFileSaved';
-import { Notification } from '@/modules/application/notification/Notification';
+import { NotificationType } from '@/modules/application/notification/NotificationType';
 import { GuestType } from '../../system/guest/GuestType';
 
 export class MapFileContentFS implements MapFileContent {
@@ -15,7 +15,7 @@ export class MapFileContentFS implements MapFileContent {
 
   public constructor(
     private launchQueue: BrowserLaunchQueue,
-    private notiffication: Notification,
+    private notiffication: NotificationType,
   ) {}
 
   public content(target: GuestType<string>): this {
