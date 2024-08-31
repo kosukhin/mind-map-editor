@@ -8,7 +8,7 @@ import {
 /**
  * Пул постоянных посетителей для источника - патронов
  */
-export class PatronPool<T> implements GuestType<T>, PoolType<T> {
+export class PatronPool<T> implements PoolType<T> {
   private patrons = new Set<GuestType<T>>();
 
   public constructor(private initiator: unknown) {}
@@ -47,9 +47,10 @@ export class PatronPool<T> implements GuestType<T>, PoolType<T> {
     }
   }
 
-  public distributeReceivingOnce(receiving: T, possiblePatron: GuestType<T>) {
+  public distributeReceivingOnce(receiving: T, possiblePatron: GuestType<T>): this {
     this.add(possiblePatron);
     possiblePatron.receive(receiving);
+    return this;
   }
 
   /**
