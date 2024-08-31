@@ -25,9 +25,7 @@ export class MapObjectsVisible implements MapObjects {
       if (!stage) {
         return;
       }
-      console.log('visible before');
       const visibleObjects = objects.filter((object) => this.isInBoundings(stage, size, object.position));
-      console.log(visibleObjects);
       this.visibleObjectsCache.receive(visibleObjects);
     })));
   }

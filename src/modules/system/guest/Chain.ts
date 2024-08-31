@@ -14,7 +14,7 @@ export class Chain<T> implements ChainType<T> {
   private filledChainPool = new PatronPoolWithGuests(this);
 
   public constructor() {
-    this.theChain = new Cache<Record<string, any>>(this);
+    this.theChain = new Cache<Record<string, any>>({}, this);
   }
 
   public result(guest: GuestType<T>) {
@@ -32,10 +32,9 @@ export class Chain<T> implements ChainType<T> {
   public receiveKey<R>(key: string): GuestType<R> {
     this.keysKnown.add(key);
     return new Guest((value) => {
-      console.log('new receive chain', key, value);
       // Обернул в очередь чтобы можно было синхронно наполнить очередь известных ключей
       queueMicrotask(() => {
-        this.theChain.cache(new Guest((chain) => {
+        this.theChain.receiving(new Guest((chain) => {
           this.keysFilled.add(key);
           const lastChain = {
             ...chain,
@@ -45,7 +44,7 @@ export class Chain<T> implements ChainType<T> {
           if (this.isChainFilled()) {
             this.filledChainPool.receive(lastChain);
           }
-        }), {});
+        }));
       });
     });
   }

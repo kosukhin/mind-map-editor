@@ -12,13 +12,12 @@ import { Patron } from '@/modules/system/guest/Patron';
 import { GuestType } from '../../system/guest/GuestType';
 
 export class MapCurrent implements Map {
-  private mapSettingsCache = new Cache(this);
+  private mapSettingsCache = new Cache(null, this);
 
-  private mapObjectsCache = new Cache<MapObjectDocument[]>(this);
+  private mapObjectsCache = new Cache<MapObjectDocument[]>(null, this);
 
   public constructor(private mapFile: MapFile) {
     mapFile.currentMap(new Patron(new Guest((latestMap: MapDocument) => {
-      console.log('cur map received', latestMap);
       this.mapSettingsCache.receive(latestMap.settings);
       this.mapObjectsCache.receive(Object.values(latestMap.objects));
     })));
@@ -37,7 +36,6 @@ export class MapCurrent implements Map {
   public receive(value: MapDocument) {
     // TODO тут временно current позже нужен объект Text которые будет представлять имя из ссылки
     const name = 'current';
-    console.log('current map save', value);
     this.mapFile.mapFile(new Guest((latestMapFile: MapFileDocument) => {
       this.mapFile.receive({
         ...latestMapFile,

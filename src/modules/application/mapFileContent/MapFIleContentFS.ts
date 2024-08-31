@@ -45,7 +45,6 @@ export class MapFileContentFS implements MapFileContent {
       throw new RuntimeError('Cant save file because no fileHandler', {});
     }
     try {
-      console.log('save string', value);
       new BrowserFileSaved(this.fileHandler).save(value);
       return this;
     } catch (e) {

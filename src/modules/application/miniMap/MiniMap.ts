@@ -27,7 +27,6 @@ export class MiniMap {
     layer.layer(new Patron(chain.receiveKey('layer')));
     layer.size(new Patron(chain.receiveKey('size')));
     chain.result(new Patron(new Guest(({ layer: konvaLayer, size, objects }) => {
-      console.log('recalc minimap');
       const scale = minimapWidth / size.width;
       const layerSize = {
         width: konvaLayer.width() * scale,
