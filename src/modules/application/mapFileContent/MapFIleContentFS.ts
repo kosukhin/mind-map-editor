@@ -1,12 +1,12 @@
 import { MapFileContent } from '@/modules/application/mapFileContent/MapFileContent';
 import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueue';
 import { SystemFileFromHandler } from '@/modules/system/file/SystemFileFromHandler';
-import { Guest } from '@/modules/system/guest/Guest';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
-import { Visitant } from '@/modules/system/guest/Visitant';
+import { Guest } from '@/modules/system/guest/Guest';
 import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFileSaved';
 import { Notification } from '@/modules/application/notification/Notification';
+import { GuestType } from '../../system/guest/GuestType';
 
 export class MapFileContentFS implements MapFileContent {
   private contentPatrons = new PatronPool(this);
@@ -18,12 +18,12 @@ export class MapFileContentFS implements MapFileContent {
     private notiffication: Notification,
   ) {}
 
-  public content(target: Guest<string>): this {
+  public content(target: GuestType<string>): this {
     try {
-      const fileHandlerGuest = new Visitant((value: FileSystemFileHandle) => {
+      const fileHandlerGuest = new Guest((value: FileSystemFileHandle) => {
         this.fileHandler = value;
         new SystemFileFromHandler(value)
-          .content(new Visitant((content: string) => {
+          .content(new Guest((content: string) => {
             this.contentPatrons.distributeReceivingOnce(content, target);
           }));
       });

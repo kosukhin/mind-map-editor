@@ -1,8 +1,8 @@
-import { Guest } from '@/modules/system/guest/Guest';
 import { Layer as KonvaLayer } from 'konva/lib/Layer';
 import { SizeDocument } from '@/modules/entities/SizeDocument';
+import { GuestType } from '../../system/guest/GuestType';
 
 export interface LayerBase {
-  layer(guest: Guest<KonvaLayer>): this;
-  size(guest: Guest<SizeDocument>): this;
+  layer(guest: GuestType<KonvaLayer>): this;
+  size(guest: GuestType<SizeDocument>): this;
 }

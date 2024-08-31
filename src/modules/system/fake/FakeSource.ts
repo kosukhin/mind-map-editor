@@ -1,12 +1,12 @@
-import { Guest } from '@/modules/system/guest/Guest';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
+import { GuestType } from '../guest/GuestType';
 
-export class FakeSource implements Guest<any> {
+export class FakeSource implements GuestType<any> {
   private pool = new PatronPool<any>(this)
 
   public constructor(private value: any) {}
 
-  public data(guest: Guest<any>): this {
+  public data(guest: GuestType<any>): this {
     this.pool.distributeReceivingOnce(this.value, guest);
     return this;
   }

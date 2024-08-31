@@ -1,6 +1,6 @@
-import { Guest } from '@/modules/system/guest/Guest';
+import { GuestType } from '../guest/GuestType';
 
 export interface SystemFile {
-  content(target: Guest<string>): this;
+  content(target: GuestType<string>): this;
   save(content: string): this;
 }

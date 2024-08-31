@@ -1,13 +1,13 @@
 import {
-  Guest,
+  GuestType,
   ReceiveOptions,
-} from '@/modules/system/guest/Guest';
+} from './GuestType';
 
 /**
  * Патрон - это постоянный посетитель
  */
-export class Patron<T> implements Guest<T> {
-  public constructor(private willBePatron: Guest<T>) {}
+export class Patron<T> implements GuestType<T> {
+  public constructor(private willBePatron: GuestType<T>) {}
 
   public introduction() {
     return 'patron' as const;

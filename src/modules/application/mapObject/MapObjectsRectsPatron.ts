@@ -1,20 +1,20 @@
-import { Guest } from '@/modules/system/guest/Guest';
 import { MapObjectDocument } from '@/modules/entities/MapStructures';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
-import { Visitant } from '@/modules/system/guest/Visitant';
+import { Guest } from '@/modules/system/guest/Guest';
 import { Rect } from 'konva/lib/shapes/Rect';
 import { MapObject } from '@/modules/application/mapObject/MapObject';
+import { GuestType } from '../../system/guest/GuestType';
 
 /**
  * Отвечает за рендеринг квадратов для объектов карты
  */
-export class MapObjectsRectsPatron implements Guest<MapObjectDocument[]> {
+export class MapObjectsRectsPatron implements GuestType<MapObjectDocument[]> {
   private previouslyRenderedRects = new Map();
 
   public constructor(private konvaLayer: LayerBase, private mapObject: MapObject) {}
 
   public receive(objects: MapObjectDocument[]): this {
-    this.konvaLayer.layer(new Visitant((layer) => {
+    this.konvaLayer.layer(new Guest((layer) => {
       objects.forEach((object) => {
         if (this.previouslyRenderedRects.has(object)) {
           const rect = this.previouslyRenderedRects.get(object);

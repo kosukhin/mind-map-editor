@@ -1,7 +1,7 @@
-import { Guest } from '@/modules/system/guest/Guest';
 import { ref } from 'vue';
+import { GuestType } from '../../system/guest/GuestType';
 
-export class VueRefPatron<T> implements Guest<T> {
+export class VueRefPatron<T> implements GuestType<T> {
   private innerRef = ref<T>();
 
   public ref() {

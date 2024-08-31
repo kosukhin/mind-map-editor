@@ -1,11 +1,11 @@
-import { Guest } from '@/modules/system/guest/Guest';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { watch } from 'vue';
+import { GuestType } from '../../system/guest/GuestType';
 
-export class VueRefPatronDuplex<T> implements Guest<T> {
+export class VueRefPatronDuplex<T> implements GuestType<T> {
   private refWatcherCreated = false;
 
-  public constructor(private basePatron: VueRefPatron<T>, private guest: Guest<T>) {}
+  public constructor(private basePatron: VueRefPatron<T>, private guest: GuestType<T>) {}
 
   public ref() {
     return this.basePatron.ref();

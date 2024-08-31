@@ -1,11 +1,11 @@
 import {
-  Guest,
+  GuestType,
   ReceiveOptions,
-} from '@/modules/system/guest/Guest';
+} from './GuestType';
 
-export class GuestInTheMiddle<T> implements Guest<T> {
+export class GuestInTheMiddle<T> implements GuestType<T> {
   public constructor(
-    private baseGuest: Guest<unknown>,
+    private baseGuest: GuestType<unknown>,
     private middleFn: (value: T, options?: ReceiveOptions) => void,
   ) {}
 

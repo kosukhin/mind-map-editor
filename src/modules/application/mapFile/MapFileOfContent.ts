@@ -2,11 +2,11 @@ import { MapFile } from '@/modules/application/mapFile/MapFile';
 import { MapFileContent } from '@/modules/application/mapFileContent/MapFileContent';
 import { MapDocument, MapFileDocument } from '@/modules/entities/MapStructures';
 import { Guest } from '@/modules/system/guest/Guest';
-import { Visitant } from '@/modules/system/guest/Visitant';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { TransformedFromJSON } from '@/modules/system/transformed/TransformedFromJSON';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
 import { TransformedToJSON } from '@/modules/system/transformed/TransformedToJSON';
+import { GuestType } from '../../system/guest/GuestType';
 
 export class MapFileOfContent implements MapFile {
   private currentMapPatrons = new PatronPool<MapDocument>(this);
@@ -15,9 +15,9 @@ export class MapFileOfContent implements MapFile {
 
   public constructor(private mapFileContent: MapFileContent) {}
 
-  public currentMap(currentMapGuest: Guest<MapDocument>): this {
+  public currentMap(currentMapGuest: GuestType<MapDocument>): this {
     try {
-      const mapFileTarget = new Visitant((value: MapFileDocument) => {
+      const mapFileTarget = new Guest((value: MapFileDocument) => {
         this.currentMapPatrons.distributeReceivingOnce(value.current, currentMapGuest);
       });
       this.mapFile(mapFileTarget);
@@ -36,9 +36,9 @@ export class MapFileOfContent implements MapFile {
     }
   }
 
-  public mapFile(mapFileTarget: Guest<MapFileDocument>): this {
+  public mapFile(mapFileTarget: GuestType<MapFileDocument>): this {
     try {
-      const contentTarget = new Visitant<string>((value) => {
+      const contentTarget = new Guest<string>((value) => {
         const mapFile = new TransformedFromJSON<MapFileDocument>(value).result();
         this.mapFilePatrons.distributeReceivingOnce(mapFile, mapFileTarget);
       });

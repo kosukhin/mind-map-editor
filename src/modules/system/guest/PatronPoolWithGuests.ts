@@ -1,12 +1,12 @@
-import {
-  Guest,
-  ReceiveOptions,
-} from '@/modules/system/guest/Guest';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
-import { Pool } from '@/modules/system/guest/Pool';
+import { PoolType } from '@/modules/system/guest/PoolType';
+import {
+  GuestType,
+  ReceiveOptions,
+} from './GuestType';
 
-export class PatronPoolWithGuests<T> implements Guest<T>, Pool<T> {
-  private guests = new Set<Guest<T>>();
+export class PatronPoolWithGuests<T> implements GuestType<T>, PoolType<T> {
+  private guests = new Set<GuestType<T>>();
 
   private patronPool: PatronPool<T>;
 
@@ -20,7 +20,7 @@ export class PatronPoolWithGuests<T> implements Guest<T>, Pool<T> {
     return this;
   }
 
-  public add(guest: Guest<T>): this {
+  public add(guest: GuestType<T>): this {
     if (!guest.introduction || guest.introduction() === 'guest') {
       this.guests.add(guest);
     }
@@ -28,7 +28,7 @@ export class PatronPoolWithGuests<T> implements Guest<T>, Pool<T> {
     return this;
   }
 
-  public distributeReceiving(receiving: T, ...guests: Guest<T>[]): this {
+  public distributeReceiving(receiving: T, ...guests: GuestType<T>[]): this {
     guests.forEach((guest) => {
       this.guests.add(guest);
     });

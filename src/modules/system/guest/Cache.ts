@@ -1,11 +1,12 @@
-import {
-  Guest,
-  ReceiveOptions,
-} from '@/modules/system/guest/Guest';
-import { GuestAware } from '@/modules/system/guest/GuestAware';
+import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
+import { CacheType } from '@/modules/system/guest/CacheType';
+import {
+  GuestType,
+  ReceiveOptions,
+} from './GuestType';
 
-export class Cache<T> implements Guest<T>, GuestAware<T> {
+export class Cache<T> implements GuestType<T>, GuestAwareType<T>, CacheType<T> {
   private pool: PatronPool<T>;
 
   private theCache: T | null = null;
@@ -20,7 +21,7 @@ export class Cache<T> implements Guest<T>, GuestAware<T> {
     return this;
   }
 
-  public receiving(guest: Guest<T>): this {
+  public receiving(guest: GuestType<T>): this {
     if (this.theCache !== null) {
       guest.receive(this.theCache);
     }
@@ -28,7 +29,7 @@ export class Cache<T> implements Guest<T>, GuestAware<T> {
     return this;
   }
 
-  public cache(guest: Guest<T>, defaultValue: T): this {
+  public cache(guest: GuestType<T>, defaultValue: T): this {
     if (this.theCache === null) {
       guest.receive(defaultValue);
     }

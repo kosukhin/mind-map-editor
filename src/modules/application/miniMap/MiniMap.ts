@@ -1,15 +1,15 @@
 import { Map } from '@/modules/application/map/Map';
-import { Guest } from '@/modules/system/guest/Guest';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
 import { Cache } from '@/modules/system/guest/Cache';
 import { Patron } from '@/modules/system/guest/Patron';
-import { Visitant } from '@/modules/system/guest/Visitant';
-import { GuestChain } from '@/modules/system/guest/GuestChain';
+import { Guest } from '@/modules/system/guest/Guest';
+import { Chain } from '@/modules/system/guest/Chain';
 import { MapObjectDocument } from '@/modules/entities/MapStructures';
 import { Layer } from 'konva/lib/Layer';
 import { PointIdDocument } from '@/modules/entities/PointIdDocument';
 import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { PointDocument } from '@/modules/entities/PointDocument';
+import { GuestType } from '../../system/guest/GuestType';
 
 export class MiniMap {
   private theSize = new Cache(this);
@@ -22,11 +22,11 @@ export class MiniMap {
 
   public constructor(private map: Map, private layer: LayerBase) {
     const minimapWidth = 130;
-    const chain = new GuestChain<{layer: Layer, size: SizeDocument, objects: MapObjectDocument[]}>();
+    const chain = new Chain<{layer: Layer, size: SizeDocument, objects: MapObjectDocument[]}>();
     map.mapObjects(new Patron(chain.receiveKey('objects')));
     layer.layer(new Patron(chain.receiveKey('layer')));
     layer.size(new Patron(chain.receiveKey('size')));
-    chain.result(new Patron(new Visitant(({ layer: konvaLayer, size, objects }) => {
+    chain.result(new Patron(new Guest(({ layer: konvaLayer, size, objects }) => {
       console.log('recalc minimap');
       const scale = minimapWidth / size.width;
       const layerSize = {
@@ -51,22 +51,22 @@ export class MiniMap {
     })));
   }
 
-  viewportPosition(guest: Guest<PointDocument>) {
+  viewportPosition(guest: GuestType<PointDocument>) {
     this.viewportPositionCache.receiving(guest);
     return this;
   }
 
-  viewportSize(guest: Guest<SizeDocument>) {
+  viewportSize(guest: GuestType<SizeDocument>) {
     this.viewportSizeCache.receiving(guest);
     return this;
   }
 
-  size(guest: Guest<SizeDocument>) {
+  size(guest: GuestType<SizeDocument>) {
     this.theSize.receiving(guest);
     return this;
   }
 
-  points(guest: Guest<PointIdDocument[]>) {
+  points(guest: GuestType<PointIdDocument[]>) {
     this.thePoints.receiving(guest);
     return this;
   }

@@ -1,6 +1,6 @@
 import { Notification, NotificationDocument } from '@/modules/application/notification/Notification';
-import { Guest } from '@/modules/system/guest/Guest';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
+import { GuestType } from '../../system/guest/GuestType';
 
 let lastTimerHead: NodeJS.Timeout | null = null;
 const notificationLifetimeDelay = 4000;
@@ -10,7 +10,7 @@ export class NotificationMemory implements Notification {
 
   private notificationsPool = new PatronPool<NotificationDocument>(this);
 
-  public message(guest: Guest<NotificationDocument>): this {
+  public message(guest: GuestType<NotificationDocument>): this {
     if (this.messageDocument) {
       this.notificationsPool.distributeReceivingOnce(this.messageDocument, guest);
     } else {

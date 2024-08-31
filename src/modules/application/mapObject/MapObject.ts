@@ -1,8 +1,8 @@
-import { Guest } from '@/modules/system/guest/Guest';
 import { MapObjectDocument } from '@/modules/entities/MapStructures';
+import { GuestType } from '../../system/guest/GuestType';
 
 export interface MapObjects {
-  objects(guest: Guest<MapObjectDocument[]>): this;
+  objects(guest: GuestType<MapObjectDocument[]>): this;
 }
 
-export type MapObject = Guest<MapObjectDocument>
+export type MapObject = GuestType<MapObjectDocument>

@@ -1,11 +1,11 @@
-import { Guest } from '@/modules/system/guest/Guest';
 import {
   MapDocument,
   MapObjectDocument,
   MapSettingsDocument,
 } from '@/modules/entities/MapStructures';
+import { GuestType } from '../../system/guest/GuestType';
 
-export interface Map extends Guest<MapDocument> {
-  mapSettings(guest: Guest<MapSettingsDocument>): this;
-  mapObjects(guest: Guest<MapObjectDocument[]>): this;
+export interface Map extends GuestType<MapDocument> {
+  mapSettings(guest: GuestType<MapSettingsDocument>): this;
+  mapObjects(guest: GuestType<MapObjectDocument[]>): this;
 }

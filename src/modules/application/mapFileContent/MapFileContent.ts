@@ -1,5 +1,5 @@
-import { Guest } from '@/modules/system/guest/Guest';
+import { GuestType } from '../../system/guest/GuestType';
 
-export interface MapFileContent extends Guest<string> {
-  content(target: Guest<string>): this;
+export interface MapFileContent extends GuestType<string> {
+  content(target: GuestType<string>): this;
 }

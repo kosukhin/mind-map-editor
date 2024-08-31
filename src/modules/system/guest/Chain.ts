@@ -1,9 +1,10 @@
-import { Guest } from '@/modules/system/guest/Guest';
 import { Cache } from '@/modules/system/guest/Cache';
-import { Visitant } from '@/modules/system/guest/Visitant';
+import { Guest } from '@/modules/system/guest/Guest';
 import { PatronPoolWithGuests } from '@/modules/system/guest/PatronPoolWithGuests';
+import { ChainType } from '@/modules/system/guest/ChainType';
+import { GuestType } from './GuestType';
 
-export class GuestChain<T> {
+export class Chain<T> implements ChainType<T> {
   private theChain: Cache<Record<string, any>>
 
   private keysKnown = new Set();
@@ -16,10 +17,10 @@ export class GuestChain<T> {
     this.theChain = new Cache<Record<string, any>>(this);
   }
 
-  public result(guest: Guest<T>) {
+  public result(guest: GuestType<T>) {
     if (this.isChainFilled()) {
       this.filledChainPool.add(guest);
-      this.theChain.receiving(new Visitant((chain) => {
+      this.theChain.receiving(new Guest((chain) => {
         this.filledChainPool.receive(chain);
       }));
     } else {
@@ -28,13 +29,13 @@ export class GuestChain<T> {
     return this;
   }
 
-  public receiveKey<R>(key: string): Guest<R> {
+  public receiveKey<R>(key: string): GuestType<R> {
     this.keysKnown.add(key);
-    return new Visitant((value) => {
+    return new Guest((value) => {
       console.log('new receive chain', key, value);
       // Обернул в очередь чтобы можно было синхронно наполнить очередь известных ключей
       queueMicrotask(() => {
-        this.theChain.cache(new Visitant((chain) => {
+        this.theChain.cache(new Guest((chain) => {
           this.keysFilled.add(key);
           const lastChain = {
             ...chain,

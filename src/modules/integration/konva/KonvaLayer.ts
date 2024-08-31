@@ -1,25 +1,25 @@
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
-import { Guest } from '@/modules/system/guest/Guest';
 import Konva from 'konva';
 import { MapFile } from '@/modules/application/mapFile/MapFile';
-import { GuestChain } from '@/modules/system/guest/GuestChain';
+import { Chain } from '@/modules/system/guest/Chain';
 import { Patron } from '@/modules/system/guest/Patron';
 import { MapDocument } from '@/modules/entities/MapStructures';
 import { Layer } from 'konva/lib/Layer';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
 import { SizeDocument } from '@/modules/entities/SizeDocument';
-import { Visitant } from '@/modules/system/guest/Visitant';
+import { Guest } from '@/modules/system/guest/Guest';
+import { GuestType } from '../../system/guest/GuestType';
 
 export class KonvaLayer implements LayerBase {
-  private guestChain = new GuestChain<{canvas: HTMLElement, map: MapDocument}>();
+  private guestChain = new Chain<{canvas: HTMLElement, map: MapDocument}>();
 
   public constructor(private mapFile: MapFile, private canvas: BrowserCanvas) {
     this.canvas.canvas(new Patron(this.guestChain.receiveKey('canvas')));
     this.mapFile.currentMap(new Patron(this.guestChain.receiveKey('map')));
   }
 
-  public layer(guest: Guest<Layer>): this {
-    this.guestChain.result(new Visitant(({ canvas, map }) => {
+  public layer(guest: GuestType<Layer>): this {
+    this.guestChain.result(new Guest(({ canvas, map }) => {
       console.log('calculate layer');
       const stage = new Konva.Stage({
         width: canvas.clientWidth,
@@ -41,7 +41,7 @@ export class KonvaLayer implements LayerBase {
     return this;
   }
 
-  public size(guest: Guest<SizeDocument>) {
+  public size(guest: GuestType<SizeDocument>) {
     guest.receive({
       height: 3000,
       width: 3000,

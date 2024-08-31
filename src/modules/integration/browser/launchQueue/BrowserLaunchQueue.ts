@@ -1,7 +1,7 @@
-import { Guest } from '@/modules/system/guest/Guest';
+import { GuestType } from '../../../system/guest/GuestType';
 
 export class BrowserLaunchQueue {
-  fileHandler(guest: Guest<FileSystemFileHandle>) {
+  fileHandler(guest: GuestType<FileSystemFileHandle>) {
     if ('launchQueue' in window) {
       (window as any).launchQueue.setConsumer((launchParams: any) => {
         if (launchParams.files && launchParams.files.length) {

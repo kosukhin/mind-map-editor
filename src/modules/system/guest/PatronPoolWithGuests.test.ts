@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { Visitant } from '@/modules/system/guest/Visitant';
+import { Guest } from '@/modules/system/guest/Guest';
 import { Patron } from '@/modules/system/guest/Patron';
 import { PatronPoolWithGuests } from '@/modules/system/guest/PatronPoolWithGuests';
 
@@ -8,15 +8,15 @@ test('patron pool with guests', () => {
   let receivedCount = 0;
 
   // 2 + 2
-  pool.add(new Patron(new Visitant<number>((value) => {
+  pool.add(new Patron(new Guest<number>((value) => {
     receivedCount += value;
   })));
   // 2 + 2
-  pool.add(new Patron(new Visitant<number>((value) => {
+  pool.add(new Patron(new Guest<number>((value) => {
     receivedCount += value;
   })));
   // 2
-  pool.add(new Visitant<number>((value) => {
+  pool.add(new Guest<number>((value) => {
     receivedCount += value;
   }));
   pool.receive(2);

@@ -1,22 +1,22 @@
-import {
-  Guest,
-  ReceiveOptions,
-} from '@/modules/system/guest/Guest';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
-import { Pool } from '@/modules/system/guest/Pool';
+import { PoolType } from '@/modules/system/guest/PoolType';
+import {
+  GuestType,
+  ReceiveOptions,
+} from './GuestType';
 
 /**
  * Пул постоянных посетителей для источника - патронов
  */
-export class PatronPool<T> implements Guest<T>, Pool<T> {
-  private patrons = new Set<Guest<T>>();
+export class PatronPool<T> implements GuestType<T>, PoolType<T> {
+  private patrons = new Set<GuestType<T>>();
 
   public constructor(private initiator: unknown) {}
 
   /**
    * Добавить гостя в пул патронов, если гость представился патроном
    */
-  public add(shouldBePatron: Guest<T>) {
+  public add(shouldBePatron: GuestType<T>) {
     try {
       if (shouldBePatron.introduction && shouldBePatron.introduction() === 'patron') {
         this.patrons.add(shouldBePatron);
@@ -47,7 +47,7 @@ export class PatronPool<T> implements Guest<T>, Pool<T> {
     }
   }
 
-  public distributeReceivingOnce(receiving: T, possiblePatron: Guest<T>) {
+  public distributeReceivingOnce(receiving: T, possiblePatron: GuestType<T>) {
     this.add(possiblePatron);
     possiblePatron.receive(receiving);
   }
@@ -55,7 +55,7 @@ export class PatronPool<T> implements Guest<T>, Pool<T> {
   /**
    * Позволяет распространить значение если оно имеет смысл
    */
-  public distributeMeaningfulReceiving(meaningful: boolean, receiving: T, possiblePatron: Guest<T>) {
+  public distributeMeaningfulReceiving(meaningful: boolean, receiving: T, possiblePatron: GuestType<T>) {
     if (meaningful) {
       this.distributeReceivingOnce(receiving, possiblePatron);
     } else {
@@ -71,7 +71,7 @@ export class PatronPool<T> implements Guest<T>, Pool<T> {
    * если гость является патроном. Также передаст получение
    * другим уже существовавшим ранее патронам
    */
-  public distributeReceiving(receiving: T, ...possiblePatrons: Guest<T>[]) {
+  public distributeReceiving(receiving: T, ...possiblePatrons: GuestType<T>[]) {
     const options: ReceiveOptions = {
       specificData: {
         initiator: this.initiator,

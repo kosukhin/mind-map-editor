@@ -1,10 +1,10 @@
-import { Guest } from '@/modules/system/guest/Guest';
+import { GuestType } from '../../system/guest/GuestType';
 
 export interface NotificationDocument {
   text: string,
   type: 'error' | 'success',
 }
 
-export interface Notification extends Guest<NotificationDocument> {
-  message(guest: Guest<NotificationDocument>): this;
+export interface Notification extends GuestType<NotificationDocument> {
+  message(guest: GuestType<NotificationDocument>): this;
 }

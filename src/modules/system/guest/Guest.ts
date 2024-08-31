@@ -1,11 +1,13 @@
-type GuestIntroduction = 'guest' | 'patron';
+import {
+  GuestType,
+  ReceiveOptions,
+} from './GuestType';
 
-export interface ReceiveOptions {
-  interceptAt?: any,
-  specificData?: any,
-}
+export class Guest<T> implements GuestType<T> {
+  constructor(private receiver: (value: T, options?: ReceiveOptions) => void) {}
 
-export interface Guest<T> {
-  receive(value: T, options?: ReceiveOptions): this;
-  introduction?(): GuestIntroduction;
+  receive(value: T, options?: ReceiveOptions) {
+    this.receiver(value, options);
+    return this;
+  }
 }
