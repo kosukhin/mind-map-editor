@@ -20,10 +20,6 @@ export class SystemFileFromHandler implements SystemFileType {
     return this;
   }
 
-  public save(content: string): this {
-    throw new Error('Method not implemented.');
-  }
-
   private async readFile(blob: File) {
     let result = '';
     if (!filesContents.has(blob)) {

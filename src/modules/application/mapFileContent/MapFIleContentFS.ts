@@ -6,18 +6,19 @@ import { NotificationType } from '@/modules/application/notification/Notificatio
 import {
   BrowserLaunchQueueType,
 } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueType';
-import { Factory } from '@/modules/system/guest/Factory';
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { SystemFileType } from '@/modules/system/file/SystemFileType';
 import { BrowserFileType } from '@/modules/integration/browser/file/BrowserFileType';
+import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { PoolType } from '@/modules/system/guest/PoolType';
 
 export class MapFileContentFS implements MapFileContentType {
   public constructor(
     private launchQueue: BrowserLaunchQueueType,
     private notification: NotificationType,
-    private fileHandlerReadFactory: Factory<SystemFileType>,
-    private browserFileFactory: Factory<BrowserFileType>,
-    private contentPatrons = new PatronPool(this),
+    private fileHandlerReadFactory: FactoryType<SystemFileType>,
+    private browserFileFactory: FactoryType<BrowserFileType>,
+    private contentPatrons: PoolType<string> = new PatronPool(this),
     private fileHandler: FileSystemFileHandle | null = null,
   ) {}
 
