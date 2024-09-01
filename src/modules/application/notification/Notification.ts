@@ -5,22 +5,22 @@ import { GuestType } from '../../system/guest/GuestType';
 export class Notification implements NotificationType {
   public constructor(
     private notificationLifetimeDelay = 4000,
-    private messageDocument = new Cache<NotificationDocument>(this),
+    private messageCache = new Cache<NotificationDocument>(this),
     private lastTimerHead: NodeJS.Timeout | null = null,
   ) {}
 
   public message(guest: GuestType<NotificationDocument>): this {
-    this.messageDocument.receiving(guest);
+    this.messageCache.receiving(guest);
     return this;
   }
 
   public receive(value: NotificationDocument): this {
-    this.messageDocument.receive(value);
+    this.messageCache.receive(value);
     if (this.lastTimerHead) {
       clearTimeout(this.lastTimerHead);
     }
     this.lastTimerHead = setTimeout(() => {
-      this.messageDocument.receive({
+      this.messageCache.receive({
         type: 'success',
         text: 'hide',
       });
