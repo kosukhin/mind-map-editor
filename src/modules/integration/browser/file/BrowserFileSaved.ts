@@ -1,6 +1,7 @@
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
+import { BrowserFileType } from '@/modules/integration/browser/file/BrowserFileType';
 
-export class BrowserFileSaved {
+export class BrowserFileSaved implements BrowserFileType {
   public constructor(private fileHandler: FileSystemFileHandle) {}
 
   public save(content: string): this {
