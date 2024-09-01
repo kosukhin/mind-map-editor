@@ -1,9 +1,9 @@
-import { MapFile } from '@/modules/application/mapFile/MapFile';
+import { MapFileType } from '@/modules/application/mapFile/MapFileType';
 import { MapDocument, MapFileDocument } from '@/modules/entities/MapStructures';
 import { GuestType } from '../../system/guest/GuestType';
 
 // TODO сделать позже файл который строит по текущему роуту
-export class MapFileOfRoute implements MapFile {
+export class MapFileOfRoute implements MapFileType {
   currentMapPool(target: GuestType<MapDocument>): this {
     throw new Error('Method not implemented.');
   }

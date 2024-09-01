@@ -1,6 +1,6 @@
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import Konva from 'konva';
-import { MapFile } from '@/modules/application/mapFile/MapFile';
+import { MapFileType } from '@/modules/application/mapFile/MapFileType';
 import { Chain } from '@/modules/system/guest/Chain';
 import { Patron } from '@/modules/system/guest/Patron';
 import { MapDocument } from '@/modules/entities/MapStructures';
@@ -13,7 +13,7 @@ import { GuestType } from '../../system/guest/GuestType';
 export class KonvaLayer implements LayerBase {
   private guestChain = new Chain<{canvas: HTMLElement, map: MapDocument}>();
 
-  public constructor(private mapFile: MapFile, private canvas: BrowserCanvas) {
+  public constructor(private mapFile: MapFileType, private canvas: BrowserCanvas) {
     this.canvas.canvas(new Patron(this.guestChain.receiveKey('canvas')));
     this.mapFile.currentMap(new Patron(this.guestChain.receiveKey('map')));
   }

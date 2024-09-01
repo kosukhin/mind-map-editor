@@ -1,4 +1,4 @@
-import { MapFile } from '@/modules/application/mapFile/MapFile';
+import { MapFileType } from '@/modules/application/mapFile/MapFileType';
 import { MapFileContentType } from '@/modules/application/mapFileContent/MapFileContentType';
 import { MapDocument, MapFileDocument } from '@/modules/entities/MapStructures';
 import { Guest } from '@/modules/system/guest/Guest';
@@ -8,12 +8,12 @@ import { RuntimeError } from '@/modules/system/error/RuntimeError';
 import { TransformedToJSON } from '@/modules/system/transformed/TransformedToJSON';
 import { GuestType } from '../../system/guest/GuestType';
 
-export class MapFileOfContent implements MapFile {
-  private currentMapPatrons = new PatronPool<MapDocument>(this);
-
-  private mapFilePatrons = new PatronPool<MapFileDocument>(this);
-
-  public constructor(private mapFileContent: MapFileContentType) {}
+export class MapFileOfContent implements MapFileType {
+  public constructor(
+    private mapFileContent: MapFileContentType,
+    private currentMapPatrons = new PatronPool<MapDocument>(this),
+    private mapFilePatrons = new PatronPool<MapFileDocument>(this),
+  ) {}
 
   public currentMap(currentMapGuest: GuestType<MapDocument>): this {
     try {

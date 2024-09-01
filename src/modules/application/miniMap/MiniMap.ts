@@ -1,4 +1,4 @@
-import { Map } from '@/modules/application/map/Map';
+import { MapType } from '@/modules/application/map/MapType';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
 import { Cache } from '@/modules/system/guest/Cache';
 import { Patron } from '@/modules/system/guest/Patron';
@@ -20,7 +20,7 @@ export class MiniMap {
 
   private viewportPositionCache = new Cache<PointDocument>(this);
 
-  public constructor(private map: Map, private layer: LayerBase) {
+  public constructor(private map: MapType, private layer: LayerBase) {
     const minimapWidth = 130;
     const chain = new Chain<{layer: Layer, size: SizeDocument, objects: MapObjectDocument[]}>();
     map.mapObjects(new Patron(chain.receiveKey('objects')));
