@@ -13,9 +13,19 @@ import { MapObjectsVisible } from '@/modules/application/mapObject/MapObjectsVis
 import { MapObjectsRectsPatron } from '@/modules/application/mapObject/MapObjectsRectsPatron';
 import { MapObjectBase } from '@/modules/application/mapObject/MapObjectBase';
 import { MiniMap } from '@/modules/application/miniMap/MiniMap';
+import { Factory } from '@/modules/system/guest/Factory';
+import { SystemFileFromHandler } from '@/modules/system/file/SystemFileFromHandler';
+import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFileSaved';
 
+const fileHandlerReadFactory = new Factory((value: FileSystemFileHandle) => new SystemFileFromHandler(value));
+const browserFileSavedFactory = new Factory((value: FileSystemFileHandle) => new BrowserFileSaved(value));
 const notification = new Notification();
-const mapFile = new MapFileOfContent(new MapFileContentFS(new BrowserLaunchQueue(), notification));
+const mapFile = new MapFileOfContent(new MapFileContentFS(
+  new BrowserLaunchQueue(),
+  notification,
+  fileHandlerReadFactory,
+  browserFileSavedFactory,
+));
 const mapCurrent = new MapCurrent(mapFile);
 const mapSettings = new MapSettingsGuest(mapFile, mapCurrent);
 const canvas = new BrowserCanvas();

@@ -1,28 +1,33 @@
-import { MapFileContent } from '@/modules/application/mapFileContent/MapFileContent';
-import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueue';
-import { SystemFileFromHandler } from '@/modules/system/file/SystemFileFromHandler';
+import { MapFileContentType } from '@/modules/application/mapFileContent/MapFileContentType';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
 import { Guest } from '@/modules/system/guest/Guest';
-import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFileSaved';
 import { NotificationType } from '@/modules/application/notification/NotificationType';
-import { GuestType } from '../../system/guest/GuestType';
+import {
+  BrowserLaunchQueueType,
+} from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueType';
+import { Factory } from '@/modules/system/guest/Factory';
+import { GuestType } from '@/modules/system/guest/GuestType';
+import { SystemFileType } from '@/modules/system/file/SystemFileType';
+import { BrowserFileType } from '@/modules/integration/browser/file/BrowserFileType';
 
-export class MapFileContentFS implements MapFileContent {
-  private contentPatrons = new PatronPool(this);
-
-  private fileHandler: FileSystemFileHandle | null = null;
-
+export class MapFileContentFS implements MapFileContentType {
   public constructor(
-    private launchQueue: BrowserLaunchQueue,
-    private notiffication: NotificationType,
+    private launchQueue: BrowserLaunchQueueType,
+    private notification: NotificationType,
+    private fileHandlerReadFactory: Factory<SystemFileType>,
+    private browserFileFactory: Factory<BrowserFileType>,
+    private contentPatrons = new PatronPool(this),
+    private fileHandler: FileSystemFileHandle | null = null,
   ) {}
 
   public content(target: GuestType<string>): this {
     try {
       const fileHandlerGuest = new Guest((value: FileSystemFileHandle) => {
         this.fileHandler = value;
-        new SystemFileFromHandler(value)
+        this
+          .fileHandlerReadFactory
+          .create(value)
           .content(new Guest((content: string) => {
             this.contentPatrons.distributeReceivingOnce(content, target);
           }));
@@ -45,12 +50,12 @@ export class MapFileContentFS implements MapFileContent {
       throw new RuntimeError('Cant save file because no fileHandler', {});
     }
     try {
-      new BrowserFileSaved(this.fileHandler).save(value);
+      this.browserFileFactory.create(this.fileHandler).save(value);
       return this;
     } catch (e) {
       throw new RuntimeError('Cant handle receive for map file FS', { cause: e });
     } finally {
-      this.notiffication.receive({
+      this.notification.receive({
         type: 'success',
         text: 'Успешно сохранен файл карты!',
       });

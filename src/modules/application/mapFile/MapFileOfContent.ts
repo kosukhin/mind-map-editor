@@ -1,5 +1,5 @@
 import { MapFile } from '@/modules/application/mapFile/MapFile';
-import { MapFileContent } from '@/modules/application/mapFileContent/MapFileContent';
+import { MapFileContentType } from '@/modules/application/mapFileContent/MapFileContentType';
 import { MapDocument, MapFileDocument } from '@/modules/entities/MapStructures';
 import { Guest } from '@/modules/system/guest/Guest';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
@@ -13,7 +13,7 @@ export class MapFileOfContent implements MapFile {
 
   private mapFilePatrons = new PatronPool<MapFileDocument>(this);
 
-  public constructor(private mapFileContent: MapFileContent) {}
+  public constructor(private mapFileContent: MapFileContentType) {}
 
   public currentMap(currentMapGuest: GuestType<MapDocument>): this {
     try {
