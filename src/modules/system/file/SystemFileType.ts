@@ -1,6 +1,6 @@
 import { GuestType } from '../guest/GuestType';
 
-export interface SystemFile {
+export interface SystemFileType {
   content(target: GuestType<string>): this;
   save(content: string): this;
 }

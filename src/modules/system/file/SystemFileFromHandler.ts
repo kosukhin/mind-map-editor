@@ -1,9 +1,9 @@
-import { SystemFile as AppFile } from '@/modules/system/file/SystemFile';
+import { SystemFileType } from '@/modules/system/file/SystemFileType';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
 import { GuestType } from '../guest/GuestType';
 
 const filesContents = new WeakMap();
-export class SystemFileFromHandler implements AppFile {
+export class SystemFileFromHandler implements SystemFileType {
   public constructor(private fileHandler: FileSystemFileHandle) {}
 
   public content(target: GuestType<string>) {
