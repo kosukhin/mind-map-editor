@@ -6,6 +6,7 @@ import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { MapFileFake } from '@/modules/application/mapFile/MapFileFake';
 import { Guest } from '@/modules/system/guest/Guest';
+import { Layer } from 'konva/lib/Layer';
 
 test('konva layer', () => {
   const canvasEL = document.createElement('canvas');
@@ -30,8 +31,11 @@ test('konva layer', () => {
   const mapFileFake = new MapFileFake(defaultMapFileDocument);
   const layer = new KonvaLayer(mapFileFake, browserCanvas);
 
-  layer.layer(new Guest((value) => {
-    console.log('layer', value);
-    expect(true).toBe(true);
+  layer.layer(new Guest((latestLayer: Layer) => {
+    latestLayer.x(10);
+    latestLayer.y(20);
+
+    expect(latestLayer.x()).toBe(10);
+    expect(latestLayer.y()).toBe(20);
   }));
 });
