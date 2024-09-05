@@ -1,10 +1,12 @@
 import { Cache } from '@/modules/system/guest/Cache';
 import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { GuestInTheMiddle } from '@/modules/system/guest/GuestInTheMiddle';
-import { GuestType } from '../../../system/guest/GuestType';
+import { GuestType } from '@/modules/system/guest/GuestType';
 
 export class BrowserCanvas implements GuestType<HTMLElement> {
-  private canvasCache = new Cache<HTMLElement>(this);
+  public constructor(
+    private canvasCache = new Cache<HTMLElement>(this),
+  ) {}
 
   public canvas(guest: GuestType<HTMLElement>): this {
     this.canvasCache.receiving(guest);
