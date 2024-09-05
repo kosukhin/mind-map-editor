@@ -2,7 +2,7 @@ import { MapObjectDocument } from '@/modules/entities/MapStructures';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
 import { Guest } from '@/modules/system/guest/Guest';
 import { Rect } from 'konva/lib/shapes/Rect';
-import { MapObject } from '@/modules/application/mapObject/MapObject';
+import { MapObjectType } from '@/modules/application/mapObject/MapObjectType';
 import { GuestType } from '../../system/guest/GuestType';
 
 /**
@@ -11,7 +11,7 @@ import { GuestType } from '../../system/guest/GuestType';
 export class MapObjectsRectsPatron implements GuestType<MapObjectDocument[]> {
   private previouslyRenderedRects = new Map();
 
-  public constructor(private konvaLayer: LayerBase, private mapObject: MapObject) {}
+  public constructor(private konvaLayer: LayerBase, private mapObject: MapObjectType) {}
 
   public receive(objects: MapObjectDocument[]): this {
     this.konvaLayer.layer(new Guest((layer) => {

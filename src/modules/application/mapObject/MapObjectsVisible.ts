@@ -6,13 +6,13 @@ import { Patron } from '@/modules/system/guest/Patron';
 import { Guest } from '@/modules/system/guest/Guest';
 import { Layer } from 'konva/lib/Layer';
 import { Stage } from 'konva/lib/Stage';
-import { MapObjects } from '@/modules/application/mapObject/MapObject';
+import { MapObjectsType } from '@/modules/application/mapObject/MapObjectType';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { GuestType } from '../../system/guest/GuestType';
 
-export class MapObjectsVisible implements MapObjects {
+export class MapObjectsVisible implements MapObjectsType {
   private visibleObjectsCache = new Cache<MapObjectDocument[]>(this);
 
   public constructor(konvaStage: LayerBase, canvas: BrowserCanvas, mapCurrent: MapCurrent) {
