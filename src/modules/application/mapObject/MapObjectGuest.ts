@@ -4,7 +4,7 @@ import { MapType } from '@/modules/application/map/MapType';
 import { MapFileType } from '@/modules/application/mapFile/MapFileType';
 import { Guest } from '@/modules/system/guest/Guest';
 
-export class MapObject implements MapObjectType {
+export class MapObjectGuest implements MapObjectType {
   public constructor(private map: MapType, private mapFile: MapFileType) {}
 
   receive(value: MapObjectDocument): this {
