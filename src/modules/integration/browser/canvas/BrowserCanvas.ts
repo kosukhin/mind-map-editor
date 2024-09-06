@@ -15,10 +15,10 @@ export class BrowserCanvas implements BrowserCanvasType {
   }
 
   public size(guest: GuestType<SizeDocument>): this {
-    this.canvasCache.receiving(new GuestInTheMiddle(guest, (value: HTMLElement) => {
+    this.canvasCache.receiving(new GuestInTheMiddle(guest, (value: HTMLCanvasElement) => {
       guest.receive({
-        height: value.clientHeight,
-        width: value.clientWidth,
+        height: value.height,
+        width: value.width,
       });
     }));
     return this;
