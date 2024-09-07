@@ -13,12 +13,13 @@ import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { PoolType } from '@/modules/system/guest/PoolType';
 
 export class MapFileContentFS implements MapFileContentType {
+  private contentPatrons: PoolType<string> = new PatronPool(this);
+
   public constructor(
     private launchQueue: BrowserLaunchQueueType,
     private notification: NotificationType,
     private fileHandlerReadFactory: FactoryType<SystemFileType>,
     private browserFileFactory: FactoryType<BrowserFileType>,
-    private contentPatrons: PoolType<string> = new PatronPool(this),
     private fileHandler: FileSystemFileHandle | null = null,
   ) {}
 
@@ -48,7 +49,7 @@ export class MapFileContentFS implements MapFileContentType {
 
   public receive(value: string): this {
     if (!this.fileHandler) {
-      throw new RuntimeError('Cant save file because no fileHandler', {});
+      throw new RuntimeError('Cant save file because no fileHandler');
     }
     try {
       this.browserFileFactory.create(this.fileHandler).save(value);

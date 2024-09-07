@@ -5,18 +5,18 @@ export class BrowserFileSaved implements BrowserFileType {
   public constructor(private fileHandler: FileSystemFileHandle) {}
 
   public save(content: string): this {
-    this.fileHandler.createWritable().then((writable) => {
+    (this.fileHandler as any).createWritable().then((writable: any) => {
       writable
         .write(content)
-        .catch((e) => {
+        .catch((e: Error) => {
           throw new RuntimeError('Cant save file in browser', { cause: e });
         });
       return writable;
     })
-      .then((writable) => {
+      .then((writable: any) => {
         writable
           .close()
-          .catch((e) => {
+          .catch((e: Error) => {
             throw new RuntimeError('Cant close written file in browser', { cause: e });
           });
       });

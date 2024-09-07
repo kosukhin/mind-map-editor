@@ -1,5 +1,5 @@
 export class RuntimeError extends Error {
-  constructor(message: string, options: ErrorOptions) {
-    super(message, options);
+  constructor(message: string, options?: {cause: unknown}) {
+    super(message, options as any);
   }
 }

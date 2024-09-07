@@ -6,6 +6,7 @@ import { KonvaLayer } from '../../integration/konva/KonvaLayer';
 import { BrowserCanvas } from '../../integration/browser/canvas/BrowserCanvas';
 import { Patron } from '../../system/guest/Patron';
 import { Guest } from '../../system/guest/Guest';
+import { MapObjectDocument } from '../../entities/MapStructures';
 
 test('mini map', () => {
   const defaultMapFileDocument = {
@@ -16,7 +17,7 @@ test('mini map', () => {
       progress: 0,
       parentNames: {},
       types: {},
-      objects: {
+      objects: <Record<string, MapObjectDocument>>{
         0: {
           id: '1',
           type: 'one',

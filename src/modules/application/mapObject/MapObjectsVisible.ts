@@ -10,17 +10,22 @@ import { MapObjectsType } from '@/modules/application/mapObject/MapObjectType';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { SizeDocument } from '@/modules/entities/SizeDocument';
+import { debug } from 'debug';
 import { GuestType } from '../../system/guest/GuestType';
+
+const debugClass = debug('map-object-visible');
 
 export class MapObjectsVisible implements MapObjectsType {
   private visibleObjectsCache = new Cache<MapObjectDocument[]>(this);
 
   public constructor(konvaStage: LayerBase, canvas: BrowserCanvas, mapCurrent: MapCurrent) {
+    debugClass('constructor initialized');
     const chain = new Chain<{layer: Layer, size: SizeDocument, objects: MapObjectDocument[]}>();
     canvas.size(new Patron(chain.receiveKey('size')));
     konvaStage.layer(new Patron(chain.receiveKey('layer')));
     mapCurrent.mapObjects(new Patron(chain.receiveKey('objects')));
     chain.result(new Patron(new Guest(({ layer, size, objects }) => {
+      debugClass('objects come to result', objects);
       const stage = layer.parent as unknown as Stage;
       if (!stage) {
         return;

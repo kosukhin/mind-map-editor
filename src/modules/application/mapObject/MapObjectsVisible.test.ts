@@ -9,11 +9,12 @@ import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanva
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { Guest } from '@/modules/system/guest/Guest';
 import { Patron } from '@/modules/system/guest/Patron';
+import { MapObjectDocument } from '@/modules/entities/MapStructures';
 
 test('visible object', () => {
   const div = document.createElement('div');
   div.innerHTML = '<canvas height="300" width="300" />';
-  const canvasEL = div.querySelector('canvas');
+  const canvasEL = div.querySelector('canvas') as HTMLElement;
   const browserCanvas = new BrowserCanvas();
   browserCanvas.receive(canvasEL);
 
@@ -25,7 +26,7 @@ test('visible object', () => {
       progress: 0,
       parentNames: {},
       types: {},
-      objects: {
+      objects: <Record<string, MapObjectDocument>>{
         2: {
           id: '1',
           type: 'one',
