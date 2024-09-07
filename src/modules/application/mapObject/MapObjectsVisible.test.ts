@@ -8,9 +8,12 @@ import { MapCurrent } from '@/modules/application/map/MapCurrent';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { Guest } from '@/modules/system/guest/Guest';
+import { Patron } from '@/modules/system/guest/Patron';
 
 test('visible object', () => {
-  const canvasEL = document.createElement('canvas');
+  const div = document.createElement('div');
+  div.innerHTML = '<canvas height="300" width="300" />';
+  const canvasEL = div.querySelector('canvas');
   const browserCanvas = new BrowserCanvas();
   browserCanvas.receive(canvasEL);
 
@@ -26,7 +29,7 @@ test('visible object', () => {
         2: {
           id: '1',
           type: 'one',
-          position: [0, 0],
+          position: [100, 200],
           name: 'test',
           additionalName: 'test',
           outlink: '/test',
@@ -55,7 +58,7 @@ test('visible object', () => {
   const layer = new KonvaLayer(mapFileFake, browserCanvas);
   const mapObjects = new MapObjectsVisible(layer, browserCanvas, mapCurrent);
 
-  mapObjects.objects(new Guest((objects) => {
-    expect(objects.length).toBe(0);
-  }));
+  mapObjects.objects(new Patron(new Guest((objects) => {
+    expect(objects.length).toBe(1);
+  })));
 });
