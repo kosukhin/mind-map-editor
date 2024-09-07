@@ -29,12 +29,12 @@ const mapFile = new MapFileOfContent(new MapFileContentFS(
 const mapCurrent = new MapCurrent(mapFile);
 const mapSettings = new MapSettingsGuest(mapFile, mapCurrent);
 const canvas = new BrowserCanvas();
-const konvaCanvas = new KonvaLayer(mapFile, canvas);
+const konvaLayer = new KonvaLayer(mapFile, canvas);
 const mapObject = new MapObjectGuest(mapCurrent, mapFile);
-const mapObjects = new MapObjectsVisible(konvaCanvas, canvas, mapCurrent);
+const mapObjects = new MapObjectsVisible(konvaLayer, canvas, mapCurrent);
 const mapObjectsPatron = new VueRefPatron();
 mapObjects.objects(mapObjectsPatron);
-mapObjects.objects(new MapObjectsRectsPatron(konvaCanvas, mapObject));
+mapObjects.objects(new MapObjectsRectsPatron(konvaLayer, mapObject));
 
 const mapSettingsPatron = new VueRefPatron<MapSettingsDocument>();
 mapCurrent.mapSettings(mapSettingsPatron);
@@ -48,7 +48,7 @@ mapFile.mapFile(mapFilePatron);
 const notificationPatron = new VueRefPatron<NotificationDocument>();
 notification.message(notificationPatron);
 
-const miniMap = new MiniMap(mapCurrent, konvaCanvas);
+const miniMap = new MiniMap(mapCurrent, konvaLayer);
 
 export const useApplication = () => ({
   map: mapPatron.ref(),

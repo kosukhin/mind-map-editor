@@ -42,11 +42,11 @@ export class MiniMap {
         height: size.height * scale,
       };
       this.theSize.receive(miniSize);
-      // this.thePoints.receive(objects.map((object) => ({
-      //   id: object.id,
-      //   x: object.position[0] * scale,
-      //   y: object.position[1] * scale,
-      // })));
+      this.thePoints.receive(objects.map((object) => ({
+        id: object.id,
+        x: object.position[0],
+        y: object.position[1],
+      })));
     })));
   }
 
