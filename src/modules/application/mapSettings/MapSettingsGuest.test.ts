@@ -3,6 +3,7 @@ import { MapFileFake } from '@/modules/application/mapFile/MapFileFake';
 import { MapCurrent } from '@/modules/application/map/MapCurrent';
 import { MapSettingsGuest } from '@/modules/application/mapSettings/MapSettingsGuest';
 import { Guest } from '@/modules/system/guest/Guest';
+import { MapFileDocument } from '../../entities/MapStructures';
 
 test('map settings guest', () => {
   const defaultMapFileDocument = {
@@ -31,7 +32,7 @@ test('map settings guest', () => {
     title: 'changed',
   });
 
-  fake.mapFile(new Guest((mapFile) => {
+  fake.mapFile(new Guest((mapFile: MapFileDocument) => {
     expect(mapFile.current.settings.title).toBe('changed');
   }));
 });

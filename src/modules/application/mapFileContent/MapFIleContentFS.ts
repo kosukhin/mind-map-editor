@@ -30,7 +30,7 @@ export class MapFileContentFS implements MapFileContentType {
           .fileHandlerReadFactory
           .create(value)
           .content(new Guest((content: string) => {
-            this.contentPatrons.distributeReceivingOnce(content, target);
+            this.contentPatrons.distribute(content, target);
           }));
       });
 

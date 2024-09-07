@@ -47,40 +47,9 @@ export class PatronPool<T> implements PoolType<T> {
     }
   }
 
-  public distributeReceivingOnce(receiving: T, possiblePatron: GuestType<T>): this {
+  public distribute(receiving: T, possiblePatron: GuestType<T>): this {
     this.add(possiblePatron);
     possiblePatron.receive(receiving);
-    return this;
-  }
-
-  /**
-   * Позволяет распространить значение если оно имеет смысл
-   */
-  public distributeMeaningfulReceiving(meaningful: boolean, receiving: T, possiblePatron: GuestType<T>) {
-    if (meaningful) {
-      this.distributeReceivingOnce(receiving, possiblePatron);
-    } else {
-      this.add(possiblePatron);
-    }
-  }
-
-  /**
-   * ATTENTION! этот метод может быть опасен, если использовать его в
-   * местах где нужно данные отдать, может привести к записи старых данных
-   *
-   * Передаст получение гостю и добавит его в патроны
-   * если гость является патроном. Также передаст получение
-   * другим уже существовавшим ранее патронам
-   */
-  public distributeReceiving(receiving: T, ...possiblePatrons: GuestType<T>[]) {
-    const options: ReceiveOptions = {
-      specificData: {
-        initiator: this.initiator,
-      },
-    };
-    possiblePatrons.forEach((patron) => patron.receive(receiving, options));
-    this.receive(receiving, options);
-    possiblePatrons.forEach((patron) => this.add(patron));
     return this;
   }
 }

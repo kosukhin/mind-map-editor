@@ -3,12 +3,15 @@ import { CacheType } from '@/modules/system/guest/CacheType';
 import { GuestType, ReceiveOptions } from './GuestType';
 
 export class Cache<T> implements CacheType<T> {
+  private pool: PatronPool<T>;
+
   public constructor(
     initiator: unknown,
     private defaultValue: T | null = null,
     private theCache: T | null = null,
-    private pool = new PatronPool<T>(initiator),
-  ) {}
+  ) {
+    this.pool = new PatronPool<T>(initiator);
+  }
 
   public receive(value: T, options?: ReceiveOptions): this {
     this.theCache = value;

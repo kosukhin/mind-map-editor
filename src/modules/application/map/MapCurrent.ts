@@ -12,10 +12,11 @@ import { Patron } from '@/modules/system/guest/Patron';
 import { GuestType } from '../../system/guest/GuestType';
 
 export class MapCurrent implements MapType {
+  private mapObjectsCache = new Cache<MapObjectDocument[]>(this);
+
   public constructor(
     private mapFile: MapFileType,
     private mapSettingsCache = new Cache(this),
-    private mapObjectsCache = new Cache<MapObjectDocument[]>(this),
   ) {
     mapFile.currentMap(new Patron(new Guest((latestMap: MapDocument) => {
       this.mapSettingsCache.receive(latestMap.settings);

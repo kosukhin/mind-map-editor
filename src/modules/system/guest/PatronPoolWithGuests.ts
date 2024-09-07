@@ -28,12 +28,9 @@ export class PatronPoolWithGuests<T> implements GuestType<T>, PoolType<T> {
     return this;
   }
 
-  public distributeReceiving(receiving: T, ...guests: GuestType<T>[]): this {
-    guests.forEach((guest) => {
-      this.guests.add(guest);
-    });
-    this.deliverToGuests(receiving);
-    this.patronPool.distributeReceiving(receiving, ...guests);
+  public distribute(receiving: T, possiblePatron: GuestType<T>): this {
+    this.add(possiblePatron);
+    this.receive(receiving);
     return this;
   }
 

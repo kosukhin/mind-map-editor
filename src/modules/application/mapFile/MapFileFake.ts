@@ -10,7 +10,7 @@ export class MapFileFake implements MapFileType {
   ) {}
 
   public currentMap(target): this {
-    this.currentMapPool.distributeReceivingOnce(
+    this.currentMapPool.distribute(
       this.mapFileDocument.current,
       target,
     );
@@ -18,7 +18,7 @@ export class MapFileFake implements MapFileType {
   }
 
   public mapFile(target): this {
-    this.mapFilePool.distributeReceivingOnce(
+    this.mapFilePool.distribute(
       this.mapFileDocument,
       target,
     );

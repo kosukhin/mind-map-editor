@@ -17,7 +17,7 @@ test('mini map', () => {
       parentNames: {},
       types: {},
       objects: {
-        2: {
+        0: {
           id: '1',
           type: 'one',
           position: [100, 200],
@@ -49,7 +49,7 @@ test('mini map', () => {
 
   const div = document.createElement('div');
   div.innerHTML = '<canvas height="300" width="300" />';
-  const canvasEL = div.querySelector('canvas');
+  const canvasEL = div.querySelector('canvas') as HTMLElement;
   const browserCanvas = new BrowserCanvas();
   browserCanvas.receive(canvasEL);
 

@@ -9,16 +9,18 @@ import { TransformedToJSON } from '@/modules/system/transformed/TransformedToJSO
 import { GuestType } from '../../system/guest/GuestType';
 
 export class MapFileOfContent implements MapFileType {
+  private currentMapPatrons = new PatronPool<MapDocument>(this);
+
+  private mapFilePatrons = new PatronPool<MapFileDocument>(this);
+
   public constructor(
     private mapFileContent: MapFileContentType,
-    private currentMapPatrons = new PatronPool<MapDocument>(this),
-    private mapFilePatrons = new PatronPool<MapFileDocument>(this),
   ) {}
 
   public currentMap(currentMapGuest: GuestType<MapDocument>): this {
     try {
       const mapFileTarget = new Guest((value: MapFileDocument) => {
-        this.currentMapPatrons.distributeReceivingOnce(value.current, currentMapGuest);
+        this.currentMapPatrons.distribute(value.current, currentMapGuest);
       });
       this.mapFile(mapFileTarget);
       return this;
@@ -40,7 +42,7 @@ export class MapFileOfContent implements MapFileType {
     try {
       const contentTarget = new Guest<string>((value) => {
         const mapFile = new TransformedFromJSON<MapFileDocument>(value).result();
-        this.mapFilePatrons.distributeReceivingOnce(mapFile, mapFileTarget);
+        this.mapFilePatrons.distribute(mapFile, mapFileTarget);
       });
       this.mapFileContent.content(contentTarget);
       return this;

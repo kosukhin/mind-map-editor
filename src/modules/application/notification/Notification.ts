@@ -3,9 +3,10 @@ import { Cache } from '@/modules/system/guest/Cache';
 import { GuestType } from '../../system/guest/GuestType';
 
 export class Notification implements NotificationType {
+  private messageCache = new Cache<NotificationDocument>(this);
+
   public constructor(
     private notificationLifetimeDelay = 4000,
-    private messageCache = new Cache<NotificationDocument>(this),
     private lastTimerHead: NodeJS.Timeout | null = null,
   ) {}
 

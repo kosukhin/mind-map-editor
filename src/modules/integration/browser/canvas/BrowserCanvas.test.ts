@@ -8,7 +8,7 @@ import { Guest } from '@/modules/system/guest/Guest';
 test('browser canvas', () => {
   const div = document.createElement('div');
   div.innerHTML = '<canvas height="300" width="300" />';
-  const canvasEL = div.querySelector('canvas');
+  const canvasEL = div.querySelector('canvas') as HTMLElement;
   const canvas = new BrowserCanvas();
   canvas.receive(canvasEL);
 

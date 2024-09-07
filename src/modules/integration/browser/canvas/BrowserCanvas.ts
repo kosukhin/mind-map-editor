@@ -5,9 +5,7 @@ import { GuestType } from '@/modules/system/guest/GuestType';
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
 
 export class BrowserCanvas implements BrowserCanvasType {
-  public constructor(
-    private canvasCache = new Cache<HTMLElement>(this),
-  ) {}
+  private canvasCache = new Cache<HTMLElement>(this);
 
   public canvas(guest: GuestType<HTMLElement>): this {
     this.canvasCache.receiving(guest);
