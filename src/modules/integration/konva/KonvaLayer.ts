@@ -13,6 +13,7 @@ import { PointDocument } from '@/modules/entities/PointDocument';
 import { Cache } from '@/modules/system/guest/Cache';
 import { CacheType } from '@/modules/system/guest/CacheType';
 import { debug } from 'debug';
+import { Stage } from 'konva/lib/Stage';
 
 const localDebug = debug('KonvaLayer');
 
@@ -46,7 +47,10 @@ export class KonvaLayer implements LayerBase {
       layer.draw();
       this.layerCache.receive(layer);
 
-      stage.on('dragend', () => {
+      stage.on('dragend', (e) => {
+        if (!(e.target instanceof Stage)) {
+          return;
+        }
         const position = {
           x: stage.x(),
           y: stage.y(),

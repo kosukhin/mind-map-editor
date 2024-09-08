@@ -6,7 +6,11 @@ import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { TransformedFromJSON } from '@/modules/system/transformed/TransformedFromJSON';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
 import { TransformedToJSON } from '@/modules/system/transformed/TransformedToJSON';
+import { debug } from 'debug';
+import { GuestInTheMiddle } from '@/modules/system/guest/GuestInTheMiddle';
 import { GuestType } from '../../system/guest/GuestType';
+
+const localDebug = debug('MapFileOfContent');
 
 export class MapFileOfContent implements MapFileType {
   private currentMapPatrons = new PatronPool<MapDocument>(this);
@@ -19,10 +23,9 @@ export class MapFileOfContent implements MapFileType {
 
   public currentMap(currentMapGuest: GuestType<MapDocument>): this {
     try {
-      const mapFileTarget = new Guest((value: MapFileDocument) => {
+      this.mapFile(new GuestInTheMiddle(currentMapGuest, (value: MapFileDocument) => {
         this.currentMapPatrons.distribute(value.current, currentMapGuest);
-      });
-      this.mapFile(mapFileTarget);
+      }));
       return this;
     } catch (e) {
       throw new RuntimeError('Problem while building current map in MapFileBase', { cause: e });
@@ -30,6 +33,7 @@ export class MapFileOfContent implements MapFileType {
   }
 
   public receive(value: MapFileDocument): this {
+    localDebug('save map file document', value);
     try {
       this.mapFileContent.receive(new TransformedToJSON(value).result());
       return this;

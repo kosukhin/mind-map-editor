@@ -11,6 +11,9 @@ import { SystemFileType } from '@/modules/system/file/SystemFileType';
 import { BrowserFileType } from '@/modules/integration/browser/file/BrowserFileType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { PoolType } from '@/modules/system/guest/PoolType';
+import { debug } from 'debug';
+
+const localDebug = debug('MapFileContentFS');
 
 export class MapFileContentFS implements MapFileContentType {
   private contentPatrons: PoolType<string> = new PatronPool(this);
@@ -48,6 +51,7 @@ export class MapFileContentFS implements MapFileContentType {
   }
 
   public receive(value: string): this {
+    localDebug('save file as content string', value);
     if (!this.fileHandler) {
       throw new RuntimeError('Cant save file because no fileHandler');
     }
