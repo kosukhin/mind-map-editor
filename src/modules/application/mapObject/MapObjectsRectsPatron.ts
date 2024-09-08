@@ -1,9 +1,12 @@
 import { MapObjectDocument } from '@/modules/entities/MapStructures';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
-import { Guest } from '@/modules/system/guest/Guest';
 import { Rect } from 'konva/lib/shapes/Rect';
 import { MapObjectType } from '@/modules/application/mapObject/MapObjectType';
+import { debug } from 'debug';
+import { PatronOnce } from '@/modules/system/guest/PatronOnce';
 import { GuestType } from '../../system/guest/GuestType';
+
+const localDebug = debug('MapObjectsRectsPatron');
 
 /**
  * Отвечает за рендеринг квадратов для объектов карты
@@ -14,7 +17,11 @@ export class MapObjectsRectsPatron implements GuestType<MapObjectDocument[]> {
   public constructor(private konvaLayer: LayerBase, private mapObject: MapObjectType) {}
 
   public receive(objects: MapObjectDocument[]): this {
-    this.konvaLayer.layer(new Guest((layer) => {
+    this.konvaLayer.layer(new PatronOnce((layer) => {
+      localDebug('rerender object rects');
+      this.previouslyRenderedRects.forEach((rect) => {
+        rect.hide();
+      });
       objects.forEach((object) => {
         if (this.previouslyRenderedRects.has(object)) {
           const rect = this.previouslyRenderedRects.get(object);
@@ -22,6 +29,7 @@ export class MapObjectsRectsPatron implements GuestType<MapObjectDocument[]> {
           rect.height(+object.height);
           rect.x(+object.position[0]);
           rect.y(+object.position[1]);
+          rect.show();
           return;
         }
 

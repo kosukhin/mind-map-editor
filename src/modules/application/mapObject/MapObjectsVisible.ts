@@ -4,13 +4,12 @@ import { MapObjectDocument } from '@/modules/entities/MapStructures';
 import { Chain } from '@/modules/system/guest/Chain';
 import { Patron } from '@/modules/system/guest/Patron';
 import { Guest } from '@/modules/system/guest/Guest';
-import { Layer } from 'konva/lib/Layer';
-import { Stage } from 'konva/lib/Stage';
 import { MapObjectsType } from '@/modules/application/mapObject/MapObjectType';
 import { LayerBase } from '@/modules/application/layer/LayerBase';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { debug } from 'debug';
+import { PointDocument } from '@/modules/entities/PointDocument';
 import { GuestType } from '../../system/guest/GuestType';
 
 const localDebug = debug('app:MapObjectsVisible');
@@ -18,19 +17,15 @@ const localDebug = debug('app:MapObjectsVisible');
 export class MapObjectsVisible implements MapObjectsType {
   private visibleObjectsCache = new Cache<MapObjectDocument[]>(this);
 
-  public constructor(konvaStage: LayerBase, canvas: BrowserCanvas, mapCurrent: MapCurrent) {
+  public constructor(layerDep: LayerBase, canvas: BrowserCanvas, mapCurrent: MapCurrent) {
     localDebug('constructor initialized');
-    const chain = new Chain<{layer: Layer, size: SizeDocument, objects: MapObjectDocument[]}>();
+    const chain = new Chain<{position: PointDocument, size: SizeDocument, objects: MapObjectDocument[]}>();
     canvas.size(new Patron(chain.receiveKey('size')));
-    konvaStage.layer(new Patron(chain.receiveKey('layer')));
+    layerDep.position(new Patron(chain.receiveKey('position')));
     mapCurrent.mapObjects(new Patron(chain.receiveKey('objects')));
-    chain.result(new Patron(new Guest(({ layer, size, objects }) => {
+    chain.result(new Patron(new Guest(({ position, size, objects }) => {
       localDebug('objects come to result', objects);
-      const stage = layer.parent as unknown as Stage;
-      if (!stage) {
-        return;
-      }
-      const visibleObjects = objects.filter((object) => this.isInBounding(stage, size, object.position));
+      const visibleObjects = objects.filter((object) => this.isInBounding(position, size, object.position));
       localDebug('visible objects calculated', visibleObjects);
       this.visibleObjectsCache.receive(visibleObjects);
     })));
@@ -41,11 +36,11 @@ export class MapObjectsVisible implements MapObjectsType {
     return this;
   }
 
-  private isInBounding(stage: Stage, size: SizeDocument, position: [number, number]) {
-    const stageStartX = stage.x() + 100;
-    const stageEndX = stage.x() - size.width;
-    const stageStartY = stage.y() + 100;
-    const stageEndY = stage.y() - size.height;
+  private isInBounding(layerPosition: PointDocument, size: SizeDocument, position: [number, number]) {
+    const stageStartX = layerPosition.x + 100;
+    const stageEndX = layerPosition.x - size.width;
+    const stageStartY = layerPosition.y + 100;
+    const stageEndY = layerPosition.y - size.height;
     const [objectX, objectY] = position;
     localDebug(
       'bounding vars',

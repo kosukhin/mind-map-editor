@@ -33,6 +33,7 @@ export class KonvaLayer implements LayerBase {
     this.canvasDep.canvas(new Patron(this.guestChain.receiveKey('canvas')));
     this.mapFile.currentMap(new Patron(this.guestChain.receiveKey('map')));
     this.guestChain.result(new Guest(({ canvas, map }) => {
+      localDebug('create new konva stage');
       const stage = new Konva.Stage({
         width: canvas.clientWidth,
         height: canvas.clientHeight,
