@@ -10,9 +10,12 @@ import { PointIdDocument } from '@/modules/entities/PointIdDocument';
 import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { PointDocument } from '@/modules/entities/PointDocument';
 import { debug } from 'debug';
+import { GuestInTheMiddle } from '@/modules/system/guest/GuestInTheMiddle';
+import { GuestCast } from '@/modules/system/guest/GuestCast';
 import { GuestType } from '../../system/guest/GuestType';
 
 const localDebug = debug('app:MiniMap');
+const minimapWidth = 130;
 
 export class MiniMap {
   private theSize = new Cache(this);
@@ -21,10 +24,7 @@ export class MiniMap {
 
   private viewportSizeCache = new Cache<SizeDocument>(this);
 
-  private viewportPositionCache = new Cache<PointDocument>(this);
-
   public constructor(private map: MapType, private layer: LayerBase) {
-    const minimapWidth = 130;
     const chain = new Chain<{layer: Layer, size: SizeDocument, objects: MapObjectDocument[]}>();
     map.mapObjects(new Patron(chain.receiveKey('objects')));
     layer.layer(new Patron(chain.receiveKey('layer')));
@@ -35,10 +35,6 @@ export class MiniMap {
         width: konvaLayer.width() * scale,
         height: konvaLayer.height() * scale,
       };
-      this.viewportPositionCache.receive({
-        x: konvaLayer.x(),
-        y: konvaLayer.y(),
-      });
       this.viewportSizeCache.receive(layerSize);
       const miniSize = {
         width: size.width * scale,
@@ -56,7 +52,18 @@ export class MiniMap {
   }
 
   viewportPosition(guest: GuestType<PointDocument>) {
-    this.viewportPositionCache.receiving(guest);
+    const chain = new Chain<{size: SizeDocument, position: PointDocument}>();
+    this.layer.size(new GuestCast(guest, chain.receiveKey('size')));
+    this.layer.position(new GuestCast(guest, chain.receiveKey('position')));
+    chain.result(new GuestInTheMiddle(guest, ({ size, position }) => {
+      const scale = minimapWidth / size.width;
+      const scaledPosition = {
+        x: position.x * scale * -1,
+        y: position.y * scale * -1,
+      };
+      localDebug('scaled position is', scaledPosition);
+      guest.receive(scaledPosition);
+    }));
     return this;
   }
 

@@ -17,7 +17,7 @@ const viewportSize = viewportSizePatron.ref();
 
 const viewportPositionPatron = new VueRefPatron();
 miniMapBehaviour.viewportPosition(viewportPositionPatron);
-const viewportPosition = viewportSizePatron.ref();
+const viewportPosition = viewportPositionPatron.ref();
 </script>
 
 <template>
@@ -30,6 +30,7 @@ const viewportPosition = viewportSizePatron.ref();
     class="absolute block bg-white top-[50px] mt-3 right-3 z-1 border border-solid border-body-dark"
   >
     <div
+      v-if="viewportPosition"
       :style="{
         width: `${viewportSize.width}px`,
         height: `${viewportSize.height}px`,

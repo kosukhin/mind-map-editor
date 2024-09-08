@@ -5,7 +5,7 @@ const { notification } = useApplication();
 </script>
 
 <template>
-  <div v-if="notification" :class="['fixed bottom-3 right-[50%] translate-x-[50%] p-3 rounded', `bg-${notification.type}`]">
+  <div v-if="notification && notification.text !== 'hide'" :class="['fixed bottom-3 right-[50%] translate-x-[50%] p-3 rounded', `bg-${notification.type}`]">
     {{ notification.text }}
   </div>
 </template>
