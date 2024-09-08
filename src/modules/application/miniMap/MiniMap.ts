@@ -9,7 +9,10 @@ import { Layer } from 'konva/lib/Layer';
 import { PointIdDocument } from '@/modules/entities/PointIdDocument';
 import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { PointDocument } from '@/modules/entities/PointDocument';
+import { debug } from 'debug';
 import { GuestType } from '../../system/guest/GuestType';
+
+const localDebug = debug('MiniMap');
 
 export class MiniMap {
   private theSize = new Cache(this);
@@ -42,11 +45,13 @@ export class MiniMap {
         height: size.height * scale,
       };
       this.theSize.receive(miniSize);
-      this.thePoints.receive(objects.map((object) => ({
+      const points = objects.map((object) => ({
         id: object.id,
-        x: object.position[0],
-        y: object.position[1],
-      })));
+        x: object.position[0] * scale,
+        y: object.position[1] * scale,
+      }));
+      localDebug('minimap points', points);
+      this.thePoints.receive(points);
     })));
   }
 

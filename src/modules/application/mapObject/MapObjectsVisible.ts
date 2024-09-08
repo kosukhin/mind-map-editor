@@ -13,24 +13,25 @@ import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { debug } from 'debug';
 import { GuestType } from '../../system/guest/GuestType';
 
-const debugClass = debug('map-object-visible');
+const localDebug = debug('MapObjectsVisible');
 
 export class MapObjectsVisible implements MapObjectsType {
   private visibleObjectsCache = new Cache<MapObjectDocument[]>(this);
 
   public constructor(konvaStage: LayerBase, canvas: BrowserCanvas, mapCurrent: MapCurrent) {
-    debugClass('constructor initialized');
+    localDebug('constructor initialized');
     const chain = new Chain<{layer: Layer, size: SizeDocument, objects: MapObjectDocument[]}>();
     canvas.size(new Patron(chain.receiveKey('size')));
     konvaStage.layer(new Patron(chain.receiveKey('layer')));
     mapCurrent.mapObjects(new Patron(chain.receiveKey('objects')));
     chain.result(new Patron(new Guest(({ layer, size, objects }) => {
-      debugClass('objects come to result', objects);
+      localDebug('objects come to result', objects);
       const stage = layer.parent as unknown as Stage;
       if (!stage) {
         return;
       }
-      const visibleObjects = objects.filter((object) => this.isInBoundings(stage, size, object.position));
+      const visibleObjects = objects.filter((object) => this.isInBounding(stage, size, object.position));
+      localDebug('visible objects calculated', visibleObjects);
       this.visibleObjectsCache.receive(visibleObjects);
     })));
   }
@@ -40,12 +41,20 @@ export class MapObjectsVisible implements MapObjectsType {
     return this;
   }
 
-  private isInBoundings(stage: Stage, size: SizeDocument, position: [number, number]) {
+  private isInBounding(stage: Stage, size: SizeDocument, position: [number, number]) {
     const stageStartX = stage.x() + 100;
     const stageEndX = stage.x() - size.width;
     const stageStartY = stage.y() + 100;
     const stageEndY = stage.y() - size.height;
     const [objectX, objectY] = position;
+    localDebug(
+      'bounding vars',
+      stageStartX,
+      stageEndX,
+      stageStartY,
+      stageEndY,
+    );
+    localDebug('object position', position);
     return (
       stageStartX > -objectX
       && -objectX > stageEndX
