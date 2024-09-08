@@ -5,7 +5,7 @@ import { GuestType } from '@/modules/system/guest/GuestType';
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
 import { debug } from 'debug';
 
-const localDebug = debug('BrowserCanvas');
+const localDebug = debug('app:BrowserCanvas');
 
 export class BrowserCanvas implements BrowserCanvasType {
   private canvasCache = new Cache<HTMLElement>(this);

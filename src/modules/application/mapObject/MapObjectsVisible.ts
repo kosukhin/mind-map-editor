@@ -13,7 +13,7 @@ import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { debug } from 'debug';
 import { GuestType } from '../../system/guest/GuestType';
 
-const localDebug = debug('MapObjectsVisible');
+const localDebug = debug('app:MapObjectsVisible');
 
 export class MapObjectsVisible implements MapObjectsType {
   private visibleObjectsCache = new Cache<MapObjectDocument[]>(this);

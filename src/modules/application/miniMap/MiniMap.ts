@@ -12,7 +12,7 @@ import { PointDocument } from '@/modules/entities/PointDocument';
 import { debug } from 'debug';
 import { GuestType } from '../../system/guest/GuestType';
 
-const localDebug = debug('MiniMap');
+const localDebug = debug('app:MiniMap');
 
 export class MiniMap {
   private theSize = new Cache(this);
