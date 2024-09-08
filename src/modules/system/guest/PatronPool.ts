@@ -27,6 +27,11 @@ export class PatronPool<T> implements PoolType<T> {
     }
   }
 
+  public remove(patron: GuestType<T>) {
+    this.patrons.delete(patron);
+    return this;
+  }
+
   /**
    * Передать один документ всем известным патронам
    */
@@ -38,6 +43,7 @@ export class PatronPool<T> implements PoolType<T> {
           specificData: {
             ...(options?.specificData ?? {}),
             initiator: this.initiator,
+            pool: this,
           },
         });
       });

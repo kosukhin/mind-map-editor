@@ -28,6 +28,12 @@ export class PatronPoolWithGuests<T> implements GuestType<T>, PoolType<T> {
     return this;
   }
 
+  public remove(patron: GuestType<T>): this {
+    this.guests.delete(patron);
+    this.patronPool.remove(patron);
+    return this;
+  }
+
   public distribute(receiving: T, possiblePatron: GuestType<T>): this {
     this.add(possiblePatron);
     this.receive(receiving);
