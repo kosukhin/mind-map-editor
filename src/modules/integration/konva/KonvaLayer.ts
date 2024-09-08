@@ -9,16 +9,29 @@ import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { Guest } from '@/modules/system/guest/Guest';
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
 import { GuestType } from '@/modules/system/guest/GuestType';
+import { PointDocument } from '@/modules/entities/PointDocument';
+import { Cache } from '@/modules/system/guest/Cache';
+import { CacheType } from '@/modules/system/guest/CacheType';
+import { debug } from 'debug';
+
+const localDebug = debug('KonvaLayer');
 
 export class KonvaLayer implements LayerBase {
   private guestChain = new Chain<{canvas: HTMLElement, map: MapDocument}>();
 
-  public constructor(private mapFile: MapFileType, private canvas: BrowserCanvasType) {
-    this.canvas.canvas(new Patron(this.guestChain.receiveKey('canvas')));
-    this.mapFile.currentMap(new Patron(this.guestChain.receiveKey('map')));
-  }
+  private positionCache: CacheType<PointDocument> = new Cache(
+    this,
+    {
+      x: 0,
+      y: 0,
+    },
+  );
 
-  public layer(guest: GuestType<Layer>): this {
+  private layerCache = new Cache(this);
+
+  public constructor(private mapFile: MapFileType, private canvasDep: BrowserCanvasType) {
+    this.canvasDep.canvas(new Patron(this.guestChain.receiveKey('canvas')));
+    this.mapFile.currentMap(new Patron(this.guestChain.receiveKey('map')));
     this.guestChain.result(new Guest(({ canvas, map }) => {
       const stage = new Konva.Stage({
         width: canvas.clientWidth,
@@ -30,13 +43,21 @@ export class KonvaLayer implements LayerBase {
       const layer = new Konva.Layer();
       stage.add(layer);
       layer.draw();
-      guest.receive(layer);
+      this.layerCache.receive(layer);
 
-      // stage.on('dragend', () => {
-      //   console.log('new position', stage.x(), stage.y());
-      //   guest.receive(layer);
-      // });
+      stage.on('dragend', () => {
+        const position = {
+          x: stage.x(),
+          y: stage.y(),
+        };
+        localDebug('new position', position);
+        this.positionCache.receive(position);
+      });
     }));
+  }
+
+  public layer(guest: GuestType<Layer>): this {
+    this.layerCache.receiving(guest);
     return this;
   }
 
@@ -45,6 +66,11 @@ export class KonvaLayer implements LayerBase {
       height: 3000,
       width: 3000,
     });
+    return this;
+  }
+
+  public position(guest: GuestType<PointDocument>): this {
+    this.positionCache.receiving(guest);
     return this;
   }
 }
