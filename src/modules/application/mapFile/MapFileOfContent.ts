@@ -1,7 +1,6 @@
 import { MapFileType } from '@/modules/application/mapFile/MapFileType';
 import { MapFileContentType } from '@/modules/application/mapFileContent/MapFileContentType';
 import { MapDocument, MapFileDocument } from '@/modules/entities/MapStructures';
-import { Guest } from '@/modules/system/guest/Guest';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { TransformedFromJSON } from '@/modules/system/transformed/TransformedFromJSON';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
@@ -22,14 +21,10 @@ export class MapFileOfContent implements MapFileType {
   ) {}
 
   public currentMap(currentMapGuest: GuestType<MapDocument>): this {
-    try {
-      this.mapFile(new GuestInTheMiddle(currentMapGuest, (value: MapFileDocument) => {
-        this.currentMapPatrons.distribute(value.current, currentMapGuest);
-      }));
-      return this;
-    } catch (e) {
-      throw new RuntimeError('Problem while building current map in MapFileBase', { cause: e });
-    }
+    this.mapFile(new GuestInTheMiddle(currentMapGuest, (value: MapFileDocument) => {
+      this.currentMapPatrons.distribute(value.current, currentMapGuest);
+    }));
+    return this;
   }
 
   public receive(value: MapFileDocument): this {
@@ -43,15 +38,10 @@ export class MapFileOfContent implements MapFileType {
   }
 
   public mapFile(mapFileTarget: GuestType<MapFileDocument>): this {
-    try {
-      const contentTarget = new Guest<string>((value) => {
-        const mapFile = new TransformedFromJSON<MapFileDocument>(value).result();
-        this.mapFilePatrons.distribute(mapFile, mapFileTarget);
-      });
-      this.mapFileContent.content(contentTarget);
-      return this;
-    } catch (e) {
-      throw new RuntimeError('Problem while building map file document in MapFileBase', { cause: e });
-    }
+    this.mapFileContent.content(new GuestInTheMiddle<string>(mapFileTarget, (value) => {
+      const mapFile = new TransformedFromJSON<MapFileDocument>(value).result();
+      this.mapFilePatrons.distribute(mapFile, mapFileTarget);
+    }));
+    return this;
   }
 }

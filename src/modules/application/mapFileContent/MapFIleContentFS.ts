@@ -57,6 +57,7 @@ export class MapFileContentFS implements MapFileContentType {
     }
     try {
       this.browserFileFactory.create(this.fileHandler).save(value);
+      this.contentPatrons.receive(value);
       return this;
     } catch (e) {
       throw new RuntimeError('Cant handle receive for map file FS', { cause: e });
