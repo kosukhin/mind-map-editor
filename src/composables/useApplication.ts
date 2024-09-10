@@ -1,5 +1,5 @@
 import { MapFileOfContent } from '@/modules/application/mapFile/MapFileOfContent';
-import { MapFileContentFS } from '@/modules/application/mapFileContent/MapFIleContentFS';
+import { MapFileContentFS } from '@/modules/application/mapFileContent/MapFileContentFS';
 import { MapDocument, MapFileDocument, MapSettingsDocument } from '@/modules/entities/MapStructures';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueue';
@@ -32,6 +32,9 @@ const canvas = new BrowserCanvas();
 const konvaLayer = new KonvaLayer(mapFile, canvas);
 const mapObject = new MapObjectGuest(mapCurrent, mapFile);
 const mapObjects = new MapObjectsVisible(konvaLayer, canvas, mapCurrent);
+
+// TODO убрать отсюда Vue патроны, делать их только там где они нужны
+
 const mapObjectsPatron = new VueRefPatron();
 mapObjects.objects(mapObjectsPatron);
 mapObjects.objects(new MapObjectsRectsPatron(konvaLayer, mapObject));

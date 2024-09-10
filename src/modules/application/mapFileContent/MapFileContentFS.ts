@@ -27,27 +27,23 @@ export class MapFileContentFS implements MapFileContentType {
   ) {}
 
   public content(target: GuestType<string>): this {
-    try {
-      const fileHandlerGuest = new Guest((value: FileSystemFileHandle) => {
-        this.fileHandler = value;
-        this
-          .fileHandlerReadFactory
-          .create(value)
-          .content(new Guest((content: string) => {
-            this.contentPatrons.distribute(content, target);
-          }));
-      });
+    const fileHandlerGuest = new Guest((value: FileSystemFileHandle) => {
+      this.fileHandler = value;
+      this
+        .fileHandlerReadFactory
+        .create(value)
+        .content(new Guest((content: string) => {
+          this.contentPatrons.distribute(content, target);
+        }));
+    });
 
-      if (!this.fileHandler) {
-        this.launchQueue.fileHandler(fileHandlerGuest);
-      } else {
-        fileHandlerGuest.receive(this.fileHandler);
-      }
-
-      return this;
-    } catch (e) {
-      throw new RuntimeError('Cant get content for map file FS', { cause: e });
+    if (!this.fileHandler) {
+      this.launchQueue.fileHandler(fileHandlerGuest);
+    } else {
+      fileHandlerGuest.receive(this.fileHandler);
     }
+
+    return this;
   }
 
   public receive(value: string): this {

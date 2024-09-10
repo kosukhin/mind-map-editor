@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { MapFileContentFS } from '@/modules/application/mapFileContent/MapFIleContentFS';
+import { MapFileContentFS } from '@/modules/application/mapFileContent/MapFileContentFS';
 import {
   BrowserLaunchQueueFake,
 } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueFake';
@@ -22,9 +22,18 @@ test('map file content fs', () => {
     browserFileFakeFactory,
   );
 
-  mapFileContent.content(new Patron(new Guest((value) => {
-    expect(value).toBe('hello world!');
+  const matches: Record<string, number> = {
+    'hello world!': 0,
+    'new content!': 0,
+  };
+
+  mapFileContent.content(new Patron(new Guest((value: string) => {
+    matches[value] += 1;
   })));
 
   mapFileContent.receive('new content!');
+
+  queueMicrotask(() => {
+    expect(Object.values(matches).join()).toBe('1,1');
+  });
 });
