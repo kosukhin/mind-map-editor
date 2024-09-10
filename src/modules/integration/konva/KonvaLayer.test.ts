@@ -4,7 +4,7 @@
 import { expect, test } from 'vitest';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
-import { MapFileFake } from '@/modules/application/mapFile/MapFileFake';
+import { MapFileFake } from '@/modules/application/map/mapFile/MapFileFake';
 import { Guest } from '@/modules/system/guest/Guest';
 import { Layer } from 'konva/lib/Layer';
 

@@ -1,10 +1,9 @@
 import Konva from 'konva';
-import { MapFileType } from '@/modules/application/mapFile/MapFileType';
+import { MapFileType } from '@/modules/application/map/mapFile/MapFileType';
 import { Chain } from '@/modules/system/guest/Chain';
 import { Patron } from '@/modules/system/guest/Patron';
 import { MapDocument } from '@/modules/entities/MapStructures';
 import { Layer } from 'konva/lib/Layer';
-import { LayerBase } from '@/modules/application/layer/LayerBase';
 import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { Guest } from '@/modules/system/guest/Guest';
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
@@ -21,7 +20,7 @@ const layerGeometry = {
   width: 3000,
 };
 
-export class KonvaLayer implements LayerBase {
+export class KonvaLayer {
   private guestChain = new Chain<{canvas: HTMLElement, map: MapDocument}>();
 
   private positionCache: CacheType<PointDocument> = new Cache(
