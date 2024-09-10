@@ -15,7 +15,11 @@ import { CacheType } from '@/modules/system/guest/CacheType';
 import { debug } from 'debug';
 import { Stage } from 'konva/lib/Stage';
 
-const localDebug = debug('KonvaLayer');
+const localDebug = debug('app:konva:KonvaLayer');
+const layerGeometry = {
+  height: 3000,
+  width: 3000,
+};
 
 export class KonvaLayer implements LayerBase {
   private guestChain = new Chain<{canvas: HTMLElement, map: MapDocument}>();
@@ -58,6 +62,24 @@ export class KonvaLayer implements LayerBase {
         localDebug('new position', position);
         this.positionCache.receive(position);
       });
+
+      stage.dragBoundFunc((pos) => {
+        localDebug('boundings event', pos);
+        const maxRight = layerGeometry.width - canvas.clientWidth;
+        const maxBottom = layerGeometry.height - canvas.clientHeight;
+        const right = pos.x * -1;
+        const bottom = pos.y * -1;
+        if (maxBottom < 0 || maxRight < 0) {
+          return { x: 0, y: 0 };
+        }
+        localDebug('boundings', maxBottom, maxRight, bottom, right);
+        return {
+          // eslint-disable-next-line no-nested-ternary
+          x: pos.x > 0 ? 0 : right > maxRight ? maxRight * -1 : pos.x,
+          // eslint-disable-next-line no-nested-ternary
+          y: pos.y > 0 ? 0 : bottom > maxBottom ? maxBottom * -1 : pos.y,
+        };
+      });
     }));
   }
 
@@ -67,10 +89,7 @@ export class KonvaLayer implements LayerBase {
   }
 
   public size(guest: GuestType<SizeDocument>) {
-    guest.receive({
-      height: 3000,
-      width: 3000,
-    });
+    guest.receive(layerGeometry);
     return this;
   }
 

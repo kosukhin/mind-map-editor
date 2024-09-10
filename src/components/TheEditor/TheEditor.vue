@@ -2,13 +2,13 @@
 import { onMounted, ref } from 'vue';
 import { useApplication } from '@/composables/useApplication';
 
-const { canvasGuest } = useApplication();
+const { canvas } = useApplication();
 
 const objects = [];
 const canvasWrapper = ref();
 
 onMounted((() => {
-  canvasGuest.receive(canvasWrapper.value);
+  canvas.receive(canvasWrapper.value);
 }));
 </script>
 
