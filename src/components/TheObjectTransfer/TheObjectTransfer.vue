@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
-import { MapObjectDocument } from '@/modules/entities/MapStructures';
+import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { ref } from '@vue/reactivity';
 import { useStorage, watchOnce } from '@vueuse/core';
 import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';

@@ -1,5 +1,5 @@
 import { Cache } from '@/modules/system/guest/Cache';
-import { SizeDocument } from '@/modules/entities/SizeDocument';
+import { SizeDocument } from '@/modules/integration/browser/canvas/SizeDocument';
 import { GuestInTheMiddle } from '@/modules/system/guest/GuestInTheMiddle';
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';

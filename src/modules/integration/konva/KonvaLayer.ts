@@ -1,18 +1,16 @@
 import Konva from 'konva';
-import { MapFileType } from '@/modules/application/map/mapFile/MapFileType';
 import { Chain } from '@/modules/system/guest/Chain';
 import { Patron } from '@/modules/system/guest/Patron';
-import { MapDocument } from '@/modules/entities/MapStructures';
 import { Layer } from 'konva/lib/Layer';
-import { SizeDocument } from '@/modules/entities/SizeDocument';
 import { Guest } from '@/modules/system/guest/Guest';
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
 import { GuestType } from '@/modules/system/guest/GuestType';
-import { PointDocument } from '@/modules/entities/PointDocument';
 import { Cache } from '@/modules/system/guest/Cache';
 import { CacheType } from '@/modules/system/guest/CacheType';
 import { debug } from 'debug';
 import { Stage } from 'konva/lib/Stage';
+import { KonvaSizeDocument } from '@/modules/integration/konva/KonvaSizeDocument';
+import { KonvaPointDocument } from '@/modules/integration/konva/KonvaPointDocument';
 
 const localDebug = debug('app:konva:KonvaLayer');
 const layerGeometry = {
@@ -21,9 +19,9 @@ const layerGeometry = {
 };
 
 export class KonvaLayer {
-  private guestChain = new Chain<{canvas: HTMLElement, map: MapDocument}>();
+  private guestChain = new Chain<{canvas: HTMLElement}>();
 
-  private positionCache: CacheType<PointDocument> = new Cache(
+  private positionCache: CacheType<KonvaPointDocument> = new Cache(
     this,
     {
       x: 0,
@@ -33,10 +31,9 @@ export class KonvaLayer {
 
   private layerCache = new Cache(this);
 
-  public constructor(private mapFile: MapFileType, private canvasDep: BrowserCanvasType) {
+  public constructor(private canvasDep: BrowserCanvasType) {
     this.canvasDep.canvas(new Patron(this.guestChain.receiveKey('canvas')));
-    this.mapFile.currentMap(new Patron(this.guestChain.receiveKey('map')));
-    this.guestChain.result(new Guest(({ canvas, map }) => {
+    this.guestChain.result(new Guest(({ canvas }) => {
       localDebug('create new konva stage');
       const stage = new Konva.Stage({
         width: canvas.clientWidth,
@@ -87,12 +84,12 @@ export class KonvaLayer {
     return this;
   }
 
-  public size(guest: GuestType<SizeDocument>) {
+  public size(guest: GuestType<KonvaSizeDocument>) {
     guest.receive(layerGeometry);
     return this;
   }
 
-  public position(guest: GuestType<PointDocument>): this {
+  public position(guest: GuestType<KonvaPointDocument>): this {
     this.positionCache.receiving(guest);
     return this;
   }

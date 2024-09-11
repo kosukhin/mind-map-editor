@@ -1,5 +1,5 @@
 import { GuestType } from '@/modules/system/guest/GuestType';
 
-export interface SystemFileType {
+export interface MapFileContentType extends GuestType<string> {
   content(target: GuestType<string>): this;
 }

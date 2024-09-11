@@ -1,6 +1,6 @@
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { PoolType } from '@/modules/system/guest/PoolType';
-import { GuestType } from '../guest/GuestType';
+import { GuestType } from '@/modules/system/guest/GuestType';
 
 export class FakeSource implements GuestType<any> {
   private pool: PoolType<any> = new PatronPool<any>(this);

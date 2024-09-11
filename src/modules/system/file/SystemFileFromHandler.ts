@@ -1,6 +1,6 @@
 import { SystemFileType } from '@/modules/system/file/SystemFileType';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
-import { GuestType } from '../guest/GuestType';
+import { GuestType } from '@/modules/system/guest/GuestType';
 
 const filesContents = new WeakMap();
 export class SystemFileFromHandler implements SystemFileType {

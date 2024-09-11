@@ -1,10 +1,11 @@
+import { GuestExecutorType } from '@/modules/system/guest/GuestExecutorType';
 import {
   GuestType,
   ReceiveOptions,
 } from './GuestType';
 
 export class Guest<T> implements GuestType<T> {
-  public constructor(private receiver: (value: T, options?: ReceiveOptions) => void) {}
+  public constructor(private receiver: GuestExecutorType<T>) {}
 
   public receive(value: T, options?: ReceiveOptions) {
     this.receiver(value, options);

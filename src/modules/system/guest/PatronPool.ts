@@ -5,17 +5,11 @@ import {
   ReceiveOptions,
 } from './GuestType';
 
-/**
- * Пул постоянных посетителей для источника - патронов
- */
 export class PatronPool<T> implements PoolType<T> {
   private patrons = new Set<GuestType<T>>();
 
   public constructor(private initiator: unknown) {}
 
-  /**
-   * Добавить гостя в пул патронов, если гость представился патроном
-   */
   public add(shouldBePatron: GuestType<T>) {
     try {
       if (shouldBePatron.introduction && shouldBePatron.introduction() === 'patron') {
@@ -32,9 +26,6 @@ export class PatronPool<T> implements PoolType<T> {
     return this;
   }
 
-  /**
-   * Передать один документ всем известным патронам
-   */
   public receive(value: T, options?: ReceiveOptions) {
     try {
       this.patrons.forEach((target) => {

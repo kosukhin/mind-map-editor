@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import svg64 from 'svg64';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import { MapTypeDocument } from '@/modules/entities/MapStructures';
+import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_PARENT_TYPES } from '@/constants/overlays';
 import { useMap } from '@/composables/useMap';

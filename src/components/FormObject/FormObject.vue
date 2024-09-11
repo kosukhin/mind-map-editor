@@ -9,7 +9,7 @@ import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
-import { MapObjectDocument } from '@/modules/entities/MapStructures';
+import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
 import BaseInputRow from '@/components/BaseInput/BaseInputRow.vue';
 import BaseEditor from '@/components/BaseEditor/BaseEditor.vue';

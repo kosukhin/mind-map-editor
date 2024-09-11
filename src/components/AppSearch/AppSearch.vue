@@ -2,7 +2,7 @@
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import { MapDocument, NamedSearchDocument } from '@/modules/entities/MapStructures';
+import { MapDocument, NamedSearchDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { get } from 'lodash';
 import { SHOW_SEARCH } from '@/constants/overlays';
 import { overlayController } from '@/modulesHigh/overlay/overlayController';
