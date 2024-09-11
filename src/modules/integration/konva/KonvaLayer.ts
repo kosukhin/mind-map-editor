@@ -11,6 +11,8 @@ import { debug } from 'debug';
 import { Stage } from 'konva/lib/Stage';
 import { KonvaSizeDocument } from '@/modules/integration/konva/KonvaSizeDocument';
 import { KonvaPointDocument } from '@/modules/integration/konva/KonvaPointDocument';
+import { ChainType } from '@/modules/system/guest/ChainType';
+import { InstanceType } from '@/modules/system/guest/InstanceType';
 
 const localDebug = debug('app:konva:KonvaLayer');
 const layerGeometry = {
@@ -19,7 +21,7 @@ const layerGeometry = {
 };
 
 export class KonvaLayer {
-  private guestChain = new Chain<{canvas: HTMLElement}>();
+  private guestChain: ChainType<{canvas: HTMLElement}>;
 
   private positionCache: CacheType<KonvaPointDocument> = new Cache(
     this,
@@ -31,7 +33,12 @@ export class KonvaLayer {
 
   private layerCache = new Cache(this);
 
-  public constructor(private canvasDep: BrowserCanvasType) {
+  public constructor(
+    private canvasDep: BrowserCanvasType,
+    chain: InstanceType<ChainType<{canvas: HTMLElement}>>,
+    cache: InstanceType<CacheType<unknown>>,
+  ) {
+    this.guestChain = chain.create();
     this.canvasDep.canvas(new Patron(this.guestChain.receiveKey('canvas')));
     this.guestChain.result(new Guest(({ canvas }) => {
       localDebug('create new konva stage');

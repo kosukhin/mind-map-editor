@@ -7,29 +7,24 @@ import { Notification } from '@/modules/application/l1/l2/visualisation/notifica
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { MapObjectsVisible } from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectsVisible';
-import { MapObjectsRectsPatron } from '@/modules/application/l1/l2/visualisation/rects/MapObjectsRectsPatron';
+import {
+  MapObjectsRectsPatron,
+} from '@/modules/application/l1/l2/visualisation/rects/MapObjectsRectsPatron';
 import { MapObjectGuest } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectGuest';
 import { MiniMap } from '@/modules/application/l1/l2/visualisation/miniMap/MiniMap';
-import { Instance } from '@/modules/system/guest/Instance';
-import { SystemFileFromHandler } from '@/modules/system/file/SystemFileFromHandler';
-import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFileSaved';
-import { Cache } from '@/modules/system/guest/Cache';
-import { Guest } from '@/modules/system/guest/Guest';
-import { GuestExecutorType } from '@/modules/system/guest/GuestExecutorType';
-import { PatronPool } from '@/modules/system/guest/PatronPool';
+import { useInstances } from '@/modules/system/guest/useInstances';
 
-/**
- * TODO избавиться от new внутри объектов - вообще
- */
-const fileHandlerContent = new Instance(
-  (value) => new SystemFileFromHandler(<FileSystemFileHandle>value),
-);
-const browserFileSaved = new Instance(
-  (value) => new BrowserFileSaved(<FileSystemFileHandle>value),
-);
-const cache = new Instance((initiator) => new Cache(initiator));
-const guest = new Instance((executor) => new Guest(<GuestExecutorType<unknown>>executor));
-const patronPool = new Instance((initiator) => new PatronPool(initiator));
+const {
+  fileHandlerContent,
+  browserFileSaved,
+  cache,
+  guest,
+  guestInTheMiddle,
+  patron,
+  patronPool,
+  transformToObject,
+  transformToString,
+} = useInstances();
 
 const notification = new Notification(cache);
 const mapFile = new MapFileOfContent(
@@ -41,10 +36,14 @@ const mapFile = new MapFileOfContent(
     guest,
     patronPool,
   ),
+  patronPool,
+  guestInTheMiddle,
+  transformToString,
+  transformToObject,
 );
-const mapCurrent = new MapCurrent(mapFile);
-const mapSettings = new MapSettingsGuest(mapFile, mapCurrent);
-const canvas = new BrowserCanvas();
+const mapCurrent = new MapCurrent(mapFile, cache, guest, patron);
+const mapSettings = new MapSettingsGuest(mapFile, mapCurrent, guest);
+const canvas = new BrowserCanvas(cache, guestInTheMiddle);
 const konvaLayer = new KonvaLayer(canvas);
 const mapObject = new MapObjectGuest(mapCurrent, mapFile);
 const mapObjects = new MapObjectsVisible(konvaLayer, canvas, mapCurrent);

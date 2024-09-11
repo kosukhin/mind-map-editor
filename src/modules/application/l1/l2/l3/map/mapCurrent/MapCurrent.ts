@@ -6,23 +6,27 @@ import {
   MapSettingsDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { Guest } from '@/modules/system/guest/Guest';
-import { Cache } from '@/modules/system/guest/Cache';
-import { Patron } from '@/modules/system/guest/Patron';
 import { debug } from 'debug';
 import { GuestType } from '@/modules/system/guest/GuestType';
+import { InstanceType } from '@/modules/system/guest/InstanceType';
+import { CacheType } from '@/modules/system/guest/CacheType';
 
 const localDebug = debug('MapCurrent');
 
 export class MapCurrent implements MapType {
-  private mapObjectsCache = new Cache<MapObjectDocument[]>(this);
+  private mapObjectsCache: CacheType<MapObjectDocument[]>;
 
-  private mapSettingsCache = new Cache(this);
+  private mapSettingsCache: CacheType<MapSettingsDocument>;
 
   public constructor(
     private mapFile: MapFileType,
+    cache: InstanceType<CacheType<unknown>>,
+    private guest: InstanceType<GuestType<unknown>>,
+    private patron: InstanceType<GuestType<unknown>>,
   ) {
-    mapFile.currentMap(new Patron(new Guest((latestMap: MapDocument) => {
+    this.mapObjectsCache = cache.create(this);
+    this.mapSettingsCache = cache.create(this);
+    mapFile.currentMap(patron.create(guest.create((latestMap: MapDocument) => {
       localDebug('current map changed');
       this.mapSettingsCache.receive(latestMap.settings);
       this.mapObjectsCache.receive(Object.values(latestMap.objects));
@@ -44,7 +48,7 @@ export class MapCurrent implements MapType {
     localDebug('save map document', value);
     // TODO тут временно current позже нужен объект Text которые будет представлять имя из ссылки
     const name = 'current';
-    this.mapFile.mapFile(new Guest((latestMapFile: MapFileDocument) => {
+    this.mapFile.mapFile(this.guest.create((latestMapFile: MapFileDocument) => {
       this.mapFile.receive({
         ...latestMapFile,
         [name]: value,
