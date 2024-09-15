@@ -1,9 +1,11 @@
 import { expect, test } from 'vitest';
 import { Notification } from '@/modules/application/l1/l2/visualisation/notification/Notification';
 import { Guest } from '@/modules/system/guest/Guest';
+import { useFactories } from '@/composables/useFactories';
 
 test('notification', () => {
-  const notification = new Notification(100);
+  const factories = useFactories();
+  const notification = new Notification(factories);
   notification.receive({
     type: 'success',
     text: 'test',

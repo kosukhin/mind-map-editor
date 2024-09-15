@@ -4,12 +4,14 @@
 import { expect, test } from 'vitest';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { Guest } from '@/modules/system/guest/Guest';
+import { useFactories } from '@/composables/useFactories';
 
 test('browser canvas', () => {
+  const factories = useFactories();
   const div = document.createElement('div');
   div.innerHTML = '<canvas height="300" width="300" />';
   const canvasEL = div.querySelector('canvas') as HTMLElement;
-  const canvas = new BrowserCanvas();
+  const canvas = new BrowserCanvas(factories);
   canvas.receive(canvasEL);
 
   canvas.size(new Guest((size) => {

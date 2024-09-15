@@ -32,6 +32,7 @@ export class MapFileOfContent implements MapFileType {
 
   public currentMap(currentMapGuest: GuestType<MapDocument>): this {
     this.mapFile(this.factories.guestInTheMiddle.create(currentMapGuest, (value: MapFileDocument) => {
+      localDebug('get current map', value, typeof value);
       this.currentMapPatrons.distribute(value.current, currentMapGuest);
     }));
     return this;
@@ -46,6 +47,7 @@ export class MapFileOfContent implements MapFileType {
   public mapFile(mapFileTarget: GuestType<MapFileDocument>): this {
     this.mapFileContent.content(this.factories.guestInTheMiddle.create(mapFileTarget, (value: string) => {
       const mapFile = this.factories.transformToObject.create(value).result();
+      localDebug('get map file', mapFile);
       this.mapFilePatrons.distribute(<MapFileDocument>mapFile, mapFileTarget);
     }));
     return this;

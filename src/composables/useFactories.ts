@@ -21,8 +21,8 @@ const pool = new Factory(PatronPool);
 const patron = new Factory(Patron);
 const patronOnce = new Factory(PatronOnce);
 const guestInTheMiddle = new Factory(GuestInTheMiddle);
-const transformToString = new Factory(TransformedFromJSON);
-const transformToObject = new Factory(TransformedToJSON);
+const transformToString = new Factory(TransformedToJSON);
+const transformToObject = new Factory(TransformedFromJSON);
 const chain = new Factory(Chain);
 
 const factories = {

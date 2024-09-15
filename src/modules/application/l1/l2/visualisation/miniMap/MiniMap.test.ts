@@ -3,6 +3,7 @@ import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { Patron } from '@/modules/system/guest/Patron';
 import { Guest } from '@/modules/system/guest/Guest';
+import { useFactories } from '@/composables/useFactories';
 import { MapCurrent } from '../../l3/map/mapCurrent/MapCurrent';
 import { MapFileFake } from '../../l3/map/mapFile/MapFileFake';
 import { MiniMap } from './MiniMap';
@@ -45,18 +46,19 @@ test('mini map', () => {
     },
   };
 
+  const factories = useFactories();
   const mapFileFake = new MapFileFake(defaultMapFileDocument);
-  const mapCurrent = new MapCurrent(mapFileFake);
+  const mapCurrent = new MapCurrent(mapFileFake, factories);
 
   const div = document.createElement('div');
   div.innerHTML = '<canvas height="300" width="300" />';
   const canvasEL = div.querySelector('canvas') as HTMLElement;
-  const browserCanvas = new BrowserCanvas();
+  const browserCanvas = new BrowserCanvas(factories);
   browserCanvas.receive(canvasEL);
 
-  const konvaLayer = new KonvaLayer(browserCanvas);
+  const konvaLayer = new KonvaLayer(browserCanvas, factories);
 
-  const miniMap = new MiniMap(mapCurrent, konvaLayer);
+  const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
 
   miniMap.points(new Patron(new Guest((points) => {
     expect(points.length).toBe(1);

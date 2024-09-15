@@ -3,6 +3,7 @@ import { MapFileFake } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileF
 import { MapCurrent } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrent';
 import { MapSettingsGuest } from '@/modules/application/l1/l2/l3/map/mapSettings/MapSettingsGuest';
 import { Guest } from '@/modules/system/guest/Guest';
+import { useFactories } from '@/composables/useFactories';
 import { MapFileDocument } from '../documents/MapStructures';
 
 test('map settings guest', () => {
@@ -23,9 +24,10 @@ test('map settings guest', () => {
     },
   };
 
+  const factories = useFactories();
   const fake = new MapFileFake(defaultMapFileDocument);
-  const map = new MapCurrent(fake);
-  const settingsGuest = new MapSettingsGuest(fake, map);
+  const map = new MapCurrent(fake, factories);
+  const settingsGuest = new MapSettingsGuest(fake, map, factories);
 
   settingsGuest.receive({
     ...defaultMapFileDocument.current.settings,

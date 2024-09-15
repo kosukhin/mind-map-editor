@@ -29,7 +29,7 @@ export class MapCurrent implements MapType {
     this.mapObjectsCache = factories.cache.create(this);
     this.mapSettingsCache = factories.cache.create(this);
     mapFile.currentMap(factories.patron.create(factories.guest.create((latestMap: MapDocument) => {
-      localDebug('current map changed');
+      localDebug('current map changed', latestMap);
       this.mapSettingsCache.receive(latestMap.settings);
       this.mapObjectsCache.receive(Object.values(latestMap.objects));
     })));
