@@ -1,8 +1,7 @@
 type GuestIntroduction = 'guest' | 'patron';
 
 export interface ReceiveOptions {
-  interceptAt?: any,
-  specificData?: any,
+  data?: unknown,
 }
 
 export interface GuestType<T = unknown> {

@@ -19,53 +19,56 @@ export class MapObjectsRectsPatron implements GuestType<MapObjectDocument[]> {
     private konvaLayer: LayerBase,
     private mapObject: MapObjectType,
     private factories: {
-      patronOnce: FactoryType<GuestType>
+      patronOnce: FactoryType<GuestType>,
+      guest: FactoryType<GuestType>,
     },
   ) {}
 
   public receive(objects: MapObjectDocument[]): this {
-    this.konvaLayer.layer(this.factories.patronOnce.create((layer: KonvaLayer) => {
-      localDebug('rerender object rects');
-      this.previouslyRenderedRects.forEach((rect) => {
-        rect.hide();
-      });
-      objects.forEach((object) => {
-        if (this.previouslyRenderedRects.has(object)) {
-          const rect = this.previouslyRenderedRects.get(object);
-          rect.width(+object.width);
-          rect.height(+object.height);
-          rect.x(+object.position[0]);
-          rect.y(+object.position[1]);
-          rect.show();
-          return;
-        }
-
-        const rect = new Rect({
-          x: +object.position[0],
-          y: +object.position[1],
-          width: +object.width,
-          height: +object.height,
-          fill: '#f00',
-          name: object.id,
-          draggable: true,
-          objectId: object.id,
+    this.konvaLayer.layer(this.factories.patronOnce.create(
+      this.factories.guest.create((layer: KonvaLayer) => {
+        localDebug('rerender object rects');
+        this.previouslyRenderedRects.forEach((rect) => {
+          rect.hide();
         });
-        this.previouslyRenderedRects.set(object, rect);
-        layer.add(rect);
+        objects.forEach((object) => {
+          if (this.previouslyRenderedRects.has(object)) {
+            const rect = this.previouslyRenderedRects.get(object);
+            rect.width(+object.width);
+            rect.height(+object.height);
+            rect.x(+object.position[0]);
+            rect.y(+object.position[1]);
+            rect.show();
+            return;
+          }
 
-        rect.on('dragend', (e) => {
-          this.mapObject.receive({
-            ...object,
-            position: [rect.x(), rect.y()],
+          const rect = new Rect({
+            x: +object.position[0],
+            y: +object.position[1],
+            width: +object.width,
+            height: +object.height,
+            fill: '#f00',
+            name: object.id,
+            draggable: true,
+            objectId: object.id,
           });
-        });
+          this.previouslyRenderedRects.set(object, rect);
+          layer.add(rect);
+
+          rect.on('dragend', (e) => {
+            this.mapObject.receive({
+              ...object,
+              position: [rect.x(), rect.y()],
+            });
+          });
 
         // TODO сделать вотчер на перетаскивание и клик по ректу
         // Перетаскивание обновляет карту
         // клик должен записать выбранный id в какого-то гостя
         // Либо нужно дать возможность подписываться на выбранный ID
-      });
-    }));
+        });
+      }),
+    ));
     return this;
   }
 

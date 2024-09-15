@@ -1,9 +1,5 @@
-import { RuntimeError } from '@/modules/system/error/RuntimeError';
 import { PoolType } from '@/modules/system/guest/PoolType';
-import {
-  GuestType,
-  ReceiveOptions,
-} from './GuestType';
+import { GuestType, ReceiveOptions } from './GuestType';
 
 export class PatronPool<T> implements PoolType<T> {
   private patrons = new Set<GuestType<T>>();
@@ -11,14 +7,10 @@ export class PatronPool<T> implements PoolType<T> {
   public constructor(private initiator: unknown) {}
 
   public add(shouldBePatron: GuestType<T>) {
-    try {
-      if (shouldBePatron.introduction && shouldBePatron.introduction() === 'patron') {
-        this.patrons.add(shouldBePatron);
-      }
-      return this;
-    } catch (e) {
-      throw new RuntimeError('Cant add patron to pool', { cause: e });
+    if (shouldBePatron.introduction && shouldBePatron.introduction() === 'patron') {
+      this.patrons.add(shouldBePatron);
     }
+    return this;
   }
 
   public remove(patron: GuestType<T>) {
@@ -27,26 +19,26 @@ export class PatronPool<T> implements PoolType<T> {
   }
 
   public receive(value: T, options?: ReceiveOptions) {
-    try {
-      this.patrons.forEach((target) => {
-        target.receive(value, {
-          ...options,
-          specificData: {
-            ...(options?.specificData ?? {}),
-            initiator: this.initiator,
-            pool: this,
-          },
-        });
-      });
-      return this;
-    } catch (e) {
-      throw new RuntimeError('Cant receive value in patrons pool', { cause: e });
-    }
+    this.patrons.forEach((target) => {
+      this.sendValueToGuest(value, target, options);
+    });
+    return this;
   }
 
   public distribute(receiving: T, possiblePatron: GuestType<T>): this {
     this.add(possiblePatron);
-    possiblePatron.receive(receiving);
+    this.sendValueToGuest(receiving, possiblePatron, {});
     return this;
+  }
+
+  private sendValueToGuest(value: T, guest: GuestType<T>, options?: ReceiveOptions) {
+    guest.receive(value, {
+      ...options,
+      data: {
+        ...((options?.data as Record<string, unknown>) ?? {}),
+        initiator: this.initiator,
+        pool: this,
+      },
+    });
   }
 }

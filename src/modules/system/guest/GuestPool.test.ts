@@ -1,10 +1,10 @@
 import { expect, test } from 'vitest';
 import { Guest } from '@/modules/system/guest/Guest';
 import { Patron } from '@/modules/system/guest/Patron';
-import { PatronPoolWithGuests } from '@/modules/system/guest/PatronPoolWithGuests';
+import { GuestPool } from '@/modules/system/guest/GuestPool';
 
 test('patron pool with guests', () => {
-  const pool = new PatronPoolWithGuests(null);
+  const pool = new GuestPool(null);
   let receivedCount = 0;
 
   // 2 + 2

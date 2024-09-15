@@ -1,6 +1,6 @@
 import { Cache } from '@/modules/system/guest/Cache';
 import { Guest } from '@/modules/system/guest/Guest';
-import { PatronPoolWithGuests } from '@/modules/system/guest/PatronPoolWithGuests';
+import { GuestPool } from '@/modules/system/guest/GuestPool';
 import { ChainType } from '@/modules/system/guest/ChainType';
 import { GuestType } from './GuestType';
 
@@ -11,7 +11,7 @@ export class Chain<T> implements ChainType<T> {
 
   private keysFilled = new Set();
 
-  private filledChainPool = new PatronPoolWithGuests(this);
+  private filledChainPool = new GuestPool(this);
 
   public constructor() {
     this.theChain = new Cache<Record<string, any>>(this, {});

@@ -4,7 +4,7 @@ import { FakeSource } from '@/modules/system/fake/FakeSource';
 import { Guest } from '@/modules/system/guest/Guest';
 
 test('factory', () => {
-  const sourceFactory = new Factory((value) => new FakeSource(value));
+  const sourceFactory = new Factory(FakeSource);
 
   const source = sourceFactory.create(42);
 

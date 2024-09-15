@@ -4,24 +4,19 @@ import {
   BrowserLaunchQueueFake,
 } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueFake';
 import { Notification } from '@/modules/application/l1/l2/visualisation/notification/Notification';
-import { BrowserFileFake } from '@/modules/integration/browser/file/BrowserFileFake';
 import { Guest } from '@/modules/system/guest/Guest';
 import { Patron } from '@/modules/system/guest/Patron';
-import { Factory } from '@/modules/system/guest/Factory';
-import { SystemFileText } from '@/modules/system/file/SystemFileText';
-import { Cache } from '@/modules/system/guest/Cache';
+import { useFactories } from '@/composables/useFactories';
 
 test('map file content fs', () => {
-  const systemFileTextFactory = new Factory(() => new SystemFileText('hello world!'));
-  const browserFileFakeFactory = new Factory(() => new BrowserFileFake());
+  const factories = useFactories();
+
   const queue = new BrowserLaunchQueueFake();
-  const cache = new Factory((initiator) => new Cache(initiator));
-  const notification = new Notification(cache);
+  const notification = new Notification(factories);
   const mapFileContent = new FileSystemContent(
     queue,
     notification,
-    systemFileTextFactory,
-    browserFileFakeFactory,
+    factories,
   );
 
   const matches: Record<string, number> = {

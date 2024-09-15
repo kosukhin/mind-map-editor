@@ -5,7 +5,7 @@ import {
   ReceiveOptions,
 } from './GuestType';
 
-export class PatronPoolWithGuests<T> implements GuestType<T>, PoolType<T> {
+export class GuestPool<T> implements GuestType<T>, PoolType<T> {
   private guests = new Set<GuestType<T>>();
 
   private patronPool: PatronPool<T>;
