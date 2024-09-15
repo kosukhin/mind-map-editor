@@ -5,7 +5,7 @@ export interface ReceiveOptions {
   specificData?: any,
 }
 
-export interface GuestType<T> {
+export interface GuestType<T = unknown> {
   receive(value: T, options?: ReceiveOptions): this;
   introduction?(): GuestIntroduction;
 }

@@ -1,14 +1,24 @@
 import { MapObjectType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
-import { MapDocument, MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import {
+  MapDocument,
+  MapObjectDocument,
+} from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { Guest } from '@/modules/system/guest/Guest';
+import { GuestType } from '@/modules/system/guest/GuestType';
+import { FactoryType } from '@/modules/system/guest/FactoryType';
 
 export class MapObjectGuest implements MapObjectType {
-  public constructor(private map: MapType, private mapFile: MapFileType) {}
+  public constructor(
+    private map: MapType,
+    private mapFile: MapFileType,
+    private factories: {
+       guest: FactoryType<GuestType>,
+    },
+  ) {}
 
   receive(value: MapObjectDocument): this {
-    this.mapFile.currentMap(new Guest((latestMap: MapDocument) => {
+    this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
       this.map.receive({
         ...latestMap,
         objects: {

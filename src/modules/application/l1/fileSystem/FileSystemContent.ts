@@ -9,7 +9,7 @@ import {
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { SystemFileType } from '@/modules/system/file/SystemFileType';
 import { BrowserFileType } from '@/modules/integration/browser/file/BrowserFileType';
-import { InstanceType } from '@/modules/system/guest/InstanceType';
+import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { PoolType } from '@/modules/system/guest/PoolType';
 import { debug } from 'debug';
 
@@ -18,25 +18,28 @@ const localDebug = debug('FileSystemContent');
 export class FileSystemContent implements MapFileContentType {
   private contentPatrons: PoolType<string>;
 
+  private fileHandler: FileSystemFileHandle | null = null;
+
   public constructor(
     private launchQueue: BrowserLaunchQueueType,
     private notification: NotificationType,
-    private fileHandlerReadFactory: InstanceType<SystemFileType>,
-    private browserFileFactory: InstanceType<BrowserFileType>,
-    private guest: InstanceType<GuestType<unknown>>,
-    pool: InstanceType<PoolType<string>>,
-    private fileHandler: FileSystemFileHandle | null = null,
+    private factories: {
+      fileHandlerContent: FactoryType<SystemFileType>,
+      browserFileSaved: FactoryType<BrowserFileType>,
+      guest: FactoryType<GuestType>,
+      pool: FactoryType<PoolType>,
+    },
   ) {
-    this.contentPatrons = pool.create(this);
+    this.contentPatrons = factories.pool.create(this);
   }
 
   public content(target: GuestType<string>): this {
-    const fileHandlerGuest = this.guest.create((value: FileSystemFileHandle) => {
+    const fileHandlerGuest = this.factories.guest.create((value: FileSystemFileHandle) => {
       this.fileHandler = value;
       this
-        .fileHandlerReadFactory
+        .factories.fileHandlerContent
         .create(value)
-        .content(this.guest.create((content: string) => {
+        .content(this.factories.guest.create((content: string) => {
           this.contentPatrons.distribute(content, target);
         }));
     });
@@ -56,7 +59,7 @@ export class FileSystemContent implements MapFileContentType {
       throw new RuntimeError('Cant save file because no fileHandler');
     }
     try {
-      this.browserFileFactory.create(this.fileHandler).save(value);
+      this.factories.browserFileSaved.create(this.fileHandler).save(value);
       this.contentPatrons.receive(value);
       return this;
     } catch (e) {

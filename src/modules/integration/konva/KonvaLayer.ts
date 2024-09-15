@@ -1,18 +1,14 @@
 import Konva from 'konva';
-import { Chain } from '@/modules/system/guest/Chain';
-import { Patron } from '@/modules/system/guest/Patron';
 import { Layer } from 'konva/lib/Layer';
-import { Guest } from '@/modules/system/guest/Guest';
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
 import { GuestType } from '@/modules/system/guest/GuestType';
-import { Cache } from '@/modules/system/guest/Cache';
 import { CacheType } from '@/modules/system/guest/CacheType';
 import { debug } from 'debug';
 import { Stage } from 'konva/lib/Stage';
 import { KonvaSizeDocument } from '@/modules/integration/konva/KonvaSizeDocument';
 import { KonvaPointDocument } from '@/modules/integration/konva/KonvaPointDocument';
 import { ChainType } from '@/modules/system/guest/ChainType';
-import { InstanceType } from '@/modules/system/guest/InstanceType';
+import { FactoryType } from '@/modules/system/guest/FactoryType';
 
 const localDebug = debug('app:konva:KonvaLayer');
 const layerGeometry = {
@@ -23,24 +19,30 @@ const layerGeometry = {
 export class KonvaLayer {
   private guestChain: ChainType<{canvas: HTMLElement}>;
 
-  private positionCache: CacheType<KonvaPointDocument> = new Cache(
-    this,
-    {
-      x: 0,
-      y: 0,
-    },
-  );
+  private positionCache: CacheType<KonvaPointDocument>;
 
-  private layerCache = new Cache(this);
+  private layerCache: CacheType<Layer>;
 
   public constructor(
     private canvasDep: BrowserCanvasType,
-    chain: InstanceType<ChainType<{canvas: HTMLElement}>>,
-    cache: InstanceType<CacheType<unknown>>,
+    private factories: {
+      chain: FactoryType<ChainType<{canvas: HTMLElement}>>,
+      cache: FactoryType<CacheType>,
+      guest: FactoryType<GuestType>,
+      patron: FactoryType<GuestType>,
+    },
   ) {
-    this.guestChain = chain.create();
-    this.canvasDep.canvas(new Patron(this.guestChain.receiveKey('canvas')));
-    this.guestChain.result(new Guest(({ canvas }) => {
+    this.positionCache = factories.cache.create(
+      this,
+      {
+        x: 0,
+        y: 0,
+      },
+    );
+    this.guestChain = factories.chain.create();
+    this.layerCache = factories.cache.create();
+    this.canvasDep.canvas(factories.patron.create(this.guestChain.receiveKey('canvas')));
+    this.guestChain.result(factories.guest.create<[(props: { canvas: HTMLElement }) => void]>(({ canvas }) => {
       localDebug('create new konva stage');
       const stage = new Konva.Stage({
         width: canvas.clientWidth,

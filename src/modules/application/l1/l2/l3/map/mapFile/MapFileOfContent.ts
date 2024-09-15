@@ -6,7 +6,7 @@ import {
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { debug } from 'debug';
 import { GuestType } from '@/modules/system/guest/GuestType';
-import { InstanceType } from '@/modules/system/guest/InstanceType';
+import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { PoolType } from '@/modules/system/guest/PoolType';
 import { Transformed } from '@/modules/system/transformed/Transformed';
 
@@ -19,17 +19,19 @@ export class MapFileOfContent implements MapFileType {
 
   public constructor(
     private mapFileContent: MapFileContentType,
-    pool: InstanceType<PoolType<unknown>>,
-    private guestInTheMiddle: InstanceType<GuestType<unknown>>,
-    private transformToString: InstanceType<Transformed<string>>,
-    private transformToMapFile: InstanceType<Transformed<unknown>>,
+    private factories: {
+      pool: FactoryType<PoolType>,
+      guestInTheMiddle: FactoryType<GuestType>,
+      transformToString: FactoryType<Transformed<string>>,
+      transformToObject: FactoryType<Transformed>,
+    },
   ) {
-    this.currentMapPatrons = pool.create(this);
-    this.mapFilePatrons = pool.create(this);
+    this.currentMapPatrons = factories.pool.create(this);
+    this.mapFilePatrons = factories.pool.create(this);
   }
 
   public currentMap(currentMapGuest: GuestType<MapDocument>): this {
-    this.mapFile(this.guestInTheMiddle.create(currentMapGuest, (value: MapFileDocument) => {
+    this.mapFile(this.factories.guestInTheMiddle.create(currentMapGuest, (value: MapFileDocument) => {
       this.currentMapPatrons.distribute(value.current, currentMapGuest);
     }));
     return this;
@@ -37,13 +39,13 @@ export class MapFileOfContent implements MapFileType {
 
   public receive(value: MapFileDocument): this {
     localDebug('save map file document', value);
-    this.mapFileContent.receive(this.transformToString.create(value).result());
+    this.mapFileContent.receive(this.factories.transformToString.create(value).result());
     return this;
   }
 
   public mapFile(mapFileTarget: GuestType<MapFileDocument>): this {
-    this.mapFileContent.content(this.guestInTheMiddle.create(mapFileTarget, (value: string) => {
-      const mapFile = this.transformToMapFile.create(value).result();
+    this.mapFileContent.content(this.factories.guestInTheMiddle.create(mapFileTarget, (value: string) => {
+      const mapFile = this.factories.transformToObject.create(value).result();
       this.mapFilePatrons.distribute(<MapFileDocument>mapFile, mapFileTarget);
     }));
     return this;

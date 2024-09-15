@@ -1,35 +1,57 @@
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import { Cache } from '@/modules/system/guest/Cache';
-import { Patron } from '@/modules/system/guest/Patron';
-import { Guest } from '@/modules/system/guest/Guest';
-import { Chain } from '@/modules/system/guest/Chain';
-import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { Layer } from 'konva/lib/Layer';
 import { PointIdDocument } from '@/modules/application/l1/l2/l3/map/documents/PointIdDocument';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { debug } from 'debug';
-import { GuestInTheMiddle } from '@/modules/system/guest/GuestInTheMiddle';
-import { GuestCast } from '@/modules/system/guest/GuestCast';
 import { GuestType } from '@/modules/system/guest/GuestType';
+import { CacheType } from '@/modules/system/guest/CacheType';
+import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { ChainType } from '@/modules/system/guest/ChainType';
+import { Layer } from 'konva/lib/Layer';
+import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 
 const localDebug = debug('app:MiniMap');
 const minimapWidth = 130;
 
+type ViewPortChainDocument = {
+  size: SizeDocument,
+  position: PointDocument
+}
+
+type MiniMapChainDocument = {
+  layer: Layer,
+  size: SizeDocument,
+  objects: MapObjectDocument[],
+};
+
 export class MiniMap {
-  private theSize = new Cache(this);
+  private theSize: CacheType<SizeDocument>;
 
-  private thePoints = new Cache<PointIdDocument[]>(this);
+  private thePoints: CacheType<PointIdDocument[]>;
 
-  private viewportSizeCache = new Cache<SizeDocument>(this);
+  private viewportSizeCache: CacheType<SizeDocument>;
 
-  public constructor(private map: MapType, private layer: LayerBase) {
-    const chain = new Chain<{layer: Layer, size: SizeDocument, objects: MapObjectDocument[]}>();
-    map.mapObjects(new Patron(chain.receiveKey('objects')));
-    layer.layer(new Patron(chain.receiveKey('layer')));
-    layer.size(new Patron(chain.receiveKey('size')));
-    chain.result(new Patron(new Guest(({ layer: konvaLayer, size, objects }) => {
+  public constructor(
+    private map: MapType,
+    private layer: LayerBase,
+    private factories: {
+      cache: FactoryType<CacheType>,
+      chain: FactoryType<ChainType<unknown>>,
+      patron: FactoryType<GuestType>,
+      guest: FactoryType<GuestType>,
+      guestInTheMiddle: FactoryType<GuestType>,
+      guestCast: FactoryType<GuestType>
+    },
+  ) {
+    this.theSize = factories.cache.create();
+    this.thePoints = factories.cache.create();
+    this.viewportSizeCache = factories.cache.create();
+    const chain = factories.chain.create();
+    map.mapObjects(factories.patron.create(chain.receiveKey('objects')));
+    layer.layer(factories.patron.create(chain.receiveKey('layer')));
+    layer.size(factories.patron.create(chain.receiveKey('size')));
+    chain.result(factories.patron.create(factories.guest.create(({ layer: konvaLayer, size, objects }: MiniMapChainDocument) => {
       const scale = minimapWidth / size.width;
       const layerSize = {
         width: konvaLayer.width() * scale,
@@ -52,10 +74,10 @@ export class MiniMap {
   }
 
   viewportPosition(guest: GuestType<PointDocument>) {
-    const chain = new Chain<{size: SizeDocument, position: PointDocument}>();
-    this.layer.size(new GuestCast(guest, chain.receiveKey('size')));
-    this.layer.position(new GuestCast(guest, chain.receiveKey('position')));
-    chain.result(new GuestInTheMiddle(guest, ({ size, position }) => {
+    const chain = this.factories.chain.create();
+    this.layer.size(this.factories.guestCast.create(guest, chain.receiveKey('size')));
+    this.layer.position(this.factories.guestCast.create(guest, chain.receiveKey('position')));
+    chain.result(this.factories.guestInTheMiddle.create(guest, ({ size, position }: ViewPortChainDocument) => {
       const scale = minimapWidth / size.width;
       const scaledPosition = {
         x: position.x * scale * -1,

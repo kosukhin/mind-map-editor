@@ -7,15 +7,15 @@ import { Notification } from '@/modules/application/l1/l2/visualisation/notifica
 import { BrowserFileFake } from '@/modules/integration/browser/file/BrowserFileFake';
 import { Guest } from '@/modules/system/guest/Guest';
 import { Patron } from '@/modules/system/guest/Patron';
-import { Instance } from '@/modules/system/guest/Instance';
+import { Factory } from '@/modules/system/guest/Factory';
 import { SystemFileText } from '@/modules/system/file/SystemFileText';
 import { Cache } from '@/modules/system/guest/Cache';
 
 test('map file content fs', () => {
-  const systemFileTextFactory = new Instance(() => new SystemFileText('hello world!'));
-  const browserFileFakeFactory = new Instance(() => new BrowserFileFake());
+  const systemFileTextFactory = new Factory(() => new SystemFileText('hello world!'));
+  const browserFileFakeFactory = new Factory(() => new BrowserFileFake());
   const queue = new BrowserLaunchQueueFake();
-  const cache = new Instance((initiator) => new Cache(initiator));
+  const cache = new Factory((initiator) => new Cache(initiator));
   const notification = new Notification(cache);
   const mapFileContent = new FileSystemContent(
     queue,

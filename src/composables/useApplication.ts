@@ -12,43 +12,27 @@ import {
 } from '@/modules/application/l1/l2/visualisation/rects/MapObjectsRectsPatron';
 import { MapObjectGuest } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectGuest';
 import { MiniMap } from '@/modules/application/l1/l2/visualisation/miniMap/MiniMap';
-import { useInstances } from '@/modules/system/guest/useInstances';
+import { useFactories } from '@/composables/useFactories';
 
-const {
-  fileHandlerContent,
-  browserFileSaved,
-  cache,
-  guest,
-  guestInTheMiddle,
-  patron,
-  patronPool,
-  transformToObject,
-  transformToString,
-} = useInstances();
+const factories = useFactories();
 
-const notification = new Notification(cache);
+const notification = new Notification(factories);
 const mapFile = new MapFileOfContent(
   new FileSystemContent(
     new BrowserLaunchQueue(),
     notification,
-    fileHandlerContent,
-    browserFileSaved,
-    guest,
-    patronPool,
+    factories,
   ),
-  patronPool,
-  guestInTheMiddle,
-  transformToString,
-  transformToObject,
+  factories,
 );
-const mapCurrent = new MapCurrent(mapFile, cache, guest, patron);
-const mapSettings = new MapSettingsGuest(mapFile, mapCurrent, guest);
-const canvas = new BrowserCanvas(cache, guestInTheMiddle);
-const konvaLayer = new KonvaLayer(canvas);
-const mapObject = new MapObjectGuest(mapCurrent, mapFile);
-const mapObjects = new MapObjectsVisible(konvaLayer, canvas, mapCurrent);
-mapObjects.objects(new MapObjectsRectsPatron(konvaLayer, mapObject));
-const miniMap = new MiniMap(mapCurrent, konvaLayer);
+const mapCurrent = new MapCurrent(mapFile, factories);
+const mapSettings = new MapSettingsGuest(mapFile, mapCurrent, factories);
+const canvas = new BrowserCanvas(factories);
+const konvaLayer = new KonvaLayer(canvas, factories);
+const mapObject = new MapObjectGuest(mapCurrent, mapFile, factories);
+const mapObjects = new MapObjectsVisible(konvaLayer, canvas, mapCurrent, factories);
+mapObjects.objects(new MapObjectsRectsPatron(konvaLayer, mapObject, factories));
+const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
 
 export const useApplication = () => ({
   mapFile,

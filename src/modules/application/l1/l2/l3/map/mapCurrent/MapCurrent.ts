@@ -8,7 +8,7 @@ import {
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { debug } from 'debug';
 import { GuestType } from '@/modules/system/guest/GuestType';
-import { InstanceType } from '@/modules/system/guest/InstanceType';
+import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { CacheType } from '@/modules/system/guest/CacheType';
 
 const localDebug = debug('MapCurrent');
@@ -20,13 +20,15 @@ export class MapCurrent implements MapType {
 
   public constructor(
     private mapFile: MapFileType,
-    cache: InstanceType<CacheType<unknown>>,
-    private guest: InstanceType<GuestType<unknown>>,
-    private patron: InstanceType<GuestType<unknown>>,
+    private factories: {
+      cache: FactoryType<CacheType>,
+      guest: FactoryType<GuestType>,
+      patron: FactoryType<GuestType>,
+    },
   ) {
-    this.mapObjectsCache = cache.create(this);
-    this.mapSettingsCache = cache.create(this);
-    mapFile.currentMap(patron.create(guest.create((latestMap: MapDocument) => {
+    this.mapObjectsCache = factories.cache.create(this);
+    this.mapSettingsCache = factories.cache.create(this);
+    mapFile.currentMap(factories.patron.create(factories.guest.create((latestMap: MapDocument) => {
       localDebug('current map changed');
       this.mapSettingsCache.receive(latestMap.settings);
       this.mapObjectsCache.receive(Object.values(latestMap.objects));
@@ -48,7 +50,7 @@ export class MapCurrent implements MapType {
     localDebug('save map document', value);
     // TODO тут временно current позже нужен объект Text которые будет представлять имя из ссылки
     const name = 'current';
-    this.mapFile.mapFile(this.guest.create((latestMapFile: MapFileDocument) => {
+    this.mapFile.mapFile(this.factories.guest.create((latestMapFile: MapFileDocument) => {
       this.mapFile.receive({
         ...latestMapFile,
         [name]: value,

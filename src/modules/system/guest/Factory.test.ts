@@ -1,10 +1,10 @@
 import { expect, test } from 'vitest';
-import { Instance } from '@/modules/system/guest/Instance';
+import { Factory } from '@/modules/system/guest/Factory';
 import { FakeSource } from '@/modules/system/fake/FakeSource';
 import { Guest } from '@/modules/system/guest/Guest';
 
 test('factory', () => {
-  const sourceFactory = new Instance((value) => new FakeSource(value));
+  const sourceFactory = new Factory((value) => new FakeSource(value));
 
   const source = sourceFactory.create(42);
 

@@ -3,8 +3,9 @@ import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { Rect } from 'konva/lib/shapes/Rect';
 import { MapObjectType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
 import { debug } from 'debug';
-import { PatronOnce } from '@/modules/system/guest/PatronOnce';
 import { GuestType } from '@/modules/system/guest/GuestType';
+import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { Layer as KonvaLayer } from 'konva/lib/Layer';
 
 const localDebug = debug('MapObjectsRectsPatron');
 
@@ -17,10 +18,13 @@ export class MapObjectsRectsPatron implements GuestType<MapObjectDocument[]> {
   public constructor(
     private konvaLayer: LayerBase,
     private mapObject: MapObjectType,
+    private factories: {
+      patronOnce: FactoryType<GuestType>
+    },
   ) {}
 
   public receive(objects: MapObjectDocument[]): this {
-    this.konvaLayer.layer(new PatronOnce((layer) => {
+    this.konvaLayer.layer(this.factories.patronOnce.create((layer: KonvaLayer) => {
       localDebug('rerender object rects');
       this.previouslyRenderedRects.forEach((rect) => {
         rect.hide();
