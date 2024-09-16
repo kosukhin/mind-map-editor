@@ -12,6 +12,7 @@ import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeD
 import { ChainType } from '@/modules/system/guest/ChainType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { Arrow } from 'konva/lib/shapes/Arrow';
+import debounce from 'lodash/debounce';
 
 const localDebug = debug('MapObjectsArrowsPatron');
 
@@ -33,30 +34,25 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
   public receive(objects: MapObjectDocument[]): this {
     localDebug('draw arrows on canvas');
     const chain = this.factories.chain.create();
-    this.konvaLayer.layer(this.factories.patronOnce.create(chain.receiveKey('layer')));
-    this.mapFile.currentMap(this.factories.patronOnce.create(chain.receiveKey('map')));
-    chain.result(this.factories.patronOnce.create(
-      this.factories.guest.create(({ layer, map }: ChainParamsType) => {
-        objects.forEach((object) => {
-          if (!object.arrows) {
-            return;
-          }
-
-          object.arrows.forEach((toObjectRelation) => {
-            const toObject = map.objects[toObjectRelation.id];
-            if (!toObject) {
-              return;
-            }
+    setTimeout(() => {
+      this.konvaLayer.layer(this.factories.patronOnce.create(chain.receiveKey('layer')));
+      this.mapFile.currentMap(this.factories.patronOnce.create(chain.receiveKey('map')));
+      chain.result(this.factories.patronOnce.create(
+        this.factories.guest.create(debounce(({ layer, map }: ChainParamsType) => {
+          const updateArrow = (
+            fromObject: MapObjectDocument,
+            toObject: MapObjectDocument,
+          ) => {
             const toObjectType = map.types[toObject.type];
 
             const startPoint = this.arrowPointPosition(
               {
-                width: object.width,
-                height: object.height,
+                width: fromObject.width,
+                height: fromObject.height,
               },
               {
-                x: object.position[0],
-                y: object.position[1],
+                x: fromObject.position[0],
+                y: fromObject.position[1],
               },
               {
                 width: toObject.width,
@@ -77,12 +73,12 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
                 y: toObject.position[1],
               },
               {
-                width: object.width,
-                height: object.height,
+                width: fromObject.width,
+                height: fromObject.height,
               },
               {
-                x: object.position[0],
-                y: object.position[1],
+                x: fromObject.position[0],
+                y: fromObject.position[1],
               },
             );
 
@@ -93,14 +89,11 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
               +endPoint.y,
             ];
             const arrowKey = points.join('-');
-            const arrowId = [toObjectRelation.id, object.id].join('-');
+            const arrowId = [fromObject.id, toObject.id].join('-');
+            localDebug(fromObject, toObject);
 
             if (this.previouslyRenderedArrows.has(arrowId)) {
               const savedArrow = this.previouslyRenderedArrows.get(arrowId);
-
-              if (savedArrow.arrowKey === arrowKey) {
-                return;
-              }
 
               savedArrow.arrow.remove();
             }
@@ -108,8 +101,6 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
             const arrow = new Arrow({
               x: 0,
               y: 0,
-              toObjectId: toObjectRelation.id,
-              formObjectId: object.id,
               points,
               pointerLength: 20,
               pointerWidth: 10,
@@ -122,10 +113,25 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
               arrowKey,
             });
             layer.add(arrow);
+          };
+
+          objects.forEach((object) => {
+            if (!object.arrows) {
+              return;
+            }
+
+            object.arrows.forEach((toObjectRelation) => {
+              const toObject = map.objects[toObjectRelation.id];
+              if (!toObject) {
+                return;
+              }
+
+              updateArrow(object, toObject);
+            });
           });
-        });
-      }),
-    ));
+        }, 100)),
+      ));
+    }, 200);
     return this;
   }
 
