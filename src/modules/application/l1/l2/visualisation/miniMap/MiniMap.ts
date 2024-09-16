@@ -25,10 +25,12 @@ type MiniMapChainDocument = {
   objects: MapObjectDocument[],
 };
 
+type SizablePointDocument = PointIdDocument & SizeDocument;
+
 export class MiniMap {
   private theSize: CacheType<SizeDocument>;
 
-  private thePoints: CacheType<PointIdDocument[]>;
+  private thePoints: CacheType<SizablePointDocument[]>;
 
   private viewportSizeCache: CacheType<SizeDocument>;
 
@@ -67,6 +69,8 @@ export class MiniMap {
         id: object.id,
         x: object.position[0] * scale,
         y: object.position[1] * scale,
+        width: object.width * scale,
+        height: object.height * scale,
       }));
       localDebug('minimap points', points);
       this.thePoints.receive(points);

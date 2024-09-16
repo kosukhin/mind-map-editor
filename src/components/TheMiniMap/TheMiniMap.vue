@@ -46,6 +46,8 @@ const viewportPosition = viewportPositionPatron.ref();
         :style="{
           top: `${obj.y}px`,
           left: `${obj.x}px`,
+          width: `${obj.width}px`,
+          height: `${obj.height}px`,
         }"
       ></div>
     </div>
