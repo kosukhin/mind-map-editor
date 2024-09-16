@@ -13,6 +13,9 @@ import {
 import { MapObjectGuest } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectGuest';
 import { MiniMap } from '@/modules/application/l1/l2/visualisation/miniMap/MiniMap';
 import { useFactories } from '@/composables/useFactories';
+import {
+  MapObjectsArrowsPatron,
+} from '@/modules/application/l1/l2/visualisation/arrows/MapObjectsArrowsPatron';
 
 const factories = useFactories();
 
@@ -32,6 +35,7 @@ const konvaLayer = new KonvaLayer(canvas, factories);
 const mapObject = new MapObjectGuest(mapCurrent, mapFile, factories);
 const mapObjects = new MapObjectsVisible(konvaLayer, canvas, mapCurrent, factories);
 mapObjects.objects(new MapObjectsRectsPatron(konvaLayer, mapObject, factories));
+mapObjects.objects(new MapObjectsArrowsPatron(konvaLayer, mapFile, factories));
 const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
 
 export const useApplication = () => ({

@@ -62,6 +62,10 @@ export class MapObjectsRectsPatron implements GuestType<MapObjectDocument[]> {
             });
           });
 
+          rect.on('click', () => {
+            localDebug('object clicked with id', object.id);
+          });
+
         // TODO сделать вотчер на перетаскивание и клик по ректу
         // Перетаскивание обновляет карту
         // клик должен записать выбранный id в какого-то гостя
