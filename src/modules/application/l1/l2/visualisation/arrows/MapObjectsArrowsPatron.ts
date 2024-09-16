@@ -13,125 +13,139 @@ import { ChainType } from '@/modules/system/guest/ChainType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { Arrow } from 'konva/lib/shapes/Arrow';
 import debounce from 'lodash/debounce';
+import { CacheType } from '@/modules/system/guest/CacheType';
 
 const localDebug = debug('MapObjectsArrowsPatron');
 
-type ChainParamsType = {layer: KonvaLayer, map: MapDocument};
+type ChainParamsType = {layer: KonvaLayer, map: MapDocument, objects: MapObjectDocument[]};
 
 export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
   private previouslyRenderedArrows = new Map();
+
+  private visibleObjectsCache: CacheType<MapObjectDocument[]>;
 
   public constructor(
     private konvaLayer: LayerBase,
     private mapFile: MapFileType,
     private factories: {
-      patronOnce: FactoryType<GuestType>,
+      patron: FactoryType<GuestType>,
       guest: FactoryType<GuestType>,
-      chain: FactoryType<ChainType>
+      chain: FactoryType<ChainType>,
+      cache: FactoryType<CacheType>
     },
-  ) {}
-
-  public receive(objects: MapObjectDocument[]): this {
+  ) {
     localDebug('draw arrows on canvas');
     const chain = this.factories.chain.create();
-    setTimeout(() => {
-      this.konvaLayer.layer(this.factories.patronOnce.create(chain.receiveKey('layer')));
-      this.mapFile.currentMap(this.factories.patronOnce.create(chain.receiveKey('map')));
-      chain.result(this.factories.patronOnce.create(
-        this.factories.guest.create(debounce(({ layer, map }: ChainParamsType) => {
-          const updateArrow = (
-            fromObject: MapObjectDocument,
-            toObject: MapObjectDocument,
-          ) => {
-            const toObjectType = map.types[toObject.type];
+    this.visibleObjectsCache = this.factories.cache.create();
 
-            const startPoint = this.arrowPointPosition(
-              {
-                width: fromObject.width,
-                height: fromObject.height,
-              },
-              {
-                x: fromObject.position[0],
-                y: fromObject.position[1],
-              },
-              {
-                width: toObject.width,
-                height: toObject.height,
-              },
-              {
-                x: toObject.position[0],
-                y: toObject.position[1],
-              },
-            );
-            const endPoint = this.arrowPointPosition(
-              {
-                width: toObject.width || toObjectType.width,
-                height: toObject.height || toObjectType.height,
-              },
-              {
-                x: toObject.position[0],
-                y: toObject.position[1],
-              },
-              {
-                width: fromObject.width,
-                height: fromObject.height,
-              },
-              {
-                x: fromObject.position[0],
-                y: fromObject.position[1],
-              },
-            );
+    this.konvaLayer.layer(this.factories.patron.create(chain.receiveKey('layer')));
+    this.mapFile.currentMap(this.factories.patron.create(chain.receiveKey('map')));
+    this.visibleObjectsCache.receiving(this.factories.patron.create(chain.receiveKey('objects')));
 
-            const points = [
-              +startPoint.x,
-              +startPoint.y,
-              +endPoint.x,
-              +endPoint.y,
-            ];
-            const arrowKey = points.join('-');
-            const arrowId = [fromObject.id, toObject.id].join('-');
-            localDebug(fromObject, toObject);
+    chain.result(this.factories.patron.create(
+      this.factories.guest.create(debounce(({ layer, map, objects }: ChainParamsType) => {
+        const updateArrow = (
+          fromObject: MapObjectDocument,
+          toObject: MapObjectDocument,
+        ) => {
+          const toObjectType = map.types[toObject.type];
 
-            if (this.previouslyRenderedArrows.has(arrowId)) {
-              const savedArrow = this.previouslyRenderedArrows.get(arrowId);
+          const startPoint = this.arrowPointPosition(
+            {
+              width: fromObject.width,
+              height: fromObject.height,
+            },
+            {
+              x: fromObject.position[0],
+              y: fromObject.position[1],
+            },
+            {
+              width: toObject.width,
+              height: toObject.height,
+            },
+            {
+              x: toObject.position[0],
+              y: toObject.position[1],
+            },
+          );
+          const endPoint = this.arrowPointPosition(
+            {
+              width: toObject.width || toObjectType.width,
+              height: toObject.height || toObjectType.height,
+            },
+            {
+              x: toObject.position[0],
+              y: toObject.position[1],
+            },
+            {
+              width: fromObject.width,
+              height: fromObject.height,
+            },
+            {
+              x: fromObject.position[0],
+              y: fromObject.position[1],
+            },
+          );
 
-              savedArrow.arrow.remove();
-            }
+          const points = [
+            +startPoint.x,
+            +startPoint.y,
+            +endPoint.x,
+            +endPoint.y,
+          ];
+          const arrowKey = points.join('-');
+          const arrowId = [fromObject.id, toObject.id].join('-');
+          localDebug(fromObject, toObject);
 
-            const arrow = new Arrow({
-              x: 0,
-              y: 0,
-              points,
-              pointerLength: 20,
-              pointerWidth: 10,
-              fill: '#ccc',
-              stroke: '#bbb',
-              strokeWidth: 2,
-            });
-            this.previouslyRenderedArrows.set(arrowId, {
-              arrow,
-              arrowKey,
-            });
-            layer.add(arrow);
-          };
+          if (this.previouslyRenderedArrows.has(arrowId)) {
+            const savedArrow = this.previouslyRenderedArrows.get(arrowId);
 
-          objects.forEach((object) => {
-            if (!object.arrows) {
+            savedArrow.arrow.show();
+            savedArrow.arrow.points(points);
+            return;
+          }
+
+          const arrow = new Arrow({
+            x: 0,
+            y: 0,
+            points,
+            pointerLength: 20,
+            pointerWidth: 10,
+            fill: '#ccc',
+            stroke: '#bbb',
+            strokeWidth: 2,
+          });
+          this.previouslyRenderedArrows.set(arrowId, {
+            arrow,
+            arrowKey,
+          });
+          layer.add(arrow);
+        };
+
+        objects.forEach((object) => {
+          if (!object.arrows) {
+            return;
+          }
+
+          // this.previouslyRenderedArrows.forEach((arrow) => {
+          //   arrow.arrow.hide();
+          // });
+          localDebug('visible objects', objects.length);
+          object.arrows.forEach((toObjectRelation) => {
+            const toObject = map.objects[toObjectRelation.id];
+            if (!toObject) {
               return;
             }
 
-            object.arrows.forEach((toObjectRelation) => {
-              const toObject = map.objects[toObjectRelation.id];
-              if (!toObject) {
-                return;
-              }
-
-              updateArrow(object, toObject);
-            });
+            updateArrow(object, toObject);
           });
-        }, 100)),
-      ));
-    }, 200);
+        });
+      }, 100)),
+    ));
+  }
+
+  public receive(objects: MapObjectDocument[]): this {
+    this.visibleObjectsCache.receive(objects);
     return this;
   }
 
