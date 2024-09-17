@@ -8,14 +8,14 @@ import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanva
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { MapObjectsVisible } from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectsVisible';
 import {
-  MapObjectsRectsPatron,
-} from '@/modules/application/l1/l2/visualisation/rects/MapObjectsRectsPatron';
+  MapObjectsRects,
+} from '@/modules/application/l1/l2/visualisation/rects/MapObjectsRects';
 import { MapObjectGuest } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectGuest';
 import { MiniMap } from '@/modules/application/l1/l2/visualisation/miniMap/MiniMap';
 import { useFactories } from '@/composables/useFactories';
 import {
-  MapObjectsArrowsPatron,
-} from '@/modules/application/l1/l2/visualisation/arrows/MapObjectsArrowsPatron';
+  MapObjectsArrows,
+} from '@/modules/application/l1/l2/visualisation/arrows/MapObjectsArrows';
 
 const factories = useFactories();
 
@@ -34,8 +34,8 @@ const canvas = new BrowserCanvas(factories);
 const konvaLayer = new KonvaLayer(canvas, factories);
 const mapObject = new MapObjectGuest(mapCurrent, mapFile, factories);
 const mapObjectsVisible = new MapObjectsVisible(konvaLayer, canvas, mapCurrent, factories);
-mapObjectsVisible.objects(new MapObjectsRectsPatron(konvaLayer, mapObject, factories));
-mapObjectsVisible.objects(new MapObjectsArrowsPatron(konvaLayer, mapFile, factories));
+mapObjectsVisible.objects(new MapObjectsRects(konvaLayer, mapObject, factories));
+mapObjectsVisible.objects(new MapObjectsArrows(konvaLayer, mapFile, factories));
 const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
 
 export const useApplication = () => ({

@@ -19,8 +19,10 @@ const localDebug = debug('MapObjectsArrowsPatron');
 
 type ChainParamsType = {layer: KonvaLayer, map: MapDocument, objects: MapObjectDocument[]};
 
-export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
+export class MapObjectsArrows implements GuestType<MapObjectDocument[]> {
   private previouslyRenderedArrows = new Map();
+
+  private filledPoints = new Map();
 
   private visibleObjectsCache: CacheType<MapObjectDocument[]>;
 
@@ -88,14 +90,14 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
           );
 
           const points = [
-            +startPoint.point.x,
-            +startPoint.point.y,
-            +startPoint.breakPoint.x,
-            +startPoint.breakPoint.y,
-            +endPoint.breakPoint.x,
-            +endPoint.breakPoint.y,
-            +endPoint.point.x,
-            +endPoint.point.y,
+            +startPoint.point.x + startPoint.shift.x,
+            +startPoint.point.y + startPoint.shift.y,
+            +startPoint.breakPoint.x + startPoint.shift.x,
+            +startPoint.breakPoint.y + startPoint.shift.y,
+            +endPoint.breakPoint.x + endPoint.shift.x,
+            +endPoint.breakPoint.y + endPoint.shift.y,
+            +endPoint.point.x + endPoint.shift.x,
+            +endPoint.point.y + endPoint.shift.y,
           ];
           const arrowKey = points.join('-');
           const arrowId = [fromObject.id, toObject.id].join('-');
@@ -126,6 +128,7 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
           layer.add(arrow);
         };
 
+        this.filledPoints.clear();
         objects.forEach((object) => {
           if (!object.arrows) {
             return;
@@ -183,29 +186,44 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
 
     const breakPoint = { x: 0, y: 0 };
 
+    let shiftX = 0;
+    let shiftY = 0;
+
     if (top) {
       x += Math.round(shapeGeometry.width / 2);
       breakPoint.x = x;
       breakPoint.y = (lookToMiddle.y + shapeMiddle.y) / 2;
+      shiftX = 1;
     } else if (left) {
       y += Math.round(shapeGeometry.height / 2);
       x += shapeGeometry.width;
       breakPoint.x = (lookToMiddle.x + shapeMiddle.x) / 2;
       breakPoint.y = y;
+      shiftY = 1;
     } else if (bottom) {
       x += Math.round(shapeGeometry.width / 2);
       y += shapeGeometry.height;
       breakPoint.x = x;
       breakPoint.y = (lookToMiddle.y + shapeMiddle.y) / 2;
+      shiftX = -1;
     } else if (right) {
       y += Math.round(shapeGeometry.height / 2);
       breakPoint.x = (lookToMiddle.x + shapeMiddle.x) / 2;
       breakPoint.y = y;
+      shiftY = -1;
     }
+
+    const pointKey = [x, y].join('-');
+    const pointsCount = this.filledPoints.get((pointKey)) || 0;
+    this.filledPoints.set(pointKey, pointsCount + 1);
 
     return {
       point: { x, y },
       breakPoint,
+      shift: {
+        x: shiftX * pointsCount * 10,
+        y: shiftY * pointsCount * 10,
+      },
     };
   }
 }

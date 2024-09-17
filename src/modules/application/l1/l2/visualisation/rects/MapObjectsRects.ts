@@ -9,10 +9,7 @@ import { Layer as KonvaLayer } from 'konva/lib/Layer';
 
 const localDebug = debug('MapObjectsRectsPatron');
 
-/**
- * Отвечает за рендеринг квадратов для объектов карты
- */
-export class MapObjectsRectsPatron implements GuestType<MapObjectDocument[]> {
+export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
   private previouslyRenderedRects = new Map();
 
   public constructor(
