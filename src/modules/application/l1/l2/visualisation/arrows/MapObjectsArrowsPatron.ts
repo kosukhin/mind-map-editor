@@ -88,10 +88,14 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
           );
 
           const points = [
-            +startPoint.x,
-            +startPoint.y,
-            +endPoint.x,
-            +endPoint.y,
+            +startPoint.point.x,
+            +startPoint.point.y,
+            +startPoint.breakPoint.x,
+            +startPoint.breakPoint.y,
+            +endPoint.breakPoint.x,
+            +endPoint.breakPoint.y,
+            +endPoint.point.x,
+            +endPoint.point.y,
           ];
           const arrowKey = points.join('-');
           const arrowId = [fromObject.id, toObject.id].join('-');
@@ -158,9 +162,17 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
     shapePosition: PointDocument,
     lookToGeometry: SizeDocument,
     lookToPosition: PointDocument,
-  ): PointDocument {
-    const dx = (shapePosition.x + Math.round(shapeGeometry.width / 2)) - (lookToPosition.x + Math.round(lookToGeometry.width / 2));
-    const dy = (shapePosition.y + Math.round(shapeGeometry.height / 2)) - (lookToPosition.y + Math.round(lookToGeometry.height / 2));
+  ) {
+    const lookToMiddle = {
+      x: lookToPosition.x + Math.round(lookToGeometry.width / 2),
+      y: lookToPosition.y + Math.round(lookToGeometry.height / 2),
+    };
+    const shapeMiddle = {
+      x: shapePosition.x + Math.round(shapeGeometry.width / 2),
+      y: shapePosition.y + Math.round(shapeGeometry.height / 2),
+    };
+    const dx = shapeMiddle.x - lookToMiddle.x;
+    const dy = shapeMiddle.y - lookToMiddle.y;
     const isModuleDYGreater = Math.abs(dy) > Math.abs(dx);
     let { x, y } = shapePosition;
 
@@ -169,18 +181,31 @@ export class MapObjectsArrowsPatron implements GuestType<MapObjectDocument[]> {
     const bottom = isModuleDYGreater && dy < 0;
     const left = !isModuleDYGreater && dx < 0;
 
+    const breakPoint = { x: 0, y: 0 };
+
     if (top) {
       x += Math.round(shapeGeometry.width / 2);
+      breakPoint.x = x;
+      breakPoint.y = (lookToMiddle.y + shapeMiddle.y) / 2;
     } else if (left) {
       y += Math.round(shapeGeometry.height / 2);
       x += shapeGeometry.width;
+      breakPoint.x = (lookToMiddle.x + shapeMiddle.x) / 2;
+      breakPoint.y = y;
     } else if (bottom) {
       x += Math.round(shapeGeometry.width / 2);
       y += shapeGeometry.height;
+      breakPoint.x = x;
+      breakPoint.y = (lookToMiddle.y + shapeMiddle.y) / 2;
     } else if (right) {
       y += Math.round(shapeGeometry.height / 2);
+      breakPoint.x = (lookToMiddle.x + shapeMiddle.x) / 2;
+      breakPoint.y = y;
     }
 
-    return { x, y };
+    return {
+      point: { x, y },
+      breakPoint,
+    };
   }
 }

@@ -33,16 +33,16 @@ const mapSettings = new MapSettingsGuest(mapFile, mapCurrent, factories);
 const canvas = new BrowserCanvas(factories);
 const konvaLayer = new KonvaLayer(canvas, factories);
 const mapObject = new MapObjectGuest(mapCurrent, mapFile, factories);
-const mapObjects = new MapObjectsVisible(konvaLayer, canvas, mapCurrent, factories);
-mapObjects.objects(new MapObjectsRectsPatron(konvaLayer, mapObject, factories));
-mapObjects.objects(new MapObjectsArrowsPatron(konvaLayer, mapFile, factories));
+const mapObjectsVisible = new MapObjectsVisible(konvaLayer, canvas, mapCurrent, factories);
+mapObjectsVisible.objects(new MapObjectsRectsPatron(konvaLayer, mapObject, factories));
+mapObjectsVisible.objects(new MapObjectsArrowsPatron(konvaLayer, mapFile, factories));
 const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
 
 export const useApplication = () => ({
   mapFile,
   mapCurrent,
   mapSettings,
-  mapObjects,
+  mapObjects: mapObjectsVisible,
   canvas,
   miniMap,
   notification,
