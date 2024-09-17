@@ -12,7 +12,7 @@ import { Transformed } from '@/modules/system/transformed/Transformed';
 
 const localDebug = debug('MapFileOfContent');
 
-export class MapFileOfContent implements MapFileType {
+export class MapFile implements MapFileType {
   private currentMapPatrons: PoolType<MapDocument>;
 
   private mapFilePatrons: PoolType<MapFileDocument>;

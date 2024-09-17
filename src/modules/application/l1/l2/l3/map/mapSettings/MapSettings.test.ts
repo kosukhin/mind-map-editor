@@ -1,12 +1,12 @@
 import { expect, test } from 'vitest';
 import { MapFileFake } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileFake';
 import { MapCurrent } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrent';
-import { MapSettingsGuest } from '@/modules/application/l1/l2/l3/map/mapSettings/MapSettingsGuest';
+import { MapSettings } from '@/modules/application/l1/l2/l3/map/mapSettings/MapSettings';
 import { Guest } from '@/modules/system/guest/Guest';
 import { useFactories } from '@/composables/useFactories';
 import { MapFileDocument } from '../documents/MapStructures';
 
-test('map settings guest', () => {
+test('map settings', () => {
   const defaultMapFileDocument = {
     current: {
       document: 'current',
@@ -27,7 +27,7 @@ test('map settings guest', () => {
   const factories = useFactories();
   const fake = new MapFileFake(defaultMapFileDocument);
   const map = new MapCurrent(fake, factories);
-  const settingsGuest = new MapSettingsGuest(fake, map, factories);
+  const settingsGuest = new MapSettings(fake, map, factories);
 
   settingsGuest.receive({
     ...defaultMapFileDocument.current.settings,

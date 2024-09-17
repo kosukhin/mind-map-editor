@@ -1,8 +1,8 @@
-import { MapFileOfContent } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileOfContent';
+import { MapFile } from '@/modules/application/l1/l2/l3/map/mapFile/MapFile';
 import { FileSystemContent } from '@/modules/application/l1/fileSystem/FileSystemContent';
 import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueue';
 import { MapCurrent } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrent';
-import { MapSettingsGuest } from '@/modules/application/l1/l2/l3/map/mapSettings/MapSettingsGuest';
+import { MapSettings } from '@/modules/application/l1/l2/l3/map/mapSettings/MapSettings';
 import { Notification } from '@/modules/application/l1/l2/visualisation/notification/Notification';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
@@ -10,17 +10,18 @@ import { MapObjectsVisible } from '@/modules/application/l1/l2/l3/visibleObjects
 import {
   MapObjectsRects,
 } from '@/modules/application/l1/l2/visualisation/rects/MapObjectsRects';
-import { MapObjectGuest } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectGuest';
+import { MapObject } from '@/modules/application/l1/l2/l3/map/mapObject/MapObject';
 import { MiniMap } from '@/modules/application/l1/l2/visualisation/miniMap/MiniMap';
 import { useFactories } from '@/composables/useFactories';
 import {
   MapObjectsArrows,
 } from '@/modules/application/l1/l2/visualisation/arrows/MapObjectsArrows';
+import { MapTypes } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypes';
 
 const factories = useFactories();
 
 const notification = new Notification(factories);
-const mapFile = new MapFileOfContent(
+const mapFile = new MapFile(
   new FileSystemContent(
     new BrowserLaunchQueue(),
     notification,
@@ -29,12 +30,14 @@ const mapFile = new MapFileOfContent(
   factories,
 );
 const mapCurrent = new MapCurrent(mapFile, factories);
-const mapSettings = new MapSettingsGuest(mapFile, mapCurrent, factories);
+const mapSettings = new MapSettings(mapFile, mapCurrent, factories);
 const canvas = new BrowserCanvas(factories);
 const konvaLayer = new KonvaLayer(canvas, factories);
-const mapObject = new MapObjectGuest(mapCurrent, mapFile, factories);
+const mapObject = new MapObject(mapCurrent, mapFile, factories);
+const mapType = new MapTypes(mapCurrent, mapFile, factories);
 const mapObjectsVisible = new MapObjectsVisible(konvaLayer, canvas, mapCurrent, factories);
-mapObjectsVisible.objects(new MapObjectsRects(konvaLayer, mapObject, factories));
+const mapRects = new MapObjectsRects(konvaLayer, mapObject, factories);
+mapObjectsVisible.objects(mapRects);
 mapObjectsVisible.objects(new MapObjectsArrows(konvaLayer, mapFile, factories));
 const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
 
@@ -42,7 +45,10 @@ export const useApplication = () => ({
   mapFile,
   mapCurrent,
   mapSettings,
-  mapObjects: mapObjectsVisible,
+  mapObject,
+  mapType,
+  mapObjectsVisible,
+  mapRects,
   canvas,
   miniMap,
   notification,

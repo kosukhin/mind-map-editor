@@ -4,13 +4,20 @@ import BaseGroup from '@/components/BaseGroup/BaseGroup.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
 import TheGrouper from '@/components/TheGrouper/TheGrouper.vue';
 import TheLinker from '@/components/TheLinker/TheLinker.vue';
+import { useApplication } from '@/composables/useApplication';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 
 const types = [];
+const { mapRects } = useApplication();
+const objectIdPatron = new VueRefPatron();
+mapRects.objectId(objectIdPatron);
+const objectId = objectIdPatron.ref();
 </script>
 
 <template>
   <div class="flex e2e-sidebar flex-col items-center gap-3 max-h-[100%] overflow-hidden">
     <div>Sidebar</div>
+    <div>{{objectId}}</div>
     <div class="mt-auto">Footer</div>
     <div v-if="map" class="flex flex-col gap-3 flex-grow w-full overflow-y-auto">
       <div
