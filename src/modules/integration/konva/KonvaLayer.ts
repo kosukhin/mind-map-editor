@@ -68,6 +68,17 @@ export class KonvaLayer {
         this.positionCache.receive(position);
       });
 
+      stage.on('dragmove', (e) => {
+        if (!(e.target instanceof Stage)) {
+          return;
+        }
+        const position = {
+          x: stage.x(),
+          y: stage.y(),
+        };
+        this.positionCache.receive(position);
+      });
+
       stage.dragBoundFunc((pos) => {
         localDebug('boundings event', pos);
         const maxRight = layerGeometry.width - canvas.clientWidth;

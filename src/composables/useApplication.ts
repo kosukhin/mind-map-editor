@@ -22,6 +22,8 @@ import { MapTypeCurrent } from '@/modules/application/l1/l2/l3/map/mapTypes/MapT
 import { MapObjectNew } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectNew';
 import { MapObjectsLink } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectsLink';
 
+// TODO нужна отдельная сущность MapDocumentCache чтото вроде того, которая будет только нужна для отрисовки промежуточных изменений без сохранения
+// Это будет работать очень хорошо, если у меня отдельно будут объекты для сохранения и отдельно для отрисовки
 const factories = useFactories();
 
 const notification = new Notification(factories);

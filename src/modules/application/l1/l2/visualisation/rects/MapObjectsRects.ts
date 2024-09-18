@@ -54,7 +54,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
             y: +object.position[1],
             width: +object.width,
             height: +object.height,
-            fill: '#f00',
+            fill: '#ccc',
             name: object.id,
             draggable: true,
             objectId: object.id,
