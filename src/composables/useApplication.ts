@@ -19,6 +19,7 @@ import {
 import { MapTypes } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypes';
 import { MapObjectCurrent } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrent';
 import { MapTypeCurrent } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypeCurrent';
+import { MapObjectNew } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectNew';
 
 const factories = useFactories();
 
@@ -38,6 +39,7 @@ const mapSettings = new MapSettings(mapFile, mapCurrent, factories);
 const canvas = new BrowserCanvas(factories);
 const konvaLayer = new KonvaLayer(canvas, factories);
 const mapObject = new MapObject(mapCurrent, mapFile, factories);
+const mapObjectNew = new MapObjectNew(mapCurrent, mapObject, factories);
 const mapType = new MapTypes(mapCurrent, mapFile, factories);
 const mapObjectsVisible = new MapObjectsVisible(konvaLayer, canvas, mapCurrent, factories);
 const mapRects = new MapObjectsRects(konvaLayer, mapObject, mapObjectCurrent, factories);
@@ -53,6 +55,7 @@ export const useApplication = () => ({
   mapType,
   mapObjectsVisible,
   mapObjectCurrent,
+  mapObjectNew,
   mapTypeCurrent,
   mapRects,
   canvas,

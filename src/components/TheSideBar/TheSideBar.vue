@@ -10,7 +10,7 @@ import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/Ma
 import { useFactories } from '@/composables/useFactories';
 import { computed } from 'vue';
 
-const { mapObjectCurrent, mapCurrent } = useApplication();
+const { mapObjectCurrent, mapObjectNew, mapCurrent } = useApplication();
 const objectIdPatron = new VueRefPatron<string>();
 mapObjectCurrent.objectId(objectIdPatron);
 const objectId = objectIdPatron.ref();
@@ -42,6 +42,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
           draggable="true"
           :style="`width:${type.type.width}px;height:${type.type.height}px`"
           :title="$t('general.notifications.dragToCanvasToAdd')"
+          @dragend="mapObjectNew.byTypeName(type.type.name, {x: 0, y: 0})"
         ></div>
         <div class="flex gap-1">
           <BaseButton class="text-white" size="sm" type="primary">
