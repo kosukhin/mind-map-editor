@@ -7,6 +7,9 @@ import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileT
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 
+/**
+ * Объект для сохранения типов узлов карты
+ */
 export class MapTypes implements GuestType<MapTypeDocument> {
   public constructor(
     private map: MapType,

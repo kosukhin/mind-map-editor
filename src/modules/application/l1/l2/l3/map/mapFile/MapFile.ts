@@ -12,6 +12,9 @@ import { Transformed } from '@/modules/system/transformed/Transformed';
 
 const localDebug = debug('MapFileOfContent');
 
+/**
+ * Объект для получения карты и сохранения всего файла с картами
+ */
 export class MapFile implements MapFileType {
   private currentMapPatrons: PoolType<MapDocument>;
 

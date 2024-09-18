@@ -13,6 +13,9 @@ import {
 
 const localDebug = debug('MapObjectsRectsPatron');
 
+/**
+ * Объект для рендеринга квадратов на конве
+ */
 export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
   private previouslyRenderedRects = new Map();
 

@@ -8,6 +8,9 @@ import { debug } from 'debug';
 
 const localDebug = debug('MapObjectNew');
 
+/**
+ * Добавление нового объекта на карту
+ */
 export class MapObjectNew {
   public constructor(
     private map: MapType,

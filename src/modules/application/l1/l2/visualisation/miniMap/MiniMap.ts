@@ -27,6 +27,9 @@ type MiniMapChainDocument = {
 
 type SizablePointDocument = PointIdDocument & SizeDocument;
 
+/**
+ * Объект для построения отображения миникарты
+ */
 export class MiniMap {
   private theSize: CacheType<SizeDocument>;
 

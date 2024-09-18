@@ -1,5 +1,8 @@
 import { SvgImageType } from '@/modules/application/l1/l2/visualisation/svg/SvgImageType';
 
+/**
+ * Объект для обработки разметки svg
+ */
 export class SvgImage implements SvgImageType {
   public constructor(
     private svgContent: string,

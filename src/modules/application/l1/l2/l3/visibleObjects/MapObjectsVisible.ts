@@ -14,6 +14,9 @@ import { ChainType } from '@/modules/system/guest/ChainType';
 const localDebug = debug('app:MapObjectsVisible');
 type ChainGuestExecutor = (props: {position: PointDocument, size: SizeDocument, objects: MapObjectDocument[]}) => void;
 
+/**
+ * Объект для определения видимых объектов
+ */
 export class MapObjectsVisible implements MapObjectsType {
   private visibleObjectsCache = new Cache<MapObjectDocument[]>(this);
 

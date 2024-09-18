@@ -8,6 +8,9 @@ import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileT
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 
+/**
+ * Сохранение объекта
+ */
 export class MapObject implements MapObjectType {
   public constructor(
     private map: MapType,

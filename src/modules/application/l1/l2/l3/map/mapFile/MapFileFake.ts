@@ -3,6 +3,9 @@ import { MapDocument, MapFileDocument } from '@/modules/application/l1/l2/l3/map
 import { PatronPool } from '@/modules/system/guest/PatronPool';
 import { GuestType } from '@/modules/system/guest/GuestType';
 
+/**
+ * Фейковый объект для получения файла с картами
+ */
 export class MapFileFake implements MapFileType {
   private currentMapPool = new PatronPool(this);
 

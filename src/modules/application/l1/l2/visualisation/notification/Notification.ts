@@ -6,6 +6,9 @@ import { GuestType } from '@/modules/system/guest/GuestType';
 import { CacheType } from '@/modules/system/guest/CacheType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 
+/**
+ * Объект для отображения уведомлений
+ */
 export class Notification implements NotificationType {
   private messageCache: CacheType<NotificationDocument>;
 

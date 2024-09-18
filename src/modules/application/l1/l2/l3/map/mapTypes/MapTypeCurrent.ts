@@ -3,6 +3,10 @@ import { CacheType } from '@/modules/system/guest/CacheType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { GuestType } from '@/modules/system/guest/GuestType';
 
+/**
+ * Объект для управления выбранным типом узла карты,
+ * например для редактирования типа узла
+ */
 export class MapTypeCurrent implements MapTypeCurrentType {
   private idCache: CacheType<string>;
 

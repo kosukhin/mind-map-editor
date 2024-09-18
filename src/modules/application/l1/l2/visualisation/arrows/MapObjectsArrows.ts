@@ -19,6 +19,9 @@ const localDebug = debug('MapObjectsArrowsPatron');
 
 type ChainParamsType = {layer: KonvaLayer, map: MapDocument, objects: MapObjectDocument[]};
 
+/**
+ * Объект для отрисовки стрелок на конве
+ */
 export class MapObjectsArrows implements GuestType<MapObjectDocument[]> {
   private previouslyRenderedArrows = new Map();
 

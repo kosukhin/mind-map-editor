@@ -13,6 +13,10 @@ import { CacheType } from '@/modules/system/guest/CacheType';
 
 const localDebug = debug('MapCurrent');
 
+/**
+ * Объект для получения основных частей карты - объекты, типы, настройки.
+ * и для сохранения карты.
+ */
 export class MapCurrent implements MapType {
   private objectsCache: CacheType<MapObjectDocument[]>;
 

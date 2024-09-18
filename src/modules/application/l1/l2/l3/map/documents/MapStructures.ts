@@ -1,3 +1,6 @@
+/**
+ * Данные типа узла карты
+ */
 export interface MapTypeDocument {
   name: string
   svg: string
@@ -5,6 +8,9 @@ export interface MapTypeDocument {
   height: number
 }
 
+/**
+ * Данные связи между объектами карты
+ */
 export interface MapObjectRelationDocument {
   id: string
   label: string
@@ -12,6 +18,9 @@ export interface MapObjectRelationDocument {
   endMapType?: MapTypeDocument,
 }
 
+/**
+ * Данные одного объекта карты
+ */
 export interface MapObjectDocument {
   id: string
   type: string
@@ -32,6 +41,9 @@ export interface MapObjectDocument {
   additionalFields?: Record<string, string>
 }
 
+/**
+ * Данные настроек карты
+ */
 export interface MapSettingsDocument {
   colored: boolean
   title: string
@@ -40,12 +52,18 @@ export interface MapSettingsDocument {
   skipSearchIndex?: boolean
 }
 
+/**
+ * Данные для именованных поисков
+ */
 export interface NamedSearchDocument {
   name: string,
   query: string,
   type: string
 }
 
+/**
+ * Данные одной карты
+ */
 export interface MapDocument {
   document: string
   url: string
@@ -59,4 +77,7 @@ export interface MapDocument {
   settings: MapSettingsDocument
 }
 
+/**
+ * Данные всего файла с картами
+ */
 export type MapFileDocument = Record<string, MapDocument>;
