@@ -47,7 +47,7 @@ const mapRects = new MapObjectsRects(konvaLayer, mapObject, mapObjectCurrent, fa
 mapObjectsVisible.objects(mapRects);
 mapObjectsVisible.objects(new MapObjectsArrows(konvaLayer, mapFile, factories));
 const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
-const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, factories);
+const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, mapCurrent, mapObject, factories);
 
 export const useApplication = () => ({
   mapFile,

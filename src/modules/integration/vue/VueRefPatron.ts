@@ -8,8 +8,8 @@ export class VueRefPatron<T> implements GuestType<T> {
     this.innerRef = ref(defaultValue) as Ref<T>;
   }
 
-  public ref() {
-    return this.innerRef;
+  public ref<CT = undefined>(): Ref<CT extends undefined ? T : CT> {
+    return this.innerRef as Ref<CT extends undefined ? T : CT>;
   }
 
   public receive(value: T): this {
