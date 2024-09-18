@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 
-const type = 'success';
-const title = 'title';
+const type = 'default';
+const title = 'Сделать связь';
 </script>
 
 <template>

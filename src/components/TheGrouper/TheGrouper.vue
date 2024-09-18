@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 
-const type = 'success';
+const type = 'default';
 const isGrouping = false;
-const title = 'title';
+const title = 'Группировать';
 </script>
 
 <template>

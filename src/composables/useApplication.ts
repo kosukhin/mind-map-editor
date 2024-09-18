@@ -20,6 +20,7 @@ import { MapTypes } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypes';
 import { MapObjectCurrent } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrent';
 import { MapTypeCurrent } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypeCurrent';
 import { MapObjectNew } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectNew';
+import { MapObjectsLink } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectsLink';
 
 const factories = useFactories();
 
@@ -46,6 +47,7 @@ const mapRects = new MapObjectsRects(konvaLayer, mapObject, mapObjectCurrent, fa
 mapObjectsVisible.objects(mapRects);
 mapObjectsVisible.objects(new MapObjectsArrows(konvaLayer, mapFile, factories));
 const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
+const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, factories);
 
 export const useApplication = () => ({
   mapFile,
@@ -56,6 +58,7 @@ export const useApplication = () => ({
   mapObjectsVisible,
   mapObjectCurrent,
   mapObjectNew,
+  mapObjectsLink,
   mapTypeCurrent,
   mapRects,
   canvas,
