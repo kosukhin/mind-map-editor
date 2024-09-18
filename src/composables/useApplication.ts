@@ -64,4 +64,5 @@ export const useApplication = () => ({
   canvas,
   miniMap,
   notification,
+  konvaLayer,
 });

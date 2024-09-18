@@ -15,7 +15,6 @@ import { SvgImage } from '@/modules/application/l1/l2/visualisation/svg/SvgImage
 import { FactoryDynamic } from '@/modules/system/guest/FactoryDynamic';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { SvgMapTypeImage } from '@/modules/application/l1/l2/visualisation/svg/SvgMapTypeImage';
-import { HtmlMapObject } from '@/modules/application/l1/l2/visualisation/html/HtmlMapObject';
 
 const fileHandlerContent = new Factory(SystemFileFromHandler);
 const browserFileSaved = new Factory(BrowserFileSaved);
@@ -33,7 +32,6 @@ const svgImage = new Factory(SvgImage);
 const svgMapTypeImage = new FactoryDynamic(
   (mapType: MapTypeDocument) => new SvgMapTypeImage(mapType, { svgImage }),
 );
-const htmlObjectTemplate = new Factory(HtmlMapObject);
 
 const factories = {
   cache,
@@ -53,8 +51,6 @@ const factories = {
 
   svgImage,
   svgMapTypeImage,
-
-  htmlObjectTemplate,
 };
 
 export const useFactories = () => factories;

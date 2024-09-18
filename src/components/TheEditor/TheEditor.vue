@@ -1,21 +1,33 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { useFactories } from '@/composables/useFactories';
-import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import {
+  MapObjectsVisibleWithLayerShift,
+} from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectsVisibleWithLayerShift';
+import {
+  MapObjectsWithTemplates,
+} from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectsWithTemplates';
+import {
+  MapObjectWithTemplateDocument,
+} from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectWithTemplateDocument';
 
-const { canvas, mapObjectsVisible } = useApplication();
-const { htmlObjectTemplate } = useFactories();
+const {
+  canvas, mapObjectsVisible, mapCurrent, konvaLayer,
+} = useApplication();
+const factories = useFactories();
 
-const objectsPatron = new VueRefPatron<MapObjectDocument[]>([]);
-mapObjectsVisible.objects(objectsPatron);
+const objectsVisible = new MapObjectsVisibleWithLayerShift(
+  konvaLayer,
+  mapObjectsVisible,
+  factories,
+);
+const objectsWithTemplates = new MapObjectsWithTemplates(objectsVisible, mapCurrent, factories);
+
+const objectsPatron = new VueRefPatron<MapObjectWithTemplateDocument[]>([]);
+objectsWithTemplates.objects(objectsPatron);
 const objects = objectsPatron.ref();
-
-const objectsWithTemplates = computed(() => objects.value?.map((object) => ({
-  obj: object,
-  html: htmlObjectTemplate.create(object).html(),
-})));
 
 const canvasWrapper = ref();
 
@@ -39,7 +51,7 @@ onMounted((() => {
         </div>
       </div>
       <div
-        v-for="obj in objectsWithTemplates"
+        v-for="obj in objects"
         :key="obj.obj.id"
         class="absolute"
         :style="`width:${obj.obj.width}px;height: ${obj.obj.height}px;top: ${obj.obj.position[1]}px;left:${obj.obj.position[0]}px;z-index:${obj.obj.zindex}`"
@@ -51,7 +63,7 @@ onMounted((() => {
           ></span>
         </div>
         <div class="absolute top-[100%] text-nowrap left-[50%] translate-x-[-50%] text-center pt-2 text-sm" v-html="obj.obj.name"></div>
-        <div :data-object-id="obj.obj.id" class="rendered-object" v-html="obj.html"></div>
+        <div :data-object-id="obj.obj.id" class="rendered-object" v-html="obj.template"></div>
       </div>
     </div>
     <div class="h-full" ref="canvasWrapper"></div>

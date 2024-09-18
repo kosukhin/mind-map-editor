@@ -31,6 +31,7 @@ export class MapObjectsLink {
   }
 
   public startLink() {
+    this.mapObjectCurrent.receive('');
     this.objectIdsCache.receiving(
       this.factories.guest.create((ids: string[]) => {
         if (ids.length) {
