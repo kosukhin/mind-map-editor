@@ -31,7 +31,7 @@ export class MapObjectsVisible implements MapObjectsType {
     const chain = factories.chain.create();
     canvas.size(factories.patron.create(chain.receiveKey('size')));
     layerDep.position(factories.patron.create(chain.receiveKey('position')));
-    mapCurrent.mapObjects(factories.patron.create(chain.receiveKey('objects')));
+    mapCurrent.objects(factories.patron.create(chain.receiveKey('objects')));
     chain.result(factories.patron.create(
       factories.guest.create<[ChainGuestExecutor]>(({ position, size, objects }) => {
         localDebug('objects come to result', objects);

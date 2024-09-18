@@ -2,7 +2,7 @@ import { FactoryType } from '@/modules/system/guest/FactoryType';
 
 export class FactoryDynamic<T> implements FactoryType<T> {
   public constructor(
-    private creationFn: (...args: unknown[]) => T,
+    private creationFn: (...args: any[]) => T,
   ) {}
 
   public create<R extends unknown[], CT = null>(...args: R): CT extends null ? T : CT {

@@ -46,11 +46,11 @@ export class MiniMap {
       guestCast: FactoryType<GuestType>
     },
   ) {
-    this.theSize = factories.cache.create();
-    this.thePoints = factories.cache.create();
-    this.viewportSizeCache = factories.cache.create();
+    this.theSize = factories.cache.create(this);
+    this.thePoints = factories.cache.create(this);
+    this.viewportSizeCache = factories.cache.create(this);
     const chain = factories.chain.create();
-    map.mapObjects(factories.patron.create(chain.receiveKey('objects')));
+    map.objects(factories.patron.create(chain.receiveKey('objects')));
     layer.layer(factories.patron.create(chain.receiveKey('layer')));
     layer.size(factories.patron.create(chain.receiveKey('size')));
     chain.result(factories.patron.create(factories.guest.create(({ layer: konvaLayer, size, objects }: MiniMapChainDocument) => {

@@ -6,30 +6,41 @@ import TheGrouper from '@/components/TheGrouper/TheGrouper.vue';
 import TheLinker from '@/components/TheLinker/TheLinker.vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
+import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { useFactories } from '@/composables/useFactories';
+import { computed } from 'vue';
 
-const types = [];
-const { mapRects } = useApplication();
-const objectIdPatron = new VueRefPatron();
-mapRects.objectId(objectIdPatron);
+const { mapObjectCurrent, mapCurrent } = useApplication();
+const objectIdPatron = new VueRefPatron<string>();
+mapObjectCurrent.objectId(objectIdPatron);
 const objectId = objectIdPatron.ref();
+
+const typesPatron = new VueRefPatron<MapTypeDocument[]>();
+mapCurrent.types(typesPatron);
+const types = typesPatron.ref();
+
+const { svgMapTypeImage } = useFactories();
+const typesExtended = computed(() => types.value?.map((type) => ({
+  type,
+  image: svgMapTypeImage.create(type).markup(),
+})));
 </script>
 
 <template>
   <div class="flex e2e-sidebar flex-col items-center gap-3 max-h-[100%] overflow-hidden">
-    <div>Sidebar</div>
     <div>{{objectId}}</div>
-    <div class="mt-auto">Footer</div>
-    <div v-if="map" class="flex flex-col gap-3 flex-grow w-full overflow-y-auto">
+    <div class="flex flex-col gap-3 flex-grow w-full overflow-y-auto">
       <div
-        v-for="(type, name) in types"
+        v-for="(type, name) in typesExtended"
         :key="name"
         class="flex flex-col items-center justify-center gap-2"
       >
-        <div class="TheSideBar-ItemName">{{ type.name }}</div>
+        <div class="TheSideBar-ItemName">{{ type.type.name }}</div>
         <div
+          v-html="type.image"
           class="TheSideBar-ItemImage"
           draggable="true"
-          :style="`width:${type.width}px;height:${type.height}px`"
+          :style="`width:${type.type.width}px;height:${type.type.height}px`"
           :title="$t('general.notifications.dragToCanvasToAdd')"
         ></div>
         <div class="flex gap-1">

@@ -7,24 +7,25 @@ import { GuestType } from '@/modules/system/guest/GuestType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { Layer as KonvaLayer } from 'konva/lib/Layer';
 import { CacheType } from '@/modules/system/guest/CacheType';
+import {
+  MapObjectCurrentType,
+} from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrentType';
 
 const localDebug = debug('MapObjectsRectsPatron');
 
 export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
   private previouslyRenderedRects = new Map();
 
-  private objectIdCache: CacheType<string>;
-
   public constructor(
     private konvaLayer: LayerBase,
     private mapObject: MapObjectType,
+    private mapObjectCurrent: MapObjectCurrentType,
     private factories: {
       patronOnce: FactoryType<GuestType>,
       guest: FactoryType<GuestType>,
       cache: FactoryType<CacheType>
     },
   ) {
-    this.objectIdCache = this.factories.cache.create();
   }
 
   public receive(objects: MapObjectDocument[]): this {
@@ -67,16 +68,11 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
 
           rect.on('click', () => {
             localDebug('object clicked with id', object.id);
-            this.objectIdCache.receive(object.id);
+            this.mapObjectCurrent.receive(object.id);
           });
         });
       }),
     ));
-    return this;
-  }
-
-  public objectId(guest: GuestType<string>): this {
-    this.objectIdCache.receiving(guest);
     return this;
   }
 

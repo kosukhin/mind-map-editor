@@ -6,6 +6,6 @@ import {
 import { GuestType } from '@/modules/system/guest/GuestType';
 
 export interface MapType extends GuestType<MapDocument> {
-  mapSettings(guest: GuestType<MapSettingsDocument>): this;
-  mapObjects(guest: GuestType<MapObjectDocument[]>): this;
+  settings(guest: GuestType<MapSettingsDocument>): this;
+  objects(guest: GuestType<MapObjectDocument[]>): this;
 }

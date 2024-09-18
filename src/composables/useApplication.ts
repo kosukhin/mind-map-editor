@@ -17,6 +17,8 @@ import {
   MapObjectsArrows,
 } from '@/modules/application/l1/l2/visualisation/arrows/MapObjectsArrows';
 import { MapTypes } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypes';
+import { MapObjectCurrent } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrent';
+import { MapTypeCurrent } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypeCurrent';
 
 const factories = useFactories();
 
@@ -30,13 +32,15 @@ const mapFile = new MapFile(
   factories,
 );
 const mapCurrent = new MapCurrent(mapFile, factories);
+const mapObjectCurrent = new MapObjectCurrent(factories);
+const mapTypeCurrent = new MapTypeCurrent(factories);
 const mapSettings = new MapSettings(mapFile, mapCurrent, factories);
 const canvas = new BrowserCanvas(factories);
 const konvaLayer = new KonvaLayer(canvas, factories);
 const mapObject = new MapObject(mapCurrent, mapFile, factories);
 const mapType = new MapTypes(mapCurrent, mapFile, factories);
 const mapObjectsVisible = new MapObjectsVisible(konvaLayer, canvas, mapCurrent, factories);
-const mapRects = new MapObjectsRects(konvaLayer, mapObject, factories);
+const mapRects = new MapObjectsRects(konvaLayer, mapObject, mapObjectCurrent, factories);
 mapObjectsVisible.objects(mapRects);
 mapObjectsVisible.objects(new MapObjectsArrows(konvaLayer, mapFile, factories));
 const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
@@ -48,6 +52,8 @@ export const useApplication = () => ({
   mapObject,
   mapType,
   mapObjectsVisible,
+  mapObjectCurrent,
+  mapTypeCurrent,
   mapRects,
   canvas,
   miniMap,

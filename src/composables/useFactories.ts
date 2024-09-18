@@ -11,6 +11,10 @@ import { Patron } from '@/modules/system/guest/Patron';
 import { Chain } from '@/modules/system/guest/Chain';
 import { PatronOnce } from '@/modules/system/guest/PatronOnce';
 import { GuestCast } from '@/modules/system/guest/GuestCast';
+import { SvgImage } from '@/modules/application/l1/l2/visualisation/svg/SvgImage';
+import { FactoryDynamic } from '@/modules/system/guest/FactoryDynamic';
+import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { SvgMapTypeImage } from '@/modules/application/l1/l2/visualisation/svg/SvgMapTypeImage';
 
 const fileHandlerContent = new Factory(SystemFileFromHandler);
 const browserFileSaved = new Factory(BrowserFileSaved);
@@ -24,6 +28,10 @@ const guestInTheMiddle = new Factory(GuestInTheMiddle);
 const transformToString = new Factory(TransformedToJSON);
 const transformToObject = new Factory(TransformedFromJSON);
 const chain = new Factory(Chain);
+const svgImage = new Factory(SvgImage);
+const svgMapTypeImage = new FactoryDynamic(
+  (mapType: MapTypeDocument) => new SvgMapTypeImage(mapType, { svgImage }),
+);
 
 const factories = {
   fileHandlerContent,
@@ -38,6 +46,9 @@ const factories = {
   pool,
   transformToString,
   transformToObject,
+
+  svgImage,
+  svgMapTypeImage,
 };
 
 export const useFactories = () => factories;

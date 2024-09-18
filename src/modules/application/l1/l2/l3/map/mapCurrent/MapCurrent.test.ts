@@ -25,7 +25,7 @@ test('map current', () => {
   const factories = useFactories();
   const fake = new MapFileFake(defaultMapFileDocument);
   const map = new MapCurrent(fake, factories);
-  map.mapObjects(new Guest((objects) => {
+  map.objects(new Guest((objects) => {
     expect(objects.length).toBe(0);
   }));
 
@@ -53,7 +53,7 @@ test('map current', () => {
     },
   });
 
-  map.mapObjects(new Guest((objects) => {
+  map.objects(new Guest((objects) => {
     expect(objects.length).toBe(1);
   }));
 });

@@ -38,7 +38,7 @@ export class MapObjectsArrows implements GuestType<MapObjectDocument[]> {
   ) {
     localDebug('draw arrows on canvas');
     const chain = this.factories.chain.create();
-    this.visibleObjectsCache = this.factories.cache.create();
+    this.visibleObjectsCache = this.factories.cache.create(this);
 
     this.konvaLayer.layer(this.factories.patron.create(chain.receiveKey('layer')));
     this.mapFile.currentMap(this.factories.patron.create(chain.receiveKey('map')));
@@ -193,24 +193,24 @@ export class MapObjectsArrows implements GuestType<MapObjectDocument[]> {
       x += Math.round(shapeGeometry.width / 2);
       breakPoint.x = x;
       breakPoint.y = (lookToMiddle.y + shapeMiddle.y) / 2;
-      shiftX = 1;
+      shiftX = lookToPosition.x > shapePosition.x ? 1 : -1;
     } else if (left) {
       y += Math.round(shapeGeometry.height / 2);
       x += shapeGeometry.width;
       breakPoint.x = (lookToMiddle.x + shapeMiddle.x) / 2;
       breakPoint.y = y;
-      shiftY = 1;
+      shiftY = lookToPosition.y > shapePosition.y ? 1 : -1;
     } else if (bottom) {
       x += Math.round(shapeGeometry.width / 2);
       y += shapeGeometry.height;
       breakPoint.x = x;
       breakPoint.y = (lookToMiddle.y + shapeMiddle.y) / 2;
-      shiftX = -1;
+      shiftX = lookToPosition.x > shapePosition.x ? 1 : -1;
     } else if (right) {
       y += Math.round(shapeGeometry.height / 2);
       breakPoint.x = (lookToMiddle.x + shapeMiddle.x) / 2;
       breakPoint.y = y;
-      shiftY = -1;
+      shiftY = lookToPosition.y > shapePosition.y ? 1 : -1;
     }
 
     const pointKey = [x, y].join('-');

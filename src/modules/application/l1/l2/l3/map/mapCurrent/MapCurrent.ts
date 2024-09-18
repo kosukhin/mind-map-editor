@@ -3,7 +3,7 @@ import {
   MapDocument,
   MapFileDocument,
   MapObjectDocument,
-  MapSettingsDocument,
+  MapSettingsDocument, MapTypeDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { debug } from 'debug';
@@ -14,9 +14,11 @@ import { CacheType } from '@/modules/system/guest/CacheType';
 const localDebug = debug('MapCurrent');
 
 export class MapCurrent implements MapType {
-  private mapObjectsCache: CacheType<MapObjectDocument[]>;
+  private objectsCache: CacheType<MapObjectDocument[]>;
 
-  private mapSettingsCache: CacheType<MapSettingsDocument>;
+  private settingsCache: CacheType<MapSettingsDocument>;
+
+  private typesCache: CacheType<MapTypeDocument[]>;
 
   public constructor(
     private mapFile: MapFileType,
@@ -26,23 +28,30 @@ export class MapCurrent implements MapType {
       patron: FactoryType<GuestType>,
     },
   ) {
-    this.mapObjectsCache = factories.cache.create(this);
-    this.mapSettingsCache = factories.cache.create(this);
+    this.objectsCache = factories.cache.create(this);
+    this.settingsCache = factories.cache.create(this);
+    this.typesCache = factories.cache.create(this);
     mapFile.currentMap(factories.patron.create(factories.guest.create((latestMap: MapDocument) => {
       localDebug('current map changed', latestMap);
-      this.mapSettingsCache.receive(latestMap.settings);
-      this.mapObjectsCache.receive(Object.values(latestMap.objects));
+      this.settingsCache.receive(latestMap.settings);
+      this.objectsCache.receive(Object.values(latestMap.objects));
+      this.typesCache.receive(Object.values(latestMap.types));
     })));
   }
 
-  public mapSettings(guest: GuestType<MapSettingsDocument>) {
-    this.mapSettingsCache.receiving(guest);
+  public settings(guest: GuestType<MapSettingsDocument>) {
+    this.settingsCache.receiving(guest);
     return this;
   }
 
-  public mapObjects(guest: GuestType<MapObjectDocument[]>) {
+  public objects(guest: GuestType<MapObjectDocument[]>) {
     localDebug('notify about new objects');
-    this.mapObjectsCache.receiving(guest);
+    this.objectsCache.receiving(guest);
+    return this;
+  }
+
+  public types(guest: GuestType<MapTypeDocument[]>) {
+    this.typesCache.receiving(guest);
     return this;
   }
 

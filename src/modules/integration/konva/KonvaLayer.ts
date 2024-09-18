@@ -40,7 +40,7 @@ export class KonvaLayer {
       },
     );
     this.guestChain = factories.chain.create();
-    this.layerCache = factories.cache.create();
+    this.layerCache = factories.cache.create(this);
     this.canvasDep.canvas(factories.patron.create(this.guestChain.receiveKey('canvas')));
     this.guestChain.result(factories.guest.create<[(props: { canvas: HTMLElement }) => void]>(({ canvas }) => {
       localDebug('create new konva stage');
