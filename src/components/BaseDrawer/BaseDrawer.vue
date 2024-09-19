@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { watch } from '@vue/runtime-core';
-import { computed, ref } from '@vue/reactivity';
-import { useMagicKeys } from '@vueuse/core';
-import { useOverlay } from '@/composables/useOverlay';
+import { computed } from '@vue/reactivity';
+import { useApplication } from '@/composables/useApplication';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 
 const props = defineProps({
   name: {
@@ -16,6 +15,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['close']);
+
 const classes = computed(() => (['e2e-drawer-back absolute z-10 top-0 left-0 w-full h-full bg-black/50']));
 const positions = {
   ltr: 'top-0 left-0 w-[50%] max-w-[900px] ',
@@ -24,26 +25,13 @@ const positions = {
   btt: 'top-auto h-[900px] max-h-[50%] bottom-0 right-0 left-0',
 };
 
-const { overlayName, tryToClose } = useOverlay();
-const close = () => {
-  tryToClose.value = props.name as string;
-};
-const isOpened = ref(false);
-watch(overlayName, () => {
-  if (overlayName.value) {
-    isOpened.value = overlayName.value === props.name;
-  }
-});
-const { current } = useMagicKeys();
-watch(current, () => {
-  if (!isOpened.value) {
-    return;
-  }
+const { drawer } = useApplication();
 
-  if (current.has('escape')) {
-    close();
-  }
-});
+const close = () => {
+  drawer.receive('');
+  emit('close');
+};
+const isOpened = drawer.isOpenedByName(props.name, new VueRefPatron<boolean>()).ref();
 </script>
 
 <template>

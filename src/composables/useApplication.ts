@@ -18,10 +18,15 @@ import { MapTypeCurrent } from '@/modules/application/l1/l2/l3/map/mapTypes/MapT
 import { MapObjectNew } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectNew';
 import { MapObjectsLink } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectsLink';
 import { MapFileForRendering } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileForRendering';
+import { Modal } from '@/modules/application/l1/l2/visualisation/modal/Modal';
+import { Drawer } from '@/modules/application/l1/l2/visualisation/drawer/Drawer';
 
 const factories = useFactories();
 
+const modal = new Modal(factories);
+const drawer = new Drawer(factories);
 const notification = new Notification(factories);
+
 const mapFile = new MapFile(
   new FileSystemContent(
     new BrowserLaunchQueue(),
@@ -36,7 +41,7 @@ const mapForRendering = new MapCurrent(mapFileForRendering, factories);
 const mapObjectForRendering = new MapObject(mapForRendering, mapFileForRendering, factories);
 
 const mapCurrent = new MapCurrent(mapFile, factories);
-const mapObjectCurrent = new MapObjectCurrent(factories);
+const mapObjectCurrent = new MapObjectCurrent(drawer, factories);
 const mapTypeCurrent = new MapTypeCurrent(factories);
 const mapSettings = new MapSettings(mapFile, mapCurrent, factories);
 const canvas = new BrowserCanvas(factories);
@@ -50,7 +55,7 @@ const mapArrows = new MapObjectsArrows(konvaLayer, mapFile, mapForRendering, fac
 const miniMap = new MiniMap(mapForRendering, konvaLayer, factories);
 const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, mapCurrent, mapObject, factories);
 
-export const useApplication = () => ({
+const modules = {
   mapFile,
   mapCurrent,
   mapSettings,
@@ -66,5 +71,9 @@ export const useApplication = () => ({
   canvas,
   miniMap,
   notification,
+  modal,
+  drawer,
   konvaLayer,
-});
+};
+
+export const useApplication = () => modules;

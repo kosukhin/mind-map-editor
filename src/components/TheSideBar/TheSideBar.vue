@@ -10,10 +10,7 @@ import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/Ma
 import { useFactories } from '@/composables/useFactories';
 import { computed } from 'vue';
 
-const { mapObjectCurrent, mapObjectNew, mapCurrent } = useApplication();
-const objectIdPatron = new VueRefPatron<string>();
-mapObjectCurrent.objectId(objectIdPatron);
-const objectId = objectIdPatron.ref();
+const { mapObjectNew, mapCurrent } = useApplication();
 
 const typesPatron = new VueRefPatron<MapTypeDocument[]>();
 mapCurrent.types(typesPatron);
@@ -28,7 +25,6 @@ const typesExtended = computed(() => types.value?.map((type) => ({
 
 <template>
   <div class="flex e2e-sidebar flex-col items-center gap-3 max-h-[100%] overflow-hidden">
-    <div>{{objectId}}</div>
     <div class="flex flex-col gap-3 flex-grow w-full overflow-y-auto">
       <div
         v-for="(type, name) in typesExtended"

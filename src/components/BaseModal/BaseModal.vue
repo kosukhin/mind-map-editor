@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { watch } from '@vue/runtime-core';
-import { ref } from '@vue/reactivity';
-import { useMagicKeys } from '@vueuse/core';
-import { useOverlay } from '@/composables/useOverlay';
+import { useApplication } from '@/composables/useApplication';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
+
+const { modal } = useApplication();
 
 const props = defineProps({
   name: {
@@ -11,29 +11,14 @@ const props = defineProps({
   },
 });
 
-const isOpened = ref(false);
-const { overlayName, tryToClose, history } = useOverlay();
-const close = () => {
-  tryToClose.value = props.name as string;
-};
-watch(overlayName, () => {
-  if (overlayName.value) {
-    isOpened.value = overlayName.value === props.name;
-  }
-});
-const { current } = useMagicKeys();
-watch(current, () => {
-  if (!isOpened.value) {
-    return;
-  }
+const isOpened = modal.isOpenedByName(props.name, new VueRefPatron<boolean>()).ref();
 
-  if (current.has('escape')) {
-    close();
-  }
-});
+const close = () => {
+  modal.receive('');
+};
+
 const back = () => {
-  history.value.pop();
-  overlayName.value = String(history.value.pop());
+  console.log('back');
 };
 </script>
 

@@ -14,12 +14,25 @@ export class MapObjectCurrent implements MapObjectCurrentType {
 
   private silenceActivator: CacheType<GuestType<string> | false>;
 
-  public constructor(private factories: {
-    cache: FactoryType<CacheType>,
-    guest: FactoryType<GuestType>
-  }) {
+  public constructor(
+    private drawer: GuestType<string>,
+    private factories: {
+      cache: FactoryType<CacheType>,
+      patron: FactoryType<GuestType>,
+      guest: FactoryType<GuestType>
+    },
+  ) {
     this.idCache = factories.cache.create(this);
     this.silenceActivator = factories.cache.create(this, false);
+    this.idCache.receiving(
+      factories.patron.create(
+        factories.guest.create((value: string) => {
+          if (value) {
+            drawer.receive('object');
+          }
+        }),
+      ),
+    );
   }
 
   public silenceOn(activator: GuestType<string>) {
@@ -32,9 +45,9 @@ export class MapObjectCurrent implements MapObjectCurrentType {
     return this;
   }
 
-  public objectId(guest: GuestType<string>): this {
+  public objectId<R extends GuestType<string>>(guest: R) {
     this.idCache.receiving(guest);
-    return this;
+    return guest;
   }
 
   public receive(value: string): this {

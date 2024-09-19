@@ -4,6 +4,7 @@ import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
 import TheEditor from '@/components/TheEditor/TheEditor.vue';
 import TheMiniMap from '@/components/TheMiniMap/TheMiniMap.vue';
 import BaseNotify from '@/components/BaseNotify/BaseNotify.vue';
+import FormObject from '@/components/FormObject/FormObject.vue';
 </script>
 
 <template>
@@ -14,4 +15,5 @@ import BaseNotify from '@/components/BaseNotify/BaseNotify.vue';
     <TheMiniMap />
   </div>
   <BaseNotify />
+  <FormObject />
 </template>
