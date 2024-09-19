@@ -136,9 +136,6 @@ export class MapObjectsArrows {
             return;
           }
 
-          // this.previouslyRenderedArrows.forEach((arrow) => {
-          //   arrow.arrow.hide();
-          // });
           localDebug('visible objects', objects.length);
           object.arrows.forEach((toObjectRelation) => {
             const toObject = objects.find((mbObject) => mbObject.id === toObjectRelation.id) || map.objects[toObjectRelation.id];
