@@ -45,10 +45,9 @@ const mapObject = new MapObject(mapCurrent, mapFile, factories);
 const mapObjectNew = new MapObjectNew(mapCurrent, mapObject, factories);
 const mapType = new MapTypes(mapCurrent, mapFile, factories);
 const mapObjectsVisible = new MapObjectsVisible(konvaLayer, canvas, mapForRendering, factories);
-const mapRects = new MapObjectsRects(konvaLayer, mapObject, mapObjectCurrent, mapObjectForRendering, factories);
-mapObjectsVisible.objects(mapRects);
-mapObjectsVisible.objects(new MapObjectsArrows(konvaLayer, mapFile, factories));
-const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
+const mapRects = new MapObjectsRects(konvaLayer, mapObject, mapObjectsVisible, mapObjectCurrent, mapObjectForRendering, factories);
+const mapArrows = new MapObjectsArrows(konvaLayer, mapFile, mapForRendering, factories);
+const miniMap = new MiniMap(mapForRendering, konvaLayer, factories);
 const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, mapCurrent, mapObject, factories);
 
 export const useApplication = () => ({
@@ -63,6 +62,7 @@ export const useApplication = () => ({
   mapObjectsLink,
   mapTypeCurrent,
   mapRects,
+  mapObjectArrows: mapArrows,
   canvas,
   miniMap,
   notification,

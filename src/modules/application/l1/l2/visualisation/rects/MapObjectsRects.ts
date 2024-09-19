@@ -1,7 +1,10 @@
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { Rect } from 'konva/lib/shapes/Rect';
-import { MapObjectType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
+import {
+  MapObjectsType,
+  MapObjectType,
+} from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
 import { debug } from 'debug';
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
@@ -22,6 +25,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
   public constructor(
     private konvaLayer: LayerBase,
     private mapObject: MapObjectType,
+    mapObjectsVisible: MapObjectsType,
     private mapObjectCurrent: MapObjectCurrentType,
     private mapObjectForRendering: MapObjectType,
     private factories: {
@@ -30,6 +34,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
       cache: FactoryType<CacheType>
     },
   ) {
+    mapObjectsVisible.objects(this);
   }
 
   public receive(objects: MapObjectDocument[]): this {

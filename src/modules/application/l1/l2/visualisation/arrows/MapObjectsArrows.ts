@@ -14,6 +14,7 @@ import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileT
 import { Arrow } from 'konva/lib/shapes/Arrow';
 import { CacheType } from '@/modules/system/guest/CacheType';
 import { throttle } from 'lodash';
+import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 
 const localDebug = debug('MapObjectsArrows');
 
@@ -22,16 +23,15 @@ type ChainParamsType = {layer: KonvaLayer, map: MapDocument, objects: MapObjectD
 /**
  * Объект для отрисовки стрелок на конве
  */
-export class MapObjectsArrows implements GuestType<MapObjectDocument[]> {
+export class MapObjectsArrows {
   private previouslyRenderedArrows = new Map();
 
   private filledPoints = new Map();
 
-  private visibleObjectsCache: CacheType<MapObjectDocument[]>;
-
   public constructor(
     private konvaLayer: LayerBase,
     private mapFile: MapFileType,
+    private mapDep: MapType,
     private factories: {
       patron: FactoryType<GuestType>,
       guest: FactoryType<GuestType>,
@@ -41,11 +41,10 @@ export class MapObjectsArrows implements GuestType<MapObjectDocument[]> {
   ) {
     localDebug('draw arrows on canvas');
     const chain = this.factories.chain.create();
-    this.visibleObjectsCache = this.factories.cache.create(this);
 
     this.konvaLayer.layer(this.factories.patron.create(chain.receiveKey('layer')));
     this.mapFile.currentMap(this.factories.patron.create(chain.receiveKey('map')));
-    this.visibleObjectsCache.receiving(this.factories.patron.create(chain.receiveKey('objects')));
+    this.mapDep.objects(this.factories.patron.create(chain.receiveKey('objects')));
 
     chain.result(this.factories.patron.create(
       this.factories.guest.create(throttle(({ layer, map, objects }: ChainParamsType) => {
@@ -142,7 +141,7 @@ export class MapObjectsArrows implements GuestType<MapObjectDocument[]> {
           // });
           localDebug('visible objects', objects.length);
           object.arrows.forEach((toObjectRelation) => {
-            const toObject = map.objects[toObjectRelation.id];
+            const toObject = objects.find((mbObject) => mbObject.id === toObjectRelation.id) || map.objects[toObjectRelation.id];
             if (!toObject) {
               return;
             }
@@ -150,13 +149,8 @@ export class MapObjectsArrows implements GuestType<MapObjectDocument[]> {
             updateArrow(object, toObject);
           });
         });
-      }, 100)),
+      }, 50)),
     ));
-  }
-
-  public receive(objects: MapObjectDocument[]): this {
-    this.visibleObjectsCache.receive(objects);
-    return this;
   }
 
   public introduction() {

@@ -59,21 +59,21 @@ export class MiniMap {
     chain.result(factories.patron.create(factories.guest.create(({ layer: konvaLayer, size, objects }: MiniMapChainDocument) => {
       const scale = minimapWidth / size.width;
       const layerSize = {
-        width: konvaLayer.width() * scale,
-        height: konvaLayer.height() * scale,
+        width: Math.round(konvaLayer.width() * scale),
+        height: Math.round(konvaLayer.height() * scale),
       };
       this.viewportSizeCache.receive(layerSize);
       const miniSize = {
-        width: size.width * scale,
-        height: size.height * scale,
+        width: Math.round(size.width * scale),
+        height: Math.round(size.height * scale),
       };
       this.theSize.receive(miniSize);
       const points = objects.map((object) => ({
         id: object.id,
-        x: object.position[0] * scale,
-        y: object.position[1] * scale,
-        width: object.width * scale,
-        height: object.height * scale,
+        x: Math.round(object.position[0] * scale),
+        y: Math.round(object.position[1] * scale),
+        width: Math.round(object.width * scale),
+        height: Math.round(object.height * scale),
       }));
       localDebug('minimap points', points);
       this.thePoints.receive(points);
