@@ -12,10 +12,10 @@ import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeD
 import { ChainType } from '@/modules/system/guest/ChainType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { Arrow } from 'konva/lib/shapes/Arrow';
-import debounce from 'lodash/debounce';
 import { CacheType } from '@/modules/system/guest/CacheType';
+import { throttle } from 'lodash';
 
-const localDebug = debug('MapObjectsArrowsPatron');
+const localDebug = debug('MapObjectsArrows');
 
 type ChainParamsType = {layer: KonvaLayer, map: MapDocument, objects: MapObjectDocument[]};
 
@@ -48,7 +48,7 @@ export class MapObjectsArrows implements GuestType<MapObjectDocument[]> {
     this.visibleObjectsCache.receiving(this.factories.patron.create(chain.receiveKey('objects')));
 
     chain.result(this.factories.patron.create(
-      this.factories.guest.create(debounce(({ layer, map, objects }: ChainParamsType) => {
+      this.factories.guest.create(throttle(({ layer, map, objects }: ChainParamsType) => {
         const updateArrow = (
           fromObject: MapObjectDocument,
           toObject: MapObjectDocument,

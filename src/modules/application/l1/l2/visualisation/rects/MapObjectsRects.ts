@@ -23,6 +23,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
     private konvaLayer: LayerBase,
     private mapObject: MapObjectType,
     private mapObjectCurrent: MapObjectCurrentType,
+    private mapObjectForRendering: MapObjectType,
     private factories: {
       patronOnce: FactoryType<GuestType>,
       guest: FactoryType<GuestType>,
@@ -64,6 +65,13 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
 
           rect.on('dragend', (e) => {
             this.mapObject.receive({
+              ...object,
+              position: [rect.x(), rect.y()],
+            });
+          });
+
+          rect.on('dragmove', (e) => {
+            this.mapObjectForRendering.receive({
               ...object,
               position: [rect.x(), rect.y()],
             });

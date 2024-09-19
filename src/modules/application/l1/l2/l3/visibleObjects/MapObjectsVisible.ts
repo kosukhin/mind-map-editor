@@ -1,4 +1,3 @@
-import { MapCurrent } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrent';
 import { Cache } from '@/modules/system/guest/Cache';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapObjectsType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
@@ -10,6 +9,7 @@ import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/Poin
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { ChainType } from '@/modules/system/guest/ChainType';
+import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 
 const localDebug = debug('app:MapObjectsVisible');
 type ChainGuestExecutor = (props: {position: PointDocument, size: SizeDocument, objects: MapObjectDocument[]}) => void;
@@ -23,7 +23,7 @@ export class MapObjectsVisible implements MapObjectsType {
   public constructor(
     layerDep: LayerBase,
     canvas: BrowserCanvas,
-    mapCurrent: MapCurrent,
+    mapCurrent: MapType,
     factories: {
       chain: FactoryType<ChainType<unknown>>,
       patron: FactoryType<GuestType<unknown>>,

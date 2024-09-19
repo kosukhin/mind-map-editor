@@ -61,7 +61,6 @@ export class MapCurrent implements MapType {
 
   public receive(value: MapDocument) {
     localDebug('save map document', value);
-    // TODO тут временно current позже нужен объект Text которые будет представлять имя из ссылки
     const name = 'current';
     this.mapFile.mapFile(this.factories.guest.create((latestMapFile: MapFileDocument) => {
       this.mapFile.receive({
