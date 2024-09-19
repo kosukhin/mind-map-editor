@@ -6,5 +6,5 @@ export interface NotificationDocument {
 }
 
 export interface NotificationType extends GuestType<NotificationDocument> {
-  message(guest: GuestType<NotificationDocument>): this;
+  message(guest: GuestType<NotificationDocument>): GuestType<NotificationDocument>;
 }

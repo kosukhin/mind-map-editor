@@ -80,7 +80,7 @@ export class MiniMap {
     })));
   }
 
-  viewportPosition(guest: GuestType<PointDocument>) {
+  viewportPosition<R extends GuestType<PointDocument>>(guest: R) {
     const chain = this.factories.chain.create();
     this.layer.size(this.factories.guestCast.create(guest, chain.receiveKey('size')));
     this.layer.position(this.factories.guestCast.create(guest, chain.receiveKey('position')));
@@ -93,21 +93,21 @@ export class MiniMap {
       localDebug('scaled position is', scaledPosition);
       guest.receive(scaledPosition);
     }));
-    return this;
+    return guest;
   }
 
-  viewportSize(guest: GuestType<SizeDocument>) {
+  viewportSize<R extends GuestType<SizeDocument>>(guest: R) {
     this.viewportSizeCache.receiving(guest);
-    return this;
+    return guest;
   }
 
-  size(guest: GuestType<SizeDocument>) {
+  size<R extends GuestType<SizeDocument>>(guest: R) {
     this.theSize.receiving(guest);
-    return this;
+    return guest;
   }
 
-  points(guest: GuestType<PointIdDocument[]>) {
+  points<R extends GuestType<PointIdDocument[]>>(guest: R) {
     this.thePoints.receiving(guest);
-    return this;
+    return guest;
   }
 }

@@ -16,7 +16,6 @@ const close = () => {
   <BaseDrawer name="object" @close="close">
     <template #header>
       <h2 class="text-lg font-bold">Редактируем объект</h2>
-
     </template>
     <div>
       Тело формы объекта {{ objectId }}

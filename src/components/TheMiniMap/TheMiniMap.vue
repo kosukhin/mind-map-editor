@@ -3,21 +3,11 @@ import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 
 const { miniMap } = useApplication();
-const pointsPatron = new VueRefPatron();
-miniMap.points(pointsPatron);
-const points = pointsPatron.ref();
 
-const sizePatron = new VueRefPatron();
-miniMap.size(sizePatron);
-const size = sizePatron.ref();
-
-const viewportSizePatron = new VueRefPatron();
-miniMap.viewportSize(viewportSizePatron);
-const viewportSize = viewportSizePatron.ref();
-
-const viewportPositionPatron = new VueRefPatron();
-miniMap.viewportPosition(viewportPositionPatron);
-const viewportPosition = viewportPositionPatron.ref();
+const points = miniMap.points(new VueRefPatron()).ref();
+const size = miniMap.size(new VueRefPatron()).ref();
+const viewportSize = miniMap.viewportSize(new VueRefPatron()).ref();
+const viewportPosition = miniMap.viewportPosition(new VueRefPatron()).ref();
 </script>
 
 <template>

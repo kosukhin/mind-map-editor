@@ -12,9 +12,7 @@ import { computed } from 'vue';
 
 const { mapObjectNew, mapCurrent } = useApplication();
 
-const typesPatron = new VueRefPatron<MapTypeDocument[]>();
-mapCurrent.types(typesPatron);
-const types = typesPatron.ref();
+const types = mapCurrent.types(new VueRefPatron<MapTypeDocument[]>()).ref();
 
 const { svgMapTypeImage } = useFactories();
 const typesExtended = computed(() => types.value?.map((type) => ({

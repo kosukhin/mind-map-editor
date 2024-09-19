@@ -9,6 +9,7 @@ import { KonvaSizeDocument } from '@/modules/integration/konva/KonvaSizeDocument
 import { KonvaPointDocument } from '@/modules/integration/konva/KonvaPointDocument';
 import { ChainType } from '@/modules/system/guest/ChainType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 
 const localDebug = debug('app:konva:KonvaLayer');
 const layerGeometry = {
@@ -16,7 +17,7 @@ const layerGeometry = {
   width: 3000,
 };
 
-export class KonvaLayer {
+export class KonvaLayer implements LayerBase {
   private guestChain: ChainType<{canvas: HTMLElement}>;
 
   private positionCache: CacheType<KonvaPointDocument>;
@@ -99,18 +100,18 @@ export class KonvaLayer {
     }));
   }
 
-  public layer(guest: GuestType<Layer>): this {
+  public layer<R extends GuestType<Layer>>(guest: R) {
     this.layerCache.receiving(guest);
-    return this;
+    return guest;
   }
 
-  public size(guest: GuestType<KonvaSizeDocument>) {
+  public size<R extends GuestType<KonvaSizeDocument>>(guest: R) {
     guest.receive(layerGeometry);
-    return this;
+    return guest;
   }
 
-  public position(guest: GuestType<KonvaPointDocument>): this {
+  public position<R extends GuestType<KonvaPointDocument>>(guest: R) {
     this.positionCache.receiving(guest);
-    return this;
+    return guest;
   }
 }

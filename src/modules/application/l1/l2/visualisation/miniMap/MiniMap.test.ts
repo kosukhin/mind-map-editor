@@ -4,6 +4,7 @@ import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanva
 import { Patron } from '@/modules/system/guest/Patron';
 import { Guest } from '@/modules/system/guest/Guest';
 import { useFactories } from '@/composables/useFactories';
+import { PointIdDocument } from '@/modules/application/l1/l2/l3/map/documents/PointIdDocument';
 import { MapCurrent } from '../../l3/map/mapCurrent/MapCurrent';
 import { MapFileFake } from '../../l3/map/mapFile/MapFileFake';
 import { MiniMap } from './MiniMap';
@@ -60,7 +61,7 @@ test('mini map', () => {
 
   const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
 
-  miniMap.points(new Patron(new Guest((points) => {
+  miniMap.points(new Patron(new Guest((points: PointIdDocument[]) => {
     expect(points.length).toBe(1);
   })));
 });

@@ -3,9 +3,7 @@ import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 
 const { notification } = useApplication();
-const notificationPatron = new VueRefPatron();
-notification.message(notificationPatron);
-const notificationRef = notificationPatron.ref();
+const notificationRef = notification.message(new VueRefPatron()).ref();
 </script>
 
 <template>

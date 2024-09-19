@@ -27,7 +27,7 @@ export class MapObjectsWithTemplates {
     },
   ) {}
 
-  public objects(guest: GuestType<MapObjectWithTemplateDocument[]>): this {
+  public objects<R extends GuestType<MapObjectWithTemplateDocument[]>>(guest: R) {
     const chain = this.factories.chain.create();
     this.map.types(this.factories.guestCast.create(guest, chain.receiveKey('types')));
     this.mapObjects.objects(this.factories.guestCast.create(guest, chain.receiveKey('objects')));
@@ -57,6 +57,6 @@ export class MapObjectsWithTemplates {
       });
       guest.receive(withTemplates);
     }));
-    return this;
+    return guest;
   }
 }

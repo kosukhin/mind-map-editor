@@ -25,9 +25,9 @@ export class MapObjectsLink {
     this.objectIdsCache = factories.cache.create(this, []);
   }
 
-  public objectIds(guest: GuestType<string[]>) {
+  public objectIds<R extends GuestType<string[]>>(guest: R) {
     this.objectIdsCache.receiving(guest);
-    return this;
+    return guest;
   }
 
   public startLink() {

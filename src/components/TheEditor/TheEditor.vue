@@ -21,20 +21,11 @@ const objectsWithTemplates = new MapObjectsWithTemplates(
   factories,
 );
 
-const objectsPatron = new VueRefPatron<MapObjectWithTemplateDocument[]>([]);
-objectsWithTemplates.objects(objectsPatron);
-const objects = objectsPatron.ref();
+const objects = objectsWithTemplates.objects(new VueRefPatron<MapObjectWithTemplateDocument[]>([])).ref();
+const layerSize = konvaLayer.size(new VueRefPatron()).ref();
+const layerPosition = konvaLayer.position(new VueRefPatron()).ref();
 
 const canvasWrapper = ref();
-
-const layerSizePatron = new VueRefPatron();
-konvaLayer.size(layerSizePatron);
-const layerSize = layerSizePatron.ref();
-
-const layerPositionPatron = new VueRefPatron();
-konvaLayer.position(layerPositionPatron);
-const layerPosition = layerPositionPatron.ref();
-
 onMounted((() => {
   canvas.receive(canvasWrapper.value);
 }));

@@ -43,20 +43,20 @@ export class MapCurrent implements MapType {
     })));
   }
 
-  public settings(guest: GuestType<MapSettingsDocument>) {
+  public settings<R extends GuestType<MapSettingsDocument>>(guest: R) {
     this.settingsCache.receiving(guest);
-    return this;
+    return guest;
   }
 
-  public objects(guest: GuestType<MapObjectDocument[]>) {
+  public objects<R extends GuestType<MapObjectDocument[]>>(guest: R) {
     localDebug('notify about new objects');
     this.objectsCache.receiving(guest);
-    return this;
+    return guest;
   }
 
-  public types(guest: GuestType<MapTypeDocument[]>) {
+  public types<R extends GuestType<MapTypeDocument[]>>(guest: R) {
     this.typesCache.receiving(guest);
-    return this;
+    return guest;
   }
 
   public receive(value: MapDocument) {

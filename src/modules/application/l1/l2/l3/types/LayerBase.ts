@@ -7,7 +7,7 @@ import { GuestType } from '@/modules/system/guest/GuestType';
  * Поведение для работы с характеристиками слоя рендеринга
  */
 export interface LayerBase {
-  layer(guest: GuestType<KonvaLayer>): this;
-  size(guest: GuestType<SizeDocument>): this;
-  position(guest: GuestType<PointDocument>): this;
+  layer(guest: GuestType<KonvaLayer>): GuestType<KonvaLayer>;
+  size(guest: GuestType<SizeDocument>): GuestType<SizeDocument>;
+  position(guest: GuestType<PointDocument>): GuestType<PointDocument>;
 }

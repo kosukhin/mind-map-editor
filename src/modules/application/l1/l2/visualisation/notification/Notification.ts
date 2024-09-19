@@ -24,9 +24,9 @@ export class Notification implements NotificationType {
     this.messageCache = factories.cache.create(this);
   }
 
-  public message(guest: GuestType<NotificationDocument>): this {
+  public message<R extends GuestType<NotificationDocument>>(guest: R): R {
     this.messageCache.receiving(guest);
-    return this;
+    return guest;
   }
 
   public receive(value: NotificationDocument): this {

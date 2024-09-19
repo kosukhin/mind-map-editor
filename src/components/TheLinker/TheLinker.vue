@@ -4,12 +4,8 @@ import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 
 const type = 'default';
-
 const { mapObjectsLink } = useApplication();
-
-const objectIdsPatron = new VueRefPatron<string[]>([]);
-mapObjectsLink.objectIds(objectIdsPatron);
-const objectIds = objectIdsPatron.ref();
+const objectIds = mapObjectsLink.objectIds(new VueRefPatron<string[]>([])).ref();
 </script>
 
 <template>
