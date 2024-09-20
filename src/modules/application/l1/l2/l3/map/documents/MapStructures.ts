@@ -8,6 +8,8 @@ export interface MapTypeDocument {
   height: number
 }
 
+export type MapTypeWithNameDocument = {name: string, type: MapTypeDocument}
+
 /**
  * Данные связи между объектами карты
  */

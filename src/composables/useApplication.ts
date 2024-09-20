@@ -22,6 +22,7 @@ import { Modal } from '@/modules/application/l1/l2/visualisation/modal/Modal';
 import { Drawer } from '@/modules/application/l1/l2/visualisation/drawer/Drawer';
 import { MapTypeRemoved } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypeRemoved';
 import { MapTypeNew } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypeNew';
+import { MapTypeUsed } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypeUsed';
 
 const factories = useFactories();
 
@@ -50,7 +51,8 @@ const canvas = new BrowserCanvas(factories);
 const konvaLayer = new KonvaLayer(canvas, factories);
 const mapObject = new MapObject(mapCurrent, mapFile, factories);
 const mapObjectNew = new MapObjectNew(mapCurrent, mapObject, factories);
-const mapType = new MapTypes(mapCurrent, mapFile, factories);
+const mapTypeUsed = new MapTypeUsed(mapFile, factories);
+const mapType = new MapTypes(mapCurrent, mapFile, notification, mapTypeUsed, factories);
 const mapTypeRemoved = new MapTypeRemoved(mapCurrent, mapFile, factories);
 const mapTypeNew = new MapTypeNew(mapType);
 const mapObjectsVisible = new MapObjectsVisible(konvaLayer, canvas, mapForRendering, factories);

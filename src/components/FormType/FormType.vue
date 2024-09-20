@@ -12,6 +12,7 @@ import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
+import { ref } from 'vue';
 
 const {
   mapTypeCurrent, mapFile, mapType, modal,
@@ -27,13 +28,15 @@ mapTypeCurrent.typeId(
 );
 
 type ChainProps = {map: MapDocument, typeId: string};
+const typeName = ref<string>('');
+const theChain = chain.create();
 const type = new VueComputedPatron<MapTypeDocument>(() => {
-  const theChain = chain.create();
   mapTypeCurrent.typeId(patron.create(theChain.receiveKey('typeId')));
   mapFile.currentMap(patron.create(theChain.receiveKey('map')));
   theChain.result(patron.create(
     guest.create(({ map, typeId }: ChainProps) => {
       type.value = map.types[typeId];
+      typeName.value = type.value?.name;
     }),
   ));
 }).ref();
@@ -41,10 +44,14 @@ const type = new VueComputedPatron<MapTypeDocument>(() => {
 const close = () => {
   mapTypeCurrent.receive('');
   modal.receive('');
+  theChain.receiveKey('typeId').receive('');
 };
 
 const save = () => {
-  mapType.receive(type.value);
+  mapType.receive({
+    name: typeName.value,
+    type: type.value,
+  });
   close();
 };
 </script>

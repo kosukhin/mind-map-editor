@@ -24,7 +24,7 @@ const { svgMapTypeImage } = useFactories();
 const typesExtended = computed(() => types.value?.map((type) => ({
   type,
   image: svgMapTypeImage.create(type).markup(),
-})));
+})).sort((a, b) => +(a.type.name >= b.type.name)));
 </script>
 
 <template>
