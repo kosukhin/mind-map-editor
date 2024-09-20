@@ -9,6 +9,7 @@ import {
 import {
   MapObjectWithTemplateDocument,
 } from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectWithTemplateDocument';
+import BaseNotify from '@/components/BaseNotify/BaseNotify.vue';
 
 const {
   canvas, mapObjectsVisible, mapCurrent, konvaLayer,
@@ -36,6 +37,7 @@ onMounted((() => {
     <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-1">
       <div class="text-sm p-2 absolute bottom-0 left-0">
         Видимых объектов: {{ objects.length }}, FPS: 0,
+        <BaseNotify />
       </div>
       <div class="absolute bottom-3 shadow-standard-second shadow-md drop-shadow right-3 z-10">
         <div class="grid-example grid grid-rows-2 grid-cols-2 bg-standard-second border border-standard-second gap-[1px] border-t-0 border-l-0">

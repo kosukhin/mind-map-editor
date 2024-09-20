@@ -10,7 +10,13 @@ import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/Ma
 import { useFactories } from '@/composables/useFactories';
 import { computed } from 'vue';
 
-const { mapObjectNew, mapCurrent } = useApplication();
+const {
+  mapObjectNew,
+  mapCurrent,
+  mapTypeCurrent,
+  mapTypeRemoved,
+  mapTypeNew,
+} = useApplication();
 
 const types = mapCurrent.types(new VueRefPatron<MapTypeDocument[]>()).ref();
 
@@ -39,10 +45,20 @@ const typesExtended = computed(() => types.value?.map((type) => ({
           @dragend="mapObjectNew.byTypeName(type.type.name, {x: 0, y: 0})"
         ></div>
         <div class="flex gap-1">
-          <BaseButton class="text-white" size="sm" type="primary">
+          <BaseButton
+            class="text-white"
+            size="sm"
+            type="primary"
+            @click="mapTypeCurrent.receive(type.type.name)"
+          >
             {{ $t('general.change') }}
           </BaseButton>
-          <BaseButton class="text-white" size="sm" type="danger">
+          <BaseButton
+            class="text-white"
+            size="sm"
+            type="danger"
+            @click="mapTypeRemoved.receive(type.type)"
+          >
             {{ $t('general.delete') }}
           </BaseButton>
         </div>
@@ -53,6 +69,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
         <BaseButton
           :title="$t('general.addType')"
           type="success"
+          @click="mapTypeNew.byName('new type')"
         >
           <BaseIcon icon="fa-plus-square" />
         </BaseButton>

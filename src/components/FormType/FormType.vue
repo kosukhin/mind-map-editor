@@ -1,92 +1,83 @@
 <script lang="ts" setup>
-import { computed, ref } from '@vue/reactivity';
-import { watch } from '@vue/runtime-core';
-import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
-import { useMapType } from '@/composables/useMapType';
-import { useMap } from '@/composables/useMap';
-import { SHOW_TYPE } from '@/constants/overlays';
-import { useFormDirtyCheck } from '@/composables/useFormDirtyCheck';
-import { useOverlay } from '@/composables/useOverlay';
-import { useKeybindings } from '@/composables/useKeybindings';
-import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
-import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
+import { useApplication } from '@/composables/useApplication';
+import {
+  MapDocument,
+  MapTypeDocument,
+} from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { VueComputedPatron } from '@/modules/integration/vue/VueComputedPatron';
+import { useFactories } from '@/composables/useFactories';
 import BaseInputRow from '@/components/BaseInput/BaseInputRow.vue';
+import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
+import BaseInput from '@/components/BaseInput/BaseInput.vue';
+import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 
-const { stringify } = JSON;
+const {
+  mapTypeCurrent, mapFile, mapType, modal,
+} = useApplication();
+const { patron, chain, guest } = useFactories();
 
-const form = ref<any>({});
-const { currentTypeId, currentType } = useMapType();
-const { map } = useMap();
-watch(
-  currentType,
-  () => {
-    if (currentType.value) {
-      form.value = {
-        ...currentType.value,
-      };
+mapTypeCurrent.typeId(
+  patron.create(guest.create((typeId: string) => {
+    if (typeId) {
+      modal.receive('type');
     }
-  },
-  {
-    flush: 'post',
-    immediate: true,
-  },
+  })),
 );
-const isDirty = computed(
-  () => stringify(form.value) !== stringify(currentType.value),
-);
-useFormDirtyCheck(isDirty, SHOW_TYPE);
 
-const { close, isOpened } = useOverlay();
+type ChainProps = {map: MapDocument, typeId: string};
+const type = new VueComputedPatron<MapTypeDocument>(() => {
+  const theChain = chain.create();
+  mapTypeCurrent.typeId(patron.create(theChain.receiveKey('typeId')));
+  mapFile.currentMap(patron.create(theChain.receiveKey('map')));
+  theChain.result(patron.create(
+    guest.create(({ map, typeId }: ChainProps) => {
+      type.value = map.types[typeId];
+    }),
+  ));
+}).ref();
+
+const close = () => {
+  mapTypeCurrent.receive('');
+  modal.receive('');
+};
 
 const save = () => {
+  mapType.receive(type.value);
   close();
-  if (map.value && currentTypeId.value) {
-    map.value.types[currentTypeId.value] = {
-      ...map.value.types[currentTypeId.value],
-      ...form.value,
-    };
-  }
 };
-const { ctrlSFired } = useKeybindings();
-watch(ctrlSFired, () => {
-  if (!isOpened(SHOW_TYPE)) {
-    return;
-  }
-  save();
-});
 </script>
 
 <template>
-  <BaseModal :name="SHOW_TYPE">
+  <BaseModal name="type">
     <template #header>
       <h2 class="text-lg font-bold">{{ $t('general.mapType') }}</h2>
     </template>
-    <div v-if="currentType" class="flex flex-col">
+    <div v-if="type" class="flex flex-col">
       <BaseInputRow>
         <BaseInputTitle>
           Название типа
         </BaseInputTitle>
-        <BaseInput v-model="form.name" />
+        <BaseInput v-model="type.name" />
       </BaseInputRow>
       <BaseInputRow>
         <BaseInputTitle>
           SVG
         </BaseInputTitle>
-        <BaseTextarea v-model="form.svg" />
+        <BaseTextarea v-model="type.svg" />
       </BaseInputRow>
       <BaseInputRow>
         <BaseInputTitle>
           Ширина
         </BaseInputTitle>
-        <BaseInput v-model="form.width" />
+        <BaseInput v-model="type.width" />
       </BaseInputRow>
       <BaseInputRow>
         <BaseInputTitle>
           Высота
         </BaseInputTitle>
-        <BaseInput v-model="form.height" />
+        <BaseInput v-model="type.height" />
       </BaseInputRow>
     </div>
     <template #footer>
