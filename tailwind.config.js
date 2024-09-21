@@ -12,10 +12,12 @@ module.exports = {
       primary: '#22bdff',
       success: '#7dff67',
       danger: '#f55',
+      error: '#f55',
       'standard-second': '#d9d9d9',
       'primary-second': '#0e9fdc',
       'success-second': '#57db42',
       'danger-second': '#d93434',
+      'error-second': '#d93434',
     },
     extend: {
       zIndex: {

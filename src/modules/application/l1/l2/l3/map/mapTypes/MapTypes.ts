@@ -19,14 +19,14 @@ export class MapTypes implements GuestType<MapTypeWithNameDocument> {
     private map: MapType,
     private mapFile: MapFileType,
     private notification: NotificationType,
-    private typeUsedCheck: CheckType<MapTypeDocument>,
+    private typeUsedCheck: CheckType<string>,
     private factories: {
       guest: FactoryType<GuestType>,
     },
   ) {}
 
   receive(value: MapTypeWithNameDocument): this {
-    this.typeUsedCheck.check(value.type, this.factories.guest.create((isTypeUsed: boolean) => {
+    this.typeUsedCheck.check(value.name, this.factories.guest.create((isTypeUsed: boolean) => {
       this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
         if (isTypeUsed && value.name !== value.type.name) {
           this.notification.receive({

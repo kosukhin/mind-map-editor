@@ -12,7 +12,7 @@ import { FactoryType } from '@/modules/system/guest/FactoryType';
 export class Notification implements NotificationType {
   private messageCache: CacheType<NotificationDocument>;
 
-  private notificationLifetimeDelay = 4000;
+  private notificationLifetimeDelay = 3500;
 
   private lastTimerHead: NodeJS.Timeout | null = null;
 

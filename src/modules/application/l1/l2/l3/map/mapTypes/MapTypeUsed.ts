@@ -1,13 +1,13 @@
 import { CheckType } from '@/modules/application/l1/l2/l3/map/checks/CheckType';
-import {
-  MapDocument,
-  MapTypeDocument,
-} from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { debug } from 'debug';
 
-export class MapTypeUsed implements CheckType<MapTypeDocument> {
+const localDebug = debug('MapTypeUsed');
+
+export class MapTypeUsed implements CheckType<string> {
   public constructor(
     private mapFile: MapFileType,
     private factories: {
@@ -15,9 +15,10 @@ export class MapTypeUsed implements CheckType<MapTypeDocument> {
     },
   ) {}
 
-  check(value: MapTypeDocument, guest: GuestType<boolean>): this {
+  check(value: string, guest: GuestType<boolean>): this {
     this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
-      const isTypeUsed = Object.values(latestMap.objects).some((object) => object.type === value.name);
+      const isTypeUsed = Object.values(latestMap.objects).some((object) => object.type === value);
+      localDebug('is type used', isTypeUsed);
       guest.receive(isTypeUsed);
     }));
     return this;
