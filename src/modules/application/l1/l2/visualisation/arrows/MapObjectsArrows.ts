@@ -131,6 +131,7 @@ export class MapObjectsArrows {
         };
 
         this.filledPoints.clear();
+        this.previouslyRenderedArrows.forEach((arrow) => arrow.arrow.hide());
         objects.forEach((object) => {
           if (!object.arrows) {
             return;

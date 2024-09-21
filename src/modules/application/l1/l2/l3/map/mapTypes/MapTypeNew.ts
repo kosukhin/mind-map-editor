@@ -11,9 +11,9 @@ export class MapTypeNew {
       name: typeName,
       type: {
         name: typeName,
-        svg: '<div>type</div>',
-        height: 100,
+        svg: '<div style="background: lightyellow;border: 1px solid #ccc;">type</div>',
         width: 100,
+        height: 40,
       },
     });
   }

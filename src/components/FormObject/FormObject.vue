@@ -16,7 +16,7 @@ import BaseEditor from '@/components/BaseEditor/BaseEditor.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 
 const {
-  mapObjectCurrent, mapFile, mapObject, drawer,
+  mapObjectCurrent, mapFile, mapObject, drawer, mapObjectRemoved,
 } = useApplication();
 const { patron, chain, guest } = useFactories();
 
@@ -32,13 +32,14 @@ const object = new VueComputedPatron<MapObjectDocument>(() => {
   ));
 }).ref();
 
-const remove = () => {
-  console.log('remove');
-};
-
 const close = () => {
   mapObjectCurrent.receive('');
   drawer.receive('');
+};
+
+const remove = () => {
+  mapObjectRemoved.receive(object.value);
+  close();
 };
 
 const save = () => {
