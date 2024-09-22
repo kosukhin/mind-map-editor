@@ -2,6 +2,7 @@ import { Cache } from '@/modules/system/guest/Cache';
 import { Guest } from '@/modules/system/guest/Guest';
 import { GuestPool } from '@/modules/system/guest/GuestPool';
 import { ChainType } from '@/modules/system/guest/ChainType';
+import { GuestInTheMiddle } from '@/modules/system/guest/GuestInTheMiddle';
 import { GuestType } from './GuestType';
 
 export class Chain<T> implements ChainType<T> {
@@ -15,6 +16,19 @@ export class Chain<T> implements ChainType<T> {
 
   public constructor() {
     this.theChain = new Cache<Record<string, any>>(this, {});
+  }
+
+  public resultArray(guest: GuestType<T>) {
+    this.filledChainPool.add(
+      new GuestInTheMiddle(guest, (value: Record<string, unknown>) => Object.values(value)),
+    );
+    if (this.isChainFilled()) {
+      this.theChain.receiving(new Guest((chain) => {
+        this.filledChainPool.receive(Object.values(chain));
+      }));
+    }
+
+    return this;
   }
 
   public result(guest: GuestType<T>) {

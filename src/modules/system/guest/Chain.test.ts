@@ -45,3 +45,16 @@ test('chain with patron', () => {
     expect(Object.values(value).length).toBe(2);
   })));
 });
+
+test('chain as array', () => {
+  const one = new FakeSource(1);
+  const two = new FakeSource(2);
+  const chain = new Chain<any>();
+
+  one.data(new Patron(chain.receiveKey('0')));
+  two.data(new Patron(chain.receiveKey('1')));
+
+  chain.resultArray(new Patron(new Guest((value) => {
+    expect(JSON.stringify(value)).toBe('[1, 2]');
+  })));
+});
