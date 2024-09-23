@@ -24,6 +24,10 @@ import { MapTypeRemoved } from '@/modules/application/l1/l2/l3/map/mapTypes/MapT
 import { MapTypeNew } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypeNew';
 import { MapTypeUsed } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypeUsed';
 import { MapObjectRemoved } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectRemoved';
+import { CheckNotification } from '@/modules/application/l1/l2/l3/map/checks/CheckNotification';
+import {
+  MapTypeUsedNameChangedCheck,
+} from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypeUsedNameChangedCheck';
 
 const factories = useFactories();
 
@@ -53,8 +57,19 @@ const konvaLayer = new KonvaLayer(canvas, factories);
 const mapObject = new MapObject(mapCurrent, mapFile, factories);
 const mapObjectRemoved = new MapObjectRemoved(mapCurrent, mapFile, factories);
 const mapObjectNew = new MapObjectNew(mapCurrent, mapObject, factories);
-const mapTypeUsed = new MapTypeUsed(mapFile, factories);
-const mapType = new MapTypes(mapCurrent, mapFile, notification, mapTypeUsed, factories);
+const mapType = new MapTypes(
+  mapCurrent,
+  mapFile,
+  [new CheckNotification(
+    notification,
+    new MapTypeUsedNameChangedCheck(
+      new MapTypeUsed(mapFile, factories),
+      factories,
+    ),
+    factories,
+  )],
+  factories,
+);
 const mapTypeRemoved = new MapTypeRemoved(mapCurrent, mapFile, factories);
 const mapTypeNew = new MapTypeNew(mapType);
 const mapObjectsVisible = new MapObjectsVisible(konvaLayer, canvas, mapForRendering, factories);
