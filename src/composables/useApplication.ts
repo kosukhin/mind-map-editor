@@ -28,6 +28,9 @@ import { CheckNotification } from '@/modules/application/l1/l2/l3/map/checks/Che
 import {
   MapTypeUsedNameChangedCheck,
 } from '@/modules/application/l1/l2/l3/map/mapTypes/MapTypeUsedNameChangedCheck';
+import {
+  MapObjectHasArrowCheck,
+} from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectHasArrowCheck';
 
 const factories = useFactories();
 
@@ -55,7 +58,18 @@ const mapSettings = new MapSettings(mapFile, mapCurrent, factories);
 const canvas = new BrowserCanvas(factories);
 const konvaLayer = new KonvaLayer(canvas, factories);
 const mapObject = new MapObject(mapCurrent, mapFile, factories);
-const mapObjectRemoved = new MapObjectRemoved(mapCurrent, mapFile, factories);
+const mapObjectRemoved = new MapObjectRemoved(
+  mapCurrent,
+  mapFile,
+  [
+    new CheckNotification(
+      notification,
+      new MapObjectHasArrowCheck(mapFile, factories),
+      factories,
+    ),
+  ],
+  factories,
+);
 const mapObjectNew = new MapObjectNew(mapCurrent, mapObject, factories);
 const mapType = new MapTypes(
   mapCurrent,
