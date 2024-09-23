@@ -35,6 +35,7 @@ import {
   MapObjectBackground,
 } from '@/modules/application/l1/l2/visualisation/background/MapObjectBackground';
 import { Zindex } from '@/modules/application/l1/l2/visualisation/zIndex/Zindex';
+import { Resizing } from '@/modules/application/l1/l2/visualisation/resizing/Resizing';
 
 const factories = useFactories();
 
@@ -92,11 +93,17 @@ const mapType = new MapTypes(
 );
 const mapTypeRemoved = new MapTypeRemoved(mapCurrent, mapFile, factories);
 const mapTypeNew = new MapTypeNew(mapType);
-const mapObjectsVisible = new MapObjectsVisible(konvaLayer, canvas, mapForRendering, factories);
+const mapObjectsVisible = new MapObjectsVisible(
+  konvaLayer,
+  canvas,
+  mapForRendering,
+  factories,
+);
 const mapRects = new MapObjectsRects(konvaLayer, mapObject, mapObjectsVisible, mapObjectCurrent, mapObjectForRendering, factories);
 const mapArrows = new MapObjectsArrows(konvaLayer, mapFile, mapForRendering, factories);
 const miniMap = new MiniMap(mapForRendering, konvaLayer, factories);
 const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, mapCurrent, mapObject, factories);
+const resizing = new Resizing(mapFile, canvas, konvaLayer, factories);
 
 const modules = {
   mapFile,
@@ -121,6 +128,7 @@ const modules = {
   modal,
   drawer,
   konvaLayer,
+  resizing,
 };
 
 export const useApplication = () => modules;

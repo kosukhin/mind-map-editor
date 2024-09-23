@@ -38,6 +38,7 @@ export class BrowserCanvas implements BrowserCanvasType {
   }
 
   public receive(value: HTMLElement): this {
+    localDebug('receive new canvas', value);
     this.canvasCache.receive(value);
     return this;
   }

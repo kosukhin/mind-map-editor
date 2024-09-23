@@ -114,4 +114,9 @@ export class KonvaLayer implements LayerBase {
     this.positionCache.receiving(guest);
     return guest;
   }
+
+  receive(value: Layer): this {
+    this.layerCache.receive(value);
+    return this;
+  }
 }
