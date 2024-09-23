@@ -103,6 +103,7 @@ export class MapObjectsArrows {
           ];
           const arrowKey = points.join('-');
           const arrowId = [fromObject.id, toObject.id].join('-');
+          localDebug('points', points, startPoint, endPoint);
           localDebug(fromObject, toObject);
 
           if (this.previouslyRenderedArrows.has(arrowId)) {
@@ -163,17 +164,18 @@ export class MapObjectsArrows {
     lookToPosition: PointDocument,
   ) {
     const lookToMiddle = {
-      x: lookToPosition.x + Math.round(lookToGeometry.width / 2),
-      y: lookToPosition.y + Math.round(lookToGeometry.height / 2),
+      x: +lookToPosition.x + Math.round(lookToGeometry.width / 2),
+      y: +lookToPosition.y + Math.round(lookToGeometry.height / 2),
     };
     const shapeMiddle = {
-      x: shapePosition.x + Math.round(shapeGeometry.width / 2),
-      y: shapePosition.y + Math.round(shapeGeometry.height / 2),
+      x: +shapePosition.x + Math.round(shapeGeometry.width / 2),
+      y: +shapePosition.y + Math.round(shapeGeometry.height / 2),
     };
     const dx = shapeMiddle.x - lookToMiddle.x;
     const dy = shapeMiddle.y - lookToMiddle.y;
     const isModuleDYGreater = Math.abs(dy) > Math.abs(dx);
-    let { x, y } = shapePosition;
+    let x = +shapePosition.x;
+    let y = +shapePosition.y;
 
     const top = isModuleDYGreater && dy >= 0;
     const right = !isModuleDYGreater && dx >= 0;
@@ -192,13 +194,13 @@ export class MapObjectsArrows {
       shiftX = lookToPosition.x > shapePosition.x ? 1 : -1;
     } else if (left) {
       y += Math.round(shapeGeometry.height / 2);
-      x += shapeGeometry.width;
+      x += +shapeGeometry.width;
       breakPoint.x = (lookToMiddle.x + shapeMiddle.x) / 2;
       breakPoint.y = y;
       shiftY = lookToPosition.y > shapePosition.y ? 1 : -1;
     } else if (bottom) {
       x += Math.round(shapeGeometry.width / 2);
-      y += shapeGeometry.height;
+      y += +shapeGeometry.height;
       breakPoint.x = x;
       breakPoint.y = (lookToMiddle.y + shapeMiddle.y) / 2;
       shiftX = lookToPosition.x > shapePosition.x ? 1 : -1;
