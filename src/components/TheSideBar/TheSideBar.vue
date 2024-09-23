@@ -16,6 +16,7 @@ const {
   mapTypeCurrent,
   mapTypeRemoved,
   mapTypeNew,
+  modal,
 } = useApplication();
 
 const types = mapCurrent.types(new VueRefPatron<MapTypeDocument[]>()).ref();
@@ -77,6 +78,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
           class="e2e-show-settings"
           :title="$t('general.settings')"
           type="primary"
+          @click="modal.receive('settings')"
         >
           <BaseIcon icon="fa-cog" />
         </BaseButton>

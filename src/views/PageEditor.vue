@@ -4,7 +4,9 @@ import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
 import TheEditor from '@/components/TheEditor/TheEditor.vue';
 import TheMiniMap from '@/components/TheMiniMap/TheMiniMap.vue';
 import FormObject from '@/components/FormObject/FormObject.vue';
-import FormType from '@/components/FormType/FormType.vue'; </script>
+import FormType from '@/components/FormType/FormType.vue';
+import FormSettings from '@/components/TheSettings/FormSettings.vue';
+</script>
 
 <template>
   <div class="grid grid-cols-[200px_1fr] grid-rows-[50px_1fr] h-dvh relative">
@@ -15,4 +17,5 @@ import FormType from '@/components/FormType/FormType.vue'; </script>
   </div>
   <FormObject />
   <FormType />
+  <FormSettings />
 </template>
