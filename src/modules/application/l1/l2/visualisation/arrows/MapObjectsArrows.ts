@@ -122,6 +122,7 @@ export class MapObjectsArrows {
             fill: '#ccc',
             stroke: '#bbb',
             strokeWidth: 2,
+            zIndex: 2,
           });
           this.previouslyRenderedArrows.set(arrowId, {
             arrow,

@@ -31,6 +31,10 @@ import {
 import {
   MapObjectHasArrowCheck,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectHasArrowCheck';
+import {
+  MapObjectBackground,
+} from '@/modules/application/l1/l2/visualisation/background/MapObjectBackground';
+import { Zindex } from '@/modules/application/l1/l2/visualisation/zIndex/Zindex';
 
 const factories = useFactories();
 
@@ -57,6 +61,8 @@ const mapTypeCurrent = new MapTypeCurrent(factories);
 const mapSettings = new MapSettings(mapFile, mapCurrent, factories);
 const canvas = new BrowserCanvas(factories);
 const konvaLayer = new KonvaLayer(canvas, factories);
+const zIndex = new Zindex(factories);
+const mapBackground = new MapObjectBackground(konvaLayer, mapFile, zIndex, factories);
 const mapObject = new MapObject(mapCurrent, mapFile, factories);
 const mapObjectRemoved = new MapObjectRemoved(
   mapCurrent,
@@ -107,6 +113,7 @@ const modules = {
   mapObjectsLink,
   mapTypeCurrent,
   mapRects,
+  mapBackground,
   mapObjectArrows: mapArrows,
   canvas,
   miniMap,

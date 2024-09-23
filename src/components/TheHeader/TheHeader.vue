@@ -27,7 +27,7 @@ import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
       <BaseButton
         type="success"
         size="sm"
-        title="Показать лог сессии"
+        title="Показать лог уведомлений"
         class="w-7 block"
       >
         <BaseIcon icon="fa-file-text" />

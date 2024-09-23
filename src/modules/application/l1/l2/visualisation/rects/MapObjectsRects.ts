@@ -63,7 +63,9 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
             name: object.id,
             draggable: true,
             objectId: object.id,
+            zIndex: 3,
           });
+
           this.previouslyRenderedRects.set(object, rect);
           layer.add(rect);
 
