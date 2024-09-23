@@ -60,13 +60,20 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
             y: +object.position[1],
             width: +object.width,
             height: +object.height,
-            fill: '#ccc',
             name: object.id,
             draggable: true,
             objectId: object.id,
           });
           this.previouslyRenderedRects.set(object, rect);
           layer.add(rect);
+
+          rect.on('mouseenter', () => {
+            layer.getStage().container().style.cursor = 'pointer';
+          });
+
+          rect.on('mouseleave', () => {
+            layer.getStage().container().style.cursor = 'default';
+          });
 
           rect.on('dragend', (e) => {
             this.mapObject.receive({
@@ -76,6 +83,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
           });
 
           rect.on('dragmove', (e) => {
+            layer.getStage().container().style.cursor = 'move';
             this.mapObjectForRendering.receive({
               ...object,
               position: [rect.x(), rect.y()],
