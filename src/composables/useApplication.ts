@@ -39,6 +39,9 @@ import { Resizing } from '@/modules/application/l1/l2/visualisation/resizing/Res
 import {
   ObjectGeometryFix,
 } from '@/modules/application/l1/l2/visualisation/objectGeometryFix/ObjectGeometryFix';
+import {
+  ObjectAdditionalFieldsFix,
+} from '@/modules/application/l1/l2/structuring/objectAdditionalFieldsFix/ObjectAdditionalFieldsFix';
 
 const factories = useFactories();
 
@@ -114,6 +117,7 @@ const mapArrows = new MapObjectsArrows(konvaLayer, mapFile, mapForRendering, fac
 const miniMap = new MiniMap(mapForRendering, konvaLayer, factories);
 const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, mapCurrent, mapObject, factories);
 const resizing = new Resizing(mapFile, canvas, konvaLayer, factories);
+const objectAdditionalFieldsFix = new ObjectAdditionalFieldsFix(mapObjectCurrent, mapFile, mapObject, factories);
 
 const modules = {
   mapFile,
@@ -140,6 +144,7 @@ const modules = {
   drawer,
   konvaLayer,
   resizing,
+  objectAdditionalFieldsFix,
 };
 
 export const useApplication = () => modules;
