@@ -38,7 +38,14 @@ export class MapObjectsVisible implements MapObjectsType {
     chain.result(factories.patron.create(
       factories.guest.create<[ChainGuestExecutor]>(({ position, size, objects }) => {
         localDebug('objects come to result', objects);
-        const visibleObjects = objects.filter((object) => this.isInBounding(position, size, object.position));
+
+        const visibleObjects = objects.filter((object) => {
+          const objectSize = {
+            width: object.width,
+            height: object.height,
+          };
+          return this.isInBounding(position, size, object.position, objectSize);
+        });
         localDebug('visible objects calculated', visibleObjects);
         this.visibleObjectsCache.receive(visibleObjects);
       }),
@@ -50,10 +57,15 @@ export class MapObjectsVisible implements MapObjectsType {
     return this;
   }
 
-  private isInBounding(layerPosition: PointDocument, size: SizeDocument, position: [number, number]) {
-    const stageStartX = layerPosition.x + 100;
+  private isInBounding(
+    layerPosition: PointDocument,
+    size: SizeDocument,
+    position: [number, number],
+    objectSize: SizeDocument,
+  ) {
+    const stageStartX = layerPosition.x;
     const stageEndX = layerPosition.x - size.width;
-    const stageStartY = layerPosition.y + 100;
+    const stageStartY = layerPosition.y;
     const stageEndY = layerPosition.y - size.height;
     const [objectX, objectY] = position;
     localDebug(
@@ -65,9 +77,9 @@ export class MapObjectsVisible implements MapObjectsType {
     );
     localDebug('object position', position);
     return (
-      stageStartX > -objectX
+      stageStartX > -objectX - objectSize.width
       && -objectX > stageEndX
-      && stageStartY > -objectY
+      && stageStartY > -objectY - objectSize.height
       && -objectY > stageEndY
     );
   }
