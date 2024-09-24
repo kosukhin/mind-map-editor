@@ -190,23 +190,23 @@ export class MapObjectsArrows {
     if (top) {
       x += Math.round(shapeGeometry.width / 2);
       breakPoint.x = x;
-      breakPoint.y = (lookToMiddle.y + shapeMiddle.y) / 2;
+      breakPoint.y = (shapePosition.y + lookToPosition.y + lookToGeometry.height) / 2;
       shiftX = lookToPosition.x > shapePosition.x ? 1 : -1;
     } else if (left) {
       y += Math.round(shapeGeometry.height / 2);
       x += +shapeGeometry.width;
-      breakPoint.x = (lookToMiddle.x + shapeMiddle.x) / 2;
+      breakPoint.x = (shapePosition.x + shapeGeometry.width + lookToPosition.x) / 2;
       breakPoint.y = y;
       shiftY = lookToPosition.y > shapePosition.y ? 1 : -1;
     } else if (bottom) {
       x += Math.round(shapeGeometry.width / 2);
       y += +shapeGeometry.height;
       breakPoint.x = x;
-      breakPoint.y = (lookToMiddle.y + shapeMiddle.y) / 2;
+      breakPoint.y = (shapePosition.y + shapeGeometry.height + lookToPosition.y) / 2;
       shiftX = lookToPosition.x > shapePosition.x ? 1 : -1;
     } else if (right) {
       y += Math.round(shapeGeometry.height / 2);
-      breakPoint.x = (lookToMiddle.x + shapeMiddle.x) / 2;
+      breakPoint.x = (shapePosition.x + lookToPosition.x + lookToGeometry.width) / 2;
       breakPoint.y = y;
       shiftY = lookToPosition.y > shapePosition.y ? 1 : -1;
     }
