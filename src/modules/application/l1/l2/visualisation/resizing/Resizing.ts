@@ -6,6 +6,9 @@ import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { Layer } from 'konva/lib/Layer';
 
+/**
+ * Обработка изменения размера редактора
+ */
 export class Resizing implements GuestType<MapDocument> {
   public constructor(
     mapFile: MapFileType,

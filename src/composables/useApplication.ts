@@ -78,20 +78,26 @@ const mapObjectRemoved = new MapObjectRemoved(
   factories,
 );
 const mapObjectNew = new MapObjectNew(mapCurrent, mapObject, factories);
+const mapTypeUsedCheck = new MapTypeUsed(mapFile, factories);
 const mapType = new MapTypes(
   mapCurrent,
   mapFile,
   [new CheckNotification(
     notification,
     new MapTypeUsedNameChangedCheck(
-      new MapTypeUsed(mapFile, factories),
+      mapTypeUsedCheck,
       factories,
     ),
     factories,
   )],
   factories,
 );
-const mapTypeRemoved = new MapTypeRemoved(mapCurrent, mapFile, factories);
+const mapTypeRemoved = new MapTypeRemoved(
+  mapCurrent,
+  mapFile,
+  [new CheckNotification(notification, mapTypeUsedCheck, factories)],
+  factories,
+);
 const mapTypeNew = new MapTypeNew(mapType);
 const mapObjectsVisible = new MapObjectsVisible(
   konvaLayer,
