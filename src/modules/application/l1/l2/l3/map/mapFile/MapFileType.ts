@@ -5,6 +5,6 @@ import { GuestType } from '@/modules/system/guest/GuestType';
  * Поведения для файла с картами
  */
 export interface MapFileType extends GuestType<MapFileDocument> {
-  currentMap(target: GuestType<MapDocument>): this;
+  currentMap(target: GuestType<MapDocument>): GuestType<MapDocument>;
   mapFile(target: GuestType<MapFileDocument>): this;
 }

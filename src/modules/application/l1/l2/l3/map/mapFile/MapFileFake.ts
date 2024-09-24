@@ -15,12 +15,12 @@ export class MapFileFake implements MapFileType {
     private mapFileDocument: MapFileDocument,
   ) {}
 
-  public currentMap(target: GuestType<MapDocument>): this {
+  public currentMap(target: GuestType<MapDocument>) {
     this.currentMapPool.distribute(
       this.mapFileDocument.current,
       target,
     );
-    return this;
+    return target;
   }
 
   public mapFile(target: GuestType<MapFileDocument>): this {

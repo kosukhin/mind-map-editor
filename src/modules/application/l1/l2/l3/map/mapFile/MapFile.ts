@@ -33,12 +33,12 @@ export class MapFile implements MapFileType {
     this.mapFilePatrons = factories.pool.create(this);
   }
 
-  public currentMap(currentMapGuest: GuestType<MapDocument>): this {
+  public currentMap<R extends GuestType<MapDocument>>(currentMapGuest: R): R {
     this.mapFile(this.factories.guestInTheMiddle.create(currentMapGuest, (value: MapFileDocument) => {
       localDebug('get current map', value, typeof value);
       this.currentMapPatrons.distribute(value.current, currentMapGuest);
     }));
-    return this;
+    return currentMapGuest;
   }
 
   public receive(value: MapFileDocument): this {

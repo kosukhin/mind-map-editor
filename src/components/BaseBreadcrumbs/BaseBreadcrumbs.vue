@@ -1,8 +1,16 @@
 <script lang="ts" setup>
 import uniqueId from 'lodash/uniqueId';
+import { useApplication } from '@/composables/useApplication';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
+import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 
-const parentNames = [];
-const settingsTitle = 'title';
+const parentNames: unknown[] = [];
+
+const {
+  mapFile,
+} = useApplication();
+
+const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
 </script>
 
 <template>
@@ -16,9 +24,9 @@ const settingsTitle = 'title';
         {{ title }}
       </RouterLink>
     </span>
-    <span>
+    <span v-if="map">
       /
-      {{ settingsTitle }}
+      {{ map.settings.title }}
     </span>
   </div>
 </template>

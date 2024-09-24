@@ -28,9 +28,9 @@ export class MapFileForRendering implements MapFileType {
     mapFile.currentMap(factories.patron.create(this.mapCache));
   }
 
-  public currentMap(target: GuestType<MapDocument>): this {
+  public currentMap(target: GuestType<MapDocument>) {
     this.mapCache.receiving(target);
-    return this;
+    return target;
   }
 
   public mapFile(target: GuestType<MapFileDocument>): this {

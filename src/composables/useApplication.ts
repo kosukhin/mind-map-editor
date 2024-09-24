@@ -42,6 +42,7 @@ import {
 import {
   ObjectAdditionalFieldsFix,
 } from '@/modules/application/l1/l2/structuring/objectAdditionalFieldsFix/ObjectAdditionalFieldsFix';
+import { MapRemoved } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapRemoved';
 
 const factories = useFactories();
 
@@ -118,10 +119,12 @@ const miniMap = new MiniMap(mapForRendering, konvaLayer, factories);
 const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, mapCurrent, mapObject, factories);
 const resizing = new Resizing(mapFile, canvas, konvaLayer, factories);
 const objectAdditionalFieldsFix = new ObjectAdditionalFieldsFix(mapObjectCurrent, mapFile, mapObject, factories);
+const mapRemoved = new MapRemoved();
 
 const modules = {
   mapFile,
   mapCurrent,
+  mapRemoved,
   mapSettings,
   mapObject,
   mapObjectRemoved,
