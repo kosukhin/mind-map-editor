@@ -14,9 +14,10 @@ import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseInputRow from '@/components/BaseInput/BaseInputRow.vue';
 import BaseEditor from '@/components/BaseEditor/BaseEditor.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 
 const {
-  mapObjectCurrent, mapFile, mapObject, drawer, mapObjectRemoved,
+  mapObjectCurrent, mapFile, mapObject, drawer, mapObjectRemoved, mapObjectRelationRemoved,
 } = useApplication();
 const { patron, chain, guest } = useFactories();
 
@@ -32,6 +33,8 @@ const object = new VueComputedPatron<MapObjectDocument>(() => {
   ));
 }).ref();
 
+const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
+
 const close = () => {
   mapObjectCurrent.receive('');
   drawer.receive('');
@@ -45,6 +48,13 @@ const remove = () => {
 const save = () => {
   mapObject.receive(object.value);
   close();
+};
+
+const removeRelation = (index: number) => {
+  mapObjectRelationRemoved.receive({
+    index,
+    object: object.value,
+  });
 };
 </script>
 
@@ -157,17 +167,18 @@ const save = () => {
           <div class="FormObject-Title">{{ $t('general.relations') }}</div>
           <div class="FormObject-Row">
             <div
-              v-for="(arrow) in object.arrows"
+              v-for="(arrow, index) in object.arrows"
               :key="arrow.id"
               class="FormObject-Arrow"
             >
-              <span class="FormObject-ArrowName">
-                obj
+              <span v-if="map?.objects[arrow.id]" class="FormObject-ArrowName">
+                #{{ index + 1 }} {{ map.objects[arrow.id].name }}
               </span>
               <BaseButton
                 class="FormObject-ArrowButton"
                 type="danger"
                 size="sm"
+                @click="removeRelation(index)"
               >
                 {{ $t('general.delete') }}
               </BaseButton>

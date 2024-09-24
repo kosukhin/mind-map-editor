@@ -43,6 +43,9 @@ import {
   ObjectAdditionalFieldsFix,
 } from '@/modules/application/l1/l2/structuring/objectAdditionalFieldsFix/ObjectAdditionalFieldsFix';
 import { MapRemoved } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapRemoved';
+import {
+  MapObjectRelationRemoved,
+} from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectRelationRemoved';
 
 const factories = useFactories();
 
@@ -120,6 +123,7 @@ const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, mapCurrent, mapObjec
 const resizing = new Resizing(mapFile, canvas, konvaLayer, factories);
 const objectAdditionalFieldsFix = new ObjectAdditionalFieldsFix(mapObjectCurrent, mapFile, mapObject, factories);
 const mapRemoved = new MapRemoved();
+const mapObjectRelationRemoved = new MapObjectRelationRemoved(mapObject);
 
 const modules = {
   mapFile,
@@ -148,6 +152,7 @@ const modules = {
   konvaLayer,
   resizing,
   objectAdditionalFieldsFix,
+  mapObjectRelationRemoved,
 };
 
 export const useApplication = () => modules;
