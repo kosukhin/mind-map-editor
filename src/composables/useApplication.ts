@@ -36,6 +36,9 @@ import {
 } from '@/modules/application/l1/l2/visualisation/background/MapObjectBackground';
 import { Zindex } from '@/modules/application/l1/l2/visualisation/zIndex/Zindex';
 import { Resizing } from '@/modules/application/l1/l2/visualisation/resizing/Resizing';
+import {
+  ObjectGeometryFix,
+} from '@/modules/application/l1/l2/visualisation/objectGeometryFix/ObjectGeometryFix';
 
 const factories = useFactories();
 
@@ -105,6 +108,7 @@ const mapObjectsVisible = new MapObjectsVisible(
   mapForRendering,
   factories,
 );
+const mapObjectsGeometryFix = new ObjectGeometryFix(mapObjectsVisible, mapFile, mapCurrent, factories);
 const mapRects = new MapObjectsRects(konvaLayer, mapObject, mapObjectsVisible, mapObjectCurrent, mapObjectForRendering, factories);
 const mapArrows = new MapObjectsArrows(konvaLayer, mapFile, mapForRendering, factories);
 const miniMap = new MiniMap(mapForRendering, konvaLayer, factories);
@@ -128,6 +132,7 @@ const modules = {
   mapRects,
   mapBackground,
   mapObjectArrows: mapArrows,
+  mapObjectsGeometryFix,
   canvas,
   miniMap,
   notification,

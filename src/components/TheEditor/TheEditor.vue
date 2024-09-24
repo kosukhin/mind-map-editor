@@ -47,11 +47,12 @@ onMounted((() => {
           <div class="w-[14px] h-[14px] bg-white"></div>
         </div>
       </div>
-      <div :class="{'absolute top-0 left-0': true}" :style="{width: `${layerSize.width}px`, height: `${layerSize.height}px`, transform: `translate(${layerPosition.x}px, ${layerPosition.y}px)`}">
+      <div :class="{'objects-container absolute top-0 left-0': true}" :style="{width: `${layerSize.width}px`, height: `${layerSize.height}px`, transform: `translate(${layerPosition.x}px, ${layerPosition.y}px)`}">
         <div
           v-for="obj in objects"
           :key="obj.obj.id"
           class="absolute"
+          :data-object-id="obj.obj.id"
           :style="`width:${obj.obj.width}px;height: ${obj.obj.height}px;top: ${obj.obj.position[1]}px;left:${obj.obj.position[0]}px;z-index:${obj.obj.zindex}`"
         >
           <div class="absolute bottom-[100%] text-nowrap left-[50%] translate-x-[-50%] text-center pb-2 pointer-events-auto text-sm">

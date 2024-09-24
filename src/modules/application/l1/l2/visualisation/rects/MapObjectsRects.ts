@@ -61,6 +61,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
             width: +object.width,
             height: +object.height,
             name: object.id,
+            fill: '#ccc',
             draggable: true,
             objectId: object.id,
             zIndex: 3,
