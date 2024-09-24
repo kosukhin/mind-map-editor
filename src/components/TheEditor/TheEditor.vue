@@ -41,7 +41,7 @@ onMounted((() => {
 <template>
   <div class="relative">
     <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-1">
-      <div class="text-sm p-2 absolute bottom-0 left-0">
+      <div class="text-sm z-10 p-2 absolute bottom-0 left-0">
         Видимых объектов: {{ objects.length }}, FPS: {{ fpsValue }},
         <BaseNotify />
       </div>
@@ -54,6 +54,18 @@ onMounted((() => {
         </div>
       </div>
       <div :class="{'objects-container absolute top-0 left-0': true}" :style="{width: `${layerSize.width}px`, height: `${layerSize.height}px`, transform: `translate(${layerPosition.x}px, ${layerPosition.y}px)`}">
+        <div class="absolute flex top-0 opacity-50 left-0 w-full z-0 h-[30px] bg-default border-solid border-1 border-black" :style="{transform: `translate(0, ${-layerPosition.y}px)`}">
+          <span class="flex-1">0</span>
+          <span class="flex-1">1000</span>
+          <span class="flex-1">2000</span>
+          <span class="flex-1">3000</span>
+        </div>
+        <div class="absolute flex flex-column top-0 opacity-50 left-0 h-full z-0 w-[30px] bg-default border-solid border-1 border-black" :style="{transform: `translate(${-layerPosition.x}px, 0)`}">
+          <span class="flex-1">0</span>
+          <span class="flex-1">1000</span>
+          <span class="flex-1">2000</span>
+          <span class="flex-1">3000</span>
+        </div>
         <div
           v-for="obj in objects"
           :key="obj.obj.id"
