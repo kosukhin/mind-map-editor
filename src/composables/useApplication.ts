@@ -46,6 +46,7 @@ import { MapRemoved } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapRem
 import {
   MapObjectRelationRemoved,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectRelationRemoved';
+import { Fps } from '@/modules/application/l1/l2/visualisation/fps/Fps';
 
 const factories = useFactories();
 
@@ -124,6 +125,7 @@ const resizing = new Resizing(mapFile, canvas, konvaLayer, factories);
 const objectAdditionalFieldsFix = new ObjectAdditionalFieldsFix(mapObjectCurrent, mapFile, mapObject, factories);
 const mapRemoved = new MapRemoved();
 const mapObjectRelationRemoved = new MapObjectRelationRemoved(mapObject);
+const fps = new Fps();
 
 const modules = {
   mapFile,
@@ -153,6 +155,7 @@ const modules = {
   resizing,
   objectAdditionalFieldsFix,
   mapObjectRelationRemoved,
+  fps,
 };
 
 export const useApplication = () => modules;

@@ -12,9 +12,15 @@ import {
 import BaseNotify from '@/components/BaseNotify/BaseNotify.vue';
 
 const {
-  canvas, mapObjectsVisible, mapCurrent, konvaLayer,
+  canvas,
+  mapObjectsVisible,
+  mapCurrent,
+  konvaLayer,
+  fps,
 } = useApplication();
 const factories = useFactories();
+
+const fpsValue = fps.value(new VueRefPatron()).ref();
 
 const objectsWithTemplates = new MapObjectsWithTemplates(
   mapObjectsVisible,
@@ -36,7 +42,7 @@ onMounted((() => {
   <div class="relative">
     <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-1">
       <div class="text-sm p-2 absolute bottom-0 left-0">
-        Видимых объектов: {{ objects.length }}, FPS: 0,
+        Видимых объектов: {{ objects.length }}, FPS: {{ fpsValue }},
         <BaseNotify />
       </div>
       <div class="absolute bottom-3 shadow-standard-second shadow-md drop-shadow right-3 z-10">
