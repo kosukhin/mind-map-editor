@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { useFactories } from '@/composables/useFactories';
@@ -10,6 +10,9 @@ import {
   MapObjectWithTemplateDocument,
 } from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectWithTemplateDocument';
 import BaseNotify from '@/components/BaseNotify/BaseNotify.vue';
+import {
+  VueSource,
+} from '@/modules/integration/vue/VueSource';
 
 const {
   canvas,
@@ -32,6 +35,10 @@ const objects = objectsWithTemplates.objects(new VueRefPatron<MapObjectWithTempl
 const layerSize = konvaLayer.size(new VueRefPatron()).ref();
 const layerPosition = konvaLayer.position(new VueRefPatron()).ref();
 
+const layerWidth = computed(() => layerSize.value?.width);
+const layerWidthSource = new VueSource(layerWidth);
+const chunks = factories.numberChunks.create(10, layerWidthSource).chunks(new VueRefPatron()).ref();
+
 const canvasWrapper = ref();
 onMounted((() => {
   canvas.receive(canvasWrapper.value);
@@ -41,7 +48,7 @@ onMounted((() => {
 <template>
   <div class="relative">
     <div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-1">
-      <div class="text-sm z-10 p-2 absolute bottom-0 left-0">
+      <div class="text-sm z-10 p-2 absolute bottom-0 left-5">
         Видимых объектов: {{ objects.length }}, FPS: {{ fpsValue }},
         <BaseNotify />
       </div>
@@ -53,23 +60,18 @@ onMounted((() => {
           <div class="w-[14px] h-[14px] bg-white"></div>
         </div>
       </div>
+      <div class="absolute z-30 top-0 left-0 h-[18px] w-[22px] bg-white"></div>
       <div :class="{'objects-container absolute top-0 left-0': true}" :style="{width: `${layerSize.width}px`, height: `${layerSize.height}px`, transform: `translate(${layerPosition.x}px, ${layerPosition.y}px)`}">
-        <div class="absolute flex top-0 opacity-50 left-0 w-full z-0 h-[30px] bg-default border-solid border-1 border-black" :style="{transform: `translate(0, ${-layerPosition.y}px)`}">
-          <span class="flex-1">0</span>
-          <span class="flex-1">1000</span>
-          <span class="flex-1">2000</span>
-          <span class="flex-1">3000</span>
+        <div class="absolute flex top-0 left-0 w-full z-20 h-[20px] bg-default border-b-2 border-border text-right text-sm px-2" :style="{transform: `translate(0, ${-layerPosition.y}px)`}">
+          <span class="flex-1 text-body-dark" :key="`horiz_${chunk}`" v-for="chunk in chunks">{{chunk}}</span>
         </div>
-        <div class="absolute flex flex-column top-0 opacity-50 left-0 h-full z-0 w-[30px] bg-default border-solid border-1 border-black" :style="{transform: `translate(${-layerPosition.x}px, 0)`}">
-          <span class="flex-1">0</span>
-          <span class="flex-1">1000</span>
-          <span class="flex-1">2000</span>
-          <span class="flex-1">3000</span>
+        <div class="absolute flex [writing-mode:vertical-lr] top-0 left-0 h-full z-20 w-[20px] bg-default border-r-2 border-border text-right text-sm py-2" :style="{transform: `translate(${-layerPosition.x}px, 0)`}">
+          <span class="flex-1 text-body-dark" :key="`vert_${chunk}`" v-for="chunk in chunks">{{chunk}}</span>
         </div>
         <div
           v-for="obj in objects"
           :key="obj.obj.id"
-          class="absolute"
+          class="absolute z-10"
           :data-object-id="obj.obj.id"
           :style="`width:${obj.obj.width}px;height: ${obj.obj.height}px;top: ${obj.obj.position[1]}px;left:${obj.obj.position[0]}px;z-index:${obj.obj.zindex}`"
         >

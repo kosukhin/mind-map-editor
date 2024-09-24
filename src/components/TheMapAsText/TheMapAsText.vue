@@ -4,11 +4,11 @@ import { computed, ref } from '@vue/reactivity';
 import { useI18n } from 'vue-i18n';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
+import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_TEXT } from '@/constants/overlays';
 import { useMap } from '@/composables/useMap';
 import { nl2br, stripHtml } from '@/utils/common';
-import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 
 useOverlayAutoClose(SHOW_TEXT);
 

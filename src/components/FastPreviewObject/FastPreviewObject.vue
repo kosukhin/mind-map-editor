@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { useMapObject } from '@/composables/useMapObject';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import { useMap } from '@/composables/useMap';
-import { useLayer } from '@/composables/useLayer';
 import Konva from 'konva';
 import { nextTick } from '@vue/runtime-core';
 import { watch } from 'vue';
-import { useObjectActions } from '@/composables/useObjectActions';
 import { useMagicKeys, useMouse } from '@vueuse/core';
+import { useObjectActions } from '@/composables/useObjectActions';
+import { useLayer } from '@/composables/useLayer';
+import { useMap } from '@/composables/useMap';
+import { useMapObject } from '@/composables/useMapObject';
 import { useMapPartialRenderer } from '@/composables/useMapPartialRenderer';
 import { useOverlay } from '@/composables/useOverlay';
 import { SHOW_OBJECT } from '@/constants/overlays';

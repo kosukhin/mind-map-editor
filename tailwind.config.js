@@ -7,6 +7,7 @@ module.exports = {
       white: '#ffffff',
       'body-dark': '#9ca3af',
       body: '#f3f4f6',
+      border: '#ccc',
       default: '#ffffff',
       standard: '#ffffff',
       primary: '#22bdff',

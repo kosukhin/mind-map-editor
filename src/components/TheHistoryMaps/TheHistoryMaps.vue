@@ -3,11 +3,11 @@ import { useStorage } from '@vueuse/core';
 import { useRoute } from 'vue-router';
 import { watch } from '@vue/runtime-core';
 import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
+import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
 import { SHOW_HISTORY_MAPS } from '@/constants/overlays';
 import { HISTORY_STORAGE_KEY } from '@/constants/system';
 import { useMeta } from '@/composables/useMeta';
-import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 
 useOverlayAutoClose(SHOW_HISTORY_MAPS);
 
