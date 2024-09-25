@@ -2,6 +2,7 @@ import { expect, test } from 'vitest';
 import { Guest } from '@/modules/system/guest/Guest';
 import { useFactories } from '@/composables/useFactories';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
 import { MapFileFake } from '../mapFile/MapFileFake';
 import { MapCurrent } from './MapCurrent';
 
@@ -25,7 +26,7 @@ test('map current', () => {
 
   const factories = useFactories();
   const fake = new MapFileFake(defaultMapFileDocument);
-  const map = new MapCurrent(fake, factories);
+  const map = new MapCurrent(fake, new MapCurrentID(factories), factories);
   map.objects(new Guest((objects: MapObjectDocument[]) => {
     expect(objects.length).toBe(0);
   }));

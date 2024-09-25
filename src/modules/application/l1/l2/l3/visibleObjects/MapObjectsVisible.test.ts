@@ -11,6 +11,7 @@ import { Guest } from '@/modules/system/guest/Guest';
 import { Patron } from '@/modules/system/guest/Patron';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { useFactories } from '@/composables/useFactories';
+import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
 
 test('visible object', () => {
   const factories = useFactories();
@@ -57,7 +58,7 @@ test('visible object', () => {
   };
 
   const mapFileFake = new MapFileFake(defaultMapFileDocument);
-  const mapCurrent = new MapCurrent(mapFileFake, factories);
+  const mapCurrent = new MapCurrent(mapFileFake, new MapCurrentID(factories), factories);
   const layer = new KonvaLayer(browserCanvas, factories);
   const mapObjects = new MapObjectsVisible(layer, browserCanvas, mapCurrent, factories);
 

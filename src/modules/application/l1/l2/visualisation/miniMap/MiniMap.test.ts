@@ -5,6 +5,7 @@ import { Patron } from '@/modules/system/guest/Patron';
 import { Guest } from '@/modules/system/guest/Guest';
 import { useFactories } from '@/composables/useFactories';
 import { PointIdDocument } from '@/modules/application/l1/l2/l3/map/documents/PointIdDocument';
+import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
 import { MapCurrent } from '../../l3/map/mapCurrent/MapCurrent';
 import { MapFileFake } from '../../l3/map/mapFile/MapFileFake';
 import { MiniMap } from './MiniMap';
@@ -49,7 +50,7 @@ test('mini map', () => {
 
   const factories = useFactories();
   const mapFileFake = new MapFileFake(defaultMapFileDocument);
-  const mapCurrent = new MapCurrent(mapFileFake, factories);
+  const mapCurrent = new MapCurrent(mapFileFake, new MapCurrentID(factories), factories);
 
   const div = document.createElement('div');
   div.innerHTML = '<canvas height="300" width="300" />';

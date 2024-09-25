@@ -43,8 +43,7 @@ export class MapObjectUrl {
               if (object.targetBlank) {
                 openExternalLink(url);
               } else {
-                const router = useRouter();
-                router.push(url);
+                localDebug('open new map', url);
               }
             }
           }),

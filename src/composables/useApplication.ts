@@ -47,6 +47,7 @@ import {
   MapObjectRelationRemoved,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectRelationRemoved';
 import { Fps } from '@/modules/application/l1/l2/visualisation/fps/Fps';
+import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
 
 const factories = useFactories();
 
@@ -54,20 +55,23 @@ const modal = new Modal(factories);
 const drawer = new Drawer(factories);
 const notification = new Notification(factories);
 
+const mapCurrentID = new MapCurrentID(factories);
+
 const mapFile = new MapFile(
   new FileSystemContent(
     new BrowserLaunchQueue(),
     notification,
     factories,
   ),
+  mapCurrentID,
   factories,
 );
 
 const mapFileForRendering = new MapFileForRendering(mapFile, factories);
-const mapForRendering = new MapCurrent(mapFileForRendering, factories);
+const mapForRendering = new MapCurrent(mapFileForRendering, mapCurrentID, factories);
 const mapObjectForRendering = new MapObject(mapForRendering, mapFileForRendering, factories);
 
-const mapCurrent = new MapCurrent(mapFile, factories);
+const mapCurrent = new MapCurrent(mapFile, mapCurrentID, factories);
 const mapObjectCurrent = new MapObjectCurrent(drawer, factories);
 const mapTypeCurrent = new MapTypeCurrent(factories);
 const mapSettings = new MapSettings(mapFile, mapCurrent, factories);
@@ -128,6 +132,7 @@ const mapObjectRelationRemoved = new MapObjectRelationRemoved(mapObject);
 const fps = new Fps();
 
 const modules = {
+  mapCurrentID,
   mapFile,
   mapCurrent,
   mapRemoved,

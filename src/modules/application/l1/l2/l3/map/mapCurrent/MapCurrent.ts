@@ -10,6 +10,7 @@ import { debug } from 'debug';
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { CacheType } from '@/modules/system/guest/CacheType';
+import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentIDType';
 
 const localDebug = debug('MapCurrent');
 
@@ -26,6 +27,7 @@ export class MapCurrent implements MapType {
 
   public constructor(
     private mapFile: MapFileType,
+    private mapId: MapCurrentIDType,
     private factories: {
       cache: FactoryType<CacheType>,
       guest: FactoryType<GuestType>,
@@ -61,13 +63,16 @@ export class MapCurrent implements MapType {
 
   public receive(value: MapDocument) {
     localDebug('save map document', value);
-    const name = 'current';
-    this.mapFile.mapFile(this.factories.guest.create((latestMapFile: MapFileDocument) => {
-      this.mapFile.receive({
-        ...latestMapFile,
-        [name]: value,
-      });
-    }));
+    this.mapId.id(
+      this.factories.guest.create((mapId: string) => {
+        this.mapFile.mapFile(this.factories.guest.create((latestMapFile: MapFileDocument) => {
+          this.mapFile.receive({
+            ...latestMapFile,
+            [mapId]: value,
+          });
+        }));
+      }),
+    );
     return this;
   }
 }
