@@ -13,6 +13,9 @@ import BaseNotify from '@/components/BaseNotify/BaseNotify.vue';
 import {
   VueSource,
 } from '@/modules/integration/vue/VueSource';
+import {
+  MapObjectDocument,
+} from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 
 const {
   canvas,
@@ -43,6 +46,12 @@ const canvasWrapper = ref();
 onMounted((() => {
   canvas.receive(canvasWrapper.value);
 }));
+
+const onObjectClick = (object: MapObjectDocument) => {
+  factories.mapObjectUrl.create(
+    factories.source.create(object),
+  ).open();
+};
 </script>
 
 <template>
@@ -63,10 +72,10 @@ onMounted((() => {
       <div class="absolute z-30 top-0 left-0 h-[18px] w-[22px] bg-white"></div>
       <div :class="{'objects-container absolute top-0 left-0': true}" :style="{width: `${layerSize.width}px`, height: `${layerSize.height}px`, transform: `translate(${layerPosition.x}px, ${layerPosition.y}px)`}">
         <div class="absolute flex top-0 left-0 w-full z-20 h-[20px] bg-default border-b-2 border-border text-right text-sm px-2" :style="{transform: `translate(0, ${-layerPosition.y}px)`}">
-          <span class="flex-1 text-body-dark" :key="`horiz_${chunk}`" v-for="chunk in chunks">{{chunk}}</span>
+          <span class="flex-1 text-body-dark" :key="`horiz_${chunk}`" v-for="chunk in chunks">{{chunk}}px</span>
         </div>
-        <div class="absolute flex [writing-mode:vertical-lr] top-0 left-0 h-full z-20 w-[20px] bg-default border-r-2 border-border text-right text-sm py-2" :style="{transform: `translate(${-layerPosition.x}px, 0)`}">
-          <span class="flex-1 text-body-dark" :key="`vert_${chunk}`" v-for="chunk in chunks">{{chunk}}</span>
+        <div class="absolute flex [writing-mode:vertical-lr] top-0 left-0 h-full z-20 w-[20px] bg-default border-r-2 border-border text-left text-sm py-2" :style="{transform: `translate(${-layerPosition.x}px, 0)`}">
+          <span class="flex-1 rotate-180 text-body-dark" :key="`vert_${chunk}`" v-for="chunk in chunks">{{chunk}}px</span>
         </div>
         <div
           v-for="obj in objects"
@@ -79,6 +88,7 @@ onMounted((() => {
           <span
             v-html="obj.obj.additionalName"
             :class="[obj.obj.linked && 'cursor-pointer underline']"
+            @click="onObjectClick(obj.obj)"
           ></span>
           </div>
           <div class="absolute top-[100%] text-nowrap left-[50%] translate-x-[-50%] text-center pt-2 text-sm" v-html="obj.obj.name"></div>

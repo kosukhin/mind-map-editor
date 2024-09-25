@@ -13,14 +13,20 @@ import { PatronOnce } from '@/modules/system/guest/PatronOnce';
 import { GuestCast } from '@/modules/system/guest/GuestCast';
 import { SvgImage } from '@/modules/application/l1/l2/visualisation/svg/SvgImage';
 import { FactoryDynamic } from '@/modules/system/guest/FactoryDynamic';
-import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import {
+  MapObjectDocument,
+  MapTypeDocument,
+} from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { SvgMapTypeImage } from '@/modules/application/l1/l2/visualisation/svg/SvgMapTypeImage';
 import { NumberChunks } from '@/modules/application/l1/l2/l3/number/NumberChunks';
 import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
+import { Source } from '@/modules/system/guest/Source';
+import { MapObjectUrl } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectUrl';
 
 const fileHandlerContent = new Factory(SystemFileFromHandler);
 const browserFileSaved = new Factory(BrowserFileSaved);
 const cache = new Factory(Cache);
+const source = new Factory(Source);
 const guest = new Factory(Guest);
 const guestCast = new Factory(GuestCast);
 const pool = new Factory(PatronPool);
@@ -35,6 +41,7 @@ const svgMapTypeImage = new FactoryDynamic(
   (mapType: MapTypeDocument) => new SvgMapTypeImage(mapType, { svgImage }),
 );
 const numberChunks = new FactoryDynamic((chunks: number, baseNumber: GuestAwareType<number>) => new NumberChunks(chunks, baseNumber, { guestInTheMiddle }));
+const mapObjectUrl = new FactoryDynamic((objectSource: GuestAwareType<MapObjectDocument>) => new MapObjectUrl(objectSource, { guest, guestInTheMiddle }));
 
 const factories = {
   cache,
@@ -45,6 +52,7 @@ const factories = {
   patron,
   patronOnce,
   pool,
+  source,
 
   fileHandlerContent,
   browserFileSaved,
@@ -56,6 +64,7 @@ const factories = {
   svgMapTypeImage,
 
   numberChunks,
+  mapObjectUrl,
 };
 
 export const useFactories = () => factories;

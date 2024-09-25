@@ -1,8 +1,8 @@
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { PatronPool } from '@/modules/system/guest/PatronPool';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
+import { SourceType } from '@/modules/system/guest/SourceType';
 
-export class Source<T> implements GuestAwareType<T>, GuestType<T> {
+export class Source<T> implements SourceType<T> {
   private pool = new PatronPool(this);
 
   public constructor(private sourceDocument: T) {}

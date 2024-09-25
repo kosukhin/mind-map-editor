@@ -13,6 +13,8 @@ export class VueSource<T> implements GuestAwareType<T> {
       if (lastValue) {
         this.pool.receive(lastValue);
       }
+    }, {
+      deep: true,
     });
   }
 

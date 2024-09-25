@@ -15,11 +15,14 @@ import BaseInputRow from '@/components/BaseInput/BaseInputRow.vue';
 import BaseEditor from '@/components/BaseEditor/BaseEditor.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
+import { VueSource } from '@/modules/integration/vue/VueSource';
 
 const {
   mapObjectCurrent, mapFile, mapObject, drawer, mapObjectRemoved, mapObjectRelationRemoved,
 } = useApplication();
-const { patron, chain, guest } = useFactories();
+const {
+  patron, chain, guest, mapObjectUrl,
+} = useFactories();
 
 type ObjectChainProps = {map: MapDocument, objectId: string};
 const object = new VueComputedPatron<MapObjectDocument>(() => {
@@ -34,6 +37,9 @@ const object = new VueComputedPatron<MapObjectDocument>(() => {
 }).ref();
 
 const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
+const objectSource = new VueSource(object);
+const objectUrlBehaviour = mapObjectUrl.create(objectSource);
+const objectUrl = objectUrlBehaviour.url(new VueRefPatron<string>()).ref();
 
 const close = () => {
   mapObjectCurrent.receive('');
@@ -80,7 +86,7 @@ const removeRelation = (index: number) => {
         <template v-if="object.linked">
           <BaseInputTitle>{{ $t('general.outerLink') }}</BaseInputTitle>
           <div class="FormObject-Row">
-            <BaseInput v-model="object.outlink" />
+            <BaseInput :model-value="object.outlink || objectUrl" @update:model-value="object.outlink=$event" />
           </div>
           <div class="FormObject-Row">
             <BaseCheckbox
