@@ -22,6 +22,7 @@ import { NumberChunks } from '@/modules/application/l1/l2/l3/number/NumberChunks
 import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 import { Source } from '@/modules/system/guest/Source';
 import { MapObjectUrl } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectUrl';
+import { MapNameFromUrl } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapNameFromUrl';
 
 const fileHandlerContent = new Factory(SystemFileFromHandler);
 const browserFileSaved = new Factory(BrowserFileSaved);
@@ -41,7 +42,10 @@ const svgMapTypeImage = new FactoryDynamic(
   (mapType: MapTypeDocument) => new SvgMapTypeImage(mapType, { svgImage }),
 );
 const numberChunks = new FactoryDynamic((chunks: number, baseNumber: GuestAwareType<number>) => new NumberChunks(chunks, baseNumber, { guestInTheMiddle }));
-const mapObjectUrl = new FactoryDynamic((objectSource: GuestAwareType<MapObjectDocument>) => new MapObjectUrl(objectSource, { guest, guestInTheMiddle }));
+const mapNameFromUrl = new FactoryDynamic((mapUrl: GuestAwareType<string>) => new MapNameFromUrl(mapUrl, { guest, guestInTheMiddle }));
+const mapObjectUrl = new FactoryDynamic((objectSource: GuestAwareType<MapObjectDocument>) => new MapObjectUrl(objectSource, {
+  guest, guestInTheMiddle, source, mapNameFromUrl,
+}));
 
 const factories = {
   cache,
@@ -65,6 +69,8 @@ const factories = {
 
   numberChunks,
   mapObjectUrl,
+
+  mapNameFromUrl,
 };
 
 export const useFactories = () => factories;

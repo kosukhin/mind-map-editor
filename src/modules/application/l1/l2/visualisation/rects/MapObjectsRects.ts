@@ -78,6 +78,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
           });
 
           rect.on('dragend', (e) => {
+            localDebug('drag ended');
             this.mapObject.receive({
               ...object,
               position: [rect.x(), rect.y()],
@@ -85,6 +86,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
           });
 
           rect.on('dragmove', (e) => {
+            localDebug('dragmove works', rect.x(), rect.y());
             layer.getStage().container().style.cursor = 'move';
             this.mapObjectForRendering.receive({
               ...object,

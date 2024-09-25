@@ -6,6 +6,8 @@ import debounce from 'lodash/debounce';
 import { useRouter } from 'vue-router';
 import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 import { debug } from 'debug';
+import { SourceType } from '@/modules/system/guest/SourceType';
+import { MapNameFromUrl } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapNameFromUrl';
 
 const urlTrim = (url: string) => {
   if (url[url.length - 1] === '/') {
@@ -31,10 +33,12 @@ export class MapObjectUrl {
     private factories: {
       guest: FactoryType<GuestType>,
       guestInTheMiddle: FactoryType<GuestType>,
+      source: FactoryType<SourceType>,
+      mapNameFromUrl: FactoryType<MapNameFromUrl>,
     },
   ) {}
 
-  public open() {
+  public open(openByNameGuest: GuestType<string>) {
     this.object.receiving(
       this.factories.guest.create((object: MapObjectDocument) => {
         this.url(
@@ -44,6 +48,15 @@ export class MapObjectUrl {
                 openExternalLink(url);
               } else {
                 localDebug('open new map', url);
+                const mapNameFromUrl = this.factories.mapNameFromUrl.create(
+                  this.factories.source.create(url),
+                );
+                mapNameFromUrl.name(
+                  this.factories.guest.create((name: string) => {
+                    localDebug('open map name', name);
+                    openByNameGuest.receive(name);
+                  }),
+                );
               }
             }
           }),

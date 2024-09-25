@@ -27,7 +27,6 @@ export class Resizing implements GuestType<MapDocument> {
       this.canvas.canvas(this.factories.guest.create((canvasEl: HTMLCanvasElement) => {
         const canvasRect = canvasEl.getBoundingClientRect();
         this.konvaLayer.layer(this.factories.guest.create((layer: Layer) => {
-          console.log('body', body.contentRect.width, body.contentRect.height);
           layer.getStage().width(body.contentRect.width - canvasRect.left);
           layer.getStage().height(body.contentRect.height - canvasRect.top);
 

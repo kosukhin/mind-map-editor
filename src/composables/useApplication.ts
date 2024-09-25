@@ -67,7 +67,7 @@ const mapFile = new MapFile(
   factories,
 );
 
-const mapFileForRendering = new MapFileForRendering(mapFile, factories);
+const mapFileForRendering = new MapFileForRendering(mapFile, mapCurrentID, factories);
 const mapForRendering = new MapCurrent(mapFileForRendering, mapCurrentID, factories);
 const mapObjectForRendering = new MapObject(mapForRendering, mapFileForRendering, factories);
 

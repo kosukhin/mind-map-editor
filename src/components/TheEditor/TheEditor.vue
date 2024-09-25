@@ -23,6 +23,7 @@ const {
   mapCurrent,
   konvaLayer,
   fps,
+  mapCurrentID,
 } = useApplication();
 const factories = useFactories();
 
@@ -50,7 +51,9 @@ onMounted((() => {
 const onObjectClick = (object: MapObjectDocument) => {
   factories.mapObjectUrl.create(
     factories.source.create(object),
-  ).open();
+  ).open(factories.guest.create((name: string) => {
+    mapCurrentID.receive(name);
+  }));
 };
 </script>
 
