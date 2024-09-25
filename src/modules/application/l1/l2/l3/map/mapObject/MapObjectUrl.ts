@@ -48,6 +48,7 @@ export class MapObjectUrl {
                 openExternalLink(url);
               } else {
                 localDebug('open new map', url);
+                window.history.pushState('', '', url);
                 const mapNameFromUrl = this.factories.mapNameFromUrl.create(
                   this.factories.source.create(url),
                 );

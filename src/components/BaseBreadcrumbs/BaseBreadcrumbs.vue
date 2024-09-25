@@ -1,32 +1,21 @@
 <script lang="ts" setup>
-import uniqueId from 'lodash/uniqueId';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-
-const parentNames: unknown[] = [];
 
 const {
-  mapFile,
+  breadcrumbs, mapCurrentID,
 } = useApplication();
 
-const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
+const list = breadcrumbs.list(new VueRefPatron<{title: string, name: string}[]>()).ref();
 </script>
 
 <template>
   <div>
-    <span
-      v-for="(title, url) in parentNames"
-      :key="url || uniqueId('history_')"
-    >
+    <span v-for="item in list" :key="item.name">
       /
-      <RouterLink :to="url">
-        {{ title }}
-      </RouterLink>
-    </span>
-    <span v-if="map">
-      /
-      {{ map.settings.title }}
+      <a href="#" @click.prevent="mapCurrentID.receive(item.name)">
+        {{ item.title }}
+      </a>
     </span>
   </div>
 </template>

@@ -45,7 +45,7 @@ export class MapFile implements MapFileType {
     this.mapId.id(this.factories.guestCast.create(currentMapGuest, chain.receiveKey('mapId')));
     this.mapFile(this.factories.guestCast.create(currentMapGuest, chain.receiveKey('mapFile')));
     chain.result(this.factories.guestInTheMiddle.create(currentMapGuest, ({ mapId, mapFile }: CurrentMapChainProps) => {
-      localDebug('get current map', mapFile, typeof mapFile);
+      localDebug('get current map', mapId, mapFile, typeof mapFile);
       if (!mapFile[mapId]) {
         this.createEmptyMapByName(mapId, currentMapGuest);
       } else {

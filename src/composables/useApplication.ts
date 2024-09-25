@@ -48,6 +48,10 @@ import {
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectRelationRemoved';
 import { Fps } from '@/modules/application/l1/l2/visualisation/fps/Fps';
 import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
+import { Breadcrumbs } from '@/modules/application/l1/l2/visualisation/breadcrumbs/Breadcrumbs';
+import {
+  MapObjectParentNames,
+} from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectParentNames';
 
 const factories = useFactories();
 
@@ -130,6 +134,8 @@ const objectAdditionalFieldsFix = new ObjectAdditionalFieldsFix(mapObjectCurrent
 const mapRemoved = new MapRemoved();
 const mapObjectRelationRemoved = new MapObjectRelationRemoved(mapObject);
 const fps = new Fps();
+const parentNames = new MapObjectParentNames(mapCurrentID, factories);
+const breadcrumbs = new Breadcrumbs(parentNames, mapFile, factories);
 
 const modules = {
   mapCurrentID,
@@ -161,6 +167,7 @@ const modules = {
   objectAdditionalFieldsFix,
   mapObjectRelationRemoved,
   fps,
+  breadcrumbs,
 };
 
 export const useApplication = () => modules;
