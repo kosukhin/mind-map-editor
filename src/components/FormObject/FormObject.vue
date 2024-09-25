@@ -18,10 +18,16 @@ import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { VueSource } from '@/modules/integration/vue/VueSource';
 
 const {
-  mapObjectCurrent, mapFile, mapObject, drawer, mapObjectRemoved, mapObjectRelationRemoved,
+  mapObjectCurrent,
+  mapFile,
+  mapObject,
+  drawer,
+  mapObjectRemoved,
+  mapObjectRelationRemoved,
+  mapObjectUrl,
 } = useApplication();
 const {
-  patron, chain, guest, mapObjectUrl,
+  patron, chain, guest,
 } = useFactories();
 
 type ObjectChainProps = {map: MapDocument, objectId: string};
@@ -38,8 +44,7 @@ const object = new VueComputedPatron<MapObjectDocument>(() => {
 
 const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
 const objectSource = new VueSource(object);
-const objectUrlBehaviour = mapObjectUrl.create(objectSource);
-const objectUrl = objectUrlBehaviour.url(new VueRefPatron<string>()).ref();
+const objectUrl = mapObjectUrl.url(objectSource, new VueRefPatron<string>()).ref();
 
 const close = () => {
   mapObjectCurrent.receive('');
@@ -52,7 +57,10 @@ const remove = () => {
 };
 
 const save = () => {
-  mapObject.receive(object.value);
+  mapObject.receive({
+    ...object.value,
+    outlink: object.value.outlink || objectUrl.value,
+  });
   close();
 };
 

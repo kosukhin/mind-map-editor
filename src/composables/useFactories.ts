@@ -43,9 +43,6 @@ const svgMapTypeImage = new FactoryDynamic(
 );
 const numberChunks = new FactoryDynamic((chunks: number, baseNumber: GuestAwareType<number>) => new NumberChunks(chunks, baseNumber, { guestInTheMiddle }));
 const mapNameFromUrl = new FactoryDynamic((mapUrl: GuestAwareType<string>) => new MapNameFromUrl(mapUrl, { guest, guestInTheMiddle }));
-const mapObjectUrl = new FactoryDynamic((objectSource: GuestAwareType<MapObjectDocument>) => new MapObjectUrl(objectSource, {
-  guest, guestInTheMiddle, source, mapNameFromUrl,
-}));
 
 const factories = {
   cache,
@@ -68,7 +65,6 @@ const factories = {
   svgMapTypeImage,
 
   numberChunks,
-  mapObjectUrl,
 
   mapNameFromUrl,
 };
