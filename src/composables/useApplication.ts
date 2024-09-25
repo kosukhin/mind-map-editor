@@ -52,9 +52,6 @@ import { Breadcrumbs } from '@/modules/application/l1/l2/visualisation/breadcrum
 import {
   MapObjectParentNames,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectParentNames';
-import { FactoryDynamic } from '@/modules/system/guest/FactoryDynamic';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
-import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapObjectUrl } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectUrl';
 
 const factories = useFactories();
