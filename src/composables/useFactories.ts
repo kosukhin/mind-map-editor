@@ -18,6 +18,7 @@ import { NumberChunks } from '@/modules/application/l1/l2/l3/number/NumberChunks
 import { Source } from '@/modules/system/guest/Source';
 import { MapNameFromUrl } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapNameFromUrl';
 import { TextNoHtml } from '@/modules/application/l1/l2/l3/text/TextNoHtml';
+import { JSONP } from '@/modules/application/l1/l2/requests/JSONP';
 
 const cache = new Factory(Cache);
 const source = new Factory(Source);
@@ -50,6 +51,7 @@ const svgMapTypeImage = new FactoryWithFactories(SvgMapTypeImage, { ...systemFac
 const numberChunks = new FactoryWithFactories(NumberChunks, systemFactories);
 const mapNameFromUrl = new FactoryWithFactories(MapNameFromUrl, systemFactories);
 const textNoHtml = new FactoryWithFactories(TextNoHtml, systemFactories);
+const jsonp = new FactoryWithFactories(JSONP, systemFactories);
 
 const factories = {
   ...systemFactories,
@@ -67,6 +69,8 @@ const factories = {
 
   mapNameFromUrl,
   textNoHtml,
+
+  jsonp,
 };
 
 export const useFactories = () => factories;

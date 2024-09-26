@@ -1,13 +1,7 @@
 <script lang="ts" setup>
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import { SHOW_PRESETS } from '@/constants/overlays';
-import { presetsCommon } from '@/constants/presets';
-import { svgRender } from '@/utils/svgRenderDefault';
-import { overlayController } from '@/modulesHigh/overlay/overlayController';
-import { useMapPresets } from '@/app/useMapPresets';
 
-overlayController.autoClose(SHOW_PRESETS);
-const { addType } = useMapPresets();
+const presetsCommon: any[] = [];
 </script>
 
 <template>
@@ -22,14 +16,12 @@ const { addType } = useMapPresets();
         <div class="AppTypesParent-ItemTitle">{{ item.name }}</div>
         <div
           class="AppTypesParent-ItemImage"
-          v-html="svgRender(item.svg)"
           :style="`width:${item.width}px;height:${item.height}px`"
         ></div>
         <BaseButton
           class="AppTypesParent-ItemButton e2e-add-preset-type"
           type="success"
           size="sm"
-          @click="addType(item)"
         >
           {{ $t('general.addToMap') }}
         </BaseButton>
