@@ -8,6 +8,7 @@ import { debug } from 'debug';
 import { SourceType } from '@/modules/system/guest/SourceType';
 import { MapNameFromUrl } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapNameFromUrl';
 import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentIDType';
+import { TextNoHtml } from '@/modules/application/l1/l2/l3/text/TextNoHtml';
 
 const urlTrim = (url: string) => {
   if (url[url.length - 1] === '/') {
@@ -35,6 +36,7 @@ export class MapObjectUrl {
       guestInTheMiddle: FactoryType<GuestType>,
       source: FactoryType<SourceType>,
       mapNameFromUrl: FactoryType<MapNameFromUrl>,
+      textNoHtml: FactoryType<TextNoHtml>
     },
   ) {}
 
@@ -72,15 +74,22 @@ export class MapObjectUrl {
               : object.additionalName
                 ? object.additionalName
                 : '';
-            let link = object.outlink
-              ? object.outlink
-              : `${baseUrl}/${
-                slugify(
-                  name,
-                )}`;
-            localDebug('link is', link);
-            link = urlTrim(link);
-            guest.receive(link);
+
+            this.factories.textNoHtml.create(
+              this.factories.source.create(name),
+            ).noHtml(
+              this.factories.guest.create((noHtmlName: string) => {
+                let link = object.outlink
+                  ? object.outlink
+                  : `${baseUrl}/${
+                    slugify(
+                      noHtmlName,
+                    )}`;
+                localDebug('link is', link);
+                link = urlTrim(link);
+                guest.receive(link);
+              }),
+            );
           }),
         );
       }),

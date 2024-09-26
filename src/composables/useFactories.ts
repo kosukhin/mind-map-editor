@@ -1,4 +1,5 @@
 import { Factory } from '@/modules/system/guest/Factory';
+import { FactoryWithFactories } from '@/modules/system/guest/FactoryWithFactories';
 import { SystemFileFromHandler } from '@/modules/system/file/SystemFileFromHandler';
 import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFileSaved';
 import { Cache } from '@/modules/system/guest/Cache';
@@ -12,20 +13,12 @@ import { Chain } from '@/modules/system/guest/Chain';
 import { PatronOnce } from '@/modules/system/guest/PatronOnce';
 import { GuestCast } from '@/modules/system/guest/GuestCast';
 import { SvgImage } from '@/modules/application/l1/l2/visualisation/svg/SvgImage';
-import { FactoryDynamic } from '@/modules/system/guest/FactoryDynamic';
-import {
-  MapObjectDocument,
-  MapTypeDocument,
-} from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { SvgMapTypeImage } from '@/modules/application/l1/l2/visualisation/svg/SvgMapTypeImage';
 import { NumberChunks } from '@/modules/application/l1/l2/l3/number/NumberChunks';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 import { Source } from '@/modules/system/guest/Source';
-import { MapObjectUrl } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectUrl';
 import { MapNameFromUrl } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapNameFromUrl';
+import { TextNoHtml } from '@/modules/application/l1/l2/l3/text/TextNoHtml';
 
-const fileHandlerContent = new Factory(SystemFileFromHandler);
-const browserFileSaved = new Factory(BrowserFileSaved);
 const cache = new Factory(Cache);
 const source = new Factory(Source);
 const guest = new Factory(Guest);
@@ -34,17 +27,9 @@ const pool = new Factory(PatronPool);
 const patron = new Factory(Patron);
 const patronOnce = new Factory(PatronOnce);
 const guestInTheMiddle = new Factory(GuestInTheMiddle);
-const transformToString = new Factory(TransformedToJSON);
-const transformToObject = new Factory(TransformedFromJSON);
 const chain = new Factory(Chain);
-const svgImage = new Factory(SvgImage);
-const svgMapTypeImage = new FactoryDynamic(
-  (mapType: MapTypeDocument) => new SvgMapTypeImage(mapType, { svgImage }),
-);
-const numberChunks = new FactoryDynamic((chunks: number, baseNumber: GuestAwareType<number>) => new NumberChunks(chunks, baseNumber, { guestInTheMiddle }));
-const mapNameFromUrl = new FactoryDynamic((mapUrl: GuestAwareType<string>) => new MapNameFromUrl(mapUrl, { guest, guestInTheMiddle }));
 
-const factories = {
+const systemFactories = {
   cache,
   chain,
   guest,
@@ -54,6 +39,20 @@ const factories = {
   patronOnce,
   pool,
   source,
+};
+
+const fileHandlerContent = new Factory(SystemFileFromHandler);
+const browserFileSaved = new Factory(BrowserFileSaved);
+const transformToString = new Factory(TransformedToJSON);
+const transformToObject = new Factory(TransformedFromJSON);
+const svgImage = new Factory(SvgImage);
+const svgMapTypeImage = new FactoryWithFactories(SvgMapTypeImage, { ...systemFactories, svgImage });
+const numberChunks = new FactoryWithFactories(NumberChunks, systemFactories);
+const mapNameFromUrl = new FactoryWithFactories(MapNameFromUrl, systemFactories);
+const textNoHtml = new FactoryWithFactories(TextNoHtml, systemFactories);
+
+const factories = {
+  ...systemFactories,
 
   fileHandlerContent,
   browserFileSaved,
@@ -67,6 +66,7 @@ const factories = {
   numberChunks,
 
   mapNameFromUrl,
+  textNoHtml,
 };
 
 export const useFactories = () => factories;
