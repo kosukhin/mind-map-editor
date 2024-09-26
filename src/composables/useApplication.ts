@@ -53,11 +53,14 @@ import {
   MapObjectParentNames,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectParentNames';
 import { MapObjectUrl } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectUrl';
+import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 
 const factories = useFactories();
 
-const modal = new Modal(factories);
-const drawer = new Drawer(factories);
+const keyboard = new Keyboard(factories);
+
+const modal = new Modal(keyboard, factories);
+const drawer = new Drawer(keyboard, factories);
 const notification = new Notification(factories);
 
 const mapCurrentID = new MapCurrentID(factories);
@@ -171,6 +174,7 @@ const modules = {
   fps,
   breadcrumbs,
   mapObjectUrl,
+  keyboard,
 };
 
 export const useApplication = () => modules;

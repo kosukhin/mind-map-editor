@@ -1,17 +1,35 @@
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { CacheType } from '@/modules/system/guest/CacheType';
+import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
+import { debug } from 'debug';
+
+const localDebug = debug('Modal');
 
 export class Modal implements GuestType<string> {
   private modalNameCache: CacheType<string>;
 
   public constructor(
+    private keyboard: Keyboard,
     private factories: {
       cache: FactoryType<CacheType>,
+      patron: FactoryType<GuestType>,
+      guest: FactoryType<GuestType>,
       guestInTheMiddle: FactoryType<GuestType>
     },
   ) {
+    localDebug('modal created');
     this.modalNameCache = factories.cache.create(this, '');
+    this.keyboard.pressed(
+      this.factories.patron.create(
+        this.factories.guest.create((key: string) => {
+          localDebug('new key in modal', key);
+          if (key === 'Escape') {
+            this.receive('');
+          }
+        }),
+      ),
+    );
   }
 
   isOpenedByName<R extends GuestType<boolean>>(name: string, guest: R) {
