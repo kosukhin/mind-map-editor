@@ -6,12 +6,14 @@ import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { useFactories } from '@/composables/useFactories';
 
 const parentTypes: string[] = [];
 
 const {
-  modal, mapFile, mapRemoved, mapSettings,
+  modal, mapFile, mapRemoved, mapSettings, keyboard,
 } = useApplication();
+const { patron, guest } = useFactories();
 
 const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
 
@@ -23,6 +25,19 @@ const save = () => {
   mapSettings.receive(map.value.settings);
   close();
 };
+
+keyboard.event(
+  patron.create(
+    guest.create((e: KeyboardEvent) => {
+      modal.isOpenedByName('settings', guest.create((opened: boolean) => {
+        if (opened && e.ctrlKey && e.key === 's' && e.type === 'keydown') {
+          e.preventDefault();
+          save();
+        }
+      }));
+    }),
+  ),
+);
 </script>
 
 <template>

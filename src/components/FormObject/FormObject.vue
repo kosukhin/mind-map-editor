@@ -25,6 +25,7 @@ const {
   mapObjectRemoved,
   mapObjectRelationRemoved,
   mapObjectUrl,
+  keyboard,
 } = useApplication();
 const {
   patron, chain, guest,
@@ -70,6 +71,19 @@ const removeRelation = (index: number) => {
     object: object.value,
   });
 };
+
+keyboard.event(
+  patron.create(
+    guest.create((e: KeyboardEvent) => {
+      drawer.isOpenedByName('object', guest.create((opened: boolean) => {
+        if (opened && e.ctrlKey && e.key === 's' && e.type === 'keydown') {
+          e.preventDefault();
+          save();
+        }
+      }));
+    }),
+  ),
+);
 </script>
 
 <template>
