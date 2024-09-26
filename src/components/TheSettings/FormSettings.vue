@@ -74,6 +74,7 @@ keyboard.event(
             <BaseButton
               type="primary"
               class="text-white e2e-open-presets"
+              @click="modal.receive('presets')"
             >
               Пресеты
             </BaseButton>

@@ -6,6 +6,7 @@ import TheMiniMap from '@/components/TheMiniMap/TheMiniMap.vue';
 import FormObject from '@/components/FormObject/FormObject.vue';
 import FormType from '@/components/FormType/FormType.vue';
 import FormSettings from '@/components/TheSettings/FormSettings.vue';
+import AppPresets from '@/components/AppPresets/AppPresets.vue';
 </script>
 
 <template>
@@ -18,4 +19,5 @@ import FormSettings from '@/components/TheSettings/FormSettings.vue';
   <FormObject />
   <FormType />
   <FormSettings />
+  <AppPresets />
 </template>
