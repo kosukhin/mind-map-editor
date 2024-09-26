@@ -97,7 +97,7 @@ const mapObjectRemoved = new MapObjectRemoved(
   ],
   factories,
 );
-const mapObjectNew = new MapObjectNew(mapCurrent, mapObject, factories);
+const mapObjectNew = new MapObjectNew(mapCurrent, mapObject, canvas, factories);
 const mapTypeUsedCheck = new MapTypeUsed(mapFile, factories);
 const mapType = new MapTypes(
   mapCurrent,

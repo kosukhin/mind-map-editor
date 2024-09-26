@@ -43,7 +43,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
           draggable="true"
           :style="`width:${type.type.width}px;height:${type.type.height}px`"
           :title="$t('general.notifications.dragToCanvasToAdd')"
-          @dragend="mapObjectNew.byTypeName(type.type.name, {x: 0, y: 0})"
+          @dragend="mapObjectNew.byTypeName(type.type.name, $event)"
         ></div>
         <div class="flex gap-1">
           <BaseButton
