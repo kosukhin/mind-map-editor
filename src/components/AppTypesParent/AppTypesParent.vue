@@ -1,47 +1,48 @@
 <script lang="ts" setup>
-import svg64 from 'svg64';
+import BaseModal from '@/components/BaseModal/BaseModal.vue';
+import { useApplication } from '@/composables/useApplication';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
-import { SHOW_PARENT_TYPES } from '@/constants/overlays';
-import { useMap } from '@/composables/useMap';
-import { svgRender } from '@/utils/svgRenderDefault';
+import { computed } from 'vue';
+import { useFactories } from '@/composables/useFactories';
 
-useOverlayAutoClose(SHOW_PARENT_TYPES);
+const { parentTypes, mapType } = useApplication();
+const { svgMapTypeImage } = useFactories();
+const theTypes = parentTypes.types(new VueRefPatron<MapTypeDocument[]>()).ref();
 
-const { map, parentTypes } = useMap();
-const addType = (type: MapTypeDocument) => {
-  if (map.value) {
-    map.value.types[type.name] = type;
-  }
-};
+const typesExtended = computed(() => theTypes.value?.map((type) => ({
+  type,
+  image: svgMapTypeImage.create(type).markup(),
+})).sort((a, b) => +(a.type.name >= b.type.name)));
 </script>
 
 <template>
-  <div class="AppTypesParent">
-    <div v-if="!parentTypes.length">{{ $t('general.noTypes') }}</div>
-    <div v-else class="AppTypesParent-Items">
-      <div
-        v-for="item in parentTypes"
-        :key="item.name"
-        class="AppTypesParent-Item"
-      >
-        <div class="AppTypesParent-ItemTitle">{{ item.name }}</div>
-        <img
-          class="AppTypesParent-ItemImage"
-          :src="svg64(svgRender(item.svg))"
-          height="100px"
-          width="100px"
-          alt=""
-        />
-        <BaseButton
-          class="AppTypesParent-ItemButton"
-          type="success"
-          @click="addType(item)"
+  <BaseModal name="parentTypes">
+    <div class="AppTypes">
+      <div class="text-md font-bold mb-2">Родительские типы</div>
+      <div class="flex gap-2 items-end">
+        <div
+          v-for="item in typesExtended"
+          :key="item.type.name"
+          class="flex flex-col gap-2"
         >
-          {{ $t('general.addToMap') }}
-        </BaseButton>
+          <div class="AppTypesParent-ItemTitle">{{ item.type.name }}</div>
+          <div
+            class="AppTypesParent-ItemImage"
+            v-html="item.image"
+            :style="`width:${item.type.width}px;height:${item.type.height}px`"
+          ></div>
+          <BaseButton
+            class="AppTypesParent-ItemButton e2e-add-preset-type"
+            type="success"
+            size="sm"
+            @click="mapType.receive({name: item.type.name, type: item.type})"
+          >
+            {{ $t('general.addToMap') }}
+          </BaseButton>
+        </div>
       </div>
     </div>
-  </div>
+  </BaseModal>
 </template>

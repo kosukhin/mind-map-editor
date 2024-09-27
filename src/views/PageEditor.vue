@@ -7,6 +7,7 @@ import FormObject from '@/components/FormObject/FormObject.vue';
 import FormType from '@/components/FormType/FormType.vue';
 import FormSettings from '@/components/TheSettings/FormSettings.vue';
 import AppPresets from '@/components/AppPresets/AppPresets.vue';
+import AppTypesParent from '@/components/AppTypesParent/AppTypesParent.vue';
 </script>
 
 <template>
@@ -20,4 +21,5 @@ import AppPresets from '@/components/AppPresets/AppPresets.vue';
   <FormType />
   <FormSettings />
   <AppPresets />
+  <AppTypesParent />
 </template>

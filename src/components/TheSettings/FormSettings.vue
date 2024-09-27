@@ -68,6 +68,7 @@ keyboard.event(
               v-if="parentTypes.length > 1"
               type="primary"
               class="text-white"
+              @click="modal.receive('parentTypes')"
             >
               {{ $t('general.parentTypes') }}
             </BaseButton>
