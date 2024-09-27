@@ -8,12 +8,12 @@ import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { useFactories } from '@/composables/useFactories';
 
-const parentTypes: string[] = [];
-
 const {
-  modal, mapFile, mapRemoved, mapSettings, keyboard,
+  modal, mapFile, mapRemoved, mapSettings, keyboard, parentNames,
 } = useApplication();
 const { patron, guest } = useFactories();
+
+const parentTypes = parentNames.names(new VueRefPatron<string[]>()).ref();
 
 const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
 
@@ -65,7 +65,7 @@ keyboard.event(
               {{ $t('general.keybindings') }}
             </BaseButton>
             <BaseButton
-              v-if="parentTypes.length"
+              v-if="parentTypes.length > 1"
               type="primary"
               class="text-white"
             >

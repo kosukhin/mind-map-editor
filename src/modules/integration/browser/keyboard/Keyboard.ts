@@ -26,6 +26,7 @@ export class Keyboard {
     useMagicKeys({
       passive: false,
       onEventFired: (e) => {
+        localDebug('magic combination happens 11', e.ctrlKey, e.key);
         this.combinationsPool.receive(e);
       },
     });

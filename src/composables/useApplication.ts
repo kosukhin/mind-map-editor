@@ -54,6 +54,7 @@ import {
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectParentNames';
 import { MapObjectUrl } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectUrl';
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
+import { ParentTypes } from '@/modules/application/l1/l2/l3/map/mapTypes/ParentTypes';
 
 const factories = useFactories();
 
@@ -141,6 +142,7 @@ const fps = new Fps();
 const parentNames = new MapObjectParentNames(mapCurrentID, factories);
 const breadcrumbs = new Breadcrumbs(parentNames, mapFile, factories);
 const mapObjectUrl = new MapObjectUrl(mapCurrentID, factories);
+const parentTypes = new ParentTypes(parentNames, mapFile, factories);
 
 const modules = {
   mapCurrentID,
@@ -175,6 +177,8 @@ const modules = {
   breadcrumbs,
   mapObjectUrl,
   keyboard,
+  parentNames,
+  parentTypes,
 };
 
 export const useApplication = () => modules;
