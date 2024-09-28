@@ -3,6 +3,7 @@ import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { CacheType } from '@/modules/system/guest/CacheType';
 import { debug } from 'debug';
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
+import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 
 const localDebug = debug('Drawer');
 
@@ -16,6 +17,7 @@ export class Drawer implements GuestType<string> {
       guestInTheMiddle: FactoryType<GuestType>,
       patron: FactoryType<GuestType>,
       guest: FactoryType<GuestType>,
+      guestAware: FactoryType<GuestAwareType>
     },
   ) {
     this.drawerNameCache = factories.cache.create(this, '');
@@ -39,6 +41,14 @@ export class Drawer implements GuestType<string> {
       }),
     );
     return guest;
+  }
+
+  openedByName(name: string): GuestAwareType<boolean> {
+    return this.factories.guestAware.create(
+      (guest: GuestType<boolean>) => {
+        this.isOpenedByName(name, guest);
+      },
+    );
   }
 
   receive(value: string): this {

@@ -15,7 +15,7 @@ import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 import { ref } from 'vue';
 
 const {
-  mapTypeCurrent, mapFile, mapType, modal, keyboard,
+  mapTypeCurrent, mapFile, mapType, modal, controlCombo,
 } = useApplication();
 const { patron, chain, guest } = useFactories();
 
@@ -55,17 +55,10 @@ const save = () => {
   close();
 };
 
-keyboard.event(
-  patron.create(
-    guest.create((e: KeyboardEvent) => {
-      modal.isOpenedByName('type', guest.create((opened: boolean) => {
-        if (opened && e.ctrlKey && e.key === 's' && e.type === 'keydown') {
-          e.preventDefault();
-          save();
-        }
-      }));
-    }),
-  ),
+controlCombo.happened(
+  'KeyS',
+  modal.openedByName('type'),
+  patron.create(guest.create(save)),
 );
 </script>
 

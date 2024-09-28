@@ -19,11 +19,15 @@ import { Source } from '@/modules/system/guest/Source';
 import { MapNameFromUrl } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapNameFromUrl';
 import { TextNoHtml } from '@/modules/application/l1/l2/l3/text/TextNoHtml';
 import { JSONP } from '@/modules/application/l1/l2/requests/JSONP';
+import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
+import { GuestAware } from '@/modules/system/guest/GuestAware';
 
 const cache = new Factory(Cache);
 const source = new Factory(Source);
 const guest = new Factory(Guest);
 const guestCast = new Factory(GuestCast);
+const guestAware: FactoryType<GuestAwareType> = new Factory(GuestAware);
 const pool = new Factory(PatronPool);
 const patron = new Factory(Patron);
 const patronOnce = new Factory(PatronOnce);
@@ -35,6 +39,7 @@ const systemFactories = {
   chain,
   guest,
   guestCast,
+  guestAware,
   guestInTheMiddle,
   patron,
   patronOnce,

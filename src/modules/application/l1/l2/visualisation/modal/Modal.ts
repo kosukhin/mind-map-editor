@@ -3,6 +3,7 @@ import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { CacheType } from '@/modules/system/guest/CacheType';
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 import { debug } from 'debug';
+import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 
 const localDebug = debug('Modal');
 
@@ -15,6 +16,7 @@ export class Modal implements GuestType<string> {
       cache: FactoryType<CacheType>,
       patron: FactoryType<GuestType>,
       guest: FactoryType<GuestType>,
+      guestAware: FactoryType<GuestAwareType>,
       guestInTheMiddle: FactoryType<GuestType>
     },
   ) {
@@ -39,6 +41,14 @@ export class Modal implements GuestType<string> {
       }),
     );
     return guest;
+  }
+
+  openedByName(name: string): GuestAwareType<boolean> {
+    return this.factories.guestAware.create(
+      (guest: GuestType<boolean>) => {
+        this.isOpenedByName(name, guest);
+      },
+    );
   }
 
   receive(value: string): this {

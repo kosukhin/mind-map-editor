@@ -25,7 +25,7 @@ const {
   mapObjectRemoved,
   mapObjectRelationRemoved,
   mapObjectUrl,
-  keyboard,
+  controlCombo,
 } = useApplication();
 const {
   patron, chain, guest,
@@ -72,17 +72,10 @@ const removeRelation = (index: number) => {
   });
 };
 
-keyboard.event(
-  patron.create(
-    guest.create((e: KeyboardEvent) => {
-      drawer.isOpenedByName('object', guest.create((opened: boolean) => {
-        if (opened && e.ctrlKey && e.key === 's' && e.type === 'keydown') {
-          e.preventDefault();
-          save();
-        }
-      }));
-    }),
-  ),
+controlCombo.happened(
+  'KeyS',
+  drawer.openedByName('object'),
+  patron.create(guest.create(save)),
 );
 </script>
 

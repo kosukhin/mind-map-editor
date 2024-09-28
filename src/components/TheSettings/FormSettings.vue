@@ -9,7 +9,7 @@ import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStr
 import { useFactories } from '@/composables/useFactories';
 
 const {
-  modal, mapFile, mapRemoved, mapSettings, keyboard, parentNames,
+  modal, mapFile, mapRemoved, mapSettings, controlCombo, parentNames,
 } = useApplication();
 const { patron, guest } = useFactories();
 
@@ -26,17 +26,10 @@ const save = () => {
   close();
 };
 
-keyboard.event(
-  patron.create(
-    guest.create((e: KeyboardEvent) => {
-      modal.isOpenedByName('settings', guest.create((opened: boolean) => {
-        if (opened && e.ctrlKey && e.key === 's' && e.type === 'keydown') {
-          e.preventDefault();
-          save();
-        }
-      }));
-    }),
-  ),
+controlCombo.happened(
+  'KeyS',
+  modal.openedByName('settings'),
+  patron.create(guest.create(save)),
 );
 </script>
 
