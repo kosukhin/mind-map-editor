@@ -55,7 +55,7 @@ const save = () => {
   close();
 };
 
-controlCombo.happened(
+controlCombo.happenedConditional(
   'KeyS',
   modal.openedByName('type'),
   patron.create(guest.create(save)),

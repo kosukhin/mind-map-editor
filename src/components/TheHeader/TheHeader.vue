@@ -2,7 +2,9 @@
 import BaseBreadcrumbs from '@/components/BaseBreadcrumbs/BaseBreadcrumbs.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
+import { useApplication } from '@/composables/useApplication';
 
+const { drawer } = useApplication();
 </script>
 
 <template>
@@ -37,6 +39,7 @@ import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
         size="sm"
         class="w-7 block e2e-open-menu"
         :title="$t('general.menu')"
+        @click="drawer.receive('menu')"
       >
         <BaseIcon icon="fa-bars" />
       </BaseButton>

@@ -56,6 +56,7 @@ import { MapObjectUrl } from '@/modules/application/l1/l2/l3/map/mapObject/MapOb
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 import { ParentTypes } from '@/modules/application/l1/l2/l3/map/mapTypes/ParentTypes';
 import { ControlCombo } from '@/modules/integration/browser/keyboard/ControlCombo';
+import { Menu } from '@/modules/application/l1/l2/visualisation/menu/Menu';
 
 const factories = useFactories();
 
@@ -145,6 +146,7 @@ const breadcrumbs = new Breadcrumbs(parentNames, mapFile, factories);
 const mapObjectUrl = new MapObjectUrl(mapCurrentID, factories);
 const parentTypes = new ParentTypes(parentNames, mapFile, factories);
 const controlCombo = new ControlCombo(keyboard, factories);
+const menu = new Menu(mapFile, factories);
 
 const modules = {
   mapCurrentID,
@@ -182,6 +184,7 @@ const modules = {
   parentNames,
   parentTypes,
   controlCombo,
+  menu,
 };
 
 export const useApplication = () => modules;

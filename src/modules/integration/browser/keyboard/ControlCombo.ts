@@ -6,6 +6,9 @@ import { debug } from 'debug';
 
 const localDebug = debug('ControlCombo');
 
+/**
+ * Комбинация с клавишей ctrl
+ */
 export class ControlCombo {
   public constructor(
     private keyboard: Keyboard,
@@ -15,7 +18,28 @@ export class ControlCombo {
     },
   ) {}
 
-  happened(
+  /**
+   * Случилась комбинация ctrl + keyCode
+   */
+  public happened(
+    keyCode: string,
+    eventGuest: GuestType<KeyboardEvent>,
+  ) {
+    this.keyboard.event(
+      this.factories.guestInTheMiddle.create(eventGuest, (e: KeyboardEvent) => {
+        localDebug('combo happened look for key', keyCode, 'received', e.code);
+        if (e.ctrlKey && e.code === keyCode && e.type === 'keydown') {
+          e.preventDefault();
+          eventGuest.receive(e);
+        }
+      }),
+    );
+  }
+
+  /**
+   * Случилась комбинация ctrl + keyCode с условием comboCondition
+   */
+  public happenedConditional(
     keyCode: string,
     comboCondition: GuestAwareType<boolean>,
     eventGuest: GuestType<KeyboardEvent>,

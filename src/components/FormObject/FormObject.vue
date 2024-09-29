@@ -72,7 +72,7 @@ const removeRelation = (index: number) => {
   });
 };
 
-controlCombo.happened(
+controlCombo.happenedConditional(
   'KeyS',
   drawer.openedByName('object'),
   patron.create(guest.create(save)),
