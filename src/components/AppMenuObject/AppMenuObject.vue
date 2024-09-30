@@ -5,7 +5,9 @@ import { useApplication } from '@/composables/useApplication';
 import { useFactories } from '@/composables/useFactories';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 
-const { controlCombo, drawer, menu } = useApplication();
+const {
+  controlCombo, drawer, menu, stagePosition,
+} = useApplication();
 const { guest, patron } = useFactories();
 
 const menuItems = menu.menuObjects(new VueRefPatron<MapObjectDocument[]>()).ref();
@@ -30,6 +32,7 @@ controlCombo.happened(
           :key="item.id"
           class="AppMenuObject-Item"
           href="#"
+          @click.prevent="stagePosition.receive(item);drawer.receive('')"
         >
           <span v-html="item.additionalName ? item.additionalName : item.name"></span>
         </a>

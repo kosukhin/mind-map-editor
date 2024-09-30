@@ -43,6 +43,7 @@ export class KonvaLayer implements LayerBase {
     this.guestChain = factories.chain.create();
     this.layerCache = factories.cache.create(this);
     this.canvasDep.canvas(factories.patron.create(this.guestChain.receiveKey('canvas')));
+
     this.guestChain.result(factories.guest.create<[(props: { canvas: HTMLElement }) => void]>(({ canvas }) => {
       localDebug('create new konva stage');
       const stage = new Konva.Stage({
@@ -117,6 +118,11 @@ export class KonvaLayer implements LayerBase {
 
   receive(value: Layer): this {
     this.layerCache.receive(value);
+    const stage = value.getStage();
+    this.positionCache.receive({
+      x: stage.x(),
+      y: stage.y(),
+    });
     return this;
   }
 }

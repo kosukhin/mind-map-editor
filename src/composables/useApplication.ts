@@ -57,6 +57,8 @@ import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 import { ParentTypes } from '@/modules/application/l1/l2/l3/map/mapTypes/ParentTypes';
 import { ControlCombo } from '@/modules/integration/browser/keyboard/ControlCombo';
 import { Menu } from '@/modules/application/l1/l2/visualisation/menu/Menu';
+import { StagePosition } from '@/modules/application/l1/l2/visualisation/stage/StagePosition';
+import { KonvaMove } from '@/modules/integration/konva/KonvaMove';
 
 const factories = useFactories();
 
@@ -147,6 +149,7 @@ const mapObjectUrl = new MapObjectUrl(mapCurrentID, factories);
 const parentTypes = new ParentTypes(parentNames, mapFile, factories);
 const controlCombo = new ControlCombo(keyboard, factories);
 const menu = new Menu(mapFile, factories);
+const stagePosition = new StagePosition(new KonvaMove(konvaLayer, canvas, factories));
 
 const modules = {
   mapCurrentID,
@@ -185,6 +188,7 @@ const modules = {
   parentTypes,
   controlCombo,
   menu,
+  stagePosition,
 };
 
 export const useApplication = () => modules;
