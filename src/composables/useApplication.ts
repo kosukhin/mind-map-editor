@@ -59,6 +59,7 @@ import { ControlCombo } from '@/modules/integration/browser/keyboard/ControlComb
 import { Menu } from '@/modules/application/l1/l2/visualisation/menu/Menu';
 import { StagePosition } from '@/modules/application/l1/l2/visualisation/stage/StagePosition';
 import { KonvaMove } from '@/modules/integration/konva/KonvaMove';
+import { KonvaLayerShiftPoint } from '@/modules/integration/konva/KonvaLayerShiftPoint';
 
 const factories = useFactories();
 
@@ -105,7 +106,14 @@ const mapObjectRemoved = new MapObjectRemoved(
   ],
   factories,
 );
-const mapObjectNew = new MapObjectNew(mapCurrent, mapObject, canvas, factories);
+const konvaLayerPosition = new KonvaLayerShiftPoint(konvaLayer, factories);
+const mapObjectNew = new MapObjectNew(
+  mapCurrent,
+  mapObject,
+  canvas,
+  konvaLayerPosition,
+  factories,
+);
 const mapTypeUsedCheck = new MapTypeUsed(mapFile, factories);
 const mapType = new MapTypes(
   mapCurrent,
