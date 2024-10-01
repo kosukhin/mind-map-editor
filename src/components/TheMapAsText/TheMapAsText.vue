@@ -1,38 +1,43 @@
 <script lang="ts" setup>
 import { useShare } from '@vueuse/core';
-import { computed, ref } from '@vue/reactivity';
+import { ref } from '@vue/reactivity';
 import { useI18n } from 'vue-i18n';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
-import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';
-import { SHOW_TEXT } from '@/constants/overlays';
-import { useMap } from '@/composables/useMap';
-import { nl2br, stripHtml } from '@/utils/common';
+import { useApplication } from '@/composables/useApplication';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
+import { useFactories } from '@/composables/useFactories';
+import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 
-useOverlayAutoClose(SHOW_TEXT);
+const { mapFile, mapCurrent } = useApplication();
+const {
+  guest, patron, textOf, textNlAsBr, textWithoutHTML,
+} = useFactories();
+const map = mapFile.currentMap(new VueRefPatron()).ref();
 
-const { map } = useMap();
-const mapAsString = computed(() => (
-  (map.value
-      && Object.values(map.value.objects)
-        .map((object) => `<div class="TheMapAsText-Item">
-          <h3>
-          ${nl2br(object.name)}
-          </h3>
-          <p>
-          ${nl2br(object.additionalName || '')}
-          </p>
-          <p>
-          ${nl2br(object.description || '')}
-          </p>
-          <p>
-            ${object.additionalFields && Object.values(object.additionalFields).join('</p><p>')}
-          </p>
-        </div>`)
-        .join(''))
-    ?? ''
-));
+const mapAsString = ref('');
+const objects = ref<MapObjectDocument[]>([]);
+mapCurrent.objects(
+  patron.create(
+    guest.create((latestObjects: MapObjectDocument[]) => {
+      objects.value = latestObjects;
+      textNlAsBr
+        .create(
+          textOf.create(
+            latestObjects.map((object) => `<div class="TheMapAsText-Item">
+                <h3>${object.name}</h3><p>${object.additionalName || ''}</p><p>${object.description || ''}</p><p>${object.additionalFields && Object.values(object.additionalFields).join('</p><p>')}</p></div>`).join(''),
+          ),
+        )
+        .asString(
+          guest.create((textWithBrs: string) => {
+            console.log(textWithBrs);
+            mapAsString.value = textWithBrs;
+          }),
+        );
+    }),
+  ),
+);
 
 const i18n = useI18n();
 const { share, isSupported } = useShare();
@@ -41,9 +46,19 @@ const onShare = () => {
     alert(i18n.t('general.notifications.sharingDontSupported'));
   }
 
-  share({
-    text: stripHtml(mapAsString.value),
-  });
+  textWithoutHTML
+    .create(
+      textOf.create(
+        mapAsString.value,
+      ),
+    )
+    .asString(
+      guest.create((textNoHTML: string) => {
+        share({
+          text: textNoHTML,
+        });
+      }),
+    );
 };
 
 const textRef = ref();
@@ -51,7 +66,7 @@ const onSelectAll = () => {
   if (map.value) {
     const range = new Range();
     range.setStart(textRef.value, 0);
-    range.setEnd(textRef.value, Object.values(map.value.objects).length);
+    range.setEnd(textRef.value, Object.values(objects.value).length);
     document.getSelection()?.removeAllRanges();
     document.getSelection()?.addRange(range);
   }
@@ -59,7 +74,7 @@ const onSelectAll = () => {
 </script>
 
 <template>
-  <BaseModal :name="SHOW_TEXT">
+  <BaseModal name="mapAsText">
     <template #header>
       <BaseTextTitle class="block mb-3">
         {{ $t('general.mapAsText') }}

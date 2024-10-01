@@ -4,7 +4,7 @@ import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
 import { useApplication } from '@/composables/useApplication';
 
-const { drawer } = useApplication();
+const { drawer, modal } = useApplication();
 </script>
 
 <template>
@@ -48,6 +48,7 @@ const { drawer } = useApplication();
         type="primary"
         size="sm"
         class="w-7 block"
+        @click="modal.receive('mapAsText')"
       >
         <BaseIcon icon="fa-text-width" />
       </BaseButton>

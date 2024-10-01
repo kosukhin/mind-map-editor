@@ -22,6 +22,9 @@ import { JSONP } from '@/modules/application/l1/l2/requests/JSONP';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 import { GuestAware } from '@/modules/system/guest/GuestAware';
+import { TextOf } from '@/modules/application/l1/l2/l3/l4/text/TextOf';
+import { TextWithoutHTML } from '@/modules/application/l1/l2/l3/l4/text/TextWithoutHTML';
+import { TextNlAsBr } from '@/modules/application/l1/l2/l3/l4/text/TextNlAsBr';
 
 const cache = new Factory(Cache);
 const source = new Factory(Source);
@@ -58,6 +61,10 @@ const mapNameFromUrl = new FactoryWithFactories(MapNameFromUrl, systemFactories)
 const textNoHtml = new FactoryWithFactories(TextNoHtml, systemFactories);
 const jsonp = new FactoryWithFactories(JSONP, systemFactories);
 
+const textOf = new Factory(TextOf);
+const textWithoutHTML = new FactoryWithFactories(TextWithoutHTML, systemFactories);
+const textNlAsBr = new FactoryWithFactories(TextNlAsBr, systemFactories);
+
 const factories = {
   ...systemFactories,
 
@@ -76,6 +83,10 @@ const factories = {
   textNoHtml,
 
   jsonp,
+
+  textOf,
+  textNlAsBr,
+  textWithoutHTML,
 };
 
 export const useFactories = () => factories;

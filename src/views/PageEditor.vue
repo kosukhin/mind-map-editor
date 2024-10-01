@@ -9,6 +9,7 @@ import FormSettings from '@/components/TheSettings/FormSettings.vue';
 import AppPresets from '@/components/AppPresets/AppPresets.vue';
 import AppTypesParent from '@/components/AppTypesParent/AppTypesParent.vue';
 import AppMenuObject from '@/components/AppMenuObject/AppMenuObject.vue';
+import TheMapAsText from '@/components/TheMapAsText/TheMapAsText.vue';
 </script>
 
 <template>
@@ -24,4 +25,5 @@ import AppMenuObject from '@/components/AppMenuObject/AppMenuObject.vue';
   <AppPresets />
   <AppTypesParent />
   <AppMenuObject />
+  <TheMapAsText />
 </template>
