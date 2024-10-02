@@ -55,6 +55,7 @@ const { drawer, modal } = useApplication();
       <BaseButton
         class="w-7 block e2e-search"
         size="sm"
+        @click="modal.receive('search')"
       >
         <BaseIcon icon="fa-search" />
       </BaseButton>

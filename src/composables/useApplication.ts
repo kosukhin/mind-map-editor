@@ -60,6 +60,7 @@ import { Menu } from '@/modules/application/l1/l2/visualisation/menu/Menu';
 import { StagePosition } from '@/modules/application/l1/l2/visualisation/stage/StagePosition';
 import { KonvaMove } from '@/modules/integration/konva/KonvaMove';
 import { KonvaLayerShiftPoint } from '@/modules/integration/konva/KonvaLayerShiftPoint';
+import { ObjectsMatchedToQuery } from '@/modules/application/l1/l2/l3/search/ObjectsMatchedToQuery';
 
 const factories = useFactories();
 
@@ -158,6 +159,10 @@ const parentTypes = new ParentTypes(parentNames, mapFile, factories);
 const controlCombo = new ControlCombo(keyboard, factories);
 const menu = new Menu(mapFile, factories);
 const stagePosition = new StagePosition(new KonvaMove(konvaLayer, canvas, factories));
+const objectsMatchedToQuery = new ObjectsMatchedToQuery(
+  mapCurrent,
+  factories,
+);
 
 const modules = {
   mapCurrentID,
@@ -197,6 +202,7 @@ const modules = {
   controlCombo,
   menu,
   stagePosition,
+  objectsMatchedToQuery,
 };
 
 export const useApplication = () => modules;

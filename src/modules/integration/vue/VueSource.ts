@@ -10,7 +10,7 @@ export class VueSource<T> implements GuestAwareType<T> {
     private refSource: Ref<T | undefined>,
   ) {
     watch(refSource, (lastValue) => {
-      if (lastValue) {
+      if (lastValue !== undefined) {
         this.pool.receive(lastValue);
       }
     }, {

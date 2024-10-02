@@ -10,6 +10,7 @@ import AppPresets from '@/components/AppPresets/AppPresets.vue';
 import AppTypesParent from '@/components/AppTypesParent/AppTypesParent.vue';
 import AppMenuObject from '@/components/AppMenuObject/AppMenuObject.vue';
 import TheMapAsText from '@/components/TheMapAsText/TheMapAsText.vue';
+import AppSearch from '@/components/AppSearch/AppSearch.vue';
 </script>
 
 <template>
@@ -26,4 +27,5 @@ import TheMapAsText from '@/components/TheMapAsText/TheMapAsText.vue';
   <AppTypesParent />
   <AppMenuObject />
   <TheMapAsText />
+  <AppSearch />
 </template>
