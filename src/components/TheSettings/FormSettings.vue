@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
-import BaseCheckbox from '@/components/BaseCheckbox/BaseCheckbox.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
@@ -9,13 +8,15 @@ import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStr
 import { useFactories } from '@/composables/useFactories';
 
 const {
-  modal, mapFile, mapRemoved, mapSettings, controlCombo, parentNames,
+  modal, mapFile, mapRemoved, mapSettings, controlCombo, parentNames, mapCurrentID,
 } = useApplication();
 const { patron, guest } = useFactories();
 
 const parentTypes = parentNames.names(new VueRefPatron<string[]>()).ref();
 
 const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
+
+const mapId = mapCurrentID.id(new VueRefPatron<string>()).ref();
 
 const close = () => {
   modal.receive('');
@@ -74,18 +75,6 @@ controlCombo.happenedConditional(
             </BaseButton>
           </div>
         </div>
-        <div class="TheSettings-Row">
-          <BaseCheckbox
-            v-model="map.settings.colored"
-            :label="$t('general.useLabelsColoring')"
-          />
-        </div>
-        <div class="mb-2">
-          <BaseCheckbox
-            v-model="map.settings.skipSearchIndex"
-            label="Пропустить индексацию поиском"
-          />
-        </div>
         <div class="mb-2">
           <label>
             <b>{{ $t('general.mapName') }}</b>
@@ -97,10 +86,6 @@ controlCombo.happenedConditional(
             {{ $t('general.githubRepo') }}
           </a>
         </div>
-        <div class="mb-4">
-          <b>{{ $t('general.favorites') }}</b>
-          <BaseInput v-model="map.settings.favoriteGroup" />
-        </div>
       </div>
       <div class="flex gap-2">
         <BaseButton class="TheSettings-Button" type="success" @click="save()">
@@ -109,7 +94,7 @@ controlCombo.happenedConditional(
         <BaseButton class="TheSettings-Button" @click="close">
           {{ $t('general.cancel') }}
         </BaseButton>
-        <BaseButton class="TheSettings-Button" type="danger" @click="mapRemoved.receive(map);close()">
+        <BaseButton class="TheSettings-Button" type="danger" @click="mapRemoved.receive(mapId);close()">
           {{ $t('general.removeMap') }}
         </BaseButton>
       </div>

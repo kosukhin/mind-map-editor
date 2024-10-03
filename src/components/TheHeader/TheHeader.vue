@@ -29,14 +29,6 @@ const { drawer, modal } = useApplication();
       <BaseButton
         type="success"
         size="sm"
-        title="Показать лог уведомлений"
-        class="w-7 block"
-      >
-        <BaseIcon icon="fa-file-text" />
-      </BaseButton>
-      <BaseButton
-        type="success"
-        size="sm"
         class="w-7 block e2e-open-menu"
         :title="$t('general.menu')"
         @click="drawer.receive('menu')"
@@ -63,7 +55,7 @@ const { drawer, modal } = useApplication();
         size="sm"
         :title="'Все карты файла'"
         class="w-7 block"
-        @click="modal.receive('fileMaps')"
+        @click="drawer.receive('fileMaps')"
       >
         <BaseIcon icon="fa-map" />
       </BaseButton>

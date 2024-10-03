@@ -11,6 +11,7 @@ import {
   faPlusSquare,
   faCog,
   faMap,
+  faClose,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,6 +26,7 @@ const icons: Record<string, IconDefinition> = {
   'fa-rotate-left': faRotateLeft,
   'fa-rotate-right': faRotateRight,
   'fa-map': faMap,
+  'fa-close': faClose,
 };
 
 defineProps({

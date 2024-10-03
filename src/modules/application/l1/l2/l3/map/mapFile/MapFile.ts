@@ -61,13 +61,13 @@ export class MapFile implements MapFileType {
     return this;
   }
 
-  public mapFile(mapFileTarget: GuestType<MapFileDocument>): this {
+  public mapFile<R extends GuestType<MapFileDocument>>(mapFileTarget: R) {
     this.mapFileContent.content(this.factories.guestInTheMiddle.create(mapFileTarget, (value: string) => {
       const mapFile = this.factories.transformToObject.create(value || this.generateEmptyMapFile()).result();
       localDebug('get map file', mapFile);
       this.mapFilePatrons.distribute(<MapFileDocument>mapFile, mapFileTarget);
     }));
-    return this;
+    return mapFileTarget;
   }
 
   private createEmptyMapByName(mapName: string, guest: GuestType<MapDocument>) {

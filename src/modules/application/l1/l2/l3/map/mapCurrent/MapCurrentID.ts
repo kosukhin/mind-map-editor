@@ -14,7 +14,7 @@ export class MapCurrentID implements MapCurrentIDType {
     this.idCache = factories.cache.create(this, 'current');
   }
 
-  public id(guest: GuestType<string>) {
+  public id<R extends GuestType<string>>(guest: R) {
     this.idCache.receiving(guest);
     return guest;
   }
