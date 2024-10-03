@@ -31,7 +31,6 @@ mapCurrent.objects(
         )
         .asString(
           guest.create((textWithBrs: string) => {
-            console.log(textWithBrs);
             mapAsString.value = textWithBrs;
           }),
         );

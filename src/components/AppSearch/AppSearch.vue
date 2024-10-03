@@ -7,11 +7,28 @@ import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { VueSource } from '@/modules/integration/vue/VueSource';
 import { useFactories } from '@/composables/useFactories';
+import { debug } from 'debug';
 
 const {
   objectsMatchedToQuery, controlCombo, modal, stagePosition,
 } = useApplication();
 const { guest, patron } = useFactories();
+
+const inputRef = ref();
+
+const localDebug = debug('app:AppSearch');
+
+modal.isOpenedByName(
+  'search',
+  patron.create(guest.create((opened: boolean) => {
+    setTimeout(() => {
+      if (opened && inputRef.value) {
+        localDebug('search is opened', opened);
+        inputRef.value.$el.focus();
+      }
+    }, 500);
+  })),
+);
 
 const queryField = ref('');
 
@@ -32,6 +49,7 @@ controlCombo.happened(
   <BaseModal name="search">
     <div class="AppSearch">
       <BaseInput
+        ref="inputRef"
         v-model="queryField"
         class="mb-2 e2e-query-input"
         :placeholder="$t('general.specifyQuery')"
