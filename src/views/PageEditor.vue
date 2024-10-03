@@ -11,6 +11,7 @@ import AppTypesParent from '@/components/AppTypesParent/AppTypesParent.vue';
 import AppMenuObject from '@/components/AppMenuObject/AppMenuObject.vue';
 import TheMapAsText from '@/components/TheMapAsText/TheMapAsText.vue';
 import AppSearch from '@/components/AppSearch/AppSearch.vue';
+import AppFileMaps from '@/components/AppFileMaps/AppFileMaps.vue';
 </script>
 
 <template>
@@ -28,4 +29,5 @@ import AppSearch from '@/components/AppSearch/AppSearch.vue';
   <AppMenuObject />
   <TheMapAsText />
   <AppSearch />
+  <AppFileMaps />
 </template>

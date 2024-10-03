@@ -61,10 +61,11 @@ const { drawer, modal } = useApplication();
       </BaseButton>
       <BaseButton
         size="sm"
-        :title="$t('general.visitHistory')"
+        :title="'Все карты файла'"
         class="w-7 block"
+        @click="modal.receive('fileMaps')"
       >
-        <BaseIcon icon="fa-history" />
+        <BaseIcon icon="fa-map" />
       </BaseButton>
     </div>
   </div>
