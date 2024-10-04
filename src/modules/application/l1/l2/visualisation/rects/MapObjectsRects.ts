@@ -13,6 +13,10 @@ import { CacheType } from '@/modules/system/guest/CacheType';
 import {
   MapObjectCurrentType,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrentType';
+import {
+  ObjectPositionType,
+} from '@/modules/application/l1/l2/l3/l4/types/object/ObjectPositionType';
+import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 
 const localDebug = debug('MapObjectsRectsPatron');
 
@@ -28,6 +32,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
     mapObjectsVisible: MapObjectsType,
     private mapObjectCurrent: MapObjectCurrentType,
     private mapObjectForRendering: MapObjectType,
+    private objectPosition: ObjectPositionType,
     private factories: {
       patronOnce: FactoryType<GuestType>,
       guest: FactoryType<GuestType>,
@@ -79,19 +84,29 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
 
           rect.on('dragend', (e) => {
             localDebug('drag ended');
-            this.mapObject.receive({
-              ...object,
-              position: [rect.x(), rect.y()],
-            });
+            this.objectPosition.position(object, {
+              x: rect.x(),
+              y: rect.y(),
+            }, this.factories.guest.create((point: PointDocument) => {
+              this.mapObject.receive({
+                ...object,
+                position: [point.x, point.y],
+              });
+            }));
           });
 
           rect.on('dragmove', (e) => {
             localDebug('dragmove works', rect.x(), rect.y());
             layer.getStage().container().style.cursor = 'move';
-            this.mapObjectForRendering.receive({
-              ...object,
-              position: [rect.x(), rect.y()],
-            });
+            this.objectPosition.position(object, {
+              x: rect.x(),
+              y: rect.y(),
+            }, this.factories.guest.create((point: PointDocument) => {
+              this.mapObjectForRendering.receive({
+                ...object,
+                position: [point.x, point.y],
+              });
+            }));
           });
 
           rect.on('click', () => {

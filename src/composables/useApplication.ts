@@ -61,6 +61,12 @@ import { StagePosition } from '@/modules/application/l1/l2/visualisation/stage/S
 import { KonvaMove } from '@/modules/integration/konva/KonvaMove';
 import { KonvaLayerShiftPoint } from '@/modules/integration/konva/KonvaLayerShiftPoint';
 import { ObjectsMatchedToQuery } from '@/modules/application/l1/l2/l3/search/ObjectsMatchedToQuery';
+import {
+  ObjectPositionBounds,
+} from '@/modules/application/l1/l2/l3/map/mapObject/ObjectPositionBounds';
+import {
+  ObjectPositionGridStick,
+} from '@/modules/application/l1/l2/l3/map/mapObject/ObjectPositionGridStick';
 
 const factories = useFactories();
 
@@ -143,7 +149,21 @@ const mapObjectsVisible = new MapObjectsVisible(
   factories,
 );
 const mapObjectsGeometryFix = new ObjectGeometryFix(mapObjectsVisible, mapFile, mapCurrent, factories);
-const mapRects = new MapObjectsRects(konvaLayer, mapObject, mapObjectsVisible, mapObjectCurrent, mapObjectForRendering, factories);
+const mapRects = new MapObjectsRects(
+  konvaLayer,
+  mapObject,
+  mapObjectsVisible,
+  mapObjectCurrent,
+  mapObjectForRendering,
+  new ObjectPositionGridStick(
+    new ObjectPositionBounds(
+      konvaLayer,
+      factories,
+    ),
+    factories,
+  ),
+  factories,
+);
 const mapArrows = new MapObjectsArrows(konvaLayer, mapFile, mapForRendering, factories);
 const miniMap = new MiniMap(mapForRendering, konvaLayer, factories);
 const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, mapCurrent, mapObject, factories);
