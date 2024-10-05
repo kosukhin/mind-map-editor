@@ -6,6 +6,10 @@ import { Guest } from '@/modules/system/guest/Guest';
 import { useFactories } from '@/composables/useFactories';
 import { PointIdDocument } from '@/modules/application/l1/l2/l3/map/documents/PointIdDocument';
 import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
+import { StageDefaultSize } from '@/modules/application/l1/l2/l3/stage/StageDefaultSize';
+import {
+  StageMoveRestrictionTransfer,
+} from '@/modules/application/l1/l2/l3/stage/StageMoveRestrictionTransfer';
 import { MapCurrent } from '../../l3/map/mapCurrent/MapCurrent';
 import { MapFileFake } from '../../l3/map/mapFile/MapFileFake';
 import { MiniMap } from './MiniMap';
@@ -58,9 +62,12 @@ test('mini map', () => {
   const browserCanvas = new BrowserCanvas(factories);
   browserCanvas.receive(canvasEL);
 
-  const konvaLayer = new KonvaLayer(browserCanvas, factories);
+  const stageSize = new StageDefaultSize();
 
-  const miniMap = new MiniMap(mapCurrent, konvaLayer, factories);
+  const stageMoveRestriction = new StageMoveRestrictionTransfer();
+  const konvaLayer = new KonvaLayer(browserCanvas, stageSize, stageMoveRestriction, factories);
+
+  const miniMap = new MiniMap(mapCurrent, konvaLayer, stageSize, factories);
 
   miniMap.points(new Patron(new Guest((points: PointIdDocument[]) => {
     expect(points.length).toBe(1);

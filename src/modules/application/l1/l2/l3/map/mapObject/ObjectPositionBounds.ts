@@ -3,11 +3,11 @@ import { GuestType } from '@/modules/system/guest/GuestType';
 import {
   ObjectPositionType,
 } from '@/modules/application/l1/l2/l3/l4/types/object/ObjectPositionType';
-import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { debug } from 'debug';
+import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 
 const localDebug = debug('ObjectPositionBounds');
 
@@ -16,7 +16,7 @@ const localDebug = debug('ObjectPositionBounds');
  */
 export class ObjectPositionBounds implements ObjectPositionType {
   public constructor(
-    private layer: LayerBase,
+    private stageSize: GuestAwareType<SizeDocument>,
     private factories: {
       guestInTheMiddle: FactoryType<GuestType>,
     },
@@ -27,7 +27,7 @@ export class ObjectPositionBounds implements ObjectPositionType {
     point: PointDocument,
     guest: R,
   ): R {
-    this.layer.size(
+    this.stageSize.receiving(
       this.factories.guestInTheMiddle.create(guest, (size: SizeDocument) => {
         let { x, y } = point;
         if (x < 30) {

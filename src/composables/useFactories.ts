@@ -25,6 +25,7 @@ import { GuestAware } from '@/modules/system/guest/GuestAware';
 import { TextOf } from '@/modules/application/l1/l2/l3/l4/text/TextOf';
 import { TextWithoutHTML } from '@/modules/application/l1/l2/l3/l4/text/TextWithoutHTML';
 import { TextNlAsBr } from '@/modules/application/l1/l2/l3/l4/text/TextNlAsBr';
+import { GuestSync } from '@/modules/system/guest/GuestSync';
 
 const cache = new Factory(Cache);
 const source = new Factory(Source);
@@ -36,6 +37,7 @@ const patron = new Factory(Patron);
 const patronOnce = new Factory(PatronOnce);
 const guestInTheMiddle = new Factory(GuestInTheMiddle);
 const chain = new Factory(Chain);
+const guestSync = new Factory(GuestSync);
 
 const systemFactories = {
   cache,
@@ -44,6 +46,7 @@ const systemFactories = {
   guestCast,
   guestAware,
   guestInTheMiddle,
+  guestSync,
   patron,
   patronOnce,
   pool,

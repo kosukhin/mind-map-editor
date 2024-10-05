@@ -12,6 +12,10 @@ import { Patron } from '@/modules/system/guest/Patron';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { useFactories } from '@/composables/useFactories';
 import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
+import { StageDefaultSize } from '@/modules/application/l1/l2/l3/stage/StageDefaultSize';
+import {
+  StageMoveRestrictionTransfer,
+} from '@/modules/application/l1/l2/l3/stage/StageMoveRestrictionTransfer';
 
 test('visible object', () => {
   const factories = useFactories();
@@ -59,7 +63,10 @@ test('visible object', () => {
 
   const mapFileFake = new MapFileFake(defaultMapFileDocument);
   const mapCurrent = new MapCurrent(mapFileFake, new MapCurrentID(factories), factories);
-  const layer = new KonvaLayer(browserCanvas, factories);
+
+  const stageSize = new StageDefaultSize();
+  const stageMoveRestriction = new StageMoveRestrictionTransfer();
+  const layer = new KonvaLayer(browserCanvas, stageSize, stageMoveRestriction, factories);
   const mapObjects = new MapObjectsVisible(layer, browserCanvas, mapCurrent, factories);
 
   mapObjects.objects(new Patron(new Guest((objects) => {

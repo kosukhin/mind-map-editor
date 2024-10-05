@@ -16,6 +16,8 @@ import {
 import {
   MapObjectDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
+import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 
 const {
   canvas,
@@ -25,6 +27,7 @@ const {
   fps,
   mapCurrentID,
   mapObjectUrl,
+  stageSize,
 } = useApplication();
 const factories = useFactories();
 
@@ -37,8 +40,8 @@ const objectsWithTemplates = new MapObjectsWithTemplates(
 );
 
 const objects = objectsWithTemplates.objects(new VueRefPatron<MapObjectWithTemplateDocument[]>([])).ref();
-const layerSize = konvaLayer.size(new VueRefPatron()).ref();
-const layerPosition = konvaLayer.position(new VueRefPatron()).ref();
+const layerSize = stageSize.receiving(new VueRefPatron<SizeDocument>()).ref();
+const layerPosition = konvaLayer.position(new VueRefPatron<PointDocument>()).ref();
 
 const layerWidth = computed(() => layerSize.value?.width);
 const layerWidthSource = new VueSource(layerWidth);

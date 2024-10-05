@@ -67,6 +67,8 @@ import {
 import {
   ObjectPositionGridStick,
 } from '@/modules/application/l1/l2/l3/map/mapObject/ObjectPositionGridStick';
+import { StageDefaultSize } from '@/modules/application/l1/l2/l3/stage/StageDefaultSize';
+import { StageMoveRestriction } from '@/modules/application/l1/l2/l3/stage/StageMoveRestriction';
 
 const factories = useFactories();
 
@@ -97,7 +99,14 @@ const mapObjectCurrent = new MapObjectCurrent(drawer, factories);
 const mapTypeCurrent = new MapTypeCurrent(factories);
 const mapSettings = new MapSettings(mapFile, mapCurrent, factories);
 const canvas = new BrowserCanvas(factories);
-const konvaLayer = new KonvaLayer(canvas, factories);
+const stageSize = new StageDefaultSize();
+const stageMoveRestriction = new StageMoveRestriction(canvas, stageSize, factories);
+const konvaLayer = new KonvaLayer(
+  canvas,
+  stageSize,
+  stageMoveRestriction,
+  factories,
+);
 const zIndex = new Zindex(factories);
 const mapBackground = new MapObjectBackground(konvaLayer, mapFile, zIndex, factories);
 const mapObject = new MapObject(mapCurrent, mapFile, factories);
@@ -157,7 +166,7 @@ const mapRects = new MapObjectsRects(
   mapObjectForRendering,
   new ObjectPositionGridStick(
     new ObjectPositionBounds(
-      konvaLayer,
+      stageSize,
       factories,
     ),
     factories,
@@ -165,7 +174,7 @@ const mapRects = new MapObjectsRects(
   factories,
 );
 const mapArrows = new MapObjectsArrows(konvaLayer, mapFile, mapForRendering, factories);
-const miniMap = new MiniMap(mapForRendering, konvaLayer, factories);
+const miniMap = new MiniMap(mapForRendering, konvaLayer, stageSize, factories);
 const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, mapCurrent, mapObject, factories);
 const resizing = new Resizing(mapFile, canvas, konvaLayer, factories);
 const objectAdditionalFieldsFix = new ObjectAdditionalFieldsFix(mapObjectCurrent, mapFile, mapObject, factories);
@@ -178,7 +187,13 @@ const mapObjectUrl = new MapObjectUrl(mapCurrentID, factories);
 const parentTypes = new ParentTypes(parentNames, mapFile, factories);
 const controlCombo = new ControlCombo(keyboard, factories);
 const menu = new Menu(mapFile, factories);
-const stagePosition = new StagePosition(new KonvaMove(konvaLayer, canvas, factories));
+const stagePosition = new StagePosition(new KonvaMove(
+  konvaLayer,
+  canvas,
+  stageSize,
+  stageMoveRestriction,
+  factories,
+));
 const objectsMatchedToQuery = new ObjectsMatchedToQuery(
   mapCurrent,
   factories,
@@ -223,6 +238,7 @@ const modules = {
   menu,
   stagePosition,
   objectsMatchedToQuery,
+  stageSize,
 };
 
 export const useApplication = () => modules;

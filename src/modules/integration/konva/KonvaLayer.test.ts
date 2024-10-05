@@ -7,13 +7,19 @@ import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanva
 import { Guest } from '@/modules/system/guest/Guest';
 import { Layer } from 'konva/lib/Layer';
 import { useFactories } from '@/composables/useFactories';
+import { StageDefaultSize } from '@/modules/application/l1/l2/l3/stage/StageDefaultSize';
+import {
+  StageMoveRestrictionTransfer,
+} from '@/modules/application/l1/l2/l3/stage/StageMoveRestrictionTransfer';
 
 test('konva layer', () => {
   const factories = useFactories();
   const canvasEL = document.createElement('canvas');
   const browserCanvas = new BrowserCanvas(factories);
   browserCanvas.receive(canvasEL);
-  const layer = new KonvaLayer(browserCanvas, factories);
+  const stageSize = new StageDefaultSize();
+  const stageMoveRestriction = new StageMoveRestrictionTransfer();
+  const layer = new KonvaLayer(browserCanvas, stageSize, stageMoveRestriction, factories);
 
   layer.layer(new Guest((latestLayer: Layer) => {
     latestLayer.x(10);

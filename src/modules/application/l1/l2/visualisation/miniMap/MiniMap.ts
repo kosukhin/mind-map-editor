@@ -10,6 +10,7 @@ import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { ChainType } from '@/modules/system/guest/ChainType';
 import { Layer } from 'konva/lib/Layer';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 
 const localDebug = debug('app:MiniMap');
 const minimapWidth = 130;
@@ -40,6 +41,7 @@ export class MiniMap {
   public constructor(
     private map: MapType,
     private layer: LayerBase,
+    private stageSize: GuestAwareType<SizeDocument>,
     private factories: {
       cache: FactoryType<CacheType>,
       chain: FactoryType<ChainType<unknown>>,
@@ -55,7 +57,7 @@ export class MiniMap {
     const chain = factories.chain.create();
     map.objects(factories.patron.create(chain.receiveKey('objects')));
     layer.layer(factories.patron.create(chain.receiveKey('layer')));
-    layer.size(factories.patron.create(chain.receiveKey('size')));
+    stageSize.receiving(factories.patron.create(chain.receiveKey('size')));
     chain.result(factories.patron.create(factories.guest.create(({ layer: konvaLayer, size, objects }: MiniMapChainDocument) => {
       const scale = minimapWidth / size.width;
       const layerSize = {
@@ -82,7 +84,7 @@ export class MiniMap {
 
   viewportPosition<R extends GuestType<PointDocument>>(guest: R) {
     const chain = this.factories.chain.create();
-    this.layer.size(this.factories.guestCast.create(guest, chain.receiveKey('size')));
+    this.stageSize.receiving(this.factories.guestCast.create(guest, chain.receiveKey('size')));
     this.layer.position(this.factories.guestCast.create(guest, chain.receiveKey('position')));
     chain.result(this.factories.guestInTheMiddle.create(guest, ({ size, position }: ViewPortChainDocument) => {
       const scale = minimapWidth / size.width;
