@@ -87,8 +87,10 @@ export class KonvaLayer implements LayerBase {
         this.positionCache.receive(position);
       });
 
+      const posGuest = this.factories.guestSync.create({
+        x: 0, y: 0,
+      });
       stage.dragBoundFunc((pos) => {
-        const posGuest = this.factories.guestSync.create(pos);
         stageMoveRestriction.position(
           pos,
           posGuest,
