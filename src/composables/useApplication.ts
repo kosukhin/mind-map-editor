@@ -70,6 +70,10 @@ import {
 import { StageDefaultSize } from '@/modules/application/l1/l2/l3/stage/StageDefaultSize';
 import { StageMoveRestriction } from '@/modules/application/l1/l2/l3/stage/StageMoveRestriction';
 import { MapHistory } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapHistory';
+import {
+  FirstPossibleFileContent,
+} from '@/modules/application/l1/l2/l3/map/mapFile/FirstPossibleFileContent';
+import { UrlContent } from '@/modules/application/l1/url/UrlContent';
 
 const factories = useFactories();
 
@@ -82,11 +86,14 @@ const notification = new Notification(factories);
 const mapCurrentID = new MapCurrentID(factories);
 
 const mapFile = new MapFile(
-  new FileSystemContent(
-    new BrowserLaunchQueue(),
-    notification,
-    factories,
-  ),
+  new FirstPossibleFileContent([
+    new UrlContent(notification, factories),
+    new FileSystemContent(
+      new BrowserLaunchQueue(),
+      notification,
+      factories,
+    ),
+  ], factories),
   mapCurrentID,
   factories,
 );

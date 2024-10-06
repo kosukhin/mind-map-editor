@@ -12,6 +12,7 @@ import { BrowserFileType } from '@/modules/integration/browser/file/BrowserFileT
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { PoolType } from '@/modules/system/guest/PoolType';
 import { debug } from 'debug';
+import { FileSystemFileHandle } from '@vueuse/core';
 
 const localDebug = debug('FileSystemContent');
 
@@ -70,5 +71,12 @@ export class FileSystemContent implements MapFileContentType {
         text: 'Успешно сохранен файл карты!',
       });
     }
+  }
+
+  public canBeUsed(guest: GuestType<boolean>): this {
+    const canBeUsed = 'launchQueue' in window;
+    localDebug('can be used', canBeUsed);
+    guest.receive(canBeUsed);
+    return this;
   }
 }
