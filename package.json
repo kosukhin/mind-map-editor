@@ -11,7 +11,6 @@
     "cy:open": "cypress open",
     "test": "vitest",
     "test-debug": "env DEBUG=app:* vitest",
-    "webstorm-integration": "vitest --watch --reporter=dot --reporter=json --outputFile=.vitest-result.json",
     "release": "standard-version --no-verify"
   },
   "config": {
