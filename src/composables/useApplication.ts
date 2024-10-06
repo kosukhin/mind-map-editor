@@ -69,6 +69,7 @@ import {
 } from '@/modules/application/l1/l2/l3/map/mapObject/ObjectPositionGridStick';
 import { StageDefaultSize } from '@/modules/application/l1/l2/l3/stage/StageDefaultSize';
 import { StageMoveRestriction } from '@/modules/application/l1/l2/l3/stage/StageMoveRestriction';
+import { MapHistory } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapHistory';
 
 const factories = useFactories();
 
@@ -198,6 +199,7 @@ const objectsMatchedToQuery = new ObjectsMatchedToQuery(
   mapCurrent,
   factories,
 );
+const mapHistory = new MapHistory(mapFile, mapCurrent, mapCurrentID, factories);
 
 const modules = {
   mapCurrentID,
@@ -239,6 +241,7 @@ const modules = {
   stagePosition,
   objectsMatchedToQuery,
   stageSize,
+  mapHistory,
 };
 
 export const useApplication = () => modules;
