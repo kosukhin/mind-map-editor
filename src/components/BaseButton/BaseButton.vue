@@ -17,7 +17,7 @@ const props = defineProps({
 // Тексты text-sm text-md text-lg
 const classes = ['rounded-main', `text-${props.size}`, `p-${props.size}`, `bg-${props.type} hover:bg-${props.type}-second`];
 
-classes.push('border border-solid border-body-dark box-border');
+classes.push('');
 </script>
 
 <template>

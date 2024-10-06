@@ -9,7 +9,7 @@ module.exports = {
       body: '#f3f4f6',
       border: '#ccc',
       default: '#ffffff',
-      standard: '#ffffff',
+      standard: '#f9f9f9',
       primary: '#22bdff',
       success: '#7dff67',
       danger: '#f55',
