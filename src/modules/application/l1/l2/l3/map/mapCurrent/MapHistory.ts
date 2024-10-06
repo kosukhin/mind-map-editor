@@ -15,6 +15,15 @@ type HistoryProps = {
 
 const localDebug = debug('MapHistory');
 
+const normalizeMapDocumentAndSerialize = (map: MapDocument) => {
+  const result = JSON.parse(JSON.stringify(map)) as MapDocument;
+  Object.values(result.objects).forEach((object) => {
+    object.width = 0;
+    object.height = 0;
+  });
+  return JSON.stringify(result);
+};
+
 /**
  * История изменения карты
  */
@@ -56,7 +65,7 @@ export class MapHistory implements GuestType<MapDocument> {
               this.factories.guest.create((history: MapDocument[]) => {
                 localDebug('add map to history', history, value);
                 const isMapFromHistory = history.some(
-                  (historyMap) => JSON.stringify(historyMap) === JSON.stringify(value),
+                  (historyMap) => normalizeMapDocumentAndSerialize(historyMap) === normalizeMapDocumentAndSerialize(value),
                 );
                 localDebug('isMapFromHistory', isMapFromHistory);
                 if (!isMapFromHistory) {

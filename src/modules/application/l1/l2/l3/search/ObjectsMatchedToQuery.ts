@@ -24,6 +24,7 @@ export class ObjectsMatchedToQuery {
     const objectsDebounceDelay = 500;
     querySource.receiving(
       this.factories.guestInTheMiddle.create(guest, debounce((query: string) => {
+        query = query.toLowerCase();
         this.map.objects(
           this.factories.guest.create((objects: MapObjectDocument[]) => {
             if (!query) {
