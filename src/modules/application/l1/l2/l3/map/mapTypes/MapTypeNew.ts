@@ -6,11 +6,13 @@ export class MapTypeNew {
     private mapType: GuestType<MapTypeWithNameDocument>,
   ) {}
 
-  public byName(typeName: string) {
+  public byName() {
+    const typeId = String(new Date().getTime());
     this.mapType.receive({
-      name: typeName,
+      name: typeId,
       type: {
-        name: typeName,
+        id: typeId,
+        name: 'Новый тип',
         svg: '<div style="background: lightyellow;border: 1px solid #ccc;">type</div>',
         width: 100,
         height: 40,

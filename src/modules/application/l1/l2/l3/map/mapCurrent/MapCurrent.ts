@@ -41,7 +41,10 @@ export class MapCurrent implements MapType {
       localDebug('current map changed', latestMap);
       this.settingsCache.receive(latestMap.settings);
       this.objectsCache.receive(Object.values(latestMap.objects));
-      this.typesCache.receive(Object.values(latestMap.types));
+      this.typesCache.receive(Object.entries(latestMap.types).map(([key, value]) => ({
+        ...value,
+        id: key,
+      })));
     })));
   }
 

@@ -2,6 +2,7 @@
  * Данные типа узла карты
  */
 export interface MapTypeDocument {
+  id: string,
   name: string
   svg: string
   width: number

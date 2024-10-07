@@ -33,7 +33,7 @@ export class MapObjectsWithTemplates {
     this.mapObjects.objects(this.factories.guestCast.create(guest, chain.receiveKey('objects')));
     chain.result(this.factories.guestInTheMiddle.create(guest, ({ types, objects }: ChainProps) => {
       const withTemplates = objects.map((object) => {
-        const type = types.find((ct) => ct.name === object.type);
+        const type = types.find((ct) => ct.id === object.type);
         if (!type) {
           return {
             obj: object,

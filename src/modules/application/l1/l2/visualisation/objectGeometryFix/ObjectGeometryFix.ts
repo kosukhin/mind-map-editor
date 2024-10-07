@@ -42,6 +42,9 @@ export class ObjectGeometryFix implements GuestType<MapObjectDocument[]> {
             return;
           }
           const savedObject = mapObjects[id];
+          if (!savedObject) {
+            return;
+          }
           localDebug('dom object geometry', domObject.clientWidth, domObject.clientHeight);
           localDebug('saved object geometry', savedObject.width, savedObject.height);
           if (savedObject.width !== domObject.clientWidth || savedObject.height !== domObject.clientHeight) {
