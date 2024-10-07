@@ -77,7 +77,8 @@ export interface MapDocument {
   objects: Record<string, MapObjectDocument>
   position?: [number, number],
   namedSearches?: NamedSearchDocument[],
-  settings: MapSettingsDocument
+  settings: MapSettingsDocument,
+  structure?: MapDocument,
 }
 
 /**

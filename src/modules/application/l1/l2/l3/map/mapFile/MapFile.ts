@@ -49,7 +49,8 @@ export class MapFile implements MapFileType {
       if (!mapFile[mapId]) {
         this.createEmptyMapByName(mapId, currentMapGuest);
       } else {
-        this.currentMapPatrons.distribute(mapFile[mapId], currentMapGuest);
+        const mapObject = mapFile[mapId];
+        this.currentMapPatrons.distribute(mapObject?.structure ? mapObject.structure : mapObject, currentMapGuest);
       }
     }));
     return currentMapGuest;
