@@ -1,5 +1,8 @@
 import { Cache } from '@/modules/system/guest/Cache';
-import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import {
+  MapDocument,
+  MapObjectDocument,
+} from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapObjectsType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
@@ -9,10 +12,10 @@ import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/Poin
 import { GuestType } from '@/modules/system/guest/GuestType';
 import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { ChainType } from '@/modules/system/guest/ChainType';
-import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
+import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 
 const localDebug = debug('app:MapObjectsVisible');
-type ChainGuestExecutor = (props: {position: PointDocument, size: SizeDocument, objects: MapObjectDocument[]}) => void;
+type ChainGuestExecutor = (props: {position: PointDocument, size: SizeDocument, map: MapDocument}) => void;
 
 /**
  * Объект для определения видимых объектов
@@ -23,7 +26,7 @@ export class MapObjectsVisible implements MapObjectsType {
   public constructor(
     layerDep: LayerBase,
     canvas: BrowserCanvas,
-    mapCurrent: MapType,
+    mapFile: MapFileType,
     factories: {
       chain: FactoryType<ChainType<unknown>>,
       patron: FactoryType<GuestType<unknown>>,
@@ -34,15 +37,17 @@ export class MapObjectsVisible implements MapObjectsType {
     const chain = factories.chain.create();
     canvas.size(factories.patron.create(chain.receiveKey('size')));
     layerDep.position(factories.patron.create(chain.receiveKey('position')));
-    mapCurrent.objects(factories.patron.create(chain.receiveKey('objects')));
+    mapFile.currentMap(factories.patron.create(chain.receiveKey('map')));
     chain.result(factories.patron.create(
-      factories.guest.create<[ChainGuestExecutor]>(({ position, size, objects }) => {
+      factories.guest.create<[ChainGuestExecutor]>(({ position, size, map }) => {
+        const objects = Object.values(map.objects);
         localDebug('objects come to result', objects);
 
         const visibleObjects = objects.filter((object) => {
+          const type = map.types[object.type] ?? {};
           const objectSize = {
-            width: object.width,
-            height: object.height,
+            width: object.width || type.width,
+            height: object.height || type.height,
           };
           return this.isInBounding(position, size, object.position, objectSize);
         });

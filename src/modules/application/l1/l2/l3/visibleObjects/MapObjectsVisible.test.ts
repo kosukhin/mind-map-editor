@@ -62,12 +62,11 @@ test('visible object', () => {
   };
 
   const mapFileFake = new MapFileFake(defaultMapFileDocument);
-  const mapCurrent = new MapCurrent(mapFileFake, new MapCurrentID(factories), factories);
 
   const stageSize = new StageDefaultSize();
   const stageMoveRestriction = new StageMoveRestrictionTransfer();
   const layer = new KonvaLayer(browserCanvas, stageSize, stageMoveRestriction, factories);
-  const mapObjects = new MapObjectsVisible(layer, browserCanvas, mapCurrent, factories);
+  const mapObjects = new MapObjectsVisible(layer, browserCanvas, mapFileFake, factories);
 
   mapObjects.objects(new Patron(new Guest((objects) => {
     expect(objects.length).toBe(1);

@@ -10,8 +10,11 @@ import { ChainType } from '@/modules/system/guest/ChainType';
 import {
   MapObjectWithTemplateDocument,
 } from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectWithTemplateDocument';
+import { debug } from 'debug';
 
 type ChainProps = {objects: MapObjectDocument[], types: MapTypeDocument[]};
+
+const localDebug = debug('MapObjectsWithTemplates');
 
 /**
  * Объекты карты с отрендеренным шаблоном HTML
@@ -32,8 +35,10 @@ export class MapObjectsWithTemplates {
     this.map.types(this.factories.guestCast.create(guest, chain.receiveKey('types')));
     this.mapObjects.objects(this.factories.guestCast.create(guest, chain.receiveKey('objects')));
     chain.result(this.factories.guestInTheMiddle.create(guest, ({ types, objects }: ChainProps) => {
+      localDebug('visible objects', objects);
       const withTemplates = objects.map((object) => {
-        const type = types.find((ct) => ct.id === object.type);
+        const type = types.find((ct) => String(ct.id) === String(object.type));
+        localDebug('check type existed', type);
         if (!type) {
           return {
             obj: object,
@@ -41,6 +46,7 @@ export class MapObjectsWithTemplates {
           };
         }
         let { svg } = type;
+        localDebug('type svg', svg);
         if (object.additionalFields) {
           Object.entries(object.additionalFields).forEach(([key, value]) => {
             svg = svg.replaceAll(`\${${key}}`, value);

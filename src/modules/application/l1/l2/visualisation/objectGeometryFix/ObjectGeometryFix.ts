@@ -53,6 +53,12 @@ export class ObjectGeometryFix implements GuestType<MapObjectDocument[]> {
             savedObject.width = domObject.clientWidth;
             savedObject.height = domObject.clientHeight;
           }
+
+          if (!savedObject.width || !savedObject.height) {
+            const type = latestMap.types[savedObject.type];
+            savedObject.width = type.width;
+            savedObject.height = type.height;
+          }
         });
         // Немного оптимизируем сохраняем сразу все объекты а не по одному
         if (hasChanges) {

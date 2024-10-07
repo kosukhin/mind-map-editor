@@ -26,14 +26,14 @@ export class MapTypeRemoved implements GuestType<MapTypeDocument> {
     const checksChain = this.factories.chain.create(this);
     this.checks.forEach((check, index) => {
       check.breakOnFail({
-        name: value.name,
+        name: value.id,
         type: value,
       }, checksChain.receiveKey(String(index)));
     });
 
     checksChain.result(this.factories.guest.create(() => {
       this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
-        delete latestMap.types[value.name];
+        delete latestMap.types[value.id];
         this.map.receive(latestMap);
       }));
     }));

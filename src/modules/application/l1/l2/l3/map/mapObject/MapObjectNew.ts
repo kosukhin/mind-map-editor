@@ -32,7 +32,7 @@ export class MapObjectNew {
           this.canvas.canvas(
             this.factories.guest.create((canvasEl: HTMLCanvasElement) => {
               const canvasRect = canvasEl.getBoundingClientRect();
-              const type = types.find((ct) => ct.name === typeName);
+              const type = types.find((ct) => ct.id === typeName);
               localDebug('is type found', type);
 
               const insertX = point.x - canvasRect.left;

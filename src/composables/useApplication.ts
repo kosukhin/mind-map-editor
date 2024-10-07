@@ -162,7 +162,7 @@ const mapTypeNew = new MapTypeNew(mapType);
 const mapObjectsVisible = new MapObjectsVisible(
   konvaLayer,
   canvas,
-  mapForRendering,
+  mapFileForRendering,
   factories,
 );
 const mapObjectsGeometryFix = new ObjectGeometryFix(mapObjectsVisible, mapFile, mapCurrent, factories);

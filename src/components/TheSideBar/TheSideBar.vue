@@ -43,14 +43,14 @@ const typesExtended = computed(() => types.value?.map((type) => ({
           draggable="true"
           :style="`width:${type.type.width}px;height:${type.type.height}px`"
           :title="$t('general.notifications.dragToCanvasToAdd')"
-          @dragend="mapObjectNew.byTypeName(type.type.name, $event)"
+          @dragend="mapObjectNew.byTypeName(type.type.id, $event)"
         ></div>
         <div class="flex gap-1">
           <BaseButton
             class="text-white"
             size="sm"
             type="primary"
-            @click="mapTypeCurrent.receive(type.type.name)"
+            @click="mapTypeCurrent.receive(type.type.id)"
           >
             {{ $t('general.change') }}
           </BaseButton>
@@ -70,7 +70,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
         <BaseButton
           :title="$t('general.addType')"
           type="success"
-          @click="mapTypeNew.byName('new type')"
+          @click="mapTypeNew.byName()"
         >
           <BaseIcon icon="fa-plus-square" />
         </BaseButton>
