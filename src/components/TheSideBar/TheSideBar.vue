@@ -65,7 +65,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
         </div>
       </div>
     </div>
-    <div class="mt-auto p-3 pt-0">
+    <div class="mt-auto w-full p-3 pt-0">
       <BaseGroup class="mb-1 grid gap-1 grid-cols-2">
         <BaseButton
           :title="$t('general.addType')"
@@ -83,8 +83,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
           <BaseIcon icon="fa-cog" />
         </BaseButton>
       </BaseGroup>
-      <TheLinker class="w-full mb-1" />
-      <TheGrouper class="w-full" />
+      <TheLinker class="w-[100%] block mb-1" />
     </div>
   </div>
 </template>

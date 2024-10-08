@@ -1,10 +1,23 @@
 import { PoolType } from '@/modules/system/guest/PoolType';
 import { GuestType, ReceiveOptions } from './GuestType';
 
+const poolSets = new Map<PoolType, Set<GuestType>>();
+
+/**
+ * Удалить патрон из всех пулов
+ */
+export const removePatronFromPools = (patron: GuestType) => {
+  poolSets.forEach((pool) => {
+    pool.delete(patron);
+  });
+};
+
 export class PatronPool<T> implements PoolType<T> {
   private patrons = new Set<GuestType<T>>();
 
-  public constructor(private initiator: unknown) {}
+  public constructor(private initiator: unknown) {
+    poolSets.set(this, this.patrons);
+  }
 
   public add(shouldBePatron: GuestType<T>) {
     if (shouldBePatron.introduction && shouldBePatron.introduction() === 'patron') {
