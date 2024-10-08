@@ -85,15 +85,16 @@ const notification = new Notification(factories);
 
 const mapCurrentID = new MapCurrentID(factories);
 
+const fileContent = new FirstPossibleFileContent([
+  new UrlContent(notification, factories),
+  new FileSystemContent(
+    new BrowserLaunchQueue(),
+    notification,
+    factories,
+  ),
+], factories);
 const mapFile = new MapFile(
-  new FirstPossibleFileContent([
-    new UrlContent(notification, factories),
-    new FileSystemContent(
-      new BrowserLaunchQueue(),
-      notification,
-      factories,
-    ),
-  ], factories),
+  fileContent,
   mapCurrentID,
   factories,
 );
@@ -249,6 +250,7 @@ const modules = {
   objectsMatchedToQuery,
   stageSize,
   mapHistory,
+  fileContent,
 };
 
 export const useApplication = () => modules;

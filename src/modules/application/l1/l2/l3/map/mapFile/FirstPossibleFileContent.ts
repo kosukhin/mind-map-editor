@@ -25,15 +25,15 @@ export class FirstPossibleFileContent implements MapFileContentType {
     });
   }
 
-  canBeUsed(guest: GuestType<boolean>): this {
+  public canBeUsed<R extends GuestType<boolean>>(guest: R) {
     localDebug('can be used to', this.firstPossibleFileContent);
     if (this.firstPossibleFileContent) {
       this.firstPossibleFileContent.canBeUsed(guest);
     }
-    return this;
+    return guest;
   }
 
-  content(target: GuestType<string>): this {
+  public content(target: GuestType<string>): this {
     localDebug('content to', this.firstPossibleFileContent);
     if (this.firstPossibleFileContent) {
       this.firstPossibleFileContent.content(target);
@@ -41,7 +41,7 @@ export class FirstPossibleFileContent implements MapFileContentType {
     return this;
   }
 
-  receive(value: string): this {
+  public receive(value: string): this {
     if (this.firstPossibleFileContent) {
       this.firstPossibleFileContent.receive(value);
     }

@@ -23,7 +23,7 @@ export class UrlContent implements MapFileContentType {
     this.contentCache = factories.cache.create();
   }
 
-  public canBeUsed(guest: GuestType<boolean>): this {
+  public canBeUsed(guest: GuestType<boolean>) {
     const canBeUsed = window.location.search.indexOf('?view=') > -1;
     localDebug('can be used', canBeUsed);
     guest.receive(window.location.search.indexOf('?view=') > -1);
@@ -37,7 +37,7 @@ export class UrlContent implements MapFileContentType {
       });
     }
 
-    return this;
+    return guest;
   }
 
   public content(target: GuestType<string>): this {
