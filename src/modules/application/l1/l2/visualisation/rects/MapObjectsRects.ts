@@ -1,4 +1,7 @@
-import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import {
+  MapDocument,
+  MapObjectDocument,
+} from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { Rect } from 'konva/lib/shapes/Rect';
 import {
@@ -17,6 +20,7 @@ import {
   ObjectPositionType,
 } from '@/modules/application/l1/l2/l3/l4/types/object/ObjectPositionType';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
+import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 
 const localDebug = debug('MapObjectsRectsPatron');
 
@@ -28,6 +32,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
 
   public constructor(
     private konvaLayer: LayerBase,
+    private mapFile: MapFileType,
     private mapObject: MapObjectType,
     mapObjectsVisible: MapObjectsType,
     private mapObjectCurrent: MapObjectCurrentType,
@@ -45,75 +50,84 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
   public receive(objects: MapObjectDocument[]): this {
     this.konvaLayer.layer(this.factories.patronOnce.create(
       this.factories.guest.create((layer: KonvaLayer) => {
-        localDebug('rerender object rects');
-        this.previouslyRenderedRects.forEach((rect) => {
-          rect.hide();
-        });
-        objects.forEach((object) => {
-          if (this.previouslyRenderedRects.has(object)) {
-            const rect = this.previouslyRenderedRects.get(object);
-            rect.width(+object.width);
-            rect.height(+object.height);
-            rect.x(+object.position[0]);
-            rect.y(+object.position[1]);
-            rect.show();
-            return;
-          }
+        this.mapFile.currentMap(
+          this.factories.guest.create((latestMap: MapDocument) => {
+            localDebug('rerender object rects');
+            this.previouslyRenderedRects.forEach((rect) => {
+              rect.hide();
+            });
+            objects.forEach((object) => {
+              const type = latestMap.types[object.type];
+              const width = +object.width || +type.width || 100;
+              const height = +object.height || +type.height || 100;
 
-          const rect = new Rect({
-            x: +object.position[0],
-            y: +object.position[1],
-            width: +object.width,
-            height: +object.height,
-            name: object.id,
-            draggable: true,
-            objectId: object.id,
-            zIndex: 3,
-          });
+              if (this.previouslyRenderedRects.has(object)) {
+                const rect = this.previouslyRenderedRects.get(object);
+                rect.width(width);
+                rect.height(height);
+                rect.x(+object.position[0]);
+                rect.y(+object.position[1]);
+                rect.show();
+                return;
+              }
 
-          this.previouslyRenderedRects.set(object, rect);
-          layer.add(rect);
-
-          rect.on('mouseenter', () => {
-            layer.getStage().container().style.cursor = 'pointer';
-          });
-
-          rect.on('mouseleave', () => {
-            layer.getStage().container().style.cursor = 'default';
-          });
-
-          rect.on('dragend', (e) => {
-            localDebug('drag ended');
-            this.objectPosition.position(object, {
-              x: rect.x(),
-              y: rect.y(),
-            }, this.factories.guest.create((point: PointDocument) => {
-              this.mapObject.receive({
-                ...object,
-                position: [point.x, point.y],
+              localDebug('rect object', object, type);
+              const rect = new Rect({
+                x: +object.position[0],
+                y: +object.position[1],
+                width,
+                height,
+                name: object.id,
+                draggable: true,
+                objectId: object.id,
+                zIndex: 3,
               });
-            }));
-          });
 
-          rect.on('dragmove', (e) => {
-            localDebug('dragmove works', rect.x(), rect.y());
-            layer.getStage().container().style.cursor = 'move';
-            this.objectPosition.position(object, {
-              x: rect.x(),
-              y: rect.y(),
-            }, this.factories.guest.create((point: PointDocument) => {
-              this.mapObjectForRendering.receive({
-                ...object,
-                position: [point.x, point.y],
+              this.previouslyRenderedRects.set(object, rect);
+              layer.add(rect);
+
+              rect.on('mouseenter', () => {
+                layer.getStage().container().style.cursor = 'pointer';
               });
-            }));
-          });
 
-          rect.on('click', () => {
-            localDebug('object clicked with id', object.id);
-            this.mapObjectCurrent.receive(object.id);
-          });
-        });
+              rect.on('mouseleave', () => {
+                layer.getStage().container().style.cursor = 'default';
+              });
+
+              rect.on('dragend', (e) => {
+                localDebug('drag ended');
+                this.objectPosition.position(object, {
+                  x: rect.x(),
+                  y: rect.y(),
+                }, this.factories.guest.create((point: PointDocument) => {
+                  this.mapObject.receive({
+                    ...object,
+                    position: [point.x, point.y],
+                  });
+                }));
+              });
+
+              rect.on('dragmove', (e) => {
+                localDebug('dragmove works', rect.x(), rect.y());
+                layer.getStage().container().style.cursor = 'move';
+                this.objectPosition.position(object, {
+                  x: rect.x(),
+                  y: rect.y(),
+                }, this.factories.guest.create((point: PointDocument) => {
+                  this.mapObjectForRendering.receive({
+                    ...object,
+                    position: [point.x, point.y],
+                  });
+                }));
+              });
+
+              rect.on('click', () => {
+                localDebug('object clicked with id', object.id);
+                this.mapObjectCurrent.receive(object.id);
+              });
+            });
+          }),
+        );
       }),
     ));
     return this;

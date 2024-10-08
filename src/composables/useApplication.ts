@@ -169,6 +169,7 @@ const mapObjectsVisible = new MapObjectsVisible(
 const mapObjectsGeometryFix = new ObjectGeometryFix(mapObjectsVisible, mapFile, mapCurrent, factories);
 const mapRects = new MapObjectsRects(
   konvaLayer,
+  mapFile,
   mapObject,
   mapObjectsVisible,
   mapObjectCurrent,
