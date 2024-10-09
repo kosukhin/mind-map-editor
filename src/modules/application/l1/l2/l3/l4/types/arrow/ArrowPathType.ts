@@ -2,12 +2,19 @@ import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeD
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { GuestType } from '@/modules/system/guest/GuestType';
 
-export interface ArrowPath {
+export type ArrowPointDocument = {
+  shapeGeometry: SizeDocument,
+  shapePosition: PointDocument,
+  lookToGeometry: SizeDocument,
+  lookToPosition: PointDocument,
+}
+
+export interface ArrowPathType {
   breakPoints(
-    shapeGeometry: SizeDocument,
-    shapePosition: PointDocument,
-    lookToGeometry: SizeDocument,
-    lookToPosition: PointDocument,
+    fromPoint: ArrowPointDocument,
+    toPoint: ArrowPointDocument,
     pointsGuest: GuestType<number[]>
   ): this;
+
+  clear(): void;
 }

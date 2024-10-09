@@ -7,8 +7,11 @@ import { GuestType } from '@/modules/system/guest/GuestType';
 import { removePatronFromPools } from '@/modules/system/guest/PatronPool';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { Layer as KonvaLayer } from 'konva/lib/Layer';
-import { ArrowPath } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPath';
+import { ArrowPathType } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
 import { Arrow } from 'konva/lib/shapes/Arrow';
+import { debug } from 'debug';
+
+const localDebug = debug('NewArrow');
 
 /**
  * Новая стрелка, появляется при создании новой связи
@@ -21,7 +24,7 @@ export class NewArrow {
   public constructor(
     private konvaLayer: LayerBase,
     private cursorPosition: GuestAwareType<PointDocument>,
-    private arrowPath: ArrowPath,
+    private arrowPath: ArrowPathType,
     private factories: {
       cache: FactoryType<CacheType>,
       patron: FactoryType<GuestType>,
@@ -36,6 +39,7 @@ export class NewArrow {
    * Создать новую стрелку для объекта
    */
   public forObject(object: MapObjectDocument) {
+    localDebug('start watch cursor');
     this.cursorGuest.receiving(
       this.factories.guest.create((guest: GuestType) => {
         removePatronFromPools(guest);
@@ -45,23 +49,42 @@ export class NewArrow {
     let arrow: Arrow | null = null;
     const patron = this.factories.patron.create(
       this.factories.guest.create((cursorPosition: PointDocument) => {
+        localDebug('cursor moves');
         this.konvaLayer.layer(
           this.factories.guest.create((layer: KonvaLayer) => {
+            localDebug('cursor moves in layer');
             // TODO сделать отрисовку стрелки
             this.arrowPath.breakPoints(
               {
-                width: object.width,
-                height: object.height,
+                shapeGeometry: {
+                  width: object.width,
+                  height: object.height,
+                },
+                shapePosition: {
+                  x: object.position[0],
+                  y: object.position[1],
+                },
+                lookToGeometry: {
+                  width: 1,
+                  height: 1,
+                },
+                lookToPosition: cursorPosition,
               },
               {
-                x: object.position[0],
-                y: object.position[1],
+                lookToGeometry: {
+                  width: object.width,
+                  height: object.height,
+                },
+                lookToPosition: {
+                  x: object.position[0],
+                  y: object.position[1],
+                },
+                shapeGeometry: {
+                  width: 1,
+                  height: 1,
+                },
+                shapePosition: cursorPosition,
               },
-              {
-                width: 1,
-                height: 1,
-              },
-              cursorPosition,
               this.factories.guest.create((points: number[]) => {
                 if (arrow) {
                   arrow.points(points);
@@ -84,6 +107,7 @@ export class NewArrow {
             );
           }),
         );
+        this.arrowPath.clear();
       }),
     );
     this.cursorPosition.receiving(patron);

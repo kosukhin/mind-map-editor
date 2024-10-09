@@ -5,6 +5,10 @@ import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapObjectType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
 import { CacheType } from '@/modules/system/guest/CacheType';
+import { NewArrow } from '@/modules/application/l1/l2/visualisation/arrows/NewArrow';
+import { debug } from 'debug';
+
+const localDebug = debug('MapObjectsLink');
 
 /**
  * Связь нескольких объектов стрелкой
@@ -16,6 +20,7 @@ export class MapObjectsLink {
     private mapObjectCurrent: MapObjectCurrent,
     private map: MapType,
     private mapObject: MapObjectType,
+    private newArrow: NewArrow,
     private factories: {
       guest: FactoryType<GuestType>,
       cache: FactoryType<CacheType>,
@@ -46,8 +51,22 @@ export class MapObjectsLink {
           this.factories.guest.create((objectId: string) => {
             objectIds.push(objectId);
             this.objectIdsCache.receive([...objectIds]);
+            localDebug('object ids', objectIds);
+
+            if (objectIds.length === 2) {
+              this.map.objects(
+                this.factories.guest.create((objects: MapObjectDocument[]) => {
+                  const [, formObjectId] = objectIds;
+                  const fromObject = objects.find((object) => object.id === formObjectId);
+                  if (fromObject) {
+                    this.newArrow.forObject(fromObject);
+                  }
+                }),
+              );
+            }
 
             if (objectIds.length === 3) {
+              this.newArrow.dispose();
               this.mapObjectCurrent.silenceOff();
               this.map.objects(
                 this.factories.guest.create((objects: MapObjectDocument[]) => {

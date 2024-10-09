@@ -74,6 +74,9 @@ import {
   FirstPossibleFileContent,
 } from '@/modules/application/l1/l2/l3/map/mapFile/FirstPossibleFileContent';
 import { UrlContent } from '@/modules/application/l1/url/UrlContent';
+import { ArrowPath } from '@/modules/application/l1/l2/visualisation/arrows/ArrowPath';
+import { Cursor } from '@/modules/integration/browser/cursor/Cursor';
+import { NewArrow } from '@/modules/application/l1/l2/visualisation/arrows/NewArrow';
 
 const factories = useFactories();
 
@@ -183,9 +186,24 @@ const mapRects = new MapObjectsRects(
   ),
   factories,
 );
-const mapArrows = new MapObjectsArrows(konvaLayer, mapFile, mapForRendering, factories);
+const cursor = new Cursor(factories);
+const arrowPath = new ArrowPath();
+const newArrow = new NewArrow(konvaLayer, cursor, arrowPath, factories);
+const mapArrows = new MapObjectsArrows(
+  konvaLayer,
+  mapFile,
+  mapForRendering,
+  arrowPath,
+  factories,
+);
 const miniMap = new MiniMap(mapForRendering, konvaLayer, stageSize, factories);
-const mapObjectsLink = new MapObjectsLink(mapObjectCurrent, mapCurrent, mapObject, factories);
+const mapObjectsLink = new MapObjectsLink(
+  mapObjectCurrent,
+  mapCurrent,
+  mapObject,
+  newArrow,
+  factories,
+);
 const resizing = new Resizing(mapFile, canvas, konvaLayer, factories);
 const objectAdditionalFieldsFix = new ObjectAdditionalFieldsFix(mapObjectCurrent, mapFile, mapObject, factories);
 const mapRemoved = new MapRemoved(mapFile, mapCurrentID, factories);
@@ -252,6 +270,7 @@ const modules = {
   stageSize,
   mapHistory,
   fileContent,
+  newArrow,
 };
 
 export const useApplication = () => modules;
