@@ -186,7 +186,7 @@ const mapRects = new MapObjectsRects(
   ),
   factories,
 );
-const cursor = new Cursor(factories);
+const cursor = new Cursor(konvaLayer, factories);
 const arrowPath = new ArrowPath();
 const newArrow = new NewArrow(konvaLayer, cursor, arrowPath, factories);
 const mapArrows = new MapObjectsArrows(

@@ -13,6 +13,11 @@ import { debug } from 'debug';
 
 const localDebug = debug('NewArrow');
 
+const arrowGeometry = {
+  width: 10,
+  height: 10,
+};
+
 /**
  * Новая стрелка, появляется при создании новой связи
  */
@@ -64,10 +69,7 @@ export class NewArrow {
                   x: object.position[0],
                   y: object.position[1],
                 },
-                lookToGeometry: {
-                  width: 1,
-                  height: 1,
-                },
+                lookToGeometry: arrowGeometry,
                 lookToPosition: cursorPosition,
               },
               {
@@ -79,10 +81,7 @@ export class NewArrow {
                   x: object.position[0],
                   y: object.position[1],
                 },
-                shapeGeometry: {
-                  width: 1,
-                  height: 1,
-                },
+                shapeGeometry: arrowGeometry,
                 shapePosition: cursorPosition,
               },
               this.factories.guest.create((points: number[]) => {

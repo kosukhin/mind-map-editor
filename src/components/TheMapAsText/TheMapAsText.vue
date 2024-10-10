@@ -9,6 +9,7 @@ import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { useFactories } from '@/composables/useFactories';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import debounce from 'lodash/debounce';
 
 const { mapFile, mapCurrent } = useApplication();
 const {
@@ -20,7 +21,7 @@ const mapAsString = ref('');
 const objects = ref<MapObjectDocument[]>([]);
 mapCurrent.objects(
   patron.create(
-    guest.create((latestObjects: MapObjectDocument[]) => {
+    guest.create(debounce((latestObjects: MapObjectDocument[]) => {
       objects.value = latestObjects;
       textNlAsBr
         .create(
@@ -34,7 +35,7 @@ mapCurrent.objects(
             mapAsString.value = textWithBrs;
           }),
         );
-    }),
+    }, 500)),
   ),
 );
 

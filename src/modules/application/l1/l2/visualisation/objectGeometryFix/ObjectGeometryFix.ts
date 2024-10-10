@@ -68,7 +68,7 @@ export class ObjectGeometryFix implements GuestType<MapObjectDocument[]> {
           });
         }
       }));
-    }, 200);
+    }, 500);
   }
 
   introduction() {
