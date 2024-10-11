@@ -15,8 +15,27 @@ export const removePatronFromPools = (patron: GuestType) => {
 export class PatronPool<T> implements PoolType<T> {
   private patrons = new Set<GuestType<T>>();
 
+  public receive: (value: T, options?: ReceiveOptions) => this;
+
   public constructor(private initiator: unknown) {
     poolSets.set(this, this.patrons);
+
+    let lastMicrotask: any = null;
+    const doReceive = (value: T, options?: ReceiveOptions) => {
+      this.patrons.forEach((target) => {
+        this.sendValueToGuest(value, target, options);
+      });
+    };
+    this.receive = (value: T, options?: ReceiveOptions) => {
+      const currentMicroTask = () => {
+        if (currentMicroTask === lastMicrotask) {
+          doReceive(value, options);
+        }
+      };
+      lastMicrotask = currentMicroTask;
+      queueMicrotask(currentMicroTask);
+      return this;
+    };
   }
 
   public add(shouldBePatron: GuestType<T>) {
@@ -28,13 +47,6 @@ export class PatronPool<T> implements PoolType<T> {
 
   public remove(patron: GuestType<T>) {
     this.patrons.delete(patron);
-    return this;
-  }
-
-  public receive(value: T, options?: ReceiveOptions) {
-    this.patrons.forEach((target) => {
-      this.sendValueToGuest(value, target, options);
-    });
     return this;
   }
 

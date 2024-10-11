@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --port=8881",
     "build": "vue-cli-service build",
+    "preview": "vue-cli-service serve --mode=production --port=8881",
     "lint": "vue-cli-service lint",
     "lint-fix": "vue-cli-service lint --fix",
     "cz": "git add . && git cz",
