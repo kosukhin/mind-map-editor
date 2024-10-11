@@ -11,6 +11,7 @@ import { PoolType } from '@/modules/system/guest/PoolType';
 import { Transformed } from '@/modules/system/transformed/Transformed';
 import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentIDType';
 import { ChainType } from '@/modules/system/guest/ChainType';
+import { CacheType } from '@/modules/system/guest/CacheType';
 
 const localDebug = debug('MapFileOfContent');
 type CurrentMapChainProps = {mapId: string, mapFile: MapFileDocument};
@@ -23,6 +24,8 @@ export class MapFile implements MapFileType {
 
   private mapFilePatrons: PoolType<MapFileDocument>;
 
+  private mapFileCache: CacheType;
+
   public constructor(
     private mapFileContent: MapFileContentType,
     private mapId: MapCurrentIDType,
@@ -34,10 +37,12 @@ export class MapFile implements MapFileType {
       guestInTheMiddle: FactoryType<GuestType>,
       transformToString: FactoryType<Transformed<string>>,
       transformToObject: FactoryType<Transformed>,
+      cache: FactoryType<CacheType>
     },
   ) {
     this.currentMapPatrons = factories.pool.create(this);
     this.mapFilePatrons = factories.pool.create(this);
+    this.mapFileCache = factories.cache.create(this, false);
   }
 
   public currentMap<R extends GuestType<MapDocument>>(currentMapGuest: R): R {
@@ -59,15 +64,25 @@ export class MapFile implements MapFileType {
   public receive(value: MapFileDocument): this {
     localDebug('save map file document', value);
     this.mapFileContent.receive(this.factories.transformToString.create(value).result());
+    this.mapFileCache.receive(value);
     return this;
   }
 
   public mapFile<R extends GuestType<MapFileDocument>>(mapFileTarget: R) {
-    this.mapFileContent.content(this.factories.guestInTheMiddle.create(mapFileTarget, (value: string) => {
-      const mapFile = this.factories.transformToObject.create(value || this.generateEmptyMapFile()).result();
-      localDebug('get map file', mapFile);
-      this.mapFilePatrons.distribute(<MapFileDocument>mapFile, mapFileTarget);
-    }));
+    this.mapFileCache.receiving(
+      this.factories.guestInTheMiddle.create(mapFileTarget, (mapFileCache: MapFileDocument) => {
+        if (mapFileCache) {
+          mapFileTarget.receive(mapFileCache);
+        } else {
+          this.mapFileContent.content(this.factories.guest.create((value: string) => {
+            const mapFile = this.factories.transformToObject.create(value || this.generateEmptyMapFile()).result();
+            localDebug('get map file', mapFile);
+            this.mapFileCache.receive(mapFile);
+            mapFileTarget.receive(<MapFileDocument>mapFile);
+          }));
+        }
+      }),
+    );
     return mapFileTarget;
   }
 
