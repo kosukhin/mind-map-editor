@@ -89,14 +89,17 @@ const onObjectClick = (object: MapObjectDocument) => {
           :data-object-id="obj.obj.id"
           :style="`width:${obj.obj.width}px;height: ${obj.obj.height}px;top: ${obj.obj.position[1]}px;left:${obj.obj.position[0]}px;z-index:${obj.obj.zindex}`"
         >
-          <div class="absolute bottom-[100%] text-nowrap left-[50%] translate-x-[-50%] text-center pb-2 pointer-events-auto text-sm">
-          <span
-            v-html="obj.obj.additionalName"
-            :class="[obj.obj.linked && 'cursor-pointer underline']"
-            @click="onObjectClick(obj.obj)"
-          ></span>
+          <div class="absolute bottom-[100%] left-[50%] translate-x-[-50%] text-center pb-2 pointer-events-auto text-sm w-[300px]">
+            <span
+              v-html="obj.obj.additionalName"
+              :class="[obj.obj.linked && 'cursor-pointer underline']"
+              @click="onObjectClick(obj.obj)"
+            ></span>
           </div>
-          <div class="absolute top-[100%] text-nowrap left-[50%] translate-x-[-50%] text-center pt-2 text-sm" v-html="obj.obj.name"></div>
+          <div
+            class="absolute top-[100%] left-[50%] translate-x-[-50%] text-center pt-2 text-sm w-[300px]"
+            v-html="obj.obj.name"
+          ></div>
           <div :data-object-id="obj.obj.id" class="rendered-object" v-html="obj.template"></div>
         </div>
       </div>
