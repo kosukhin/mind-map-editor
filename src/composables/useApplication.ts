@@ -77,6 +77,9 @@ import { UrlContent } from '@/modules/application/l1/url/UrlContent';
 import { ArrowPath } from '@/modules/application/l1/l2/visualisation/arrows/ArrowPath';
 import { Cursor } from '@/modules/integration/browser/cursor/Cursor';
 import { NewArrow } from '@/modules/application/l1/l2/visualisation/arrows/NewArrow';
+import {
+  CursorWithObjects,
+} from '@/modules/application/l1/l2/visualisation/cursor/CursorWithObjects';
 
 const factories = useFactories();
 
@@ -187,8 +190,13 @@ const mapRects = new MapObjectsRects(
   factories,
 );
 const cursor = new Cursor(konvaLayer, factories);
+const cursorWithObjects = new CursorWithObjects(
+  mapObjectsVisible,
+  cursor,
+  factories,
+);
 const arrowPath = new ArrowPath();
-const newArrow = new NewArrow(konvaLayer, cursor, arrowPath, factories);
+const newArrow = new NewArrow(konvaLayer, cursorWithObjects, arrowPath, factories);
 const mapArrows = new MapObjectsArrows(
   konvaLayer,
   mapFile,
