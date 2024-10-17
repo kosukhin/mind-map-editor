@@ -49,6 +49,8 @@ test('map current', () => {
         lastClick: 0,
         inMenu: false,
         menuOrder: 1,
+        changeTimestamp: 0,
+        createTimestamp: 0,
         width: 10,
         height: 10,
       },

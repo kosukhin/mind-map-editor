@@ -42,6 +42,8 @@ export interface MapObjectDocument {
   width: number
   height: number
   additionalFields?: Record<string, string>
+  createTimestamp: number
+  changeTimestamp: number
 }
 
 /**

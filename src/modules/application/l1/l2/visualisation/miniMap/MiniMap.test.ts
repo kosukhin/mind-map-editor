@@ -42,6 +42,8 @@ test('mini map', () => {
           menuOrder: 1,
           width: 10,
           height: 10,
+          createTimestamp: 0,
+          changeTimestamp: 0,
         },
       },
       settings: {

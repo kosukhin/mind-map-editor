@@ -48,6 +48,8 @@ test('visible object', () => {
           targetBlank: false,
           lastClick: 0,
           inMenu: false,
+          createTimestamp: 0,
+          changeTimestamp: 0,
           menuOrder: 1,
           width: 10,
           height: 10,

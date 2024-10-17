@@ -88,10 +88,15 @@ controlCombo.happenedConditional(
       <h2 class="text-lg font-bold">{{ $t('general.mapObject') }}</h2>
       <small v-if="object" class="flex gap-2 items-center">
         <span> ID #{{ object.id }} </span>
-        <BaseButton size="sm" type="primary">
-          {{ $t('general.copy') }}
-        </BaseButton>
       </small>
+      <div v-if="object" class="flex gap-2 mt-2">
+        <div v-if="object.createTimestamp">
+          Создан: {{ new Date(object.createTimestamp).toLocaleString() }}
+        </div>
+        <div v-if="object.changeTimestamp">
+          Изменен: {{ new Date(object.changeTimestamp).toLocaleString() }}
+        </div>
+      </div>
     </template>
     <div v-if="object" class="flex flex-col gap-2">
       <div class="FormObject-Inner">

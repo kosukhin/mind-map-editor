@@ -56,6 +56,8 @@ export class MapObjectNew {
                   height: type.height,
                   zindex: 0,
                   id: new Date().getTime().toString(),
+                  createTimestamp: Date.now(),
+                  changeTimestamp: Date.now(),
                   position: [
                     insertX > 0 ? insertX + stagePosition.x : 0,
                     insertY > 0 ? insertY + stagePosition.y : 0,

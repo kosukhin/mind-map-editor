@@ -26,7 +26,11 @@ export class MapObject implements MapObjectType {
         ...latestMap,
         objects: {
           ...latestMap.objects,
-          [value.id]: value,
+          [value.id]: {
+            ...value,
+            createTimestamp: value.createTimestamp ?? Date.now(),
+            changeTimestamp: Date.now(),
+          },
         },
       });
     }));
