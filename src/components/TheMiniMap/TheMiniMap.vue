@@ -20,7 +20,7 @@ const viewportPosition = miniMap.viewportPosition(new VueRefPatron<PointDocument
         width: `${size.width}px`,
         height: `${size.height}px`,
       }"
-    class="absolute block bg-white bottom-[10px] mt-3 right-3 z-1 border border-solid border-body-dark"
+    class="absolute pointer-events-none block bg-white bottom-[10px] mt-3 right-3 z-1 border border-solid border-body-dark"
   >
     <div
       v-if="viewportPosition"

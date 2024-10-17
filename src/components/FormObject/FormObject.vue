@@ -21,6 +21,7 @@ const {
   mapObjectCurrent,
   mapFile,
   mapObject,
+  mapCurrent,
   drawer,
   mapObjectRemoved,
   mapObjectRelationRemoved,
@@ -42,6 +43,8 @@ const object = new VueComputedPatron<MapObjectDocument>(() => {
     }),
   ));
 }).ref();
+
+const types = mapCurrent.types(new VueRefPatron()).ref();
 
 const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
 const objectSource = new VueSource(object);
@@ -158,20 +161,11 @@ controlCombo.happenedConditional(
           </BaseInputTitle>
           <BaseSelect
             v-model="object.type"
-            :items="[]"
+            :items="types"
             option-id="id"
             option-label="name"
           />
         </BaseInputRow>
-        <div class="my-2">
-          <BaseButton
-            class="FormObject-ArrowButton"
-            type="primary"
-            size="md"
-          >
-            {{ $t('general.transfer') }}
-          </BaseButton>
-        </div>
         <div class="my-2">
           <BaseCheckbox
             v-model="object.inMenu"
