@@ -80,6 +80,15 @@ import { NewArrow } from '@/modules/application/l1/l2/visualisation/arrows/NewAr
 import {
   CursorWithObjects,
 } from '@/modules/application/l1/l2/visualisation/cursor/CursorWithObjects';
+import {
+  ObjectsOutsideScreen,
+} from '@/modules/application/l1/l2/l3/map/mapObject/ObjectsOutsideScreen';
+import { GuestAware } from '@/modules/system/guest/GuestAware';
+import { Guest } from '@/modules/system/guest/Guest';
+import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import {
+  StagePositionByObjectId,
+} from '@/modules/application/l1/l2/visualisation/stage/StagePositionByObjectId';
 
 const factories = useFactories();
 
@@ -110,6 +119,9 @@ const mapForRendering = new MapCurrent(mapFileForRendering, mapCurrentID, factor
 const mapObjectForRendering = new MapObject(mapForRendering, mapFileForRendering, factories);
 
 const mapCurrent = new MapCurrent(mapFile, mapCurrentID, factories);
+const mapCurrentSource = new GuestAware<MapDocument>((guest) => {
+  mapFile.currentMap(guest);
+});
 const mapObjectCurrent = new MapObjectCurrent(drawer, factories);
 const mapTypeCurrent = new MapTypeCurrent(factories);
 const mapSettings = new MapSettings(mapFile, mapCurrent, factories);
@@ -223,23 +235,32 @@ const mapObjectUrl = new MapObjectUrl(mapCurrentID, factories);
 const parentTypes = new ParentTypes(parentNames, mapFile, factories);
 const controlCombo = new ControlCombo(keyboard, factories);
 const menu = new Menu(mapFile, factories);
-const stagePosition = new StagePosition(new KonvaMove(
+const konvaMove = new KonvaMove(
   konvaLayer,
   canvas,
   stageSize,
   stageMoveRestriction,
   factories,
-));
+);
+const stagePosition = new StagePosition(konvaMove);
+const stagePositionByObjectId = new StagePositionByObjectId(konvaMove, factories);
 const objectsMatchedToQuery = new ObjectsMatchedToQuery(
   mapCurrent,
   factories,
 );
 const mapHistory = new MapHistory(mapFile, mapCurrent, mapCurrentID, factories);
+const objectsOutsideScreen = new ObjectsOutsideScreen(
+  mapCurrent,
+  stageSize,
+  konvaLayer,
+  factories,
+);
 
 const modules = {
   mapCurrentID,
   mapFile,
   mapCurrent,
+  mapCurrentSource,
   mapRemoved,
   mapSettings,
   mapObject,
@@ -274,11 +295,13 @@ const modules = {
   controlCombo,
   menu,
   stagePosition,
+  stagePositionByObjectId,
   objectsMatchedToQuery,
   stageSize,
   mapHistory,
   fileContent,
   newArrow,
+  objectsOutsideScreen,
 };
 
 export const useApplication = () => modules;
