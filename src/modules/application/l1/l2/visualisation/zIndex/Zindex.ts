@@ -16,7 +16,7 @@ export class Zindex implements GuestObjectType<FnType> {
       guest: FactoryType<GuestObjectType>,
     },
   ) {
-    this.fnsCache = factories.cache.create(this, []);
+    this.fnsCache = factories.cache.create([]);
     this.fnsCache.value(factories.patron.create(
       factories.guest.create(debounce((fns: FnType[]) => {
         localDebug('zindex fns run');

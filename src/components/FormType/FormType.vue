@@ -42,13 +42,13 @@ const type = new VueComputedPatron<MapTypeDocument>(() => {
 }).ref();
 
 const close = () => {
-  mapTypeCurrent.receive('');
-  modal.receive('');
-  theChain.receiveKey('typeId').receive('');
+  mapTypeCurrent.give('');
+  modal.give('');
+  theChain.receiveKey('typeId').give('');
 };
 
 const save = () => {
-  mapType.receive({
+  mapType.give({
     name: typeName.value,
     type: type.value,
   });

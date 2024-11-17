@@ -36,7 +36,7 @@ test('map file content fs', () => {
     matches[value] += 1;
   })));
 
-  mapFileContent.receive('new content!');
+  mapFileContent.give('new content!');
 
   queueMicrotask(() => {
     expect(Object.values(matches).join()).toBe('1,1');

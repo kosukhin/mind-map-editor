@@ -1,5 +1,5 @@
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
-import { GuestAwareType , GuestObjectType , FactoryType } from 'patron-oop';
+import { GuestAwareType, GuestObjectType, FactoryType } from 'patron-oop';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { debug } from 'debug';

@@ -29,7 +29,7 @@ export class Resizing implements GuestObjectType<MapDocument> {
           layer.getStage().width(body.contentRect.width - canvasRect.left);
           layer.getStage().height(body.contentRect.height - canvasRect.top);
 
-          this.canvas.receive(canvasEl);
+          this.canvas.give(canvasEl);
           this.konvaLayer.give(layer);
         }));
       }));

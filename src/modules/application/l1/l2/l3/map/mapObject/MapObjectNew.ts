@@ -1,5 +1,5 @@
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
-import { FactoryType , GuestObjectType } from 'patron-oop';
+import { FactoryType, GuestObjectType } from 'patron-oop';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapObjectType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
@@ -39,7 +39,7 @@ export class MapObjectNew {
 
               if (type) {
                 localDebug('add new type');
-                this.mapObject.receive({
+                this.mapObject.give({
                   additionalName: '',
                   arrows: [],
                   description: '',

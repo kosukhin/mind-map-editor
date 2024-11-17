@@ -2,7 +2,7 @@ import {
   NotificationDocument,
   NotificationType,
 } from '@/modules/application/l1/l2/visualisation/notification/NotificationType';
-import { GuestType, SourceType, FactoryType } from 'patron-oop';
+import { GuestObjectType, SourceType, FactoryType } from 'patron-oop';
 
 /**
  * Объект для отображения уведомлений
@@ -16,13 +16,13 @@ export class Notification implements NotificationType {
 
   public constructor(
     factories: {
-      cache: FactoryType<SourceType<unknown>>,
+      sourceEmpty: FactoryType<SourceType<unknown>>,
     },
   ) {
-    this.messageCache = factories.cache.create(this);
+    this.messageCache = factories.sourceEmpty.create();
   }
 
-  public message<R extends GuestType<NotificationDocument>>(guest: R): R {
+  public message<R extends GuestObjectType<NotificationDocument>>(guest: R): R {
     this.messageCache.value(guest);
     return guest;
   }

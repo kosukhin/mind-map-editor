@@ -15,13 +15,13 @@ export class MapObjectCurrent implements MapObjectCurrentType {
   public constructor(
     private drawer: GuestObjectType<string>,
     private factories: {
-      cache: FactoryType<SourceType>,
+      sourceEmpty: FactoryType<SourceType>,
       patron: FactoryType<GuestObjectType>,
       guest: FactoryType<GuestObjectType>
     },
   ) {
-    this.idCache = factories.cache.create(this);
-    this.silenceActivator = factories.cache.create(this, false);
+    this.idCache = factories.sourceEmpty.create();
+    this.silenceActivator = factories.sourceEmpty.create(false);
     this.idCache.value(
       factories.patron.create(
         factories.guest.create((value: string) => {
@@ -48,7 +48,7 @@ export class MapObjectCurrent implements MapObjectCurrentType {
     return guest;
   }
 
-  public receive(value: string): this {
+  public give(value: string): this {
     this.silenceActivator.value(
       this.factories.guest.create((activator: GuestObjectType<string> | false) => {
         // Если мы в режиме тишины то значение получает только тот кто активировал тишину

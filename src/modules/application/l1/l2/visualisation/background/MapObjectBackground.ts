@@ -24,7 +24,7 @@ export class MapObjectBackground implements GuestObjectType<MapDocument> {
       guest: FactoryType<GuestObjectType>,
     },
   ) {
-    this.mapNameCache = factories.cache.create(this, '');
+    this.mapNameCache = factories.cache.create('');
     this.mapFile.currentMap(this);
   }
 

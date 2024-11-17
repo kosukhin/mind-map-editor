@@ -28,7 +28,7 @@ const positions = {
 const { drawer } = useApplication();
 
 const close = () => {
-  drawer.receive('');
+  drawer.give('');
   emit('close');
 };
 const isOpened = drawer.isOpenedByName(props.name, new VueRefPatron<boolean>()).ref();

@@ -30,13 +30,13 @@ export class NewArrow {
     private cursorPosition: GuestAwareType<PointDocument>,
     private arrowPath: ArrowPathType,
     private factories: {
-      cache: FactoryType<SourceType>,
+      sourceEmpty: FactoryType<SourceType>,
       patron: FactoryType<GuestObjectType>,
       guest: FactoryType<GuestObjectType>,
     },
   ) {
-    this.cursorGuest = this.factories.cache.create(this);
-    this.arrowCache = this.factories.cache.create(this);
+    this.cursorGuest = this.factories.sourceEmpty.create();
+    this.arrowCache = this.factories.sourceEmpty.create();
   }
 
   /**

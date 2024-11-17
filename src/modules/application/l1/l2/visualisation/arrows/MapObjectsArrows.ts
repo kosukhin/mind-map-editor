@@ -30,10 +30,10 @@ export class MapObjectsArrows {
     private mapDep: MapType,
     private arrowPath: ArrowPathType,
     private factories: {
-      patron: FactoryType<GuestType>,
-      guest: FactoryType<GuestType>,
+      patron: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>,
       chain: FactoryType<ChainType>,
-      cache: FactoryType<CacheType>
+      cache: FactoryType<SourceType>
     },
   ) {
     localDebug('draw arrows on canvas');

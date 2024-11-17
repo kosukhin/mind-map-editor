@@ -31,24 +31,24 @@ export class KonvaLayer implements LayerBase {
     private factories: {
       chain: FactoryType<ChainType<{canvas: HTMLElement}>>,
       cache: FactoryType<SourceType>,
+      sourceEmpty: FactoryType<SourceType>,
       guest: FactoryType<GuestObjectType>,
       patron: FactoryType<GuestObjectType>,
       guestSync: FactoryType<GuestValueType>,
     },
   ) {
     this.positionCache = factories.cache.create(
-      this,
       {
         x: 0,
         y: 0,
       },
     );
     this.guestChain = factories.chain.create();
-    this.layerCache = factories.cache.create(this);
+    this.layerCache = factories.sourceEmpty.create();
     this.canvasDep.canvas(factories.patron.create(this.guestChain.receiveKey('canvas')));
     stageSizeDep.value(this.guestChain.receiveKey('stageSize'));
 
-    this.guestChain.result(factories.guest.create<[(props: { canvas: HTMLElement, stageSize: SizeDocument }) => void]>(({ canvas, stageSize }) => {
+    this.guestChain.result(factories.guest.create<[(props: { canvas: HTMLElement, stageSize: SizeDocument }) => void]>(({ canvas }) => {
       localDebug('create new konva stage');
       const stage = new Konva.Stage({
         width: canvas.clientWidth,

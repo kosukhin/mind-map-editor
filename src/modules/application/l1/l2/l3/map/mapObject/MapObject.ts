@@ -5,7 +5,7 @@ import {
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { GuestType, FactoryType } from 'patron-oop';
+import { GuestObjectType, FactoryType } from 'patron-oop';
 
 /**
  * Сохранение объекта
@@ -15,7 +15,7 @@ export class MapObject implements MapObjectType {
     private map: MapType,
     private mapFile: MapFileType,
     private factories: {
-       guest: FactoryType<GuestType>,
+       guest: FactoryType<GuestObjectType>,
     },
   ) {}
 

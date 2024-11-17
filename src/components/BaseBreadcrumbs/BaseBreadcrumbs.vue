@@ -13,7 +13,7 @@ const list = breadcrumbs.list(new VueRefPatron<{title: string, name: string}[]>(
   <div>
     <span v-for="item in list" :key="item.name">
       /
-      <a href="#" @click.prevent="mapCurrentID.receive(item.name)">
+      <a href="#" @click.prevent="mapCurrentID.give(item.name)">
         {{ item.title }}
       </a>
     </span>

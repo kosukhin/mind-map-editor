@@ -10,11 +10,11 @@ export class BrowserCanvas implements BrowserCanvasType {
 
   public constructor(
     private factories: {
-      cache: FactoryType<SourceType>,
+      sourceEmpty: FactoryType<SourceType>,
       guestInTheMiddle: FactoryType<GuestObjectType>,
     },
   ) {
-    this.canvasCache = factories.cache.create(this);
+    this.canvasCache = factories.sourceEmpty.create();
   }
 
   public canvas(guest: GuestObjectType<HTMLElement>): this {

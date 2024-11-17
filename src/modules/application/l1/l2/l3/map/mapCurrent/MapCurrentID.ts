@@ -9,7 +9,7 @@ export class MapCurrentID implements MapCurrentIDType {
       cache: FactoryType<SourceType>
     },
   ) {
-    this.idCache = factories.cache.create(this, 'current');
+    this.idCache = factories.cache.create('current');
   }
 
   public id<R extends GuestObjectType<string>>(guest: R) {

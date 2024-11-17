@@ -9,7 +9,7 @@ import {
 test('notification', () => {
   const factories = useFactories();
   const notification = new Notification(factories);
-  notification.receive({
+  notification.give({
     type: 'success',
     text: 'test',
   });

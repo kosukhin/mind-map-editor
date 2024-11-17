@@ -51,17 +51,17 @@ const objectSource = new VueSource(object);
 const objectUrl = mapObjectUrl.url(objectSource, new VueRefPatron<string>()).ref();
 
 const close = () => {
-  mapObjectCurrent.receive('');
-  drawer.receive('');
+  mapObjectCurrent.give('');
+  drawer.give('');
 };
 
 const remove = () => {
-  mapObjectRemoved.receive(object.value);
+  mapObjectRemoved.give(object.value);
   close();
 };
 
 const save = () => {
-  mapObject.receive({
+  mapObject.give({
     ...object.value,
     outlink: object.value.outlink || objectUrl.value,
   });
@@ -69,7 +69,7 @@ const save = () => {
 };
 
 const removeRelation = (index: number) => {
-  mapObjectRelationRemoved.receive({
+  mapObjectRelationRemoved.give({
     index,
     object: object.value,
   });

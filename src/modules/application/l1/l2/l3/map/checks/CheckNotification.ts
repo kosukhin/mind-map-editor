@@ -3,7 +3,7 @@ import {
 } from '@/modules/application/l1/l2/visualisation/notification/NotificationType';
 import { CheckType } from '@/modules/application/l1/l2/l3/map/checks/CheckType';
 import { CheckNotificationType } from '@/modules/application/l1/l2/l3/map/checks/CheckNotificationType';
-import { GuestObjectType , FactoryType } from 'patron-oop';
+import { GuestObjectType, FactoryType } from 'patron-oop';
 
 export class CheckNotification<T> implements CheckNotificationType<T> {
   public constructor(

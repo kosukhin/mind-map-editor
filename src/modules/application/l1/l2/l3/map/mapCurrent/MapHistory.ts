@@ -46,8 +46,8 @@ export class MapHistory implements GuestObjectType<MapDocument> {
       patron: FactoryType<GuestObjectType>
     },
   ) {
-    this.mapsHistory = factories.cache.create(this, []);
-    this.historyIndex = factories.cache.create(this, 0);
+    this.mapsHistory = factories.cache.create([]);
+    this.historyIndex = factories.cache.create(0);
     this.mapFile.currentMap(factories.patron.create(this));
     this.mapId.id(factories.patron.create(
       factories.guest.create(() => {

@@ -87,7 +87,7 @@ import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/Br
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { KonvaLayerShiftPoint } from '@/modules/integration/konva/KonvaLayerShiftPoint';
 import { KonvaMove } from '@/modules/integration/konva/KonvaMove';
-import { GuestAware } from '@/modules/system/guest/GuestAware';
+import { GuestAware, GuestObject } from 'patron-oop';
 
 const factories = useFactories();
 
@@ -119,7 +119,7 @@ const mapObjectForRendering = new MapObject(mapForRendering, mapFileForRendering
 
 const mapCurrent = new MapCurrent(mapFile, mapCurrentID, factories);
 const mapCurrentSource = new GuestAware<MapDocument>((guest) => {
-  mapFile.currentMap(guest);
+  mapFile.currentMap(new GuestObject(guest));
 });
 const mapObjectCurrent = new MapObjectCurrent(drawer, factories);
 const mapTypeCurrent = new MapTypeCurrent(factories);

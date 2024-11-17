@@ -37,7 +37,7 @@ const typesExtended = computed(() => theTypes.value?.map((type) => ({
             class="AppTypesParent-ItemButton e2e-add-preset-type"
             type="success"
             size="sm"
-            @click="mapType.receive({name: item.type.name, type: item.type})"
+            @click="mapType.give({name: item.type.name, type: item.type})"
           >
             {{ $t('general.addToMap') }}
           </BaseButton>

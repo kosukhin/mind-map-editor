@@ -15,12 +15,12 @@ export class UrlContent implements MapFileContentType {
   public constructor(
     private notification: NotificationType,
     private factories: {
-      cache: FactoryType<SourceType>,
+      sourceEmpty: FactoryType<SourceType>,
       guest: FactoryType<GuestObjectType>,
       patronOnce: FactoryType<GuestObjectType>,
     },
   ) {
-    this.contentCache = factories.cache.create();
+    this.contentCache = factories.sourceEmpty.create();
   }
 
   public canBeUsed(guest: GuestObjectType<boolean>) {

@@ -30,7 +30,7 @@ export class ArrowPath implements ArrowPathType {
       toPoint.lookToPosition,
     );
 
-    pointsGuest.receive([
+    pointsGuest.give([
       +startPoint.point.x + startPoint.shift.x,
       +startPoint.point.y + startPoint.shift.y,
       +startPoint.breakPoint.x + startPoint.shift.x,

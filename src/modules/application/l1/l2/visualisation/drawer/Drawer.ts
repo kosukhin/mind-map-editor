@@ -19,7 +19,7 @@ export class Drawer implements GuestObjectType<string> {
       guestAware: FactoryType<GuestAwareType>
     },
   ) {
-    this.drawerNameCache = factories.cache.create(this, '');
+    this.drawerNameCache = factories.cache.create('');
     this.keyboard.pressed(
       this.factories.patron.create(
         this.factories.guest.create((key: string) => {

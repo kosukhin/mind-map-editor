@@ -9,9 +9,9 @@ export class MapTypeCurrent implements MapTypeCurrentType {
   private idCache: SourceType<string>;
 
   public constructor(factories: {
-    cache: FactoryType<SourceType>
+    sourceEmpty: FactoryType<SourceType>
   }) {
-    this.idCache = factories.cache.create();
+    this.idCache = factories.sourceEmpty.create();
   }
 
   public typeId<R extends GuestObjectType<string>>(guest: R) {

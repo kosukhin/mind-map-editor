@@ -31,7 +31,7 @@ test('map current', () => {
     expect(objects.length).toBe(0);
   }));
 
-  map.receive({
+  map.give({
     ...defaultMapFileDocument.current,
     objects: {
       2: {

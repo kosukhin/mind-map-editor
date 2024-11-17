@@ -18,9 +18,6 @@ const urlTrim = (url: string) => {
   return url;
 };
 
-// eslint-disable-next-line no-restricted-globals
-const getLocation = () => location;
-
 const openExternalLink = debounce((link: string) => {
   window.open(link);
 }, 200);

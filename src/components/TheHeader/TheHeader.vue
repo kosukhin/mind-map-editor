@@ -60,7 +60,7 @@ controlCombo.happened(
         size="sm"
         class="w-7 block e2e-open-menu"
         :title="$t('general.menu')"
-        @click="drawer.receive('menu')"
+        @click="drawer.give('menu')"
       >
         <BaseIcon icon="fa-bars" />
       </BaseButton>
@@ -69,14 +69,14 @@ controlCombo.happened(
         type="primary"
         size="sm"
         class="w-7 block"
-        @click="modal.receive('mapAsText')"
+        @click="modal.give('mapAsText')"
       >
         <BaseIcon icon="fa-text-width" />
       </BaseButton>
       <BaseButton
         class="w-7 block e2e-search"
         size="sm"
-        @click="modal.receive('search')"
+        @click="modal.give('search')"
       >
         <BaseIcon icon="fa-search" />
       </BaseButton>
@@ -84,7 +84,7 @@ controlCombo.happened(
         size="sm"
         :title="'Все карты файла'"
         class="w-7 block"
-        @click="drawer.receive('fileMaps')"
+        @click="drawer.give('fileMaps')"
       >
         <BaseIcon icon="fa-map" />
       </BaseButton>

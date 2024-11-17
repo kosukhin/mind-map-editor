@@ -11,6 +11,7 @@ import {
   GuestAwareType,
   GuestAware,
   GuestSync,
+  SourceEmpty,
 } from 'patron-oop';
 import { SystemFileFromHandler } from '@/modules/system/file/SystemFileFromHandler';
 import { BrowserFileSaved } from '@/modules/integration/browser/file/BrowserFileSaved';
@@ -26,8 +27,9 @@ import { TextOf } from '@/modules/application/l1/l2/l3/l4/text/TextOf';
 import { TextWithoutHTML } from '@/modules/application/l1/l2/l3/l4/text/TextWithoutHTML';
 import { TextNlAsBr } from '@/modules/application/l1/l2/l3/l4/text/TextNlAsBr';
 
-const cache = new Factory(Cache);
+const cache = new Factory(Source);
 const source = new Factory(Source);
+const sourceEmpty = new Factory(SourceEmpty);
 const guest = new Factory(Guest);
 const guestCast = new Factory(GuestCast);
 const guestAware: FactoryType<GuestAwareType> = new Factory(GuestAware);
@@ -50,6 +52,7 @@ const systemFactories = {
   patronOnce,
   pool,
   source,
+  sourceEmpty,
 };
 
 const fileHandlerContent = new Factory(SystemFileFromHandler);

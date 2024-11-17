@@ -41,7 +41,7 @@ export class MiniMap {
     private layer: LayerBase,
     private stageSize: GuestAwareType<SizeDocument>,
     private factories: {
-      cache: FactoryType<SourceType>,
+      sourceEmpty: FactoryType<SourceType>,
       chain: FactoryType<ChainType<unknown>>,
       patron: FactoryType<GuestObjectType>,
       guest: FactoryType<GuestObjectType>,
@@ -49,9 +49,9 @@ export class MiniMap {
       guestCast: FactoryType<GuestObjectType>
     },
   ) {
-    this.theSize = factories.cache.create(this);
-    this.thePoints = factories.cache.create(this);
-    this.viewportSizeCache = factories.cache.create(this);
+    this.theSize = factories.sourceEmpty.create();
+    this.thePoints = factories.sourceEmpty.create();
+    this.viewportSizeCache = factories.sourceEmpty.create();
     const chain = factories.chain.create();
     map.objects(factories.patron.create(chain.receiveKey('objects')));
     layer.layer(factories.patron.create(chain.receiveKey('layer')));

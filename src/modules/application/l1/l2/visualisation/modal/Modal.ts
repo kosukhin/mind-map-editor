@@ -23,7 +23,7 @@ export class Modal implements GuestObjectType<string> {
     },
   ) {
     localDebug('modal created');
-    this.modalNameCache = factories.cache.create(this, '');
+    this.modalNameCache = factories.cache.create('');
     this.keyboard.pressed(
       this.factories.patron.create(
         this.factories.guest.create((key: string) => {

@@ -11,10 +11,10 @@ export class JSONP implements JSONPType {
     private emptyValue: unknown,
     private factories: {
       guest: FactoryType<GuestObjectType>,
-      cache: FactoryType<SourceType>,
+      sourceEmpty: FactoryType<SourceType>,
     },
   ) {
-    this.loadingCache = factories.cache.create(this);
+    this.loadingCache = factories.sourceEmpty.create();
   }
 
   public content<R extends GuestObjectType>(guest: R): R {

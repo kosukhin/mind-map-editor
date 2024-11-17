@@ -25,7 +25,7 @@ export class MapObjectsLink {
       guestInTheMiddle: FactoryType<GuestObjectType>
     },
   ) {
-    this.objectIdsCache = factories.cache.create(this, []);
+    this.objectIdsCache = factories.cache.create([]);
   }
 
   public objectIds<R extends GuestObjectType<string[]>>(guest: R) {
@@ -34,7 +34,7 @@ export class MapObjectsLink {
   }
 
   public startLink() {
-    this.mapObjectCurrent.receive('');
+    this.mapObjectCurrent.give('');
     this.objectIdsCache.value(
       this.factories.guest.create((ids: string[]) => {
         if (ids.length) {

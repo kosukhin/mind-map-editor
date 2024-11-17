@@ -27,17 +27,19 @@ export class MapCurrent implements MapType {
     private mapFile: MapFileType,
     private mapId: MapCurrentIDType,
     private factories: {
-      cache: FactoryType<SourceType>,
+      sourceEmpty: FactoryType<SourceType>,
       guest: FactoryType<GuestObjectType>,
       patron: FactoryType<GuestObjectType>,
     },
   ) {
-    this.objectsCache = factories.cache.create(this);
-    this.settingsCache = factories.cache.create(this);
-    this.typesCache = factories.cache.create(this);
+    this.objectsCache = factories.sourceEmpty.create();
+    this.settingsCache = factories.sourceEmpty.create();
+    this.typesCache = factories.sourceEmpty.create();
     mapFile.currentMap(factories.patron.create(factories.guest.create((latestMap: MapDocument) => {
       localDebug('current map changed', latestMap);
       this.settingsCache.give(latestMap.settings);
+      console.log(latestMap, latestMap.objects);
+
       this.objectsCache.give(Object.values(latestMap.objects));
       this.typesCache.give(Object.entries(latestMap.types).map(([key, value]) => ({
         ...value,
@@ -62,7 +64,7 @@ export class MapCurrent implements MapType {
     return guest;
   }
 
-  public receive(value: MapDocument) {
+  public give(value: MapDocument) {
     localDebug('save map document', value);
     this.mapId.id(
       this.factories.guest.create((mapId: string) => {

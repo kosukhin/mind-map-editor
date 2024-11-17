@@ -44,7 +44,7 @@ export class MapFile implements MapFileType {
   ) {
     this.currentMapPatrons = factories.pool.create(this);
     this.mapFilePatrons = factories.pool.create(this);
-    this.mapFileCache = factories.cache.create(this, false);
+    this.mapFileCache = factories.cache.create(false);
   }
 
   public currentMap<R extends GuestObjectType<MapDocument>>(currentMapGuest: R): R {

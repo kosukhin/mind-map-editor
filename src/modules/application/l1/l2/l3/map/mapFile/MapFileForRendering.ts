@@ -28,7 +28,7 @@ export class MapFileForRendering implements MapFileType {
       guest: FactoryType<GuestObjectType>,
     },
   ) {
-    this.mapCache = factories.cache.create(this, { objects: {}, types: {}, settings: {} });
+    this.mapCache = factories.cache.create({ objects: {}, types: {}, settings: {} });
     mapFile.currentMap(factories.patron.create(this.mapCache));
   }
 
@@ -40,6 +40,8 @@ export class MapFileForRendering implements MapFileType {
   public mapFile(target: GuestObjectType<MapFileDocument>) {
     this.mapCache.value(
       this.factories.guestInTheMiddle.create(target, (map: MapDocument) => {
+        console.log('map for rendering file', map);
+
         this.mapId.id(
           this.factories.guest.create((mapId: string) => {
             target.give({ [mapId]: map });
