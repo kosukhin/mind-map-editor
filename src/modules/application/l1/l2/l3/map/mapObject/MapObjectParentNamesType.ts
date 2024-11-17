@@ -1,5 +1,5 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 export interface MapObjectParentNamesType {
-  names(guest: GuestType<string[]>): GuestType<string[]>
+  names(guest: GuestObjectType<string[]>): GuestObjectType<string[]>
 }

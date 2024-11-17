@@ -3,9 +3,8 @@ import {
   MapDocument,
   MapObjectDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType, FactoryType } from 'patron-oop';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 
 /**
  * Проверяет что объект карты имеет хотя бы одну входяую стрелку
@@ -14,18 +13,18 @@ export class MapObjectHasArrowCheck implements CheckType<MapObjectDocument> {
   public constructor(
     private mapFile: MapFileType,
     private factories: {
-      guest: FactoryType<GuestType>,
+      guest: FactoryType<GuestObjectType>,
     },
   ) {}
 
-  public check(value: MapObjectDocument, guest: GuestType<true | string>): this {
+  public check(value: MapObjectDocument, guest: GuestObjectType<true | string>): this {
     this.mapFile.currentMap(this.factories.guest.create((map: MapDocument) => {
       let hasIncomeArrow = false;
       Object.values(map.objects).forEach((object) => {
         hasIncomeArrow = hasIncomeArrow || object.arrows.some((arrow) => arrow.id === value.id);
       });
 
-      guest.receive(!hasIncomeArrow || 'У объекта есть входящие связи!');
+      guest.give(!hasIncomeArrow || 'У объекта есть входящие связи!');
     }));
     return this;
   }

@@ -2,7 +2,7 @@ import { expect, test } from 'vitest';
 import { MapFileFake } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileFake';
 import { MapCurrent } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrent';
 import { MapSettings } from '@/modules/application/l1/l2/l3/map/mapSettings/MapSettings';
-import { Guest } from '@/modules/system/guest/Guest';
+import { Guest } from 'patron-oop';
 import { useFactories } from '@/composables/useFactories';
 import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
 import { MapFileDocument } from '../documents/MapStructures';
@@ -30,7 +30,7 @@ test('map settings', () => {
   const map = new MapCurrent(fake, new MapCurrentID(factories), factories);
   const settingsGuest = new MapSettings(fake, map, factories);
 
-  settingsGuest.receive({
+  settingsGuest.give({
     ...defaultMapFileDocument.current.settings,
     title: 'changed',
   });

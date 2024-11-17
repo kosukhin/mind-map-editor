@@ -1,11 +1,10 @@
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import {
+  GuestObjectType, FactoryType, GuestAwareType, SourceType,
+} from 'patron-oop';
 import { slugify } from 'transliteration';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 import debounce from 'lodash/debounce';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 import { debug } from 'debug';
-import { SourceType } from '@/modules/system/guest/SourceType';
 import { MapNameFromUrl } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapNameFromUrl';
 import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentIDType';
 import { TextNoHtml } from '@/modules/application/l1/l2/l3/text/TextNoHtml';
@@ -32,15 +31,15 @@ export class MapObjectUrl {
   public constructor(
     private mapId: MapCurrentIDType,
     private factories: {
-      guest: FactoryType<GuestType>,
-      guestInTheMiddle: FactoryType<GuestType>,
+      guest: FactoryType<GuestObjectType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>,
       source: FactoryType<SourceType>,
       mapNameFromUrl: FactoryType<MapNameFromUrl>,
       textNoHtml: FactoryType<TextNoHtml>
     },
   ) {}
 
-  public open(object: MapObjectDocument, openByNameGuest: GuestType<string>) {
+  public open(object: MapObjectDocument, openByNameGuest: GuestObjectType<string>) {
     if (object?.linked) {
       const url = object.outlink;
       if (object.targetBlank) {
@@ -53,7 +52,7 @@ export class MapObjectUrl {
         mapNameFromUrl.name(
           this.factories.guest.create((name: string) => {
             localDebug('open map name', url, name);
-            openByNameGuest.receive(name);
+            openByNameGuest.give(name);
           }),
         );
       }
@@ -62,8 +61,8 @@ export class MapObjectUrl {
     return this;
   }
 
-  public url<R extends GuestType<string>>(theObject: GuestAwareType<MapObjectDocument>, guest: R) {
-    theObject.receiving(
+  public url<R extends GuestObjectType<string>>(theObject: GuestAwareType<MapObjectDocument>, guest: R) {
+    theObject.value(
       this.factories.guestInTheMiddle.create(guest, (object: MapObjectDocument) => {
         this.mapId.id(
           this.factories.guest.create((mapId: string) => {
@@ -87,7 +86,7 @@ export class MapObjectUrl {
                     )}`;
                 localDebug('link is', link);
                 link = urlTrim(link);
-                guest.receive(link);
+                guest.give(link);
               }),
             );
           }),

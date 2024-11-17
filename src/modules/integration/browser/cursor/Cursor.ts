@@ -1,10 +1,11 @@
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { PoolType } from '@/modules/system/guest/PoolType';
-import { debug } from 'debug';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
+import { debug } from 'debug';
+import {
+  FactoryType,
+  GuestAwareType, GuestObjectType,
+  PoolType,
+} from 'patron-oop';
 
 const localDebug = debug('Cursor');
 
@@ -19,8 +20,8 @@ export class Cursor implements GuestAwareType<PointDocument> {
     konvaLayer: LayerBase,
     factories: {
       pool: FactoryType<PoolType>,
-      patron: FactoryType<GuestType>,
-      guest: FactoryType<GuestType>,
+      patron: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>,
     },
   ) {
     this.cursorPool = factories.pool.create(this);
@@ -35,7 +36,7 @@ export class Cursor implements GuestAwareType<PointDocument> {
         y: e.offsetY + -stagePosition.y,
       };
       localDebug('move cursor fired', cursorPoint);
-      this.cursorPool.receive(cursorPoint);
+      this.cursorPool.give(cursorPoint);
     });
 
     konvaLayer.position(
@@ -48,7 +49,7 @@ export class Cursor implements GuestAwareType<PointDocument> {
     );
   }
 
-  public receiving(guest: GuestType<PointDocument>) {
+  public value(guest: GuestObjectType<PointDocument>) {
     this.cursorPool.add(guest);
     return this;
   }

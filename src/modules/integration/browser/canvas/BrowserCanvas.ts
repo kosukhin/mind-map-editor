@@ -1,35 +1,33 @@
 import { SizeDocument } from '@/modules/integration/browser/canvas/SizeDocument';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType, SourceType, FactoryType } from 'patron-oop';
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
 import { debug } from 'debug';
-import { CacheType } from '@/modules/system/guest/CacheType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 
 const localDebug = debug('app:BrowserCanvas');
 
 export class BrowserCanvas implements BrowserCanvasType {
-  private canvasCache: CacheType<HTMLElement>;
+  private canvasCache: SourceType<HTMLElement>;
 
   public constructor(
     private factories: {
-      cache: FactoryType<CacheType>,
-      guestInTheMiddle: FactoryType<GuestType>,
+      cache: FactoryType<SourceType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>,
     },
   ) {
     this.canvasCache = factories.cache.create(this);
   }
 
-  public canvas(guest: GuestType<HTMLElement>): this {
-    this.canvasCache.receiving(guest);
+  public canvas(guest: GuestObjectType<HTMLElement>): this {
+    this.canvasCache.value(guest);
     return this;
   }
 
-  public size(guest: GuestType<SizeDocument>): this {
-    this.canvasCache.receiving(this.factories.guestInTheMiddle.create(guest, (value: HTMLCanvasElement) => {
+  public size(guest: GuestObjectType<SizeDocument>): this {
+    this.canvasCache.value(this.factories.guestInTheMiddle.create(guest, (value: HTMLCanvasElement) => {
       const width = value.width || value.clientWidth;
       const height = value.height || value.clientHeight;
       localDebug('canvas size', width, height);
-      guest.receive({
+      guest.give({
         height,
         width,
       });
@@ -37,9 +35,9 @@ export class BrowserCanvas implements BrowserCanvasType {
     return this;
   }
 
-  public receive(value: HTMLElement): this {
+  public give(value: HTMLElement): this {
     localDebug('receive new canvas', value);
-    this.canvasCache.receive(value);
+    this.canvasCache.give(value);
     return this;
   }
 }

@@ -45,7 +45,7 @@ const objectsWithTemplates = new MapObjectsWithTemplates(
 );
 
 const objects = objectsWithTemplates.objects(new VueRefPatron<MapObjectWithTemplateDocument[]>([])).ref();
-const layerSize = stageSize.receiving(new VueRefPatron<SizeDocument>()).ref();
+const layerSize = stageSize.value(new VueRefPatron<SizeDocument>()).ref();
 const layerPosition = konvaLayer.position(new VueRefPatron<PointDocument>()).ref();
 
 const layerWidth = computed(() => layerSize.value?.width);
@@ -54,12 +54,12 @@ const chunks = factories.numberChunks.create(10, layerWidthSource).chunks(new Vu
 
 const canvasWrapper = ref();
 onMounted((() => {
-  canvas.receive(canvasWrapper.value);
+  canvas.give(canvasWrapper.value);
 }));
 
 const onObjectClick = (object: MapObjectDocument) => {
   mapObjectUrl.open(object, factories.guest.create((name: string) => {
-    mapCurrentID.receive(name);
+    mapCurrentID.give(name);
   }));
 };
 

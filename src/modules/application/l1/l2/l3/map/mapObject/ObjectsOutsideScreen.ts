@@ -1,10 +1,9 @@
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
+import {
+  GuestAwareType, FactoryType, ChainType, GuestObjectType,
+} from 'patron-oop';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { ChainType } from '@/modules/system/guest/ChainType';
-import { GuestType } from '@/modules/system/guest/GuestType';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { debug } from 'debug';
@@ -50,13 +49,13 @@ export class ObjectsOutsideScreen {
     private layer: LayerBase,
     private factories: {
       chain: FactoryType<ChainType<unknown>>,
-      guestCast: FactoryType<GuestType>,
-      guestInTheMiddle: FactoryType<GuestType>,
+      guestCast: FactoryType<GuestObjectType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>,
     },
   ) {
   }
 
-  public count<R extends GuestType<CountDocument>>(config: ObjectsConfig, guest: R) {
+  public count<R extends GuestObjectType<CountDocument>>(config: ObjectsConfig, guest: R) {
     const isPositiveDirection = config.direction === 'positive';
     const chain = this.factories.chain.create();
     this.map.objects(this.factories.guestCast.create(guest, chain.receiveKey('objects')));
@@ -75,7 +74,7 @@ export class ObjectsOutsideScreen {
           return isPositiveDirection ? objectPoint > screenPoint : objectPoint < screenPoint;
         });
         localDebug('nearest', nearest);
-        guest.receive({
+        guest.give({
           count: nearest.length,
           nearestObjectId: nearest.at(isPositiveDirection ? -1 : 0)?.id ?? '',
         });

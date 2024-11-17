@@ -40,7 +40,7 @@ const searchResults = objectsMatchedToQuery.objects(
 controlCombo.happened(
   'KeyF',
   patron.create(guest.create(() => {
-    modal.receive('search');
+    modal.give('search');
   })),
 );
 </script>
@@ -59,7 +59,7 @@ controlCombo.happened(
           v-for="result in searchResults"
           :key="result.name"
           class="cursor-pointer"
-          @click.prevent="stagePosition.receive(result);modal.receive('')"
+          @click.prevent="stagePosition.give(result);modal.give('')"
         >
           <b class="AppSearch-ItemName" v-html="result.name"></b>
           <b

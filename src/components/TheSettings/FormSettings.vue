@@ -19,11 +19,11 @@ const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
 const mapId = mapCurrentID.id(new VueRefPatron<string>()).ref();
 
 const close = () => {
-  modal.receive('');
+  modal.give('');
 };
 
 const save = () => {
-  mapSettings.receive(map.value.settings);
+  mapSettings.give(map.value.settings);
   close();
 };
 
@@ -62,14 +62,14 @@ controlCombo.happenedConditional(
               v-if="parentTypes.length > 1"
               type="primary"
               class="text-white"
-              @click="modal.receive('parentTypes')"
+              @click="modal.give('parentTypes')"
             >
               {{ $t('general.parentTypes') }}
             </BaseButton>
             <BaseButton
               type="primary"
               class="text-white e2e-open-presets"
-              @click="modal.receive('presets')"
+              @click="modal.give('presets')"
             >
               Пресеты
             </BaseButton>
@@ -94,7 +94,7 @@ controlCombo.happenedConditional(
         <BaseButton class="TheSettings-Button" @click="close">
           {{ $t('general.cancel') }}
         </BaseButton>
-        <BaseButton class="TheSettings-Button" type="danger" @click="mapRemoved.receive(mapId);close()">
+        <BaseButton class="TheSettings-Button" type="danger" @click="mapRemoved.give(mapId);close()">
           {{ $t('general.removeMap') }}
         </BaseButton>
       </div>

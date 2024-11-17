@@ -1,18 +1,16 @@
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { GuestAwareType, GuestObjectType, FactoryType } from 'patron-oop';
 
 export class MapNameFromUrl {
   public constructor(
     private mapUrl: GuestAwareType<string>,
     private factories: {
-      guest: FactoryType<GuestType>,
-      guestInTheMiddle: FactoryType<GuestType>
+      guest: FactoryType<GuestObjectType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>
     },
   ) {}
 
-  public name(guest: GuestType<string>) {
-    this.mapUrl.receiving(
+  public name(guest: GuestObjectType<string>) {
+    this.mapUrl.value(
       this.factories.guestInTheMiddle.create(guest, (url: string) => {
         let mapName = url.replace('/', '').replaceAll('/', '_');
 
@@ -20,7 +18,7 @@ export class MapNameFromUrl {
           mapName = `_${mapName}`;
         }
 
-        guest.receive(mapName);
+        guest.give(mapName);
       }),
     );
   }

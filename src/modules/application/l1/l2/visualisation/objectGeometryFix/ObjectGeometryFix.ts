@@ -1,14 +1,13 @@
-import { MapObjectsType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
-import { GuestType } from '@/modules/system/guest/GuestType';
 import {
   MapDocument,
   MapObjectDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { debug } from 'debug';
-import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
+import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
+import { MapObjectsType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
+import { debug } from 'debug';
 import debounce from 'lodash/debounce';
+import { FactoryType, GuestObjectType } from 'patron-oop';
 
 const localDebug = debug('ObjectGeometryFix');
 
@@ -17,7 +16,7 @@ const localDebug = debug('ObjectGeometryFix');
  * ТК сохраненные значения размеров объектов могут отличаться от
  * автоматически рассчитанных при рендеринге
  */
-export class ObjectGeometryFix implements GuestType<MapObjectDocument[]> {
+export class ObjectGeometryFix implements GuestObjectType<MapObjectDocument[]> {
   private readonly innerReceive: (value: MapObjectDocument[]) => void;
 
   public constructor(
@@ -25,7 +24,7 @@ export class ObjectGeometryFix implements GuestType<MapObjectDocument[]> {
     private mapFile: MapFileType,
     private map: MapType,
     private factories: {
-      guest: FactoryType<GuestType>,
+      guest: FactoryType<GuestObjectType>,
     },
   ) {
     objectsVisible.objects(this);
@@ -62,7 +61,7 @@ export class ObjectGeometryFix implements GuestType<MapObjectDocument[]> {
         });
         // Немного оптимизируем сохраняем сразу все объекты а не по одному
         if (hasChanges) {
-          this.map.receive({
+          this.map.give({
             ...latestMap,
             objects: mapObjects,
           });
@@ -71,11 +70,7 @@ export class ObjectGeometryFix implements GuestType<MapObjectDocument[]> {
     }, 500);
   }
 
-  introduction() {
-    return 'patron' as const;
-  }
-
-  receive(value: MapObjectDocument[]): this {
+  public give(value: MapObjectDocument[]): this {
     this.innerReceive(value);
     return this;
   }

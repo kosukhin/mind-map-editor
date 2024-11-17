@@ -1,6 +1,6 @@
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 export type ArrowPointDocument = {
   shapeGeometry: SizeDocument,
@@ -13,7 +13,7 @@ export interface ArrowPathType {
   breakPoints(
     fromPoint: ArrowPointDocument,
     toPoint: ArrowPointDocument,
-    pointsGuest: GuestType<number[]>
+    pointsGuest: GuestObjectType<number[]>
   ): this;
 
   clear(): void;

@@ -1,13 +1,11 @@
 import { StageMoveType } from '@/modules/application/l1/l2/visualisation/stage/StageMoveType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { FactoryType, GuestObjectType, GuestAwareType } from 'patron-oop';
 import { Layer } from 'konva/lib/Layer';
 import { debug } from 'debug';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 import {
   StageMoveRestrictionType,
 } from '@/modules/application/l1/l2/l3/l4/types/stage/StageMoveRestrictionType';
@@ -25,14 +23,14 @@ export class KonvaMove implements StageMoveType {
     private stageSize: GuestAwareType<SizeDocument>,
     private stageMoveRestriction: StageMoveRestrictionType,
     private factories: {
-      guest: FactoryType<GuestType>,
+      guest: FactoryType<GuestObjectType>,
     },
   ) {}
 
   public move(object: MapObjectDocument): void {
     localDebug('move stage to new point', object.position);
-    this.stageSize.receiving(
-      this.factories.guest.create((layerSize: SizeDocument) => {
+    this.stageSize.value(
+      this.factories.guest.create(() => {
         this.canvas.size(
           this.factories.guest.create((size: SizeDocument) => {
             this.layer.layer(
@@ -48,7 +46,7 @@ export class KonvaMove implements StageMoveType {
                   this.factories.guest.create((pos: PointDocument) => {
                     layer.getStage().position(pos);
                     setTimeout(() => {
-                      this.layer.receive(layer);
+                      this.layer.give(layer);
                     });
                   }),
                 );

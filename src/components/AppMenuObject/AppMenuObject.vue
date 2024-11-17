@@ -15,7 +15,7 @@ const menuItems = menu.menuObjects(new VueRefPatron<MapObjectDocument[]>()).ref(
 controlCombo.happened(
   'KeyM',
   patron.create(guest.create(() => {
-    drawer.receive('menu');
+    drawer.give('menu');
   })),
 );
 </script>
@@ -32,7 +32,7 @@ controlCombo.happened(
           :key="item.id"
           class="AppMenuObject-Item"
           href="#"
-          @click.prevent="stagePosition.receive(item);drawer.receive('')"
+          @click.prevent="stagePosition.give(item);drawer.give('')"
         >
           <span v-html="item.additionalName ? item.additionalName : item.name"></span>
         </a>

@@ -3,24 +3,23 @@ import {
 } from '@/modules/application/l1/l2/visualisation/notification/NotificationType';
 import { CheckType } from '@/modules/application/l1/l2/l3/map/checks/CheckType';
 import { CheckNotificationType } from '@/modules/application/l1/l2/l3/map/checks/CheckNotificationType';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { GuestObjectType , FactoryType } from 'patron-oop';
 
 export class CheckNotification<T> implements CheckNotificationType<T> {
   public constructor(
     private notification: NotificationType,
     private check: CheckType<T>,
     private factories: {
-      guest: FactoryType<GuestType>
+      guest: FactoryType<GuestObjectType>
     },
   ) {}
 
-  public breakOnFail(value: T, guest: GuestType<true>): this {
+  public breakOnFail(value: T, guest: GuestObjectType<true>): this {
     this.check.check(value, this.factories.guest.create((result: true | string) => {
       if (result === true) {
-        guest.receive(true);
+        guest.give(true);
       } else {
-        this.notification.receive({
+        this.notification.give({
           type: 'error',
           text: result,
         });
@@ -30,11 +29,11 @@ export class CheckNotification<T> implements CheckNotificationType<T> {
     return this;
   }
 
-  public continueOnFail(value: T, guest: GuestType<true | string>) {
+  public continueOnFail(value: T, guest: GuestObjectType<true | string>) {
     this.check.check(value, this.factories.guest.create((result: true | string) => {
-      guest.receive(result);
+      guest.give(result);
       if (result !== true) {
-        this.notification.receive({
+        this.notification.give({
           type: 'error',
           text: result,
         });

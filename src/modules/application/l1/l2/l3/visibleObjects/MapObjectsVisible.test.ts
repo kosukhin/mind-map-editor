@@ -1,21 +1,18 @@
 /**
  * @vitest-environment jsdom
  */
-import { expect, test } from 'vitest';
-import { MapObjectsVisible } from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectsVisible';
-import { MapFileFake } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileFake';
-import { MapCurrent } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrent';
-import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
-import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
-import { Guest } from '@/modules/system/guest/Guest';
-import { Patron } from '@/modules/system/guest/Patron';
-import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { useFactories } from '@/composables/useFactories';
-import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
+import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { MapFileFake } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileFake';
 import { StageDefaultSize } from '@/modules/application/l1/l2/l3/stage/StageDefaultSize';
 import {
   StageMoveRestrictionTransfer,
 } from '@/modules/application/l1/l2/l3/stage/StageMoveRestrictionTransfer';
+import { MapObjectsVisible } from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectsVisible';
+import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
+import { Guest, Patron } from 'patron-oop';
+import { expect, test } from 'vitest';
 
 test('visible object', () => {
   const factories = useFactories();
@@ -23,7 +20,7 @@ test('visible object', () => {
   div.innerHTML = '<canvas height="300" width="300" />';
   const canvasEL = div.querySelector('canvas') as HTMLElement;
   const browserCanvas = new BrowserCanvas(factories);
-  browserCanvas.receive(canvasEL);
+  browserCanvas.give(canvasEL);
 
   const defaultMapFileDocument = {
     current: {

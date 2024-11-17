@@ -1,10 +1,10 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 export interface NotificationDocument {
   text: string,
   type: 'error' | 'success',
 }
 
-export interface NotificationType extends GuestType<NotificationDocument> {
-  message(guest: GuestType<NotificationDocument>): GuestType<NotificationDocument>;
+export interface NotificationType extends GuestObjectType<NotificationDocument> {
+  message(guest: GuestObjectType<NotificationDocument>): GuestObjectType<NotificationDocument>;
 }

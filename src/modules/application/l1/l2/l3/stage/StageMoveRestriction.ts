@@ -1,10 +1,8 @@
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
+import { GuestAwareType , GuestObjectType , FactoryType } from 'patron-oop';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
-import { GuestType } from '@/modules/system/guest/GuestType';
 import { debug } from 'debug';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 import {
   StageMoveRestrictionType,
 } from '@/modules/application/l1/l2/l3/l4/types/stage/StageMoveRestrictionType';
@@ -16,14 +14,14 @@ export class StageMoveRestriction implements StageMoveRestrictionType {
     private canvasDep: BrowserCanvasType,
     private stageSize: GuestAwareType<SizeDocument>,
     private factories: {
-      guest: FactoryType<GuestType>,
+      guest: FactoryType<GuestObjectType>,
     },
   ) {}
 
-  public position(pos: PointDocument, guest: GuestType<PointDocument>): GuestType {
+  public position(pos: PointDocument, guest: GuestObjectType<PointDocument>): GuestObjectType {
     this.canvasDep.canvas(
       this.factories.guest.create((canvas: HTMLElement) => {
-        this.stageSize.receiving(
+        this.stageSize.value(
           // eslint-disable-next-line consistent-return
           this.factories.guest.create((stageSize: SizeDocument) => {
             localDebug('income position', pos);
@@ -36,7 +34,7 @@ export class StageMoveRestriction implements StageMoveRestrictionType {
             }
             localDebug('boundings', maxBottom, maxRight, bottom, right);
 
-            guest.receive(
+            guest.give(
               {
                 // eslint-disable-next-line no-nested-ternary
                 x: pos.x > 0 ? 0 : right > maxRight ? maxRight * -1 : pos.x,

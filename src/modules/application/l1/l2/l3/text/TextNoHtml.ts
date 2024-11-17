@@ -1,22 +1,20 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { GuestObjectType, GuestAwareType, FactoryType } from 'patron-oop';
 
 export class TextNoHtml {
   public constructor(
     private text: GuestAwareType<string>,
     private factories: {
-      guestInTheMiddle: FactoryType<GuestType>
+      guestInTheMiddle: FactoryType<GuestObjectType>
     },
   ) {}
 
-  public noHtml(guest: GuestType<string>) {
-    this.text.receiving(
+  public noHtml(guest: GuestObjectType<string>) {
+    this.text.value(
       this.factories.guestInTheMiddle.create(guest, (text: string) => {
         const tmp = document.createElement('DIV');
         tmp.innerHTML = text;
         const noHtmlText = tmp.textContent || tmp.innerText || '';
-        guest.receive(noHtmlText);
+        guest.give(noHtmlText);
       }),
     );
 

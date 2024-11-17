@@ -1,6 +1,5 @@
 import { MapFileContentType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileContentType';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { GuestObjectType, FactoryType } from 'patron-oop';
 import { debug } from 'debug';
 
 const localDebug = debug('FirstPossibleFileContent');
@@ -11,7 +10,7 @@ export class FirstPossibleFileContent implements MapFileContentType {
   public constructor(
     fileContents: MapFileContentType[],
     factories: {
-      guest: FactoryType<GuestType>,
+      guest: FactoryType<GuestObjectType>,
     },
   ) {
     fileContents.forEach((fileContent) => {
@@ -25,7 +24,7 @@ export class FirstPossibleFileContent implements MapFileContentType {
     });
   }
 
-  public canBeUsed<R extends GuestType<boolean>>(guest: R) {
+  public canBeUsed<R extends GuestObjectType<boolean>>(guest: R) {
     localDebug('can be used to', this.firstPossibleFileContent);
     if (this.firstPossibleFileContent) {
       this.firstPossibleFileContent.canBeUsed(guest);
@@ -33,7 +32,7 @@ export class FirstPossibleFileContent implements MapFileContentType {
     return guest;
   }
 
-  public content(target: GuestType<string>): this {
+  public content(target: GuestObjectType<string>): this {
     localDebug('content to', this.firstPossibleFileContent);
     if (this.firstPossibleFileContent) {
       this.firstPossibleFileContent.content(target);
@@ -41,9 +40,9 @@ export class FirstPossibleFileContent implements MapFileContentType {
     return this;
   }
 
-  public receive(value: string): this {
+  public give(value: string): this {
     if (this.firstPossibleFileContent) {
-      this.firstPossibleFileContent.receive(value);
+      this.firstPossibleFileContent.give(value);
     }
     return this;
   }

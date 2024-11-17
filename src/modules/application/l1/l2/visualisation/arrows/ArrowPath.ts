@@ -2,7 +2,7 @@ import {
   ArrowPathType,
   ArrowPointDocument,
 } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 
@@ -16,7 +16,7 @@ export class ArrowPath implements ArrowPathType {
     this.filledPoints.clear();
   }
 
-  public breakPoints(fromPoint: ArrowPointDocument, toPoint: ArrowPointDocument, pointsGuest: GuestType<number[]>): this {
+  public breakPoints(fromPoint: ArrowPointDocument, toPoint: ArrowPointDocument, pointsGuest: GuestObjectType<number[]>): this {
     const startPoint = this.arrowPointPosition(
       fromPoint.shapeGeometry,
       fromPoint.shapePosition,

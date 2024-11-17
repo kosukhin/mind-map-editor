@@ -1,8 +1,7 @@
 import { StagePositionType } from '@/modules/application/l1/l2/l3/l4/types/stage/StagePositionType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType, FactoryType } from 'patron-oop';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 
 /**
  * Точка сдвига стейджа, подходит для
@@ -12,14 +11,14 @@ export class KonvaLayerShiftPoint implements StagePositionType {
   public constructor(
     private konvaLayer: KonvaLayer,
     private factories: {
-      guestInTheMiddle: FactoryType<GuestType>
+      guestInTheMiddle: FactoryType<GuestObjectType>
     },
   ) {}
 
-  public position(guest: GuestType<PointDocument>): GuestType {
+  public position(guest: GuestObjectType<PointDocument>): GuestObjectType {
     this.konvaLayer.position(
       this.factories.guestInTheMiddle.create(guest, (position: PointDocument) => {
-        guest.receive({
+        guest.give({
           x: position.x * -1,
           y: position.y * -1,
         });

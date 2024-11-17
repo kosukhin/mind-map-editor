@@ -1,6 +1,5 @@
 import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentIDType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { FactoryType, GuestObjectType } from 'patron-oop';
 import {
   MapObjectParentNamesType,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectParentNamesType';
@@ -9,13 +8,13 @@ export class MapObjectParentNames implements MapObjectParentNamesType {
   public constructor(
     private mapId: MapCurrentIDType,
     private factories: {
-      guestInTheMiddle: FactoryType<GuestType>,
-      guest: FactoryType<GuestType>
+      guestInTheMiddle: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>
     },
   ) {
   }
 
-  names<R extends GuestType<string[]>>(guest: R) {
+  names<R extends GuestObjectType<string[]>>(guest: R) {
     this.mapId.id(
       this.factories.guestInTheMiddle.create(guest, (mapId: string) => {
         const chunks = mapId.split('_').filter((v) => !!v);
@@ -29,7 +28,7 @@ export class MapObjectParentNames implements MapObjectParentNamesType {
           return theName;
         });
         accumulator = '';
-        guest.receive(names);
+        guest.give(names);
       }),
     );
     return guest;

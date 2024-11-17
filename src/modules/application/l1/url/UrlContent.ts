@@ -1,54 +1,54 @@
 import { MapFileContentType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileContentType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import {
+  GuestObjectType, SourceType, FactoryType,
+} from 'patron-oop';
 import {
   NotificationType,
 } from '@/modules/application/l1/l2/visualisation/notification/NotificationType';
 import { debug } from 'debug';
-import { CacheType } from '@/modules/system/guest/CacheType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 
 const localDebug = debug('UrlContent');
 
 export class UrlContent implements MapFileContentType {
-  private contentCache: CacheType<string>
+  private contentCache: SourceType<string>
 
   public constructor(
     private notification: NotificationType,
     private factories: {
-      cache: FactoryType<CacheType>,
-      guest: FactoryType<GuestType>,
-      patronOnce: FactoryType<GuestType>,
+      cache: FactoryType<SourceType>,
+      guest: FactoryType<GuestObjectType>,
+      patronOnce: FactoryType<GuestObjectType>,
     },
   ) {
     this.contentCache = factories.cache.create();
   }
 
-  public canBeUsed(guest: GuestType<boolean>) {
+  public canBeUsed(guest: GuestObjectType<boolean>) {
     const canBeUsed = window.location.search.indexOf('?view=') > -1;
     localDebug('can be used', canBeUsed);
-    guest.receive(window.location.search.indexOf('?view=') > -1);
+    guest.give(window.location.search.indexOf('?view=') > -1);
 
     if (canBeUsed) {
       const url = window.location.search.split('=')[1] ?? '';
 
       fetch(url, { redirect: 'follow' }).then((r) => r.text()).then((text) => {
         localDebug('received text', text);
-        this.contentCache.receive(text);
+        this.contentCache.give(text);
       });
     }
 
     return guest;
   }
 
-  public content(target: GuestType<string>): this {
+  public content(target: GuestObjectType<string>): this {
     const url = window.location.search.split('=')[1] ?? '';
     localDebug('visit url', url);
-    this.contentCache.receiving(this.factories.patronOnce.create(target));
+    this.contentCache.value(this.factories.patronOnce.create(target));
     return this;
   }
 
-  public receive(): this {
-    this.notification.receive({
+  public give(): this {
+    this.notification.give({
       type: 'error',
       text: 'Невозможно сохранить карту, открытую по ссылке!',
     });

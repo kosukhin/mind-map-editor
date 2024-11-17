@@ -1,45 +1,42 @@
-import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import { GuestType } from '@/modules/system/guest/GuestType';
 import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { CacheType } from '@/modules/system/guest/CacheType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import html2canvas from 'html2canvas';
-import { Rect } from 'konva/lib/shapes/Rect';
-import { Layer } from 'konva/lib/Layer';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
+import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { debug } from 'debug';
+import html2canvas from 'html2canvas';
+import { Layer } from 'konva/lib/Layer';
+import { Rect } from 'konva/lib/shapes/Rect';
+import {
+  FactoryType,
+  GuestObjectType, SourceType,
+} from 'patron-oop';
 
 const localDebug = debug('MapObjectBackground');
 
-export class MapObjectBackground implements GuestType<MapDocument> {
-  private mapNameCache: CacheType<string>;
+export class MapObjectBackground implements GuestObjectType<MapDocument> {
+  private mapNameCache: SourceType<string>;
 
   public constructor(
     private konvaLayer: LayerBase,
     private mapFile: MapFileType,
-    private zIndex: GuestType<() => void>,
+    private zIndex: GuestObjectType<() => void>,
     private factories: {
-      cache: FactoryType<CacheType>,
-      guest: FactoryType<GuestType>,
+      cache: FactoryType<SourceType>,
+      guest: FactoryType<GuestObjectType>,
     },
   ) {
     this.mapNameCache = factories.cache.create(this, '');
     this.mapFile.currentMap(this);
   }
 
-  introduction() {
-    return 'patron' as const;
-  }
-
-  receive(value: MapDocument): this {
+  public give(value: MapDocument): this {
     localDebug('map received in background', value);
-    this.mapNameCache.receiving(this.factories.guest.create((mapName: string) => {
+    this.mapNameCache.value(this.factories.guest.create((mapName: string) => {
       if (mapName === value.url) {
         return;
       }
 
       localDebug('background cache is not equals', mapName);
-      this.mapNameCache.receive(value.url);
+      this.mapNameCache.give(value.url);
       const img = new Image();
       const gridPattern = document.querySelector('.grid-example') as HTMLElement;
       if (gridPattern) {
@@ -55,7 +52,7 @@ export class MapObjectBackground implements GuestType<MapDocument> {
                 fillPatternImage: img,
                 zIndex: 1,
               });
-              this.zIndex.receive(() => {
+              this.zIndex.give(() => {
                 background.zIndex(0);
               });
               layer.add(background);

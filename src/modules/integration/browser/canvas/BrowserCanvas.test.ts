@@ -3,7 +3,7 @@
  */
 import { expect, test } from 'vitest';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
-import { Guest } from '@/modules/system/guest/Guest';
+import { Guest } from 'patron-oop';
 import { useFactories } from '@/composables/useFactories';
 
 test('browser canvas', () => {
@@ -12,7 +12,7 @@ test('browser canvas', () => {
   div.innerHTML = '<canvas height="300" width="300" />';
   const canvasEL = div.querySelector('canvas') as HTMLElement;
   const canvas = new BrowserCanvas(factories);
-  canvas.receive(canvasEL);
+  canvas.give(canvasEL);
 
   canvas.size(new Guest((size) => {
     expect(size.width).toBe(300);

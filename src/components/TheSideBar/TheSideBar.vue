@@ -2,12 +2,11 @@
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseGroup from '@/components/BaseGroup/BaseGroup.vue';
 import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
-import TheGrouper from '@/components/TheGrouper/TheGrouper.vue';
 import TheLinker from '@/components/TheLinker/TheLinker.vue';
 import { useApplication } from '@/composables/useApplication';
-import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { useFactories } from '@/composables/useFactories';
+import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { computed } from 'vue';
 
 const {
@@ -50,7 +49,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
             class="text-white"
             size="sm"
             type="primary"
-            @click="mapTypeCurrent.receive(type.type.id)"
+            @click="mapTypeCurrent.give(type.type.id)"
           >
             {{ $t('general.change') }}
           </BaseButton>
@@ -58,7 +57,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
             class="text-white"
             size="sm"
             type="danger"
-            @click="mapTypeRemoved.receive(type.type)"
+            @click="mapTypeRemoved.give(type.type)"
           >
             {{ $t('general.delete') }}
           </BaseButton>
@@ -78,7 +77,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
           class="e2e-show-settings"
           :title="$t('general.settings')"
           type="primary"
-          @click="modal.receive('settings')"
+          @click="modal.give('settings')"
         >
           <BaseIcon icon="fa-cog" />
         </BaseButton>

@@ -22,7 +22,7 @@ const { patron, chain, guest } = useFactories();
 mapTypeCurrent.typeId(
   patron.create(guest.create((typeId: string) => {
     if (typeId) {
-      modal.receive('type');
+      modal.give('type');
     }
   })),
 );

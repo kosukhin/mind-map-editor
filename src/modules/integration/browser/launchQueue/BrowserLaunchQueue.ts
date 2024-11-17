@@ -5,7 +5,7 @@ import {
 import {
   BrowserLaunchQueueType,
 } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 export class BrowserLaunchQueue implements BrowserLaunchQueueType {
   public constructor(
@@ -13,12 +13,12 @@ export class BrowserLaunchQueue implements BrowserLaunchQueueType {
     private isLaunchQueueSupported = 'launchQueue' in window,
   ) {}
 
-  public fileHandler(guest: GuestType<FileSystemFileHandle>) {
+  public fileHandler(guest: GuestObjectType<FileSystemFileHandle>) {
     if (this.isLaunchQueueSupported) {
       this.launchQueue.setConsumer((launchParams: LaunchParamsType) => {
         if (launchParams.files && launchParams.files.length) {
           const [fileHandler] = launchParams.files;
-          guest.receive(fileHandler);
+          guest.give(fileHandler);
         }
       });
     }

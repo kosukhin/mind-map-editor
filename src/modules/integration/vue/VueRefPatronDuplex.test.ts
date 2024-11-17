@@ -2,7 +2,7 @@ import { expect, test } from 'vitest';
 import { FakeSource } from '@/modules/system/fake/FakeSource';
 import { VueRefPatronDuplex } from '@/modules/integration/vue/VueRefPatronDuplex';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { Guest } from '@/modules/system/guest/Guest';
+import { Guest } from 'patron-oop';
 
 test('vue ref duplex', () => {
   const source = new FakeSource(1);

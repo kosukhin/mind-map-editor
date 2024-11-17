@@ -1,5 +1,5 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 export interface JSONPType {
-  content(guest: GuestType): GuestType
+  content(guest: GuestObjectType): GuestObjectType
 }

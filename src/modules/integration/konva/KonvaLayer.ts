@@ -1,20 +1,18 @@
 import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { CacheType } from '@/modules/system/guest/CacheType';
+import {
+  GuestObjectType, SourceType, ChainType,
+  FactoryType, GuestAwareType, GuestValueType,
+} from 'patron-oop';
 import { debug } from 'debug';
 import { Stage } from 'konva/lib/Stage';
 import { KonvaPointDocument } from '@/modules/integration/konva/KonvaPointDocument';
-import { ChainType } from '@/modules/system/guest/ChainType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import {
   StageMoveRestrictionType,
 } from '@/modules/application/l1/l2/l3/l4/types/stage/StageMoveRestrictionType';
-import { GuestValueType } from '@/modules/system/guest/GuestValueType';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 
 const localDebug = debug('app:konva:KonvaLayer');
@@ -22,9 +20,9 @@ const localDebug = debug('app:konva:KonvaLayer');
 export class KonvaLayer implements LayerBase {
   private guestChain: ChainType<{canvas: HTMLElement}>;
 
-  private positionCache: CacheType<KonvaPointDocument>;
+  private positionCache: SourceType<KonvaPointDocument>;
 
-  private layerCache: CacheType<Layer>;
+  private layerCache: SourceType<Layer>;
 
   public constructor(
     private canvasDep: BrowserCanvasType,
@@ -32,9 +30,9 @@ export class KonvaLayer implements LayerBase {
     private stageMoveRestriction: StageMoveRestrictionType,
     private factories: {
       chain: FactoryType<ChainType<{canvas: HTMLElement}>>,
-      cache: FactoryType<CacheType>,
-      guest: FactoryType<GuestType>,
-      patron: FactoryType<GuestType>,
+      cache: FactoryType<SourceType>,
+      guest: FactoryType<GuestObjectType>,
+      patron: FactoryType<GuestObjectType>,
       guestSync: FactoryType<GuestValueType>,
     },
   ) {
@@ -48,7 +46,7 @@ export class KonvaLayer implements LayerBase {
     this.guestChain = factories.chain.create();
     this.layerCache = factories.cache.create(this);
     this.canvasDep.canvas(factories.patron.create(this.guestChain.receiveKey('canvas')));
-    stageSizeDep.receiving(this.guestChain.receiveKey('stageSize'));
+    stageSizeDep.value(this.guestChain.receiveKey('stageSize'));
 
     this.guestChain.result(factories.guest.create<[(props: { canvas: HTMLElement, stageSize: SizeDocument }) => void]>(({ canvas, stageSize }) => {
       localDebug('create new konva stage');
@@ -62,7 +60,7 @@ export class KonvaLayer implements LayerBase {
       const layer = new Konva.Layer();
       stage.add(layer);
       layer.draw();
-      this.layerCache.receive(layer);
+      this.layerCache.give(layer);
 
       stage.on('dragend', (e) => {
         if (!(e.target instanceof Stage)) {
@@ -73,7 +71,7 @@ export class KonvaLayer implements LayerBase {
           y: stage.y(),
         };
         localDebug('new position', position);
-        this.positionCache.receive(position);
+        this.positionCache.give(position);
       });
 
       stage.on('dragmove', (e) => {
@@ -84,7 +82,7 @@ export class KonvaLayer implements LayerBase {
           x: stage.x(),
           y: stage.y(),
         };
-        this.positionCache.receive(position);
+        this.positionCache.give(position);
       });
 
       const posGuest = this.factories.guestSync.create({
@@ -100,20 +98,20 @@ export class KonvaLayer implements LayerBase {
     }));
   }
 
-  public layer<R extends GuestType<Layer>>(guest: R) {
-    this.layerCache.receiving(guest);
+  public layer<R extends GuestObjectType<Layer>>(guest: R) {
+    this.layerCache.value(guest);
     return guest;
   }
 
-  public position<R extends GuestType<KonvaPointDocument>>(guest: R) {
-    this.positionCache.receiving(guest);
+  public position<R extends GuestObjectType<KonvaPointDocument>>(guest: R) {
+    this.positionCache.value(guest);
     return guest;
   }
 
-  receive(value: Layer): this {
-    this.layerCache.receive(value);
+  public give(value: Layer): this {
+    this.layerCache.give(value);
     const stage = value.getStage();
-    this.positionCache.receive({
+    this.positionCache.give({
       x: stage.x(),
       y: stage.y(),
     });

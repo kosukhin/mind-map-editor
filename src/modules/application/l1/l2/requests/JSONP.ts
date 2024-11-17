@@ -1,44 +1,42 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType, FactoryType, SourceType } from 'patron-oop';
 import { JSONPType } from '@/modules/application/l1/l2/requests/JSONPType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { useScriptTag } from '@vueuse/core';
-import { CacheType } from '@/modules/system/guest/CacheType';
 
 export class JSONP implements JSONPType {
-  private loadingCache: CacheType<boolean>;
+  private loadingCache: SourceType<boolean>;
 
   public constructor(
     private callbackName: string,
     private url: string,
     private emptyValue: unknown,
     private factories: {
-      guest: FactoryType<GuestType>,
-      cache: FactoryType<CacheType>,
+      guest: FactoryType<GuestObjectType>,
+      cache: FactoryType<SourceType>,
     },
   ) {
     this.loadingCache = factories.cache.create(this);
   }
 
-  public content<R extends GuestType>(guest: R): R {
-    this.loadingCache.receive(true);
+  public content<R extends GuestObjectType>(guest: R): R {
+    this.loadingCache.give(true);
     const timer = setTimeout(() => {
-      this.loadingCache.receive(false);
-      guest.receive(this.emptyValue);
+      this.loadingCache.give(false);
+      guest.give(this.emptyValue);
     }, 10_000);
     useScriptTag(
       this.url,
       () => {
         clearInterval(timer);
         const result = (window as any)[this.callbackName]?.() || this.emptyValue;
-        guest.receive(result);
-        this.loadingCache.receive(false);
+        guest.give(result);
+        this.loadingCache.give(false);
       },
     );
     return guest;
   }
 
-  public loading<R extends GuestType<boolean>>(guest: R) {
-    this.loadingCache.receiving(guest);
+  public loading<R extends GuestObjectType<boolean>>(guest: R) {
+    this.loadingCache.value(guest);
     return guest;
   }
 }

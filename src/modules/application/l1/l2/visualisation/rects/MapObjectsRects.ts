@@ -9,10 +9,8 @@ import {
   MapObjectType,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
 import { debug } from 'debug';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { GuestObjectType, FactoryType, SourceType } from 'patron-oop';
 import { Layer as KonvaLayer } from 'konva/lib/Layer';
-import { CacheType } from '@/modules/system/guest/CacheType';
 import {
   MapObjectCurrentType,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrentType';
@@ -27,7 +25,7 @@ const localDebug = debug('MapObjectsRectsPatron');
 /**
  * Объект для рендеринга квадратов на конве
  */
-export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
+export class MapObjectsRects implements GuestObjectType<MapObjectDocument[]> {
   private previouslyRenderedRects = new Map();
 
   public constructor(
@@ -39,15 +37,15 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
     private mapObjectForRendering: MapObjectType,
     private objectPosition: ObjectPositionType,
     private factories: {
-      patronOnce: FactoryType<GuestType>,
-      guest: FactoryType<GuestType>,
-      cache: FactoryType<CacheType>
+      patronOnce: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>,
+      cache: FactoryType<SourceType>
     },
   ) {
     mapObjectsVisible.objects(this);
   }
 
-  public receive(objects: MapObjectDocument[]): this {
+  public give(objects: MapObjectDocument[]): this {
     this.konvaLayer.layer(this.factories.patronOnce.create(
       this.factories.guest.create((layer: KonvaLayer) => {
         this.mapFile.currentMap(
@@ -94,27 +92,27 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
                 layer.getStage().container().style.cursor = 'default';
               });
 
-              rect.on('dragend', (e) => {
+              rect.on('dragend', () => {
                 localDebug('drag ended');
                 this.objectPosition.position(object, {
                   x: rect.x(),
                   y: rect.y(),
                 }, this.factories.guest.create((point: PointDocument) => {
-                  this.mapObject.receive({
+                  this.mapObject.give({
                     ...object,
                     position: [point.x, point.y],
                   });
                 }));
               });
 
-              rect.on('dragmove', (e) => {
+              rect.on('dragmove', () => {
                 localDebug('dragmove works', rect.x(), rect.y());
                 layer.getStage().container().style.cursor = 'move';
                 this.objectPosition.position(object, {
                   x: rect.x(),
                   y: rect.y(),
                 }, this.factories.guest.create((point: PointDocument) => {
-                  this.mapObjectForRendering.receive({
+                  this.mapObjectForRendering.give({
                     ...object,
                     position: [point.x, point.y],
                   });
@@ -123,7 +121,7 @@ export class MapObjectsRects implements GuestType<MapObjectDocument[]> {
 
               rect.on('click', () => {
                 localDebug('object clicked with id', object.id);
-                this.mapObjectCurrent.receive(object.id);
+                this.mapObjectCurrent.give(object.id);
               });
             });
           }),

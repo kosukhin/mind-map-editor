@@ -1,10 +1,11 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { CacheType } from '@/modules/system/guest/CacheType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
-import { ChainType } from '@/modules/system/guest/ChainType';
-import { debug } from 'debug';
 import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentIDType';
+import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
+import { debug } from 'debug';
+import {
+  ChainType,
+  FactoryType,
+  GuestObjectType, SourceType,
+} from 'patron-oop';
 import { MapDocument } from '../documents/MapStructures';
 import { MapFileType } from '../mapFile/MapFileType';
 
@@ -27,22 +28,22 @@ const normalizeMapDocumentAndSerialize = (map: MapDocument) => {
 /**
  * История изменения карты
  */
-export class MapHistory implements GuestType<MapDocument> {
-  private mapsHistory: CacheType<MapDocument[]>;
+export class MapHistory implements GuestObjectType<MapDocument> {
+  private mapsHistory: SourceType<MapDocument[]>;
 
-  private historyIndex: CacheType<number>;
+  private historyIndex: SourceType<number>;
 
   public constructor(
     private mapFile: MapFileType,
     private map: MapType,
     private mapId: MapCurrentIDType,
     private factories: {
-      cache: FactoryType<CacheType>,
-      guest: FactoryType<GuestType>,
-      guestInTheMiddle: FactoryType<GuestType>,
-      guestCast: FactoryType<GuestType>,
+      cache: FactoryType<SourceType>,
+      guest: FactoryType<GuestObjectType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>,
+      guestCast: FactoryType<GuestObjectType>,
       chain: FactoryType<ChainType>,
-      patron: FactoryType<GuestType>
+      patron: FactoryType<GuestObjectType>
     },
   ) {
     this.mapsHistory = factories.cache.create(this, []);
@@ -50,18 +51,18 @@ export class MapHistory implements GuestType<MapDocument> {
     this.mapFile.currentMap(factories.patron.create(this));
     this.mapId.id(factories.patron.create(
       factories.guest.create(() => {
-        this.mapsHistory.receive([]);
-        this.historyIndex.receive(0);
+        this.mapsHistory.give([]);
+        this.historyIndex.give(0);
       }),
     ));
   }
 
-  public receive(value: MapDocument): this {
+  public give(value: MapDocument): this {
     requestIdleCallback(() => {
-      this.historyIndex.receiving(
+      this.historyIndex.value(
         this.factories.guest.create(
           (lastHistoryIndex: number) => {
-            this.mapsHistory.receiving(
+            this.mapsHistory.value(
               this.factories.guest.create((history: MapDocument[]) => {
                 localDebug('add map to history', history, value);
                 const isMapFromHistory = history.some(
@@ -70,8 +71,8 @@ export class MapHistory implements GuestType<MapDocument> {
                 localDebug('isMapFromHistory', isMapFromHistory);
                 if (!isMapFromHistory) {
                   const prevHistory = history[lastHistoryIndex] ? [history[lastHistoryIndex]] : [];
-                  this.historyIndex.receive(0);
-                  this.mapsHistory.receive([value, ...prevHistory, ...history.slice(0, 9)]);
+                  this.historyIndex.give(0);
+                  this.mapsHistory.give([value, ...prevHistory, ...history.slice(0, 9)]);
                 }
               }),
             );
@@ -82,58 +83,58 @@ export class MapHistory implements GuestType<MapDocument> {
     return this;
   }
 
-  public isPrevPossible<R extends GuestType<boolean>>(guest: R) {
+  public isPrevPossible<R extends GuestObjectType<boolean>>(guest: R) {
     const chain = this.factories.chain.create(this);
-    this.historyIndex.receiving(this.factories.guestCast.create(guest, chain.receiveKey('historyIndex')));
-    this.mapsHistory.receiving(this.factories.guestCast.create(guest, chain.receiveKey('mapsHistory')));
+    this.historyIndex.value(this.factories.guestCast.create(guest, chain.receiveKey('historyIndex')));
+    this.mapsHistory.value(this.factories.guestCast.create(guest, chain.receiveKey('mapsHistory')));
     chain.result(
       this.factories.guestInTheMiddle.create(guest, ({ historyIndex, mapsHistory }: HistoryProps) => {
         const isPrevPossible = historyIndex < mapsHistory.length - 1;
         localDebug('recalculate is prev possible', isPrevPossible);
-        guest.receive(isPrevPossible);
+        guest.give(isPrevPossible);
       }),
     );
     return guest;
   }
 
   public prev() {
-    this.historyIndex.receiving(
+    this.historyIndex.value(
       this.factories.guest.create((lastHistoryIndex: number) => {
         const nextHistoryIndex = lastHistoryIndex + 1;
-        this.historyIndex.receive(nextHistoryIndex);
-        this.mapsHistory.receiving(
+        this.historyIndex.give(nextHistoryIndex);
+        this.mapsHistory.value(
           this.factories.guest.create((mapsHistory: MapDocument[]) => {
             const map = mapsHistory[nextHistoryIndex];
-            this.map.receive(map);
+            this.map.give(map);
           }),
         );
       }),
     );
   }
 
-  public isNextPossible<R extends GuestType<boolean>>(guest: R) {
+  public isNextPossible<R extends GuestObjectType<boolean>>(guest: R) {
     const chain = this.factories.chain.create(this);
-    this.historyIndex.receiving(this.factories.guestCast.create(guest, chain.receiveKey('historyIndex')));
-    this.mapsHistory.receiving(this.factories.guestCast.create(guest, chain.receiveKey('mapsHistory')));
+    this.historyIndex.value(this.factories.guestCast.create(guest, chain.receiveKey('historyIndex')));
+    this.mapsHistory.value(this.factories.guestCast.create(guest, chain.receiveKey('mapsHistory')));
     chain.result(
       this.factories.guestInTheMiddle.create(guest, ({ historyIndex, mapsHistory }: HistoryProps) => {
         const isNextPossible = historyIndex > 0 && historyIndex <= mapsHistory.length - 1;
         localDebug('recalculate is next possible', isNextPossible);
-        guest.receive(isNextPossible);
+        guest.give(isNextPossible);
       }),
     );
     return guest;
   }
 
   public next() {
-    this.historyIndex.receiving(
+    this.historyIndex.value(
       this.factories.guest.create((lastHistoryIndex: number) => {
         const nextHistoryIndex = lastHistoryIndex - 1;
-        this.historyIndex.receive(nextHistoryIndex);
-        this.mapsHistory.receiving(
+        this.historyIndex.give(nextHistoryIndex);
+        this.mapsHistory.value(
           this.factories.guest.create((mapsHistory: MapDocument[]) => {
             const map = mapsHistory[nextHistoryIndex];
-            this.map.receive(map);
+            this.map.give(map);
           }),
         );
       }),

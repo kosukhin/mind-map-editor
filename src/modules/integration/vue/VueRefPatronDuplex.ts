@@ -1,11 +1,11 @@
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 import { watch } from 'vue';
 
-export class VueRefPatronDuplex<T> implements GuestType<T> {
+export class VueRefPatronDuplex<T> implements GuestObjectType<T> {
   public constructor(
     private basePatron: VueRefPatron<T>,
-    private guest: GuestType<T>,
+    private guest: GuestObjectType<T>,
     private refWatcherCreated = false,
   ) {}
 
@@ -17,13 +17,13 @@ export class VueRefPatronDuplex<T> implements GuestType<T> {
     return this.basePatron.introduction();
   }
 
-  public receive(value: T): this {
-    this.basePatron.receive(value);
+  public give(value: T): this {
+    this.basePatron.give(value);
     if (!this.refWatcherCreated) {
       this.refWatcherCreated = true;
       watch(this.basePatron.ref(), (newValue) => {
         if (newValue) {
-          this.guest.receive(newValue);
+          this.guest.give(newValue);
         }
       }, {
         deep: true,

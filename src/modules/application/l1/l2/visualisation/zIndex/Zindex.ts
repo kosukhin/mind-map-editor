@@ -1,6 +1,4 @@
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { CacheType } from '@/modules/system/guest/CacheType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { FactoryType, SourceType, GuestObjectType } from 'patron-oop';
 import debounce from 'lodash/debounce';
 import { debug } from 'debug';
 
@@ -8,18 +6,18 @@ type FnType = () => void;
 
 const localDebug = debug('Zindex');
 
-export class Zindex implements GuestType<FnType> {
-  private fnsCache: CacheType<FnType[]>;
+export class Zindex implements GuestObjectType<FnType> {
+  private fnsCache: SourceType<FnType[]>;
 
   public constructor(
     private factories: {
-      cache: FactoryType<CacheType>,
-      patron: FactoryType<GuestType>,
-      guest: FactoryType<GuestType>,
+      cache: FactoryType<SourceType>,
+      patron: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>,
     },
   ) {
     this.fnsCache = factories.cache.create(this, []);
-    this.fnsCache.receiving(factories.patron.create(
+    this.fnsCache.value(factories.patron.create(
       factories.guest.create(debounce((fns: FnType[]) => {
         localDebug('zindex fns run');
         fns.forEach((fn) => fn());
@@ -27,10 +25,10 @@ export class Zindex implements GuestType<FnType> {
     ));
   }
 
-  public receive(value: () => void): this {
+  public give(value: () => void): this {
     localDebug('zindex received value');
-    this.fnsCache.receiving(this.factories.guest.create((fns: FnType[]) => {
-      this.fnsCache.receive(fns.concat(value));
+    this.fnsCache.value(this.factories.guest.create((fns: FnType[]) => {
+      this.fnsCache.give(fns.concat(value));
     }));
     return this;
   }

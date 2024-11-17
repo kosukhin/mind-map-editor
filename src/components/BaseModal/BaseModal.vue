@@ -12,10 +12,10 @@ const props = defineProps({
 });
 
 const isOpened = modal.isOpenedByName(props.name, new VueRefPatron<boolean>()).ref();
-const history = [];
+const history: unknown[] = [];
 
 const close = () => {
-  modal.receive('');
+  modal.give('');
 };
 
 const back = () => {

@@ -1,14 +1,14 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 import { MapTypeWithNameDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 
 export class MapTypeNew {
   public constructor(
-    private mapType: GuestType<MapTypeWithNameDocument>,
+    private mapType: GuestObjectType<MapTypeWithNameDocument>,
   ) {}
 
   public byName() {
     const typeId = String(new Date().getTime());
-    this.mapType.receive({
+    this.mapType.give({
       name: typeId,
       type: {
         id: typeId,

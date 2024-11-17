@@ -1,63 +1,61 @@
 import {
   MapObjectCurrentType,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrentType';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { CacheType } from '@/modules/system/guest/CacheType';
+import { GuestObjectType, FactoryType, SourceType } from 'patron-oop';
 
 /**
  * Представление текущего выбранного объекта с логикой
  * бронирования выбранного объекта одним гостем
  */
 export class MapObjectCurrent implements MapObjectCurrentType {
-  private idCache: CacheType<string>;
+  private idCache: SourceType<string>;
 
-  private silenceActivator: CacheType<GuestType<string> | false>;
+  private silenceActivator: SourceType<GuestObjectType<string> | false>;
 
   public constructor(
-    private drawer: GuestType<string>,
+    private drawer: GuestObjectType<string>,
     private factories: {
-      cache: FactoryType<CacheType>,
-      patron: FactoryType<GuestType>,
-      guest: FactoryType<GuestType>
+      cache: FactoryType<SourceType>,
+      patron: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>
     },
   ) {
     this.idCache = factories.cache.create(this);
     this.silenceActivator = factories.cache.create(this, false);
-    this.idCache.receiving(
+    this.idCache.value(
       factories.patron.create(
         factories.guest.create((value: string) => {
           if (value) {
-            drawer.receive('object');
+            drawer.give('object');
           }
         }),
       ),
     );
   }
 
-  public silenceOn(activator: GuestType<string>) {
-    this.silenceActivator.receive(activator);
+  public silenceOn(activator: GuestObjectType<string>) {
+    this.silenceActivator.give(activator);
     return this;
   }
 
   public silenceOff() {
-    this.silenceActivator.receive(false);
+    this.silenceActivator.give(false);
     return this;
   }
 
-  public objectId<R extends GuestType<string>>(guest: R) {
-    this.idCache.receiving(guest);
+  public objectId<R extends GuestObjectType<string>>(guest: R) {
+    this.idCache.value(guest);
     return guest;
   }
 
   public receive(value: string): this {
-    this.silenceActivator.receiving(
-      this.factories.guest.create((activator: GuestType<string> | false) => {
+    this.silenceActivator.value(
+      this.factories.guest.create((activator: GuestObjectType<string> | false) => {
         // Если мы в режиме тишины то значение получает только тот кто активировал тишину
         if (activator) {
-          activator.receive(value);
+          activator.give(value);
         } else {
-          this.idCache.receive(value);
+          this.idCache.give(value);
         }
       }),
     );

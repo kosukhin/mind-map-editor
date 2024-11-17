@@ -1,6 +1,5 @@
 import { TextType } from '@/modules/application/l1/l2/l3/l4/types/text/TextType';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { Factory } from '@/modules/system/guest/Factory';
+import { GuestObjectType, Factory } from 'patron-oop';
 import { debug } from 'debug';
 
 const localDebug = debug('TextNlAsBr');
@@ -9,12 +8,12 @@ export class TextNlAsBr implements TextType {
   public constructor(
     private baseText: TextType,
     private factories: {
-      guestInTheMiddle: Factory<GuestType>,
+      guestInTheMiddle: Factory<GuestObjectType>,
     },
   ) {
   }
 
-  public asString(guest: GuestType<string>): GuestType {
+  public asString(guest: GuestObjectType<string>): GuestObjectType {
     this.baseText.asString(
       this.factories.guestInTheMiddle.create(guest, (text: string) => {
         if (typeof text === 'undefined' || text === null) {
@@ -22,7 +21,7 @@ export class TextNlAsBr implements TextType {
         }
         const breakTag = '<br />';
         localDebug(text);
-        guest.receive((text ?? '').replace(
+        guest.give((text ?? '').replace(
           /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g,
           `$1${breakTag}$2`,
         ));

@@ -4,7 +4,7 @@ import {
   LaunchQueueType,
 } from '@/modules/integration/browser/launchQueue/LaunchQueueType';
 import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueue';
-import { Guest } from '@/modules/system/guest/Guest';
+import { Guest } from 'patron-oop';
 
 test('browser launch queue', () => {
   const launchQueueStub: LaunchQueueType = {

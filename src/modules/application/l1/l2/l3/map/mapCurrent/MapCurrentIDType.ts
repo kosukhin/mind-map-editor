@@ -1,5 +1,5 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
-export interface MapCurrentIDType extends GuestType<string> {
-  id(guest: GuestType<string>): GuestType<string>;
+export interface MapCurrentIDType extends GuestObjectType<string> {
+  id(guest: GuestObjectType<string>): GuestObjectType<string>;
 }

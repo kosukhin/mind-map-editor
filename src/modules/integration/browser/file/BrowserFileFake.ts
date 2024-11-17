@@ -1,6 +1,5 @@
 import { BrowserFileType } from '@/modules/integration/browser/file/BrowserFileType';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestAwareType, GuestObjectType } from 'patron-oop';
 
 export class BrowserFileFake implements BrowserFileType, GuestAwareType<string> {
   public constructor(
@@ -12,8 +11,8 @@ export class BrowserFileFake implements BrowserFileType, GuestAwareType<string> 
     return this;
   }
 
-  receiving(guest: GuestType<string>) {
-    guest.receive(this.theContent);
+  value(guest: GuestObjectType<string>) {
+    guest.give(this.theContent);
     return this;
   }
 }

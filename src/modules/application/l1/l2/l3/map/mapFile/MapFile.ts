@@ -1,17 +1,19 @@
-import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { MapFileContentType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileContentType';
 import {
   MapDocument,
   MapFileDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { debug } from 'debug';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { PoolType } from '@/modules/system/guest/PoolType';
-import { Transformed } from '@/modules/system/transformed/Transformed';
 import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentIDType';
-import { ChainType } from '@/modules/system/guest/ChainType';
-import { CacheType } from '@/modules/system/guest/CacheType';
+import { MapFileContentType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileContentType';
+import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
+import { Transformed } from '@/modules/system/transformed/Transformed';
+import { debug } from 'debug';
+import {
+  ChainType,
+  FactoryType,
+  GuestObjectType,
+  PoolType,
+  SourceType,
+} from 'patron-oop';
 
 const localDebug = debug('MapFileOfContent');
 type CurrentMapChainProps = {mapId: string, mapFile: MapFileDocument};
@@ -24,20 +26,20 @@ export class MapFile implements MapFileType {
 
   private mapFilePatrons: PoolType<MapFileDocument>;
 
-  private mapFileCache: CacheType;
+  private mapFileCache: SourceType;
 
   public constructor(
     private mapFileContent: MapFileContentType,
     private mapId: MapCurrentIDType,
     private factories: {
       pool: FactoryType<PoolType>,
-      guest: FactoryType<GuestType>,
+      guest: FactoryType<GuestObjectType>,
       chain: FactoryType<ChainType>,
-      guestCast: FactoryType<GuestType>,
-      guestInTheMiddle: FactoryType<GuestType>,
+      guestCast: FactoryType<GuestObjectType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>,
       transformToString: FactoryType<Transformed<string>>,
       transformToObject: FactoryType<Transformed>,
-      cache: FactoryType<CacheType>
+      cache: FactoryType<SourceType>
     },
   ) {
     this.currentMapPatrons = factories.pool.create(this);
@@ -45,7 +47,7 @@ export class MapFile implements MapFileType {
     this.mapFileCache = factories.cache.create(this, false);
   }
 
-  public currentMap<R extends GuestType<MapDocument>>(currentMapGuest: R): R {
+  public currentMap<R extends GuestObjectType<MapDocument>>(currentMapGuest: R): R {
     const chain = this.factories.chain.create();
     this.mapId.id(this.factories.guestCast.create(currentMapGuest, chain.receiveKey('mapId')));
     this.mapFile(this.factories.guestCast.create(currentMapGuest, chain.receiveKey('mapFile')));
@@ -61,24 +63,24 @@ export class MapFile implements MapFileType {
     return currentMapGuest;
   }
 
-  public receive(value: MapFileDocument): this {
+  public give(value: MapFileDocument): this {
     localDebug('save map file document', value);
-    this.mapFileContent.receive(this.factories.transformToString.create(value).result());
-    this.mapFileCache.receive(value);
+    this.mapFileContent.give(this.factories.transformToString.create(value).result());
+    this.mapFileCache.give(value);
     return this;
   }
 
-  public mapFile<R extends GuestType<MapFileDocument>>(mapFileTarget: R) {
-    this.mapFileCache.receiving(
+  public mapFile<R extends GuestObjectType<MapFileDocument>>(mapFileTarget: R) {
+    this.mapFileCache.value(
       this.factories.guestInTheMiddle.create(mapFileTarget, (mapFileCache: MapFileDocument) => {
         if (mapFileCache) {
-          mapFileTarget.receive(mapFileCache);
+          mapFileTarget.give(mapFileCache);
         } else {
           this.mapFileContent.content(this.factories.guest.create((value: string) => {
             const mapFile = this.factories.transformToObject.create(value || this.generateEmptyMapFile()).result();
             localDebug('get map file', mapFile);
-            this.mapFileCache.receive(mapFile);
-            mapFileTarget.receive(<MapFileDocument>mapFile);
+            this.mapFileCache.give(mapFile);
+            mapFileTarget.give(<MapFileDocument>mapFile);
           }));
         }
       }),
@@ -86,18 +88,18 @@ export class MapFile implements MapFileType {
     return mapFileTarget;
   }
 
-  private createEmptyMapByName(mapName: string, guest: GuestType<MapDocument>) {
+  private createEmptyMapByName(mapName: string, guest: GuestObjectType<MapDocument>) {
     localDebug('creating empty map by name', mapName);
     const mapFileTemplate = this.factories.transformToObject.create(
       this.generateEmptyMapFile(),
     ).result() as {current: MapDocument};
     this.mapFile(
       this.factories.guest.create((mapFile: MapFileDocument) => {
-        this.receive({
+        this.give({
           ...mapFile,
           [mapName]: mapFileTemplate.current,
         });
-        guest.receive(mapFileTemplate.current);
+        guest.give(mapFileTemplate.current);
       }),
     );
   }

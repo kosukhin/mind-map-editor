@@ -1,7 +1,6 @@
-import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { MapDocument, MapFileDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { PatronPool } from '@/modules/system/guest/PatronPool';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
+import { GuestObjectType, PatronPool } from 'patron-oop';
 
 /**
  * Фейковый объект для получения файла с картами
@@ -15,7 +14,7 @@ export class MapFileFake implements MapFileType {
     private mapFileDocument: MapFileDocument,
   ) {}
 
-  public currentMap(target: GuestType<MapDocument>) {
+  public currentMap(target: GuestObjectType<MapDocument>) {
     this.currentMapPool.distribute(
       this.mapFileDocument.current,
       target,
@@ -23,18 +22,18 @@ export class MapFileFake implements MapFileType {
     return target;
   }
 
-  public mapFile(target: GuestType<MapFileDocument>): this {
+  public mapFile(target: GuestObjectType<MapFileDocument>) {
     this.mapFilePool.distribute(
       this.mapFileDocument,
       target,
     );
-    return this;
+    return target;
   }
 
-  public receive(value: MapFileDocument): this {
+  public give(value: MapFileDocument): this {
     this.mapFileDocument = value;
-    this.currentMapPool.receive(value.current);
-    this.mapFilePool.receive(value);
+    this.currentMapPool.give(value.current);
+    this.mapFilePool.give(value);
     return this;
   }
 }

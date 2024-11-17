@@ -1,6 +1,4 @@
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { PoolType } from '@/modules/system/guest/PoolType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { FactoryType, PoolType, GuestObjectType } from 'patron-oop';
 import { debug } from 'debug';
 import { useMagicKeys } from '@vueuse/core';
 
@@ -21,24 +19,24 @@ export class Keyboard {
     this.combinationsPool = factories.pool.create(this);
     window.addEventListener('keyup', (e) => {
       localDebug('keyboard pressed', e.key);
-      this.pressedPool.receive(e.key);
+      this.pressedPool.give(e.key);
     });
     useMagicKeys({
       passive: false,
       onEventFired: (e) => {
         localDebug('magic combination happens 11', e.ctrlKey, e.key);
-        this.combinationsPool.receive(e);
+        this.combinationsPool.give(e);
       },
     });
   }
 
-  public pressed(guest: GuestType<string>) {
+  public pressed(guest: GuestObjectType<string>) {
     localDebug('keyboard receive pressed subscriber');
     this.pressedPool.add(guest);
     return this;
   }
 
-  public event(guest: GuestType<KeyboardEvent>) {
+  public event(guest: GuestObjectType<KeyboardEvent>) {
     localDebug('keyboard receive combination subscriber');
     this.combinationsPool.add(guest);
     return this;

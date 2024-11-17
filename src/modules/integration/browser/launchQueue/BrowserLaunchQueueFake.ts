@@ -1,11 +1,11 @@
 import {
   BrowserLaunchQueueType,
 } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 export class BrowserLaunchQueueFake implements BrowserLaunchQueueType {
-  fileHandler(guest: GuestType<FileSystemFileHandle>): this {
-    guest.receive({ message: 'fake handler' } as unknown as FileSystemFileHandle);
+  fileHandler(guest: GuestObjectType<FileSystemFileHandle>): this {
+    guest.give({ message: 'fake handler' } as unknown as FileSystemFileHandle);
     return this;
   }
 }

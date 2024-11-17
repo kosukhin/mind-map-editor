@@ -1,10 +1,9 @@
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
+import {
+  GuestAwareType, FactoryType, SourceType, GuestObjectType,
+  removePatronFromPools,
+} from 'patron-oop';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { CacheType } from '@/modules/system/guest/CacheType';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { removePatronFromPools } from '@/modules/system/guest/PatronPool';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { Layer as KonvaLayer } from 'konva/lib/Layer';
 import { ArrowPathType } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
@@ -22,18 +21,18 @@ const arrowGeometry = {
  * Новая стрелка, появляется при создании новой связи
  */
 export class NewArrow {
-  private cursorGuest: CacheType<GuestType>;
+  private cursorGuest: SourceType<GuestObjectType>;
 
-  private arrowCache: CacheType;
+  private arrowCache: SourceType;
 
   public constructor(
     private konvaLayer: LayerBase,
     private cursorPosition: GuestAwareType<PointDocument>,
     private arrowPath: ArrowPathType,
     private factories: {
-      cache: FactoryType<CacheType>,
-      patron: FactoryType<GuestType>,
-      guest: FactoryType<GuestType>,
+      cache: FactoryType<SourceType>,
+      patron: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>,
     },
   ) {
     this.cursorGuest = this.factories.cache.create(this);
@@ -45,8 +44,8 @@ export class NewArrow {
    */
   public forObject(object: MapObjectDocument) {
     localDebug('start watch cursor');
-    this.cursorGuest.receiving(
-      this.factories.guest.create((guest: GuestType) => {
+    this.cursorGuest.value(
+      this.factories.guest.create((guest: GuestObjectType) => {
         removePatronFromPools(guest);
       }),
     );
@@ -101,7 +100,7 @@ export class NewArrow {
                   zIndex: 2,
                 });
                 layer.add(arrow);
-                this.arrowCache.receive(arrow);
+                this.arrowCache.give(arrow);
               }),
             );
           }),
@@ -109,20 +108,20 @@ export class NewArrow {
         this.arrowPath.clear();
       }),
     );
-    this.cursorPosition.receiving(patron);
-    this.cursorGuest.receive(patron);
+    this.cursorPosition.value(patron);
+    this.cursorGuest.give(patron);
   }
 
   /**
    * Отмена стрелки
    */
   public dispose() {
-    this.cursorGuest.receiving(
-      this.factories.guest.create((guest: GuestType) => {
+    this.cursorGuest.value(
+      this.factories.guest.create((guest: GuestObjectType) => {
         removePatronFromPools(guest);
       }),
     );
-    this.arrowCache.receiving(
+    this.arrowCache.value(
       this.factories.guest.create((arrow: Arrow) => {
         arrow.remove();
       }),

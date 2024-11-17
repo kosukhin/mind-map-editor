@@ -1,18 +1,18 @@
 import { SystemFileType } from '@/modules/system/file/SystemFileType';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 const filesContents = new WeakMap();
 export class SystemFileFromHandler implements SystemFileType {
   public constructor(private fileHandler: FileSystemFileHandle) {}
 
-  public content(target: GuestType<string>) {
+  public content(target: GuestObjectType<string>) {
     this.fileHandler.getFile()
       .then(
         (file) => this.readFile(file),
       )
       .then((content) => {
-        target.receive(content);
+        target.give(content);
       })
       .catch((error) => {
         throw new RuntimeError('Problem when reading file in SystemFileFromHandler', { cause: error });

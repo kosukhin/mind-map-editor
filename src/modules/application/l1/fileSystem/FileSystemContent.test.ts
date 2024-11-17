@@ -4,13 +4,10 @@ import {
   BrowserLaunchQueueFake,
 } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueFake';
 import { Notification } from '@/modules/application/l1/l2/visualisation/notification/Notification';
-import { Guest } from '@/modules/system/guest/Guest';
-import { Patron } from '@/modules/system/guest/Patron';
+import { Guest , Patron , Factory , FactoryDynamic } from 'patron-oop';
 import { useFactories } from '@/composables/useFactories';
-import { Factory } from '@/modules/system/guest/Factory';
 import { BrowserFileFake } from '@/modules/integration/browser/file/BrowserFileFake';
 import { SystemFileText } from '@/modules/system/file/SystemFileText';
-import { FactoryDynamic } from '@/modules/system/guest/FactoryDynamic';
 
 test('map file content fs', () => {
   const factories = useFactories();

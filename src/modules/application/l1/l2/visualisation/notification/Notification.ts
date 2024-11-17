@@ -2,15 +2,13 @@ import {
   NotificationDocument,
   NotificationType,
 } from '@/modules/application/l1/l2/visualisation/notification/NotificationType';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { CacheType } from '@/modules/system/guest/CacheType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { GuestType, SourceType, FactoryType } from 'patron-oop';
 
 /**
  * Объект для отображения уведомлений
  */
 export class Notification implements NotificationType {
-  private messageCache: CacheType<NotificationDocument>;
+  private messageCache: SourceType<NotificationDocument>;
 
   private notificationLifetimeDelay = 3500;
 
@@ -18,24 +16,24 @@ export class Notification implements NotificationType {
 
   public constructor(
     factories: {
-      cache: FactoryType<CacheType<unknown>>,
+      cache: FactoryType<SourceType<unknown>>,
     },
   ) {
     this.messageCache = factories.cache.create(this);
   }
 
   public message<R extends GuestType<NotificationDocument>>(guest: R): R {
-    this.messageCache.receiving(guest);
+    this.messageCache.value(guest);
     return guest;
   }
 
-  public receive(value: NotificationDocument): this {
-    this.messageCache.receive(value);
+  public give(value: NotificationDocument): this {
+    this.messageCache.give(value);
     if (this.lastTimerHead) {
       clearTimeout(this.lastTimerHead);
     }
     this.lastTimerHead = setTimeout(() => {
-      this.messageCache.receive({
+      this.messageCache.give({
         type: 'success',
         text: 'hide',
       });

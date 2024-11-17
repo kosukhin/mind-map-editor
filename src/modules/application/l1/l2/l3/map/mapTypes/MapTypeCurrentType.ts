@@ -1,8 +1,8 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 /**
  * Поведение для выбора типа узла карты
  */
-export interface MapTypeCurrentType extends GuestType<string> {
-  typeId(guest: GuestType<string>): GuestType<string>;
+export interface MapTypeCurrentType extends GuestObjectType<string> {
+  typeId(guest: GuestObjectType<string>): GuestObjectType<string>;
 }

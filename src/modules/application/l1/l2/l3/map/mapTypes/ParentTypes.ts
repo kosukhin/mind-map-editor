@@ -2,9 +2,7 @@ import {
   MapObjectParentNamesType,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectParentNamesType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { ChainType } from '@/modules/system/guest/ChainType';
+import { FactoryType, GuestObjectType, ChainType } from 'patron-oop';
 import {
   MapFileDocument,
   MapTypeDocument,
@@ -20,14 +18,14 @@ export class ParentTypes {
     private parentNames: MapObjectParentNamesType,
     private mapFile: MapFileType,
     private factories: {
-      guestInTheMiddle: FactoryType<GuestType>,
-      guestCast: FactoryType<GuestType>,
-      guest: FactoryType<GuestType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>,
+      guestCast: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>,
       chain: FactoryType<ChainType>
     },
   ) {}
 
-  public types<R extends GuestType<MapTypeDocument[]>>(guest: R) {
+  public types<R extends GuestObjectType<MapTypeDocument[]>>(guest: R) {
     localDebug('parent types requested');
     const chain = this.factories.chain.create();
     this.parentNames.names(this.factories.guestCast.create(guest, chain.receiveKey('parentNames')));
@@ -42,7 +40,7 @@ export class ParentTypes {
           types[type.name] = type;
         });
       });
-      guest.receive(Object.values(types));
+      guest.give(Object.values(types));
     }));
 
     return guest;

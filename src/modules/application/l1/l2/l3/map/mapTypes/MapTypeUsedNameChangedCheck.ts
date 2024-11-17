@@ -1,22 +1,21 @@
 import { CheckType } from '@/modules/application/l1/l2/l3/map/checks/CheckType';
 import { MapTypeWithNameDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { FactoryType, GuestObjectType } from 'patron-oop';
 
 export class MapTypeUsedNameChangedCheck implements CheckType<MapTypeWithNameDocument> {
   public constructor(
     private mapTypeUsedCheck: CheckType<MapTypeWithNameDocument>,
     private factories: {
-      guest: FactoryType<GuestType>
+      guest: FactoryType<GuestObjectType>
     },
   ) {}
 
-  check(value: MapTypeWithNameDocument, guest: GuestType<true | string>): this {
+  check(value: MapTypeWithNameDocument, guest: GuestObjectType<true | string>): this {
     this.mapTypeUsedCheck.check(value, this.factories.guest.create((result: true | string) => {
       if (result !== true && value.name !== value.type.name) {
-        guest.receive('Нельзя изменять имя типа, который использован!');
+        guest.give('Нельзя изменять имя типа, который использован!');
       } else {
-        guest.receive(true);
+        guest.give(true);
       }
     }));
     return this;

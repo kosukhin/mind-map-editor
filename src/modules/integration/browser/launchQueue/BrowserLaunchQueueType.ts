@@ -1,5 +1,5 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 export interface BrowserLaunchQueueType {
-  fileHandler(guest: GuestType<FileSystemFileHandle>): this;
+  fileHandler(guest: GuestObjectType<FileSystemFileHandle>): this;
 }

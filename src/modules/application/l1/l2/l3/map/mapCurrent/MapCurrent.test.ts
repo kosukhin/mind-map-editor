@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { Guest } from '@/modules/system/guest/Guest';
+import { Guest } from 'patron-oop';
 import { useFactories } from '@/composables/useFactories';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';

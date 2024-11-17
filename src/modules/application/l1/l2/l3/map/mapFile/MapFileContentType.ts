@@ -1,9 +1,9 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 /**
  * Поведение для получения контента файла с картами строкой
  */
-export interface MapFileContentType extends GuestType<string> {
-  content(target: GuestType<string>): this;
-  canBeUsed(guest: GuestType<boolean>): GuestType<boolean>;
+export interface MapFileContentType extends GuestObjectType<string> {
+  content(target: GuestObjectType<string>): this;
+  canBeUsed(guest: GuestObjectType<boolean>): GuestObjectType<boolean>;
 }

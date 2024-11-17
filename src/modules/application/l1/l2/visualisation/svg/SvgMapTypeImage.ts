@@ -1,6 +1,6 @@
 import { SvgImageType } from '@/modules/application/l1/l2/visualisation/svg/SvgImageType';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { FactoryType } from 'patron-oop';
 
 /**
  * Объект для обработки изображения типа карты

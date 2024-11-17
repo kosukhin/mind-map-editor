@@ -1,4 +1,6 @@
-import { Cache } from '@/modules/system/guest/Cache';
+import {
+  SourceEmpty, GuestObjectType, FactoryType, ChainType,
+} from 'patron-oop';
 import {
   MapDocument,
   MapObjectDocument,
@@ -9,9 +11,6 @@ import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanva
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { debug } from 'debug';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { ChainType } from '@/modules/system/guest/ChainType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 
 const localDebug = debug('app:MapObjectsVisible');
@@ -21,7 +20,7 @@ type ChainGuestExecutor = (props: {position: PointDocument, size: SizeDocument, 
  * Объект для определения видимых объектов
  */
 export class MapObjectsVisible implements MapObjectsType {
-  private visibleObjectsCache = new Cache<MapObjectDocument[]>(this);
+  private visibleObjectsCache = new SourceEmpty<MapObjectDocument[]>();
 
   public constructor(
     layerDep: LayerBase,
@@ -29,8 +28,8 @@ export class MapObjectsVisible implements MapObjectsType {
     mapFile: MapFileType,
     factories: {
       chain: FactoryType<ChainType<unknown>>,
-      patron: FactoryType<GuestType<unknown>>,
-      guest: FactoryType<GuestType<unknown>>,
+      patron: FactoryType<GuestObjectType<unknown>>,
+      guest: FactoryType<GuestObjectType<unknown>>,
     },
   ) {
     localDebug('constructor initialized');
@@ -52,13 +51,13 @@ export class MapObjectsVisible implements MapObjectsType {
           return this.isInBounding(position, size, object.position, objectSize);
         });
         localDebug('visible objects calculated', visibleObjects);
-        this.visibleObjectsCache.receive(visibleObjects);
+        this.visibleObjectsCache.give(visibleObjects);
       }),
     ));
   }
 
-  public objects(guest: GuestType<MapObjectDocument[]>) {
-    this.visibleObjectsCache.receiving(guest);
+  public objects(guest: GuestObjectType<MapObjectDocument[]>) {
+    this.visibleObjectsCache.value(guest);
     return this;
   }
 

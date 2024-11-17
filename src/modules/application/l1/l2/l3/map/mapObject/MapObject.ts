@@ -5,8 +5,7 @@ import {
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
+import { GuestType, FactoryType } from 'patron-oop';
 
 /**
  * Сохранение объекта
@@ -20,9 +19,9 @@ export class MapObject implements MapObjectType {
     },
   ) {}
 
-  receive(value: MapObjectDocument): this {
+  public give(value: MapObjectDocument): this {
     this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
-      this.map.receive({
+      this.map.give({
         ...latestMap,
         objects: {
           ...latestMap.objects,

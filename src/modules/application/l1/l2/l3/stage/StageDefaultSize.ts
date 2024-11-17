@@ -1,6 +1,5 @@
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
+import { GuestAwareType, GuestObjectType } from 'patron-oop';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
-import { GuestType } from '@/modules/system/guest/GuestType';
 
 const layerGeometry = {
   height: 3000,
@@ -8,8 +7,8 @@ const layerGeometry = {
 };
 
 export class StageDefaultSize implements GuestAwareType<SizeDocument> {
-  receiving<R extends GuestType<SizeDocument>>(guest: R): R {
-    guest.receive(layerGeometry);
+  value<R extends GuestObjectType<SizeDocument>>(guest: R): R {
+    guest.give(layerGeometry);
     return guest;
   }
 }

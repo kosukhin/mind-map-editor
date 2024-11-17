@@ -1,8 +1,7 @@
 import { expect, test } from 'vitest';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
-import { Patron } from '@/modules/system/guest/Patron';
-import { Guest } from '@/modules/system/guest/Guest';
+import { Patron, Guest } from 'patron-oop';
 import { useFactories } from '@/composables/useFactories';
 import { PointIdDocument } from '@/modules/application/l1/l2/l3/map/documents/PointIdDocument';
 import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
@@ -62,7 +61,7 @@ test('mini map', () => {
   div.innerHTML = '<canvas height="300" width="300" />';
   const canvasEL = div.querySelector('canvas') as HTMLElement;
   const browserCanvas = new BrowserCanvas(factories);
-  browserCanvas.receive(canvasEL);
+  browserCanvas.give(canvasEL);
 
   const stageSize = new StageDefaultSize();
 

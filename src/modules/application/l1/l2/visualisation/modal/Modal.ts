@@ -1,23 +1,25 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { CacheType } from '@/modules/system/guest/CacheType';
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 import { debug } from 'debug';
-import { GuestAwareType } from '@/modules/system/guest/GuestAwareType';
+import {
+  FactoryType,
+  GuestAwareType,
+  GuestObjectType,
+  SourceType,
+} from 'patron-oop';
 
 const localDebug = debug('Modal');
 
-export class Modal implements GuestType<string> {
-  private modalNameCache: CacheType<string>;
+export class Modal implements GuestObjectType<string> {
+  private modalNameCache: SourceType<string>;
 
   public constructor(
     private keyboard: Keyboard,
     private factories: {
-      cache: FactoryType<CacheType>,
-      patron: FactoryType<GuestType>,
-      guest: FactoryType<GuestType>,
+      cache: FactoryType<SourceType>,
+      patron: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>,
       guestAware: FactoryType<GuestAwareType>,
-      guestInTheMiddle: FactoryType<GuestType>
+      guestInTheMiddle: FactoryType<GuestObjectType>
     },
   ) {
     localDebug('modal created');
@@ -27,32 +29,32 @@ export class Modal implements GuestType<string> {
         this.factories.guest.create((key: string) => {
           localDebug('new key in modal', key);
           if (key === 'Escape') {
-            this.receive('');
+            this.give('');
           }
         }),
       ),
     );
   }
 
-  isOpenedByName<R extends GuestType<boolean>>(name: string, guest: R) {
-    this.modalNameCache.receiving(
+  public isOpenedByName<R extends GuestObjectType<boolean>>(name: string, guest: R) {
+    this.modalNameCache.value(
       this.factories.guestInTheMiddle.create(guest, (modalName: string) => {
-        guest.receive(modalName === name);
+        guest.give(modalName === name);
       }),
     );
     return guest;
   }
 
-  openedByName(name: string): GuestAwareType<boolean> {
+  public openedByName(name: string): GuestAwareType<boolean> {
     return this.factories.guestAware.create(
-      (guest: GuestType<boolean>) => {
+      (guest: GuestObjectType<boolean>) => {
         this.isOpenedByName(name, guest);
       },
     );
   }
 
-  receive(value: string): this {
-    this.modalNameCache.receive(value);
+  public give(value: string): this {
+    this.modalNameCache.give(value);
     return this;
   }
 }

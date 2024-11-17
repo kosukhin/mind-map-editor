@@ -1,27 +1,26 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
 import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
+import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { Layer } from 'konva/lib/Layer';
+import { FactoryType, GuestObjectType } from 'patron-oop';
 
 /**
  * Обработка изменения размера редактора
  */
-export class Resizing implements GuestType<MapDocument> {
+export class Resizing implements GuestObjectType<MapDocument> {
   public constructor(
     mapFile: MapFileType,
     private canvas: BrowserCanvas,
     private konvaLayer: LayerBase,
     private factories: {
-      guest: FactoryType<GuestType>
+      guest: FactoryType<GuestObjectType>
     },
   ) {
     mapFile.currentMap(this);
   }
 
-  receive(): this {
+  public give(): this {
     const resizeObserver = new ResizeObserver((entries) => {
       const [body] = entries;
       this.canvas.canvas(this.factories.guest.create((canvasEl: HTMLCanvasElement) => {
@@ -31,7 +30,7 @@ export class Resizing implements GuestType<MapDocument> {
           layer.getStage().height(body.contentRect.height - canvasRect.top);
 
           this.canvas.receive(canvasEl);
-          this.konvaLayer.receive(layer);
+          this.konvaLayer.give(layer);
         }));
       }));
     });

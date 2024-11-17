@@ -1,8 +1,8 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 /**
  * Поведения для получения выбранного id объекта
  */
-export interface MapObjectCurrentType extends GuestType<string> {
-  objectId(guest: GuestType<string>): GuestType<string>;
+export interface MapObjectCurrentType extends GuestObjectType<string> {
+  objectId(guest: GuestObjectType<string>): GuestObjectType<string>;
 }

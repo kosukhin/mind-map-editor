@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { Notification } from '@/modules/application/l1/l2/visualisation/notification/Notification';
-import { Guest } from '@/modules/system/guest/Guest';
+import { Guest } from 'patron-oop';
 import { useFactories } from '@/composables/useFactories';
 import {
   NotificationDocument,

@@ -1,5 +1,5 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 export interface SystemFileType {
-  content(target: GuestType<string>): this;
+  content(target: GuestObjectType<string>): this;
 }

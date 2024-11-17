@@ -15,7 +15,7 @@ const currentMapName = mapCurrentID.id(new VueRefPatron()).ref();
 const remove = (name: string) => {
   // eslint-disable-next-line no-restricted-globals
   if (confirm('Вы уверены?')) {
-    mapRemoved.receive(name);
+    mapRemoved.give(name);
   }
 };
 </script>
@@ -32,7 +32,7 @@ const remove = (name: string) => {
         <a
           href="#"
           :class="{'font-bold': currentMapName === mapName}"
-          @click.prevent="mapCurrentID.receive(mapName);drawer.receive('')"
+          @click.prevent="mapCurrentID.give(mapName);drawer.give('')"
         >
           {{ map.settings.title }}
         </a>

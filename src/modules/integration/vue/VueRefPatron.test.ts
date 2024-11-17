@@ -6,6 +6,6 @@ test('vue ref patron', () => {
   const source = new FakeSource(1);
   const patron = new VueRefPatron();
   source.data(patron);
-  source.receive(22);
+  source.give(22);
   expect(patron.ref().value).toBe(22);
 });

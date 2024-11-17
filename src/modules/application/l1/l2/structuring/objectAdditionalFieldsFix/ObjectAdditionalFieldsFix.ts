@@ -1,9 +1,8 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType, FactoryType } from 'patron-oop';
 import {
   MapObjectCurrentType,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrentType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
 import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapObjectType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
 
@@ -17,23 +16,19 @@ const buildMapFromArray = (arr: any[], existedFields: Record<string, unknown>) =
   return acc;
 }, {} as any);
 
-export class ObjectAdditionalFieldsFix implements GuestType<string> {
+export class ObjectAdditionalFieldsFix implements GuestObjectType<string> {
   public constructor(
     objectCurrent: MapObjectCurrentType,
     private mapFile: MapFileType,
     private mapObject: MapObjectType,
     private factories: {
-      guest: FactoryType<GuestType>,
+      guest: FactoryType<GuestObjectType>,
     },
   ) {
     objectCurrent.objectId(this);
   }
 
-  introduction() {
-    return 'patron' as const;
-  }
-
-  receive(value: string): this {
+  public give(value: string): this {
     this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
       const object = latestMap.objects[value];
       if (!object) {
@@ -46,7 +41,7 @@ export class ObjectAdditionalFieldsFix implements GuestType<string> {
         (v) => v !== 'width' && v !== 'height',
       );
       object.additionalFields = buildMapFromArray(neededFields, object.additionalFields ?? {});
-      this.mapObject.receive(object);
+      this.mapObject.give(object);
     }));
     return this;
   }

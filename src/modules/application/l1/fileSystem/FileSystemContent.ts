@@ -6,11 +6,9 @@ import {
 import {
   BrowserLaunchQueueType,
 } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType, FactoryType, PoolType } from 'patron-oop';
 import { SystemFileType } from '@/modules/system/file/SystemFileType';
 import { BrowserFileType } from '@/modules/integration/browser/file/BrowserFileType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { PoolType } from '@/modules/system/guest/PoolType';
 import { debug } from 'debug';
 import { FileSystemFileHandle } from '@vueuse/core';
 
@@ -27,14 +25,14 @@ export class FileSystemContent implements MapFileContentType {
     private factories: {
       fileHandlerContent: FactoryType<SystemFileType>,
       browserFileSaved: FactoryType<BrowserFileType>,
-      guest: FactoryType<GuestType>,
+      guest: FactoryType<GuestObjectType>,
       pool: FactoryType<PoolType>,
     },
   ) {
     this.contentPatrons = factories.pool.create(this);
   }
 
-  public content(target: GuestType<string>): this {
+  public content(target: GuestObjectType<string>): this {
     const fileHandlerGuest = this.factories.guest.create((value: FileSystemFileHandle) => {
       this.fileHandler = value;
       this
@@ -48,36 +46,36 @@ export class FileSystemContent implements MapFileContentType {
     if (!this.fileHandler) {
       this.launchQueue.fileHandler(fileHandlerGuest);
     } else {
-      fileHandlerGuest.receive(this.fileHandler);
+      fileHandlerGuest.give(this.fileHandler);
     }
 
     return this;
   }
 
-  public receive(value: string): this {
+  public give(value: string): this {
     localDebug('save file as content string', value);
     if (!this.fileHandler) {
       throw new RuntimeError('Cant save file because no fileHandler');
     }
     try {
       this.factories.browserFileSaved.create(this.fileHandler).save(value);
-      this.contentPatrons.receive(value);
+      this.contentPatrons.give(value);
       return this;
     } catch (e) {
       throw new RuntimeError('Cant handle receive for map file FS', { cause: e });
     } finally {
-      this.notification.receive({
+      this.notification.give({
         type: 'success',
         text: 'Успешно сохранен файл карты!',
       });
     }
   }
 
-  public canBeUsed(guest: GuestType<boolean>) {
+  public canBeUsed(guest: GuestObjectType<boolean>) {
     const canBeUsed = 'launchQueue' in window;
     localDebug('can be used', canBeUsed);
     const matches = window.matchMedia('(display-mode: standalone)');
-    guest.receive(canBeUsed && matches.matches);
+    guest.give(canBeUsed && matches.matches);
     return guest;
   }
 }

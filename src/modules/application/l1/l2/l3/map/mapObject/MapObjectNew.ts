@@ -1,6 +1,5 @@
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
-import { FactoryType } from '@/modules/system/guest/FactoryType';
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { FactoryType , GuestObjectType } from 'patron-oop';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapObjectType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
@@ -20,7 +19,7 @@ export class MapObjectNew {
     private canvas: BrowserCanvas,
     private stagePosition: StagePositionType,
     private factories: {
-      guest: FactoryType<GuestType>
+      guest: FactoryType<GuestObjectType>
     },
   ) { }
 

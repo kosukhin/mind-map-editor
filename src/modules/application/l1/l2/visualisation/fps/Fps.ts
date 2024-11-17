@@ -1,9 +1,9 @@
-import { GuestType } from '@/modules/system/guest/GuestType';
+import { GuestObjectType } from 'patron-oop';
 
 export class Fps {
-  public value<R extends GuestType<number>>(guest: R) {
+  public value<R extends GuestObjectType<number>>(guest: R) {
     if (typeof performance === 'undefined') {
-      guest.receive(0);
+      guest.give(0);
     }
     const every = 10;
     let last = performance.now();
@@ -14,7 +14,7 @@ export class Fps {
       if (ticks >= every) {
         const now = performance.now();
         const diff = now - last;
-        guest.receive(Math.round(1000 / (diff / ticks)));
+        guest.give(Math.round(1000 / (diff / ticks)));
         last = now;
         ticks = 0;
       }
