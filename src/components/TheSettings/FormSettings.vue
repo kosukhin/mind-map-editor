@@ -41,23 +41,8 @@ controlCombo.happenedConditional(
     </template>
     <div class="TheSettings" v-if="map?.settings">
       <div class="mb-2">
-        <a href="#" class="PageEditor-Download">
-          Скачать карту
-        </a>
         <div class="TheSettings-Row">
           <div class="flex gap-2 mb-2">
-            <BaseButton
-              class="text-white"
-              type="primary"
-            >
-              {{ $t('general.jsonExportImport') }}
-            </BaseButton>
-            <BaseButton
-              class="text-white"
-              type="primary"
-            >
-              {{ $t('general.keybindings') }}
-            </BaseButton>
             <BaseButton
               v-if="parentTypes.length > 1"
               type="primary"

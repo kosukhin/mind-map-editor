@@ -1,14 +1,10 @@
 import { useFactories } from '@/composables/useFactories';
-import { FileSystemContent } from '@/modules/application/l1/fileSystem/FileSystemContent';
 import { CheckNotification } from '@/modules/application/l1/l2/l3/map/checks/CheckNotification';
 import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapCurrent } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrent';
 import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
 import { MapHistory } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapHistory';
 import { MapRemoved } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapRemoved';
-import {
-  FirstPossibleFileContent,
-} from '@/modules/application/l1/l2/l3/map/mapFile/FirstPossibleFileContent';
 import { MapFile } from '@/modules/application/l1/l2/l3/map/mapFile/MapFile';
 import { MapFileForRendering } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileForRendering';
 import { MapObject } from '@/modules/application/l1/l2/l3/map/mapObject/MapObject';
@@ -78,16 +74,16 @@ import {
   StagePositionByObjectId,
 } from '@/modules/application/l1/l2/visualisation/stage/StagePositionByObjectId';
 import { Zindex } from '@/modules/application/l1/l2/visualisation/zIndex/Zindex';
-import { UrlContent } from '@/modules/application/l1/url/UrlContent';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { Cursor } from '@/modules/integration/browser/cursor/Cursor';
 import { ControlCombo } from '@/modules/integration/browser/keyboard/ControlCombo';
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
-import { BrowserLaunchQueue } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueue';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { KonvaLayerShiftPoint } from '@/modules/integration/konva/KonvaLayerShiftPoint';
 import { KonvaMove } from '@/modules/integration/konva/KonvaMove';
-import { GuestAware, GuestObject } from 'patron-oop';
+import {
+  GuestAware, GuestObject,
+} from 'patron-oop';
 
 const factories = useFactories();
 
@@ -98,14 +94,8 @@ const drawer = new Drawer(keyboard, factories);
 const notification = new Notification(factories);
 const mapCurrentID = new MapCurrentID(factories);
 
-const fileContent = new FirstPossibleFileContent([
-  new UrlContent(notification, factories),
-  new FileSystemContent(
-    new BrowserLaunchQueue(),
-    notification,
-    factories,
-  ),
-], factories);
+const emptyMapFileContent = '{"current":{"progress":0,"settings":{"colored":false,"title":"current"},"objects":{},"types":{},"url":"/current","parent":""}}';
+const fileContent = factories.source.create(emptyMapFileContent);
 const mapFile = new MapFile(
   fileContent,
   mapCurrentID,
