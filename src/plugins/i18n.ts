@@ -6,6 +6,7 @@ export default createI18n({
   legacy: false,
   locale: 'ru',
   fallbackLocale: 'ru',
+  globalInjection: true,
   messages: {
     ru,
     en,
