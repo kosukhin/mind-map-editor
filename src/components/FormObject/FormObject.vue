@@ -16,6 +16,9 @@ import BaseEditor from '@/components/BaseEditor/BaseEditor.vue';
 import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { VueSource } from '@/modules/integration/vue/VueSource';
+import debug from 'debug';
+
+const localDebug = debug('FormObject');
 
 const {
   mapObjectCurrent,
@@ -36,9 +39,16 @@ type ObjectChainProps = {map: MapDocument, objectId: string};
 const object = new VueComputedPatron<MapObjectDocument>(() => {
   const theChain = chain.create();
   mapObjectCurrent.objectId(patron.create(theChain.receiveKey('objectId')));
+  mapObjectCurrent.objectId(patron.create((obj) => {
+    localDebug('sep obj', obj);
+  }));
   mapFile.currentMap(patron.create(theChain.receiveKey('map')));
+  mapFile.currentMap(patron.create((map) => {
+    localDebug('sep map', map);
+  }));
   theChain.result(patron.create(
     guest.create(({ map, objectId }: ObjectChainProps) => {
+      localDebug('object opened', objectId);
       object.value = map.objects[objectId];
     }),
   ));

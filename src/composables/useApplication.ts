@@ -96,7 +96,6 @@ const keyboard = new Keyboard(factories);
 const modal = new Modal(keyboard, factories);
 const drawer = new Drawer(keyboard, factories);
 const notification = new Notification(factories);
-
 const mapCurrentID = new MapCurrentID(factories);
 
 const fileContent = new FirstPossibleFileContent([

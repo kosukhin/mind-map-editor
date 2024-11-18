@@ -1,7 +1,10 @@
 import {
   MapObjectCurrentType,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrentType';
+import debug from 'debug';
 import { GuestObjectType, FactoryType, SourceType } from 'patron-oop';
+
+const localDebug = debug('app:MapObjectCurrent');
 
 /**
  * Представление текущего выбранного объекта с логикой
@@ -16,12 +19,13 @@ export class MapObjectCurrent implements MapObjectCurrentType {
     private drawer: GuestObjectType<string>,
     private factories: {
       sourceEmpty: FactoryType<SourceType>,
+      source: FactoryType<SourceType>,
       patron: FactoryType<GuestObjectType>,
       guest: FactoryType<GuestObjectType>
     },
   ) {
     this.idCache = factories.sourceEmpty.create();
-    this.silenceActivator = factories.sourceEmpty.create(false);
+    this.silenceActivator = factories.source.create(false);
     this.idCache.value(
       factories.patron.create(
         factories.guest.create((value: string) => {
@@ -49,8 +53,10 @@ export class MapObjectCurrent implements MapObjectCurrentType {
   }
 
   public give(value: string): this {
+    localDebug('new value current object', value);
     this.silenceActivator.value(
       this.factories.guest.create((activator: GuestObjectType<string> | false) => {
+        localDebug('silence activator', activator);
         // Если мы в режиме тишины то значение получает только тот кто активировал тишину
         if (activator) {
           activator.give(value);
