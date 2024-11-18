@@ -45,4 +45,8 @@ export class ObjectAdditionalFieldsFix implements GuestObjectType<string> {
     }));
     return this;
   }
+
+  public introduction() {
+    return 'patron' as const;
+  }
 }
