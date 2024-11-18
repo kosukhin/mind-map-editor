@@ -38,7 +38,6 @@ export class MapCurrent implements MapType {
     mapFile.currentMap(factories.patron.create(factories.guest.create((latestMap: MapDocument) => {
       localDebug('current map changed', latestMap);
       this.settingsCache.give(latestMap.settings);
-      console.log(latestMap, latestMap.objects);
 
       this.objectsCache.give(Object.values(latestMap.objects));
       this.typesCache.give(Object.entries(latestMap.types).map(([key, value]) => ({

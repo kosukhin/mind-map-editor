@@ -14,7 +14,6 @@ export class MapRemoved implements GuestObjectType<string> {
 
   public give(mapId: string): this {
     const { guest } = this.factories;
-    console.log('remove map', mapId);
     this.mapFile.mapFile(
       guest.create((mapFile: MapFileDocument) => {
         delete mapFile[mapId];

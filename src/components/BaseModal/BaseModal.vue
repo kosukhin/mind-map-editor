@@ -18,9 +18,6 @@ const close = () => {
   modal.give('');
 };
 
-const back = () => {
-  console.log('back');
-};
 </script>
 
 <template>
@@ -31,7 +28,6 @@ const back = () => {
           v-if="history.length > 1"
           title="Назад"
           class="absolute text-white left-0 top-0 -ml-5 flex justify-center items-center bg-primary/70 hover:bg-primary-second/70 cursor-pointer w-5"
-          @click="back"
         >
           &lt;
         </div>

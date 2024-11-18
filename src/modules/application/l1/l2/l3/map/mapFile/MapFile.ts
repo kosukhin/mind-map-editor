@@ -43,6 +43,9 @@ export class MapFile implements MapFileType {
     this.currentMapPatrons = factories.pool.create(this);
     this.mapFileCache = factories.cache.create(false);
     mapFileContent.value(factories.patron.create((fileContent: string) => {
+      if (!fileContent) {
+        return;
+      }
       const mapFile = this.factories.transformToObject.create(fileContent).result();
       localDebug('get map file', mapFile);
       this.mapFileCache.give(mapFile);

@@ -25,9 +25,10 @@ export class ObjectGeometryFix implements GuestObjectType<MapObjectDocument[]> {
     private map: MapType,
     private factories: {
       guest: FactoryType<GuestObjectType>,
+      patron: FactoryType<GuestObjectType>,
     },
   ) {
-    objectsVisible.objects(this);
+    objectsVisible.objects(factories.patron.create(this));
     this.innerReceive = debounce((value: MapObjectDocument[]) => {
       this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
         localDebug('objects to fix', value);
