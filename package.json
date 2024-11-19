@@ -2,6 +2,7 @@
   "name": "mmc-v3",
   "version": "0.1.1",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve --port=8881",
     "build": "vue-cli-service build",
