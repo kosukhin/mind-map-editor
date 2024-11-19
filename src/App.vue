@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import PatronSchemeEditor from '@/components/PatronSchemeEditor.vue';
 import { useService } from '@/composables/useService';
-import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import PageNoContent from '@/views/PageNoContent.vue';
+import { PatronSchemeEditor, VueRefPatron } from 'patron-scheme-editor';
+import 'patron-scheme-editor/dist/style.css';
 
 const { serviceFileContent } = useService();
 

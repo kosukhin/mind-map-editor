@@ -1,11 +1,45 @@
 {
   "name": "patron-scheme-editor",
+  "license": "MIT",
   "version": "0.0.0",
-  "description": "wyswyg scheme editor",
-  "main": "index.js",
+  "description": "Visual schemes editor",
+  "type": "module",
+  "main": "dist/patron.js",
+  "typings": "es/index.d.ts",
+  "keywords": [
+    "oop",
+    "schemes",
+    "vue"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "vite build",
+    "test": "vitest",
+    "release": "npm run build && standard-version --no-verify"
   },
-  "author": "",
-  "license": "MIT"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kosukhin/patron-scheme-editor.git"
+  },
+  "private": false,
+  "dependencies": {
+    "patron-oop": "1.26.0",
+    "vue": "3.5.13"
+  },
+  "devDependencies": {
+    "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@vitejs/plugin-vue": "^5.2.0",
+    "autoprefixer": "^10.4.20",
+    "cz-customizable": "^7.0.0",
+    "esbuild": "^0.24.0",
+    "postcss": "^8.4.49",
+    "rollup": "^4.24.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "standard-version": "^9.5.0",
+    "tailwindcss": "^3.4.15",
+    "vite": "^5.4.11",
+    "vite-plugin-dts": "^4.3.0",
+    "vitest": "^2.1.2"
+  }
 }

@@ -41,6 +41,7 @@
     "list": "^2.0.19",
     "lodash": "^4.17.21",
     "patron-oop": "^1.26.0",
+    "patron-scheme-editor": "file:patron-scheme-editor",
     "register-service-worker": "^1.7.2",
     "sass": "^1.35.2",
     "sass-loader": "10.1.1",
