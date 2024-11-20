@@ -81,6 +81,8 @@ const hiddenOnBottomObjects = objectsOutsideScreen.count(
 ).ref();
 
 const moveToObjectId = stagePositionByObjectId.move.bind(stagePositionByObjectId, mapCurrentSource);
+
+// For tailwind bg-body
 </script>
 
 <template>
