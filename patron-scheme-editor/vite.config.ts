@@ -6,7 +6,7 @@ import dts from 'vite-plugin-dts';
 export default defineConfig({
   build: {
     outDir: 'es',
-    minify: true,
+    minify: false,
     rollupOptions: {
       external: ['vue', 'patorn-oop'],
       output: {
