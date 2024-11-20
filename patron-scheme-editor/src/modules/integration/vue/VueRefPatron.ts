@@ -13,7 +13,6 @@ export class VueRefPatron<T> implements GuestObjectType<T> {
   }
 
   public give(value: T): this {
-    console.log('vue ref patron', value);
     this.innerRef.value = value;
     return this;
   }

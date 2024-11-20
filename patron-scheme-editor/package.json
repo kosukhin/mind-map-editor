@@ -36,10 +36,12 @@
   },
   "private": false,
   "peerDependencies": {
-    "patron-oop": "1.x",
-    "html2canvas": "^1.4.1",
-    "konva": "^8.4.2",
     "vue": "3.x"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "patron-oop": "^1.26.0",
+    "konva": "^8.4.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.8.1",

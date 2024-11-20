@@ -13,7 +13,7 @@ export default defineConfig({
     },
     emptyOutDir: true,
     rollupOptions: {
-      external: ['vue', 'patron-oop', 'html2canvas', 'konva'],
+      external: ['vue'],
       output: {
         exports: 'named',
         globals: {
