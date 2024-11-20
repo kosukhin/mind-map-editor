@@ -3,7 +3,7 @@ import { ref, watch } from 'vue';
 import { useService } from '@/composables/useService';
 import PageNoContent from '@/views/PageNoContent.vue';
 import { PatronSchemeEditor, VueRefPatron, useFactories } from 'patron-scheme-editor';
-import 'patron-scheme-editor/dist/style.css';
+import 'patron-scheme-editor/patron-scheme-editor.css';
 
 const { serviceFileContent } = useService();
 

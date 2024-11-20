@@ -4,12 +4,24 @@
   "version": "0.0.0",
   "description": "Visual schemes editor",
   "type": "module",
-  "main": "dist/patron.js",
-  "typings": "es/index.d.ts",
+  "main": "dist/patron.es.js",
+  "typings": "dist/index.d.ts",
   "keywords": [
     "oop",
     "schemes",
-    "vue"
+    "vue",
+    "mind-map"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/patron.es.js",
+      "require": "./dist/patron.umd.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./patron-scheme-editor.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
   ],
   "scripts": {
     "build": "vite build",
@@ -23,9 +35,11 @@
     "url": "https://github.com/kosukhin/patron-scheme-editor.git"
   },
   "private": false,
-  "dependencies": {
-    "patron-oop": "1.26.0",
-    "vue": "3.5.13"
+  "peerDependencies": {
+    "patron-oop": "1.x",
+    "html2canvas": "^1.4.1",
+    "konva": "^8.4.2",
+    "vue": "3.x"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.8.1",
