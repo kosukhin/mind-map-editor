@@ -22,21 +22,23 @@ export class Resizing implements GuestObjectType<MapDocument> {
 
   public give(): this {
     const resizeObserver = new ResizeObserver((entries) => {
-      const [body] = entries;
-      this.canvas.canvas(
-        this.factories.guest.create((canvasEl: HTMLCanvasElement) => {
-          const canvasRect = canvasEl.getBoundingClientRect();
-          this.konvaLayer.layer(
-            this.factories.guest.create((layer: Layer) => {
-              layer.getStage().width(body.contentRect.width - canvasRect.left);
-              layer.getStage().height(body.contentRect.height - canvasRect.top);
+      requestAnimationFrame(() => {
+        const [body] = entries;
+        this.canvas.canvas(
+          this.factories.guest.create((canvasEl: HTMLCanvasElement) => {
+            const canvasRect = canvasEl.getBoundingClientRect();
+            this.konvaLayer.layer(
+              this.factories.guest.create((layer: Layer) => {
+                layer.getStage().width(body.contentRect.width - canvasRect.left);
+                layer.getStage().height(body.contentRect.height - canvasRect.top);
 
-              this.canvas.give(canvasEl);
-              this.konvaLayer.give(layer);
-            }),
-          );
-        }),
-      );
+                this.canvas.give(canvasEl);
+                this.konvaLayer.give(layer);
+              }),
+            );
+          }),
+        );
+      });
     });
     const body = document.querySelector('body');
     if (body) {

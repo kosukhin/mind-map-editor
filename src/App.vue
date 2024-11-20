@@ -13,13 +13,10 @@ const { patron } = useFactories();
 
 const patronContentRef = ref();
 serviceFileContent.content(patron.create((content: boolean) => {
-  console.log('content', content);
   patronContentRef.value = content;
 }));
 
 watch(patronContentRef, (patronContentValue: string) => {
-  console.log('patron value', patronContentValue);
-
   serviceFileContent.give(patronContentValue);
 });
 </script>

@@ -44,19 +44,21 @@ fileContent.value(patron.create((newValue: string) => {
 </script>
 
 <template>
-  <div class="grid grid-cols-[200px_1fr] grid-rows-[50px_1fr] h-dvh relative">
-    <TheHeader class="col-span-2" />
-    <TheSideBar />
-    <TheEditor class="w-auto col-auto h-full " />
-    <TheMiniMap />
+  <div class="bg-body absolute top-0 left-0 w-full h-full">
+    <div class="grid grid-cols-[200px_1fr] grid-rows-[50px_1fr] h-dvh relative">
+      <TheHeader class="col-span-2" />
+      <TheSideBar />
+      <TheEditor class="w-auto col-auto h-full " />
+      <TheMiniMap />
+    </div>
+    <FormObject />
+    <FormType />
+    <FormSettings />
+    <AppPresets />
+    <AppTypesParent />
+    <AppMenuObject />
+    <TheMapAsText />
+    <AppSearch />
+    <AppFileMaps />
   </div>
-  <FormObject />
-  <FormType />
-  <FormSettings />
-  <AppPresets />
-  <AppTypesParent />
-  <AppMenuObject />
-  <TheMapAsText />
-  <AppSearch />
-  <AppFileMaps />
 </template>

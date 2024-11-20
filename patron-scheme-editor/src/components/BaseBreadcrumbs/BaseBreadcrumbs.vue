@@ -10,10 +10,11 @@ const list = breadcrumbs.list(new VueRefPatron<{title: string, name: string}[]>(
 </script>
 
 <template>
-  <div>
-    <span v-for="item in list" :key="item.name">
-      /
-      <a href="#" @click.prevent="mapCurrentID.give(item.name)">
+  <div class="flex flex-wrap gap-2">
+    <span class="flex gap-2" v-for="(item, index) in list" :key="item.name">
+      <span v-if="index !== 0">/</span>
+      <b v-if="index === list.length - 1">Открыто: {{ item.title }}</b>
+      <a v-else href="#" @click.prevent="mapCurrentID.give(item.name)">
         {{ item.title }}
       </a>
     </span>
