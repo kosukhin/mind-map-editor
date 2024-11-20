@@ -1,0 +1,70 @@
+{
+  "name": "patron-scheme-editor",
+  "license": "MIT",
+  "version": "0.0.0",
+  "description": "Visual schemes editor",
+  "type": "module",
+  "main": "dist/patron.es.js",
+  "typings": "dist/index.d.ts",
+  "keywords": [
+    "oop",
+    "schemes",
+    "vue",
+    "mind-map"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/patron.es.js",
+      "require": "./dist/patron.umd.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./patron-scheme-editor.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "release": "npm run build && standard-version --no-verify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kosukhin/patron-scheme-editor.git"
+  },
+  "private": false,
+  "peerDependencies": {
+    "vue": "3.x"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "patron-oop": "^1.26.0",
+    "konva": "^8.4.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.12.0",
+    "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@vitejs/plugin-vue": "^5.2.0",
+    "autoprefixer": "^10.4.20",
+    "cz-customizable": "^7.0.0",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "postcss": "^8.4.49",
+    "rollup": "^4.24.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "standard-version": "^9.5.0",
+    "tailwindcss": "^3.4.15",
+    "vite": "^5.4.11",
+    "vite-plugin-dts": "^4.3.0",
+    "vitest": "^2.1.2"
+  }
+}

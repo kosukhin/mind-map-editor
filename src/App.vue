@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import { watch } from 'vue';
-import PatronSchemeEditor from '@/components/PatronSchemeEditor.vue';
+import { ref, watch } from 'vue';
 import { useService } from '@/composables/useService';
-import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import PageNoContent from '@/views/PageNoContent.vue';
+import { PatronSchemeEditor, VueRefPatron, useFactories } from 'patron-scheme-editor';
+import 'patron-scheme-editor/patron-scheme-editor.css';
 
 const { serviceFileContent } = useService();
 
-const patronContent = new VueRefPatron<string>();
-const patronContentRef = patronContent.ref();
-serviceFileContent.content(patronContent);
-
 const canBeUsed = serviceFileContent.canBeUsed(new VueRefPatron()).ref();
+
+const { patron } = useFactories();
+
+const patronContentRef = ref();
+serviceFileContent.content(patron.create((content: boolean) => {
+  patronContentRef.value = content;
+}));
 
 watch(patronContentRef, (patronContentValue: string) => {
   serviceFileContent.give(patronContentValue);
