@@ -3,9 +3,7 @@ import { PatronPool, PoolType, GuestObjectType } from 'patron-oop';
 export class FakeSource implements GuestObjectType<any> {
   private pool: PoolType<any> = new PatronPool<any>(this);
 
-  public constructor(
-    private value: any,
-  ) {}
+  public constructor(private value: any) {}
 
   public data(guest: GuestObjectType<any>): this {
     this.pool.distribute(this.value, guest);

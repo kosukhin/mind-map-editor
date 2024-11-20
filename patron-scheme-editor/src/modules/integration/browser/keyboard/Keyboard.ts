@@ -9,11 +9,7 @@ export class Keyboard {
 
   private combinationsPool: PoolType;
 
-  public constructor(
-    factories: {
-      pool: FactoryType<PoolType>,
-    },
-  ) {
+  public constructor(factories: { pool: FactoryType<PoolType> }) {
     localDebug('keyboard created');
     this.pressedPool = factories.pool.create(this);
     this.combinationsPool = factories.pool.create(this);

@@ -8,9 +8,7 @@ import { SourceType, FactoryType, GuestObjectType } from 'patron-oop';
 export class MapTypeCurrent implements MapTypeCurrentType {
   private idCache: SourceType<string>;
 
-  public constructor(factories: {
-    sourceEmpty: FactoryType<SourceType>
-  }) {
+  public constructor(factories: { sourceEmpty: FactoryType<SourceType> }) {
     this.idCache = factories.sourceEmpty.create();
   }
 

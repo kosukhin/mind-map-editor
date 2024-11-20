@@ -21,13 +21,17 @@ export class VueRefPatronDuplex<T> implements GuestObjectType<T> {
     this.basePatron.give(value);
     if (!this.refWatcherCreated) {
       this.refWatcherCreated = true;
-      watch(this.basePatron.ref(), (newValue) => {
-        if (newValue) {
-          this.guest.give(newValue);
-        }
-      }, {
-        deep: true,
-      });
+      watch(
+        this.basePatron.ref(),
+        (newValue) => {
+          if (newValue) {
+            this.guest.give(newValue);
+          }
+        },
+        {
+          deep: true,
+        },
+      );
     }
     return this;
   }

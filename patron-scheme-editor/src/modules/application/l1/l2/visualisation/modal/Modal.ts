@@ -1,11 +1,6 @@
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 import { debug } from 'debug';
-import {
-  FactoryType,
-  GuestAwareType,
-  GuestObjectType,
-  SourceType,
-} from 'patron-oop';
+import { FactoryType, GuestAwareType, GuestObjectType, SourceType } from 'patron-oop';
 
 const localDebug = debug('Modal');
 
@@ -15,11 +10,11 @@ export class Modal implements GuestObjectType<string> {
   public constructor(
     private keyboard: Keyboard,
     private factories: {
-      cache: FactoryType<SourceType>,
-      patron: FactoryType<GuestObjectType>,
-      guest: FactoryType<GuestObjectType>,
-      guestAware: FactoryType<GuestAwareType>,
-      guestInTheMiddle: FactoryType<GuestObjectType>
+      cache: FactoryType<SourceType>;
+      patron: FactoryType<GuestObjectType>;
+      guest: FactoryType<GuestObjectType>;
+      guestAware: FactoryType<GuestAwareType>;
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
   ) {
     localDebug('modal created');
@@ -46,11 +41,9 @@ export class Modal implements GuestObjectType<string> {
   }
 
   public openedByName(name: string): GuestAwareType<boolean> {
-    return this.factories.guestAware.create(
-      (guest: GuestObjectType<boolean>) => {
-        this.isOpenedByName(name, guest);
-      },
-    );
+    return this.factories.guestAware.create((guest: GuestObjectType<boolean>) => {
+      this.isOpenedByName(name, guest);
+    });
   }
 
   public give(value: string): this {

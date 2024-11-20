@@ -14,17 +14,19 @@ export class MapSettings implements GuestObjectType<MapSettingsDocument> {
     private mapFile: MapFileType,
     private map: MapType,
     private factories: {
-      guest: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>;
     },
   ) {}
 
   public give(newSettings: MapSettingsDocument): this {
-    this.mapFile.currentMap(this.factories.guest.create((latestMapDocument: MapDocument) => {
-      this.map.give({
-        ...latestMapDocument,
-        settings: newSettings,
-      });
-    }));
+    this.mapFile.currentMap(
+      this.factories.guest.create((latestMapDocument: MapDocument) => {
+        this.map.give({
+          ...latestMapDocument,
+          settings: newSettings,
+        });
+      }),
+    );
     return this;
   }
 }

@@ -5,7 +5,7 @@ export class NumberChunks {
     private chunksCount: number,
     private baseNumber: GuestAwareType<number>,
     private factories: {
-      guestInTheMiddle: FactoryType<GuestObjectType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
   ) {}
 

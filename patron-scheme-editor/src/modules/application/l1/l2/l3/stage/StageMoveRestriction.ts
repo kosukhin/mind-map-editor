@@ -3,9 +3,7 @@ import { GuestAwareType, GuestObjectType, FactoryType } from 'patron-oop';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { debug } from 'debug';
-import {
-  StageMoveRestrictionType,
-} from '@/modules/application/l1/l2/l3/l4/types/stage/StageMoveRestrictionType';
+import { StageMoveRestrictionType } from '@/modules/application/l1/l2/l3/l4/types/stage/StageMoveRestrictionType';
 
 const localDebug = debug('StageMoveRestriction');
 
@@ -14,7 +12,7 @@ export class StageMoveRestriction implements StageMoveRestrictionType {
     private canvasDep: BrowserCanvasType,
     private stageSize: GuestAwareType<SizeDocument>,
     private factories: {
-      guest: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>;
     },
   ) {}
 
@@ -22,7 +20,6 @@ export class StageMoveRestriction implements StageMoveRestrictionType {
     this.canvasDep.canvas(
       this.factories.guest.create((canvas: HTMLElement) => {
         this.stageSize.value(
-          // eslint-disable-next-line consistent-return
           this.factories.guest.create((stageSize: SizeDocument) => {
             localDebug('income position', pos);
             const maxRight = stageSize.width - canvas.clientWidth;
@@ -34,14 +31,11 @@ export class StageMoveRestriction implements StageMoveRestrictionType {
             }
             localDebug('boundings', maxBottom, maxRight, bottom, right);
 
-            guest.give(
-              {
-                // eslint-disable-next-line no-nested-ternary
-                x: pos.x > 0 ? 0 : right > maxRight ? maxRight * -1 : pos.x,
-                // eslint-disable-next-line no-nested-ternary
-                y: pos.y > 0 ? 0 : bottom > maxBottom ? maxBottom * -1 : pos.y,
-              },
-            );
+            guest.give({
+              x: pos.x > 0 ? 0 : right > maxRight ? maxRight * -1 : pos.x,
+
+              y: pos.y > 0 ? 0 : bottom > maxBottom ? maxBottom * -1 : pos.y,
+            });
           }),
         );
       }),

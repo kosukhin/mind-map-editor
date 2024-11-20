@@ -9,11 +9,13 @@ export class SvgMapTypeImage implements SvgImageType {
   public constructor(
     private type: MapTypeDocument,
     private factories: {
-      svgImage: FactoryType<SvgImageType>
+      svgImage: FactoryType<SvgImageType>;
     },
   ) {}
 
   public markup(): string {
-    return this.factories.svgImage.create(this.type.svg, this.type.width, this.type.height).markup();
+    return this.factories.svgImage
+      .create(this.type.svg, this.type.width, this.type.height)
+      .markup();
   }
 }

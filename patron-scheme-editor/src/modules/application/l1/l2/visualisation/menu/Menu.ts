@@ -12,7 +12,7 @@ export class Menu {
   public constructor(
     private mapFile: MapFileType,
     private factories: {
-      guestInTheMiddle: Factory<GuestObjectType>,
+      guestInTheMiddle: Factory<GuestObjectType>;
     },
   ) {}
 

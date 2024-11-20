@@ -6,9 +6,7 @@ import { GuestObjectType } from 'patron-oop';
 const localDebug = debug('StagePosition');
 
 export class StagePosition implements GuestObjectType<MapObjectDocument> {
-  public constructor(
-    private stageMove: StageMoveType,
-  ) {}
+  public constructor(private stageMove: StageMoveType) {}
 
   public give(value: MapObjectDocument): this {
     localDebug('received position', value);

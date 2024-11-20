@@ -2,9 +2,7 @@ import { GuestObjectType } from 'patron-oop';
 import { MapTypeWithNameDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 
 export class MapTypeNew {
-  public constructor(
-    private mapType: GuestObjectType<MapTypeWithNameDocument>,
-  ) {}
+  public constructor(private mapType: GuestObjectType<MapTypeWithNameDocument>) {}
 
   public byName() {
     const typeId = String(new Date().getTime());

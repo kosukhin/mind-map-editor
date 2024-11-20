@@ -1,23 +1,19 @@
 import { MapFileContentType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileContentType';
-import {
-  GuestObjectType, SourceType, FactoryType,
-} from 'patron-oop';
-import {
-  NotificationType,
-} from '@/modules/application/l1/l2/visualisation/notification/NotificationType';
+import { GuestObjectType, SourceType, FactoryType } from 'patron-oop';
+import { NotificationType } from '@/modules/application/l1/l2/visualisation/notification/NotificationType';
 import { debug } from 'debug';
 
 const localDebug = debug('UrlContent');
 
 export class UrlContent implements MapFileContentType {
-  private contentCache: SourceType<string>
+  private contentCache: SourceType<string>;
 
   public constructor(
     private notification: NotificationType,
     private factories: {
-      sourceEmpty: FactoryType<SourceType>,
-      guest: FactoryType<GuestObjectType>,
-      patronOnce: FactoryType<GuestObjectType>,
+      sourceEmpty: FactoryType<SourceType>;
+      guest: FactoryType<GuestObjectType>;
+      patronOnce: FactoryType<GuestObjectType>;
     },
   ) {
     this.contentCache = factories.sourceEmpty.create();
@@ -31,10 +27,12 @@ export class UrlContent implements MapFileContentType {
     if (canBeUsed) {
       const url = window.location.search.split('=')[1] ?? '';
 
-      fetch(url, { redirect: 'follow' }).then((r) => r.text()).then((text) => {
-        localDebug('received text', text);
-        this.contentCache.give(text);
-      });
+      fetch(url, { redirect: 'follow' })
+        .then((r) => r.text())
+        .then((text) => {
+          localDebug('received text', text);
+          this.contentCache.give(text);
+        });
     }
 
     return guest;

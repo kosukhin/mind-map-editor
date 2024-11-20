@@ -1,6 +1,4 @@
-import {
-  MapObjectCurrentType,
-} from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrentType';
+import { MapObjectCurrentType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrentType';
 import debug from 'debug';
 import { GuestObjectType, FactoryType, SourceType } from 'patron-oop';
 
@@ -18,10 +16,10 @@ export class MapObjectCurrent implements MapObjectCurrentType {
   public constructor(
     private drawer: GuestObjectType<string>,
     private factories: {
-      sourceEmpty: FactoryType<SourceType>,
-      source: FactoryType<SourceType>,
-      patron: FactoryType<GuestObjectType>,
-      guest: FactoryType<GuestObjectType>
+      sourceEmpty: FactoryType<SourceType>;
+      source: FactoryType<SourceType>;
+      patron: FactoryType<GuestObjectType>;
+      guest: FactoryType<GuestObjectType>;
     },
   ) {
     this.idCache = factories.sourceEmpty.create();

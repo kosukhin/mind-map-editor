@@ -19,53 +19,55 @@ export class MapObjectNew {
     private canvas: BrowserCanvas,
     private stagePosition: StagePositionType,
     private factories: {
-      guest: FactoryType<GuestObjectType>
+      guest: FactoryType<GuestObjectType>;
     },
-  ) { }
+  ) {}
 
   public byTypeName(typeName: string, point: PointDocument): this {
     localDebug('start to add new type', typeName, point);
     this.stagePosition.position(
       this.factories.guest.create((stagePosition: PointDocument) => {
-        this.map.types(this.factories.guest.create((types: MapTypeDocument[]) => {
-          this.canvas.canvas(
-            this.factories.guest.create((canvasEl: HTMLCanvasElement) => {
-              const canvasRect = canvasEl.getBoundingClientRect();
-              const type = types.find((ct) => ct.id === typeName);
-              localDebug('is type found', type);
+        this.map.types(
+          this.factories.guest.create((types: MapTypeDocument[]) => {
+            this.canvas.canvas(
+              this.factories.guest.create((canvasEl: HTMLCanvasElement) => {
+                const canvasRect = canvasEl.getBoundingClientRect();
+                const type = types.find((ct) => ct.id === typeName);
+                localDebug('is type found', type);
 
-              const insertX = point.x - canvasRect.left;
-              const insertY = point.y - canvasRect.top;
+                const insertX = point.x - canvasRect.left;
+                const insertY = point.y - canvasRect.top;
 
-              if (type) {
-                localDebug('add new type');
-                this.mapObject.give({
-                  additionalName: '',
-                  arrows: [],
-                  description: '',
-                  inMenu: false,
-                  lastClick: Date.now(),
-                  linked: false,
-                  menuOrder: 0,
-                  name: '',
-                  outlink: '',
-                  targetBlank: false,
-                  type: typeName,
-                  width: type.width,
-                  height: type.height,
-                  zindex: 0,
-                  id: new Date().getTime().toString(),
-                  createTimestamp: Date.now(),
-                  changeTimestamp: Date.now(),
-                  position: [
-                    insertX > 0 ? insertX + stagePosition.x : 0,
-                    insertY > 0 ? insertY + stagePosition.y : 0,
-                  ],
-                });
-              }
-            }),
-          );
-        }));
+                if (type) {
+                  localDebug('add new type');
+                  this.mapObject.give({
+                    additionalName: '',
+                    arrows: [],
+                    description: '',
+                    inMenu: false,
+                    lastClick: Date.now(),
+                    linked: false,
+                    menuOrder: 0,
+                    name: '',
+                    outlink: '',
+                    targetBlank: false,
+                    type: typeName,
+                    width: type.width,
+                    height: type.height,
+                    zindex: 0,
+                    id: new Date().getTime().toString(),
+                    createTimestamp: Date.now(),
+                    changeTimestamp: Date.now(),
+                    position: [
+                      insertX > 0 ? insertX + stagePosition.x : 0,
+                      insertY > 0 ? insertY + stagePosition.y : 0,
+                    ],
+                  });
+                }
+              }),
+            );
+          }),
+        );
       }),
     );
     return this;

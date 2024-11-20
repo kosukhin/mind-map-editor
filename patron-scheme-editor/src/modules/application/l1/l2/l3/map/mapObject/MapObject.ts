@@ -15,24 +15,26 @@ export class MapObject implements MapObjectType {
     private map: MapType,
     private mapFile: MapFileType,
     private factories: {
-       guest: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>;
     },
   ) {}
 
   public give(value: MapObjectDocument): this {
-    this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
-      this.map.give({
-        ...latestMap,
-        objects: {
-          ...latestMap.objects,
-          [value.id]: {
-            ...value,
-            createTimestamp: value.createTimestamp ?? Date.now(),
-            changeTimestamp: Date.now(),
+    this.mapFile.currentMap(
+      this.factories.guest.create((latestMap: MapDocument) => {
+        this.map.give({
+          ...latestMap,
+          objects: {
+            ...latestMap.objects,
+            [value.id]: {
+              ...value,
+              createTimestamp: value.createTimestamp ?? Date.now(),
+              changeTimestamp: Date.now(),
+            },
           },
-        },
-      });
-    }));
+        });
+      }),
+    );
     return this;
   }
 }

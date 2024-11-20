@@ -10,8 +10,8 @@ export class ObjectsMatchedToQuery {
   public constructor(
     private map: MapType,
     private factories: {
-      guestInTheMiddle: FactoryType<GuestObjectType>,
-      guest: FactoryType<GuestObjectType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>;
+      guest: FactoryType<GuestObjectType>;
     },
   ) {}
 
@@ -21,21 +21,32 @@ export class ObjectsMatchedToQuery {
   ): R {
     const objectsDebounceDelay = 500;
     querySource.value(
-      this.factories.guestInTheMiddle.create(guest, debounce((query: string) => {
-        query = query.toLowerCase();
-        this.map.objects(
-          this.factories.guest.create((objects: MapObjectDocument[]) => {
-            if (!query) {
-              localDebug('reset results');
-              guest.give([]);
-              return;
-            }
-            const results = objects.filter((object) => object.name.toLowerCase().includes(query) || object.additionalName?.toLowerCase().includes(query) || Object.values(object.additionalFields ?? {}).join(' ').toLowerCase().includes(query));
-            localDebug('objects in searching', results, query);
-            guest.give(results);
-          }),
-        );
-      }, objectsDebounceDelay)),
+      this.factories.guestInTheMiddle.create(
+        guest,
+        debounce((query: string) => {
+          query = query.toLowerCase();
+          this.map.objects(
+            this.factories.guest.create((objects: MapObjectDocument[]) => {
+              if (!query) {
+                localDebug('reset results');
+                guest.give([]);
+                return;
+              }
+              const results = objects.filter(
+                (object) =>
+                  object.name.toLowerCase().includes(query) ||
+                  object.additionalName?.toLowerCase().includes(query) ||
+                  Object.values(object.additionalFields ?? {})
+                    .join(' ')
+                    .toLowerCase()
+                    .includes(query),
+              );
+              localDebug('objects in searching', results, query);
+              guest.give(results);
+            }),
+          );
+        }, objectsDebounceDelay),
+      ),
     );
     return guest;
   }

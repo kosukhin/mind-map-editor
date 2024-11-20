@@ -5,12 +5,10 @@ import {
   MapObjectDocument,
   MapTypeDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import {
-  MapObjectWithTemplateDocument,
-} from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectWithTemplateDocument';
+import { MapObjectWithTemplateDocument } from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectWithTemplateDocument';
 import { debug } from 'debug';
 
-type ChainProps = {objects: MapObjectDocument[], types: MapTypeDocument[]};
+type ChainProps = { objects: MapObjectDocument[]; types: MapTypeDocument[] };
 
 const localDebug = debug('MapObjectsWithTemplates');
 
@@ -22,9 +20,9 @@ export class MapObjectsWithTemplates {
     private mapObjects: MapObjectsType,
     private map: MapType,
     private factories: {
-      chain: FactoryType<ChainType>,
-      guestCast: FactoryType<GuestObjectType>,
-      guestInTheMiddle: FactoryType<GuestObjectType>
+      chain: FactoryType<ChainType>;
+      guestCast: FactoryType<GuestObjectType>;
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
   ) {}
 
@@ -32,35 +30,37 @@ export class MapObjectsWithTemplates {
     const chain = this.factories.chain.create();
     this.map.types(this.factories.guestCast.create(guest, chain.receiveKey('types')));
     this.mapObjects.objects(this.factories.guestCast.create(guest, chain.receiveKey('objects')));
-    chain.result(this.factories.guestInTheMiddle.create(guest, ({ types, objects }: ChainProps) => {
-      localDebug('visible objects', objects);
-      const withTemplates = objects.map((object) => {
-        const type = types.find((ct) => String(ct.id) === String(object.type));
-        localDebug('check type existed', type);
-        if (!type) {
+    chain.result(
+      this.factories.guestInTheMiddle.create(guest, ({ types, objects }: ChainProps) => {
+        localDebug('visible objects', objects);
+        const withTemplates = objects.map((object) => {
+          const type = types.find((ct) => String(ct.id) === String(object.type));
+          localDebug('check type existed', type);
+          if (!type) {
+            return {
+              obj: object,
+              template: '',
+            };
+          }
+          let { svg } = type;
+          localDebug('type svg', svg);
+          if (object.additionalFields) {
+            Object.entries(object.additionalFields).forEach(([key, value]) => {
+              svg = svg.replaceAll(`\${${key}}`, value);
+            });
+          }
+          ['width', 'height'].forEach((key) => {
+            svg = svg.replaceAll(`\${${key}}`, (object as any)[key]);
+          });
+
           return {
             obj: object,
-            template: '',
+            template: svg,
           };
-        }
-        let { svg } = type;
-        localDebug('type svg', svg);
-        if (object.additionalFields) {
-          Object.entries(object.additionalFields).forEach(([key, value]) => {
-            svg = svg.replaceAll(`\${${key}}`, value);
-          });
-        }
-        ['width', 'height'].forEach((key) => {
-          svg = svg.replaceAll(`\${${key}}`, (object as any)[key]);
         });
-
-        return {
-          obj: object,
-          template: svg,
-        };
-      });
-      guest.give(withTemplates);
-    }));
+        guest.give(withTemplates);
+      }),
+    );
     return guest;
   }
 }

@@ -5,10 +5,7 @@ import {
 import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentIDType';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { debug } from 'debug';
-import {
-  FactoryType, GuestObjectType,
-  SourceType,
-} from 'patron-oop';
+import { FactoryType, GuestObjectType, SourceType } from 'patron-oop';
 
 const localDebug = debug('MapFileForRendering');
 
@@ -16,16 +13,16 @@ const localDebug = debug('MapFileForRendering');
  * Отдельный источник текущего файла карты - только для целей быстрого рендеринга
  */
 export class MapFileForRendering implements MapFileType {
-  private readonly mapCache: SourceType<MapDocument>
+  private readonly mapCache: SourceType<MapDocument>;
 
   public constructor(
     mapFile: MapFileType,
     private mapId: MapCurrentIDType,
     private factories: {
-      cache: FactoryType<SourceType>,
-      patron: FactoryType<GuestObjectType>,
-      guestInTheMiddle: FactoryType<GuestObjectType>,
-      guest: FactoryType<GuestObjectType>,
+      cache: FactoryType<SourceType>;
+      patron: FactoryType<GuestObjectType>;
+      guestInTheMiddle: FactoryType<GuestObjectType>;
+      guest: FactoryType<GuestObjectType>;
     },
   ) {
     this.mapCache = factories.cache.create({ objects: {}, types: {}, settings: {} });

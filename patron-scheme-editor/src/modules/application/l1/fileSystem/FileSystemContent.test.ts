@@ -1,10 +1,8 @@
 import { expect, test } from 'vitest';
 import { FileSystemContent } from '@/modules/application/l1/fileSystem/FileSystemContent';
-import {
-  BrowserLaunchQueueFake,
-} from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueFake';
+import { BrowserLaunchQueueFake } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueFake';
 import { Notification } from '@/modules/application/l1/l2/visualisation/notification/Notification';
-import { Guest , Patron , Factory , FactoryDynamic } from 'patron-oop';
+import { Guest, Patron, Factory, FactoryDynamic } from 'patron-oop';
 import { useFactories } from '@/composables/useFactories';
 import { BrowserFileFake } from '@/modules/integration/browser/file/BrowserFileFake';
 import { SystemFileText } from '@/modules/system/file/SystemFileText';
@@ -17,24 +15,24 @@ test('map file content fs', () => {
 
   const queue = new BrowserLaunchQueueFake();
   const notification = new Notification(factories);
-  const mapFileContent = new FileSystemContent(
-    queue,
-    notification,
-    {
-      ...factories,
-      fileHandlerContent: systemFileTextFactory,
-      browserFileSaved: browserFileFakeFactory,
-    },
-  );
+  const mapFileContent = new FileSystemContent(queue, notification, {
+    ...factories,
+    fileHandlerContent: systemFileTextFactory,
+    browserFileSaved: browserFileFakeFactory,
+  });
 
   const matches: Record<string, number> = {
     'hello world!': 0,
     'new content!': 0,
   };
 
-  mapFileContent.content(new Patron(new Guest((value: string) => {
-    matches[value] += 1;
-  })));
+  mapFileContent.content(
+    new Patron(
+      new Guest((value: string) => {
+        matches[value] += 1;
+      }),
+    ),
+  );
 
   mapFileContent.give('new content!');
 

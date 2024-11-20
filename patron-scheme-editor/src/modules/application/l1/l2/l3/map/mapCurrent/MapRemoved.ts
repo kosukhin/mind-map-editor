@@ -8,7 +8,7 @@ export class MapRemoved implements GuestObjectType<string> {
     private mapFile: MapFileType,
     private mapId: MapCurrentIDType,
     private factories: {
-      guest: FactoryType<GuestObjectType>
+      guest: FactoryType<GuestObjectType>;
     },
   ) {}
 

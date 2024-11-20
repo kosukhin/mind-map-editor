@@ -275,12 +275,12 @@ class bN {
     this.fileHandler = e;
   }
   content(e) {
-    return this.fileHandler.getFile().then(
-      (t) => this.readFile(t)
-    ).then((t) => {
+    return this.fileHandler.getFile().then((t) => this.readFile(t)).then((t) => {
       e.give(t);
     }).catch((t) => {
-      throw new rc("Problem when reading file in SystemFileFromHandler", { cause: t });
+      throw new rc("Problem when reading file in SystemFileFromHandler", {
+        cause: t
+      });
     }), this;
   }
   async readFile(e) {
@@ -616,15 +616,12 @@ class $N {
     const t = setTimeout(() => {
       this.loadingCache.give(!1), e.give(this.emptyValue);
     }, 1e4);
-    return RN(
-      this.url,
-      () => {
-        var r;
-        clearInterval(t);
-        const i = ((r = window[this.callbackName]) == null ? void 0 : r.call(window)) || this.emptyValue;
-        e.give(i), this.loadingCache.give(!1);
-      }
-    ), e;
+    return RN(this.url, () => {
+      var r;
+      clearInterval(t);
+      const i = ((r = window[this.callbackName]) == null ? void 0 : r.call(window)) || this.emptyValue;
+      e.give(i), this.loadingCache.give(!1);
+    }), e;
   }
   loading(e) {
     return this.loadingCache.value(e), e;
@@ -968,10 +965,7 @@ class aP {
         if (typeof t > "u" || t === null)
           return "";
         const i = "<br />";
-        return rP(t), e.give((t ?? "").replace(
-          /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g,
-          `$1${i}$2`
-        )), !0;
+        return rP(t), e.give((t ?? "").replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, `$1${i}$2`)), !0;
       })
     ), e;
   }
@@ -1010,20 +1004,26 @@ class yb {
     this.notification = e, this.check = t, this.factories = i;
   }
   breakOnFail(e, t) {
-    return this.check.check(e, this.factories.guest.create((i) => {
-      i === !0 ? t.give(!0) : this.notification.give({
-        type: "error",
-        text: i
-      });
-    })), this;
+    return this.check.check(
+      e,
+      this.factories.guest.create((i) => {
+        i === !0 ? t.give(!0) : this.notification.give({
+          type: "error",
+          text: i
+        });
+      })
+    ), this;
   }
   continueOnFail(e, t) {
-    return this.check.check(e, this.factories.guest.create((i) => {
-      t.give(i), i !== !0 && this.notification.give({
-        type: "error",
-        text: i
-      });
-    })), this;
+    return this.check.check(
+      e,
+      this.factories.guest.create((i) => {
+        t.give(i), i !== !0 && this.notification.give({
+          type: "error",
+          text: i
+        });
+      })
+    ), this;
   }
 }
 const im = Ve.debug("MapCurrent");
@@ -1032,12 +1032,18 @@ class vQ {
     Ne(this, "objectsCache");
     Ne(this, "settingsCache");
     Ne(this, "typesCache");
-    this.mapFile = e, this.mapId = t, this.factories = i, this.objectsCache = i.sourceEmpty.create(), this.settingsCache = i.sourceEmpty.create(), this.typesCache = i.sourceEmpty.create(), e.currentMap(i.patron.create(i.guest.create((r) => {
-      im("current map changed", r), this.settingsCache.give(r.settings), this.objectsCache.give(Object.values(r.objects)), this.typesCache.give(Object.entries(r.types).map(([a, A]) => ({
-        ...A,
-        id: a
-      })));
-    })));
+    this.mapFile = e, this.mapId = t, this.factories = i, this.objectsCache = i.sourceEmpty.create(), this.settingsCache = i.sourceEmpty.create(), this.typesCache = i.sourceEmpty.create(), e.currentMap(
+      i.patron.create(
+        i.guest.create((r) => {
+          im("current map changed", r), this.settingsCache.give(r.settings), this.objectsCache.give(Object.values(r.objects)), this.typesCache.give(
+            Object.entries(r.types).map(([a, A]) => ({
+              ...A,
+              id: a
+            }))
+          );
+        })
+      )
+    );
   }
   settings(e) {
     return this.settingsCache.value(e), e;
@@ -1051,12 +1057,14 @@ class vQ {
   give(e) {
     return im("save map document", e), this.mapId.id(
       this.factories.guest.create((t) => {
-        this.mapFile.mapFile(this.factories.guest.create((i) => {
-          this.mapFile.give({
-            ...i,
-            [t]: e
-          });
-        }));
+        this.mapFile.mapFile(
+          this.factories.guest.create((i) => {
+            this.mapFile.give({
+              ...i,
+              [t]: e
+            });
+          })
+        );
       })
     ), this;
   }
@@ -1083,41 +1091,46 @@ class kP {
   constructor(e, t, i, r) {
     Ne(this, "mapsHistory");
     Ne(this, "historyIndex");
-    this.mapFile = e, this.map = t, this.mapId = i, this.factories = r, this.mapsHistory = r.cache.create([]), this.historyIndex = r.cache.create(0), this.mapFile.currentMap(r.patron.create(this)), this.mapId.id(r.patron.create(
-      r.guest.create(() => {
-        this.mapsHistory.give([]), this.historyIndex.give(0);
-      })
-    ));
+    this.mapFile = e, this.map = t, this.mapId = i, this.factories = r, this.mapsHistory = r.cache.create([]), this.historyIndex = r.cache.create(0), this.mapFile.currentMap(r.patron.create(this)), this.mapId.id(
+      r.patron.create(
+        r.guest.create(() => {
+          this.mapsHistory.give([]), this.historyIndex.give(0);
+        })
+      )
+    );
   }
   give(e) {
     return requestIdleCallback(() => {
       this.historyIndex.value(
-        this.factories.guest.create(
-          (t) => {
-            this.mapsHistory.value(
-              this.factories.guest.create((i) => {
-                kh("add map to history", i, e);
-                const r = i.some(
-                  (a) => Tv(a) === Tv(e)
-                );
-                if (kh("isMapFromHistory", r), !r) {
-                  const a = i[t] ? [i[t]] : [];
-                  this.historyIndex.give(0), this.mapsHistory.give([e, ...a, ...i.slice(0, 9)]);
-                }
-              })
-            );
-          }
-        )
+        this.factories.guest.create((t) => {
+          this.mapsHistory.value(
+            this.factories.guest.create((i) => {
+              kh("add map to history", i, e);
+              const r = i.some(
+                (a) => Tv(a) === Tv(e)
+              );
+              if (kh("isMapFromHistory", r), !r) {
+                const a = i[t] ? [i[t]] : [];
+                this.historyIndex.give(0), this.mapsHistory.give([e, ...a, ...i.slice(0, 9)]);
+              }
+            })
+          );
+        })
       );
     }), this;
   }
   isPrevPossible(e) {
     const t = this.factories.chain.create(this);
-    return this.historyIndex.value(this.factories.guestCast.create(e, t.receiveKey("historyIndex"))), this.mapsHistory.value(this.factories.guestCast.create(e, t.receiveKey("mapsHistory"))), t.result(
-      this.factories.guestInTheMiddle.create(e, ({ historyIndex: i, mapsHistory: r }) => {
-        const a = i < r.length - 1;
-        kh("recalculate is prev possible", a), e.give(a);
-      })
+    return this.historyIndex.value(
+      this.factories.guestCast.create(e, t.receiveKey("historyIndex"))
+    ), this.mapsHistory.value(this.factories.guestCast.create(e, t.receiveKey("mapsHistory"))), t.result(
+      this.factories.guestInTheMiddle.create(
+        e,
+        ({ historyIndex: i, mapsHistory: r }) => {
+          const a = i < r.length - 1;
+          kh("recalculate is prev possible", a), e.give(a);
+        }
+      )
     ), e;
   }
   prev() {
@@ -1135,11 +1148,16 @@ class kP {
   }
   isNextPossible(e) {
     const t = this.factories.chain.create(this);
-    return this.historyIndex.value(this.factories.guestCast.create(e, t.receiveKey("historyIndex"))), this.mapsHistory.value(this.factories.guestCast.create(e, t.receiveKey("mapsHistory"))), t.result(
-      this.factories.guestInTheMiddle.create(e, ({ historyIndex: i, mapsHistory: r }) => {
-        const a = i > 0 && i <= r.length - 1;
-        kh("recalculate is next possible", a), e.give(a);
-      })
+    return this.historyIndex.value(
+      this.factories.guestCast.create(e, t.receiveKey("historyIndex"))
+    ), this.mapsHistory.value(this.factories.guestCast.create(e, t.receiveKey("mapsHistory"))), t.result(
+      this.factories.guestInTheMiddle.create(
+        e,
+        ({ historyIndex: i, mapsHistory: r }) => {
+          const a = i > 0 && i <= r.length - 1;
+          kh("recalculate is next possible", a), e.give(a);
+        }
+      )
     ), e;
   }
   next() {
@@ -1174,37 +1192,43 @@ class MP {
   constructor(e, t, i) {
     Ne(this, "currentMapPatrons");
     Ne(this, "mapFileCache");
-    this.mapFileContent = e, this.mapId = t, this.factories = i, this.currentMapPatrons = i.pool.create(this), this.mapFileCache = i.cache.create(!1), e.value(i.patron.create((r) => {
-      if (!r)
-        return;
-      const a = this.factories.transformToObject.create(r).result();
-      Dh("get map file", a), this.mapFileCache.give(a);
-    }));
+    this.mapFileContent = e, this.mapId = t, this.factories = i, this.currentMapPatrons = i.pool.create(this), this.mapFileCache = i.cache.create(!1), e.value(
+      i.patron.create((r) => {
+        if (!r)
+          return;
+        const a = this.factories.transformToObject.create(r).result();
+        Dh("get map file", a), this.mapFileCache.give(a);
+      })
+    );
   }
   currentMap(e) {
     const t = this.factories.chain.create();
-    return this.mapId.id(this.factories.guestCast.create(e, t.receiveKey("mapId"))), this.mapFile(this.factories.guestCast.create(e, t.receiveKey("mapFile"))), t.result(this.factories.guestInTheMiddle.create(e, ({ mapId: i, mapFile: r }) => {
-      if (Dh("get current map", i, r, typeof r), !r[i])
-        this.createEmptyMapByName(i, e);
-      else {
-        const a = r[i];
-        this.currentMapPatrons.distribute(a != null && a.structure ? a.structure : a, e);
-      }
-    })), e;
+    return this.mapId.id(this.factories.guestCast.create(e, t.receiveKey("mapId"))), this.mapFile(this.factories.guestCast.create(e, t.receiveKey("mapFile"))), t.result(
+      this.factories.guestInTheMiddle.create(
+        e,
+        ({ mapId: i, mapFile: r }) => {
+          if (Dh("get current map", i, r, typeof r), !r[i])
+            this.createEmptyMapByName(i, e);
+          else {
+            const a = r[i];
+            this.currentMapPatrons.distribute(
+              a != null && a.structure ? a.structure : a,
+              e
+            );
+          }
+        }
+      )
+    ), e;
   }
   give(e) {
     return Dh("save map file document", e), this.mapFileContent.give(this.factories.transformToString.create(e).result()), this;
   }
   mapFile(e) {
-    return this.mapFileCache.value(
-      e
-    ), e;
+    return this.mapFileCache.value(e), e;
   }
   createEmptyMapByName(e, t) {
     Dh("creating empty map by name", e);
-    const i = this.factories.transformToObject.create(
-      this.generateEmptyMapFile()
-    ).result();
+    const i = this.factories.transformToObject.create(this.generateEmptyMapFile()).result();
     this.mapFile(
       this.factories.guest.create((r) => {
         this.give({
@@ -1251,19 +1275,21 @@ class SQ {
     this.map = e, this.mapFile = t, this.factories = i;
   }
   give(e) {
-    return this.mapFile.currentMap(this.factories.guest.create((t) => {
-      this.map.give({
-        ...t,
-        objects: {
-          ...t.objects,
-          [e.id]: {
-            ...e,
-            createTimestamp: e.createTimestamp ?? Date.now(),
-            changeTimestamp: Date.now()
+    return this.mapFile.currentMap(
+      this.factories.guest.create((t) => {
+        this.map.give({
+          ...t,
+          objects: {
+            ...t.objects,
+            [e.id]: {
+              ...e,
+              createTimestamp: e.createTimestamp ?? Date.now(),
+              changeTimestamp: Date.now()
+            }
           }
-        }
-      });
-    })), this;
+        });
+      })
+    ), this;
   }
 }
 const Lv = BQ("app:MapObjectCurrent");
@@ -1301,12 +1327,14 @@ class OP {
     this.mapFile = e, this.factories = t;
   }
   check(e, t) {
-    return this.mapFile.currentMap(this.factories.guest.create((i) => {
-      let r = !1;
-      Object.values(i.objects).forEach((a) => {
-        r = r || a.arrows.some((A) => A.id === e.id);
-      }), t.give(!r || "У объекта есть входящие связи!");
-    })), this;
+    return this.mapFile.currentMap(
+      this.factories.guest.create((i) => {
+        let r = !1;
+        Object.values(i.objects).forEach((a) => {
+          r = r || a.arrows.some((A) => A.id === e.id);
+        }), t.give(!r || "У объекта есть входящие связи!");
+      })
+    ), this;
   }
 }
 const rm = Ve.debug("MapObjectNew");
@@ -1317,38 +1345,40 @@ class jP {
   byTypeName(e, t) {
     return rm("start to add new type", e, t), this.stagePosition.position(
       this.factories.guest.create((i) => {
-        this.map.types(this.factories.guest.create((r) => {
-          this.canvas.canvas(
-            this.factories.guest.create((a) => {
-              const A = a.getBoundingClientRect(), s = r.find((h) => h.id === e);
-              rm("is type found", s);
-              const o = t.x - A.left, l = t.y - A.top;
-              s && (rm("add new type"), this.mapObject.give({
-                additionalName: "",
-                arrows: [],
-                description: "",
-                inMenu: !1,
-                lastClick: Date.now(),
-                linked: !1,
-                menuOrder: 0,
-                name: "",
-                outlink: "",
-                targetBlank: !1,
-                type: e,
-                width: s.width,
-                height: s.height,
-                zindex: 0,
-                id: (/* @__PURE__ */ new Date()).getTime().toString(),
-                createTimestamp: Date.now(),
-                changeTimestamp: Date.now(),
-                position: [
-                  o > 0 ? o + i.x : 0,
-                  l > 0 ? l + i.y : 0
-                ]
-              }));
-            })
-          );
-        }));
+        this.map.types(
+          this.factories.guest.create((r) => {
+            this.canvas.canvas(
+              this.factories.guest.create((a) => {
+                const A = a.getBoundingClientRect(), s = r.find((h) => h.id === e);
+                rm("is type found", s);
+                const o = t.x - A.left, l = t.y - A.top;
+                s && (rm("add new type"), this.mapObject.give({
+                  additionalName: "",
+                  arrows: [],
+                  description: "",
+                  inMenu: !1,
+                  lastClick: Date.now(),
+                  linked: !1,
+                  menuOrder: 0,
+                  name: "",
+                  outlink: "",
+                  targetBlank: !1,
+                  type: e,
+                  width: s.width,
+                  height: s.height,
+                  zindex: 0,
+                  id: (/* @__PURE__ */ new Date()).getTime().toString(),
+                  createTimestamp: Date.now(),
+                  changeTimestamp: Date.now(),
+                  position: [
+                    o > 0 ? o + i.x : 0,
+                    l > 0 ? l + i.y : 0
+                  ]
+                }));
+              })
+            );
+          })
+        );
       })
     ), this;
   }
@@ -1391,11 +1421,15 @@ class RP {
     const t = this.factories.chain.create(this);
     return this.checks.forEach((i, r) => {
       i.breakOnFail(e, t.receiveKey(String(r)));
-    }), t.result(this.factories.guest.create(() => {
-      this.mapFile.currentMap(this.factories.guest.create((i) => {
-        delete i.objects[e.id], this.map.give(i);
-      }));
-    })), this;
+    }), t.result(
+      this.factories.guest.create(() => {
+        this.mapFile.currentMap(
+          this.factories.guest.create((i) => {
+            delete i.objects[e.id], this.map.give(i);
+          })
+        );
+      })
+    ), this;
   }
 }
 const YP = Ve.debug("MapObjectsLink");
@@ -1766,13 +1800,9 @@ class ZR {
         this.mapId.id(
           this.factories.guest.create((r) => {
             const a = r[0] === "_" ? r.replaceAll("_", "/") : "/current", A = i.name ? i.name : i.additionalName ? i.additionalName : "";
-            this.factories.textNoHtml.create(
-              this.factories.source.create(A)
-            ).noHtml(
+            this.factories.textNoHtml.create(this.factories.source.create(A)).noHtml(
               this.factories.guest.create((s) => {
-                let o = i.outlink ? i.outlink : `${a}/${Ly(
-                  s
-                )}`;
+                let o = i.outlink ? i.outlink : `${a}/${Ly(s)}`;
                 Am("link is", o), o = GR(o), t.give(o);
               })
             );
@@ -1835,17 +1865,29 @@ class qR {
   count(e, t) {
     const i = e.direction === "positive", r = this.factories.chain.create();
     return this.map.objects(this.factories.guestCast.create(t, r.receiveKey("objects"))), this.layer.layer(this.factories.guestCast.create(t, r.receiveKey("layer"))), this.layer.position(this.factories.guestCast.create(t, r.receiveKey("position"))), r.result(
-      this.factories.guestInTheMiddle.create(t, ({ objects: a, layer: A, position: s }) => {
-        var g;
-        const o = $R[e.direction], h = a.sort((d, m) => d.position[sm[e.axis]] * o - m.position[sm[e.axis]] * o).filter((d) => {
-          const m = d.position[sm[e.axis]] + (i ? 0 : d[Ov[e.axis]]), p = s[e.axis] * -1 + (i ? A[Ov[e.axis]]() : 0);
-          return jv("mb nearest points", e.direction, "objectP=", m, "screenP=", p), i ? m > p : m < p;
-        });
-        jv("nearest", h), t.give({
-          count: h.length,
-          nearestObjectId: ((g = h.at(i ? -1 : 0)) == null ? void 0 : g.id) ?? ""
-        });
-      })
+      this.factories.guestInTheMiddle.create(
+        t,
+        ({ objects: a, layer: A, position: s }) => {
+          var g;
+          const o = $R[e.direction], h = a.sort(
+            (d, m) => d.position[sm[e.axis]] * o - m.position[sm[e.axis]] * o
+          ).filter((d) => {
+            const m = d.position[sm[e.axis]] + (i ? 0 : d[Ov[e.axis]]), p = s[e.axis] * -1 + (i ? A[Ov[e.axis]]() : 0);
+            return jv(
+              "mb nearest points",
+              e.direction,
+              "objectP=",
+              m,
+              "screenP=",
+              p
+            ), i ? m > p : m < p;
+          });
+          jv("nearest", h), t.give({
+            count: h.length,
+            nearestObjectId: ((g = h.at(i ? -1 : 0)) == null ? void 0 : g.id) ?? ""
+          });
+        }
+      )
     ), t;
   }
 }
@@ -1854,12 +1896,14 @@ class eY {
     this.mapFile = e, this.map = t, this.factories = i;
   }
   give(e) {
-    return this.mapFile.currentMap(this.factories.guest.create((t) => {
-      this.map.give({
-        ...t,
-        settings: e
-      });
-    })), this;
+    return this.mapFile.currentMap(
+      this.factories.guest.create((t) => {
+        this.map.give({
+          ...t,
+          settings: e
+        });
+      })
+    ), this;
   }
 }
 class tY {
@@ -1899,15 +1943,22 @@ class iY {
   give(e) {
     const t = this.factories.chain.create(this);
     return this.checks.forEach((i, r) => {
-      i.breakOnFail({
-        name: e.id,
-        type: e
-      }, t.receiveKey(String(r)));
-    }), t.result(this.factories.guest.create(() => {
-      this.mapFile.currentMap(this.factories.guest.create((i) => {
-        delete i.types[e.id], this.map.give(i);
-      }));
-    })), this;
+      i.breakOnFail(
+        {
+          name: e.id,
+          type: e
+        },
+        t.receiveKey(String(r))
+      );
+    }), t.result(
+      this.factories.guest.create(() => {
+        this.mapFile.currentMap(
+          this.factories.guest.create((i) => {
+            delete i.types[e.id], this.map.give(i);
+          })
+        );
+      })
+    ), this;
   }
 }
 class rY {
@@ -1918,17 +1969,21 @@ class rY {
     const t = this.factories.chain.create(this);
     return this.checks.forEach((i, r) => {
       i.breakOnFail(e, t.receiveKey(String(r)));
-    }), t.result(this.factories.guest.create(() => {
-      this.mapFile.currentMap(this.factories.guest.create((i) => {
-        delete i.types[e.name], this.map.give({
-          ...i,
-          types: {
-            ...i.types,
-            [e.type.name]: e.type
-          }
-        });
-      }));
-    })), this;
+    }), t.result(
+      this.factories.guest.create(() => {
+        this.mapFile.currentMap(
+          this.factories.guest.create((i) => {
+            delete i.types[e.name], this.map.give({
+              ...i,
+              types: {
+                ...i.types,
+                [e.type.name]: e.type
+              }
+            });
+          })
+        );
+      })
+    ), this;
   }
 }
 const aY = Ve.debug("MapTypeUsed");
@@ -1937,10 +1992,14 @@ class AY {
     this.mapFile = e, this.factories = t;
   }
   check(e, t) {
-    return this.mapFile.currentMap(this.factories.guest.create((i) => {
-      const r = Object.values(i.objects).some((a) => a.type === e.name);
-      aY("is type used", r), t.give(!r || "Тип карты использован");
-    })), this;
+    return this.mapFile.currentMap(
+      this.factories.guest.create((i) => {
+        const r = Object.values(i.objects).some(
+          (a) => a.type === e.name
+        );
+        aY("is type used", r), t.give(!r || "Тип карты использован");
+      })
+    ), this;
   }
 }
 class sY {
@@ -1948,9 +2007,12 @@ class sY {
     this.mapTypeUsedCheck = e, this.factories = t;
   }
   check(e, t) {
-    return this.mapTypeUsedCheck.check(e, this.factories.guest.create((i) => {
-      i !== !0 && e.name !== e.type.name ? t.give("Нельзя изменять имя типа, который использован!") : t.give(!0);
-    })), this;
+    return this.mapTypeUsedCheck.check(
+      e,
+      this.factories.guest.create((i) => {
+        i !== !0 && e.name !== e.type.name ? t.give("Нельзя изменять имя типа, который использован!") : t.give(!0);
+      })
+    ), this;
   }
 }
 const Nv = Ve.debug("ParentTypes");
@@ -1961,16 +2023,18 @@ class oY {
   types(e) {
     Nv("parent types requested");
     const t = this.factories.chain.create();
-    return this.parentNames.names(this.factories.guestCast.create(e, t.receiveKey("parentNames"))), this.mapFile.mapFile(this.factories.guestCast.create(e, t.receiveKey("mapFile"))), t.result(this.factories.guestInTheMiddle.create(e, ({ parentNames: i, mapFile: r }) => {
-      const a = i.slice(0, -1);
-      Nv("parent names", a);
-      const A = {};
-      a.map((o) => r[o]).forEach((o) => {
-        Object.values(o.types).forEach((l) => {
-          A[l.name] = l;
-        });
-      }), e.give(Object.values(A));
-    })), e;
+    return this.parentNames.names(this.factories.guestCast.create(e, t.receiveKey("parentNames"))), this.mapFile.mapFile(this.factories.guestCast.create(e, t.receiveKey("mapFile"))), t.result(
+      this.factories.guestInTheMiddle.create(e, ({ parentNames: i, mapFile: r }) => {
+        const a = i.slice(0, -1);
+        Nv("parent names", a);
+        const A = {};
+        a.map((o) => r[o]).forEach((o) => {
+          Object.values(o.types).forEach((l) => {
+            A[l.name] = l;
+          });
+        }), e.give(Object.values(A));
+      })
+    ), e;
   }
 }
 const Pv = Ve.debug("ObjectsMatchedToQuery");
@@ -1980,21 +2044,26 @@ class uY {
   }
   objects(e, t) {
     return e.value(
-      this.factories.guestInTheMiddle.create(t, Qu((r) => {
-        r = r.toLowerCase(), this.map.objects(
-          this.factories.guest.create((a) => {
-            if (!r) {
-              Pv("reset results"), t.give([]);
-              return;
-            }
-            const A = a.filter((s) => {
-              var o;
-              return s.name.toLowerCase().includes(r) || ((o = s.additionalName) == null ? void 0 : o.toLowerCase().includes(r)) || Object.values(s.additionalFields ?? {}).join(" ").toLowerCase().includes(r);
-            });
-            Pv("objects in searching", A, r), t.give(A);
-          })
-        );
-      }, 500))
+      this.factories.guestInTheMiddle.create(
+        t,
+        Qu((r) => {
+          r = r.toLowerCase(), this.map.objects(
+            this.factories.guest.create((a) => {
+              if (!r) {
+                Pv("reset results"), t.give([]);
+                return;
+              }
+              const A = a.filter(
+                (s) => {
+                  var o;
+                  return s.name.toLowerCase().includes(r) || ((o = s.additionalName) == null ? void 0 : o.toLowerCase().includes(r)) || Object.values(s.additionalFields ?? {}).join(" ").toLowerCase().includes(r);
+                }
+              );
+              Pv("objects in searching", A, r), t.give(A);
+            })
+          );
+        }, 500)
+      )
     ), t;
   }
 }
@@ -2016,20 +2085,15 @@ class hY {
     return this.canvasDep.canvas(
       this.factories.guest.create((i) => {
         this.stageSize.value(
-          // eslint-disable-next-line consistent-return
           this.factories.guest.create((r) => {
             Rv("income position", e);
             const a = r.width - i.clientWidth, A = r.height - i.clientHeight, s = e.x * -1, o = e.y * -1;
             if (A < 0 || a < 0)
               return { x: 0, y: 0 };
-            Rv("boundings", A, a, o, s), t.give(
-              {
-                // eslint-disable-next-line no-nested-ternary
-                x: e.x > 0 ? 0 : s > a ? a * -1 : e.x,
-                // eslint-disable-next-line no-nested-ternary
-                y: e.y > 0 ? 0 : o > A ? A * -1 : e.y
-              }
-            );
+            Rv("boundings", A, a, o, s), t.give({
+              x: e.x > 0 ? 0 : s > a ? a * -1 : e.x,
+              y: e.y > 0 ? 0 : o > A ? A * -1 : e.y
+            });
           })
         );
       })
@@ -2042,33 +2106,29 @@ class gY {
     Ne(this, "visibleObjectsCache", new mQ());
     nl("constructor initialized");
     const a = r.chain.create();
-    t.size(r.patron.create(a.receiveKey("size"))), e.position(r.patron.create(a.receiveKey("position"))), i.currentMap(r.patron.create(a.receiveKey("map"))), a.result(r.patron.create(
-      r.guest.create(({ position: A, size: s, map: o }) => {
-        const l = Object.values(o.objects);
-        nl("objects come to result", l);
-        const h = l.filter((g) => {
-          const d = o.types[g.type] ?? {}, m = {
-            width: g.width || d.width,
-            height: g.height || d.height
-          };
-          return this.isInBounding(A, s, g.position, m);
-        });
-        nl("visible objects calculated", h), this.visibleObjectsCache.give(h);
-      })
-    ));
+    t.size(r.patron.create(a.receiveKey("size"))), e.position(r.patron.create(a.receiveKey("position"))), i.currentMap(r.patron.create(a.receiveKey("map"))), a.result(
+      r.patron.create(
+        r.guest.create(({ position: A, size: s, map: o }) => {
+          const l = Object.values(o.objects);
+          nl("objects come to result", l);
+          const h = l.filter((g) => {
+            const d = o.types[g.type] ?? {}, m = {
+              width: g.width || d.width,
+              height: g.height || d.height
+            };
+            return this.isInBounding(A, s, g.position, m);
+          });
+          nl("visible objects calculated", h), this.visibleObjectsCache.give(h);
+        })
+      )
+    );
   }
   objects(e) {
     return this.visibleObjectsCache.value(e), this;
   }
   isInBounding(e, t, i, r) {
     const a = e.x, A = e.x - t.width, s = e.y, o = e.y - t.height, [l, h] = i;
-    return nl(
-      "bounding vars",
-      a,
-      A,
-      s,
-      o
-    ), nl("object position", i), a > -l - r.width && -l > A && s > -h - r.height && -h > o;
+    return nl("bounding vars", a, A, s, o), nl("object position", i), a > -l - r.width && -l > A && s > -h - r.height && -h > o;
   }
 }
 const dY = (n, e) => {
@@ -2080,15 +2140,15 @@ class pY {
     this.mapFile = t, this.mapObject = i, this.factories = r, e.objectId(this);
   }
   give(e) {
-    return this.mapFile.currentMap(this.factories.guest.create((t) => {
-      const i = t.objects[e];
-      if (!i)
-        return;
-      const r = t.types[i.type], a = /\$\{([a-zA-Z1-9]+)\}/g, s = dY(r.svg, a).filter(
-        (o) => o !== "width" && o !== "height"
-      );
-      i.additionalFields = fY(s, i.additionalFields ?? {}), this.mapObject.give(i);
-    })), this;
+    return this.mapFile.currentMap(
+      this.factories.guest.create((t) => {
+        const i = t.objects[e];
+        if (!i)
+          return;
+        const r = t.types[i.type], a = /\$\{([a-zA-Z1-9]+)\}/g, s = dY(r.svg, a).filter((o) => o !== "width" && o !== "height");
+        i.additionalFields = fY(s, i.additionalFields ?? {}), this.mapObject.give(i);
+      })
+    ), this;
   }
   introduction() {
     return "patron";
@@ -8701,80 +8761,84 @@ class u4 {
     Ne(this, "previouslyRenderedArrows", /* @__PURE__ */ new Map());
     this.konvaLayer = e, this.mapFile = t, this.mapDep = i, this.arrowPath = r, this.factories = a, jh("draw arrows on canvas");
     const A = this.factories.chain.create();
-    this.konvaLayer.layer(this.factories.patron.create(A.receiveKey("layer"))), this.mapFile.currentMap(this.factories.patron.create(A.receiveKey("map"))), this.mapDep.objects(this.factories.patron.create(A.receiveKey("objects"))), A.result(this.factories.patron.create(
-      this.factories.guest.create(o4.throttle(({ layer: s, map: o, objects: l }) => {
-        const h = (g, d) => {
-          const m = o.types[d.type];
-          this.arrowPath.breakPoints(
-            {
-              shapeGeometry: {
-                width: g.width,
-                height: g.height
-              },
-              shapePosition: {
-                x: g.position[0],
-                y: g.position[1]
-              },
-              lookToGeometry: {
-                width: d.width,
-                height: d.height
-              },
-              lookToPosition: {
-                x: d.position[0],
-                y: d.position[1]
-              }
-            },
-            {
-              shapeGeometry: {
-                width: d.width || m.width,
-                height: d.height || m.height
-              },
-              shapePosition: {
-                x: d.position[0],
-                y: d.position[1]
-              },
-              lookToGeometry: {
-                width: g.width,
-                height: g.height
-              },
-              lookToPosition: {
-                x: g.position[0],
-                y: g.position[1]
-              }
-            },
-            this.factories.guest.create((p) => {
-              const w = p.join("-"), b = [g.id, d.id].join("-");
-              if (jh("points", p), jh(g, d), this.previouslyRenderedArrows.has(b)) {
-                const v = this.previouslyRenderedArrows.get(b);
-                v.arrow.show(), v.arrow.points(p);
-                return;
-              }
-              const C = new Wa({
-                x: 0,
-                y: 0,
-                points: p,
-                pointerLength: 20,
-                pointerWidth: 10,
-                fill: "#ccc",
-                stroke: "#bbb",
-                strokeWidth: 2,
-                zIndex: 2
-              });
-              this.previouslyRenderedArrows.set(b, {
-                arrow: C,
-                arrowKey: w
-              }), s.add(C);
-            })
-          );
-        };
-        this.arrowPath.clear(), this.previouslyRenderedArrows.forEach((g) => g.arrow.hide()), l.forEach((g) => {
-          g.arrows && (jh("visible objects", l.length), g.arrows.forEach((d) => {
-            const m = l.find((p) => p.id === d.id) || o.objects[d.id];
-            m && h(g, m);
-          }));
-        });
-      }, 50))
-    ));
+    this.konvaLayer.layer(this.factories.patron.create(A.receiveKey("layer"))), this.mapFile.currentMap(this.factories.patron.create(A.receiveKey("map"))), this.mapDep.objects(this.factories.patron.create(A.receiveKey("objects"))), A.result(
+      this.factories.patron.create(
+        this.factories.guest.create(
+          o4.throttle(({ layer: s, map: o, objects: l }) => {
+            const h = (g, d) => {
+              const m = o.types[d.type];
+              this.arrowPath.breakPoints(
+                {
+                  shapeGeometry: {
+                    width: g.width,
+                    height: g.height
+                  },
+                  shapePosition: {
+                    x: g.position[0],
+                    y: g.position[1]
+                  },
+                  lookToGeometry: {
+                    width: d.width,
+                    height: d.height
+                  },
+                  lookToPosition: {
+                    x: d.position[0],
+                    y: d.position[1]
+                  }
+                },
+                {
+                  shapeGeometry: {
+                    width: d.width || m.width,
+                    height: d.height || m.height
+                  },
+                  shapePosition: {
+                    x: d.position[0],
+                    y: d.position[1]
+                  },
+                  lookToGeometry: {
+                    width: g.width,
+                    height: g.height
+                  },
+                  lookToPosition: {
+                    x: g.position[0],
+                    y: g.position[1]
+                  }
+                },
+                this.factories.guest.create((p) => {
+                  const w = p.join("-"), b = [g.id, d.id].join("-");
+                  if (jh("points", p), jh(g, d), this.previouslyRenderedArrows.has(b)) {
+                    const v = this.previouslyRenderedArrows.get(b);
+                    v.arrow.show(), v.arrow.points(p);
+                    return;
+                  }
+                  const C = new Wa({
+                    x: 0,
+                    y: 0,
+                    points: p,
+                    pointerLength: 20,
+                    pointerWidth: 10,
+                    fill: "#ccc",
+                    stroke: "#bbb",
+                    strokeWidth: 2,
+                    zIndex: 2
+                  });
+                  this.previouslyRenderedArrows.set(b, {
+                    arrow: C,
+                    arrowKey: w
+                  }), s.add(C);
+                })
+              );
+            };
+            this.arrowPath.clear(), this.previouslyRenderedArrows.forEach((g) => g.arrow.hide()), l.forEach((g) => {
+              g.arrows && (jh("visible objects", l.length), g.arrows.forEach((d) => {
+                const m = l.find((p) => p.id === d.id) || o.objects[d.id];
+                m && h(g, m);
+              }));
+            });
+          }, 50)
+        )
+      )
+    );
   }
   introduction() {
     return "patron";
@@ -13751,30 +13815,34 @@ class UX {
     this.konvaLayer = e, this.mapFile = t, this.zIndex = i, this.factories = r, this.mapNameCache = r.cache.create(""), this.mapFile.currentMap(r.patron.create(this));
   }
   give(e) {
-    return this.konvaLayer.layer(this.factories.patronOnce.create((t) => {
-      ul("map received in background", e), this.mapNameCache.value(this.factories.guest.create((i) => {
-        if (i === e.url)
-          return;
-        ul("background cache is not equals", i), this.mapNameCache.give(e.url);
-        const r = new Image(), a = document.querySelector(".grid-example");
-        ul("grid example", a), a && DX(a).then((A) => {
-          r.src = A.toDataURL(), r.onload = () => {
-            ul("canvas pattern loaded"), ul("konva layer loaded");
-            const s = new Ws({
-              width: 3e3,
-              height: 3e3,
-              x: 0,
-              y: 0,
-              fillPatternImage: r,
-              zIndex: 1
+    return this.konvaLayer.layer(
+      this.factories.patronOnce.create((t) => {
+        ul("map received in background", e), this.mapNameCache.value(
+          this.factories.guest.create((i) => {
+            if (i === e.url)
+              return;
+            ul("background cache is not equals", i), this.mapNameCache.give(e.url);
+            const r = new Image(), a = document.querySelector(".grid-example");
+            ul("grid example", a), a && DX(a).then((A) => {
+              r.src = A.toDataURL(), r.onload = () => {
+                ul("canvas pattern loaded"), ul("konva layer loaded");
+                const s = new Ws({
+                  width: 3e3,
+                  height: 3e3,
+                  x: 0,
+                  y: 0,
+                  fillPatternImage: r,
+                  zIndex: 1
+                });
+                this.zIndex.give(() => {
+                  s.zIndex(0);
+                }), t.add(s);
+              };
             });
-            this.zIndex.give(() => {
-              s.zIndex(0);
-            }), t.add(s);
-          };
-        });
-      }));
-    })), this;
+          })
+        );
+      })
+    ), this;
   }
 }
 const IX = Ve.debug("Breadcrumbs");
@@ -13786,13 +13854,15 @@ class OX {
     const t = this.factories.chain.create();
     return this.parentNames.names(this.factories.guestCast.create(e, t.receiveKey("names"))), this.mapFile.mapFile(this.factories.guestCast.create(e, t.receiveKey("mapFile"))), t.result(
       this.factories.guestInTheMiddle.create(e, ({ names: i, mapFile: r }) => {
-        IX("map id", i, r), e.give(i.map((a) => {
-          var A, s;
-          return {
-            title: ((s = (A = r[a]) == null ? void 0 : A.settings) == null ? void 0 : s.title) || "unknown",
-            name: a
-          };
-        }));
+        IX("map id", i, r), e.give(
+          i.map((a) => {
+            var A, s;
+            return {
+              title: ((s = (A = r[a]) == null ? void 0 : A.settings) == null ? void 0 : s.title) || "unknown",
+              name: a
+            };
+          })
+        );
       })
     ), e;
   }
@@ -13804,7 +13874,9 @@ class jX {
   }
   value(e) {
     const t = this.factories.chain.create();
-    return this.cursor.value(this.factories.guestCast.create(e, t.receiveKey("cursor"))), this.objectsVisible.objects(this.factories.guestCast.create(e, t.receiveKey("objects"))), t.result(
+    return this.cursor.value(this.factories.guestCast.create(e, t.receiveKey("cursor"))), this.objectsVisible.objects(
+      this.factories.guestCast.create(e, t.receiveKey("objects"))
+    ), t.result(
       this.factories.guestInTheMiddle.create(e, ({ cursor: i, objects: r }) => {
         const a = r.find((A) => {
           const s = A.position[0], o = A.position[0] + A.width || 100, l = A.position[1], h = A.position[1] + A.height || 100;
@@ -13838,11 +13910,9 @@ class NX {
     ), t;
   }
   openedByName(e) {
-    return this.factories.guestAware.create(
-      (t) => {
-        this.isOpenedByName(e, t);
-      }
-    );
+    return this.factories.guestAware.create((t) => {
+      this.isOpenedByName(e, t);
+    });
   }
   give(e) {
     return this.drawerNameCache.give(e), this;
@@ -13884,36 +13954,42 @@ class YX {
     Ne(this, "viewportSizeCache");
     this.map = e, this.layer = t, this.stageSize = i, this.factories = r, this.theSize = r.sourceEmpty.create(), this.thePoints = r.sourceEmpty.create(), this.viewportSizeCache = r.sourceEmpty.create();
     const a = r.chain.create();
-    e.objects(r.patron.create(a.receiveKey("objects"))), t.layer(r.patron.create(a.receiveKey("layer"))), i.value(r.patron.create(a.receiveKey("size"))), a.result(r.patron.create(r.guest.create(({ layer: A, size: s, objects: o }) => {
-      const l = nS / s.width, h = {
-        width: Math.round(A.width() * l),
-        height: Math.round(A.height() * l)
-      };
-      this.viewportSizeCache.give(h);
-      const g = {
-        width: Math.round(s.width * l),
-        height: Math.round(s.height * l)
-      };
-      this.theSize.give(g);
-      const d = o.map((m) => ({
-        id: m.id,
-        x: Math.round(m.position[0] * l),
-        y: Math.round(m.position[1] * l),
-        width: Math.round(m.width * l),
-        height: Math.round(m.height * l)
-      }));
-      tS("minimap points", d), this.thePoints.give(d);
-    })));
+    e.objects(r.patron.create(a.receiveKey("objects"))), t.layer(r.patron.create(a.receiveKey("layer"))), i.value(r.patron.create(a.receiveKey("size"))), a.result(
+      r.patron.create(
+        r.guest.create(({ layer: A, size: s, objects: o }) => {
+          const l = nS / s.width, h = {
+            width: Math.round(A.width() * l),
+            height: Math.round(A.height() * l)
+          };
+          this.viewportSizeCache.give(h);
+          const g = {
+            width: Math.round(s.width * l),
+            height: Math.round(s.height * l)
+          };
+          this.theSize.give(g);
+          const d = o.map((m) => ({
+            id: m.id,
+            x: Math.round(m.position[0] * l),
+            y: Math.round(m.position[1] * l),
+            width: Math.round(m.width * l),
+            height: Math.round(m.height * l)
+          }));
+          tS("minimap points", d), this.thePoints.give(d);
+        })
+      )
+    );
   }
   viewportPosition(e) {
     const t = this.factories.chain.create();
-    return this.stageSize.value(this.factories.guestCast.create(e, t.receiveKey("size"))), this.layer.position(this.factories.guestCast.create(e, t.receiveKey("position"))), t.result(this.factories.guestInTheMiddle.create(e, ({ size: i, position: r }) => {
-      const a = nS / i.width, A = {
-        x: r.x * a * -1,
-        y: r.y * a * -1
-      };
-      tS("scaled position is", A), e.give(A);
-    })), e;
+    return this.stageSize.value(this.factories.guestCast.create(e, t.receiveKey("size"))), this.layer.position(this.factories.guestCast.create(e, t.receiveKey("position"))), t.result(
+      this.factories.guestInTheMiddle.create(e, ({ size: i, position: r }) => {
+        const a = nS / i.width, A = {
+          x: r.x * a * -1,
+          y: r.y * a * -1
+        };
+        tS("scaled position is", A), e.give(A);
+      })
+    ), e;
   }
   viewportSize(e) {
     return this.viewportSizeCache.value(e), e;
@@ -13945,11 +14021,9 @@ class JX {
     ), t;
   }
   openedByName(e) {
-    return this.factories.guestAware.create(
-      (t) => {
-        this.isOpenedByName(e, t);
-      }
-    );
+    return this.factories.guestAware.create((t) => {
+      this.isOpenedByName(e, t);
+    });
   }
   give(e) {
     return this.modalNameCache.give(e), this;
@@ -13979,24 +14053,26 @@ class GX {
   constructor(e, t, i, r) {
     Ne(this, "innerReceive");
     this.mapFile = t, this.map = i, this.factories = r, e.objects(r.patron.create(this)), this.innerReceive = Qu((a) => {
-      this.mapFile.currentMap(this.factories.guest.create((A) => {
-        ll("objects to fix", a);
-        const s = document.querySelectorAll(".objects-container .rendered-object"), o = A.objects;
-        let l = !1;
-        s.forEach((h) => {
-          const g = h.getAttribute("data-object-id");
-          if (ll("i see id", g), !g)
-            return;
-          const d = o[g];
-          if (d && (ll("dom object geometry", h.clientWidth, h.clientHeight), ll("saved object geometry", d.width, d.height), (d.width !== h.clientWidth || d.height !== h.clientHeight) && (l = !0, ll("update object geometry"), d.width = h.clientWidth, d.height = h.clientHeight), !d.width || !d.height)) {
-            const m = A.types[d.type];
-            d.width = m.width, d.height = m.height;
-          }
-        }), l && this.map.give({
-          ...A,
-          objects: o
-        });
-      }));
+      this.mapFile.currentMap(
+        this.factories.guest.create((A) => {
+          ll("objects to fix", a);
+          const s = document.querySelectorAll(".objects-container .rendered-object"), o = A.objects;
+          let l = !1;
+          s.forEach((h) => {
+            const g = h.getAttribute("data-object-id");
+            if (ll("i see id", g), !g)
+              return;
+            const d = o[g];
+            if (d && (ll("dom object geometry", h.clientWidth, h.clientHeight), ll("saved object geometry", d.width, d.height), (d.width !== h.clientWidth || d.height !== h.clientHeight) && (l = !0, ll("update object geometry"), d.width = h.clientWidth, d.height = h.clientHeight), !d.width || !d.height)) {
+              const m = A.types[d.type];
+              d.width = m.width, d.height = m.height;
+            }
+          }), l && this.map.give({
+            ...A,
+            objects: o
+          });
+        })
+      );
     }, 500);
   }
   give(e) {
@@ -14010,62 +14086,72 @@ class XX {
     this.konvaLayer = e, this.mapFile = t, this.mapObject = i, this.mapObjectCurrent = a, this.mapObjectForRendering = A, this.objectPosition = s, this.factories = o, r.objects(this);
   }
   give(e) {
-    return this.konvaLayer.layer(this.factories.patronOnce.create(
-      this.factories.guest.create((t) => {
-        this.mapFile.currentMap(
-          this.factories.guest.create((i) => {
-            cl("rerender object rects"), this.previouslyRenderedRects.forEach((r) => {
-              r.hide();
-            }), e.forEach((r) => {
-              const a = i.types[r.type], A = +r.width || +a.width || 100, s = +r.height || +a.height || 100;
-              if (this.previouslyRenderedRects.has(r)) {
-                const l = this.previouslyRenderedRects.get(r);
-                l.width(A), l.height(s), l.x(+r.position[0]), l.y(+r.position[1]), l.show();
-                return;
-              }
-              cl("rect object", r, a);
-              const o = new Ws({
-                x: +r.position[0],
-                y: +r.position[1],
-                width: A,
-                height: s,
-                name: r.id,
-                draggable: !0,
-                objectId: r.id,
-                zIndex: 3
+    return this.konvaLayer.layer(
+      this.factories.patronOnce.create(
+        this.factories.guest.create((t) => {
+          this.mapFile.currentMap(
+            this.factories.guest.create((i) => {
+              cl("rerender object rects"), this.previouslyRenderedRects.forEach((r) => {
+                r.hide();
+              }), e.forEach((r) => {
+                const a = i.types[r.type], A = +r.width || +a.width || 100, s = +r.height || +a.height || 100;
+                if (this.previouslyRenderedRects.has(r)) {
+                  const l = this.previouslyRenderedRects.get(r);
+                  l.width(A), l.height(s), l.x(+r.position[0]), l.y(+r.position[1]), l.show();
+                  return;
+                }
+                cl("rect object", r, a);
+                const o = new Ws({
+                  x: +r.position[0],
+                  y: +r.position[1],
+                  width: A,
+                  height: s,
+                  name: r.id,
+                  draggable: !0,
+                  objectId: r.id,
+                  zIndex: 3
+                });
+                this.previouslyRenderedRects.set(r, o), t.add(o), o.on("mouseenter", () => {
+                  t.getStage().container().style.cursor = "pointer";
+                }), o.on("mouseleave", () => {
+                  t.getStage().container().style.cursor = "default";
+                }), o.on("dragend", () => {
+                  cl("drag ended"), this.objectPosition.position(
+                    r,
+                    {
+                      x: o.x(),
+                      y: o.y()
+                    },
+                    this.factories.guest.create((l) => {
+                      this.mapObject.give({
+                        ...r,
+                        position: [l.x, l.y]
+                      });
+                    })
+                  );
+                }), o.on("dragmove", () => {
+                  cl("dragmove works", o.x(), o.y()), t.getStage().container().style.cursor = "move", this.objectPosition.position(
+                    r,
+                    {
+                      x: o.x(),
+                      y: o.y()
+                    },
+                    this.factories.guest.create((l) => {
+                      this.mapObjectForRendering.give({
+                        ...r,
+                        position: [l.x, l.y]
+                      });
+                    })
+                  );
+                }), o.on("click", () => {
+                  cl("object clicked with id", r.id), this.mapObjectCurrent.give(r.id);
+                });
               });
-              this.previouslyRenderedRects.set(r, o), t.add(o), o.on("mouseenter", () => {
-                t.getStage().container().style.cursor = "pointer";
-              }), o.on("mouseleave", () => {
-                t.getStage().container().style.cursor = "default";
-              }), o.on("dragend", () => {
-                cl("drag ended"), this.objectPosition.position(r, {
-                  x: o.x(),
-                  y: o.y()
-                }, this.factories.guest.create((l) => {
-                  this.mapObject.give({
-                    ...r,
-                    position: [l.x, l.y]
-                  });
-                }));
-              }), o.on("dragmove", () => {
-                cl("dragmove works", o.x(), o.y()), t.getStage().container().style.cursor = "move", this.objectPosition.position(r, {
-                  x: o.x(),
-                  y: o.y()
-                }, this.factories.guest.create((l) => {
-                  this.mapObjectForRendering.give({
-                    ...r,
-                    position: [l.x, l.y]
-                  });
-                }));
-              }), o.on("click", () => {
-                cl("object clicked with id", r.id), this.mapObjectCurrent.give(r.id);
-              });
-            });
-          })
-        );
-      })
-    )), this;
+            })
+          );
+        })
+      )
+    ), this;
   }
   introduction() {
     return "patron";
@@ -14078,12 +14164,16 @@ class ZX {
   give() {
     const e = new ResizeObserver((i) => {
       const [r] = i;
-      this.canvas.canvas(this.factories.guest.create((a) => {
-        const A = a.getBoundingClientRect();
-        this.konvaLayer.layer(this.factories.guest.create((s) => {
-          s.getStage().width(r.contentRect.width - A.left), s.getStage().height(r.contentRect.height - A.top), this.canvas.give(a), this.konvaLayer.give(s);
-        }));
-      }));
+      this.canvas.canvas(
+        this.factories.guest.create((a) => {
+          const A = a.getBoundingClientRect();
+          this.konvaLayer.layer(
+            this.factories.guest.create((s) => {
+              s.getStage().width(r.contentRect.width - A.left), s.getStage().height(r.contentRect.height - A.top), this.canvas.give(a), this.konvaLayer.give(s);
+            })
+          );
+        })
+      );
     }), t = document.querySelector("body");
     return t && e.observe(t), this;
   }
@@ -14113,16 +14203,22 @@ const rS = Ve.debug("Zindex");
 class $X {
   constructor(e) {
     Ne(this, "fnsCache");
-    this.factories = e, this.fnsCache = e.cache.create([]), this.fnsCache.value(e.patron.create(
-      e.guest.create(Qu((t) => {
-        rS("zindex fns run"), t.forEach((i) => i());
-      }, 50))
-    ));
+    this.factories = e, this.fnsCache = e.cache.create([]), this.fnsCache.value(
+      e.patron.create(
+        e.guest.create(
+          Qu((t) => {
+            rS("zindex fns run"), t.forEach((i) => i());
+          }, 50)
+        )
+      )
+    );
   }
   give(e) {
-    return rS("zindex received value"), this.fnsCache.value(this.factories.guest.create((t) => {
-      this.fnsCache.give(t.concat(e));
-    })), this;
+    return rS("zindex received value"), this.fnsCache.value(
+      this.factories.guest.create((t) => {
+        this.fnsCache.give(t.concat(e));
+      })
+    ), this;
   }
 }
 const aS = Ve.debug("app:BrowserCanvas");
@@ -14135,13 +14231,15 @@ class qX {
     return this.canvasCache.value(e), this;
   }
   size(e) {
-    return this.canvasCache.value(this.factories.guestInTheMiddle.create(e, (t) => {
-      const i = t.width || t.clientWidth, r = t.height || t.clientHeight;
-      aS("canvas size", i, r), e.give({
-        height: r,
-        width: i
-      });
-    })), this;
+    return this.canvasCache.value(
+      this.factories.guestInTheMiddle.create(e, (t) => {
+        const i = t.width || t.clientWidth, r = t.height || t.clientHeight;
+        aS("canvas size", i, r), e.give({
+          height: r,
+          width: i
+        });
+      })
+    ), this;
   }
   give(e) {
     return aS("receive new canvas", e), this.canvasCache.give(e), this;
@@ -17711,46 +17809,45 @@ class S5 {
     Ne(this, "guestChain");
     Ne(this, "positionCache");
     Ne(this, "layerCache");
-    this.canvasDep = e, this.stageMoveRestriction = i, this.factories = r, this.positionCache = r.cache.create(
-      {
-        x: 0,
-        y: 0
-      }
-    ), this.guestChain = r.chain.create(), this.layerCache = r.sourceEmpty.create(), this.canvasDep.canvas(r.patron.create(this.guestChain.receiveKey("canvas"))), t.value(this.guestChain.receiveKey("stageSize")), this.guestChain.result(r.guest.create(({ canvas: a }) => {
-      bS("create new konva stage");
-      const A = new wS.Stage({
-        width: a.clientWidth,
-        height: a.clientHeight,
-        container: a,
-        fill: "#ffeeee",
-        draggable: !0
-      }), s = new wS.Layer();
-      A.add(s), s.draw(), this.layerCache.give(s), A.on("dragend", (l) => {
-        if (!(l.target instanceof ou))
-          return;
-        const h = {
-          x: A.x(),
-          y: A.y()
-        };
-        bS("new position", h), this.positionCache.give(h);
-      }), A.on("dragmove", (l) => {
-        if (!(l.target instanceof ou))
-          return;
-        const h = {
-          x: A.x(),
-          y: A.y()
-        };
-        this.positionCache.give(h);
-      });
-      const o = this.factories.guestSync.create({
-        x: 0,
-        y: 0
-      });
-      A.dragBoundFunc((l) => (i.position(
-        l,
-        o
-      ), o.value()));
-    }));
+    this.canvasDep = e, this.stageMoveRestriction = i, this.factories = r, this.positionCache = r.cache.create({
+      x: 0,
+      y: 0
+    }), this.guestChain = r.chain.create(), this.layerCache = r.sourceEmpty.create(), this.canvasDep.canvas(r.patron.create(this.guestChain.receiveKey("canvas"))), t.value(this.guestChain.receiveKey("stageSize")), this.guestChain.result(
+      r.guest.create(
+        ({ canvas: a }) => {
+          bS("create new konva stage");
+          const A = new wS.Stage({
+            width: a.clientWidth,
+            height: a.clientHeight,
+            container: a,
+            fill: "#ffeeee",
+            draggable: !0
+          }), s = new wS.Layer();
+          A.add(s), s.draw(), this.layerCache.give(s), A.on("dragend", (l) => {
+            if (!(l.target instanceof ou))
+              return;
+            const h = {
+              x: A.x(),
+              y: A.y()
+            };
+            bS("new position", h), this.positionCache.give(h);
+          }), A.on("dragmove", (l) => {
+            if (!(l.target instanceof ou))
+              return;
+            const h = {
+              x: A.x(),
+              y: A.y()
+            };
+            this.positionCache.give(h);
+          });
+          const o = this.factories.guestSync.create({
+            x: 0,
+            y: 0
+          });
+          A.dragBoundFunc((l) => (i.position(l, o), o.value()));
+        }
+      )
+    );
   }
   layer(e) {
     return this.layerCache.value(e), e;
@@ -17814,102 +17911,55 @@ class Q5 {
     );
   }
 }
-const Le = Ki(), sf = new iZ(Le), T5 = new JX(sf, Le), gL = new NX(sf, Le), of = new KX(Le), $a = new _P(Le), L5 = '{"current":{"progress":0,"settings":{"colored":false,"title":"current"},"objects":{},"types":{},"url":"/current","parent":""}}', dL = Le.source.create(L5), $t = new MP(
-  dL,
-  $a,
-  Le
-), Db = new UP($t, $a, Le), Mb = new vQ(Db, $a, Le), x5 = new SQ(Mb, Db, Le), wr = new vQ($t, $a, Le), _5 = new fQ((n) => {
+const Le = Ki(), sf = new iZ(Le), T5 = new JX(sf, Le), gL = new NX(sf, Le), of = new KX(Le), $a = new _P(Le), L5 = '{"current":{"progress":0,"settings":{"colored":false,"title":"current"},"objects":{},"types":{},"url":"/current","parent":""}}', dL = Le.source.create(L5), $t = new MP(dL, $a, Le), Db = new UP($t, $a, Le), Mb = new vQ(Db, $a, Le), x5 = new SQ(Mb, Db, Le), wr = new vQ($t, $a, Le), _5 = new fQ((n) => {
   $t.currentMap(new Fy(n));
-}), uf = new IP(gL, Le), k5 = new tY(Le), D5 = new eY($t, wr, Le), eo = new qX(Le), to = new cY(), fL = new hY(eo, to, Le), br = new S5(
-  eo,
-  to,
-  fL,
+}), uf = new IP(gL, Le), k5 = new tY(Le), D5 = new eY($t, wr, Le), eo = new qX(Le), to = new cY(), fL = new hY(eo, to, Le), br = new S5(eo, to, fL, Le), M5 = new $X(Le), H5 = new UX(br, $t, M5, Le), _u = new SQ(wr, $t, Le), U5 = new RP(
+  wr,
+  $t,
+  [new yb(of, new OP($t, Le), Le)],
   Le
-), M5 = new $X(Le), H5 = new UX(br, $t, M5, Le), _u = new SQ(wr, $t, Le), U5 = new RP(
+), I5 = new F5(br, Le), O5 = new jP(wr, _u, eo, I5, Le), pL = new AY($t, Le), mL = new rY(
   wr,
   $t,
   [
     new yb(
       of,
-      new OP($t, Le),
+      new sY(pL, Le),
       Le
     )
   ],
-  Le
-), I5 = new F5(br, Le), O5 = new jP(
-  wr,
-  _u,
-  eo,
-  I5,
-  Le
-), pL = new AY($t, Le), mL = new rY(
-  wr,
-  $t,
-  [new yb(
-    of,
-    new sY(
-      pL,
-      Le
-    ),
-    Le
-  )],
   Le
 ), j5 = new iY(
   wr,
   $t,
   [new yb(of, pL, Le)],
   Le
-), N5 = new nY(mL), lf = new gY(
-  br,
-  eo,
-  Db,
+), N5 = new nY(mL), lf = new gY(br, eo, Db, Le), P5 = new GX(
+  lf,
+  $t,
+  wr,
   Le
-), P5 = new GX(lf, $t, wr, Le), R5 = new XX(
+), R5 = new XX(
   br,
   $t,
   _u,
   lf,
   uf,
   x5,
-  new zR(
-    new VR(
-      to,
-      Le
-    ),
-    Le
-  ),
+  new zR(new VR(to, Le), Le),
   Le
-), Y5 = new tZ(br, Le), J5 = new jX(
-  lf,
-  Y5,
-  Le
-), yL = new mY(), wL = new l4(br, J5, yL, Le), K5 = new u4(
-  br,
-  $t,
-  Mb,
-  yL,
-  Le
-), G5 = new YX(Mb, br, to, Le), X5 = new JP(
+), Y5 = new tZ(br, Le), J5 = new jX(lf, Y5, Le), yL = new mY(), wL = new l4(br, J5, yL, Le), K5 = new u4(br, $t, Mb, yL, Le), G5 = new YX(Mb, br, to, Le), X5 = new JP(
   uf,
   wr,
   _u,
   wL,
   Le
-), Z5 = new ZX($t, eo, br, Le), W5 = new pY(uf, $t, _u, Le), V5 = new DP($t, $a, Le), z5 = new PP(_u), $5 = new PX(), Hb = new NP($a, Le), q5 = new OX(Hb, $t, Le), eW = new ZR($a, Le), tW = new oY(Hb, $t, Le), nW = new nZ(sf, Le), iW = new RX($t, Le), bL = new Q5(
-  br,
-  eo,
-  to,
-  fL,
+), Z5 = new ZX($t, eo, br, Le), W5 = new pY(
+  uf,
+  $t,
+  _u,
   Le
-), rW = new VX(bL), aW = new zX(bL, Le), AW = new uY(
-  wr,
-  Le
-), sW = new kP($t, wr, $a, Le), oW = new qR(
-  wr,
-  to,
-  br,
-  Le
-), uW = {
+), V5 = new DP($t, $a, Le), z5 = new PP(_u), $5 = new PX(), Hb = new NP($a, Le), q5 = new OX(Hb, $t, Le), eW = new ZR($a, Le), tW = new oY(Hb, $t, Le), nW = new nZ(sf, Le), iW = new RX($t, Le), bL = new Q5(br, eo, to, fL, Le), rW = new VX(bL), aW = new zX(bL, Le), AW = new uY(wr, Le), sW = new kP($t, wr, $a, Le), oW = new qR(wr, to, br, Le), uW = {
   mapCurrentID: $a,
   mapFile: $t,
   mapCurrent: wr,
@@ -21373,27 +21423,29 @@ class $8 {
   }
   objects(e) {
     const t = this.factories.chain.create();
-    return this.map.types(this.factories.guestCast.create(e, t.receiveKey("types"))), this.mapObjects.objects(this.factories.guestCast.create(e, t.receiveKey("objects"))), t.result(this.factories.guestInTheMiddle.create(e, ({ types: i, objects: r }) => {
-      Jm("visible objects", r);
-      const a = r.map((A) => {
-        const s = i.find((l) => String(l.id) === String(A.type));
-        if (Jm("check type existed", s), !s)
-          return {
+    return this.map.types(this.factories.guestCast.create(e, t.receiveKey("types"))), this.mapObjects.objects(this.factories.guestCast.create(e, t.receiveKey("objects"))), t.result(
+      this.factories.guestInTheMiddle.create(e, ({ types: i, objects: r }) => {
+        Jm("visible objects", r);
+        const a = r.map((A) => {
+          const s = i.find((l) => String(l.id) === String(A.type));
+          if (Jm("check type existed", s), !s)
+            return {
+              obj: A,
+              template: ""
+            };
+          let { svg: o } = s;
+          return Jm("type svg", o), A.additionalFields && Object.entries(A.additionalFields).forEach(([l, h]) => {
+            o = o.replaceAll(`\${${l}}`, h);
+          }), ["width", "height"].forEach((l) => {
+            o = o.replaceAll(`\${${l}}`, A[l]);
+          }), {
             obj: A,
-            template: ""
+            template: o
           };
-        let { svg: o } = s;
-        return Jm("type svg", o), A.additionalFields && Object.entries(A.additionalFields).forEach(([l, h]) => {
-          o = o.replaceAll(`\${${l}}`, h);
-        }), ["width", "height"].forEach((l) => {
-          o = o.replaceAll(`\${${l}}`, A[l]);
-        }), {
-          obj: A,
-          template: o
-        };
-      });
-      e.give(a);
-    })), e;
+        });
+        e.give(a);
+      })
+    ), e;
   }
 }
 const q8 = /* @__PURE__ */ rt({
@@ -21409,11 +21461,15 @@ const q8 = /* @__PURE__ */ rt({
 class Zb {
   constructor(e) {
     Ne(this, "pool", new Jd(this));
-    this.refSource = e, Na(e, (t) => {
-      t !== void 0 && this.pool.give(t);
-    }, {
-      deep: !0
-    });
+    this.refSource = e, Na(
+      e,
+      (t) => {
+        t !== void 0 && this.pool.give(t);
+      },
+      {
+        deep: !0
+      }
+    );
   }
   value(e) {
     return this.refSource.value && e.give(this.refSource.value), this.pool.add(e), this;
@@ -43176,9 +43232,11 @@ class Cse {
   }
   content(e) {
     const t = this.factories.guest.create((i) => {
-      this.fileHandler = i, this.factories.fileHandlerContent.create(i).content(this.factories.guest.create((r) => {
-        this.contentPatrons.distribute(r, e);
-      }));
+      this.fileHandler = i, this.factories.fileHandlerContent.create(i).content(
+        this.factories.guest.create((r) => {
+          this.contentPatrons.distribute(r, e);
+        })
+      );
     });
     return this.fileHandler ? t.give(this.fileHandler) : this.launchQueue.fileHandler(t), this;
   }

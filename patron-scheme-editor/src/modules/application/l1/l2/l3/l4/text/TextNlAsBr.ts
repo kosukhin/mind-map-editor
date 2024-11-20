@@ -8,10 +8,9 @@ export class TextNlAsBr implements TextType {
   public constructor(
     private baseText: TextType,
     private factories: {
-      guestInTheMiddle: Factory<GuestObjectType>,
+      guestInTheMiddle: Factory<GuestObjectType>;
     },
-  ) {
-  }
+  ) {}
 
   public asString(guest: GuestObjectType<string>): GuestObjectType {
     this.baseText.asString(
@@ -21,10 +20,7 @@ export class TextNlAsBr implements TextType {
         }
         const breakTag = '<br />';
         localDebug(text);
-        guest.give((text ?? '').replace(
-          /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g,
-          `$1${breakTag}$2`,
-        ));
+        guest.give((text ?? '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, `$1${breakTag}$2`));
         return true;
       }),
     );

@@ -10,7 +10,7 @@ export class FirstPossibleFileContent implements MapFileContentType {
   public constructor(
     fileContents: MapFileContentType[],
     factories: {
-      guest: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>;
     },
   ) {
     fileContents.forEach((fileContent) => {

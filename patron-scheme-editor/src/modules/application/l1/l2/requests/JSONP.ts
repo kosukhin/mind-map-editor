@@ -10,8 +10,8 @@ export class JSONP implements JSONPType {
     private url: string,
     private emptyValue: unknown,
     private factories: {
-      guest: FactoryType<GuestObjectType>,
-      sourceEmpty: FactoryType<SourceType>,
+      guest: FactoryType<GuestObjectType>;
+      sourceEmpty: FactoryType<SourceType>;
     },
   ) {
     this.loadingCache = factories.sourceEmpty.create();
@@ -23,15 +23,12 @@ export class JSONP implements JSONPType {
       this.loadingCache.give(false);
       guest.give(this.emptyValue);
     }, 10_000);
-    useScriptTag(
-      this.url,
-      () => {
-        clearInterval(timer);
-        const result = (window as any)[this.callbackName]?.() || this.emptyValue;
-        guest.give(result);
-        this.loadingCache.give(false);
-      },
-    );
+    useScriptTag(this.url, () => {
+      clearInterval(timer);
+      const result = (window as any)[this.callbackName]?.() || this.emptyValue;
+      guest.give(result);
+      this.loadingCache.give(false);
+    });
     return guest;
   }
 

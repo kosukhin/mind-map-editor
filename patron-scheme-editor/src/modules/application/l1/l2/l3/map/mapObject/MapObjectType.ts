@@ -11,4 +11,4 @@ export interface MapObjectsType {
 /**
  * Поведение для сохранения объекта
  */
-export type MapObjectType = GuestObjectType<MapObjectDocument>
+export type MapObjectType = GuestObjectType<MapObjectDocument>;

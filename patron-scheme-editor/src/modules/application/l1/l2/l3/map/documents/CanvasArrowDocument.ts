@@ -5,9 +5,9 @@ import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/Poin
  * Данные стрелки связи между объектами
  */
 export interface CanvasArrowDocument {
-  fromPoint: PointDocument,
-  toPoint: PointDocument,
-  label: string,
-  beginMapType?: MapTypeDocument,
-  endMapType?: MapTypeDocument,
+  fromPoint: PointDocument;
+  toPoint: PointDocument;
+  label: string;
+  beginMapType?: MapTypeDocument;
+  endMapType?: MapTypeDocument;
 }

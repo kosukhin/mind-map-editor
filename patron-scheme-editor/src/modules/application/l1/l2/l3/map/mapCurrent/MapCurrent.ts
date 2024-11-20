@@ -3,7 +3,8 @@ import {
   MapDocument,
   MapFileDocument,
   MapObjectDocument,
-  MapSettingsDocument, MapTypeDocument,
+  MapSettingsDocument,
+  MapTypeDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { debug } from 'debug';
@@ -27,24 +28,30 @@ export class MapCurrent implements MapType {
     private mapFile: MapFileType,
     private mapId: MapCurrentIDType,
     private factories: {
-      sourceEmpty: FactoryType<SourceType>,
-      guest: FactoryType<GuestObjectType>,
-      patron: FactoryType<GuestObjectType>,
+      sourceEmpty: FactoryType<SourceType>;
+      guest: FactoryType<GuestObjectType>;
+      patron: FactoryType<GuestObjectType>;
     },
   ) {
     this.objectsCache = factories.sourceEmpty.create();
     this.settingsCache = factories.sourceEmpty.create();
     this.typesCache = factories.sourceEmpty.create();
-    mapFile.currentMap(factories.patron.create(factories.guest.create((latestMap: MapDocument) => {
-      localDebug('current map changed', latestMap);
-      this.settingsCache.give(latestMap.settings);
+    mapFile.currentMap(
+      factories.patron.create(
+        factories.guest.create((latestMap: MapDocument) => {
+          localDebug('current map changed', latestMap);
+          this.settingsCache.give(latestMap.settings);
 
-      this.objectsCache.give(Object.values(latestMap.objects));
-      this.typesCache.give(Object.entries(latestMap.types).map(([key, value]) => ({
-        ...value,
-        id: key,
-      })));
-    })));
+          this.objectsCache.give(Object.values(latestMap.objects));
+          this.typesCache.give(
+            Object.entries(latestMap.types).map(([key, value]) => ({
+              ...value,
+              id: key,
+            })),
+          );
+        }),
+      ),
+    );
   }
 
   public settings<R extends GuestObjectType<MapSettingsDocument>>(guest: R) {
@@ -67,12 +74,14 @@ export class MapCurrent implements MapType {
     localDebug('save map document', value);
     this.mapId.id(
       this.factories.guest.create((mapId: string) => {
-        this.mapFile.mapFile(this.factories.guest.create((latestMapFile: MapFileDocument) => {
-          this.mapFile.give({
-            ...latestMapFile,
-            [mapId]: value,
-          });
-        }));
+        this.mapFile.mapFile(
+          this.factories.guest.create((latestMapFile: MapFileDocument) => {
+            this.mapFile.give({
+              ...latestMapFile,
+              [mapId]: value,
+            });
+          }),
+        );
       }),
     );
     return this;

@@ -1,4 +1,7 @@
-import { MapDocument, MapFileDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import {
+  MapDocument,
+  MapFileDocument,
+} from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { GuestObjectType, PatronPool } from 'patron-oop';
 
@@ -10,23 +13,15 @@ export class MapFileFake implements MapFileType {
 
   private mapFilePool = new PatronPool(this);
 
-  public constructor(
-    private mapFileDocument: MapFileDocument,
-  ) {}
+  public constructor(private mapFileDocument: MapFileDocument) {}
 
   public currentMap(target: GuestObjectType<MapDocument>) {
-    this.currentMapPool.distribute(
-      this.mapFileDocument.current,
-      target,
-    );
+    this.currentMapPool.distribute(this.mapFileDocument.current, target);
     return target;
   }
 
   public mapFile(target: GuestObjectType<MapFileDocument>) {
-    this.mapFilePool.distribute(
-      this.mapFileDocument,
-      target,
-    );
+    this.mapFilePool.distribute(this.mapFileDocument, target);
     return target;
   }
 

@@ -1,11 +1,7 @@
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { debug } from 'debug';
-import {
-  FactoryType,
-  GuestAwareType, GuestObjectType,
-  PoolType,
-} from 'patron-oop';
+import { FactoryType, GuestAwareType, GuestObjectType, PoolType } from 'patron-oop';
 
 const localDebug = debug('Cursor');
 
@@ -19,9 +15,9 @@ export class Cursor implements GuestAwareType<PointDocument> {
   public constructor(
     konvaLayer: LayerBase,
     factories: {
-      pool: FactoryType<PoolType>,
-      patron: FactoryType<GuestObjectType>,
-      guest: FactoryType<GuestObjectType>,
+      pool: FactoryType<PoolType>;
+      patron: FactoryType<GuestObjectType>;
+      guest: FactoryType<GuestObjectType>;
     },
   ) {
     this.cursorPool = factories.pool.create(this);

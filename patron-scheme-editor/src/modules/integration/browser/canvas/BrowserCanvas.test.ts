@@ -14,12 +14,16 @@ test('browser canvas', () => {
   const canvas = new BrowserCanvas(factories);
   canvas.give(canvasEL);
 
-  canvas.size(new Guest((size) => {
-    expect(size.width).toBe(300);
-    expect(size.height).toBe(300);
-  }));
+  canvas.size(
+    new Guest((size) => {
+      expect(size.width).toBe(300);
+      expect(size.height).toBe(300);
+    }),
+  );
 
-  canvas.canvas(new Guest((innerCanvas) => {
-    expect(innerCanvas).toBe(canvasEL);
-  }));
+  canvas.canvas(
+    new Guest((innerCanvas) => {
+      expect(innerCanvas).toBe(canvasEL);
+    }),
+  );
 });

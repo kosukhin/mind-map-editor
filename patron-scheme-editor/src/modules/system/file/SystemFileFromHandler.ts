@@ -7,15 +7,16 @@ export class SystemFileFromHandler implements SystemFileType {
   public constructor(private fileHandler: FileSystemFileHandle) {}
 
   public content(target: GuestObjectType<string>) {
-    this.fileHandler.getFile()
-      .then(
-        (file) => this.readFile(file),
-      )
+    this.fileHandler
+      .getFile()
+      .then((file) => this.readFile(file))
       .then((content) => {
         target.give(content);
       })
       .catch((error) => {
-        throw new RuntimeError('Problem when reading file in SystemFileFromHandler', { cause: error });
+        throw new RuntimeError('Problem when reading file in SystemFileFromHandler', {
+          cause: error,
+        });
       });
     return this;
   }

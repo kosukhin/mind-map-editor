@@ -4,8 +4,8 @@ export class MapNameFromUrl {
   public constructor(
     private mapUrl: GuestAwareType<string>,
     private factories: {
-      guest: FactoryType<GuestObjectType>,
-      guestInTheMiddle: FactoryType<GuestObjectType>
+      guest: FactoryType<GuestObjectType>;
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
   ) {}
 

@@ -6,18 +6,21 @@ export class MapTypeUsedNameChangedCheck implements CheckType<MapTypeWithNameDoc
   public constructor(
     private mapTypeUsedCheck: CheckType<MapTypeWithNameDocument>,
     private factories: {
-      guest: FactoryType<GuestObjectType>
+      guest: FactoryType<GuestObjectType>;
     },
   ) {}
 
   check(value: MapTypeWithNameDocument, guest: GuestObjectType<true | string>): this {
-    this.mapTypeUsedCheck.check(value, this.factories.guest.create((result: true | string) => {
-      if (result !== true && value.name !== value.type.name) {
-        guest.give('Нельзя изменять имя типа, который использован!');
-      } else {
-        guest.give(true);
-      }
-    }));
+    this.mapTypeUsedCheck.check(
+      value,
+      this.factories.guest.create((result: true | string) => {
+        if (result !== true && value.name !== value.type.name) {
+          guest.give('Нельзя изменять имя типа, который использован!');
+        } else {
+          guest.give(true);
+        }
+      }),
+    );
     return this;
   }
 }

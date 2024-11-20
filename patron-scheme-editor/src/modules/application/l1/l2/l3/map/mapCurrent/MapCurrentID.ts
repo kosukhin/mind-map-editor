@@ -4,11 +4,7 @@ import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/
 export class MapCurrentID implements MapCurrentIDType {
   private idCache: SourceType<string>;
 
-  public constructor(
-    factories: {
-      cache: FactoryType<SourceType>
-    },
-  ) {
+  public constructor(factories: { cache: FactoryType<SourceType> }) {
     this.idCache = factories.cache.create('current');
   }
 

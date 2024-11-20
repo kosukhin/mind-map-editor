@@ -1,8 +1,6 @@
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { GuestObjectType, FactoryType, GuestAwareType } from 'patron-oop';
-import {
-  ObjectPositionType,
-} from '@/modules/application/l1/l2/l3/l4/types/object/ObjectPositionType';
+import { ObjectPositionType } from '@/modules/application/l1/l2/l3/l4/types/object/ObjectPositionType';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { debug } from 'debug';
@@ -16,7 +14,7 @@ export class ObjectPositionBounds implements ObjectPositionType {
   public constructor(
     private stageSize: GuestAwareType<SizeDocument>,
     private factories: {
-      guestInTheMiddle: FactoryType<GuestObjectType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
   ) {}
 

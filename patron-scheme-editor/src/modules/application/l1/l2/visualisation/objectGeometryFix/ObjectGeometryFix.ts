@@ -24,50 +24,55 @@ export class ObjectGeometryFix implements GuestObjectType<MapObjectDocument[]> {
     private mapFile: MapFileType,
     private map: MapType,
     private factories: {
-      guest: FactoryType<GuestObjectType>,
-      patron: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>;
+      patron: FactoryType<GuestObjectType>;
     },
   ) {
     objectsVisible.objects(factories.patron.create(this));
     this.innerReceive = debounce((value: MapObjectDocument[]) => {
-      this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
-        localDebug('objects to fix', value);
-        const domObjects = document.querySelectorAll('.objects-container .rendered-object');
-        const mapObjects = latestMap.objects;
-        let hasChanges = false;
-        domObjects.forEach((domObject) => {
-          const id = domObject.getAttribute('data-object-id');
-          localDebug('i see id', id);
-          if (!id) {
-            return;
-          }
-          const savedObject = mapObjects[id];
-          if (!savedObject) {
-            return;
-          }
-          localDebug('dom object geometry', domObject.clientWidth, domObject.clientHeight);
-          localDebug('saved object geometry', savedObject.width, savedObject.height);
-          if (savedObject.width !== domObject.clientWidth || savedObject.height !== domObject.clientHeight) {
-            hasChanges = true;
-            localDebug('update object geometry');
-            savedObject.width = domObject.clientWidth;
-            savedObject.height = domObject.clientHeight;
-          }
+      this.mapFile.currentMap(
+        this.factories.guest.create((latestMap: MapDocument) => {
+          localDebug('objects to fix', value);
+          const domObjects = document.querySelectorAll('.objects-container .rendered-object');
+          const mapObjects = latestMap.objects;
+          let hasChanges = false;
+          domObjects.forEach((domObject) => {
+            const id = domObject.getAttribute('data-object-id');
+            localDebug('i see id', id);
+            if (!id) {
+              return;
+            }
+            const savedObject = mapObjects[id];
+            if (!savedObject) {
+              return;
+            }
+            localDebug('dom object geometry', domObject.clientWidth, domObject.clientHeight);
+            localDebug('saved object geometry', savedObject.width, savedObject.height);
+            if (
+              savedObject.width !== domObject.clientWidth ||
+              savedObject.height !== domObject.clientHeight
+            ) {
+              hasChanges = true;
+              localDebug('update object geometry');
+              savedObject.width = domObject.clientWidth;
+              savedObject.height = domObject.clientHeight;
+            }
 
-          if (!savedObject.width || !savedObject.height) {
-            const type = latestMap.types[savedObject.type];
-            savedObject.width = type.width;
-            savedObject.height = type.height;
-          }
-        });
-        // Немного оптимизируем сохраняем сразу все объекты а не по одному
-        if (hasChanges) {
-          this.map.give({
-            ...latestMap,
-            objects: mapObjects,
+            if (!savedObject.width || !savedObject.height) {
+              const type = latestMap.types[savedObject.type];
+              savedObject.width = type.width;
+              savedObject.height = type.height;
+            }
           });
-        }
-      }));
+          // Немного оптимизируем сохраняем сразу все объекты а не по одному
+          if (hasChanges) {
+            this.map.give({
+              ...latestMap,
+              objects: mapObjects,
+            });
+          }
+        }),
+      );
     }, 500);
   }
 

@@ -5,10 +5,9 @@ export class TextWithoutHTML implements TextType {
   public constructor(
     private baseText: TextType,
     private factories: {
-      guestInTheMiddle: FactoryType<GuestObjectType>,
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
-  ) {
-  }
+  ) {}
 
   public asString(guest: GuestObjectType<string>): GuestObjectType {
     this.baseText.asString(

@@ -6,9 +6,7 @@ import { debug } from 'debug';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import {
-  StageMoveRestrictionType,
-} from '@/modules/application/l1/l2/l3/l4/types/stage/StageMoveRestrictionType';
+import { StageMoveRestrictionType } from '@/modules/application/l1/l2/l3/l4/types/stage/StageMoveRestrictionType';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 
 const localDebug = debug('position');
@@ -23,7 +21,7 @@ export class KonvaMove implements StageMoveType {
     private stageSize: GuestAwareType<SizeDocument>,
     private stageMoveRestriction: StageMoveRestrictionType,
     private factories: {
-      guest: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>;
     },
   ) {}
 

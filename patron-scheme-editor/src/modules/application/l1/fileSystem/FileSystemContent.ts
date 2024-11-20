@@ -1,11 +1,7 @@
 import { MapFileContentType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileContentType';
 import { RuntimeError } from '@/modules/system/error/RuntimeError';
-import {
-  NotificationType,
-} from '@/modules/application/l1/l2/visualisation/notification/NotificationType';
-import {
-  BrowserLaunchQueueType,
-} from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueType';
+import { NotificationType } from '@/modules/application/l1/l2/visualisation/notification/NotificationType';
+import { BrowserLaunchQueueType } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueType';
 import { GuestObjectType, FactoryType, PoolType } from 'patron-oop';
 import { SystemFileType } from '@/modules/system/file/SystemFileType';
 import { BrowserFileType } from '@/modules/integration/browser/file/BrowserFileType';
@@ -23,10 +19,10 @@ export class FileSystemContent implements MapFileContentType {
     private launchQueue: BrowserLaunchQueueType,
     private notification: NotificationType,
     private factories: {
-      fileHandlerContent: FactoryType<SystemFileType>,
-      browserFileSaved: FactoryType<BrowserFileType>,
-      guest: FactoryType<GuestObjectType>,
-      pool: FactoryType<PoolType>,
+      fileHandlerContent: FactoryType<SystemFileType>;
+      browserFileSaved: FactoryType<BrowserFileType>;
+      guest: FactoryType<GuestObjectType>;
+      pool: FactoryType<PoolType>;
     },
   ) {
     this.contentPatrons = factories.pool.create(this);
@@ -35,12 +31,11 @@ export class FileSystemContent implements MapFileContentType {
   public content(target: GuestObjectType<string>): this {
     const fileHandlerGuest = this.factories.guest.create((value: FileSystemFileHandle) => {
       this.fileHandler = value;
-      this
-        .factories.fileHandlerContent
-        .create(value)
-        .content(this.factories.guest.create((content: string) => {
+      this.factories.fileHandlerContent.create(value).content(
+        this.factories.guest.create((content: string) => {
           this.contentPatrons.distribute(content, target);
-        }));
+        }),
+      );
     });
 
     if (!this.fileHandler) {

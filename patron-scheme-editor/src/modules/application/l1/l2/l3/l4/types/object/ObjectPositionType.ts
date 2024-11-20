@@ -6,6 +6,6 @@ export interface ObjectPositionType {
   position(
     object: MapObjectDocument,
     point: PointDocument,
-    guest: GuestObjectType<PointDocument>
-  ): GuestObjectType<PointDocument>
+    guest: GuestObjectType<PointDocument>,
+  ): GuestObjectType<PointDocument>;
 }

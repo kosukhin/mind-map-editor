@@ -11,18 +11,15 @@ export class ControlCombo {
   public constructor(
     private keyboard: Keyboard,
     private factories: {
-      guest: FactoryType<GuestObjectType>,
-      guestInTheMiddle: FactoryType<GuestObjectType>,
+      guest: FactoryType<GuestObjectType>;
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
   ) {}
 
   /**
    * Случилась комбинация ctrl + keyCode
    */
-  public happened(
-    keyCode: string,
-    eventGuest: GuestObjectType<KeyboardEvent>,
-  ) {
+  public happened(keyCode: string, eventGuest: GuestObjectType<KeyboardEvent>) {
     this.keyboard.event(
       this.factories.guestInTheMiddle.create(eventGuest, (e: KeyboardEvent) => {
         localDebug('combo happened look for key', keyCode, 'received', e.code);

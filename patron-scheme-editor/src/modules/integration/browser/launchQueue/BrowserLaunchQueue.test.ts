@@ -17,7 +17,9 @@ test('browser launch queue', () => {
 
   const queue = new BrowserLaunchQueue(launchQueueStub, true);
 
-  queue.fileHandler(new Guest((value) => {
-    expect((value as any).fileHandlerStub).toBe(true);
-  }));
+  queue.fileHandler(
+    new Guest((value) => {
+      expect((value as any).fileHandlerStub).toBe(true);
+    }),
+  );
 });

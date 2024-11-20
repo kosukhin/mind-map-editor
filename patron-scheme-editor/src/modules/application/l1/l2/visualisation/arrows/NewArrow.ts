@@ -1,6 +1,9 @@
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import {
-  GuestAwareType, FactoryType, SourceType, GuestObjectType,
+  GuestAwareType,
+  FactoryType,
+  SourceType,
+  GuestObjectType,
   removePatronFromPools,
 } from 'patron-oop';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
@@ -30,9 +33,9 @@ export class NewArrow {
     private cursorPosition: GuestAwareType<PointDocument>,
     private arrowPath: ArrowPathType,
     private factories: {
-      sourceEmpty: FactoryType<SourceType>,
-      patron: FactoryType<GuestObjectType>,
-      guest: FactoryType<GuestObjectType>,
+      sourceEmpty: FactoryType<SourceType>;
+      patron: FactoryType<GuestObjectType>;
+      guest: FactoryType<GuestObjectType>;
     },
   ) {
     this.cursorGuest = this.factories.sourceEmpty.create();

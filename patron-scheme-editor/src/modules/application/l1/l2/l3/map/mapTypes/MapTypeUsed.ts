@@ -13,16 +13,20 @@ export class MapTypeUsed implements CheckType<MapTypeWithNameDocument> {
   public constructor(
     private mapFile: MapFileType,
     private factories: {
-      guest: FactoryType<GuestObjectType>
+      guest: FactoryType<GuestObjectType>;
     },
   ) {}
 
   check(value: MapTypeWithNameDocument, guest: GuestObjectType<true | string>): this {
-    this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
-      const isTypeUsed = Object.values(latestMap.objects).some((object) => object.type === value.name);
-      localDebug('is type used', isTypeUsed);
-      guest.give(!isTypeUsed || 'Тип карты использован');
-    }));
+    this.mapFile.currentMap(
+      this.factories.guest.create((latestMap: MapDocument) => {
+        const isTypeUsed = Object.values(latestMap.objects).some(
+          (object) => object.type === value.name,
+        );
+        localDebug('is type used', isTypeUsed);
+        guest.give(!isTypeUsed || 'Тип карты использован');
+      }),
+    );
     return this;
   }
 }

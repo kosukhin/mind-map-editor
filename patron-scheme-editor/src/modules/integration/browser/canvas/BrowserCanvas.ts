@@ -10,8 +10,8 @@ export class BrowserCanvas implements BrowserCanvasType {
 
   public constructor(
     private factories: {
-      sourceEmpty: FactoryType<SourceType>,
-      guestInTheMiddle: FactoryType<GuestObjectType>,
+      sourceEmpty: FactoryType<SourceType>;
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
   ) {
     this.canvasCache = factories.sourceEmpty.create();
@@ -23,15 +23,17 @@ export class BrowserCanvas implements BrowserCanvasType {
   }
 
   public size(guest: GuestObjectType<SizeDocument>): this {
-    this.canvasCache.value(this.factories.guestInTheMiddle.create(guest, (value: HTMLCanvasElement) => {
-      const width = value.width || value.clientWidth;
-      const height = value.height || value.clientHeight;
-      localDebug('canvas size', width, height);
-      guest.give({
-        height,
-        width,
-      });
-    }));
+    this.canvasCache.value(
+      this.factories.guestInTheMiddle.create(guest, (value: HTMLCanvasElement) => {
+        const width = value.width || value.clientWidth;
+        const height = value.height || value.clientHeight;
+        localDebug('canvas size', width, height);
+        guest.give({
+          height,
+          width,
+        });
+      }),
+    );
     return this;
   }
 

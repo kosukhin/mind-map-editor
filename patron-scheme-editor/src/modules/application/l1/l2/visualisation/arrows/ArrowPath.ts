@@ -16,7 +16,11 @@ export class ArrowPath implements ArrowPathType {
     this.filledPoints.clear();
   }
 
-  public breakPoints(fromPoint: ArrowPointDocument, toPoint: ArrowPointDocument, pointsGuest: GuestObjectType<number[]>): this {
+  public breakPoints(
+    fromPoint: ArrowPointDocument,
+    toPoint: ArrowPointDocument,
+    pointsGuest: GuestObjectType<number[]>,
+  ): this {
     const startPoint = this.arrowPointPosition(
       fromPoint.shapeGeometry,
       fromPoint.shapePosition,
@@ -99,7 +103,7 @@ export class ArrowPath implements ArrowPathType {
     }
 
     const pointKey = [x, y].join('-');
-    const pointsCount = this.filledPoints.get((pointKey)) || 0;
+    const pointsCount = this.filledPoints.get(pointKey) || 0;
     this.filledPoints.set(pointKey, pointsCount + 1);
 
     return {

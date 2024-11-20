@@ -12,9 +12,9 @@ export class SvgImage implements SvgImageType {
 
   public markup(): string {
     return this.svgContent
-      // eslint-disable-next-line no-template-curly-in-string
+
       .replaceAll('${width}', String(this.width))
-      // eslint-disable-next-line no-template-curly-in-string
+
       .replaceAll('${height}', String(this.height));
   }
 }

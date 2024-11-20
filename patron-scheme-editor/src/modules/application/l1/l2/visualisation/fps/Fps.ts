@@ -9,17 +9,18 @@ export class Fps {
     let last = performance.now();
     let ticks = 0;
 
-    const doFrameMeasure = () => requestAnimationFrame((() => {
-      ticks += 1;
-      if (ticks >= every) {
-        const now = performance.now();
-        const diff = now - last;
-        guest.give(Math.round(1000 / (diff / ticks)));
-        last = now;
-        ticks = 0;
-      }
-      doFrameMeasure();
-    }));
+    const doFrameMeasure = () =>
+      requestAnimationFrame(() => {
+        ticks += 1;
+        if (ticks >= every) {
+          const now = performance.now();
+          const diff = now - last;
+          guest.give(Math.round(1000 / (diff / ticks)));
+          last = now;
+          ticks = 0;
+        }
+        doFrameMeasure();
+      });
     doFrameMeasure();
 
     return guest;

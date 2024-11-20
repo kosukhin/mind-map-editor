@@ -6,7 +6,7 @@ export class StagePositionByObjectId {
   public constructor(
     private stageMove: StageMoveType,
     private factories: {
-      guest: FactoryType<GuestObjectType>
+      guest: FactoryType<GuestObjectType>;
     },
   ) {}
 

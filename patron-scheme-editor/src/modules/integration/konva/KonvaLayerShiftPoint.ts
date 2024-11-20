@@ -11,7 +11,7 @@ export class KonvaLayerShiftPoint implements StagePositionType {
   public constructor(
     private konvaLayer: KonvaLayer,
     private factories: {
-      guestInTheMiddle: FactoryType<GuestObjectType>
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
   ) {}
 

@@ -2,9 +2,7 @@ import { BrowserFileType } from '@/modules/integration/browser/file/BrowserFileT
 import { GuestAwareType, GuestObjectType } from 'patron-oop';
 
 export class BrowserFileFake implements BrowserFileType, GuestAwareType<string> {
-  public constructor(
-    private theContent: string = '',
-  ) {}
+  public constructor(private theContent: string = '') {}
 
   save(content: string): this {
     this.theContent = content;

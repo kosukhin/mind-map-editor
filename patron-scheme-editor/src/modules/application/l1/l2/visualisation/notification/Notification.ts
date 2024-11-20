@@ -14,11 +14,7 @@ export class Notification implements NotificationType {
 
   private lastTimerHead: NodeJS.Timeout | null = null;
 
-  public constructor(
-    factories: {
-      sourceEmpty: FactoryType<SourceType<unknown>>,
-    },
-  ) {
+  public constructor(factories: { sourceEmpty: FactoryType<SourceType<unknown>> }) {
     this.messageCache = factories.sourceEmpty.create();
   }
 

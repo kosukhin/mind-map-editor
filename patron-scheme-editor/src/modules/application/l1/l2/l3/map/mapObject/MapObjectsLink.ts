@@ -12,7 +12,7 @@ const localDebug = debug('MapObjectsLink');
  * Связь нескольких объектов стрелкой
  */
 export class MapObjectsLink {
-  private objectIdsCache: SourceType<string[]>
+  private objectIdsCache: SourceType<string[]>;
 
   public constructor(
     private mapObjectCurrent: MapObjectCurrent,
@@ -20,9 +20,9 @@ export class MapObjectsLink {
     private mapObject: MapObjectType,
     private newArrow: NewArrow,
     private factories: {
-      guest: FactoryType<GuestObjectType>,
-      cache: FactoryType<SourceType>,
-      guestInTheMiddle: FactoryType<GuestObjectType>
+      guest: FactoryType<GuestObjectType>;
+      cache: FactoryType<SourceType>;
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
   ) {
     this.objectIdsCache = factories.cache.create([]);

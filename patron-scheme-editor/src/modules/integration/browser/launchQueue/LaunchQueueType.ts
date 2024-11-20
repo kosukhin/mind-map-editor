@@ -1,5 +1,5 @@
 export interface LaunchParamsType {
-  files: FileSystemFileHandle[]
+  files: FileSystemFileHandle[];
 }
 
 export interface LaunchQueueType {

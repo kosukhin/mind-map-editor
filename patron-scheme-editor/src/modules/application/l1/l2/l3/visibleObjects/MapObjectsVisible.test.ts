@@ -5,9 +5,7 @@ import { useFactories } from '@/composables/useFactories';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapFileFake } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileFake';
 import { StageDefaultSize } from '@/modules/application/l1/l2/l3/stage/StageDefaultSize';
-import {
-  StageMoveRestrictionTransfer,
-} from '@/modules/application/l1/l2/l3/stage/StageMoveRestrictionTransfer';
+import { StageMoveRestrictionTransfer } from '@/modules/application/l1/l2/l3/stage/StageMoveRestrictionTransfer';
 import { MapObjectsVisible } from '@/modules/application/l1/l2/l3/visibleObjects/MapObjectsVisible';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
@@ -67,7 +65,11 @@ test('visible object', () => {
   const layer = new KonvaLayer(browserCanvas, stageSize, stageMoveRestriction, factories);
   const mapObjects = new MapObjectsVisible(layer, browserCanvas, mapFileFake, factories);
 
-  mapObjects.objects(new Patron(new Guest((objects) => {
-    expect(objects.length).toBe(1);
-  })));
+  mapObjects.objects(
+    new Patron(
+      new Guest((objects) => {
+        expect(objects.length).toBe(1);
+      }),
+    ),
+  );
 });

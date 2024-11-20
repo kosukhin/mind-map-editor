@@ -35,7 +35,9 @@ test('map settings', () => {
     title: 'changed',
   });
 
-  fake.mapFile(new Guest((mapFile: MapFileDocument) => {
-    expect(mapFile.current.settings.title).toBe('changed');
-  }));
+  fake.mapFile(
+    new Guest((mapFile: MapFileDocument) => {
+      expect(mapFile.current.settings.title).toBe('changed');
+    }),
+  );
 });

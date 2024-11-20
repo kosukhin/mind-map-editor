@@ -1,6 +1,4 @@
-import {
-  GuestObjectType, FactoryType, SourceType, GuestAwareType,
-} from 'patron-oop';
+import { GuestObjectType, FactoryType, SourceType, GuestAwareType } from 'patron-oop';
 import { debug } from 'debug';
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 
@@ -12,11 +10,11 @@ export class Drawer implements GuestObjectType<string> {
   public constructor(
     private keyboard: Keyboard,
     private factories: {
-      cache: FactoryType<SourceType>,
-      guestInTheMiddle: FactoryType<GuestObjectType>,
-      patron: FactoryType<GuestObjectType>,
-      guest: FactoryType<GuestObjectType>,
-      guestAware: FactoryType<GuestAwareType>
+      cache: FactoryType<SourceType>;
+      guestInTheMiddle: FactoryType<GuestObjectType>;
+      patron: FactoryType<GuestObjectType>;
+      guest: FactoryType<GuestObjectType>;
+      guestAware: FactoryType<GuestAwareType>;
     },
   ) {
     this.drawerNameCache = factories.cache.create('');
@@ -43,11 +41,9 @@ export class Drawer implements GuestObjectType<string> {
   }
 
   public openedByName(name: string): GuestAwareType<boolean> {
-    return this.factories.guestAware.create(
-      (guest: GuestObjectType<boolean>) => {
-        this.isOpenedByName(name, guest);
-      },
-    );
+    return this.factories.guestAware.create((guest: GuestObjectType<boolean>) => {
+      this.isOpenedByName(name, guest);
+    });
   }
 
   public give(value: string): this {

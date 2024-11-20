@@ -27,9 +27,11 @@ test('map current', () => {
   const factories = useFactories();
   const fake = new MapFileFake(defaultMapFileDocument);
   const map = new MapCurrent(fake, new MapCurrentID(factories), factories);
-  map.objects(new Guest((objects: MapObjectDocument[]) => {
-    expect(objects.length).toBe(0);
-  }));
+  map.objects(
+    new Guest((objects: MapObjectDocument[]) => {
+      expect(objects.length).toBe(0);
+    }),
+  );
 
   map.give({
     ...defaultMapFileDocument.current,
@@ -57,7 +59,9 @@ test('map current', () => {
     },
   });
 
-  map.objects(new Guest((objects: MapObjectDocument[]) => {
-    expect(objects.length).toBe(1);
-  }));
+  map.objects(
+    new Guest((objects: MapObjectDocument[]) => {
+      expect(objects.length).toBe(1);
+    }),
+  );
 });

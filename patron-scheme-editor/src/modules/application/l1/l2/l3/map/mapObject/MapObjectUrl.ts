@@ -1,7 +1,5 @@
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import {
-  GuestObjectType, FactoryType, GuestAwareType, SourceType,
-} from 'patron-oop';
+import { GuestObjectType, FactoryType, GuestAwareType, SourceType } from 'patron-oop';
 import { slugify } from 'transliteration';
 import debounce from 'lodash/debounce';
 import { debug } from 'debug';
@@ -28,11 +26,11 @@ export class MapObjectUrl {
   public constructor(
     private mapId: MapCurrentIDType,
     private factories: {
-      guest: FactoryType<GuestObjectType>,
-      guestInTheMiddle: FactoryType<GuestObjectType>,
-      source: FactoryType<SourceType>,
-      mapNameFromUrl: FactoryType<MapNameFromUrl>,
-      textNoHtml: FactoryType<TextNoHtml>
+      guest: FactoryType<GuestObjectType>;
+      guestInTheMiddle: FactoryType<GuestObjectType>;
+      source: FactoryType<SourceType>;
+      mapNameFromUrl: FactoryType<MapNameFromUrl>;
+      textNoHtml: FactoryType<TextNoHtml>;
     },
   ) {}
 
@@ -58,29 +56,25 @@ export class MapObjectUrl {
     return this;
   }
 
-  public url<R extends GuestObjectType<string>>(theObject: GuestAwareType<MapObjectDocument>, guest: R) {
+  public url<R extends GuestObjectType<string>>(
+    theObject: GuestAwareType<MapObjectDocument>,
+    guest: R,
+  ) {
     theObject.value(
       this.factories.guestInTheMiddle.create(guest, (object: MapObjectDocument) => {
         this.mapId.id(
           this.factories.guest.create((mapId: string) => {
             const baseUrl = mapId[0] === '_' ? mapId.replaceAll('_', '/') : '/current';
-            // eslint-disable-next-line no-nested-ternary
+
             const name = object.name
               ? object.name
               : object.additionalName
                 ? object.additionalName
                 : '';
 
-            this.factories.textNoHtml.create(
-              this.factories.source.create(name),
-            ).noHtml(
+            this.factories.textNoHtml.create(this.factories.source.create(name)).noHtml(
               this.factories.guest.create((noHtmlName: string) => {
-                let link = object.outlink
-                  ? object.outlink
-                  : `${baseUrl}/${
-                    slugify(
-                      noHtmlName,
-                    )}`;
+                let link = object.outlink ? object.outlink : `${baseUrl}/${slugify(noHtmlName)}`;
                 localDebug('link is', link);
                 link = urlTrim(link);
                 guest.give(link);

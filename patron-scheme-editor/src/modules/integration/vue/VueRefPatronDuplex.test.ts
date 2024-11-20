@@ -10,8 +10,10 @@ test('vue ref duplex', () => {
   source.data(patron);
   patron.ref().value = 2;
   queueMicrotask(() => {
-    source.data(new Guest((value) => {
-      expect(value).toBe(2);
-    }));
+    source.data(
+      new Guest((value) => {
+        expect(value).toBe(2);
+      }),
+    );
   });
 });

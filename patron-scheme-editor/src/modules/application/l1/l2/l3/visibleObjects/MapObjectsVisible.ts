@@ -1,6 +1,4 @@
-import {
-  SourceEmpty, GuestObjectType, FactoryType, ChainType,
-} from 'patron-oop';
+import { SourceEmpty, GuestObjectType, FactoryType, ChainType } from 'patron-oop';
 import {
   MapDocument,
   MapObjectDocument,
@@ -14,7 +12,11 @@ import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/Poin
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 
 const localDebug = debug('app:MapObjectsVisible');
-type ChainGuestExecutor = (props: {position: PointDocument, size: SizeDocument, map: MapDocument}) => void;
+type ChainGuestExecutor = (props: {
+  position: PointDocument;
+  size: SizeDocument;
+  map: MapDocument;
+}) => void;
 
 /**
  * Объект для определения видимых объектов
@@ -27,9 +29,9 @@ export class MapObjectsVisible implements MapObjectsType {
     canvas: BrowserCanvas,
     mapFile: MapFileType,
     factories: {
-      chain: FactoryType<ChainType<unknown>>,
-      patron: FactoryType<GuestObjectType<unknown>>,
-      guest: FactoryType<GuestObjectType<unknown>>,
+      chain: FactoryType<ChainType<unknown>>;
+      patron: FactoryType<GuestObjectType<unknown>>;
+      guest: FactoryType<GuestObjectType<unknown>>;
     },
   ) {
     localDebug('constructor initialized');
@@ -37,23 +39,25 @@ export class MapObjectsVisible implements MapObjectsType {
     canvas.size(factories.patron.create(chain.receiveKey('size')));
     layerDep.position(factories.patron.create(chain.receiveKey('position')));
     mapFile.currentMap(factories.patron.create(chain.receiveKey('map')));
-    chain.result(factories.patron.create(
-      factories.guest.create<[ChainGuestExecutor]>(({ position, size, map }) => {
-        const objects = Object.values(map.objects);
-        localDebug('objects come to result', objects);
+    chain.result(
+      factories.patron.create(
+        factories.guest.create<[ChainGuestExecutor]>(({ position, size, map }) => {
+          const objects = Object.values(map.objects);
+          localDebug('objects come to result', objects);
 
-        const visibleObjects = objects.filter((object) => {
-          const type = map.types[object.type] ?? {};
-          const objectSize = {
-            width: object.width || type.width,
-            height: object.height || type.height,
-          };
-          return this.isInBounding(position, size, object.position, objectSize);
-        });
-        localDebug('visible objects calculated', visibleObjects);
-        this.visibleObjectsCache.give(visibleObjects);
-      }),
-    ));
+          const visibleObjects = objects.filter((object) => {
+            const type = map.types[object.type] ?? {};
+            const objectSize = {
+              width: object.width || type.width,
+              height: object.height || type.height,
+            };
+            return this.isInBounding(position, size, object.position, objectSize);
+          });
+          localDebug('visible objects calculated', visibleObjects);
+          this.visibleObjectsCache.give(visibleObjects);
+        }),
+      ),
+    );
   }
 
   public objects(guest: GuestObjectType<MapObjectDocument[]>) {
@@ -72,19 +76,13 @@ export class MapObjectsVisible implements MapObjectsType {
     const stageStartY = layerPosition.y;
     const stageEndY = layerPosition.y - size.height;
     const [objectX, objectY] = position;
-    localDebug(
-      'bounding vars',
-      stageStartX,
-      stageEndX,
-      stageStartY,
-      stageEndY,
-    );
+    localDebug('bounding vars', stageStartX, stageEndX, stageStartY, stageEndY);
     localDebug('object position', position);
     return (
-      stageStartX > -objectX - objectSize.width
-      && -objectX > stageEndX
-      && stageStartY > -objectY - objectSize.height
-      && -objectY > stageEndY
+      stageStartX > -objectX - objectSize.width &&
+      -objectX > stageEndX &&
+      stageStartY > -objectY - objectSize.height &&
+      -objectY > stageEndY
     );
   }
 }

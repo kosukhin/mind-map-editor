@@ -4,7 +4,7 @@ export class TextNoHtml {
   public constructor(
     private text: GuestAwareType<string>,
     private factories: {
-      guestInTheMiddle: FactoryType<GuestObjectType>
+      guestInTheMiddle: FactoryType<GuestObjectType>;
     },
   ) {}
 

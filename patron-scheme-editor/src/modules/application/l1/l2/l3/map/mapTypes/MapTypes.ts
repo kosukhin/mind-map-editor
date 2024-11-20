@@ -5,9 +5,7 @@ import {
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
-import {
-  CheckNotificationType,
-} from '@/modules/application/l1/l2/l3/map/checks/CheckNotificationType';
+import { CheckNotificationType } from '@/modules/application/l1/l2/l3/map/checks/CheckNotificationType';
 
 /**
  * Объект для сохранения типов узлов карты
@@ -18,8 +16,8 @@ export class MapTypes implements GuestObjectType<MapTypeWithNameDocument> {
     private mapFile: MapFileType,
     private checks: CheckNotificationType<MapTypeWithNameDocument>[],
     private factories: {
-      guest: FactoryType<GuestObjectType>,
-      chain: FactoryType<ChainType>
+      guest: FactoryType<GuestObjectType>;
+      chain: FactoryType<ChainType>;
     },
   ) {}
 
@@ -29,18 +27,22 @@ export class MapTypes implements GuestObjectType<MapTypeWithNameDocument> {
       check.breakOnFail(value, checksChain.receiveKey(String(index)));
     });
 
-    checksChain.result(this.factories.guest.create(() => {
-      this.mapFile.currentMap(this.factories.guest.create((latestMap: MapDocument) => {
-        delete latestMap.types[value.name];
-        this.map.give({
-          ...latestMap,
-          types: {
-            ...latestMap.types,
-            [value.type.name]: value.type,
-          },
-        });
-      }));
-    }));
+    checksChain.result(
+      this.factories.guest.create(() => {
+        this.mapFile.currentMap(
+          this.factories.guest.create((latestMap: MapDocument) => {
+            delete latestMap.types[value.name];
+            this.map.give({
+              ...latestMap,
+              types: {
+                ...latestMap.types,
+                [value.type.name]: value.type,
+              },
+            });
+          }),
+        );
+      }),
+    );
 
     return this;
   }

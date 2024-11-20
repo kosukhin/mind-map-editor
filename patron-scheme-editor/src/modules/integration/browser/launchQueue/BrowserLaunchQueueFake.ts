@@ -1,6 +1,4 @@
-import {
-  BrowserLaunchQueueType,
-} from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueType';
+import { BrowserLaunchQueueType } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueType';
 import { GuestObjectType } from 'patron-oop';
 
 export class BrowserLaunchQueueFake implements BrowserLaunchQueueType {
