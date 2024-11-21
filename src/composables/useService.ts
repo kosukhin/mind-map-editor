@@ -1,3 +1,4 @@
+import { FSHtmlContent } from '@/modules/FSHtmlContent';
 import {
   useApplication,
   useFactories,
@@ -10,13 +11,16 @@ import {
 const factories = useFactories();
 const { notification } = useApplication();
 
+const fsContent = new FileSystemContent(
+  new BrowserLaunchQueue(),
+  notification,
+  factories,
+);
+
 const fileContent = new FirstPossibleFileContent([
   new UrlContent(notification, factories),
-  new FileSystemContent(
-    new BrowserLaunchQueue(),
-    notification,
-    factories,
-  ),
+  new FSHtmlContent(fsContent),
+  fsContent,
 ], factories);
 
 const modules = {
