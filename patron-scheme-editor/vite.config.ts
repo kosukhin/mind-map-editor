@@ -2,9 +2,16 @@ import vue from '@vitejs/plugin-vue';
 import path, { resolve } from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import EnvironmentPlugin from 'vite-plugin-environment';
 
 export default defineConfig({
-  plugins: [vue(), dts({ rollupTypes: true })],
+  plugins: [
+    vue(),
+    dts({ rollupTypes: true }),
+    EnvironmentPlugin({
+      NODE_ENV: 'production',
+    }),
+  ],
   build: {
     lib: {
       name: 'patron',

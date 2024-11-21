@@ -4,7 +4,7 @@ import { useFactories } from '@/composables/useFactories';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useApplication } from '@/composables/useApplication';
 
 const {
@@ -12,7 +12,7 @@ const {
 } = useFactories();
 const { mapType } = useApplication();
 
-const presets = jsonp.create('onPresets', '/data/presets.js', []).content(new VueRefPatron<MapTypeDocument[]>([])).ref();
+const presets = ref<any[]>([])
 
 const presetsExtended = computed(() => presets.value.map((preset) => ({
   preset,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch } from 'vue';
+import { provide, watch } from 'vue';
 import TheHeader from '@/components/TheHeader/TheHeader.vue';
 import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
 import TheEditor from '@/components/TheEditor/TheEditor.vue';
@@ -41,6 +41,7 @@ watch(() => props.modelValue, (value) => {
 fileContent.value(patron.create((newValue: string) => {
   emit('update:modelValue', newValue);
 }));
+
 </script>
 
 <template>
