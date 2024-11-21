@@ -916,6 +916,10 @@ modelValue: {
 type: StringConstructor;
 required: true;
 };
+readonly: {
+type: BooleanConstructor;
+default: boolean;
+};
 }, {}, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {
 "update:modelValue": (...args: any[]) => void;
 }, string, PublicProps, Readonly<ExtractPropTypes<    {
@@ -923,9 +927,15 @@ modelValue: {
 type: StringConstructor;
 required: true;
 };
+readonly: {
+type: BooleanConstructor;
+default: boolean;
+};
 }>> & {
 "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
-}, {}, {}>;
+}, {
+readonly: boolean;
+}, {}>;
 
 /**
  * Данные для точки с координатами
@@ -1160,6 +1170,9 @@ export declare const useApplication: () => {
     fileContent: Source<any>;
     newArrow: NewArrow;
     objectsOutsideScreen: ObjectsOutsideScreen;
+    settings: Source<{
+        readonly: boolean;
+    }>;
 };
 
 export declare const useFactories: () => {
@@ -1193,6 +1206,7 @@ export declare const useFactories: () => {
 export declare class VueRefPatron<T> implements GuestObjectType<T> {
     private readonly innerRef;
     constructor(defaultValue?: T | undefined);
+    get value(): T;
     ref<CT = undefined>(): Ref<CT extends undefined ? T : CT>;
     give(value: T): this;
     introduction(): "patron";
