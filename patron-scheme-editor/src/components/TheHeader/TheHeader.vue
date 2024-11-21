@@ -5,9 +5,10 @@ import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { useFactories } from '@/composables/useFactories';
+import { EditorSettings } from '@/modules/application/l1/l2/l3/l4/editor/EditorSettings';
 
 const {
-  drawer, modal, mapHistory, controlCombo,
+  drawer, modal, mapHistory, controlCombo, settings: appSettings
 } = useApplication();
 const { patron, guest } = useFactories();
 
@@ -30,6 +31,9 @@ controlCombo.happened(
     }
   })),
 );
+
+const settings = new VueRefPatron<EditorSettings>();
+appSettings.value(settings);
 </script>
 
 <template>
@@ -37,7 +41,7 @@ controlCombo.happened(
     <BaseBreadcrumbs class="TheHeader-Breadcrumbs" />
     <div class="ml-auto gap-1 flex">
       <BaseButton
-        v-if="isNextPossible"
+        v-if="isNextPossible && !settings.value.readonly"
         size="sm"
         title="Отменить последнее действие"
         class="w-7 block"
@@ -46,7 +50,7 @@ controlCombo.happened(
         <BaseIcon icon="fa-rotate-left" />
       </BaseButton>
       <BaseButton
-        v-if="isPrevPossible"
+        v-if="isPrevPossible && !settings.value.readonly"
         size="sm"
         title="Вернуть отмененное действие"
         class="w-7 block"

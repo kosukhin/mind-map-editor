@@ -5,6 +5,7 @@ import BaseIcon from '@/components/BaseIcon/BaseIcon.vue';
 import TheLinker from '@/components/TheLinker/TheLinker.vue';
 import { useApplication } from '@/composables/useApplication';
 import { useFactories } from '@/composables/useFactories';
+import { EditorSettings } from '@/modules/application/l1/l2/l3/l4/editor/EditorSettings';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { computed } from 'vue';
@@ -16,6 +17,7 @@ const {
   mapTypeRemoved,
   mapTypeNew,
   modal,
+  settings: appSettings
 } = useApplication();
 
 const types = mapCurrent.types(new VueRefPatron<MapTypeDocument[]>()).ref();
@@ -25,6 +27,9 @@ const typesExtended = computed(() => types.value?.map((type) => ({
   type,
   image: svgMapTypeImage.create(type).markup(),
 })).sort((a, b) => +(a.type.name >= b.type.name)));
+
+const settings = new VueRefPatron<EditorSettings>();
+appSettings.value(settings);
 </script>
 
 <template>
@@ -44,7 +49,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
           :title="$t('general.notifications.dragToCanvasToAdd')"
           @dragend="mapObjectNew.byTypeName(type.type.id, $event)"
         ></div>
-        <div class="flex gap-1">
+        <div class="flex gap-1" v-if="!settings.value.readonly">
           <BaseButton
             class="text-white"
             size="sm"
@@ -64,7 +69,7 @@ const typesExtended = computed(() => types.value?.map((type) => ({
         </div>
       </div>
     </div>
-    <div class="mt-auto w-full p-3 pt-0">
+    <div class="mt-auto w-full p-3 pt-0" v-if="!settings.value.readonly">
       <BaseGroup class="mb-1 grid gap-1 grid-cols-2">
         <BaseButton
           :title="$t('general.addType')"

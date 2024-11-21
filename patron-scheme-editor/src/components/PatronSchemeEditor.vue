@@ -1,32 +1,40 @@
 <script setup lang="ts">
-import { provide, watch } from 'vue';
-import TheHeader from '@/components/TheHeader/TheHeader.vue';
-import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
-import TheEditor from '@/components/TheEditor/TheEditor.vue';
-import TheMiniMap from '@/components/TheMiniMap/TheMiniMap.vue';
+import AppFileMaps from '@/components/AppFileMaps/AppFileMaps.vue';
+import AppMenuObject from '@/components/AppMenuObject/AppMenuObject.vue';
+import AppPresets from '@/components/AppPresets/AppPresets.vue';
+import AppSearch from '@/components/AppSearch/AppSearch.vue';
+import AppTypesParent from '@/components/AppTypesParent/AppTypesParent.vue';
 import FormObject from '@/components/FormObject/FormObject.vue';
 import FormType from '@/components/FormType/FormType.vue';
-import FormSettings from '@/components/TheSettings/FormSettings.vue';
-import AppPresets from '@/components/AppPresets/AppPresets.vue';
-import AppTypesParent from '@/components/AppTypesParent/AppTypesParent.vue';
-import AppMenuObject from '@/components/AppMenuObject/AppMenuObject.vue';
+import TheEditor from '@/components/TheEditor/TheEditor.vue';
+import TheHeader from '@/components/TheHeader/TheHeader.vue';
 import TheMapAsText from '@/components/TheMapAsText/TheMapAsText.vue';
-import AppSearch from '@/components/AppSearch/AppSearch.vue';
-import AppFileMaps from '@/components/AppFileMaps/AppFileMaps.vue';
+import TheMiniMap from '@/components/TheMiniMap/TheMiniMap.vue';
+import FormSettings from '@/components/TheSettings/FormSettings.vue';
+import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
 import { useApplication } from '@/composables/useApplication';
 import { useFactories } from '@/composables/useFactories';
+import { watch } from 'vue';
 
 const props = defineProps({
   modelValue: {
     type: String,
     required: true,
   },
+  readonly: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const emit = defineEmits(['update:modelValue']);
 
-const { fileContent } = useApplication();
+const { fileContent, settings } = useApplication();
 const { guest, patron } = useFactories();
+
+settings.value((lastSettings) => {
+  settings.give({ ...lastSettings, readonly: props.readonly });
+})
 
 watch(() => props.modelValue, (value) => {
   fileContent.value(guest.create((oldValue: string) => {

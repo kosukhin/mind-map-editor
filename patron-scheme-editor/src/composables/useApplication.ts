@@ -57,7 +57,7 @@ import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { KonvaLayerShiftPoint } from '@/modules/integration/konva/KonvaLayerShiftPoint';
 import { KonvaMove } from '@/modules/integration/konva/KonvaMove';
-import { GuestAware, GuestObject } from 'patron-oop';
+import { GuestAware, GuestObject, Source } from 'patron-oop';
 
 const factories = useFactories();
 
@@ -171,6 +171,9 @@ const stagePositionByObjectId = new StagePositionByObjectId(konvaMove, factories
 const objectsMatchedToQuery = new ObjectsMatchedToQuery(mapCurrent, factories);
 const mapHistory = new MapHistory(mapFile, mapCurrent, mapCurrentID, factories);
 const objectsOutsideScreen = new ObjectsOutsideScreen(mapCurrent, stageSize, konvaLayer, factories);
+const settings = new Source({
+  readonly: false,
+});
 
 const modules = {
   mapCurrentID,
@@ -218,6 +221,7 @@ const modules = {
   fileContent,
   newArrow,
   objectsOutsideScreen,
+  settings,
 };
 
 export const useApplication = () => modules;
