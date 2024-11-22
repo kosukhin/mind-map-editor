@@ -69,7 +69,7 @@ export class FileSystemContent implements MapFileContentType {
   public canBeUsed(guest: GuestObjectType<boolean>) {
     const canBeUsed = 'launchQueue' in window;
     localDebug('can be used', canBeUsed);
-    const matches = window.matchMedia('(display-mode: standalone)');
+    const matches = window && window.matchMedia('(display-mode: standalone)');
     guest.give(canBeUsed && matches.matches);
     return guest;
   }

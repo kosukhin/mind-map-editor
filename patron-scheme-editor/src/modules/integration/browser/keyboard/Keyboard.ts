@@ -13,7 +13,7 @@ export class Keyboard {
     localDebug('keyboard created');
     this.pressedPool = factories.pool.create(this);
     this.combinationsPool = factories.pool.create(this);
-    window.addEventListener('keyup', (e) => {
+    window?.addEventListener('keyup', (e) => {
       localDebug('keyboard pressed', e.key);
       this.pressedPool.give(e.key);
     });

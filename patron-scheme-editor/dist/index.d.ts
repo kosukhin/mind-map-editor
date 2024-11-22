@@ -78,6 +78,8 @@ declare interface BrowserFileType {
 export declare class BrowserLaunchQueue implements BrowserLaunchQueueType {
     private launchQueue;
     private isLaunchQueueSupported;
+    private fileHandle;
+    private isCalculated;
     constructor(launchQueue?: LaunchQueueType, isLaunchQueueSupported?: boolean);
     fileHandler(guest: GuestObjectType<FileSystemFileHandle>): this;
 }
@@ -1119,7 +1121,7 @@ export declare class UrlContent implements MapFileContentType {
         guest: FactoryType<GuestObjectType>;
         patronOnce: FactoryType<GuestObjectType>;
     });
-    canBeUsed(guest: GuestObjectType<boolean>): GuestObjectType<boolean>;
+    canBeUsed(guest: GuestObjectType<boolean>): GuestObjectType<boolean> | this;
     content(target: GuestObjectType<string>): this;
     give(): this;
 }

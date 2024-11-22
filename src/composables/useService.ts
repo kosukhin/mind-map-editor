@@ -1,4 +1,5 @@
 import { FSHtmlContent } from '@/modules/FSHtmlContent';
+import { FSJsonContent } from '@/modules/FSJsonContent';
 import {
   useApplication,
   useFactories,
@@ -11,16 +12,17 @@ import {
 const factories = useFactories();
 const { notification } = useApplication();
 
+const launchQueue = new BrowserLaunchQueue();
 const fsContent = new FileSystemContent(
-  new BrowserLaunchQueue(),
+  launchQueue,
   notification,
   factories,
 );
 
 const fileContent = new FirstPossibleFileContent([
   new UrlContent(notification, factories),
-  new FSHtmlContent(fsContent),
-  fsContent,
+  new FSHtmlContent(fsContent, launchQueue),
+  new FSJsonContent(fsContent, launchQueue),
 ], factories);
 
 const modules = {

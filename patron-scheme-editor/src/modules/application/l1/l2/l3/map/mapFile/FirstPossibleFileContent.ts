@@ -13,9 +13,11 @@ export class FirstPossibleFileContent implements MapFileContentType {
       guest: FactoryType<GuestObjectType>;
     },
   ) {
+    localDebug('length', fileContents.length);
     fileContents.forEach((fileContent) => {
       fileContent.canBeUsed(
         factories.guest.create((canBeUsed: boolean) => {
+          localDebug('canbeused result', fileContent, canBeUsed);
           if (canBeUsed && !this.firstPossibleFileContent) {
             this.firstPossibleFileContent = fileContent;
           }

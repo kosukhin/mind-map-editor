@@ -26,7 +26,7 @@ export class Cursor implements GuestAwareType<PointDocument> {
       y: 0,
     };
 
-    window.addEventListener('mousemove', (e) => {
+    window?.addEventListener('mousemove', (e) => {
       const cursorPoint = {
         x: e.offsetX + -stagePosition.x,
         y: e.offsetY + -stagePosition.y,

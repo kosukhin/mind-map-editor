@@ -1,12 +1,13 @@
 import {
+  Guest,
   GuestCast, GuestChain, GuestObjectType,
 } from 'patron-oop';
 import { BrowserLaunchQueue, FileSystemContent } from 'patron-scheme-editor';
 import debug from 'debug';
 
-const localDebug = debug('FSHtmlContent');
+const localDebug = debug('FSJsonContent');
 
-export class FSHtmlContent {
+export class FSJsonContent {
   public constructor(
     private fsContent: FileSystemContent,
     private launchQueue: BrowserLaunchQueue,
@@ -14,7 +15,7 @@ export class FSHtmlContent {
 
   public content(target: GuestObjectType<string>): this {
     this.fsContent.content(new GuestCast(target, (value) => {
-      localDebug('html content', value);
+      localDebug('json content', value);
       target.give(value);
     }));
     return this;
@@ -29,11 +30,17 @@ export class FSHtmlContent {
     localDebug('check canbe used');
     const chain = new GuestChain<{fileHandler: FileSystemFileHandle, canBeUsed: boolean}>();
     this.launchQueue.fileHandler(new GuestCast(guest, chain.receiveKey('fileHandler')));
+    this.launchQueue.fileHandler(new Guest((value) => {
+      console.log('launchQueue', value);
+    }));
     this.fsContent.canBeUsed(new GuestCast(guest, chain.receiveKey('canBeUsed')));
+    this.fsContent.canBeUsed(new Guest((value) => {
+      console.log('original ', value);
+    }));
     chain.result(({ fileHandler, canBeUsed }) => {
-      const isHTML = fileHandler.name.indexOf('.html') > 0;
-      localDebug('isHTML', isHTML);
-      guest.give(canBeUsed && isHTML);
+      const isJSON = fileHandler.name.indexOf('.json') > 0;
+      localDebug('isJSON', isJSON);
+      guest.give(canBeUsed && isJSON);
     });
     return guest;
   }
