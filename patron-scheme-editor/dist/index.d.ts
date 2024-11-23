@@ -140,11 +140,13 @@ export declare class FileSystemContent implements MapFileContentType {
     private factories;
     private contentPatrons;
     private fileHandler;
+    private contentSource;
     constructor(launchQueue: BrowserLaunchQueueType, notification: NotificationType, factories: {
         fileHandlerContent: FactoryType<SystemFileType>;
         browserFileSaved: FactoryType<BrowserFileType>;
         guest: FactoryType<GuestObjectType>;
         pool: FactoryType<PoolType>;
+        sourceEmpty: FactoryType<SourceType>;
     });
     content(target: GuestObjectType<string>): this;
     give(value: string): this;
@@ -153,8 +155,12 @@ export declare class FileSystemContent implements MapFileContentType {
 
 export declare class FirstPossibleFileContent implements MapFileContentType {
     private firstPossibleFileContent;
+    private contentSource;
+    private canBeUsedSource;
     constructor(fileContents: MapFileContentType[], factories: {
         guest: FactoryType<GuestObjectType>;
+        patronOnce: FactoryType<GuestObjectType>;
+        patron: FactoryType<GuestObjectType>;
     });
     canBeUsed<R extends GuestObjectType<boolean>>(guest: R): R;
     content(target: GuestObjectType<string>): this;
@@ -1052,7 +1058,6 @@ declare class SystemFileFromHandler implements SystemFileType {
     private fileHandler;
     constructor(fileHandler: FileSystemFileHandle);
     content(target: GuestObjectType<string>): this;
-    private readFile;
 }
 
 declare interface SystemFileType {

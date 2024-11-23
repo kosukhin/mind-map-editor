@@ -16,6 +16,11 @@ const compat = new FlatCompat({
 
 export default [
   {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 0,
+    },
+  },
+  {
     ignores: ['**/node_modules', '**/dist', '**/es'],
   },
   ...compat.extends(
