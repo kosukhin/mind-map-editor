@@ -78,7 +78,6 @@ declare interface BrowserFileType {
 export declare class BrowserLaunchQueue implements BrowserLaunchQueueType {
     private launchQueue;
     private isLaunchQueueSupported;
-    private fileHandle;
     private isCalculated;
     constructor(launchQueue?: LaunchQueueType, isLaunchQueueSupported?: boolean);
     fileHandler(guest: GuestObjectType<FileSystemFileHandle>): this;

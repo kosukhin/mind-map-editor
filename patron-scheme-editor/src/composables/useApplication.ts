@@ -176,6 +176,7 @@ const settings = new Source({
 });
 
 const modules = {
+  emptyMapFileContent,
   mapCurrentID,
   mapFile,
   mapCurrent,

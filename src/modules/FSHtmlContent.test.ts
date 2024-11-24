@@ -1,8 +1,11 @@
 import { Guest, GuestObjectType } from 'patron-oop';
 import { expect, test } from 'vitest';
+import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
+import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
 import { FSHtmlContent } from './FSHtmlContent';
 
 test('FSHtmlContent формат .html', () => {
+  const htmlTemplate = new HtmlTemplate(baseHtmlTemplate);
   const htmlContent = new FSHtmlContent(
     {
       content(target: GuestObjectType<string>) {
@@ -21,6 +24,7 @@ test('FSHtmlContent формат .html', () => {
         } as any);
       },
     } as any,
+    htmlTemplate,
   );
 
   htmlContent.canBeUsed(new Guest((value) => {

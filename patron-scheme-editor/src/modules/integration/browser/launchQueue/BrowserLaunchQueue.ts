@@ -5,8 +5,9 @@ import {
 import { BrowserLaunchQueueType } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueType';
 import { GuestObjectType, SourceEmpty } from 'patron-oop';
 
+const fileHandle = new SourceEmpty();
+
 export class BrowserLaunchQueue implements BrowserLaunchQueueType {
-  private fileHandle = new SourceEmpty();
   private isCalculated = false;
 
   public constructor(
@@ -18,15 +19,15 @@ export class BrowserLaunchQueue implements BrowserLaunchQueueType {
     if (this.isLaunchQueueSupported && !this.isCalculated) {
       this.isCalculated = true;
       this.launchQueue.setConsumer((launchParams: LaunchParamsType) => {
+        console.log('require file handler');
         if (launchParams.files && launchParams.files.length) {
-          console.log('launch queue filled');
           const [fileHandler] = launchParams.files;
-          this.fileHandle.give(fileHandler);
+          fileHandle.give(fileHandler);
         }
       });
     }
 
-    this.fileHandle.value(guest);
+    fileHandle.value(guest);
 
     return this;
   }

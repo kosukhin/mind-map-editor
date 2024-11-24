@@ -3,25 +3,37 @@ import {
 } from 'patron-oop';
 import { BrowserLaunchQueue, FileSystemContent } from 'patron-scheme-editor';
 import debug from 'debug';
+import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
+import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
 
 const localDebug = debug('FSHtmlContent');
 
 export class FSHtmlContent {
+  private isCorrectHTML = false;
+
+  private regexp = /'{"current":(.+)}'/;
+
   public constructor(
     private fsContent: FileSystemContent,
     private launchQueue: BrowserLaunchQueue,
+    private htmlTemplate: HtmlTemplate,
   ) { }
 
+  // html comes - convert it to json
   public content(target: GuestObjectType<string>): this {
-    this.fsContent.content(new GuestCast(target, (value) => {
-      localDebug('html content', value);
-      target.give(value);
+    this.fsContent.content(new GuestCast(target, (html) => {
+      if (!html) {
+        target.give(baseHtmlTemplate);
+      } else {
+        this.htmlTemplate.htmlToJson(html, target);
+      }
     }));
     return this;
   }
 
-  public give(value: string): this {
-    this.fsContent.give(value);
+  // json comes - convert it to html
+  public give(json: string): this {
+    this.htmlTemplate.jsonToHtml(json, this.fsContent);
     return this;
   }
 

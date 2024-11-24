@@ -1,5 +1,7 @@
 import { FSHtmlContent } from '@/modules/FSHtmlContent';
 import { FSJsonContent } from '@/modules/FSJsonContent';
+import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
+import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
 import {
   useApplication,
   useFactories,
@@ -19,10 +21,12 @@ const fsContent = new FileSystemContent(
   factories,
 );
 
+const htmlTemplate = new HtmlTemplate(baseHtmlTemplate);
+
 const fileContent = new FirstPossibleFileContent([
   new UrlContent(notification, factories),
-  new FSHtmlContent(fsContent, launchQueue),
   new FSJsonContent(fsContent, launchQueue),
+  new FSHtmlContent(fsContent, launchQueue, htmlTemplate),
 ], factories);
 
 const modules = {

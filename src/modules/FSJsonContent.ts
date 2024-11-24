@@ -1,3 +1,4 @@
+import baseJsonTemplate from '@/modules/json/baseJsonTemplate';
 import debug from 'debug';
 import {
   GuestCast, GuestChain, GuestObjectType,
@@ -14,7 +15,11 @@ export class FSJsonContent {
 
   public content(target: GuestObjectType<string>): this {
     this.fsContent.content(new GuestCast(target, (value) => {
-      target.give(value);
+      if (!value) {
+        target.give(baseJsonTemplate);
+      } else {
+        target.give(value);
+      }
     }));
     return this;
   }
