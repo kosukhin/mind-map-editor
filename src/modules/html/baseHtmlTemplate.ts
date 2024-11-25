@@ -9,12 +9,12 @@ export default `<!DOCTYPE html>
       content="width=device-width, initial-scale=1.0"
     />
     <title>PatronSchemeEditor</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/patron-scheme-editor@0.0.2/dist/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/patron-scheme-editor@0.0.3/dist/style.css" />
     <script type="importmap">
       {
         "imports": {
           "patron-oop": "https://cdn.jsdelivr.net/npm/patron-oop@1.26.0/dist/patron.min.mjs",
-          "patron-scheme-editor": "https://cdn.jsdelivr.net/npm/patron-scheme-editor@0.0.2/dist/patron.es.js",
+          "patron-scheme-editor": "https://cdn.jsdelivr.net/npm/patron-scheme-editor@0.0.3/dist/patron.es.js",
           "vue": "https://cdnjs.cloudflare.com/ajax/libs/vue/3.4.38/vue.esm-browser.prod.min.js",
           "vue-i18n": "https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/9.14.1/vue-i18n.esm-browser.prod.min.js"
         }

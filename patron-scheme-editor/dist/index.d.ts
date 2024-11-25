@@ -1131,6 +1131,7 @@ export declare class UrlContent implements MapFileContentType {
 }
 
 export declare const useApplication: () => {
+    emptyMapFileContent: string;
     mapCurrentID: MapCurrentID;
     mapFile: MapFile;
     mapCurrent: MapCurrent;
