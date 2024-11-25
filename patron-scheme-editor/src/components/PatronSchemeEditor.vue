@@ -24,6 +24,10 @@ const props = defineProps({
   readonly: {
     type: Boolean,
     default: false,
+  },
+  presets: {
+    type: Object,
+    default: () => ({}),
   }
 });
 
@@ -33,7 +37,11 @@ const { fileContent, settings } = useApplication();
 const { guest, patron } = useFactories();
 
 settings.value((lastSettings) => {
-  settings.give({ ...lastSettings, readonly: props.readonly });
+  settings.give({
+    ...lastSettings,
+    readonly: props.readonly,
+    presets: props.presets
+  });
 })
 
 watch(() => props.modelValue, (value) => {

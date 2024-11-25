@@ -1,4 +1,5 @@
 import { useFactories } from '@/composables/useFactories';
+import { EditorSettings } from '@/modules/application/l1/l2/l3/l4/editor/EditorSettings';
 import { CheckNotification } from '@/modules/application/l1/l2/l3/map/checks/CheckNotification';
 import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapCurrent } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrent';
@@ -171,7 +172,7 @@ const stagePositionByObjectId = new StagePositionByObjectId(konvaMove, factories
 const objectsMatchedToQuery = new ObjectsMatchedToQuery(mapCurrent, factories);
 const mapHistory = new MapHistory(mapFile, mapCurrent, mapCurrentID, factories);
 const objectsOutsideScreen = new ObjectsOutsideScreen(mapCurrent, stageSize, konvaLayer, factories);
-const settings = new Source({
+const settings = new Source<EditorSettings>({
   readonly: false,
 });
 
