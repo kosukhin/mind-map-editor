@@ -20,6 +20,10 @@ export class UrlContent implements MapFileContentType {
   }
 
   public canBeUsed(guest: GuestObjectType<boolean>) {
+    if (!window) {
+      guest.give(false);
+      return this;
+    }
     const canBeUsed = window.location.search.indexOf('?view=') > -1;
     localDebug('can be used', canBeUsed);
     guest.give(window.location.search.indexOf('?view=') > -1);
@@ -39,6 +43,9 @@ export class UrlContent implements MapFileContentType {
   }
 
   public content(target: GuestObjectType<string>): this {
+    if (!window) {
+      return this;
+    }
     const url = window.location.search.split('=')[1] ?? '';
     localDebug('visit url', url);
     this.contentCache.value(this.factories.patronOnce.create(target));

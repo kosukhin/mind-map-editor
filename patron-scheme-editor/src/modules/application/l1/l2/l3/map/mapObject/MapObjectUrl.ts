@@ -17,7 +17,7 @@ const urlTrim = (url: string) => {
 };
 
 const openExternalLink = debounce((link: string) => {
-  window.open(link);
+  window?.open(link);
 }, 200);
 
 const localDebug = debug('MapObjectUrl');

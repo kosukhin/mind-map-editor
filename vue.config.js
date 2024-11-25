@@ -21,6 +21,7 @@ module.exports = defineConfig({
         action: '/',
         accept: {
           'text/json': ['.json'],
+          'text/html': ['.html'],
         },
         launch_type: 'single-client',
       }],

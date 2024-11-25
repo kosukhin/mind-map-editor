@@ -24,6 +24,8 @@ module.exports = {
     'no-useless-constructor': 'off',
     'class-methods-use-this': 'off',
     'max-len': 'off',
+    'import/no-relative-packages': 'off', // TODO to think about rule for .test.ts only
+    '@typescript-eslint/no-explicit-any': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
