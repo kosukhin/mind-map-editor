@@ -133,6 +133,11 @@ declare class Drawer implements GuestObjectType<string> {
     give(value: string): this;
 }
 
+declare interface EditorSettings {
+    readonly: boolean;
+    presets: Record<string, MapTypeDocument[]>;
+}
+
 export declare class FileSystemContent implements MapFileContentType {
     private launchQueue;
     private notification;
@@ -927,6 +932,10 @@ readonly: {
 type: BooleanConstructor;
 default: boolean;
 };
+presets: {
+type: ObjectConstructor;
+default: () => {};
+};
 }, {}, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {
 "update:modelValue": (...args: any[]) => void;
 }, string, PublicProps, Readonly<ExtractPropTypes<    {
@@ -938,10 +947,15 @@ readonly: {
 type: BooleanConstructor;
 default: boolean;
 };
+presets: {
+type: ObjectConstructor;
+default: () => {};
+};
 }>> & {
 "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
 }, {
 readonly: boolean;
+presets: Record<string, any>;
 }, {}>;
 
 /**
@@ -1177,9 +1191,7 @@ export declare const useApplication: () => {
     fileContent: Source<any>;
     newArrow: NewArrow;
     objectsOutsideScreen: ObjectsOutsideScreen;
-    settings: Source<{
-        readonly: boolean;
-    }>;
+    settings: Source<EditorSettings>;
 };
 
 export declare const useFactories: () => {

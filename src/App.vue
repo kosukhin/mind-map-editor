@@ -4,6 +4,7 @@ import { useService } from '@/composables/useService';
 import PageNoContent from '@/views/PageNoContent.vue';
 import { PatronSchemeEditor, VueRefPatron, useFactories } from 'patron-scheme-editor';
 import 'patron-scheme-editor/patron-scheme-editor.css';
+import presets from '../public/data/presets.json';
 
 const { serviceFileContent } = useService();
 
@@ -22,6 +23,6 @@ watch(patronContentRef, (patronContentValue: string) => {
 </script>
 
 <template>
-  <PatronSchemeEditor v-if="canBeUsed && patronContentRef" v-model="patronContentRef" />
+  <PatronSchemeEditor v-if="canBeUsed && patronContentRef" v-model="patronContentRef" :presets="presets" />
   <PageNoContent v-else />
 </template>
