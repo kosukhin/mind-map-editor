@@ -13,6 +13,10 @@ export class VueRefPatronDuplex<T> implements GuestObjectType<T> {
     return this.basePatron.ref();
   }
 
+  public get value() {
+    return this.basePatron.value;
+  }
+
   public introduction() {
     return this.basePatron.introduction();
   }
