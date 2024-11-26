@@ -1,9 +1,11 @@
+import { DocumentTitle } from './../modules/integration/browser/document/DocumentTitle';
 import { useFactories } from '@/composables/useFactories';
 import { EditorSettings } from '@/modules/application/l1/l2/l3/l4/editor/EditorSettings';
 import { CheckNotification } from '@/modules/application/l1/l2/l3/map/checks/CheckNotification';
 import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapCurrent } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrent';
 import { MapCurrentID } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentID';
+import { MapCurrentTitle } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentTitle';
 import { MapHistory } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapHistory';
 import { MapRemoved } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapRemoved';
 import { MapFile } from '@/modules/application/l1/l2/l3/map/mapFile/MapFile';
@@ -69,10 +71,10 @@ const drawer = new Drawer(keyboard, factories);
 const notification = new Notification(factories);
 const mapCurrentID = new MapCurrentID(factories);
 
-const emptyMapFileContent =
-  '{"current":{"progress":0,"settings":{"colored":false,"title":"current"},"objects":{},"types":{},"url":"/current","parent":""}}';
-const fileContent = factories.source.create(emptyMapFileContent);
+const fileContent = factories.sourceEmpty.create();
 const mapFile = new MapFile(fileContent, mapCurrentID, factories);
+const mapCurrentTitle = new MapCurrentTitle(mapFile);
+const documentTitle = new DocumentTitle(mapCurrentTitle);
 
 const mapFileForRendering = new MapFileForRendering(mapFile, mapCurrentID, factories);
 const mapForRendering = new MapCurrent(mapFileForRendering, mapCurrentID, factories);
@@ -174,10 +176,10 @@ const mapHistory = new MapHistory(mapFile, mapCurrent, mapCurrentID, factories);
 const objectsOutsideScreen = new ObjectsOutsideScreen(mapCurrent, stageSize, konvaLayer, factories);
 const settings = new Source<EditorSettings>({
   readonly: false,
+  presets: {},
 });
 
 const modules = {
-  emptyMapFileContent,
   mapCurrentID,
   mapFile,
   mapCurrent,
@@ -224,6 +226,7 @@ const modules = {
   newArrow,
   objectsOutsideScreen,
   settings,
+  documentTitle,
 };
 
 export const useApplication = () => modules;

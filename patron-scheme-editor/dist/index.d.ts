@@ -117,6 +117,12 @@ declare type CountDocument = {
     nearestObjectId: string;
 };
 
+declare class DocumentTitle implements GuestObjectType<string> {
+    constructor(title: GuestAwareType<string>);
+    give(value: string): this;
+    introduction(): "patron";
+}
+
 declare class Drawer implements GuestObjectType<string> {
     private keyboard;
     private factories;
@@ -954,8 +960,8 @@ default: () => {};
 }>> & {
 "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
 }, {
-readonly: boolean;
 presets: Record<string, any>;
+readonly: boolean;
 }, {}>;
 
 /**
@@ -1145,7 +1151,6 @@ export declare class UrlContent implements MapFileContentType {
 }
 
 export declare const useApplication: () => {
-    emptyMapFileContent: string;
     mapCurrentID: MapCurrentID;
     mapFile: MapFile;
     mapCurrent: MapCurrent;
@@ -1188,10 +1193,11 @@ export declare const useApplication: () => {
     objectsMatchedToQuery: ObjectsMatchedToQuery;
     stageSize: StageDefaultSize;
     mapHistory: MapHistory;
-    fileContent: Source<any>;
+    fileContent: SourceEmpty<any>;
     newArrow: NewArrow;
     objectsOutsideScreen: ObjectsOutsideScreen;
     settings: Source<EditorSettings>;
+    documentTitle: DocumentTitle;
 };
 
 export declare const useFactories: () => {
