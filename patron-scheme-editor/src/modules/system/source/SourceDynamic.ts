@@ -1,24 +1,22 @@
-import { GuestAwareType, GuestType, Patron, PatronPool, SourceEmpty, SourceType } from 'patron-oop';
+import { give, GuestAwareType, GuestType, PatronPool, SourceType } from 'patron-oop';
 
 export class SourceDynamic<T = unknown> implements SourceType<T> {
-  private sourceEmpty = new SourceEmpty();
-
-  public constructor(baseGuest: GuestType<T>, baseGuestAware: GuestAwareType<T>) {
-    this.sourceEmpty.value(new Patron(baseGuest));
-    baseGuestAware.value(new Patron(this.sourceEmpty));
-  }
+  public constructor(
+    private baseGuest: GuestType<T>,
+    private baseGuestAware: GuestAwareType<T>,
+  ) {}
 
   public value(guest: GuestType<T>) {
-    this.sourceEmpty.value(<GuestType>guest);
+    this.baseGuestAware.value(guest);
     return this;
   }
 
   public give(value: T) {
-    this.sourceEmpty.give(value);
+    give(value, this.baseGuest);
     return this;
   }
 
   public pool(): PatronPool<T> {
-    return this.sourceEmpty.pool();
+    throw Error('No pool in SourceDynamic');
   }
 }

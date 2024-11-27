@@ -19,7 +19,7 @@ test('SourceDynamic', () => {
 
   sourceDynamic.give(2);
 
-  setTimeout(() => {
-    expect(theValue).toBe(2);
+  sourceDynamic.value((value) => {
+    expect(value).toBe(2);
   });
 });

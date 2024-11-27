@@ -3,33 +3,31 @@ import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { Patron, SourceEmpty } from 'patron-oop';
+import { VueRefPatronDuplex } from '@/modules/integration/vue/VueRefPatronDuplex';
+import { Jsoned } from '@/modules/system/json/Jsoned';
+import { SourceDynamic } from '@/modules/system/source/SourceDynamic';
+import { GuestAware, GuestObject, Patron, Source, SourceEmpty, SourceType } from 'patron-oop';
 
 const { mapFile, mapCurrent } = useApplication();
 
-const mapSerialized = new SourceEmpty<string>();
+const mapCurrentSource = new SourceDynamic(
+  mapCurrent,
+  new GuestAware((guest) => {
+    mapFile.currentMap(new GuestObject(guest));
+  })
+);
 
-mapFile.currentMap(new Patron((map) => {
-  mapSerialized.give(JSON.stringify(map));
-}))
+const json = new Jsoned(<SourceType>mapCurrentSource);
 
-// mapSerialized.value(new Patron((value) => {
-//   mapFile.currentMap(new Guest((latestMap) => {
-//     const latestMapSerialized = JSON.stringify(latestMap);
-//     if (latestMapSerialized !== value) {
-//       mapCurrent.give(JSON.parse(value));
-//     }
-//   }));
-// }))
-
-const sourceRef = new VueRefPatron<string>();
+const sourceRef = new VueRefPatronDuplex(new VueRefPatron<string>(), json);
+json.value(sourceRef);
 const source = sourceRef.ref();
 </script>
 
 <template>
   <BaseModal name="export">
     <div class="AppPresets">
-      <div class="text-md font-bold mb-2">Общие</div>
+      <div class="text-md font-bold mb-2">Экспорт\Импорт текущей карты</div>
       <div class="flex flex-col gap-2">
         <BaseTextarea v-model="source" />
       </div>
