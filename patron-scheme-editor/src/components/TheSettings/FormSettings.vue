@@ -53,6 +53,13 @@ controlCombo.happenedConditional(
             </BaseButton>
             <BaseButton
               type="primary"
+              class="text-white"
+              @click="modal.give('export')"
+            >
+              {{ $t('general.exportOrImport') }}
+            </BaseButton>
+            <BaseButton
+              type="primary"
               class="text-white e2e-open-presets"
               @click="modal.give('presets')"
             >

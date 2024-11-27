@@ -12,6 +12,7 @@ import TheMapAsText from '@/components/TheMapAsText/TheMapAsText.vue';
 import TheMiniMap from '@/components/TheMiniMap/TheMiniMap.vue';
 import FormSettings from '@/components/TheSettings/FormSettings.vue';
 import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
+import AppExport from '@/components/AppExport/AppExport.vue';
 import { useApplication } from '@/composables/useApplication';
 import { useFactories } from '@/composables/useFactories';
 import { watch } from 'vue';
@@ -57,7 +58,6 @@ watch(() => props.modelValue, (value) => {
 fileContent.value(patron.create((newValue: string) => {
   emit('update:modelValue', newValue);
 }));
-
 </script>
 
 <template>
@@ -73,6 +73,7 @@ fileContent.value(patron.create((newValue: string) => {
     <FormSettings />
     <AppPresets />
     <AppTypesParent />
+    <AppExport />
     <AppMenuObject />
     <TheMapAsText />
     <AppSearch />
