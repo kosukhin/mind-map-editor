@@ -573,12 +573,14 @@ declare class MapObjectsRects implements GuestObjectType<MapObjectDocument[]> {
     private mapObjectCurrent;
     private mapObjectForRendering;
     private objectPosition;
+    private settings;
     private factories;
     private previouslyRenderedRects;
-    constructor(konvaLayer: LayerBase, mapFile: MapFileType, mapObject: MapObjectType, mapObjectsVisible: MapObjectsType, mapObjectCurrent: MapObjectCurrentType, mapObjectForRendering: MapObjectType, objectPosition: ObjectPositionType, factories: {
+    constructor(konvaLayer: LayerBase, mapFile: MapFileType, mapObject: MapObjectType, mapObjectsVisible: MapObjectsType, mapObjectCurrent: MapObjectCurrentType, mapObjectForRendering: MapObjectType, objectPosition: ObjectPositionType, settings: GuestAwareType<EditorSettings>, factories: {
         patronOnce: FactoryType<GuestObjectType>;
         guest: FactoryType<GuestObjectType>;
         cache: FactoryType<SourceType>;
+        chain: FactoryType<ChainType>;
     });
     give(objects: MapObjectDocument[]): this;
     introduction(): "patron";
