@@ -1,20 +1,21 @@
+import { EditorSettings } from '@/modules/application/l1/l2/l3/l4/editor/EditorSettings';
+import { ObjectPositionType } from '@/modules/application/l1/l2/l3/l4/types/object/ObjectPositionType';
 import {
   MapDocument,
   MapObjectDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import { Rect } from 'konva/lib/shapes/Rect';
+import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
+import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
+import { MapObjectCurrentType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrentType';
 import {
   MapObjectsType,
   MapObjectType,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
+import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { debug } from 'debug';
-import { GuestObjectType, FactoryType, SourceType } from 'patron-oop';
 import { Layer as KonvaLayer } from 'konva/lib/Layer';
-import { MapObjectCurrentType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectCurrentType';
-import { ObjectPositionType } from '@/modules/application/l1/l2/l3/l4/types/object/ObjectPositionType';
-import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
-import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
+import { Rect } from 'konva/lib/shapes/Rect';
+import { ChainType, FactoryType, GuestAwareType, GuestObjectType, SourceType } from 'patron-oop';
 
 const localDebug = debug('MapObjectsRectsPatron');
 
@@ -32,10 +33,12 @@ export class MapObjectsRects implements GuestObjectType<MapObjectDocument[]> {
     private mapObjectCurrent: MapObjectCurrentType,
     private mapObjectForRendering: MapObjectType,
     private objectPosition: ObjectPositionType,
+    private settings: GuestAwareType<EditorSettings>,
     private factories: {
       patronOnce: FactoryType<GuestObjectType>;
       guest: FactoryType<GuestObjectType>;
       cache: FactoryType<SourceType>;
+      chain: FactoryType<ChainType>;
     },
   ) {
     mapObjectsVisible.objects(this);
@@ -45,8 +48,12 @@ export class MapObjectsRects implements GuestObjectType<MapObjectDocument[]> {
     this.konvaLayer.layer(
       this.factories.patronOnce.create(
         this.factories.guest.create((layer: KonvaLayer) => {
-          this.mapFile.currentMap(
-            this.factories.guest.create((latestMap: MapDocument) => {
+          const chain = this.factories.chain.create();
+          this.mapFile.currentMap(chain.receiveKey('map'));
+          this.settings.value(chain.receiveKey('settings'));
+          chain.result(
+            this.factories.guest.create((props: { map: MapDocument; settings: EditorSettings }) => {
+              const { map: latestMap, settings } = props;
               localDebug('rerender object rects');
               this.previouslyRenderedRects.forEach((rect) => {
                 rect.hide();
@@ -73,7 +80,7 @@ export class MapObjectsRects implements GuestObjectType<MapObjectDocument[]> {
                   width,
                   height,
                   name: object.id,
-                  draggable: true,
+                  draggable: !settings.readonly,
                   objectId: object.id,
                   zIndex: 3,
                 });

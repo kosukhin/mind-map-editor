@@ -65,6 +65,10 @@ import { GuestAware, GuestObject, Source } from 'patron-oop';
 const factories = useFactories();
 
 const keyboard = new Keyboard(factories);
+const settings = new Source<EditorSettings>({
+  readonly: false,
+  presets: {},
+});
 
 const modal = new Modal(keyboard, factories);
 const drawer = new Drawer(keyboard, factories);
@@ -137,6 +141,7 @@ const mapRects = new MapObjectsRects(
   mapObjectCurrent,
   mapObjectForRendering,
   new ObjectPositionGridStick(new ObjectPositionBounds(stageSize, factories), factories),
+  settings,
   factories,
 );
 const cursor = new Cursor(konvaLayer, factories);
@@ -174,10 +179,6 @@ const stagePositionByObjectId = new StagePositionByObjectId(konvaMove, factories
 const objectsMatchedToQuery = new ObjectsMatchedToQuery(mapCurrent, factories);
 const mapHistory = new MapHistory(mapFile, mapCurrent, mapCurrentID, factories);
 const objectsOutsideScreen = new ObjectsOutsideScreen(mapCurrent, stageSize, konvaLayer, factories);
-const settings = new Source<EditorSettings>({
-  readonly: false,
-  presets: {},
-});
 
 const modules = {
   mapCurrentID,
