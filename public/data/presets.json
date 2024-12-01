@@ -17,6 +17,12 @@
       "svg": "<style>.svg-type-todo{display:block;color:black;font:14px serif;overflow:auto;padding:9px;border:solid 2px #ccc;background:#ffeeee;width:auto;}</style><div class=\"svg-type-todo\" style=\"width:${width}px\">${text}</div>",
       "width": 100,
       "height": 40
+    },
+    {
+      "name": "Отменено",
+      "svg": "<style>.svg-type-cancelled{display:block;color:black;font:14px serif;overflow:auto;padding:9px;border:solid 2px #ccc;background:#eeeeee;width:auto;}</style><div class=\"svg-type-cancelled\" style=\"width:${width}px\">${text}</div>",
+      "width": 100,
+      "height": 40
     }
   ]
 }

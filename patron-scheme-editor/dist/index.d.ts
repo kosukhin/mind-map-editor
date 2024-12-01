@@ -1200,6 +1200,7 @@ export declare const useApplication: () => {
     objectsOutsideScreen: ObjectsOutsideScreen;
     settings: Source<EditorSettings>;
     documentTitle: DocumentTitle;
+    sidebarDraggable: SourceEmpty<HTMLElement>;
 };
 
 export declare const useFactories: () => {
