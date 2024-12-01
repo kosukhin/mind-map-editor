@@ -8,7 +8,7 @@ import { useFactories } from '@/composables/useFactories';
 import { EditorSettings } from '@/modules/application/l1/l2/l3/l4/editor/EditorSettings';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const {
   mapObjectNew,
@@ -17,10 +17,16 @@ const {
   mapTypeRemoved,
   mapTypeNew,
   modal,
-  settings: appSettings
+  settings: appSettings,
+  sidebarDraggable
 } = useApplication();
 
 const types = mapCurrent.types(new VueRefPatron<MapTypeDocument[]>()).ref();
+const dragWrapperRef = ref();
+
+onMounted(() => {
+  sidebarDraggable.give(dragWrapperRef.value);
+})
 
 const { svgMapTypeImage } = useFactories();
 const typesExtended = computed(() => types.value?.map((type) => ({
@@ -34,7 +40,7 @@ appSettings.value(settings);
 
 <template>
   <div class="flex e2e-sidebar flex-col items-center gap-3 max-h-[100%] overflow-hidden">
-    <div class="flex flex-col gap-3 flex-grow w-full overflow-y-auto">
+    <div ref="dragWrapperRef" class="flex flex-col gap-3 flex-grow w-full overflow-y-auto">
       <div
         v-for="(type, name) in typesExtended"
         :key="name"

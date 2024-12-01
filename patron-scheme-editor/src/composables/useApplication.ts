@@ -55,12 +55,13 @@ import { StagePositionByObjectId } from '@/modules/application/l1/l2/visualisati
 import { Zindex } from '@/modules/application/l1/l2/visualisation/zIndex/Zindex';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { Cursor } from '@/modules/integration/browser/cursor/Cursor';
+import { Draggable } from '@/modules/integration/browser/dragged/Draggable';
 import { ControlCombo } from '@/modules/integration/browser/keyboard/ControlCombo';
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { KonvaLayerShiftPoint } from '@/modules/integration/konva/KonvaLayerShiftPoint';
 import { KonvaMove } from '@/modules/integration/konva/KonvaMove';
-import { GuestAware, GuestObject, Source } from 'patron-oop';
+import { GuestAware, GuestObject, Source, SourceEmpty } from 'patron-oop';
 
 const factories = useFactories();
 
@@ -179,6 +180,8 @@ const stagePositionByObjectId = new StagePositionByObjectId(konvaMove, factories
 const objectsMatchedToQuery = new ObjectsMatchedToQuery(mapCurrent, factories);
 const mapHistory = new MapHistory(mapFile, mapCurrent, mapCurrentID, factories);
 const objectsOutsideScreen = new ObjectsOutsideScreen(mapCurrent, stageSize, konvaLayer, factories);
+const sidebarDraggable = new SourceEmpty<HTMLElement>();
+new Draggable(sidebarDraggable);
 
 const modules = {
   mapCurrentID,
@@ -228,6 +231,7 @@ const modules = {
   objectsOutsideScreen,
   settings,
   documentTitle,
+  sidebarDraggable,
 };
 
 export const useApplication = () => modules;
