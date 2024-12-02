@@ -41754,7 +41754,7 @@ const qre = /* @__PURE__ */ jd(Vre, [["render", $re]]), eae = "default", tae = /
       _: 1
     }));
   }
-}), nae = { class: "flex e2e-sidebar flex-col items-center gap-3 max-h-[100%] overflow-hidden" }, iae = { class: "TheSideBar-ItemName" }, rae = ["innerHTML", "title", "onDragend"], aae = {
+}), nae = { class: "flex e2e-sidebar flex-col items-center gap-3 max-h-[100%] overflow-hidden" }, iae = { class: "TheSideBar-ItemName" }, rae = ["innerHTML", "draggable", "title", "onDragend"], aae = {
   key: 0,
   class: "flex gap-1"
 }, Aae = {
@@ -41797,7 +41797,7 @@ const qre = /* @__PURE__ */ jd(Vre, [["render", $re]]), eae = "default", tae = /
           le("div", {
             innerHTML: b.image,
             class: "TheSideBar-ItemImage",
-            draggable: "true",
+            draggable: N(m).value.readonly ? "false" : "true",
             style: kr(`width:${b.type.width}px;height:${b.type.height}px`),
             title: p.$t("general.notifications.dragToCanvasToAdd"),
             onDragend: (S) => N(e).byTypeName(b.type.id, S)
