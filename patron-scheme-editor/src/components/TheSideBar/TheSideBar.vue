@@ -50,7 +50,7 @@ appSettings.value(settings);
         <div
           v-html="type.image"
           class="TheSideBar-ItemImage"
-          draggable="true"
+          :draggable="settings.value.readonly ? 'false' : 'true'"
           :style="`width:${type.type.width}px;height:${type.type.height}px`"
           :title="$t('general.notifications.dragToCanvasToAdd')"
           @dragend="mapObjectNew.byTypeName(type.type.id, $event)"
