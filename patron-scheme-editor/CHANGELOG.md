@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.7...v0.0.8) (2024-12-02)
+
+
+### Features
+
+* **issue-21:** disable text selection on interface ([00cf1bd](https://github.com/kosukhin/patron-scheme-editor/commit/00cf1bdf44799015326fcbd9ccb8f8c35de5465c))
+* **issue-34:** disable types drag in readonly mode ([0e489eb](https://github.com/kosukhin/patron-scheme-editor/commit/0e489eb5b2fc033f02d2de4a2591916effff2aac))
+* **issue-35:** draggable behaviour ([dac36bb](https://github.com/kosukhin/patron-scheme-editor/commit/dac36bb78160bc948c90619af22c530eeae520dc))
+
 ### [0.0.7](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.6...v0.0.7) (2024-12-01)
 
 ### 0.0.6 (2024-11-30)
