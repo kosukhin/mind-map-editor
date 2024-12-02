@@ -98,8 +98,14 @@ const onSelectAll = () => {
         </div>
       </BaseTextTitle>
     </template>
-    <article v-if="map" class="TheMapAsText">
+    <article v-if="map" class="TheMapAsText select-auto">
       <div ref="textRef" v-html="mapAsString"></div>
     </article>
   </BaseModal>
 </template>
+
+<style langs="scss">
+.TheMapAsText * {
+  user-select: all;
+}
+</style>
