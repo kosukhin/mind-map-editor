@@ -41485,7 +41485,7 @@ function _re(n, e) {
 }
 const Mre = /* @__PURE__ */ jd(xre, [["render", _re]]), Dre = { class: "flex gap-1" }, Hre = {
   key: 0,
-  class: "TheMapAsText"
+  class: "TheMapAsText select-auto"
 }, Ure = ["innerHTML"], Ire = /* @__PURE__ */ tt({
   __name: "TheMapAsText",
   setup(n) {
