@@ -1,5 +1,6 @@
 import { ChainType } from 'patron-oop';
 import { ComponentOptionsMixin } from 'vue';
+import { ComponentProvideOptions } from 'vue';
 import { DefineComponent } from 'vue';
 import { ExtractPropTypes } from 'vue';
 import { Factory } from 'patron-oop';
@@ -931,7 +932,7 @@ declare class ParentTypes {
     types<R extends GuestObjectType<MapTypeDocument[]>>(guest: R): R;
 }
 
-export declare const PatronSchemeEditor: DefineComponent<    {
+export declare const PatronSchemeEditor: DefineComponent<ExtractPropTypes<    {
 modelValue: {
 type: StringConstructor;
 required: true;
@@ -944,7 +945,7 @@ presets: {
 type: ObjectConstructor;
 default: () => {};
 };
-}, {}, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {
+}>, {}, {}, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {
 "update:modelValue": (...args: any[]) => void;
 }, string, PublicProps, Readonly<ExtractPropTypes<    {
 modelValue: {
@@ -959,12 +960,12 @@ presets: {
 type: ObjectConstructor;
 default: () => {};
 };
-}>> & {
+}>> & Readonly<{
 "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
-}, {
+}>, {
 presets: Record<string, any>;
 readonly: boolean;
-}, {}>;
+}, {}, {}, {}, string, ComponentProvideOptions, true, {}, any>;
 
 /**
  * Данные для точки с координатами

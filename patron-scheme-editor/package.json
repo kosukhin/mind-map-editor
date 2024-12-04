@@ -37,11 +37,14 @@
   },
   "private": false,
   "peerDependencies": {
-    "vue": "3.x"
+    "vue": "3.x",
+    "@tiptap/pm": "2.x",
+    "@tiptap/starter-kit": "2.x",
+    "@tiptap/vue-3": "2.x",
+    "html2canvas": "1.x",
+    "konva": "8.x"
   },
   "dependencies": {
-    "html2canvas": "^1.4.1",
-    "konva": "^8.4.2",
     "patron-oop": "^1.26.0"
   },
   "devDependencies": {

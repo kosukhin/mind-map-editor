@@ -2,7 +2,6 @@ import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStr
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { debug } from 'debug';
-import html2canvas from 'html2canvas';
 import { Layer } from 'konva/lib/Layer';
 import { Rect } from 'konva/lib/shapes/Rect';
 import { FactoryType, GuestObjectType, SourceType } from 'patron-oop';
@@ -43,26 +42,25 @@ export class MapObjectBackground implements GuestObjectType<MapDocument> {
             const gridPattern = document.querySelector('.grid-example') as HTMLElement;
             localDebug('grid example', gridPattern);
             if (gridPattern) {
-              html2canvas(gridPattern).then((canvas) => {
-                img.src = canvas.toDataURL();
-                img.onload = () => {
-                  localDebug('canvas pattern loaded');
-
-                  localDebug('konva layer loaded');
-                  const background = new Rect({
-                    width: 3000,
-                    height: 3000,
-                    x: 0,
-                    y: 0,
-                    fillPatternImage: img,
-                    zIndex: 1,
-                  });
-                  this.zIndex.give(() => {
-                    background.zIndex(0);
-                  });
-                  layer.add(background);
-                };
-              });
+              // html2canvas(gridPattern).then((canvas) => {
+              //   img.src = canvas.toDataURL();
+              //   img.onload = () => {
+              //     localDebug('canvas pattern loaded');
+              //     localDebug('konva layer loaded');
+              //     const background = new Rect({
+              //       width: 3000,
+              //       height: 3000,
+              //       x: 0,
+              //       y: 0,
+              //       fillPatternImage: img,
+              //       zIndex: 1,
+              //     });
+              //     this.zIndex.give(() => {
+              //       background.zIndex(0);
+              //     });
+              //     layer.add(background);
+              //   };
+              // });
             }
           }),
         );

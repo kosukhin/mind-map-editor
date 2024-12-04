@@ -8,7 +8,7 @@ import { Layer as KonvaLayer } from 'konva/lib/Layer';
 import { debug } from 'debug';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { Arrow } from 'konva/lib/shapes/Arrow';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 import { ArrowPathType } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
 

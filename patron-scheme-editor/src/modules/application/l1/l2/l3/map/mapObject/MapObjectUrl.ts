@@ -1,6 +1,5 @@
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { GuestObjectType, FactoryType, GuestAwareType, SourceType } from 'patron-oop';
-import { slugify } from 'transliteration';
 import debounce from 'lodash/debounce';
 import { debug } from 'debug';
 import { MapNameFromUrl } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapNameFromUrl';
@@ -86,4 +85,11 @@ export class MapObjectUrl {
     );
     return guest;
   }
+}
+
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
 }

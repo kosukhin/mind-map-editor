@@ -20,11 +20,14 @@ export default defineConfig({
     },
     emptyOutDir: true,
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'konva', 'konva/lib', '@tiptap'],
       output: {
         exports: 'named',
         globals: {
           vue: 'Vue',
+          konva: 'konva',
+          'konva/lib': 'konva/lib',
+          '@tiptap': '@tiptap',
         },
       },
     },
