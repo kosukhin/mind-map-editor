@@ -44,7 +44,7 @@ export class FSHtmlContent {
     this.fsContent.canBeUsed(new GuestCast(guest, chain.receiveKey('canBeUsed')));
     chain.result(({ fileHandler, canBeUsed }) => {
       const isHTML = fileHandler.name.indexOf('.html') > 0;
-      localDebug('isHTML', isHTML);
+      localDebug('isHTML', isHTML, canBeUsed);
       guest.give(canBeUsed && isHTML);
     });
     return guest;

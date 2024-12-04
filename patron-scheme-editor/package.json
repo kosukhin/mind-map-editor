@@ -37,7 +37,7 @@
   },
   "private": false,
   "peerDependencies": {
-    "vue": "3.x",
+    "vue": "3.4.x",
     "@tiptap/pm": "2.x",
     "@tiptap/starter-kit": "2.x",
     "@tiptap/vue-3": "2.x",
