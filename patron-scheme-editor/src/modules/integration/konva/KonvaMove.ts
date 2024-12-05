@@ -1,7 +1,7 @@
 import { StageMoveType } from '@/modules/application/l1/l2/visualisation/stage/StageMoveType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { FactoryType, GuestObjectType, GuestAwareType } from 'patron-oop';
-import { Layer } from 'konva/lib/Layer';
+import Konva from 'konva';
 import { debug } from 'debug';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
@@ -32,7 +32,7 @@ export class KonvaMove implements StageMoveType {
         this.canvas.size(
           this.factories.guest.create((size: SizeDocument) => {
             this.layer.layer(
-              this.factories.guest.create((layer: Layer) => {
+              this.factories.guest.create((layer: typeof Konva.Layer) => {
                 const [x, y] = object.position;
                 const newPosition = {
                   x: -x - Math.round(object.width / 2) + Math.round(size.width / 2),

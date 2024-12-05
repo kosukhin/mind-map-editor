@@ -1,9 +1,9 @@
 import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
 import { debug } from 'debug';
-import { Layer } from 'konva/lib/Layer';
-import { Rect } from 'konva/lib/shapes/Rect';
+import Konva from 'konva';
 import { FactoryType, GuestObjectType, SourceType } from 'patron-oop';
 
 const localDebug = debug('MapObjectBackground');
@@ -28,7 +28,7 @@ export class MapObjectBackground implements GuestObjectType<MapDocument> {
 
   public give(value: MapDocument): this {
     this.konvaLayer.layer(
-      this.factories.patronOnce.create((layer: Layer) => {
+      this.factories.patronOnce.create((layer: KonvaLayer) => {
         localDebug('map received in background', value);
         this.mapNameCache.value(
           this.factories.guest.create((mapName: string) => {
@@ -41,27 +41,25 @@ export class MapObjectBackground implements GuestObjectType<MapDocument> {
             const img = new Image();
             const gridPattern = document.querySelector('.grid-example') as HTMLElement;
             localDebug('grid example', gridPattern);
-            if (gridPattern) {
-              // html2canvas(gridPattern).then((canvas) => {
-              //   img.src = canvas.toDataURL();
-              //   img.onload = () => {
-              //     localDebug('canvas pattern loaded');
-              //     localDebug('konva layer loaded');
-              //     const background = new Rect({
-              //       width: 3000,
-              //       height: 3000,
-              //       x: 0,
-              //       y: 0,
-              //       fillPatternImage: img,
-              //       zIndex: 1,
-              //     });
-              //     this.zIndex.give(() => {
-              //       background.zIndex(0);
-              //     });
-              //     layer.add(background);
-              //   };
-              // });
-            }
+            import('@/assets/grid.jpg').then((module: { default: string }) => {
+              img.src = module.default;
+              img.onload = () => {
+                localDebug('canvas pattern loaded');
+                localDebug('konva layer loaded');
+                const background = new Konva.Rect({
+                  width: 3000,
+                  height: 3000,
+                  x: 0,
+                  y: 0,
+                  fillPatternImage: img,
+                  zIndex: 1,
+                });
+                this.zIndex.give(() => {
+                  background.zIndex(0);
+                });
+                layer.add(background);
+              };
+            });
           }),
         );
       }),

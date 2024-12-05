@@ -4,13 +4,15 @@ import {
   MapObjectDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import { Layer as KonvaLayer } from 'konva/lib/Layer';
 import { debug } from 'debug';
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import { Arrow } from 'konva/lib/shapes/Arrow';
 import throttle from 'lodash/throttle';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 import { ArrowPathType } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
+import Konva from 'konva';
+
+const { Arrow } = Konva;
 
 const localDebug = debug('MapObjectsArrows');
 

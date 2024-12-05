@@ -1,5 +1,6 @@
 import { ChainType } from 'patron-oop';
 import { ComponentOptionsMixin } from 'vue';
+import { default as default_2 } from 'konva';
 import { DefineComponent } from 'vue';
 import { ExtractPropTypes } from 'vue';
 import { Factory } from 'patron-oop';
@@ -12,7 +13,6 @@ import { GuestChain } from 'patron-oop';
 import { GuestObjectType } from 'patron-oop';
 import { GuestSync } from 'patron-oop';
 import { GuestValueType } from 'patron-oop';
-import { Layer } from 'konva/lib/Layer';
 import { Patron } from 'patron-oop';
 import { PatronOnce } from 'patron-oop';
 import { PatronPool } from 'patron-oop';
@@ -226,9 +226,9 @@ declare class KonvaLayer implements LayerBase {
         patron: FactoryType<GuestObjectType>;
         guestSync: FactoryType<GuestValueType>;
     });
-    layer<R extends GuestObjectType<Layer>>(guest: R): R;
+    layer<R extends GuestObjectType<typeof default_2.Layer>>(guest: R): R;
     position<R extends GuestObjectType<KonvaPointDocument>>(guest: R): R;
-    give(value: Layer): this;
+    give(value: typeof default_2.Layer): this;
 }
 
 declare type KonvaPointDocument = {
@@ -247,8 +247,8 @@ declare interface LaunchQueueType {
 /**
  * Поведение для работы с характеристиками слоя рендеринга
  */
-declare interface LayerBase extends GuestObjectType<Layer> {
-    layer(guest: GuestObjectType<Layer>): GuestObjectType<Layer>;
+declare interface LayerBase extends GuestObjectType<KonvaLayer> {
+    layer(guest: GuestObjectType<KonvaLayer>): GuestObjectType<KonvaLayer>;
     position(guest: GuestObjectType<PointDocument>): GuestObjectType<PointDocument>;
 }
 

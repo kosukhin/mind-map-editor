@@ -13,6 +13,7 @@ export default defineConfig({
     }),
   ],
   build: {
+    minify: 'esbuild',
     lib: {
       name: 'patron',
       entry: resolve(__dirname, 'src/index.ts'),
