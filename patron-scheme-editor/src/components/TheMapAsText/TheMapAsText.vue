@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useShare } from '@vueuse/core';
-import { ref } from '@vue/reactivity';
-import { useI18n } from 'vue-i18n';
+import { ref } from 'vue';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
@@ -39,11 +38,10 @@ mapCurrent.objects(
   ),
 );
 
-const i18n = useI18n();
 const { share, isSupported } = useShare();
 const onShare = () => {
   if (!isSupported.value) {
-    alert(i18n.t('general.notifications.sharingDontSupported'));
+    alert('Sharing is not supported');
   }
 
   textWithoutHTML
