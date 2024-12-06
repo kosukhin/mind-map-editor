@@ -21,7 +21,8 @@
     "./patron-scheme-editor.css": "./dist/style.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "dist-embedable"
   ],
   "scripts": {
     "build": "vite build --mode=production",
