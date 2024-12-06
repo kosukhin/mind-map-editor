@@ -16,7 +16,6 @@ export default `<!DOCTYPE html>
     <script type="module">
       window.content = '${baseJsonTemplate}';
       window.content = fromBase64(window.content);
-
       function fromBase64(binstr) {
         const safeStr = atob(binstr);
         const arr = new Uint8Array(safeStr.length);
@@ -26,5 +25,6 @@ export default `<!DOCTYPE html>
         return new TextDecoder().decode(arr);
       }
     </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/patron-scheme-editor/dist-embedable/assets/index.js"></script>
   </body>
 </html>`;
