@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.9...v0.0.10) (2024-12-06)
+
+
+### Features
+
+* **main:** move embedable to module ([423f4d6](https://github.com/kosukhin/patron-scheme-editor/commit/423f4d6ae2ffc76403f16b445e6a8019a7fcf638))
+
 ### [0.0.9](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.7...v0.0.9) (2024-12-06)
 
 
