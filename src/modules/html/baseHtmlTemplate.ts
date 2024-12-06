@@ -14,14 +14,13 @@ export default `<!DOCTYPE html>
   <body>
     <div id="app"></div>
     <script type="module">
-      const content = '${baseJsonTemplate}';
+      window.content = '${baseJsonTemplate}';
 
       fetch('https://raw.githubusercontent.com/kosukhin/patron-scheme-editor/refs/heads/issue-28/embedable/dist/assets/index.js')
       .then(r => r.text())
       .then((scriptText) => {
         const script = document.createElement('script');
         script.type = 'module';
-        script.crossorigin = true;
         script.textContent = scriptText;
         document.body.appendChild(script);
       });

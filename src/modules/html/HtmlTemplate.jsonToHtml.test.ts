@@ -7,6 +7,6 @@ test('HtmlTemplate.jsonToHtml.test', () => {
   const htmlTemplate = new HtmlTemplate(baseHtmlTemplate);
 
   htmlTemplate.jsonToHtml('{"json": "hello"}', new Guest((html) => {
-    expect(html).toContain("const content = '{\"json\": \"hello\"}';");
+    expect(html).toContain("window.content = '{\"json\": \"hello\"}';");
   }));
 });
