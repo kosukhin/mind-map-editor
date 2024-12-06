@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.7...v0.0.9) (2024-12-06)
+
+
+### Features
+
+* **issue-19:** fis search by map nodes ([07b6a84](https://github.com/kosukhin/patron-scheme-editor/commit/07b6a84f6df8976d4bd265e36c10139854033bfc))
+* **issue-21:** disable text selection on interface ([00cf1bd](https://github.com/kosukhin/patron-scheme-editor/commit/00cf1bdf44799015326fcbd9ccb8f8c35de5465c))
+* **issue-28:** наработки по использованию umd ([b5b56fc](https://github.com/kosukhin/patron-scheme-editor/commit/b5b56fcad469ece38f00ce39b300d1e7a582b388))
+* **issue-28:** created emdedable script with all needed dependencies ([e9c0103](https://github.com/kosukhin/patron-scheme-editor/commit/e9c010339bb3c79966931ab41407a7c316f204f5))
+* **issue-28:** enable dist ([1958729](https://github.com/kosukhin/patron-scheme-editor/commit/19587295fde3bec9b20b439ad27eb46c5d97f366))
+* **issue-28:** fix vue versions ([c2fd65e](https://github.com/kosukhin/patron-scheme-editor/commit/c2fd65ea34eaa7c2cc8bf6c4c52365e553c11293))
+* **issue-28:** move background image inside ([b768a5c](https://github.com/kosukhin/patron-scheme-editor/commit/b768a5cb683b8cdce81ce84d9993efa34183ddd5))
+* **issue-28:** rebuild basehtml logic ([c1d2100](https://github.com/kosukhin/patron-scheme-editor/commit/c1d21003ba9a268567ab975dfa26a6e96e27aed2))
+* **issue-28:** remove unneeded bunlded deps ([47f77e2](https://github.com/kosukhin/patron-scheme-editor/commit/47f77e29892b07174ca8c9faacfe43bc1620a3ed))
+* **issue-28:** work by reduce bundle sizes ([1501cc4](https://github.com/kosukhin/patron-scheme-editor/commit/1501cc445916b87da8e27796ab00abc574a4e116))
+* **issue-34:** disable types drag in readonly mode ([0e489eb](https://github.com/kosukhin/patron-scheme-editor/commit/0e489eb5b2fc033f02d2de4a2591916effff2aac))
+* **issue-35:** draggable behaviour ([dac36bb](https://github.com/kosukhin/patron-scheme-editor/commit/dac36bb78160bc948c90619af22c530eeae520dc))
+
 ### [0.0.8](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.7...v0.0.8) (2024-12-02)
 
 
