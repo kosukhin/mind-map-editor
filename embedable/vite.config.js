@@ -4,7 +4,8 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
   plugins: [vue()],
   build: {
-    outDir: '../patron-scheme-editor/dist/embedable/',
+    outDir: '../patron-scheme-editor/dist-embedable/',
+    emptyOutDir: true,
     rollupOptions: {
       output: {
         entryFileNames: 'assets/[name].js',

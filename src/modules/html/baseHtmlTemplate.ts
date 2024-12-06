@@ -17,15 +17,6 @@ export default `<!DOCTYPE html>
       window.content = '${baseJsonTemplate}';
       window.content = fromBase64(window.content);
 
-      fetch('https://raw.githubusercontent.com/kosukhin/patron-scheme-editor/refs/heads/issue-28/embedable/dist/assets/index.js')
-      .then(r => r.text())
-      .then((scriptText) => {
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.textContent = scriptText;
-        document.body.appendChild(script);
-      });
-
       function fromBase64(binstr) {
         const safeStr = atob(binstr);
         const arr = new Uint8Array(safeStr.length);
