@@ -5,7 +5,7 @@ import { expect, test } from 'vitest';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { Guest } from 'patron-oop';
-import { Layer } from 'konva/lib/Layer';
+import Konva from 'konva';
 import { useFactories } from '@/composables/useFactories';
 import { StageDefaultSize } from '@/modules/application/l1/l2/l3/stage/StageDefaultSize';
 import { StageMoveRestrictionTransfer } from '@/modules/application/l1/l2/l3/stage/StageMoveRestrictionTransfer';
@@ -20,7 +20,7 @@ test('konva layer', () => {
   const layer = new KonvaLayer(browserCanvas, stageSize, stageMoveRestriction, factories);
 
   layer.layer(
-    new Guest((latestLayer: Layer) => {
+    new Guest((latestLayer: typeof Konva.Layer) => {
       latestLayer.x(10);
       latestLayer.y(20);
 

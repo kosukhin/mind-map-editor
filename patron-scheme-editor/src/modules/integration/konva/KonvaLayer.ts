@@ -1,5 +1,4 @@
 import Konva from 'konva';
-import { Layer } from 'konva/lib/Layer';
 import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
 import {
   GuestObjectType,
@@ -10,7 +9,6 @@ import {
   GuestValueType,
 } from 'patron-oop';
 import { debug } from 'debug';
-import { Stage } from 'konva/lib/Stage';
 import { KonvaPointDocument } from '@/modules/integration/konva/KonvaPointDocument';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
@@ -24,7 +22,7 @@ export class KonvaLayer implements LayerBase {
 
   private positionCache: SourceType<KonvaPointDocument>;
 
-  private layerCache: SourceType<Layer>;
+  private layerCache: SourceType<typeof Konva.Layer>;
 
   public constructor(
     private canvasDep: BrowserCanvasType,
@@ -65,7 +63,7 @@ export class KonvaLayer implements LayerBase {
           this.layerCache.give(layer);
 
           stage.on('dragend', (e) => {
-            if (!(e.target instanceof Stage)) {
+            if (!(e.target instanceof Konva.Stage)) {
               return;
             }
             const position = {
@@ -77,7 +75,7 @@ export class KonvaLayer implements LayerBase {
           });
 
           stage.on('dragmove', (e) => {
-            if (!(e.target instanceof Stage)) {
+            if (!(e.target instanceof Konva.Stage)) {
               return;
             }
             const position = {
@@ -100,7 +98,7 @@ export class KonvaLayer implements LayerBase {
     );
   }
 
-  public layer<R extends GuestObjectType<Layer>>(guest: R) {
+  public layer<R extends GuestObjectType<typeof Konva.Layer>>(guest: R) {
     this.layerCache.value(guest);
     return guest;
   }
@@ -110,7 +108,7 @@ export class KonvaLayer implements LayerBase {
     return guest;
   }
 
-  public give(value: Layer): this {
+  public give(value: typeof Konva.Layer): this {
     this.layerCache.give(value);
     const stage = value.getStage();
     this.positionCache.give({

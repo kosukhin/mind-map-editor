@@ -12,9 +12,9 @@ import {
   MapObjectType,
 } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
 import { debug } from 'debug';
-import { Layer as KonvaLayer } from 'konva/lib/Layer';
-import { Rect } from 'konva/lib/shapes/Rect';
+import Konva from 'konva';
 import { ChainType, FactoryType, GuestAwareType, GuestObjectType, SourceType } from 'patron-oop';
 
 const localDebug = debug('MapObjectsRectsPatron');
@@ -74,7 +74,7 @@ export class MapObjectsRects implements GuestObjectType<MapObjectDocument[]> {
                 }
 
                 localDebug('rect object', object, type);
-                const rect = new Rect({
+                const rect = new Konva.Rect({
                   x: +object.position[0],
                   y: +object.position[1],
                   width,

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { defineEmits, defineProps, watch } from '@vue/runtime-core';
+import { defineEmits, defineProps, watch } from 'vue';
 import { useVModel } from '@vueuse/core';
-import { ref } from '@vue/reactivity';
+import { ref } from 'vue';
 import debounce from 'lodash/debounce';
 
 const props = defineProps({

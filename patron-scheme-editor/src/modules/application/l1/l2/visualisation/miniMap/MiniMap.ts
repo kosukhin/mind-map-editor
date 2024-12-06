@@ -5,8 +5,8 @@ import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeD
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { debug } from 'debug';
 import { GuestObjectType, SourceType, FactoryType, ChainType, GuestAwareType } from 'patron-oop';
-import { Layer } from 'konva/lib/Layer';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
 
 const localDebug = debug('app:MiniMap');
 const minimapWidth = 130;
@@ -17,7 +17,7 @@ type ViewPortChainDocument = {
 };
 
 type MiniMapChainDocument = {
-  layer: Layer;
+  layer: KonvaLayer;
   size: SizeDocument;
   objects: MapObjectDocument[];
 };

@@ -13,6 +13,7 @@ export default defineConfig({
     }),
   ],
   build: {
+    minify: 'esbuild',
     lib: {
       name: 'patron',
       entry: resolve(__dirname, 'src/index.ts'),
@@ -20,7 +21,7 @@ export default defineConfig({
     },
     emptyOutDir: true,
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', /^konva.*/, /^@tiptap.*/, /^@fortawesome.*/, /^prosemirror-.*/],
       output: {
         exports: 'named',
         globals: {

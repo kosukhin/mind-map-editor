@@ -1,6 +1,6 @@
-import { Layer as KonvaLayer } from 'konva/lib/Layer';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { GuestObjectType } from 'patron-oop';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 
 /**
  * Поведение для работы с характеристиками слоя рендеринга

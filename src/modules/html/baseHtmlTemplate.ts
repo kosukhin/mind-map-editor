@@ -10,59 +10,19 @@ export default `<!DOCTYPE html>
     />
     <title>PatronSchemeEditor</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/patron-scheme-editor/dist/style.css" />
-    <script type="importmap">
-      {
-        "imports": {
-          "patron-oop": "https://cdn.jsdelivr.net/npm/patron-oop@1.26.0/dist/patron.min.mjs",
-          "patron-scheme-editor": "https://cdn.jsdelivr.net/npm/patron-scheme-editor/dist/patron.es.js",
-          "vue": "https://cdnjs.cloudflare.com/ajax/libs/vue/3.4.38/vue.esm-browser.prod.min.js",
-          "vue-i18n": "https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/9.14.1/vue-i18n.esm-browser.prod.min.js"
-        }
-      }
-    </script>
   </head>
   <body>
-    <div id="app">
-      <div style="position: relative; width: 100vw; height: 100vh;">
-        <patron-scheme-editor v-model="content" readonly />
-      </div>
-      }
-    </div>
+    <div id="app"></div>
     <script type="module">
-      import { createApp } from 'vue';
-      import { PatronSchemeEditor } from 'patron-scheme-editor';
-      import { createI18n } from 'vue-i18n';
+      window.content = '${baseJsonTemplate}';
 
-      const content = '${baseJsonTemplate}';
-
-      Promise.all([
-        fetch('https://raw.githubusercontent.com/kosukhin/patron-scheme-editor/refs/heads/main/src/locales/ru.json').then(r => r.json()),
-        fetch('https://raw.githubusercontent.com/kosukhin/patron-scheme-editor/refs/heads/main/src/locales/en.json').then(r => r.json()),
-      ]).then(([ru, en]) => {
-        createApp({
-          data() {
-            return {
-              content,
-            };
-          },
-          components: {
-            PatronSchemeEditor,
-          }
-        })
-          .use(
-            createI18n({
-              legacy: false,
-              locale: 'ru',
-              fallbackLocale: 'ru',
-              globalInjection: true,
-              messages: {
-                ru,
-                en,
-              },
-            })
-          )
-          .mount('#app')
-        ;
+      fetch('https://raw.githubusercontent.com/kosukhin/patron-scheme-editor/refs/heads/issue-28/embedable/dist/assets/index.js')
+      .then(r => r.text())
+      .then((scriptText) => {
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.textContent = scriptText;
+        document.body.appendChild(script);
       });
     </script>
   </body>

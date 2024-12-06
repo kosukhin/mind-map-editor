@@ -1,9 +1,9 @@
 import { GuestObjectType } from 'patron-oop';
 
 export class HtmlTemplate {
-  private regexp = /const content = '(.+)'/;
+  private regexp = /(?:window\.|const\s)content = '(.+)'/;
 
-  private varTemplate = "const content = '{json}'";
+  private varTemplate = "window.content = '{json}'";
 
   public constructor(private htmlTemplate: string) { }
 

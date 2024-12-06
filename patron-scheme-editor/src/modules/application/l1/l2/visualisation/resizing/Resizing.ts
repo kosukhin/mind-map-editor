@@ -2,7 +2,7 @@ import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStr
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
-import { Layer } from 'konva/lib/Layer';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
 import { FactoryType, GuestObjectType } from 'patron-oop';
 
 /**
@@ -28,7 +28,7 @@ export class Resizing implements GuestObjectType<MapDocument> {
           this.factories.guest.create((canvasEl: HTMLCanvasElement) => {
             const canvasRect = canvasEl.getBoundingClientRect();
             this.konvaLayer.layer(
-              this.factories.guest.create((layer: Layer) => {
+              this.factories.guest.create((layer: KonvaLayer) => {
                 layer.getStage().width(body.contentRect.width - canvasRect.left);
                 layer.getStage().height(body.contentRect.height - canvasRect.top);
 

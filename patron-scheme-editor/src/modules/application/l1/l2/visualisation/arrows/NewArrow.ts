@@ -8,10 +8,12 @@ import {
 } from 'patron-oop';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import { Layer as KonvaLayer } from 'konva/lib/Layer';
+import Konva from 'konva';
 import { ArrowPathType } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
-import { Arrow } from 'konva/lib/shapes/Arrow';
 import { debug } from 'debug';
+import { KonvaArrow, KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
+
+const { Arrow } = Konva;
 
 const localDebug = debug('NewArrow');
 
@@ -53,7 +55,7 @@ export class NewArrow {
       }),
     );
 
-    let arrow: Arrow | null = null;
+    let arrow: KonvaArrow | null = null;
     const patron = this.factories.patron.create(
       this.factories.guest.create((cursorPosition: PointDocument) => {
         localDebug('cursor moves');
@@ -125,7 +127,7 @@ export class NewArrow {
       }),
     );
     this.arrowCache.value(
-      this.factories.guest.create((arrow: Arrow) => {
+      this.factories.guest.create((arrow: typeof Arrow) => {
         arrow.remove();
       }),
     );

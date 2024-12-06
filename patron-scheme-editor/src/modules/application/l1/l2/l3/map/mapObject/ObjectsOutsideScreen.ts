@@ -5,7 +5,7 @@ import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { debug } from 'debug';
-import { Layer } from 'konva/lib/Layer';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 
 type ObjectsConfig = {
   axis: 'x' | 'y';
@@ -19,7 +19,7 @@ export type CountDocument = {
 
 type ChainDocument = {
   position: PointDocument;
-  layer: Layer;
+  layer: KonvaLayer;
   objects: MapObjectDocument[];
 };
 

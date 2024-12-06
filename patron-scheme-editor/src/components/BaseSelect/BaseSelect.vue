@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineEmits } from '@vue/runtime-core';
+import { defineEmits } from 'vue';
 import { useVModel } from '@vueuse/core';
 import { PropType } from 'vue';
 
