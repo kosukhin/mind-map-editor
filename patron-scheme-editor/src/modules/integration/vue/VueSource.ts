@@ -1,5 +1,5 @@
 import { Guest, GuestAwareType, PatronPool } from 'patron-oop';
-import { Ref, watch } from 'vue';
+import { Ref, watch } from '@vue/runtime-core';
 
 export class VueSource<T> implements GuestAwareType<T> {
   private pool = new PatronPool<T>(this);

@@ -1,8 +1,5 @@
 import { ChainType } from 'patron-oop';
-import { ComponentOptionsMixin } from 'vue';
 import { default as default_2 } from 'konva';
-import { DefineComponent } from 'vue';
-import { ExtractPropTypes } from 'vue';
 import { Factory } from 'patron-oop';
 import { FactoryType } from 'patron-oop';
 import { Guest } from 'patron-oop';
@@ -17,7 +14,6 @@ import { Patron } from 'patron-oop';
 import { PatronOnce } from 'patron-oop';
 import { PatronPool } from 'patron-oop';
 import { PoolType } from 'patron-oop';
-import { PublicProps } from 'vue';
 import { Ref } from 'vue';
 import { Source } from 'patron-oop';
 import { SourceEmpty } from 'patron-oop';
@@ -931,40 +927,7 @@ declare class ParentTypes {
     types<R extends GuestObjectType<MapTypeDocument[]>>(guest: R): R;
 }
 
-export declare const PatronSchemeEditor: DefineComponent<    {
-modelValue: {
-type: StringConstructor;
-required: true;
-};
-readonly: {
-type: BooleanConstructor;
-default: boolean;
-};
-presets: {
-type: ObjectConstructor;
-default: () => {};
-};
-}, {}, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {
-"update:modelValue": (...args: any[]) => void;
-}, string, PublicProps, Readonly<ExtractPropTypes<    {
-modelValue: {
-type: StringConstructor;
-required: true;
-};
-readonly: {
-type: BooleanConstructor;
-default: boolean;
-};
-presets: {
-type: ObjectConstructor;
-default: () => {};
-};
-}>> & {
-"onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
-}, {
-presets: Record<string, any>;
-readonly: boolean;
-}, {}>;
+export declare const PatronSchemeEditor: any;
 
 /**
  * Данные для точки с координатами
