@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { defineEmits, defineProps, watch } from 'vue';
+import { defineEmits, defineProps, watch, ref } from '@vue/runtime-core';
 import { useVModel } from '@vueuse/core';
-import { ref } from 'vue';
 import debounce from 'lodash/debounce';
 
 const props = defineProps({

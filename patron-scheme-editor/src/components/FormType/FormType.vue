@@ -12,7 +12,7 @@ import BaseInputTitle from '@/components/BaseInputTitle/BaseInputTitle.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
-import { ref } from 'vue';
+import { ref } from '@vue/runtime-core';
 
 const {
   mapTypeCurrent, mapFile, mapType, modal, controlCombo,

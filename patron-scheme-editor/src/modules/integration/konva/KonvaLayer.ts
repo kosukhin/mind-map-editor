@@ -14,6 +14,7 @@ import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { StageMoveRestrictionType } from '@/modules/application/l1/l2/l3/l4/types/stage/StageMoveRestrictionType';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
+import { KonvaLayer as KonvaLayerType } from '@/modules/integration/konva/KonvaTypes';
 
 const localDebug = debug('app:konva:KonvaLayer');
 
@@ -22,7 +23,7 @@ export class KonvaLayer implements LayerBase {
 
   private positionCache: SourceType<KonvaPointDocument>;
 
-  private layerCache: SourceType<typeof Konva.Layer>;
+  private layerCache: SourceType<KonvaLayerType>;
 
   public constructor(
     private canvasDep: BrowserCanvasType,
@@ -57,7 +58,7 @@ export class KonvaLayer implements LayerBase {
             fill: '#ffeeee',
             draggable: true,
           });
-          const layer = new Konva.Layer();
+          const layer = new Konva.Layer() as unknown as KonvaLayerType;
           stage.add(layer);
           layer.draw();
           this.layerCache.give(layer);
@@ -98,7 +99,7 @@ export class KonvaLayer implements LayerBase {
     );
   }
 
-  public layer<R extends GuestObjectType<typeof Konva.Layer>>(guest: R) {
+  public layer<R extends GuestObjectType<KonvaLayerType>>(guest: R) {
     this.layerCache.value(guest);
     return guest;
   }
@@ -108,7 +109,7 @@ export class KonvaLayer implements LayerBase {
     return guest;
   }
 
-  public give(value: typeof Konva.Layer): this {
+  public give(value: KonvaLayerType): this {
     this.layerCache.give(value);
     const stage = value.getStage();
     this.positionCache.give({

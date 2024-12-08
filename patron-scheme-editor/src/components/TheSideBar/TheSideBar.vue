@@ -8,7 +8,7 @@ import { useFactories } from '@/composables/useFactories';
 import { EditorSettings } from '@/modules/application/l1/l2/l3/l4/editor/EditorSettings';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from '@vue/runtime-core';
 
 const {
   mapObjectNew,

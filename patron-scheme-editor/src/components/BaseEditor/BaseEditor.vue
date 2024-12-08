@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import { EditorContent, BubbleMenu, useEditor } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
-import { onBeforeUnmount, watch } from 'vue';
+import { onBeforeUnmount, watch } from '@vue/runtime-core';
 
 const props = defineProps({
   modelValue: {

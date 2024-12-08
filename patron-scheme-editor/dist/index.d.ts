@@ -1,5 +1,4 @@
 import { ChainType } from 'patron-oop';
-import { default as default_2 } from 'konva';
 import { Factory } from 'patron-oop';
 import { FactoryType } from 'patron-oop';
 import { Guest } from 'patron-oop';
@@ -10,11 +9,12 @@ import { GuestChain } from 'patron-oop';
 import { GuestObjectType } from 'patron-oop';
 import { GuestSync } from 'patron-oop';
 import { GuestValueType } from 'patron-oop';
+import { Layer } from 'konva/lib/Layer';
 import { Patron } from 'patron-oop';
 import { PatronOnce } from 'patron-oop';
 import { PatronPool } from 'patron-oop';
 import { PoolType } from 'patron-oop';
-import { Ref } from 'vue';
+import { Ref } from '@vue/runtime-core';
 import { Source } from 'patron-oop';
 import { SourceEmpty } from 'patron-oop';
 import { SourceType } from 'patron-oop';
@@ -205,7 +205,9 @@ declare class Keyboard {
     event(guest: GuestObjectType<KeyboardEvent>): this;
 }
 
-declare class KonvaLayer implements LayerBase {
+declare type KonvaLayer = Layer;
+
+declare class KonvaLayer_2 implements LayerBase {
     private canvasDep;
     private stageMoveRestriction;
     private factories;
@@ -222,9 +224,9 @@ declare class KonvaLayer implements LayerBase {
         patron: FactoryType<GuestObjectType>;
         guestSync: FactoryType<GuestValueType>;
     });
-    layer<R extends GuestObjectType<typeof default_2.Layer>>(guest: R): R;
+    layer<R extends GuestObjectType<KonvaLayer>>(guest: R): R;
     position<R extends GuestObjectType<KonvaPointDocument>>(guest: R): R;
-    give(value: typeof default_2.Layer): this;
+    give(value: KonvaLayer): this;
 }
 
 declare type KonvaPointDocument = {
@@ -1141,7 +1143,7 @@ export declare const useApplication: () => {
     notification: Notification_2;
     modal: Modal;
     drawer: Drawer;
-    konvaLayer: KonvaLayer;
+    konvaLayer: KonvaLayer_2;
     resizing: Resizing;
     objectAdditionalFieldsFix: ObjectAdditionalFieldsFix;
     mapObjectRelationRemoved: MapObjectRelationRemoved;

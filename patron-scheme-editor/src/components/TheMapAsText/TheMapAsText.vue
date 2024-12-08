@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useShare } from '@vueuse/core';
-import { ref } from 'vue';
+import { ref } from '@vue/runtime-core';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';

@@ -33,7 +33,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "patron-scheme-editor/vue-prototype.d.ts"
   ],
   "exclude": [
     "node_modules"
