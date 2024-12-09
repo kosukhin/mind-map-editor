@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { defineEmits } from 'vue';
 import { useVModel } from '@vueuse/core';
-import { PropType } from 'vue';
+import { PropType, defineEmits } from '@vue/runtime-core';
 
 const props = defineProps({
   modelValue: {

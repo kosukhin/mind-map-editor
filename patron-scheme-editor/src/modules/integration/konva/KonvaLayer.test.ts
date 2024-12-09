@@ -3,6 +3,7 @@
  */
 import { expect, test } from 'vitest';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
+import { KonvaLayer as KonvaLayerType } from '@/modules/integration/konva/KonvaTypes';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { Guest } from 'patron-oop';
 import Konva from 'konva';
@@ -20,7 +21,7 @@ test('konva layer', () => {
   const layer = new KonvaLayer(browserCanvas, stageSize, stageMoveRestriction, factories);
 
   layer.layer(
-    new Guest((latestLayer: typeof Konva.Layer) => {
+    new Guest((latestLayer: KonvaLayerType) => {
       latestLayer.x(10);
       latestLayer.y(20);
 

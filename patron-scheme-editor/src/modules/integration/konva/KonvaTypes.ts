@@ -1,4 +1,5 @@
-import Konva from 'konva';
+import { Layer } from 'konva/lib/Layer';
+import { Arrow } from 'konva/lib/shapes/Arrow';
 
-export type KonvaLayer = typeof Konva.Layer;
-export type KonvaArrow = typeof Konva.Arrow;
+export type KonvaLayer = Layer;
+export type KonvaArrow = Arrow;

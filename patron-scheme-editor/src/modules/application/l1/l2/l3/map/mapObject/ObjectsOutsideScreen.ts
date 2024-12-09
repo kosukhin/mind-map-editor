@@ -5,7 +5,7 @@ import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { debug } from 'debug';
-import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
 
 type ObjectsConfig = {
   axis: 'x' | 'y';
@@ -50,7 +50,7 @@ export class ObjectsOutsideScreen {
       guestCast: FactoryType<GuestObjectType>;
       guestInTheMiddle: FactoryType<GuestObjectType>;
     },
-  ) {}
+  ) { }
 
   public count<R extends GuestObjectType<CountDocument>>(config: ObjectsConfig, guest: R) {
     const isPositiveDirection = config.direction === 'positive';

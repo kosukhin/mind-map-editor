@@ -1,4 +1,4 @@
-import { ref, Ref } from 'vue';
+import { ref, Ref } from '@vue/runtime-core';
 
 export class VueComputedPatron<T> {
   private readonly innerRef: Ref<T | undefined>;

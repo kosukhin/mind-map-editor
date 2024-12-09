@@ -4,17 +4,17 @@ import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { computed } from 'vue';
+import { computed } from '@vue/runtime-core';
 import { useFactories } from '@/composables/useFactories';
 
 const { parentTypes, mapType } = useApplication();
 const { svgMapTypeImage } = useFactories();
 const theTypes = parentTypes.types(new VueRefPatron<MapTypeDocument[]>()).ref();
 
-const typesExtended = computed(() => theTypes.value?.map((type) => ({
+const typesExtended = computed(() => theTypes.value?.map((type: MapTypeDocument) => ({
   type,
   image: svgMapTypeImage.create(type).markup(),
-})).sort((a, b) => +(a.type.name >= b.type.name)));
+})).sort((a: { type: MapTypeDocument }, b: { type: MapTypeDocument }) => +(a.type.name >= b.type.name)));
 </script>
 
 <template>

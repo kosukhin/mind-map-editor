@@ -18,6 +18,7 @@ export default [
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 0,
+      'prettier.bracketSpacing': false,
     },
   },
   {

@@ -15,7 +15,7 @@ import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
 import AppExport from '@/components/AppExport/AppExport.vue';
 import { useApplication } from '@/composables/useApplication';
 import { useFactories } from '@/composables/useFactories';
-import { watch } from 'vue';
+import { watch } from '@vue/runtime-core';
 
 const props = defineProps({
   modelValue: {

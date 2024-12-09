@@ -127,7 +127,7 @@ export class NewArrow {
       }),
     );
     this.arrowCache.value(
-      this.factories.guest.create((arrow: typeof Arrow) => {
+      this.factories.guest.create((arrow: KonvaArrow) => {
         arrow.remove();
       }),
     );

@@ -5,7 +5,7 @@ import { useApplication } from '@/composables/useApplication';
 import { useFactories } from '@/composables/useFactories';
 import { EditorSettings } from '@/modules/application/l1/l2/l3/l4/editor/EditorSettings';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { computed } from 'vue';
+import { computed } from '@vue/runtime-core';
 
 const {
    svgMapTypeImage,

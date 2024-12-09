@@ -39,13 +39,7 @@ type ObjectChainProps = {map: MapDocument, objectId: string};
 const object = new VueComputedPatron<MapObjectDocument>(() => {
   const theChain = chain.create();
   mapObjectCurrent.objectId(patron.create(theChain.receiveKey('objectId')));
-  mapObjectCurrent.objectId(patron.create((obj) => {
-    localDebug('sep obj', obj);
-  }));
   mapFile.currentMap(patron.create(theChain.receiveKey('map')));
-  mapFile.currentMap(patron.create((map) => {
-    localDebug('sep map', map);
-  }));
   theChain.result(patron.create(
     guest.create(({ map, objectId }: ObjectChainProps) => {
       localDebug('object opened', objectId);
