@@ -6,7 +6,7 @@ import { useScriptTag as Os, useMagicKeys as Bs, useVModel as Le, useShare as Is
 import le from "konva";
 import { ref as te, computed as Se, watch as je, onBeforeUnmount as Ps, onMounted as ns } from "@vue/runtime-core";
 import { FontAwesomeIcon as Es } from "@fortawesome/vue-fontawesome";
-import { faArrowUp as Rs, faArrowDown as Ds, faArrowRight as Ns, faArrowLeft as Vs, faClose as Hs, faMap as Us, faRotateRight as zs, faRotateLeft as Ls, faFileText as Qs, faCog as Ks, faPlusSquare as Gs, faHistory as Ws, faSearch as Js, faTextWidth as Zs, faBars as qs } from "@fortawesome/free-solid-svg-icons";
+import { faBars as Rs, faTextWidth as Ds, faSearch as Ns, faHistory as Vs, faPlusSquare as Hs, faCog as Us, faFileText as zs, faRotateLeft as Ls, faRotateRight as Qs, faMap as Ks, faClose as Gs, faArrowLeft as Ws, faArrowRight as Js, faArrowDown as Zs, faArrowUp as qs } from "@fortawesome/free-solid-svg-icons";
 import { useEditor as Ys, EditorContent as Xs, BubbleMenu as ei } from "@tiptap/vue-3";
 import ti from "@tiptap/starter-kit";
 class si {
@@ -2844,21 +2844,21 @@ const ya = { key: 0 }, wa = { class: "flex-grow overflow-y-auto" }, Ca = {
   },
   setup(r) {
     const e = {
-      "fa-bars": qs,
-      "fa-text-width": Zs,
-      "fa-search": Js,
-      "fa-history": Ws,
-      "fa-plus-square": Gs,
-      "fa-cog": Ks,
-      "fa-file-text": Qs,
+      "fa-bars": Rs,
+      "fa-text-width": Ds,
+      "fa-search": Ns,
+      "fa-history": Vs,
+      "fa-plus-square": Hs,
+      "fa-cog": Us,
+      "fa-file-text": zs,
       "fa-rotate-left": Ls,
-      "fa-rotate-right": zs,
-      "fa-map": Us,
-      "fa-close": Hs,
-      "fa-arrow-left": Vs,
-      "fa-arrow-right": Ns,
-      "fa-arrow-down": Ds,
-      "fa-arrow-up": Rs
+      "fa-rotate-right": Qs,
+      "fa-map": Ks,
+      "fa-close": Gs,
+      "fa-arrow-left": Ws,
+      "fa-arrow-right": Js,
+      "fa-arrow-down": Zs,
+      "fa-arrow-up": qs
     };
     return (t, s) => (m(), z(c(Es), {
       icon: e[r.icon]
