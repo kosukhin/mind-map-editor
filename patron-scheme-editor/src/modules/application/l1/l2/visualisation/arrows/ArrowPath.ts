@@ -5,6 +5,11 @@ import {
 import { GuestObjectType } from 'patron-oop';
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
+import debug from 'debug';
+
+const centerGap = 20;
+
+const localDebug = debug('ArrowPath');
 
 /**
  * Путь между двумя объектами
@@ -62,6 +67,42 @@ export class ArrowPath implements ArrowPathType {
       x: +shapePosition.x + Math.round(shapeGeometry.width / 2),
       y: +shapePosition.y + Math.round(shapeGeometry.height / 2),
     };
+
+    const isXFar = Math.abs(lookToMiddle.x - shapeMiddle.x) - (lookToGeometry.width + centerGap);
+    const isYFar = Math.abs(lookToMiddle.y - shapeMiddle.y) - (lookToGeometry.height + centerGap);
+
+    if (isXFar < 0 || isYFar < 0) {
+      localDebug('ArrowPath', isXFar, isYFar);
+      return this.arrowPointPositionNear(
+        shapeGeometry,
+        shapePosition,
+        lookToGeometry,
+        lookToPosition
+      );
+    } else {
+      return this.arrowPointPositionFar(
+        shapeGeometry,
+        shapePosition,
+        lookToGeometry,
+        lookToPosition
+      );
+    }
+  }
+
+  private arrowPointPositionNear(
+    shapeGeometry: SizeDocument,
+    shapePosition: PointDocument,
+    lookToGeometry: SizeDocument,
+    lookToPosition: PointDocument,
+  ) {
+    const lookToMiddle = {
+      x: +lookToPosition.x + Math.round(lookToGeometry.width / 2),
+      y: +lookToPosition.y + Math.round(lookToGeometry.height / 2),
+    };
+    const shapeMiddle = {
+      x: +shapePosition.x + Math.round(shapeGeometry.width / 2),
+      y: +shapePosition.y + Math.round(shapeGeometry.height / 2),
+    };
     const dx = shapeMiddle.x - lookToMiddle.x;
     const dy = shapeMiddle.y - lookToMiddle.y;
     const isModuleDYGreater = Math.abs(dy) > Math.abs(dx);
@@ -105,6 +146,31 @@ export class ArrowPath implements ArrowPathType {
     const pointKey = [x, y].join('-');
     const pointsCount = this.filledPoints.get(pointKey) || 0;
     this.filledPoints.set(pointKey, pointsCount + 1);
+
+    return {
+      point: { x, y },
+      breakPoint,
+      shift: {
+        x: shiftX * pointsCount * 10,
+        y: shiftY * pointsCount * 10,
+      },
+    };
+  }
+
+
+  private arrowPointPositionFar(
+    shapeGeometry: SizeDocument,
+    shapePosition: PointDocument,
+    lookToGeometry: SizeDocument,
+    lookToPosition: PointDocument,
+  ) {
+    const breakPoint: any[] = [];
+    const x = 0;
+    const y = 0;
+    let shiftX = 0;
+    let shiftY = 0;
+    const pointKey = [x, y].join('-');
+    const pointsCount = this.filledPoints.get(pointKey) || 0;
 
     return {
       point: { x, y },
