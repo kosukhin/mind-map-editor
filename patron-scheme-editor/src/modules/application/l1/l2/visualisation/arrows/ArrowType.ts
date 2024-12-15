@@ -5,18 +5,23 @@ export type ArrowTypeType = 'twoBreaks' | 'threeBreaks';
 
 export interface ArrowDepsDocument {
   fromObject: MapObjectDocument,
-  toObject: MapObjectDocument
+  toObject: MapObjectDocument,
+  pointsCount: number
 }
 
-export class ArrowType implements GuestAwareType<ArrowTypeType> {
+export interface ArrowDepsDocumentWithType extends ArrowDepsDocument {
+  type: ArrowTypeType,
+}
+
+export class ArrowType implements GuestAwareType<ArrowDepsDocumentWithType> {
   public constructor(
     private arrowDepsSource: GuestAwareType<ArrowDepsDocument>,
     private centerGap = 10
   ) { }
 
-  public value(guest: GuestType<ArrowTypeType>) {
+  public value(guest: GuestType<ArrowDepsDocumentWithType>) {
     this.arrowDepsSource.value(
-      new GuestCast(<GuestType>guest, ({ fromObject, toObject }) => {
+      new GuestCast(<GuestType>guest, ({ fromObject, toObject, pointsCount }) => {
         const shapeGeometry = {
           width: fromObject.width,
           height: fromObject.height,
@@ -46,8 +51,12 @@ export class ArrowType implements GuestAwareType<ArrowTypeType> {
         const isXFar = Math.abs(lookToMiddle.x - shapeMiddle.x) - (lookToGeometry.width + this.centerGap);
         const isYFar = Math.abs(lookToMiddle.y - shapeMiddle.y) - (lookToGeometry.height + this.centerGap);
 
-        const result: ArrowTypeType = (isXFar < 0 || isYFar < 0) ? 'threeBreaks' : 'twoBreaks';
-        give(result, guest)
+        give({
+          fromObject,
+          toObject,
+          pointsCount,
+          type: (isXFar < 0 || isYFar < 0) ? 'threeBreaks' : 'twoBreaks'
+        }, guest)
       })
     )
     return this;

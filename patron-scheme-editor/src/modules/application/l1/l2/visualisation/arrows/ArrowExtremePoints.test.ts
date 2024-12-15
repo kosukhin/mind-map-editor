@@ -15,6 +15,7 @@ test('ArrowExtremePoints.test', () => {
       id: 2,
       arrows: [
         { id: 1 },
+        { id: 3 },
       ]
     },
     3: {
@@ -28,7 +29,7 @@ test('ArrowExtremePoints.test', () => {
   );
 
   points.value((arrows) => {
-    expect(arrows.length).toBe(3);
+    expect(arrows.length).toBe(4);
     expect(arrows[0].fromObject.id).toBe(1);
     expect(arrows[0].toObject.id).toBe(2);
     expect(arrows[1].fromObject.id).toBe(1);
