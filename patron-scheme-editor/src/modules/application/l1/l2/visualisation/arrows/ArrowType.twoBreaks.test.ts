@@ -14,13 +14,12 @@ test('ArrowType.twoBreaks.test', () => {
         width: 100,
         height: 100,
         position: [200, 200]
-      },
-      pointsCount: 1
+      }
     }, guest)
   })
   const arrowType = new ArrowType(deps);
 
-  arrowType.value((type) => {
-    expect(type).toBe('twoBreaks');
+  arrowType.value((v) => {
+    expect(v.type).toBe('twoBreaks');
   })
 })

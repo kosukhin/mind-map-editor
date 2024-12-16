@@ -19,7 +19,7 @@ test('ArrowType.threeBreaks.test', () => {
   })
   const arrowType = new ArrowType(deps);
 
-  arrowType.value((type) => {
-    expect(type).toBe('threeBreaks');
+  arrowType.value((v) => {
+    expect(v.type).toBe('threeBreaks');
   })
 })

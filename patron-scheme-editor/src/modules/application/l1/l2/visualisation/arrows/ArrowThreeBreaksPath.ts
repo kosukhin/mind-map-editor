@@ -8,6 +8,10 @@ export class ArrowThreeBreaksPath implements GuestAwareType<number[]> {
   public value(guest: GuestType<number[]>): this {
     this.arrowDeps.value(
       new GuestCast(guest, (value) => {
+        if (value.type !== 'threeBreaks') {
+          return;
+        }
+
         const startPoint = this.points(value.fromObject, value.toObject);
         const endPoint = this.points(value.toObject, value.fromObject);
         give([
