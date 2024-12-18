@@ -1,11 +1,11 @@
 import { MapObjectDocument } from "@/modules/application/l1/l2/l3/map/documents/MapStructures";
-import { ArrowDepsDocumentWithType } from "@/modules/application/l1/l2/visualisation/arrows/ArrowType";
+import { ArrowDepsDocumentWithType, ArrowPoints } from "@/modules/application/l1/l2/visualisation/arrows/ArrowType";
 import { give, GuestAwareType, GuestCast, GuestType } from "patron-oop";
 
-export class ArrowThreeBreaksPath implements GuestAwareType<number[]> {
+export class ArrowThreeBreaksPath implements GuestAwareType<ArrowPoints> {
   public constructor(private arrowDeps: GuestAwareType<ArrowDepsDocumentWithType>) { }
 
-  public value(guest: GuestType<number[]>): this {
+  public value(guest: GuestType<ArrowPoints>): this {
     this.arrowDeps.value(
       new GuestCast(guest, (value) => {
         if (value.type !== 'threeBreaks') {
@@ -14,16 +14,19 @@ export class ArrowThreeBreaksPath implements GuestAwareType<number[]> {
 
         const startPoint = this.points(value.fromObject, value.toObject);
         const endPoint = this.points(value.toObject, value.fromObject);
-        give([
-          +startPoint.point.x + startPoint.shift.x,
-          +startPoint.point.y + startPoint.shift.y,
-          +startPoint.breakPoint.x + startPoint.shift.x,
-          +startPoint.breakPoint.y + startPoint.shift.y,
-          +endPoint.breakPoint.x + endPoint.shift.x,
-          +endPoint.breakPoint.y + endPoint.shift.y,
-          +endPoint.point.x + endPoint.shift.x,
-          +endPoint.point.y + endPoint.shift.y,
-        ], guest);
+        give({
+          key: value.fromObject.id + '-' + value.toObject.id,
+          points: [
+            +startPoint.point.x + startPoint.shift.x,
+            +startPoint.point.y + startPoint.shift.y,
+            +startPoint.breakPoint.x + startPoint.shift.x,
+            +startPoint.breakPoint.y + startPoint.shift.y,
+            +endPoint.breakPoint.x + endPoint.shift.x,
+            +endPoint.breakPoint.y + endPoint.shift.y,
+            +endPoint.point.x + endPoint.shift.x,
+            +endPoint.point.y + endPoint.shift.y,
+          ]
+        }, guest);
       })
     )
 

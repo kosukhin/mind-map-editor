@@ -1,7 +1,7 @@
+import { ActionType } from "@/modules/system/source/ActionType";
 import { GuestAwareType, GuestType, SourceEmpty, SourceType } from "patron-oop";
 
-export interface GuestAwareAcitveType<R = unknown, T = unknown> extends GuestAwareType<T> {
-  do(config: R): this;
+export interface GuestAwareAcitveType<R = unknown, T = unknown> extends GuestAwareType<T>, ActionType<R> {
 }
 
 export class GuestAwareActive<R, T> implements GuestAwareAcitveType<R, T> {

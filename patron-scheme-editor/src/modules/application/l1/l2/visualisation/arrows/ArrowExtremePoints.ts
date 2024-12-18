@@ -19,16 +19,13 @@ export class ArrowExtremePoints implements GuestAwareType<ArrowDepsDocument[]> {
         guest, ({ objects, objectsMap }) => {
           const resultObjects: ArrowDepsDocument[] = [];
           objects.forEach((fromObject) => {
-            let pointsCount = 0
             fromObject.arrows.forEach((toObjectRelation) => {
               const toObject = objectsMap[toObjectRelation.id];
-              pointsCount += 1;
 
               if (toObject) {
                 resultObjects.push({
                   fromObject,
                   toObject,
-                  pointsCount
                 })
               }
             })

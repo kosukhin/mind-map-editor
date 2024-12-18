@@ -13,13 +13,12 @@ export class BrowserLaunchQueue implements BrowserLaunchQueueType {
   public constructor(
     private launchQueue: LaunchQueueType = (window as any).launchQueue,
     private isLaunchQueueSupported = 'launchQueue' in window,
-  ) {}
+  ) { }
 
   public fileHandler(guest: GuestObjectType<FileSystemFileHandle>) {
     if (this.isLaunchQueueSupported && !this.isCalculated) {
       this.isCalculated = true;
       this.launchQueue.setConsumer((launchParams: LaunchParamsType) => {
-        console.log('require file handler');
         if (launchParams.files && launchParams.files.length) {
           const [fileHandler] = launchParams.files;
           fileHandle.give(fileHandler);

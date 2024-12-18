@@ -1186,7 +1186,7 @@ export declare const useFactories: () => {
     chain: Factory<GuestChain<any>>;
     guest: Factory<Guest<any>>;
     guestCast: Factory<GuestCast<any>>;
-    guestAware: FactoryType<GuestAwareType<unknown>>;
+    guestAware: FactoryType<GuestAwareType<any>>;
     guestInTheMiddle: Factory<GuestCast<any>>;
     guestSync: Factory<GuestSync<any>>;
     patron: Factory<Patron<any>>;

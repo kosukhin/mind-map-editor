@@ -12,6 +12,11 @@ export interface ArrowDepsDocumentWithType extends ArrowDepsDocument {
   type: ArrowTypeType,
 }
 
+export interface ArrowPoints {
+  key: string,
+  points: number[]
+}
+
 export class ArrowType implements GuestAwareType<ArrowDepsDocumentWithType> {
   public constructor(
     private arrowDepsSource: GuestAwareType<ArrowDepsDocument>,

@@ -1,4 +1,5 @@
-import { GuestObjectType, FactoryType, ChainType, SourceType } from 'patron-oop';
+import { GuestAwareMap } from '@/modules/system/source/GuestAwareMap';
+import { GuestObjectType, FactoryType, ChainType, SourceType, GuestAware, Factory, give, GuestAwareType } from 'patron-oop';
 import {
   MapDocument,
   MapObjectDocument,
@@ -11,12 +12,20 @@ import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 import { ArrowPathType } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
 import Konva from 'konva';
+import { Module } from '@/modules/system/source/Module';
+import { ArrowExtremePoints } from '@/modules/application/l1/l2/visualisation/arrows/ArrowExtremePoints';
+import { ArrowDepsDocument, ArrowPoints, ArrowType } from '@/modules/application/l1/l2/visualisation/arrows/ArrowType';
+import { GuestAwareFirst } from '@/modules/system/source/GuestAwareFirst';
+import { ArrowTwoBreaksPath } from '@/modules/application/l1/l2/visualisation/arrows/ArrowTwoBreaksPath';
+import { ArrowThreeBreaksPath } from '@/modules/application/l1/l2/visualisation/arrows/ArrowThreeBreaksPath';
 
 const { Arrow } = Konva;
 
 const localDebug = debug('MapObjectsArrows');
 
 type ChainParamsType = { layer: KonvaLayer; map: MapDocument; objects: MapObjectDocument[] };
+
+
 
 /**
  * Объект для отрисовки стрелок на конве
@@ -47,99 +56,48 @@ export class MapObjectsArrows {
       this.factories.patron.create(
         this.factories.guest.create(
           throttle(({ layer, map, objects }: ChainParamsType) => {
-            const updateArrow = (fromObject: MapObjectDocument, toObject: MapObjectDocument) => {
-              const toObjectType = map.types[toObject.type];
 
-              this.arrowPath.breakPoints(
-                {
-                  shapeGeometry: {
-                    width: fromObject.width,
-                    height: fromObject.height,
-                  },
-                  shapePosition: {
-                    x: fromObject.position[0],
-                    y: fromObject.position[1],
-                  },
-                  lookToGeometry: {
-                    width: toObject.width,
-                    height: toObject.height,
-                  },
-                  lookToPosition: {
-                    x: toObject.position[0],
-                    y: toObject.position[1],
-                  },
-                },
-                {
-                  shapeGeometry: {
-                    width: toObject.width || toObjectType.width,
-                    height: toObject.height || toObjectType.height,
-                  },
-                  shapePosition: {
-                    x: toObject.position[0],
-                    y: toObject.position[1],
-                  },
-                  lookToGeometry: {
-                    width: fromObject.width,
-                    height: fromObject.height,
-                  },
-                  lookToPosition: {
-                    x: fromObject.position[0],
-                    y: fromObject.position[1],
-                  },
-                },
-                this.factories.guest.create((points: number[]) => {
-                  const arrowKey = points.join('-');
-                  const arrowId = [fromObject.id, toObject.id].join('-');
-                  localDebug('points', points);
-                  localDebug(fromObject, toObject);
+            const objectsMap = objects.reduce((acc: Record<string, any>, item) => {
+              acc[item.id] = item;
+              return acc;
+            }, {});
+            const extremePoints = new GuestAwareMap<ArrowDepsDocument, ArrowPoints>(new ArrowExtremePoints(
+              new GuestAware((guest) => give(objects, guest)),
+              new GuestAware((guest) => give(objectsMap, guest))
+            ), new Module((dep: GuestAwareType<ArrowDepsDocument>) => {
+              const arrowType = new ArrowType(dep);
+              return new GuestAwareFirst([new ArrowTwoBreaksPath(arrowType), new ArrowThreeBreaksPath(arrowType)])
+            }));
 
-                  if (this.previouslyRenderedArrows.has(arrowId)) {
-                    const savedArrow = this.previouslyRenderedArrows.get(arrowId);
+            extremePoints.value((pointsCoords) => {
+              pointsCoords.forEach((arrowPoints) => {
+                const arrowId = arrowPoints.key
 
-                    savedArrow.arrow.show();
-                    savedArrow.arrow.points(points);
-                    return;
-                  }
+                if (this.previouslyRenderedArrows.has(arrowId)) {
+                  const savedArrow = this.previouslyRenderedArrows.get(arrowId);
 
-                  const arrow = new Arrow({
-                    x: 0,
-                    y: 0,
-                    points,
-                    pointerLength: 20,
-                    pointerWidth: 10,
-                    fill: '#ccc',
-                    stroke: '#bbb',
-                    strokeWidth: 2,
-                    zIndex: 2,
-                  });
-                  this.previouslyRenderedArrows.set(arrowId, {
-                    arrow,
-                    arrowKey,
-                  });
-                  layer.add(arrow);
-                }),
-              );
-            };
-
-            this.arrowPath.clear();
-            this.previouslyRenderedArrows.forEach((arrow) => arrow.arrow.hide());
-            objects.forEach((object) => {
-              if (!object.arrows) {
-                return;
-              }
-
-              localDebug('visible objects', objects.length);
-              object.arrows.forEach((toObjectRelation) => {
-                const toObject =
-                  objects.find((mbObject) => mbObject.id === toObjectRelation.id) ||
-                  map.objects[toObjectRelation.id];
-                if (!toObject) {
+                  savedArrow.arrow.show();
+                  savedArrow.arrow.points(arrowPoints.points);
                   return;
                 }
 
-                updateArrow(object, toObject);
-              });
-            });
+                const arrow = new Arrow({
+                  x: 0,
+                  y: 0,
+                  points: arrowPoints.points,
+                  pointerLength: 20,
+                  pointerWidth: 10,
+                  fill: '#ccc',
+                  stroke: '#bbb',
+                  strokeWidth: 2,
+                  zIndex: 2,
+                });
+                this.previouslyRenderedArrows.set(arrowId, {
+                  arrow,
+                });
+                layer.add(arrow);
+              })
+            })
           }, 50),
         ),
       ),
