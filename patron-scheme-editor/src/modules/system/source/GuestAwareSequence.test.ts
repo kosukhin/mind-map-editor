@@ -1,4 +1,4 @@
-import { GuestAwareMap } from "@/modules/system/source/GuestAwareMap";
+import { GuestAwareSequence } from "@/modules/system/source/GuestAwareSequence";
 import { Factory, give, GuestAwareType, GuestCast, GuestType, Source } from "patron-oop";
 import { expect, test } from "vitest";
 
@@ -15,9 +15,9 @@ class X2 implements GuestAwareType<number> {
   }
 }
 
-test('GuestAwareMap.test', () => {
+test('GuestAwareSequence.test', () => {
   const source = new Source([1, 2, 3, 9])
-  const guestMapped = new GuestAwareMap(
+  const guestMapped = new GuestAwareSequence(
     source,
     new Factory(X2)
   );
@@ -25,4 +25,4 @@ test('GuestAwareMap.test', () => {
   guestMapped.value((v) => {
     expect(v.join()).toBe('2,4,6,18')
   });
-});
+})

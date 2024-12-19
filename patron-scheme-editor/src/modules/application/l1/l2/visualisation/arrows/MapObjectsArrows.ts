@@ -1,31 +1,29 @@
-import { GuestAwareMap } from '@/modules/system/source/GuestAwareMap';
-import { GuestObjectType, FactoryType, ChainType, SourceType, GuestAware, Factory, give, GuestAwareType } from 'patron-oop';
+import { ArrowPathType } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
 import {
   MapDocument,
   MapObjectDocument,
 } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import { debug } from 'debug';
-import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
-import throttle from 'lodash/throttle';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
-import { ArrowPathType } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
-import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
-import Konva from 'konva';
-import { Module } from '@/modules/system/source/Module';
+import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
+import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { ArrowExtremePoints } from '@/modules/application/l1/l2/visualisation/arrows/ArrowExtremePoints';
-import { ArrowDepsDocument, ArrowPoints, ArrowType } from '@/modules/application/l1/l2/visualisation/arrows/ArrowType';
-import { GuestAwareFirst } from '@/modules/system/source/GuestAwareFirst';
-import { ArrowTwoBreaksPath } from '@/modules/application/l1/l2/visualisation/arrows/ArrowTwoBreaksPath';
 import { ArrowThreeBreaksPath } from '@/modules/application/l1/l2/visualisation/arrows/ArrowThreeBreaksPath';
+import { ArrowTwoBreaksPath } from '@/modules/application/l1/l2/visualisation/arrows/ArrowTwoBreaksPath';
+import { ArrowDepsDocument, ArrowPoints, ArrowType } from '@/modules/application/l1/l2/visualisation/arrows/ArrowType';
+import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
+import { GuestAwareFirst } from '@/modules/system/source/GuestAwareFirst';
+import { GuestAwareSequence } from '@/modules/system/source/GuestAwareSequence';
+import { Module } from '@/modules/system/source/Module';
+import { debug } from 'debug';
+import Konva from 'konva';
+import throttle from 'lodash/throttle';
+import { ChainType, FactoryType, give, GuestAware, GuestAwareType, GuestObjectType, SourceType } from 'patron-oop';
 
 const { Arrow } = Konva;
 
 const localDebug = debug('MapObjectsArrows');
 
 type ChainParamsType = { layer: KonvaLayer; map: MapDocument; objects: MapObjectDocument[] };
-
-
 
 /**
  * Объект для отрисовки стрелок на конве
@@ -61,7 +59,7 @@ export class MapObjectsArrows {
               acc[item.id] = item;
               return acc;
             }, {});
-            const extremePoints = new GuestAwareMap<ArrowDepsDocument, ArrowPoints>(new ArrowExtremePoints(
+            const extremePoints = new GuestAwareSequence<ArrowDepsDocument, ArrowPoints>(new ArrowExtremePoints(
               new GuestAware((guest) => give(objects, guest)),
               new GuestAware((guest) => give(objectsMap, guest))
             ), new Module((dep: GuestAwareType<ArrowDepsDocument>) => {
