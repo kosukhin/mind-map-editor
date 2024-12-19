@@ -22,6 +22,6 @@ test('ArrowTwoBreaksPath.test', () => {
   const arrow = new ArrowTwoBreaksPath(deps);
 
   arrow.value((arrowPath) => {
-    expect(JSON.stringify(arrowPath.points)).toBe('[100,51,150,51,150,249,200,249]');
+    expect(JSON.stringify(arrowPath.points)).toBe('[100,50,250,50,250,200]');
   })
 })

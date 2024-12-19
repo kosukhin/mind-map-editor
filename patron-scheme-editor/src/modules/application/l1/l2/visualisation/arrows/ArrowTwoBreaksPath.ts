@@ -29,7 +29,7 @@ export class ArrowTwoBreaksPath implements GuestAwareType<ArrowPoints> {
       midHeight: fromObject.position[1] + Math.round(fromObject.height / 2),
       midWidth: fromObject.position[0] + Math.round(fromObject.width / 2),
       fullHeight: fromObject.position[1] + fromObject.height,
-      fullWidth: fromObject.position[0] + fromObject.width / 2,
+      fullWidth: fromObject.position[0] + fromObject.width,
     };
     const to = {
       startHeight: toObject.position[1],
@@ -37,25 +37,25 @@ export class ArrowTwoBreaksPath implements GuestAwareType<ArrowPoints> {
       midHeight: toObject.position[1] + Math.round(toObject.height / 2),
       midWidth: toObject.position[0] + Math.round(toObject.width / 2),
       fullHeight: toObject.position[1] + toObject.height,
-      fullWidth: toObject.position[0] + toObject.width / 2,
+      fullWidth: toObject.position[0] + toObject.width,
     };
 
     const calcPosition = {
-      'left-top': () => fo.fullWidth > to.startWidth && fo.fullHeight > to.startHeight,
-      'right-top': () => to.fullWidth > fo.startWidth && fo.fullHeight > to.startHeight,
-      'left-bottom': () => fo.fullWidth > to.startWidth && to.fullHeight > fo.startHeight,
-      'right-bottom': () => to.fullWidth > fo.startWidth && to.fullHeight > fo.startHeight,
+      'left-top': () => fo.fullWidth < to.startWidth && fo.fullHeight < to.startHeight,
+      'right-top': () => to.fullWidth < fo.startWidth && fo.fullHeight < to.startHeight,
+      'left-bottom': () => fo.fullWidth < to.startWidth && to.fullHeight < fo.startHeight,
+      'right-bottom': () => to.fullWidth < fo.startWidth && to.fullHeight < fo.startHeight,
     } as const;
 
     const calcPoints = {
       'left-top': () => [fo.fullWidth, fo.midHeight, to.midWidth, fo.midHeight, to.midWidth, to.startHeight],
       'right-top': () => [fo.startWidth, fo.midHeight, to.midWidth, fo.midHeight, to.midWidth, to.startHeight
       ],
-      'left-bottom': () => [fo.fullWidth, fo.midHeight, to.midWidth, fo.fullHeight, to.midWidth, to.fullHeight],
-      'right-bottom': () => [fo.startWidth, fo.midHeight, to.midWidth, fo.fullHeight, to.midWidth, to.fullHeight],
+      'left-bottom': () => [fo.fullWidth, fo.midHeight, to.midWidth, fo.midHeight, to.midWidth, to.fullHeight],
+      'right-bottom': () => [fo.startWidth, fo.midHeight, to.midWidth, fo.midHeight, to.midWidth, to.fullHeight],
     } as const;
 
-    const position = Object.entries(calcPoints).reduce((acc, [pos, posCondition]) => {
+    const position = Object.entries(calcPosition).reduce((acc, [pos, posCondition]) => {
       if (posCondition()) {
         acc = pos
       }

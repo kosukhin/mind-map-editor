@@ -6,7 +6,7 @@ import { useScriptTag as Is, useMagicKeys as Os, useVModel as Le, useShare as Ps
 import he from "konva";
 import { ref as ie, computed as je, watch as Be, onBeforeUnmount as Es, onMounted as as } from "@vue/runtime-core";
 import { FontAwesomeIcon as Ds } from "@fortawesome/vue-fontawesome";
-import { faArrowUp as Rs, faArrowDown as Ns, faArrowRight as Hs, faArrowLeft as Vs, faClose as Us, faMap as zs, faRotateRight as Ls, faRotateLeft as Qs, faFileText as Ws, faCog as Ks, faPlusSquare as Gs, faHistory as Ys, faSearch as Js, faTextWidth as Zs, faBars as qs } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp as Rs, faArrowDown as Hs, faArrowRight as Ns, faArrowLeft as Vs, faClose as Us, faMap as zs, faRotateRight as Ls, faRotateLeft as Qs, faFileText as Ws, faCog as Ks, faPlusSquare as Gs, faHistory as Ys, faSearch as Js, faTextWidth as Zs, faBars as qs } from "@fortawesome/free-solid-svg-icons";
 import { useEditor as Xs, EditorContent as ei, BubbleMenu as ti } from "@tiptap/vue-3";
 import si from "@tiptap/starter-kit";
 class ii {
@@ -739,7 +739,7 @@ var Di = Ei;
 })(at, at.exports);
 var T = at.exports;
 const ut = /* @__PURE__ */ lt(T), Ri = T.debug("TextNlAsBr");
-class Ni {
+class Hi {
   constructor(e, t) {
     this.baseText = e, this.factories = t;
   }
@@ -754,8 +754,8 @@ class Ni {
     ), e;
   }
 }
-const Hi = new R(Ie), Vi = new R(Ie), Ui = new R(ye), zi = new R(pe), Li = new R(K), Qi = new R(Ae), Wi = new R(Qe), Ki = new R(gi), Gi = new R(yi), Yi = new R(K), Ji = new R(ct), Zi = new R(fi), de = {
-  cache: Hi,
+const Ni = new R(Ie), Vi = new R(Ie), Ui = new R(ye), zi = new R(pe), Li = new R(K), Qi = new R(Ae), Wi = new R(Qe), Ki = new R(gi), Gi = new R(yi), Yi = new R(K), Ji = new R(ct), Zi = new R(fi), de = {
+  cache: Ni,
   chain: Ji,
   guest: zi,
   guestCast: Li,
@@ -767,7 +767,7 @@ const Hi = new R(Ie), Vi = new R(Ie), Ui = new R(ye), zi = new R(pe), Li = new R
   pool: Wi,
   source: Vi,
   sourceEmpty: Ui
-}, qi = new R(xi), Xi = new R(_i), en = new R(ki), tn = new R($i), ls = new R(Mi), sn = new R(Fi, { ...de, svgImage: ls }), nn = new R(Ti, de), rn = new R(Si, de), on = new R(ji, de), an = new R(Bi, de), cn = new R(Ii), ln = new R(Oi, de), un = new R(Ni, de), hn = {
+}, qi = new R(xi), Xi = new R(_i), en = new R(ki), tn = new R($i), ls = new R(Mi), sn = new R(Fi, { ...de, svgImage: ls }), nn = new R(Ti, de), rn = new R(Si, de), on = new R(ji, de), an = new R(Bi, de), cn = new R(Ii), ln = new R(Oi, de), un = new R(Hi, de), hn = {
   ...de,
   fileHandlerContent: qi,
   browserFileSaved: Xi,
@@ -1285,9 +1285,9 @@ function Dn(n) {
     ;
   return e;
 }
-var Rn = Dn, Nn = Rn, Hn = /^\s+/;
+var Rn = Dn, Hn = Rn, Nn = /^\s+/;
 function Vn(n) {
-  return n && n.slice(0, Nn(n) + 1).replace(Hn, "");
+  return n && n.slice(0, Hn(n) + 1).replace(Nn, "");
 }
 var Un = Vn, zn = ds, Ln = zn.Symbol, ps = Ln, Et = ps, fs = Object.prototype, Qn = fs.hasOwnProperty, Wn = fs.toString, _e = Et ? Et.toStringTag : void 0;
 function Kn(n) {
@@ -1316,21 +1316,21 @@ var or = rr, ar = nr, cr = or, lr = "[object Symbol]";
 function ur(n) {
   return typeof n == "symbol" || cr(n) && ar(n) == lr;
 }
-var hr = ur, dr = Un, Nt = dt, pr = hr, Ht = NaN, fr = /^[-+]0x[0-9a-f]+$/i, gr = /^0b[01]+$/i, mr = /^0o[0-7]+$/i, vr = parseInt;
+var hr = ur, dr = Un, Ht = dt, pr = hr, Nt = NaN, fr = /^[-+]0x[0-9a-f]+$/i, gr = /^0b[01]+$/i, mr = /^0o[0-7]+$/i, vr = parseInt;
 function Ar(n) {
   if (typeof n == "number")
     return n;
   if (pr(n))
-    return Ht;
-  if (Nt(n)) {
+    return Nt;
+  if (Ht(n)) {
     var e = typeof n.valueOf == "function" ? n.valueOf() : n;
-    n = Nt(e) ? e + "" : e;
+    n = Ht(e) ? e + "" : e;
   }
   if (typeof n != "string")
     return n === 0 ? n : +n;
   n = dr(n);
   var t = gr.test(n);
-  return t || mr.test(n) ? vr(n.slice(2), t ? 2 : 8) : fr.test(n) ? Ht : +n;
+  return t || mr.test(n) ? vr(n.slice(2), t ? 2 : 8) : fr.test(n) ? Nt : +n;
 }
 var yr = Ar, br = dt, et = Pn, Vt = yr, wr = "Expected a function", Cr = Math.max, xr = Math.min;
 function _r(n, e, t) {
@@ -1602,8 +1602,8 @@ class Rr {
     ), this;
   }
 }
-const Nr = T.debug("MapTypeUsed");
-class Hr {
+const Hr = T.debug("MapTypeUsed");
+class Nr {
   constructor(e, t) {
     this.mapFile = e, this.factories = t;
   }
@@ -1613,7 +1613,7 @@ class Hr {
         const i = Object.values(s.objects).some(
           (r) => r.type === e.name
         );
-        Nr("is type used", i), t.give(!i || "Тип карты использован");
+        Hr("is type used", i), t.give(!i || "Тип карты использован");
       })
     ), this;
   }
@@ -1993,15 +1993,20 @@ class uo {
       midHeight: e.position[1] + Math.round(e.height / 2),
       midWidth: e.position[0] + Math.round(e.width / 2),
       fullHeight: e.position[1] + e.height,
-      fullWidth: e.position[0] + e.width / 2
+      fullWidth: e.position[0] + e.width
     }, i = {
       startHeight: t.position[1],
       startWidth: t.position[0],
       midHeight: t.position[1] + Math.round(t.height / 2),
       midWidth: t.position[0] + Math.round(t.width / 2),
       fullHeight: t.position[1] + t.height,
-      fullWidth: t.position[0] + t.width / 2
+      fullWidth: t.position[0] + t.width
     }, r = {
+      "left-top": () => s.fullWidth < i.startWidth && s.fullHeight < i.startHeight,
+      "right-top": () => i.fullWidth < s.startWidth && s.fullHeight < i.startHeight,
+      "left-bottom": () => s.fullWidth < i.startWidth && i.fullHeight < s.startHeight,
+      "right-bottom": () => i.fullWidth < s.startWidth && i.fullHeight < s.startHeight
+    }, o = {
       "left-top": () => [s.fullWidth, s.midHeight, i.midWidth, s.midHeight, i.midWidth, i.startHeight],
       "right-top": () => [
         s.startWidth,
@@ -2011,10 +2016,10 @@ class uo {
         i.midWidth,
         i.startHeight
       ],
-      "left-bottom": () => [s.fullWidth, s.midHeight, i.midWidth, s.fullHeight, i.midWidth, i.fullHeight],
-      "right-bottom": () => [s.startWidth, s.midHeight, i.midWidth, s.fullHeight, i.midWidth, i.fullHeight]
-    }, o = Object.entries(r).reduce((a, [c, d]) => (d() && (a = c), a), "left-top");
-    return r[o]();
+      "left-bottom": () => [s.fullWidth, s.midHeight, i.midWidth, s.midHeight, i.midWidth, i.fullHeight],
+      "right-bottom": () => [s.startWidth, s.midHeight, i.midWidth, s.midHeight, i.midWidth, i.fullHeight]
+    }, a = Object.entries(r).reduce((c, [d, u]) => (u() && (c = d), c), "left-top");
+    return console.log(a), o[a]();
   }
 }
 class ho {
@@ -2668,7 +2673,7 @@ class Ro {
     return this.cursorPool.add(e), this;
   }
 }
-class No {
+class Ho {
   constructor(e) {
     this.el = e, e.value(this);
   }
@@ -2691,8 +2696,8 @@ class No {
     return "patron";
   }
 }
-const Ne = T.debug("ControlCombo");
-class Ho {
+const He = T.debug("ControlCombo");
+class No {
   constructor(e, t) {
     this.keyboard = e, this.factories = t;
   }
@@ -2702,7 +2707,7 @@ class Ho {
   happened(e, t) {
     this.keyboard.event(
       this.factories.guestInTheMiddle.create(t, (s) => {
-        Ne("combo happened look for key", e, "received", s.code), s.ctrlKey && s.code === e && s.type === "keydown" && (s.preventDefault(), t.give(s));
+        He("combo happened look for key", e, "received", s.code), s.ctrlKey && s.code === e && s.type === "keydown" && (s.preventDefault(), t.give(s));
       })
     );
   }
@@ -2710,11 +2715,11 @@ class Ho {
    * Случилась комбинация ctrl + keyCode с условием comboCondition
    */
   happenedConditional(e, t, s) {
-    Ne("combo control happened registration"), this.keyboard.event(
+    He("combo control happened registration"), this.keyboard.event(
       this.factories.guestInTheMiddle.create(s, (i) => {
-        Ne("keyboard event come"), t.value(
+        He("keyboard event come"), t.value(
           this.factories.guest.create((r) => {
-            Ne("combo happened look for key", e, "received", i.code), r && i.ctrlKey && i.code === e && i.type === "keydown" && (i.preventDefault(), s.give(i));
+            He("combo happened look for key", e, "received", i.code), r && i.ctrlKey && i.code === e && i.type === "keydown" && (i.preventDefault(), s.give(i));
           })
         );
       })
@@ -2853,16 +2858,16 @@ class Qo {
 const _ = Z(), We = new Vo(_), ms = new Ie({
   readonly: !1,
   presets: {}
-}), Wo = new Mo(We, _), vs = new xo(We, _), Ke = new Fo(_), ue = new dn(_), As = _.sourceEmpty.create(), H = new mn(As, ue, _), Ko = new pn(H), Go = new ii(Ko), pt = new An(H, ue, _), ft = new us(pt, ue, _), Yo = new hs(ft, pt, _), te = new us(H, ue, _), Jo = new Ae((n) => {
-  H.currentMap(new Ue(n));
-}), Ge = new yn(vs, _), Zo = new Pr(_), qo = new Or(H, te, _), fe = new Eo(_), ge = new Qr(), ys = new Wr(fe, ge, _), se = new Uo(fe, ge, ys, _), Xo = new Po(_), ea = new yo(se, H, Xo, _), xe = new hs(te, H, _), ta = new _n(
+}), Wo = new Mo(We, _), vs = new xo(We, _), Ke = new Fo(_), ue = new dn(_), As = _.sourceEmpty.create(), N = new mn(As, ue, _), Ko = new pn(N), Go = new ii(Ko), pt = new An(N, ue, _), ft = new us(pt, ue, _), Yo = new hs(ft, pt, _), te = new us(N, ue, _), Jo = new Ae((n) => {
+  N.currentMap(new Ue(n));
+}), Ge = new yn(vs, _), Zo = new Pr(_), qo = new Or(N, te, _), fe = new Eo(_), ge = new Qr(), ys = new Wr(fe, ge, _), se = new Uo(fe, ge, ys, _), Xo = new Po(_), ea = new yo(se, N, Xo, _), xe = new hs(te, N, _), ta = new _n(
   te,
-  H,
-  [new ht(Ke, new bn(H, _), _)],
+  N,
+  [new ht(Ke, new bn(N, _), _)],
   _
-), sa = new zo(se, _), ia = new wn(te, xe, fe, sa, _), bs = new Hr(H, _), ws = new Rr(
+), sa = new zo(se, _), ia = new wn(te, xe, fe, sa, _), bs = new Nr(N, _), ws = new Rr(
   te,
-  H,
+  N,
   [
     new ht(
       Ke,
@@ -2873,17 +2878,17 @@ const _ = Z(), We = new Vo(_), ms = new Ie({
   _
 ), na = new Dr(
   te,
-  H,
+  N,
   [new ht(Ke, bs, _)],
   _
 ), ra = new Er(ws), Ye = new Kr(se, fe, pt, _), oa = new To(
   Ye,
-  H,
+  N,
   te,
   _
 ), aa = new So(
   se,
-  H,
+  N,
   xe,
   Ye,
   Ge,
@@ -2891,22 +2896,22 @@ const _ = Z(), We = new Vo(_), ms = new Ie({
   new jr(new Sr(ge, _), _),
   ms,
   _
-), ca = new Ro(se, _), la = new Co(Ye, ca, _), Cs = new qr(), xs = new vo(se, la, Cs, _), ua = new go(se, H, ft, Cs, _), ha = new ko(ft, se, ge, _), da = new kn(
+), ca = new Ro(se, _), la = new Co(Ye, ca, _), Cs = new qr(), xs = new vo(se, la, Cs, _), ua = new go(se, N, ft, Cs, _), ha = new ko(ft, se, ge, _), da = new kn(
   Ge,
   te,
   xe,
   xs,
   _
-), pa = new jo(H, fe, se, _), fa = new Jr(
+), pa = new jo(N, fe, se, _), fa = new Jr(
   Ge,
-  H,
+  N,
   xe,
   _
-), ga = new gn(H, ue, _), ma = new xn(xe), va = new _o(), gt = new Cn(ue, _), Aa = new wo(gt, H, _), ya = new Mr(ue, _), ba = new Ur(gt, H, _), wa = new Ho(We, _), Ca = new $o(H, _), _s = new Qo(se, fe, ge, ys, _), xa = new Io(_s), _a = new Oo(_s, _), $a = new zr(te, _), ka = new fn(H, te, ue, _), Ma = new Ir(te, ge, se, _), $s = new ye();
-new No($s);
+), ga = new gn(N, ue, _), ma = new xn(xe), va = new _o(), gt = new Cn(ue, _), Aa = new wo(gt, N, _), ya = new Mr(ue, _), ba = new Ur(gt, N, _), wa = new No(We, _), Ca = new $o(N, _), _s = new Qo(se, fe, ge, ys, _), xa = new Io(_s), _a = new Oo(_s, _), $a = new zr(te, _), ka = new fn(N, te, ue, _), Ma = new Ir(te, ge, se, _), $s = new ye();
+new Ho($s);
 const Fa = {
   mapCurrentID: ue,
-  mapFile: H,
+  mapFile: N,
   mapCurrent: te,
   mapCurrentSource: Jo,
   mapRemoved: ga,
@@ -3046,8 +3051,8 @@ const Ta = { key: 0 }, Sa = { class: "flex-grow overflow-y-auto" }, ja = {
       "fa-map": zs,
       "fa-close": Us,
       "fa-arrow-left": Vs,
-      "fa-arrow-right": Hs,
-      "fa-arrow-down": Ns,
+      "fa-arrow-right": Ns,
+      "fa-arrow-down": Hs,
       "fa-arrow-up": Rs
     };
     return (t, s) => (f(), z(l(Ds), {
@@ -3103,7 +3108,7 @@ const Ta = { key: 0 }, Sa = { class: "flex-grow overflow-y-auto" }, ja = {
 }, Da = {
   key: 1,
   class: "flex flex-col gap-1"
-}, Ra = ["onClick"], Na = ["innerHTML"], Ha = /* @__PURE__ */ D({
+}, Ra = ["onClick"], Ha = ["innerHTML"], Na = /* @__PURE__ */ D({
   __name: "AppMenuObject",
   setup(n) {
     const {
@@ -3134,7 +3139,7 @@ const Ta = { key: 0 }, Sa = { class: "flex-grow overflow-y-auto" }, ja = {
             }, [
               b("span", {
                 innerHTML: u.additionalName ? u.additionalName : u.name
-              }, null, 8, Na)
+              }, null, 8, Ha)
             ], 8, Ra))), 128))
           ])) : (f(), A("div", Ea, x(c.$t("appMenuObject.noItems")), 1))
         ])
@@ -3493,7 +3498,7 @@ function bc(n, e) {
     ee(n.$slots, "default")
   ]);
 }
-const X = /* @__PURE__ */ Je(Ac, [["render", bc]]), wc = { class: "rounded-main p-2 border border-solid border-body-dark" }, Cc = { class: "flex gap-2 p-2 bg-white border border-solid border-body-dark rounded-main" }, He = /* @__PURE__ */ D({
+const X = /* @__PURE__ */ Je(Ac, [["render", bc]]), wc = { class: "rounded-main p-2 border border-solid border-body-dark" }, Cc = { class: "flex gap-2 p-2 bg-white border border-solid border-body-dark rounded-main" }, Ne = /* @__PURE__ */ D({
   __name: "BaseEditor",
   props: {
     modelValue: {
@@ -3589,7 +3594,7 @@ const X = /* @__PURE__ */ Je(Ac, [["render", bc]]), wc = { class: "rounded-main 
 }, Fc = { key: 0 }, Tc = { key: 1 }, Sc = {
   key: 0,
   class: "flex flex-col gap-2"
-}, jc = { class: "FormObject-Inner" }, Bc = { class: "FormObject-Row" }, Ic = { class: "FormObject-Row" }, Oc = { class: "FormObject-Row" }, Pc = { class: "my-2" }, Ec = { class: "FormObject-Title" }, Dc = { class: "FormObject-Row" }, Rc = { class: "FormObject-Title" }, Nc = { class: "FormObject-Row" }, Hc = {
+}, jc = { class: "FormObject-Inner" }, Bc = { class: "FormObject-Row" }, Ic = { class: "FormObject-Row" }, Oc = { class: "FormObject-Row" }, Pc = { class: "my-2" }, Ec = { class: "FormObject-Title" }, Dc = { class: "FormObject-Row" }, Rc = { class: "FormObject-Title" }, Hc = { class: "FormObject-Row" }, Nc = {
   key: 0,
   class: "FormObject-ArrowName"
 }, Vc = { class: "py-3 flex gap-1" }, Uc = /* @__PURE__ */ D({
@@ -3719,7 +3724,7 @@ const X = /* @__PURE__ */ Je(Ac, [["render", bc]]), wc = { class: "rounded-main 
                   ]),
                   _: 2
                 }, 1024),
-                g(He, {
+                g(Ne, {
                   modelValue: l(m).additionalFields[q],
                   "onUpdate:modelValue": (le) => l(m).additionalFields[q] = le
                 }, null, 8, ["modelValue", "onUpdate:modelValue"])
@@ -3734,7 +3739,7 @@ const X = /* @__PURE__ */ Je(Ac, [["render", bc]]), wc = { class: "rounded-main 
                   ]),
                   _: 1
                 }),
-                g(He, {
+                g(Ne, {
                   modelValue: l(m).additionalName,
                   "onUpdate:modelValue": F[3] || (F[3] = (k) => l(m).additionalName = k)
                 }, null, 8, ["modelValue"])
@@ -3749,7 +3754,7 @@ const X = /* @__PURE__ */ Je(Ac, [["render", bc]]), wc = { class: "rounded-main 
                   ]),
                   _: 1
                 }),
-                g(He, {
+                g(Ne, {
                   modelValue: l(m).name,
                   "onUpdate:modelValue": F[4] || (F[4] = (k) => l(m).name = k)
                 }, null, 8, ["modelValue"])
@@ -3764,7 +3769,7 @@ const X = /* @__PURE__ */ Je(Ac, [["render", bc]]), wc = { class: "rounded-main 
                   ]),
                   _: 1
                 }),
-                g(He, {
+                g(Ne, {
                   modelValue: l(m).description,
                   "onUpdate:modelValue": F[5] || (F[5] = (k) => l(m).description = k)
                 }, null, 8, ["modelValue"])
@@ -3858,14 +3863,14 @@ const X = /* @__PURE__ */ Je(Ac, [["render", bc]]), wc = { class: "rounded-main 
             ], 64)) : B("", !0),
             l(m).arrows && l(m).arrows.length ? (f(), A(U, { key: 2 }, [
               b("div", Rc, x(S.$t("general.relations")), 1),
-              b("div", Nc, [
+              b("div", Hc, [
                 (f(!0), A(U, null, W(l(m).arrows, (k, q) => {
                   var le;
                   return f(), A("div", {
                     key: k.id,
                     class: "FormObject-Arrow"
                   }, [
-                    (le = l(v)) != null && le.objects[k.id] ? (f(), A("span", Hc, " #" + x(q + 1) + " " + x(l(v).objects[k.id].name), 1)) : B("", !0),
+                    (le = l(v)) != null && le.objects[k.id] ? (f(), A("span", Nc, " #" + x(q + 1) + " " + x(l(v).objects[k.id].name), 1)) : B("", !0),
                     g(E, {
                       class: "FormObject-ArrowButton",
                       type: "danger",
@@ -4134,7 +4139,7 @@ const Jc = /* @__PURE__ */ D({
             key: 0,
             class: "pointer-events-auto absolute z-30 top-0 left-4 h-[18px] bg-white flex items-center gap-1 text-body-dark text-sm cursor-pointer",
             title: `${(yt = l(S)) == null ? void 0 : yt.count} шт. объектов левее`,
-            onClick: re[0] || (re[0] = (N) => l(le)(l(S).nearestObjectId))
+            onClick: re[0] || (re[0] = (H) => l(le)(l(S).nearestObjectId))
           }, [
             g(J, { icon: "fa-arrow-left" }),
             b("span", sl, x((bt = l(S)) == null ? void 0 : bt.count), 1)
@@ -4143,7 +4148,7 @@ const Jc = /* @__PURE__ */ D({
             key: 1,
             class: "pointer-events-auto absolute z-30 p-1 top-0 right-0 h-[18px] bg-white flex items-center gap-1 text-body-dark text-sm cursor-pointer",
             title: `${(Ct = l(F)) == null ? void 0 : Ct.count} шт. объектов правее`,
-            onClick: re[1] || (re[1] = (N) => l(le)(l(F).nearestObjectId))
+            onClick: re[1] || (re[1] = (H) => l(le)(l(F).nearestObjectId))
           }, [
             b("span", nl, x((xt = l(F)) == null ? void 0 : xt.count), 1),
             g(J, { icon: "fa-arrow-right" })
@@ -4152,7 +4157,7 @@ const Jc = /* @__PURE__ */ D({
             key: 2,
             class: "pointer-events-auto absolute z-30 top-[18px] left-0 w-[18px] bg-white flex flex-col leading-4 items-center gap-1 text-body-dark text-sm cursor-pointer",
             title: `${($t = l(k)) == null ? void 0 : $t.count} шт. объектов выше`,
-            onClick: re[2] || (re[2] = (N) => l(le)(l(k).nearestObjectId))
+            onClick: re[2] || (re[2] = (H) => l(le)(l(k).nearestObjectId))
           }, [
             g(J, { icon: "fa-arrow-up" }),
             b("span", ol, x((kt = l(k)) == null ? void 0 : kt.count), 1)
@@ -4161,7 +4166,7 @@ const Jc = /* @__PURE__ */ D({
             key: 3,
             class: "pointer-events-auto absolute z-30 p-1 bottom-0 left-0 w-[18px] bg-white flex flex-col-reverse leading-4 items-center gap-1 text-body-dark text-sm cursor-pointer",
             title: `${(Ft = l(q)) == null ? void 0 : Ft.count} шт. объектов ниже`,
-            onClick: re[3] || (re[3] = (N) => l(le)(l(q).nearestObjectId))
+            onClick: re[3] || (re[3] = (H) => l(le)(l(q).nearestObjectId))
           }, [
             g(J, { icon: "fa-arrow-down" }),
             b("span", cl, x((Tt = l(q)) == null ? void 0 : Tt.count), 1)
@@ -4174,41 +4179,41 @@ const Jc = /* @__PURE__ */ D({
               class: "absolute flex top-0 left-0 w-full z-20 h-[20px] bg-default border-b-2 border-border text-right text-sm px-2",
               style: ae({ transform: `translate(0, ${-l(M).y}px)` })
             }, [
-              (f(!0), A(U, null, W(l(Q), (N) => (f(), A("span", {
+              (f(!0), A(U, null, W(l(Q), (H) => (f(), A("span", {
                 class: "flex-1 text-body-dark",
-                key: `horiz_${N}`
-              }, x(N) + "px", 1))), 128))
+                key: `horiz_${H}`
+              }, x(H) + "px", 1))), 128))
             ], 4),
             b("div", {
               class: "absolute flex [writing-mode:vertical-lr] top-0 left-0 h-full z-20 w-[20px] bg-default border-r-2 border-border text-left text-sm py-2",
               style: ae({ transform: `translate(${-l(M).x}px, 0)` })
             }, [
-              (f(!0), A(U, null, W(l(Q), (N) => (f(), A("span", {
+              (f(!0), A(U, null, W(l(Q), (H) => (f(), A("span", {
                 class: "flex-1 rotate-180 text-body-dark",
-                key: `vert_${N}`
-              }, x(N) + "px", 1))), 128))
+                key: `vert_${H}`
+              }, x(H) + "px", 1))), 128))
             ], 4),
-            (f(!0), A(U, null, W(l(C), (N) => (f(), A("div", {
-              key: N.obj.id,
+            (f(!0), A(U, null, W(l(C), (H) => (f(), A("div", {
+              key: H.obj.id,
               class: "absolute z-10",
-              "data-object-id": N.obj.id,
-              style: ae(`width:${N.obj.width}px;height: ${N.obj.height}px;top: ${N.obj.position[1]}px;left:${N.obj.position[0]}px;z-index:${N.obj.zindex}`)
+              "data-object-id": H.obj.id,
+              style: ae(`width:${H.obj.width}px;height: ${H.obj.height}px;top: ${H.obj.position[1]}px;left:${H.obj.position[0]}px;z-index:${H.obj.zindex}`)
             }, [
               b("div", ul, [
                 b("span", {
-                  innerHTML: N.obj.additionalName,
-                  class: ce([N.obj.linked && "cursor-pointer underline"]),
-                  onClick: (uu) => P(N.obj)
+                  innerHTML: H.obj.additionalName,
+                  class: ce([H.obj.linked && "cursor-pointer underline"]),
+                  onClick: (uu) => P(H.obj)
                 }, null, 10, hl)
               ]),
               b("div", {
                 class: "absolute top-[100%] left-[50%] translate-x-[-50%] text-center pt-2 text-sm w-[300px]",
-                innerHTML: N.obj.name
+                innerHTML: H.obj.name
               }, null, 8, dl),
               b("div", {
-                "data-object-id": N.obj.id,
+                "data-object-id": H.obj.id,
                 class: "rendered-object",
-                innerHTML: N.template
+                innerHTML: H.template
               }, null, 8, pl)
             ], 12, ll))), 128))
           ], 4)
@@ -4477,7 +4482,7 @@ const kl = /* @__PURE__ */ Je(xl, [["render", $l]]), Ml = { class: "flex gap-1" 
 }), Il = { class: "text-lg font-bold" }, Ol = {
   key: 0,
   class: "TheSettings"
-}, Pl = { class: "mb-2" }, El = { class: "TheSettings-Row" }, Dl = { class: "flex gap-2 mb-2" }, Rl = { class: "mb-2" }, Nl = { class: "mb-2" }, Hl = {
+}, Pl = { class: "mb-2" }, El = { class: "TheSettings-Row" }, Dl = { class: "flex gap-2 mb-2" }, Rl = { class: "mb-2" }, Hl = { class: "mb-2" }, Nl = {
   href: "https://github.com/kosukhin/mind-map-creator",
   target: "_blank"
 }, Vl = { class: "flex gap-2" }, Ul = /* @__PURE__ */ D({
@@ -4553,8 +4558,8 @@ const kl = /* @__PURE__ */ Je(xl, [["render", $l]]), Ml = { class: "flex gap-1" 
                   }, null, 8, ["modelValue"])
                 ])
               ]),
-              b("div", Nl, [
-                b("a", Hl, x(C.$t("general.githubRepo")), 1)
+              b("div", Hl, [
+                b("a", Nl, x(C.$t("general.githubRepo")), 1)
               ])
             ]),
             b("div", Vl, [
@@ -4853,7 +4858,7 @@ const nu = { class: "AppPresets" }, ru = /* @__PURE__ */ b("div", { class: "text
       g(qa),
       g(pc),
       g(au),
-      g(Ha),
+      g(Na),
       g(Sl),
       g(ac),
       g(Oa)
