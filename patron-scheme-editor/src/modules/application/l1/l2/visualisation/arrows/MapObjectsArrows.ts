@@ -11,6 +11,7 @@ import { ArrowThreeBreaksPath } from '@/modules/application/l1/l2/visualisation/
 import { ArrowTwoBreaksPath } from '@/modules/application/l1/l2/visualisation/arrows/ArrowTwoBreaksPath';
 import { ArrowDepsDocument, ArrowPoints, ArrowType } from '@/modules/application/l1/l2/visualisation/arrows/ArrowType';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
+import { ArrowSamePointsGap } from '@/modules/system/source/ArrowSamePointsGap';
 import { GuestAwareFirst } from '@/modules/system/source/GuestAwareFirst';
 import { GuestAwareSequence } from '@/modules/system/source/GuestAwareSequence';
 import { Module } from '@/modules/system/source/Module';
@@ -59,13 +60,13 @@ export class MapObjectsArrows {
               acc[item.id] = item;
               return acc;
             }, {});
-            const extremePoints = new GuestAwareSequence<ArrowDepsDocument, ArrowPoints>(new ArrowExtremePoints(
+            const extremePoints = new ArrowSamePointsGap(new GuestAwareSequence<ArrowDepsDocument, ArrowPoints>(new ArrowExtremePoints(
               new GuestAware((guest) => give(objects, guest)),
               new GuestAware((guest) => give(objectsMap, guest))
             ), new Module((dep: GuestAwareType<ArrowDepsDocument>) => {
               const arrowType = new ArrowType(dep);
               return new GuestAwareFirst([new ArrowTwoBreaksPath(arrowType), new ArrowThreeBreaksPath(arrowType)])
-            }));
+            })));
 
             extremePoints.value((pointsCoords) => {
               pointsCoords.forEach((arrowPoints) => {
