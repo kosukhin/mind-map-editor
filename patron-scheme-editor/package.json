@@ -47,7 +47,7 @@
     "vue": "3.4.x"
   },
   "dependencies": {
-    "patron-oop": "^1.26.0"
+    "patron-oop": "^1.28.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
