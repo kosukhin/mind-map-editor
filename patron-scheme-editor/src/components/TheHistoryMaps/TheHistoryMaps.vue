@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { useStorage } from '@vueuse/core';
 import { useRoute } from 'vue-router';
-import { watch } from '@vue/runtime-core';
+// @ts-ignore
+import { watch } from 'vue';
 import BaseDrawer from '@/components/BaseDrawer/BaseDrawer.vue';
 import BaseTextTitle from '@/components/BaseText/BaseTextTitle.vue';
 import { useOverlayAutoClose } from '@/composables/useOverlayAutoclose';

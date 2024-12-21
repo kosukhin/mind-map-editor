@@ -1,6 +1,7 @@
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { GuestObjectType } from 'patron-oop';
-import { watch } from '@vue/runtime-core';
+// @ts-ignore
+import { watch } from 'vue';
 
 export class VueRefPatronDuplex<T> implements GuestObjectType<T> {
   public constructor(
@@ -27,7 +28,7 @@ export class VueRefPatronDuplex<T> implements GuestObjectType<T> {
       this.refWatcherCreated = true;
       watch(
         this.basePatron.ref(),
-        (newValue) => {
+        (newValue: any) => {
           if (newValue) {
             this.guest.give(newValue);
           }

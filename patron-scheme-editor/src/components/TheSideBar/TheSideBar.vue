@@ -8,7 +8,8 @@ import { useFactories } from '@/composables/useFactories';
 import { EditorSettings } from '@/modules/application/l1/l2/l3/l4/editor/EditorSettings';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { computed, onMounted, ref } from '@vue/runtime-core';
+// @ts-ignore
+import { computed, onMounted, ref } from 'vue';
 
 const {
   mapObjectNew,
@@ -29,10 +30,10 @@ onMounted(() => {
 })
 
 const { svgMapTypeImage } = useFactories();
-const typesExtended = computed(() => types.value?.map((type) => ({
+const typesExtended = computed(() => types.value?.map((type: any) => ({
   type,
   image: svgMapTypeImage.create(type).markup(),
-})).sort((a, b) => +(a.type.name >= b.type.name)));
+})).sort((a: any, b: any) => +(a.type.name >= b.type.name)));
 
 const settings = new VueRefPatron<EditorSettings>();
 appSettings.value(settings);

@@ -15,7 +15,8 @@ import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
 import AppExport from '@/components/AppExport/AppExport.vue';
 import { useApplication } from '@/composables/useApplication';
 import { useFactories } from '@/composables/useFactories';
-import { watch } from '@vue/runtime-core';
+// @ts-ignore
+import { watch } from 'vue';
 
 const props = defineProps({
   modelValue: {
@@ -45,7 +46,7 @@ settings.value((lastSettings) => {
   });
 })
 
-watch(() => props.modelValue, (value) => {
+watch(() => props.modelValue, (value: any) => {
   fileContent.value(guest.create((oldValue: string) => {
     if (value !== oldValue) {
       fileContent.give(value);

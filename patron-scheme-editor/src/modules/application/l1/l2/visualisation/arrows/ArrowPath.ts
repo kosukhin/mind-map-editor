@@ -2,9 +2,9 @@ import {
   ArrowPathType,
   ArrowPointDocument,
 } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
-import { GuestObjectType } from 'patron-oop';
-import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
+import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
+import { GuestObjectType } from 'patron-oop';
 
 /**
  * Путь между двумя объектами
@@ -49,6 +49,20 @@ export class ArrowPath implements ArrowPathType {
   }
 
   private arrowPointPosition(
+    shapeGeometry: SizeDocument,
+    shapePosition: PointDocument,
+    lookToGeometry: SizeDocument,
+    lookToPosition: PointDocument,
+  ) {
+    return this.arrowPointPositionNear(
+      shapeGeometry,
+      shapePosition,
+      lookToGeometry,
+      lookToPosition
+    );
+  }
+
+  private arrowPointPositionNear(
     shapeGeometry: SizeDocument,
     shapePosition: PointDocument,
     lookToGeometry: SizeDocument,

@@ -24,7 +24,8 @@
 <script lang="ts" setup>
 import { EditorContent, BubbleMenu, useEditor } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
-import { onBeforeUnmount, watch } from '@vue/runtime-core';
+// @ts-ignore
+import { onBeforeUnmount, watch } from 'vue';
 
 const props = defineProps({
   modelValue: {
@@ -52,7 +53,7 @@ onBeforeUnmount(() => {
   editor.value?.destroy();
 });
 
-watch(() => props.modelValue, (value) => {
+watch(() => props.modelValue, (value: any) => {
   if (!editor.value) {
     return;
   }

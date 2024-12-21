@@ -14,7 +14,7 @@ import { Patron } from 'patron-oop';
 import { PatronOnce } from 'patron-oop';
 import { PatronPool } from 'patron-oop';
 import { PoolType } from 'patron-oop';
-import { Ref } from '@vue/runtime-core';
+import { Ref } from 'vue';
 import { Source } from 'patron-oop';
 import { SourceEmpty } from 'patron-oop';
 import { SourceType } from 'patron-oop';
@@ -1186,7 +1186,7 @@ export declare const useFactories: () => {
     chain: Factory<GuestChain<any>>;
     guest: Factory<Guest<any>>;
     guestCast: Factory<GuestCast<any>>;
-    guestAware: FactoryType<GuestAwareType<unknown>>;
+    guestAware: FactoryType<GuestAwareType<any>>;
     guestInTheMiddle: Factory<GuestCast<any>>;
     guestSync: Factory<GuestSync<any>>;
     patron: Factory<Patron<any>>;

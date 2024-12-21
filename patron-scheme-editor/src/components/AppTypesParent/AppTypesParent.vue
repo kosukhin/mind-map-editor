@@ -4,7 +4,8 @@ import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import { MapTypeDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { computed } from '@vue/runtime-core';
+// @ts-ignore
+import { computed } from 'vue';
 import { useFactories } from '@/composables/useFactories';
 
 const { parentTypes, mapType } = useApplication();

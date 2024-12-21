@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref, computed } from '@vue/runtime-core';
+// @ts-ignore
+import { onMounted, ref, computed } from 'vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { useFactories } from '@/composables/useFactories';
