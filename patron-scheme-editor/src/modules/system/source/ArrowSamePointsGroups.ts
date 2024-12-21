@@ -36,7 +36,7 @@ export class ArrowSamePointsGroups implements GuestAwareType<Record<string, Shif
             arrowIndex: index,
             pointStartIndex: point.points.length - 2,
             breakPointStartIndex: point.points.length - 4,
-            pointEndIndex: point.points.length - 2,
+            pointEndIndex: 0,
           });
         });
 

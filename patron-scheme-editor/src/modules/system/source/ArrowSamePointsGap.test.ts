@@ -16,7 +16,6 @@ test('ArrowSamePointsGap.test', () => {
   ]);
   const pointsWithGap = new ArrowSamePointsGap(source);
   pointsWithGap.value((v) => {
-    console.log(v);
     expect(v[1].points[0]).toBe(25);
   })
 });

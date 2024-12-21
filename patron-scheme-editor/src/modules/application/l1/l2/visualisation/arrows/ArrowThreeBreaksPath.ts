@@ -86,8 +86,8 @@ export class ArrowThreeBreaksPath implements GuestAwareType<ArrowPoints> {
       point: { x, y },
       breakPoint,
       shift: {
-        x: shiftX,
-        y: shiftY,
+        x: 0,
+        y: 0,
       },
     };
   }

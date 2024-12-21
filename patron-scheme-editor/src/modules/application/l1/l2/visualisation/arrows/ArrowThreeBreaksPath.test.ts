@@ -22,6 +22,6 @@ test('ArrowThreeBreaksPath.test', () => {
   const arrow = new ArrowThreeBreaksPath(deps);
 
   arrow.value((points) => {
-    expect(JSON.stringify(points)).toBe('[100,51,150,51,150,249,200,249]');
+    expect(JSON.stringify(points.points)).toBe('[100,50,150,50,150,250,200,250]');
   })
 })
