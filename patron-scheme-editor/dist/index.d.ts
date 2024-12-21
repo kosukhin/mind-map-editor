@@ -14,7 +14,7 @@ import { Patron } from 'patron-oop';
 import { PatronOnce } from 'patron-oop';
 import { PatronPool } from 'patron-oop';
 import { PoolType } from 'patron-oop';
-import { Ref } from '@vue/runtime-core';
+import { Ref } from 'vue';
 import { Source } from 'patron-oop';
 import { SourceEmpty } from 'patron-oop';
 import { SourceType } from 'patron-oop';

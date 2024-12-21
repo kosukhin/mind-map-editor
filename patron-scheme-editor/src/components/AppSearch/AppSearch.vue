@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
 import BaseModal from '@/components/BaseModal/BaseModal.vue';
-import { ref } from '@vue/runtime-core';
+// @ts-ignore
+import { ref } from 'vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';

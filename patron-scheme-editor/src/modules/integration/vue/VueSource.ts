@@ -1,5 +1,6 @@
 import { Guest, GuestAwareType, PatronPool } from 'patron-oop';
-import { Ref, watch } from '@vue/runtime-core';
+// @ts-ignore
+import { Ref, watch } from 'vue';
 
 export class VueSource<T> implements GuestAwareType<T> {
   private pool = new PatronPool<T>(this);
@@ -7,7 +8,7 @@ export class VueSource<T> implements GuestAwareType<T> {
   public constructor(private refSource: Ref<T | undefined>) {
     watch(
       refSource,
-      (lastValue) => {
+      (lastValue: any) => {
         if (lastValue !== undefined) {
           this.pool.give(lastValue);
         }

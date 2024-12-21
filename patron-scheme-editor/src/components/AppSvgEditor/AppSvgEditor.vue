@@ -1,7 +1,8 @@
 <script setup>
 import Editor from 'svgedit/dist/editor/Editor';
 import 'svgedit/dist/editor/svgedit.css';
-import { onMounted, defineProps, defineEmits } from '@vue/runtime-core';
+// @ts-ignore
+import { onMounted, defineProps, defineEmits } from 'vue';
 import { useVModel } from '@vueuse/core';
 
 const props = defineProps({

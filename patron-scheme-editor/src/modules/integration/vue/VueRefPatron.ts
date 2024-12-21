@@ -1,5 +1,6 @@
 import { GuestObjectType } from 'patron-oop';
-import { Ref, ref } from '@vue/runtime-core';
+// @ts-ignore
+import { Ref, ref } from 'vue';
 
 export class VueRefPatron<T> implements GuestObjectType<T> {
   private readonly innerRef: Ref<T | undefined>;
