@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.12...v0.0.13) (2024-12-21)
+
+
+### Features
+
+* **issue-20:** arrow breaks work ([8f28ca3](https://github.com/kosukhin/patron-scheme-editor/commit/8f28ca3f3e4858e17220e75f46ea9c09a81063a1))
+* **issue-20:** finished arrow algorithm ([ab8485e](https://github.com/kosukhin/patron-scheme-editor/commit/ab8485e93199e5c96a7960a645731961f1a72962))
+* **issue-20:** fix reativity in embedable version ([8c1fa4e](https://github.com/kosukhin/patron-scheme-editor/commit/8c1fa4e4fd5d7087df7565f54d482ffc9b00dd5d))
+* **issue-20:** guest aware sequence ([015c53a](https://github.com/kosukhin/patron-scheme-editor/commit/015c53a07bc5a0fce7905a6c97029cea4ffae0a6))
+* **issue-20:** guestAwareActive ([55643f0](https://github.com/kosukhin/patron-scheme-editor/commit/55643f0c526b4dbb4b2d2ddaf512b71fbe682e05))
+* **issue-20:** guestAwareMap done ([c283f51](https://github.com/kosukhin/patron-scheme-editor/commit/c283f513c72a94bbc832a4f549470ea0fc1688b3))
+* **issue-20:** same points gap work ([eae150d](https://github.com/kosukhin/patron-scheme-editor/commit/eae150dcd56582811dc819d31bf2eae22c56e289))
+* **issue-20:** separate three breaks path ([5a9cfe9](https://github.com/kosukhin/patron-scheme-editor/commit/5a9cfe949af50a2fceb5395475091d6b5f29574c))
+* **issue-20:** two breaks finished ([39c2f64](https://github.com/kosukhin/patron-scheme-editor/commit/39c2f6415e9d45229fd9fb3eb46c46a4901fd2ae))
+* **issue-20:** work for arrows breaks ([7ca56c7](https://github.com/kosukhin/patron-scheme-editor/commit/7ca56c70837ee433871b94fcbdd33448c18c9ddd))
+* **issue-20:** work for arrows rendering with one breakpoint ([cf8b111](https://github.com/kosukhin/patron-scheme-editor/commit/cf8b1117390a1b20e4ff7162de57ecdb54e1f3c3))
+* **issue-20:** work for different arrow types ([00c8748](https://github.com/kosukhin/patron-scheme-editor/commit/00c8748e42b5e504b328959915c6cb05cb9d3fc0))
+* **issue-20:** work for same points algo ([33d8614](https://github.com/kosukhin/patron-scheme-editor/commit/33d8614894333c4fcef1c725bb0c8e971193c10f))
+* **issue-20:** work for shifting points ([b5099b1](https://github.com/kosukhin/patron-scheme-editor/commit/b5099b12497e3fa05620a9deaf080a55e90c02c9))
+* **issue-20:** work for two points breaks ([3a57a1e](https://github.com/kosukhin/patron-scheme-editor/commit/3a57a1e5a8d7f60b8deb014bf2aaf9634e352089))
+* **issue-20:** work on three breaks path ([70251d1](https://github.com/kosukhin/patron-scheme-editor/commit/70251d1969882426337ebbea9e457f8072d1c064))
+* **issue-30:** ts errors fixes ([5d2bf14](https://github.com/kosukhin/patron-scheme-editor/commit/5d2bf149fe40a6d75011f61b1755b5edfe5080fb))
+* **issue-30:** types fixes ([718add9](https://github.com/kosukhin/patron-scheme-editor/commit/718add934bfcc28cfc715140a18e4563a31edfcb))
+* **issue-30:** typings improovements ([85edd98](https://github.com/kosukhin/patron-scheme-editor/commit/85edd98a8edf1e1438d8dc8bce862134f1747f9e))
+* **main:** fix html template to use jsdelivr ([4c092f8](https://github.com/kosukhin/patron-scheme-editor/commit/4c092f878255b833ec669502a37da7f79c487b5f))
+
 ### [0.0.12](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.11...v0.0.12) (2024-12-06)
 
 
