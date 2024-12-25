@@ -1,9 +1,20 @@
 console.log('SW inside sw');
 
-self.addEventListener('fetch', (event) => {
-  console.log('SW handle fetch in worker');
+let sharedFileContent = '';
 
+self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
+  console.log('SW handle fetch in worker', url.pathname, event.request.method);
+
+  if (event.request.method === 'GET' && url.pathname === '/share-file-content') {
+    console.log('SW response as json');
+
+    event.respondWith(Response.json({
+      data: sharedFileContent,
+    }));
+    return;
+  }
+
   if (
     event.request.method !== 'POST'
     || url.pathname !== '/share-file-handler'
@@ -12,7 +23,6 @@ self.addEventListener('fetch', (event) => {
   }
 
   console.log('SW fetch fits');
-  const swChannel = new BroadcastChannel('sw-channel');
 
   event.respondWith(
     (async () => {
@@ -37,10 +47,7 @@ self.addEventListener('fetch', (event) => {
           reader.readAsText(file.value);
           reader.onload = () => {
             console.log('SW reader res', reader.result);
-            swChannel.postMessage({
-              name: file.value.name,
-              content: reader.result,
-            });
+            sharedFileContent = reader.result;
           };
         }
 

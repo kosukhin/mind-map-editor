@@ -1,19 +1,10 @@
 import {
+  GuestCast,
   GuestObjectType,
   SourceEmpty,
 } from 'patron-oop';
 
-console.log('init shared content');
-
-const contentCache = new SourceEmpty<string>();
-const canBeUsedSource = new SourceEmpty<boolean>();
-const swChannel = new BroadcastChannel('sw-channel');
-swChannel.onmessage = (event) => {
-  console.log('new channel message', event);
-
-  canBeUsedSource.give(true);
-  contentCache.give(event.data);
-};
+const sharedSource = new SourceEmpty();
 
 export class ShareContent {
   public constructor(
@@ -22,12 +13,22 @@ export class ShareContent {
   }
 
   public canBeUsed(guest: GuestObjectType<boolean>) {
-    canBeUsedSource.value(guest);
+    fetch('/share-file-content')
+      .then((resp) => resp.json())
+      .then((resp) => {
+        console.log('json result', resp);
+
+        sharedSource.give(resp.data);
+      });
+
+    sharedSource.value(new GuestCast(guest, (v) => {
+      guest.give(!!v);
+    }));
     return guest;
   }
 
   public content(target: GuestObjectType<string>): this {
-    contentCache.value(target);
+    sharedSource.value(target);
     return this;
   }
 

@@ -3,6 +3,7 @@ import { FSJsonContent } from '@/modules/FSJsonContent';
 import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
 import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
 import { ShareContent } from '@/modules/ShareContent';
+import { PatronOnce } from 'patron-oop';
 import {
   useApplication,
   useFactories,
