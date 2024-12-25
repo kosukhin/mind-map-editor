@@ -2,6 +2,7 @@ import { FSHtmlContent } from '@/modules/FSHtmlContent';
 import { FSJsonContent } from '@/modules/FSJsonContent';
 import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
 import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
+import { ShareContent } from '@/modules/ShareContent';
 import {
   useApplication,
   useFactories,
@@ -27,6 +28,7 @@ const fileContent = new FirstPossibleFileContent([
   new UrlContent(notification, factories),
   new FSJsonContent(fsContent, launchQueue),
   new FSHtmlContent(fsContent, launchQueue, htmlTemplate),
+  new ShareContent(notification),
 ], factories);
 
 const modules = {

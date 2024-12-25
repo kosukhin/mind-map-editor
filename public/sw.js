@@ -1,7 +1,7 @@
-console.log('inside sw');
+console.log('SW inside sw');
 
 self.addEventListener('fetch', (event) => {
-  console.log('handle fetch in worker');
+  console.log('SW handle fetch in worker');
 
   const url = new URL(event.request.url);
   if (
@@ -11,24 +11,42 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  console.log('fetch fits');
+  console.log('SW fetch fits');
+  const swChannel = new BroadcastChannel('sw-channel');
 
   event.respondWith(
     (async () => {
       try {
-        console.log('request', event.request);
+        console.log('SW request', event.request);
         const formData = await event.request.formData();
 
-        console.log('formData', formData);
+        console.log('SW formData', formData);
 
-        const htmlFiles = formData.getAll('htmlFiles');
-        console.log('html', htmlFiles);
-        const jsonFiles = formData.getAll('jsonFiles');
-        console.log('json', jsonFiles);
+        const file = { value: null };
+        const [htmlFile] = formData.getAll('htmlFiles');
+        if (htmlFile) {
+          file.value = htmlFile;
+        }
+        const [jsonFile] = formData.getAll('jsonFiles');
+        if (jsonFile) {
+          file.value = jsonFile;
+        }
 
-        console.log('respond with worker');
+        if (file.value) {
+          const reader = new FileReader();
+          reader.readAsText(file.value);
+          reader.onload = () => {
+            console.log('SW reader res', reader.result);
+            swChannel.postMessage({
+              name: file.value.name,
+              content: reader.result,
+            });
+          };
+        }
+
+        console.log('SW respond with worker', file.value);
       } catch (e) {
-        console.log('failed fetch', e);
+        console.log('SW failed fetch', e);
       }
 
       return Response.redirect('/', 303);

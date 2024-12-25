@@ -34,7 +34,8 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "patron-scheme-editor/vue-prototype.d.ts"
+    "patron-scheme-editor/vue-prototype.d.ts",
+    "src/modules/ShareContent.ts"
   ],
   "exclude": [
     "node_modules"

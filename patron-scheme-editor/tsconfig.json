@@ -28,7 +28,8 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "../src/modules/ShareContent.ts"
   ],
   "exclude": [
     "node_modules"

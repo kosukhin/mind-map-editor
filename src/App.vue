@@ -6,6 +6,7 @@ import { PatronSchemeEditor, VueRefPatron, useFactories } from 'patron-scheme-ed
 import 'patron-scheme-editor/patron-scheme-editor.css';
 import presets from '../public/data/presets.json';
 
+console.log('App vue');
 const { serviceFileContent } = useService();
 
 const canBeUsed = serviceFileContent.canBeUsed(new VueRefPatron()).ref();
