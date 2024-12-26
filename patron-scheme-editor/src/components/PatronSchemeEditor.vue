@@ -16,7 +16,7 @@ import AppExport from '@/components/AppExport/AppExport.vue';
 import { useApplication } from '@/composables/useApplication';
 import { useFactories } from '@/composables/useFactories';
 // @ts-ignore
-import { watch } from 'vue';
+import { watch, ref } from 'vue';
 
 const props = defineProps({
   modelValue: {
@@ -59,13 +59,15 @@ watch(() => props.modelValue, (value: any) => {
 fileContent.value(patron.create((newValue: string) => {
   emit('update:modelValue', newValue);
 }));
+
+const sidebarOpened = ref(false);
 </script>
 
 <template>
   <div class="bg-body absolute top-0 left-0 w-full h-full">
     <div class="grid grid-cols-[200px_1fr] grid-rows-[50px_1fr] h-dvh relative">
       <TheHeader class="col-span-2" />
-      <TheSideBar />
+      <TheSideBar v-if="sidebarOpened" />
       <TheEditor class="w-auto col-auto h-full " />
       <TheMiniMap />
     </div>
