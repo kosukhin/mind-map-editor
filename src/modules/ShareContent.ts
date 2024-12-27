@@ -21,7 +21,8 @@ export class ShareContent {
 
         if (!resp.data) {
           if (this.fromLocalStorage) {
-            guest.give(true);
+            sharedSource.give(this.fromLocalStorage);
+            return;
           }
         }
 
@@ -47,8 +48,6 @@ export class ShareContent {
   }
 
   public give(value: string): this {
-    console.log('save value', value);
-
     this.fromLocalStorage = value;
     localStorage.setItem('shared-map', value);
     return this;
