@@ -76,12 +76,12 @@ device.value(new Patron((theDevice) => {
 
 <template>
   <div class="bg-body absolute top-0 left-0 w-full h-full">
-    <div class="grid grid-rows-[50px_1fr] h-dvh relative" :class="{'grid-cols-[200px_1fr]': sidebarOpened, 'grid-cols-[1fr]': !sidebarOpened}">
+    <div class="grid grid-rows-[50px_1fr] h-dvh relative" :class="{'grid-cols-[200px_1fr]': !devicePatron.value.isMobile, 'grid-cols-[1fr]': devicePatron.value.isMobile}">
       <TheHeader class="col-span-2" />
-      <TheSideBar v-if="sidebarOpened" />
+      <TheSideBar v-if="sidebarOpened" :class="{'bg-[#f3f4f6] w-[200px] absolute top-[50px] left-0 z-20 bottom-0': devicePatron.value.isMobile}" />
       <TheEditor class="w-auto col-auto h-full " />
       <TheMiniMap />
-      <TheSidebarButton v-if="devicePatron.value.isMobile" />
+      <TheSidebarButton v-if="devicePatron.value.isMobile" @click="sidebarOpened = !sidebarOpened" />
     </div>
     <FormObject />
     <FormType />

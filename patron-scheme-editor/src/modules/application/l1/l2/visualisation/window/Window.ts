@@ -1,3 +1,4 @@
+import debounce from "lodash/debounce";
 import { GuestAware, GuestAwareType, GuestType, Source, SourceEmpty } from "patron-oop"
 
 type WindowDocument = {
@@ -12,14 +13,14 @@ export class Window implements GuestAwareType<WindowDocument> {
   });
 
   public constructor() {
-    const resizeObserver = new ResizeObserver((entries) => {
+    const resizeObserver = new ResizeObserver(debounce((entries) => {
       requestAnimationFrame(() => {
         this.source.give({
           height: window.innerHeight,
           width: window.innerWidth
         });
       });
-    });
+    }, 50));
 
     const body = document.querySelector('body');
 

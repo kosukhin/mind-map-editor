@@ -2,6 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   faBars,
+  faBarsStaggered,
   faTextWidth,
   faFileText,
   faSearch,
@@ -21,6 +22,7 @@ import {
 
 const icons: Record<string, IconDefinition> = {
   'fa-bars': faBars,
+  'fa-bars-staggered': faBarsStaggered,
   'fa-text-width': faTextWidth,
   'fa-search': faSearch,
   'fa-history': faHistory,
