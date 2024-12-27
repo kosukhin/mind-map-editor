@@ -55,6 +55,9 @@ export class MapObjectsArrows {
       this.factories.patron.create(
         this.factories.guest.create(
           throttle(({ layer, map, objects }: ChainParamsType) => {
+            this.previouslyRenderedArrows.forEach(prevArrow => {
+              prevArrow.arrow.hide();
+            });
 
             const objectsMap = objects.reduce((acc: Record<string, any>, item) => {
               acc[item.id] = item;

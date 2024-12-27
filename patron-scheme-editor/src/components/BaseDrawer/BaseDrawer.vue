@@ -3,6 +3,7 @@
 import { computed } from 'vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
+import { Patron } from 'patron-oop';
 
 const props = defineProps({
   name: {
@@ -26,13 +27,23 @@ const positions = {
   btt: 'top-auto h-[900px] max-h-[50%] bottom-0 right-0 left-0',
 };
 
-const { drawer } = useApplication();
+const { drawer, device } = useApplication();
 
 const close = () => {
   drawer.give('');
   emit('close');
 };
 const isOpened = drawer.isOpenedByName(props.name, new VueRefPatron<boolean>()).ref();
+
+device.value(new Patron((theDevice) => {
+  if (theDevice.isMobile) {
+    positions.ltr = positions.ltr.replace('[50%]', '[100%]');
+    positions.rtl = positions.rtl.replace('[50%]', '[100%]');
+  } else {
+    positions.ltr = positions.ltr.replace('[100%]', '[50%]');
+    positions.rtl = positions.rtl.replace('[100%]', '[50%]');
+  }
+}))
 </script>
 
 <template>

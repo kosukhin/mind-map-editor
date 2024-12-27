@@ -131,10 +131,13 @@ export class MapObjectsRects implements GuestObjectType<MapObjectDocument[]> {
                   );
                 });
 
-                rect.on('click', () => {
+                const onClick = () => {
                   localDebug('object clicked with id', object.id);
                   this.mapObjectCurrent.give(object.id);
-                });
+                }
+
+                rect.on('click', onClick);
+                rect.on('tap', onClick);
               });
             }),
           );
