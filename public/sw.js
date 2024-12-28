@@ -1,6 +1,6 @@
 console.log('SW inside sw');
 
-let sharedFileContent = '';
+let sharedFileContent = null;
 
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
@@ -46,8 +46,14 @@ self.addEventListener('fetch', (event) => {
           const reader = new FileReader();
           reader.readAsText(file.value);
           reader.onload = () => {
+            console.log('SW file', file.value);
+
             console.log('SW reader res', reader.result);
-            sharedFileContent = reader.result;
+            sharedFileContent = {
+              name: file.value.name,
+              content: reader.result,
+              mime: file.value.type,
+            };
           };
         }
 

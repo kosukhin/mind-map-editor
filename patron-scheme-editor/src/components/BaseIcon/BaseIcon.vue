@@ -17,6 +17,7 @@ import {
   faArrowRight,
   faArrowDown,
   faArrowUp,
+  faShareNodes,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -37,6 +38,7 @@ const icons: Record<string, IconDefinition> = {
   'fa-arrow-right': faArrowRight,
   'fa-arrow-down': faArrowDown,
   'fa-arrow-up': faArrowUp,
+  'fa-share-nodes': faShareNodes,
 };
 
 defineProps({

@@ -1,16 +1,17 @@
 import {
   GuestCast,
   GuestObjectType,
-  SourceEmpty,
+  SourceType,
 } from 'patron-oop';
 
-const sharedSource = new SourceEmpty<string>();
+export interface ShareFileDocument {
+  name: string,
+  content: string,
+  mime: string,
+}
 
 export class ShareContent {
-  private fromLocalStorage: string
-
-  public constructor() {
-    this.fromLocalStorage = localStorage.getItem('shared-map') || '';
+  public constructor(private sharedSource: SourceType<ShareFileDocument>) {
   }
 
   public canBeUsed(guest: GuestObjectType<boolean>) {
@@ -18,18 +19,13 @@ export class ShareContent {
       .then((resp) => resp.json())
       .then((resp) => {
         console.log('json result', resp);
-
-        if (!resp.data) {
-          if (this.fromLocalStorage) {
-            sharedSource.give(this.fromLocalStorage);
-            return;
-          }
-        }
-
-        sharedSource.give(resp.data);
+        guest.give(true);
+        this.sharedSource.give(resp.data);
       });
 
-    sharedSource.value(new GuestCast(guest, (v) => {
+    this.sharedSource.value(new GuestCast(guest, (v) => {
+      console.log('share source value');
+
       guest.give(!!v);
     }));
 
@@ -37,19 +33,21 @@ export class ShareContent {
   }
 
   public content(target: GuestObjectType<string>): this {
-    sharedSource.value(new GuestCast(target, (v) => {
-      if (this.fromLocalStorage) {
-        target.give(this.fromLocalStorage);
-      } else if (v) {
-        target.give(v);
+    this.sharedSource.value(new GuestCast(target, (v) => {
+      if (v) {
+        target.give(v.content);
       }
     }));
     return this;
   }
 
-  public give(value: string): this {
-    this.fromLocalStorage = value;
-    localStorage.setItem('shared-map', value);
+  public give(content: string): this {
+    this.sharedSource.value((value) => {
+      this.sharedSource.give({
+        ...value,
+        content,
+      });
+    });
     return this;
   }
 }

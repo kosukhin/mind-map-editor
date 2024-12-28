@@ -4,12 +4,13 @@ import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
 import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
 import { ShareContent } from '@/modules/ShareContent';
 import {
-  useApplication,
-  useFactories,
+  BrowserLaunchQueue,
   FileSystemContent,
   FirstPossibleFileContent,
   UrlContent,
-  BrowserLaunchQueue,
+  useApplication,
+  useFactories,
+  useSharing,
 } from 'patron-scheme-editor';
 
 const factories = useFactories();
@@ -24,11 +25,13 @@ const fsContent = new FileSystemContent(
 
 const htmlTemplate = new HtmlTemplate(baseHtmlTemplate);
 
+const { sharedStorageRecord } = useSharing();
+
 const fileContent = new FirstPossibleFileContent([
   new UrlContent(notification, factories),
   new FSJsonContent(fsContent, launchQueue),
   new FSHtmlContent(fsContent, launchQueue, htmlTemplate),
-  new ShareContent(),
+  new ShareContent(sharedStorageRecord),
 ], factories);
 
 const modules = {
