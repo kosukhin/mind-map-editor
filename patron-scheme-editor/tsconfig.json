@@ -29,8 +29,9 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "../src/modules/ShareContent.ts"
-  ],
+    "../src/modules/ShareContent.ts",
+    "../src/composables/useSharing.ts"
+, "../src/modules/share/SharedFile.ts", "../src/modules/share/SharingPossible.ts"  ],
   "exclude": [
     "node_modules"
   ]

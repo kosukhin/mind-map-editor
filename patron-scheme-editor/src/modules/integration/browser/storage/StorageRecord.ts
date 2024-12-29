@@ -17,7 +17,7 @@ export class StorageRecord<T> implements SourceType<T> {
     );
   }
 
-  public give(value: T): this {
+  public give(value: T | null): this {
     localStorage.setItem(this.name, JSON.stringify(value));
     this.source.give(value)
     return this;

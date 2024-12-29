@@ -1,4 +1,3 @@
-import { useSharing } from './composables/useSharing';
 import './assets/styles.scss';
 import './assets/transitions.scss';
 import PatronSchemeEditor from './components/PatronSchemeEditor.vue';
@@ -20,6 +19,5 @@ export {
   UrlContent,
   useApplication,
   useFactories,
-  useSharing,
   VueRefPatron,
 };

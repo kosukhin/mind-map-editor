@@ -4,6 +4,7 @@ import { computed } from 'vue';
 import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { Patron } from 'patron-oop';
+import BaseButton from '@/components/BaseButton/BaseButton.vue';
 
 const props = defineProps({
   name: {
@@ -43,7 +44,9 @@ device.value(new Patron((theDevice) => {
     positions.ltr = positions.ltr.replace('[100%]', '[50%]');
     positions.rtl = positions.rtl.replace('[100%]', '[50%]');
   }
-}))
+}));
+const devicePatron = new VueRefPatron();
+device.value(devicePatron);
 </script>
 
 <template>
@@ -58,6 +61,15 @@ device.value(new Patron((theDevice) => {
         </div>
         <div v-if="$slots.footer" class="flex gap-1">
           <slot name="footer" />
+        </div>
+        <div v-if="devicePatron.value.isMobile" class="flex gap-1">
+          <BaseButton
+            type="primary"
+            class="text-white w-full block mt-2"
+            @click="drawer.give('')"
+          >
+            Закрыть
+          </BaseButton>
         </div>
       </div>
     </div>

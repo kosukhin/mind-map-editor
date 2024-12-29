@@ -66,7 +66,6 @@ export class ShareContent {
 
   public give(content: string): this {
     const isEmptyMap = content.includes('"objects":{},"types":{},');
-    console.trace('!!!GIVED CONTENT', content);
 
     this.sharedSource.value((value) => {
       const correnctContent = isEmptyMap ? value.content : content;

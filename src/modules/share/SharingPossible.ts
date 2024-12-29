@@ -1,4 +1,4 @@
-import { give, GuestAwareType, GuestType } from "patron-oop";
+import { give, GuestAwareType, GuestType } from 'patron-oop';
 
 export class SharingPossible implements GuestAwareType<boolean> {
   value(guest: GuestType<boolean>) {
@@ -7,7 +7,7 @@ export class SharingPossible implements GuestAwareType<boolean> {
       return this;
     }
 
-    const testFile = new File(["foo"], "foo.txt", { type: "text/plain" });
+    const testFile = new File(['foo'], 'foo.txt', { type: 'text/plain' });
     const data = { files: [testFile] };
 
     give(navigator.canShare(data), guest);

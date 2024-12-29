@@ -1,6 +1,10 @@
 import { ShareFileDocument } from '@/modules/ShareContent';
-import { GuestAwareType, GuestType, SourceEmpty } from 'patron-oop';
-import { ActionType } from '../../../patron-scheme-editor/src/modules/system/source/ActionType';
+import {
+  GuestAwareType,
+  GuestType,
+  ActionType,
+  SourceEmpty,
+} from 'patron-oop';
 
 export class SharedFileFromWorker implements GuestAwareType<ShareFileDocument>, ActionType<void> {
   private source = new SourceEmpty<ShareFileDocument>()

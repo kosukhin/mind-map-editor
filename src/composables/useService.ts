@@ -1,3 +1,4 @@
+import { useSharing } from '@/composables/useSharing';
 import { FSHtmlContent } from '@/modules/FSHtmlContent';
 import { FSJsonContent } from '@/modules/FSJsonContent';
 import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
@@ -11,7 +12,6 @@ import {
   UrlContent,
   useApplication,
   useFactories,
-  useSharing,
 } from 'patron-scheme-editor';
 
 const factories = useFactories();

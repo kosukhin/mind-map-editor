@@ -20,10 +20,6 @@ import { Source } from 'patron-oop';
 import { SourceEmpty } from 'patron-oop';
 import { SourceType } from 'patron-oop';
 
-declare interface ActionType<P = any> {
-    do(config: P): this;
-}
-
 declare interface ArrowPathType {
     breakPoints(fromPoint: ArrowPointDocument, toPoint: ArrowPointDocument, pointsGuest: GuestObjectType<number[]>): this;
     clear(): void;
@@ -983,21 +979,6 @@ declare class Resizing implements GuestObjectType<MapDocument> {
     give(): this;
 }
 
-declare class SharedFile implements GuestAwareType<boolean>, ActionType<void> {
-    private fileSource;
-    private sharingTitle;
-    private loading;
-    constructor(fileSource: GuestAwareType<ShareFileDocument>, sharingTitle?: string);
-    value(guest: GuestType<boolean>): this;
-    do(): this;
-}
-
-declare interface ShareFileDocument {
-    name: string;
-    content: string;
-    mime: string;
-}
-
 /**
  * Данные для элемента с размерами
  */
@@ -1046,7 +1027,7 @@ export declare class StorageRecord<T> implements SourceType<T> {
     private name;
     private source;
     constructor(name: string);
-    give(value: T): this;
+    give(value: T | null): this;
     pool(): PatronPool<T>;
     value(guest: GuestType<T>): this;
 }
@@ -1236,11 +1217,6 @@ export declare const useFactories: () => {
     pool: Factory<PatronPool<any>>;
     source: Factory<Source<any>>;
     sourceEmpty: Factory<SourceEmpty<any>>;
-};
-
-export declare const useSharing: () => {
-    sharedStorageRecord: StorageRecord<ShareFileDocument>;
-    sharedFile: SharedFile;
 };
 
 export declare class VueRefPatron<T> implements GuestObjectType<T> {

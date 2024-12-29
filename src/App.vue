@@ -4,6 +4,8 @@ import { useService } from '@/composables/useService';
 import PageNoContent from '@/views/PageNoContent.vue';
 import { PatronSchemeEditor, VueRefPatron, useFactories } from 'patron-scheme-editor';
 import 'patron-scheme-editor/patron-scheme-editor.css';
+import TheSharingButton from '@/components/TheSharingButton/TheSharingButton.vue';
+import { useSharing } from '@/composables/useSharing';
 import presets from '../public/data/presets.json';
 
 const { serviceFileContent } = useService();
@@ -20,9 +22,33 @@ serviceFileContent.content(patron.create((content: boolean) => {
 watch(patronContentRef, (patronContentValue: string) => {
   serviceFileContent.give(patronContentValue);
 });
+
+const { sharePossible, sharedStorageRecord } = useSharing();
+const sharingPossiblePatron = new VueRefPatron();
+sharePossible.value(sharingPossiblePatron);
+const sharedStoragePatron = new VueRefPatron();
+sharedStorageRecord.value(sharedStoragePatron);
 </script>
 
 <template>
-  <PatronSchemeEditor v-if="canBeUsed && patronContentRef" v-model="patronContentRef" :presets="presets" />
+  <PatronSchemeEditor
+    v-if="canBeUsed && patronContentRef"
+    v-model="patronContentRef"
+    :presets="presets"
+  >
+    <template #insideGrid>
+      <TheSharingButton v-if="sharingPossiblePatron.value" />
+    </template>
+    <template #beforeSettingsButtons>
+      <button
+        v-if="sharedStoragePatron.value"
+        type="button"
+        class="rounded-main text-md p-md bg-primary hover:bg-primary-second text-white"
+        @click="sharedStorageRecord.give(null)"
+      >
+        Очистить Sharing
+      </button>
+    </template>
+  </PatronSchemeEditor>
   <PageNoContent v-else />
 </template>

@@ -1,6 +1,7 @@
-import { ActionType } from "@/modules/system/source/ActionType";
-import debug from "debug";
-import { GuestAwareType, GuestObjectType, GuestType, Source } from "patron-oop";
+import debug from 'debug';
+import {
+  GuestAwareType, ActionType, GuestType, Source,
+} from 'patron-oop';
 
 export interface ShareFileDocument {
   name: string,
@@ -26,7 +27,7 @@ export class SharedFile implements GuestAwareType<boolean>, ActionType<void> {
         const fielToShare = new File(
           [value.content],
           value.name.replace('.json', '.txt'),
-          { type: 'text/plain' }
+          { type: 'text/plain' },
         );
 
         this.loading.give(true);

@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
+import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import { useApplication } from '@/composables/useApplication';
-import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { useFactories } from '@/composables/useFactories';
-import { useSharing } from '@/composables/useSharing';
+import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 
 const {
   modal, mapFile, mapRemoved, mapSettings, controlCombo, parentNames, mapCurrentID,
@@ -33,10 +32,6 @@ controlCombo.happenedConditional(
   modal.openedByName('settings'),
   patron.create(guest.create(save)),
 );
-
-const { sharedStorageRecord } = useSharing();
-const sharingStoragePatron = new VueRefPatron();
-sharedStorageRecord.value(sharingStoragePatron);
 </script>
 
 <template>
@@ -48,14 +43,7 @@ sharedStorageRecord.value(sharingStoragePatron);
       <div class="mb-2">
         <div class="TheSettings-Row">
           <div class="flex gap-2 mb-2">
-            <BaseButton
-              v-if="sharingStoragePatron.value"
-              type="primary"
-              class="text-white"
-              @click="sharedStorageRecord.give(null)"
-            >
-              Очистить Sharing
-            </BaseButton>
+            <slot name="beforeButtons" />
             <BaseButton
               v-if="parentTypes.length > 1"
               type="primary"
