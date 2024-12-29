@@ -15,7 +15,7 @@ import {
 } from 'patron-scheme-editor';
 
 const factories = useFactories();
-const { notification } = useApplication();
+const { notification, mapCurrentID } = useApplication();
 
 const launchQueue = new BrowserLaunchQueue();
 const fsContent = new FileSystemContent(
@@ -34,7 +34,12 @@ const fileContent = new FirstPossibleFileContent([
   new UrlContent(notification, factories),
   new FSJsonContent(fsContent, launchQueue),
   new FSHtmlContent(fsContent, launchQueue, htmlTemplate),
-  new ShareContent(sharedStorageRecord, sharedFromWorker, htmlTemplate),
+  new ShareContent(
+    sharedStorageRecord,
+    sharedFromWorker,
+    htmlTemplate,
+    mapCurrentID,
+  ),
 ], factories);
 
 const modules = {

@@ -1,4 +1,5 @@
 import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
+import debug from 'debug';
 import {
   Guest,
   GuestAware,
@@ -16,6 +17,12 @@ export interface ShareFileDocument {
   mime: string,
 }
 
+interface MapCurrentIDType extends GuestObjectType<string> {
+  id(guest: GuestObjectType<string>): GuestObjectType<string>;
+}
+
+const localDebug = debug('ShareContent');
+
 export class ShareContent {
   private contentSource: GuestAwareType<string>;
 
@@ -23,6 +30,7 @@ export class ShareContent {
     private sharedSource: SourceType<ShareFileDocument>,
     private sharedFromWorker: GuestAwareType<ShareFileDocument>,
     private htmlTemplate: HtmlTemplate,
+    private mapCurrentID: MapCurrentIDType,
   ) {
     this.sharedFromWorker.value(new Patron((valueFromWorker) => {
       this.sharedSource.value((cachedValue) => {
@@ -65,32 +73,36 @@ export class ShareContent {
   }
 
   public give(content: string): this {
-    const isEmptyMap = content.includes('"objects":{},"types":{},');
+    this.mapCurrentID.id(new Guest((id) => {
+      const isEmptyMap = id === 'current' && content.includes('"objects":{},"types":{},');
 
-    this.sharedSource.value((value) => {
-      const correnctContent = isEmptyMap ? value.content : content;
+      localDebug('give', isEmptyMap, content);
 
-      if (value.mime.includes('html')) {
-        if (isEmptyMap) {
+      this.sharedSource.value((value) => {
+        const correnctContent = isEmptyMap ? value.content : content;
+
+        if (value.mime.includes('html')) {
+          if (isEmptyMap) {
+            this.sharedSource.give({
+              ...value,
+              content: correnctContent,
+            });
+          } else {
+            this.htmlTemplate.jsonToHtml(correnctContent, new Guest((htmlContent: string) => {
+              this.sharedSource.give({
+                ...value,
+                content: htmlContent,
+              });
+            }));
+          }
+        } else {
           this.sharedSource.give({
             ...value,
             content: correnctContent,
           });
-        } else {
-          this.htmlTemplate.jsonToHtml(correnctContent, new Guest((htmlContent: string) => {
-            this.sharedSource.give({
-              ...value,
-              content: htmlContent,
-            });
-          }));
         }
-      } else {
-        this.sharedSource.give({
-          ...value,
-          content: correnctContent,
-        });
-      }
-    });
+      });
+    }));
     return this;
   }
 }
