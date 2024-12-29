@@ -41,6 +41,7 @@ import { NewArrow } from '@/modules/application/l1/l2/visualisation/arrows/NewAr
 import { MapObjectBackground } from '@/modules/application/l1/l2/visualisation/background/MapObjectBackground';
 import { Breadcrumbs } from '@/modules/application/l1/l2/visualisation/breadcrumbs/Breadcrumbs';
 import { CursorWithObjects } from '@/modules/application/l1/l2/visualisation/cursor/CursorWithObjects';
+import { Device } from '@/modules/application/l1/l2/visualisation/device/Device';
 import { Drawer } from '@/modules/application/l1/l2/visualisation/drawer/Drawer';
 import { Fps } from '@/modules/application/l1/l2/visualisation/fps/Fps';
 import { Menu } from '@/modules/application/l1/l2/visualisation/menu/Menu';
@@ -52,6 +53,7 @@ import { MapObjectsRects } from '@/modules/application/l1/l2/visualisation/rects
 import { Resizing } from '@/modules/application/l1/l2/visualisation/resizing/Resizing';
 import { StagePosition } from '@/modules/application/l1/l2/visualisation/stage/StagePosition';
 import { StagePositionByObjectId } from '@/modules/application/l1/l2/visualisation/stage/StagePositionByObjectId';
+import { Window } from '@/modules/application/l1/l2/visualisation/window/Window';
 import { Zindex } from '@/modules/application/l1/l2/visualisation/zIndex/Zindex';
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { Cursor } from '@/modules/integration/browser/cursor/Cursor';
@@ -61,7 +63,7 @@ import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { KonvaLayerShiftPoint } from '@/modules/integration/konva/KonvaLayerShiftPoint';
 import { KonvaMove } from '@/modules/integration/konva/KonvaMove';
-import { GuestAware, GuestObject, Source, SourceEmpty } from 'patron-oop';
+import { give, GuestAware, GuestCast, GuestObject, GuestType, Source, SourceEmpty } from 'patron-oop';
 
 const factories = useFactories();
 
@@ -183,6 +185,16 @@ const objectsOutsideScreen = new ObjectsOutsideScreen(mapCurrent, stageSize, kon
 const sidebarDraggable = new SourceEmpty<HTMLElement>();
 new Draggable(sidebarDraggable);
 
+const theWindow = new Window();
+const windowWidth = new GuestAware<number>((guest) => {
+  theWindow.value(
+    new GuestCast(guest, (windowDoc) => {
+      give(windowDoc.width, guest);
+    })
+  )
+});
+const device = new Device(windowWidth);
+
 const modules = {
   mapCurrentID,
   mapFile,
@@ -232,6 +244,7 @@ const modules = {
   settings,
   documentTitle,
   sidebarDraggable,
+  device,
 };
 
 export const useApplication = () => modules;

@@ -55,6 +55,7 @@ appSettings.value(settings);
           :style="`width:${type.type.width}px;height:${type.type.height}px`"
           :title="$t('general.notifications.dragToCanvasToAdd')"
           @dragend="mapObjectNew.byTypeName(type.type.id, $event)"
+          @dblclick="mapObjectNew.byTypeName(type.type.id, $event);$emit('close')"
         ></div>
         <div class="flex gap-1" v-if="!settings.value.readonly">
           <BaseButton

@@ -8,6 +8,7 @@ import { GuestCast } from 'patron-oop';
 import { GuestChain } from 'patron-oop';
 import { GuestObjectType } from 'patron-oop';
 import { GuestSync } from 'patron-oop';
+import { GuestType } from 'patron-oop';
 import { GuestValueType } from 'patron-oop';
 import { Layer } from 'konva/lib/Layer';
 import { Patron } from 'patron-oop';
@@ -111,6 +112,18 @@ declare class ControlCombo {
 declare type CountDocument = {
     count: number;
     nearestObjectId: string;
+};
+
+declare class Device implements GuestAwareType<DeviceDocument> {
+    private windowWidth;
+    private mobileLimit;
+    constructor(windowWidth: GuestAwareType<number>, mobileLimit?: number);
+    value(guest: GuestType<DeviceDocument>): this;
+}
+
+declare type DeviceDocument = {
+    isMobile: boolean;
+    isDesktop: boolean;
 };
 
 declare class DocumentTitle implements GuestObjectType<string> {
@@ -1010,6 +1023,15 @@ declare interface StagePositionType {
     position(guest: GuestObjectType<PointDocument>): GuestObjectType;
 }
 
+export declare class StorageRecord<T> implements SourceType<T> {
+    private name;
+    private source;
+    constructor(name: string);
+    give(value: T | null): this;
+    pool(): PatronPool<T>;
+    value(guest: GuestType<T>): this;
+}
+
 /**
  * Объект для обработки разметки svg
  */
@@ -1166,6 +1188,7 @@ export declare const useApplication: () => {
     settings: Source<EditorSettings>;
     documentTitle: DocumentTitle;
     sidebarDraggable: SourceEmpty<HTMLElement>;
+    device: Device;
 };
 
 export declare const useFactories: () => {

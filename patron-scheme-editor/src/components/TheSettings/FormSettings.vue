@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import BaseButton from '@/components/BaseButton/BaseButton.vue';
 import BaseInput from '@/components/BaseInput/BaseInput.vue';
+import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import { useApplication } from '@/composables/useApplication';
-import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
-import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { useFactories } from '@/composables/useFactories';
+import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 
 const {
   modal, mapFile, mapRemoved, mapSettings, controlCombo, parentNames, mapCurrentID,
@@ -43,6 +43,7 @@ controlCombo.happenedConditional(
       <div class="mb-2">
         <div class="TheSettings-Row">
           <div class="flex gap-2 mb-2">
+            <slot name="beforeButtons" />
             <BaseButton
               v-if="parentTypes.length > 1"
               type="primary"

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AppExport from '@/components/AppExport/AppExport.vue';
 import AppFileMaps from '@/components/AppFileMaps/AppFileMaps.vue';
 import AppMenuObject from '@/components/AppMenuObject/AppMenuObject.vue';
 import AppPresets from '@/components/AppPresets/AppPresets.vue';
@@ -12,11 +13,14 @@ import TheMapAsText from '@/components/TheMapAsText/TheMapAsText.vue';
 import TheMiniMap from '@/components/TheMiniMap/TheMiniMap.vue';
 import FormSettings from '@/components/TheSettings/FormSettings.vue';
 import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
-import AppExport from '@/components/AppExport/AppExport.vue';
 import { useApplication } from '@/composables/useApplication';
 import { useFactories } from '@/composables/useFactories';
+import TheSidebarButton from '@/components/TheSidebarButton/TheSidebarButton.vue';
+import { DeviceDocument } from '@/modules/application/l1/l2/visualisation/device/Device';
+import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
+import { Patron } from 'patron-oop';
 // @ts-ignore
-import { watch } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
   modelValue: {
@@ -35,7 +39,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const { fileContent, settings } = useApplication();
+const { fileContent, settings, device } = useApplication();
 const { guest, patron } = useFactories();
 
 settings.value((lastSettings) => {
@@ -59,19 +63,35 @@ watch(() => props.modelValue, (value: any) => {
 fileContent.value(patron.create((newValue: string) => {
   emit('update:modelValue', newValue);
 }));
+
+const sidebarOpened = ref(true);
+
+const devicePatron = new VueRefPatron<DeviceDocument>();
+device.value(devicePatron);
+
+device.value(new Patron((theDevice) => {
+  sidebarOpened.value = theDevice.isDesktop;
+}))
+
 </script>
 
 <template>
   <div class="bg-body absolute top-0 left-0 w-full h-full">
-    <div class="grid grid-cols-[200px_1fr] grid-rows-[50px_1fr] h-dvh relative">
+    <div class="grid grid-rows-[50px_1fr] h-dvh relative" :class="{'grid-cols-[200px_1fr]': !devicePatron.value.isMobile, 'grid-cols-[1fr]': devicePatron.value.isMobile}">
       <TheHeader class="col-span-2" />
-      <TheSideBar />
+      <TheSideBar v-if="sidebarOpened" :class="{'bg-[#f3f4f6] w-[200px] absolute top-[50px] left-0 z-10 bottom-0': devicePatron.value.isMobile}" @close="sidebarOpened=false" />
       <TheEditor class="w-auto col-auto h-full " />
       <TheMiniMap />
+      <TheSidebarButton v-if="devicePatron.value.isMobile" @click="sidebarOpened = !sidebarOpened" />
+      <slot name="insideGrid" />
     </div>
     <FormObject />
     <FormType />
-    <FormSettings />
+    <FormSettings>
+      <template #beforeButtons>
+        <slot name="beforeSettingsButtons" />
+      </template>
+    </FormSettings>
     <AppPresets />
     <AppTypesParent />
     <AppExport />

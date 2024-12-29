@@ -2,6 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   faBars,
+  faBarsStaggered,
   faTextWidth,
   faFileText,
   faSearch,
@@ -16,11 +17,13 @@ import {
   faArrowRight,
   faArrowDown,
   faArrowUp,
+  faShareNodes,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons: Record<string, IconDefinition> = {
   'fa-bars': faBars,
+  'fa-bars-staggered': faBarsStaggered,
   'fa-text-width': faTextWidth,
   'fa-search': faSearch,
   'fa-history': faHistory,
@@ -35,6 +38,7 @@ const icons: Record<string, IconDefinition> = {
   'fa-arrow-right': faArrowRight,
   'fa-arrow-down': faArrowDown,
   'fa-arrow-up': faArrowUp,
+  'fa-share-nodes': faShareNodes,
 };
 
 defineProps({
