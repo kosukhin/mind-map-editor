@@ -6,6 +6,7 @@ import { useApplication } from '@/composables/useApplication';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { MapDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { useFactories } from '@/composables/useFactories';
+import { useSharing } from '@/composables/useSharing';
 
 const {
   modal, mapFile, mapRemoved, mapSettings, controlCombo, parentNames, mapCurrentID,
@@ -32,6 +33,10 @@ controlCombo.happenedConditional(
   modal.openedByName('settings'),
   patron.create(guest.create(save)),
 );
+
+const { sharedStorageRecord } = useSharing();
+const sharingStoragePatron = new VueRefPatron();
+sharedStorageRecord.value(sharingStoragePatron);
 </script>
 
 <template>
@@ -43,6 +48,14 @@ controlCombo.happenedConditional(
       <div class="mb-2">
         <div class="TheSettings-Row">
           <div class="flex gap-2 mb-2">
+            <BaseButton
+              v-if="sharingStoragePatron.value"
+              type="primary"
+              class="text-white"
+              @click="sharedStorageRecord.give(null)"
+            >
+              Очистить Sharing
+            </BaseButton>
             <BaseButton
               v-if="parentTypes.length > 1"
               type="primary"

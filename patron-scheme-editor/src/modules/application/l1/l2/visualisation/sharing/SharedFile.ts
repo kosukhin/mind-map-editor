@@ -1,4 +1,5 @@
 import { ActionType } from "@/modules/system/source/ActionType";
+import debug from "debug";
 import { GuestAwareType, GuestObjectType, GuestType, Source } from "patron-oop";
 
 export interface ShareFileDocument {
@@ -6,6 +7,8 @@ export interface ShareFileDocument {
   content: string,
   mime: string,
 }
+
+const localDebug = debug('SharedFile');
 
 export class SharedFile implements GuestAwareType<boolean>, ActionType<void> {
   private loading = new Source(false);
@@ -19,25 +22,23 @@ export class SharedFile implements GuestAwareType<boolean>, ActionType<void> {
 
   public do(): this {
     this.fileSource.value((value) => {
+      try {
+        const fielToShare = new File(
+          [value.content],
+          value.name.replace('.json', '.txt'),
+          { type: 'text/plain' }
+        );
 
-      const fielToShare = new File(
-        [value.content],
-        value.name.replace('.json', '.txt'),
-        { type: 'text/plain' }
-      );
-      console.log('try to share file', value, fielToShare, {
-        title: this.sharingTitle,
-        url: 'https://share.file',
-        text: 'Sharing from pwa',
-        files: [fielToShare],
-      });
-      this.loading.give(true);
-      navigator.share({
-        title: this.sharingTitle,
-        files: [fielToShare],
-      }).finally(() => {
-        this.loading.give(false);
-      });
+        this.loading.give(true);
+        navigator.share({
+          title: `${this.sharingTitle} ${value.name}`,
+          files: [fielToShare],
+        }).finally(() => {
+          this.loading.give(false);
+        });
+      } catch (e) {
+        localDebug(e);
+      }
     });
     return this;
   }

@@ -9,10 +9,6 @@ import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
 const localDebug = debug('FSHtmlContent');
 
 export class FSHtmlContent {
-  private isCorrectHTML = false;
-
-  private regexp = /'{"current":(.+)}'/;
-
   public constructor(
     private fsContent: FileSystemContent,
     private launchQueue: BrowserLaunchQueue,
@@ -39,7 +35,7 @@ export class FSHtmlContent {
 
   public canBeUsed(guest: GuestObjectType<boolean>) {
     localDebug('check canbe used');
-    const chain = new GuestChain<{fileHandler: FileSystemFileHandle, canBeUsed: boolean}>();
+    const chain = new GuestChain<{ fileHandler: FileSystemFileHandle, canBeUsed: boolean }>();
     this.launchQueue.fileHandler(new GuestCast(guest, chain.receiveKey('fileHandler')));
     this.fsContent.canBeUsed(new GuestCast(guest, chain.receiveKey('canBeUsed')));
     chain.result(({ fileHandler, canBeUsed }) => {

@@ -8,7 +8,7 @@ import { Transformed } from '@/modules/system/transformed/Transformed';
 import { debug } from 'debug';
 import { ChainType, FactoryType, GuestObjectType, PoolType, SourceType } from 'patron-oop';
 
-const localDebug = debug('MapFileOfContent');
+const localDebug = debug('MapFile');
 type CurrentMapChainProps = { mapId: string; mapFile: MapFileDocument };
 
 /**

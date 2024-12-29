@@ -1,6 +1,12 @@
+import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
 import {
+  Guest,
+  GuestAware,
+  GuestAwareType,
   GuestCast,
+  GuestObject,
   GuestObjectType,
+  Patron,
   SourceType,
 } from 'patron-oop';
 
@@ -11,21 +17,42 @@ export interface ShareFileDocument {
 }
 
 export class ShareContent {
-  public constructor(private sharedSource: SourceType<ShareFileDocument>) {
+  private contentSource: GuestAwareType<string>;
+
+  public constructor(
+    private sharedSource: SourceType<ShareFileDocument>,
+    private sharedFromWorker: GuestAwareType<ShareFileDocument>,
+    private htmlTemplate: HtmlTemplate,
+  ) {
+    this.sharedFromWorker.value(new Patron((valueFromWorker) => {
+      this.sharedSource.value((cachedValue) => {
+        if (!cachedValue) {
+          this.sharedSource.give(valueFromWorker);
+        }
+      });
+    }));
+    this.contentSource = new GuestAware((guest) => {
+      const guestObject = new GuestObject(guest);
+      this.sharedSource.value(new GuestCast(guestObject, (v) => {
+        if (v) {
+          if (v.name.includes('.html')) {
+            this.htmlTemplate.htmlToJson(v.content, new GuestCast(guestObject, (json) => {
+              guestObject.give(json);
+            }));
+          } else {
+            guestObject.give(v.content);
+          }
+        }
+      }));
+    });
   }
 
   public canBeUsed(guest: GuestObjectType<boolean>) {
-    fetch('/share-file-content')
-      .then((resp) => resp.json())
-      .then((resp) => {
-        console.log('json result', resp);
-        guest.give(true);
-        this.sharedSource.give(resp.data);
-      });
+    this.sharedFromWorker.value(new GuestCast(guest, (v) => {
+      guest.give(!!v);
+    }));
 
     this.sharedSource.value(new GuestCast(guest, (v) => {
-      console.log('share source value');
-
       guest.give(!!v);
     }));
 
@@ -33,20 +60,37 @@ export class ShareContent {
   }
 
   public content(target: GuestObjectType<string>): this {
-    this.sharedSource.value(new GuestCast(target, (v) => {
-      if (v) {
-        target.give(v.content);
-      }
-    }));
+    this.contentSource.value(target);
     return this;
   }
 
   public give(content: string): this {
+    const isEmptyMap = content.includes('"objects":{},"types":{},');
+    console.trace('!!!GIVED CONTENT', content);
+
     this.sharedSource.value((value) => {
-      this.sharedSource.give({
-        ...value,
-        content,
-      });
+      const correnctContent = isEmptyMap ? value.content : content;
+
+      if (value.mime.includes('html')) {
+        if (isEmptyMap) {
+          this.sharedSource.give({
+            ...value,
+            content: correnctContent,
+          });
+        } else {
+          this.htmlTemplate.jsonToHtml(correnctContent, new Guest((htmlContent: string) => {
+            this.sharedSource.give({
+              ...value,
+              content: htmlContent,
+            });
+          }));
+        }
+      } else {
+        this.sharedSource.give({
+          ...value,
+          content: correnctContent,
+        });
+      }
     });
     return this;
   }
