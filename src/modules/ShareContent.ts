@@ -74,7 +74,7 @@ export class ShareContent {
 
   public give(content: string): this {
     this.mapCurrentID.id(new Guest((id) => {
-      const isEmptyMap = id === 'current' && content.includes('"objects":{},"types":{},');
+      const isEmptyMap = id === 'current' && content.includes('"current":{"progress":0,"settings":{"colored":false,"title":"current"},"objects":{},"types":{}');
 
       localDebug('give', isEmptyMap, content);
 
