@@ -1,9 +1,18 @@
+import debug from 'debug';
 import { GuestObjectType } from 'patron-oop';
 
+const localDebug = debug('HtmlTemplate');
+
 function toBase64(instr: string) {
+  localDebug('toBase64 called');
   const binAry = (new TextEncoder().encode(instr));
-  const safeStr = String.fromCharCode(...binAry);
-  return btoa(safeStr);
+  let binary = '';
+  const bytes = new Uint8Array(binAry);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i += 1) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
 }
 
 function fromBase64(binstr: string) {
@@ -37,6 +46,7 @@ export class HtmlTemplate {
   }
 
   public jsonToHtml(json: string, htmlGuest: GuestObjectType<string>) {
+    localDebug('jsonToHtml called');
     const varTemplate = this.varTemplate.replace('{json}', toBase64(json));
     const realHtml = this.htmlTemplate.replace(this.regexp, varTemplate);
     htmlGuest.give(realHtml);
