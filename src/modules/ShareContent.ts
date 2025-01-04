@@ -5,6 +5,7 @@ import {
   GuestAware,
   GuestAwareType,
   GuestCast,
+  GuestChain,
   GuestObject,
   GuestObjectType,
   Patron,
@@ -31,6 +32,7 @@ export class ShareContent {
     private sharedFromWorker: GuestAwareType<ShareFileDocument>,
     private htmlTemplate: HtmlTemplate,
     private mapCurrentID: MapCurrentIDType,
+    private storageChangedGuest: GuestObjectType<boolean>,
   ) {
     this.sharedFromWorker.value(new Patron((valueFromWorker) => {
       this.sharedSource.value((cachedValue) => {
@@ -53,6 +55,15 @@ export class ShareContent {
         }
       }));
     });
+
+    const chain = new GuestChain<{ fromWorker: ShareFileDocument, fromStorage: ShareFileDocument }>();
+    this.sharedFromWorker.value(new Patron(chain.receiveKey('fromWorker')));
+    this.sharedSource.value(new Patron(chain.receiveKey('fromStorage')));
+    chain.result(new Patron(({ fromWorker, fromStorage }) => {
+      localDebug('fromWorker = ', fromWorker.content.length);
+      localDebug('fromStorage = ', fromStorage.content.length);
+      this.storageChangedGuest.give(fromWorker.content.length !== fromStorage.content.length);
+    }));
   }
 
   public canBeUsed(guest: GuestObjectType<boolean>) {
@@ -88,7 +99,9 @@ export class ShareContent {
               content: correnctContent,
             });
           } else {
+            localDebug('try to save html to storage');
             this.htmlTemplate.jsonToHtml(correnctContent, new Guest((htmlContent: string) => {
+              localDebug('save html to storage');
               this.sharedSource.give({
                 ...value,
                 content: htmlContent,

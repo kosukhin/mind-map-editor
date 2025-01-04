@@ -5,6 +5,7 @@ import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
 import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
 import { SharedFileFromWorker } from '@/modules/share/SharedFileFromWorker';
 import { ShareContent } from '@/modules/ShareContent';
+import { Source } from 'patron-oop';
 import {
   BrowserLaunchQueue,
   FileSystemContent,
@@ -30,6 +31,8 @@ const { sharedStorageRecord } = useSharing();
 const sharedFromWorker = new SharedFileFromWorker();
 sharedFromWorker.do();
 
+const sharingStorageChanged = new Source(false);
+
 const fileContent = new FirstPossibleFileContent([
   new UrlContent(notification, factories),
   new FSJsonContent(fsContent, launchQueue),
@@ -39,11 +42,13 @@ const fileContent = new FirstPossibleFileContent([
     sharedFromWorker,
     htmlTemplate,
     mapCurrentID,
+    sharingStorageChanged,
   ),
 ], factories);
 
 const modules = {
   serviceFileContent: fileContent,
+  sharingStorageChanged,
 };
 
 export const useService = () => modules;
