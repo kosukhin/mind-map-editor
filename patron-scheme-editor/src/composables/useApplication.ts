@@ -60,10 +60,11 @@ import { Cursor } from '@/modules/integration/browser/cursor/Cursor';
 import { Draggable } from '@/modules/integration/browser/dragged/Draggable';
 import { ControlCombo } from '@/modules/integration/browser/keyboard/ControlCombo';
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
+import { SessionRecord } from '@/modules/integration/browser/storage/SessionRecord';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaLayer';
 import { KonvaLayerShiftPoint } from '@/modules/integration/konva/KonvaLayerShiftPoint';
 import { KonvaMove } from '@/modules/integration/konva/KonvaMove';
-import { give, GuestAware, GuestCast, GuestObject, GuestType, Source, SourceEmpty } from 'patron-oop';
+import { give, GuestAware, GuestCast, GuestObject, GuestType, Source, SourceEmpty, Patron } from 'patron-oop';
 
 const factories = useFactories();
 
@@ -82,6 +83,9 @@ const fileContent = factories.sourceEmpty.create();
 const mapFile = new MapFile(fileContent, mapCurrentID, factories);
 const mapCurrentTitle = new MapCurrentTitle(mapFile);
 const documentTitle = new DocumentTitle(mapCurrentTitle);
+
+const sessionMap = new SessionRecord('current-map');
+mapFile.currentMap(new Patron(sessionMap));
 
 const mapFileForRendering = new MapFileForRendering(mapFile, mapCurrentID, factories);
 const mapForRendering = new MapCurrent(mapFileForRendering, mapCurrentID, factories);
