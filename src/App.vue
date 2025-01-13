@@ -52,3 +52,9 @@ sharedStorageRecord.value(sharedStoragePatron);
   </PatronSchemeEditor>
   <PageNoContent v-else />
 </template>
+
+<style>
+body {
+  font: 14px Arial, sans-serif;
+}
+</style>
