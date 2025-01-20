@@ -7,6 +7,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(Response.json({
       data: sharedFileContent,
     }));
+    sharedFileContent = null;
     return;
   }
 
