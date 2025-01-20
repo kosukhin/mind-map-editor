@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.14...v0.1.2) (2025-01-20)
+
+
+### Features
+
+* **54-questions-preset:** questionaire preset ([38982fc](https://github.com/kosukhin/patron-scheme-editor/commit/38982fc60aa807cb105b4338aa75f6f2ca46c948))
+* **57-add-default-font-style-to-editor:** default font style ([dfd5e3b](https://github.com/kosukhin/patron-scheme-editor/commit/dfd5e3b744d4f2cfef747664e734237d95580dd4))
+* **issue-46:** almost done shared api integration ([1e97274](https://github.com/kosukhin/patron-scheme-editor/commit/1e9727488f1a3b4c6074cadb6a9d711b452f397c))
+* **issue-46:** dblclick to add new type ([e1f6d48](https://github.com/kosukhin/patron-scheme-editor/commit/e1f6d48a80f7024774de5559bab60c36d4f0ac59))
+* **issue-46:** fix empty map freezed current main map ([06e970f](https://github.com/kosukhin/patron-scheme-editor/commit/06e970f563c5c7a69387e59ab9515cf5b1081dd1))
+* **issue-46:** fix stack overflow and add changed style for sharing ([f7808ba](https://github.com/kosukhin/patron-scheme-editor/commit/f7808ba09b551d14bb7304a2283ba3bd715a0bb0))
+* **issue-46:** move sharing to app ([3d22799](https://github.com/kosukhin/patron-scheme-editor/commit/3d22799fefaa5c8669c25d0dddb8230a2f6d660e))
+* **issue-46:** remove console logs ([da27d43](https://github.com/kosukhin/patron-scheme-editor/commit/da27d4347c027d5671ceacad78b1607d923fa432))
+* **issue-46:** session storage added ([46e99e3](https://github.com/kosukhin/patron-scheme-editor/commit/46e99e3d59624bba802d42a56fb1ef32189ebe12))
+* **issue-46:** storage changed flag ([0d5c883](https://github.com/kosukhin/patron-scheme-editor/commit/0d5c883f9203079de7498319c25daa007d2ed1e0))
+* **issue-46:** work for mobile version ([fb73600](https://github.com/kosukhin/patron-scheme-editor/commit/fb7360084f987e71a618d5941112e24c5d733013))
+* **issue-46:** work on mobile sidebar ([0c674bf](https://github.com/kosukhin/patron-scheme-editor/commit/0c674bf33453e5a6c9c9d54c9c05afe6580d3438))
+* **issue-46:** work on mobile version ([a6b979c](https://github.com/kosukhin/patron-scheme-editor/commit/a6b979c2dd7dc7621fbe2af9ee1f6a1f146bd651))
+* **issue-46:** work on share content ([2883a1c](https://github.com/kosukhin/patron-scheme-editor/commit/2883a1c2f119694ca51b50efcd04c54be55d3ebf))
+* **issue-46:** work on shared api ([617875a](https://github.com/kosukhin/patron-scheme-editor/commit/617875a0270fe839867d56bb4044984567383549))
+* **issue-46:** work on sharing with sw ([0d30371](https://github.com/kosukhin/patron-scheme-editor/commit/0d30371205c974cff0450aaf3926725821372691))
+
+
+### Bug Fixes
+
+* **issue-46:** fix empty for current map ([aa8a782](https://github.com/kosukhin/patron-scheme-editor/commit/aa8a782d6cee088ad6f52687f57fc51784130973))
+* **issue-46:** work on sharing files ([9511ca1](https://github.com/kosukhin/patron-scheme-editor/commit/9511ca1f6906ba76a06f011bad9fd28b09955608))
+
 ### 0.1.1 (2024-07-20)
 
 
