@@ -1,3 +1,4 @@
+import { ActionType } from 'patron-oop';
 import { ChainType } from 'patron-oop';
 import { Factory } from 'patron-oop';
 import { FactoryType } from 'patron-oop';
@@ -19,6 +20,8 @@ import { Ref } from 'vue';
 import { Source } from 'patron-oop';
 import { SourceEmpty } from 'patron-oop';
 import { SourceType } from 'patron-oop';
+
+declare type ActionsType = 'empty';
 
 declare interface ArrowPathType {
     breakPoints(fromPoint: ArrowPointDocument, toPoint: ArrowPointDocument, pointsGuest: GuestObjectType<number[]>): this;
@@ -1023,11 +1026,12 @@ declare interface StagePositionType {
     position(guest: GuestObjectType<PointDocument>): GuestObjectType;
 }
 
-export declare class StorageRecord<T> implements SourceType<T> {
+export declare class StorageRecord<T> implements SourceType<T>, ActionType<ActionsType> {
     private name;
     private source;
     constructor(name: string);
-    give(value: T | null): this;
+    do(action: ActionsType): this;
+    give(value: T): this;
     pool(): PatronPool<T>;
     value(guest: GuestType<T>): this;
 }

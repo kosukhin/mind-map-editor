@@ -13,6 +13,7 @@ import TheMapAsText from '@/components/TheMapAsText/TheMapAsText.vue';
 import TheMiniMap from '@/components/TheMiniMap/TheMiniMap.vue';
 import FormSettings from '@/components/TheSettings/FormSettings.vue';
 import TheSideBar from '@/components/TheSideBar/TheSideBar.vue';
+import BaseModal from '@/components/BaseModal/BaseModal.vue';
 import { useApplication } from '@/composables/useApplication';
 import { useFactories } from '@/composables/useFactories';
 import TheSidebarButton from '@/components/TheSidebarButton/TheSidebarButton.vue';
@@ -99,5 +100,15 @@ device.value(new Patron((theDevice) => {
     <TheMapAsText />
     <AppSearch />
     <AppFileMaps />
+    <BaseModal name="custom">
+      <div class="AppClientModal">
+        <div class="text-md font-bold mb-2">
+          <slot name="customModalTitle" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <slot name="customModalBody" />
+        </div>
+      </div>
+    </BaseModal>
   </div>
 </template>

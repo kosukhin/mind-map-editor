@@ -1,8 +1,8 @@
-import { ShareFileDocument } from '@/modules/ShareContent';
+import { ShareFileDocument } from '@/modules/share/ShareContent';
 import {
+  ActionType,
   GuestAwareType,
   GuestType,
-  ActionType,
   SourceEmpty,
 } from 'patron-oop';
 
