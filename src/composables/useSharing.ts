@@ -1,6 +1,6 @@
 import { SharedFile } from '@/modules/share/SharedFile';
 import { SharingPossible } from '@/modules/share/SharingPossible';
-import { ShareFileDocument } from '@/modules/ShareContent';
+import { ShareFileDocument } from '@/modules/share/ShareContent';
 import { StorageRecord } from 'patron-scheme-editor';
 
 const sharedStorageRecord = new StorageRecord<ShareFileDocument>('shared-map');

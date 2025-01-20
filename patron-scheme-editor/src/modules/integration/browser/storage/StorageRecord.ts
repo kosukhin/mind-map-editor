@@ -1,7 +1,9 @@
-import { GuestType, PatronPool, Source, SourceEmpty, SourceType } from "patron-oop";
+import { ActionType, GuestType, PatronPool, SourceEmpty, SourceType } from "patron-oop";
 
-export class StorageRecord<T> implements SourceType<T> {
-  private source = new Source<T | null>(null);
+type ActionsType = 'empty';
+
+export class StorageRecord<T> implements SourceType<T>, ActionType<ActionsType> {
+  private source = new SourceEmpty<T>();
 
   public constructor(private name: string) {
     const value = JSON.parse(localStorage.getItem(name) || 'null');
@@ -17,7 +19,14 @@ export class StorageRecord<T> implements SourceType<T> {
     );
   }
 
-  public give(value: T | null): this {
+  public do(action: ActionsType): this {
+    if (action === 'empty') {
+      localStorage.removeItem(this.name);
+    }
+    return this;
+  }
+
+  public give(value: T): this {
     localStorage.setItem(this.name, JSON.stringify(value));
     this.source.give(value)
     return this;

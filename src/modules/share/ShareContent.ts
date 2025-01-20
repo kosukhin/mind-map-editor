@@ -1,4 +1,5 @@
 import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
+import { Deadline } from '@/modules/time/Deadline';
 import debug from 'debug';
 import {
   Guest,
@@ -10,7 +11,6 @@ import {
   GuestObjectType,
   Patron,
   PatronOnce,
-  SourceEmpty,
   SourceType,
 } from 'patron-oop';
 
@@ -26,8 +26,6 @@ interface MapCurrentIDType extends GuestObjectType<string> {
 
 const localDebug = debug('ShareContent');
 
-const storageFirstValue = new SourceEmpty();
-
 export class ShareContent {
   private contentSource: GuestAwareType<string>;
 
@@ -38,12 +36,13 @@ export class ShareContent {
     private mapCurrentID: MapCurrentIDType,
     private storageChangedGuest: GuestObjectType<boolean>,
   ) {
+    const nullishSharedSource = new Deadline(this.sharedSource, null, 0);
     this.sharedFromWorker.value(new Patron((valueFromWorker) => {
-      this.sharedSource.value((cachedValue) => {
+      nullishSharedSource.value(new Guest((cachedValue) => {
         if (!cachedValue) {
           this.sharedSource.give(valueFromWorker);
         }
-      });
+      }));
     }));
     this.contentSource = new GuestAware((guest) => {
       const guestObject = new GuestObject(guest);
@@ -60,27 +59,16 @@ export class ShareContent {
       }));
     });
 
-    const chain = new GuestChain<{
-      fromWorker: ShareFileDocument,
-      fromStorage: ShareFileDocument
-    }>();
-    this.sharedFromWorker.value(new Patron(chain.receiveKey('fromWorker')));
-    this.sharedSource.value(new Patron(chain.receiveKey('fromStorage')));
-    chain.result(new Patron(({ fromWorker, fromStorage }) => {
-      localDebug('fromWorker = ', fromWorker.content.length);
-      localDebug('fromStorage = ', fromStorage.content.length);
-      this.storageChangedGuest.give(fromWorker.content.length !== fromStorage.content.length);
-    }));
-
-    this.sharedSource.value(new PatronOnce(storageFirstValue));
     const storageChain = new GuestChain<{
       fromStorage: ShareFileDocument,
-      storageRemembered: ShareFileDocument
+      storageRemembered: number
     }>();
     this.sharedSource.value(new Patron(storageChain.receiveKey('fromStorage')));
-    storageFirstValue.value(new Patron(storageChain.receiveKey('storageRemembered')));
+    this.sharedSource.value(new PatronOnce((v) => {
+      storageChain.receiveKey('storageRemembered').give(v.content.length);
+    }));
     storageChain.result(new Patron(({ fromStorage, storageRemembered }) => {
-      this.storageChangedGuest.give(fromStorage.content.length !== storageRemembered.content.length);
+      this.storageChangedGuest.give(fromStorage.content.length !== storageRemembered);
     }));
   }
 
