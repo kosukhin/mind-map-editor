@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/kosukhin/patron-scheme-editor/compare/v0.1.2...v0.1.3) (2025-01-20)
+
+
+### Features
+
+* **55-add-modal-when-sharing-to-ensure-reset-or-not-previously-shared-document:** share conflict ([2ef26c9](https://github.com/kosukhin/patron-scheme-editor/commit/2ef26c96f7851dd23b86f04335fcba28c00bc790))
+
 ### [0.1.2](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.14...v0.1.2) (2025-01-20)
 
 
