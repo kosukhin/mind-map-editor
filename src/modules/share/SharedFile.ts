@@ -1,6 +1,9 @@
 import debug from 'debug';
 import {
-  GuestAwareType, ActionType, GuestType, Source,
+  ActionType,
+  GuestAwareType,
+  GuestObjectType,
+  GuestType, Source,
 } from 'patron-oop';
 
 export interface ShareFileDocument {
@@ -14,7 +17,11 @@ const localDebug = debug('SharedFile');
 export class SharedFile implements GuestAwareType<boolean>, ActionType<void> {
   private loading = new Source(false);
 
-  public constructor(private fileSource: GuestAwareType<ShareFileDocument>, private sharingTitle = 'Share file') { }
+  public constructor(
+    private fileSource: GuestAwareType<ShareFileDocument>,
+    private sharedLastTimestamp: GuestObjectType<{ name: string, timestamp: number }>,
+    private sharingTitle = 'Share file',
+  ) { }
 
   public value(guest: GuestType<boolean>) {
     this.loading.value(guest);
@@ -36,6 +43,10 @@ export class SharedFile implements GuestAwareType<boolean>, ActionType<void> {
           files: [fielToShare],
         }).finally(() => {
           this.loading.give(false);
+          this.sharedLastTimestamp.give({
+            name: value.name,
+            timestamp: Date.now(),
+          });
         });
       } catch (e) {
         localDebug(e);
