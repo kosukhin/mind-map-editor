@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.16](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.15...v0.0.16) (2025-01-21)
+
+
+### Features
+
+* **63-add-share-date-in-conflict-window:** last sharing timestamp ([b9cadc7](https://github.com/kosukhin/patron-scheme-editor/commit/b9cadc7e13772a5dccdc331066754bfa25863677))
+
 ### [0.0.15](https://github.com/kosukhin/patron-scheme-editor/compare/v0.1.3...v0.0.15) (2025-01-20)
 
 ### [0.0.14](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.13...v0.0.14) (2024-12-21)
