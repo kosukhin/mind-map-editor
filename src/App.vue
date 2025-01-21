@@ -16,7 +16,7 @@ const { serviceFileContent, shareConflict, sharedFromWorker } = useService();
 const canBeUsed = serviceFileContent.canBeUsed(new VueRefPatron()).ref();
 
 const { patron } = useFactories();
-const { sharedFile } = useSharing();
+const { sharedFile, sharedLastTimestamp } = useSharing();
 
 const patronContentRef = ref();
 serviceFileContent.content(patron.create((content: boolean) => {
@@ -44,6 +44,9 @@ const openNewFile = () => {
   sharedFromWorker.value(sharedStorageRecord);
   location.reload();
 };
+
+const sharedLastTimestampPatron = new VueRefPatron<{timestamp: number}>();
+sharedLastTimestamp.value(sharedLastTimestampPatron);
 </script>
 
 <template>
@@ -69,6 +72,12 @@ const openNewFile = () => {
       Конфликт шаринга
     </template>
     <template #customModalBody>
+      <p v-if="sharedLastTimestampPatron.value">
+        Последний шаринг: {{ new Date(sharedLastTimestampPatron.value.timestamp).toLocaleString() }}
+      </p>
+      <p v-else>
+        Открытый файл не шарился
+      </p>
       <p>
         Вы открыли новый файл через функционал шаринга, но не закрыли старый, поэтому случился конфликт
       </p>
