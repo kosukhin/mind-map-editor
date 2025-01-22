@@ -4,7 +4,7 @@ import { PointIdDocument } from '@/modules/application/l1/l2/l3/map/documents/Po
 import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { debug } from 'debug';
-import { GuestObjectType, SourceType, FactoryType, ChainType, GuestAwareType } from 'patron-oop';
+import { GuestObjectType, SourceType, FactoryType, GuestAwareAllType, GuestAwareObjectType } from 'patron-oop';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
 
@@ -37,10 +37,10 @@ export class MiniMap {
   public constructor(
     private map: MapType,
     private layer: LayerBase,
-    private stageSize: GuestAwareType<SizeDocument>,
+    private stageSize: GuestAwareObjectType<SizeDocument>,
     private factories: {
       sourceEmpty: FactoryType<SourceType>;
-      chain: FactoryType<ChainType<unknown>>;
+      chain: FactoryType<GuestAwareAllType<unknown>>;
       patron: FactoryType<GuestObjectType>;
       guest: FactoryType<GuestObjectType>;
       guestInTheMiddle: FactoryType<GuestObjectType>;
@@ -51,10 +51,10 @@ export class MiniMap {
     this.thePoints = factories.sourceEmpty.create();
     this.viewportSizeCache = factories.sourceEmpty.create();
     const chain = factories.chain.create();
-    map.objects(factories.patron.create(chain.receiveKey('objects')));
-    layer.layer(factories.patron.create(chain.receiveKey('layer')));
-    stageSize.value(factories.patron.create(chain.receiveKey('size')));
-    chain.result(
+    map.objects(factories.patron.create(chain.guestKey('objects')));
+    layer.layer(factories.patron.create(chain.guestKey('layer')));
+    stageSize.value(factories.patron.create(chain.guestKey('size')));
+    chain.value(
       factories.patron.create(
         factories.guest.create(({ layer: konvaLayer, size, objects }: MiniMapChainDocument) => {
           const scale = minimapWidth / size.width;
@@ -82,11 +82,11 @@ export class MiniMap {
     );
   }
 
-  viewportPosition<R extends GuestObjectType<PointDocument>>(guest: R) {
+  public viewportPosition<R extends GuestObjectType<PointDocument>>(guest: R) {
     const chain = this.factories.chain.create();
-    this.stageSize.value(this.factories.guestCast.create(guest, chain.receiveKey('size')));
-    this.layer.position(this.factories.guestCast.create(guest, chain.receiveKey('position')));
-    chain.result(
+    this.stageSize.value(this.factories.guestCast.create(guest, chain.guestKey('size')));
+    this.layer.position(this.factories.guestCast.create(guest, chain.guestKey('position')));
+    chain.value(
       this.factories.guestInTheMiddle.create(guest, ({ size, position }: ViewPortChainDocument) => {
         const scale = minimapWidth / size.width;
         const scaledPosition = {
@@ -100,17 +100,17 @@ export class MiniMap {
     return guest;
   }
 
-  viewportSize<R extends GuestObjectType<SizeDocument>>(guest: R) {
+  public viewportSize<R extends GuestObjectType<SizeDocument>>(guest: R) {
     this.viewportSizeCache.value(guest);
     return guest;
   }
 
-  size<R extends GuestObjectType<SizeDocument>>(guest: R) {
+  public size<R extends GuestObjectType<SizeDocument>>(guest: R) {
     this.theSize.value(guest);
     return guest;
   }
 
-  points<R extends GuestObjectType<PointIdDocument[]>>(guest: R) {
+  public points<R extends GuestObjectType<PointIdDocument[]>>(guest: R) {
     this.thePoints.value(guest);
     return guest;
   }

@@ -1,20 +1,20 @@
 import { MapObjectDocument } from "@/modules/application/l1/l2/l3/map/documents/MapStructures";
-import { ArrowDepsDocument, ArrowTypeType } from "@/modules/application/l1/l2/visualisation/arrows/ArrowType";
-import { give, GuestAwareType, GuestCast, GuestChain, GuestType } from "patron-oop";
+import { ArrowDepsDocument } from "@/modules/application/l1/l2/visualisation/arrows/ArrowType";
+import { give, GuestAwareAll, GuestAwareObjectType, GuestCast, GuestType } from "patron-oop";
 
 type ArrowExtremePointsParams = { objects: MapObjectDocument[], objectsMap: Record<string, MapObjectDocument> }
 
-export class ArrowExtremePoints implements GuestAwareType<ArrowDepsDocument[]> {
+export class ArrowExtremePoints implements GuestAwareObjectType<ArrowDepsDocument[]> {
   public constructor(
-    private objectsSource: GuestAwareType<MapObjectDocument[]>,
-    private objectsMapSource: GuestAwareType<Record<string, MapObjectDocument>>,
+    private objectsSource: GuestAwareObjectType<MapObjectDocument[]>,
+    private objectsMapSource: GuestAwareObjectType<Record<string, MapObjectDocument>>,
   ) { }
 
   public value(guest: GuestType<ArrowDepsDocument[]>): this {
-    const chain = new GuestChain<ArrowExtremePointsParams>();
-    this.objectsSource.value(new GuestCast(guest, chain.receiveKey('objects')));
-    this.objectsMapSource.value(new GuestCast(guest, chain.receiveKey('objectsMap')));
-    chain.result(
+    const chain = new GuestAwareAll<ArrowExtremePointsParams>();
+    this.objectsSource.value(new GuestCast(guest, chain.guestKey('objects')));
+    this.objectsMapSource.value(new GuestCast(guest, chain.guestKey('objectsMap')));
+    chain.value(
       new GuestCast(
         guest, ({ objects, objectsMap }) => {
           const resultObjects: ArrowDepsDocument[] = [];

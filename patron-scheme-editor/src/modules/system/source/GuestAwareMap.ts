@@ -1,13 +1,13 @@
-import { FactoryType, give, GuestAware, GuestAwareType, GuestCast, GuestChain, GuestType } from "patron-oop";
+import { FactoryType, give, GuestAware, GuestAwareAll, GuestAwareObjectType, GuestCast, GuestType } from "patron-oop";
 
-export class GuestAwareMap<T = unknown, TG = unknown> implements GuestAwareType<TG[]> {
+export class GuestAwareMap<T = unknown, TG = unknown> implements GuestAwareObjectType<TG[]> {
   public constructor(
-    private baseSource: GuestAwareType<T[]>,
-    private targetSourceFactory: FactoryType<GuestAwareType<TG>>
+    private baseSource: GuestAwareObjectType<T[]>,
+    private targetSourceFactory: FactoryType<GuestAwareObjectType<TG>>
   ) { }
 
   value(guest: GuestType<TG[]>) {
-    const chain = new GuestChain();
+    const chain = new GuestAwareAll();
     this.baseSource.value(
       new GuestCast(<GuestType>guest, (value) => {
         value.forEach((val, index) => {
@@ -16,11 +16,11 @@ export class GuestAwareMap<T = unknown, TG = unknown> implements GuestAwareType<
               give(val, innerGuest);
             })
           )
-          targetSource.value(chain.receiveKey('' + index));
+          targetSource.value(chain.guestKey('' + index));
         });
       })
     );
-    chain.resultArray(<GuestType>guest);
+    chain.valueArray(<GuestType>guest);
     return this;
   }
 }

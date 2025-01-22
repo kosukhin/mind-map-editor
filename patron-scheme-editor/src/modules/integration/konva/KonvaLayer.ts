@@ -1,25 +1,25 @@
-import Konva from 'konva';
-import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
-import {
-  GuestObjectType,
-  SourceType,
-  ChainType,
-  FactoryType,
-  GuestAwareType,
-  GuestValueType,
-} from 'patron-oop';
-import { debug } from 'debug';
-import { KonvaPointDocument } from '@/modules/integration/konva/KonvaPointDocument';
-import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
 import { StageMoveRestrictionType } from '@/modules/application/l1/l2/l3/l4/types/stage/StageMoveRestrictionType';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
+import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
+import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
+import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
+import { KonvaPointDocument } from '@/modules/integration/konva/KonvaPointDocument';
 import { KonvaLayer as KonvaLayerType } from '@/modules/integration/konva/KonvaTypes';
+import { debug } from 'debug';
+import Konva from 'konva';
+import {
+  FactoryType,
+  GuestAwareAllType,
+  GuestAwareObjectType,
+  GuestObjectType,
+  GuestValueType,
+  SourceType
+} from 'patron-oop';
 
 const localDebug = debug('app:konva:KonvaLayer');
 
 export class KonvaLayer implements LayerBase {
-  private guestChain: ChainType<{ canvas: HTMLElement }>;
+  private guestChain: GuestAwareAllType<{ canvas: HTMLElement }>;
 
   private positionCache: SourceType<KonvaPointDocument>;
 
@@ -27,10 +27,10 @@ export class KonvaLayer implements LayerBase {
 
   public constructor(
     private canvasDep: BrowserCanvasType,
-    stageSizeDep: GuestAwareType<SizeDocument>,
+    stageSizeDep: GuestAwareObjectType<SizeDocument>,
     private stageMoveRestriction: StageMoveRestrictionType,
     private factories: {
-      chain: FactoryType<ChainType<{ canvas: HTMLElement }>>;
+      chain: FactoryType<GuestAwareAllType<{ canvas: HTMLElement }>>;
       cache: FactoryType<SourceType>;
       sourceEmpty: FactoryType<SourceType>;
       guest: FactoryType<GuestObjectType>;
@@ -44,10 +44,10 @@ export class KonvaLayer implements LayerBase {
     });
     this.guestChain = factories.chain.create();
     this.layerCache = factories.sourceEmpty.create();
-    this.canvasDep.canvas(factories.patron.create(this.guestChain.receiveKey('canvas')));
-    stageSizeDep.value(this.guestChain.receiveKey('stageSize'));
+    this.canvasDep.canvas(factories.patron.create(this.guestChain.guestKey('canvas')));
+    stageSizeDep.value(this.guestChain.guestKey('stageSize'));
 
-    this.guestChain.result(
+    this.guestChain.value(
       factories.guest.create<[(props: { canvas: HTMLElement; stageSize: SizeDocument }) => void]>(
         ({ canvas }) => {
           localDebug('create new konva stage');

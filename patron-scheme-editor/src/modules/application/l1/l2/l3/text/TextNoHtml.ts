@@ -1,12 +1,12 @@
-import { GuestObjectType, GuestAwareType, FactoryType } from 'patron-oop';
+import { FactoryType, GuestAwareObjectType, GuestObjectType } from 'patron-oop';
 
 export class TextNoHtml {
   public constructor(
-    private text: GuestAwareType<string>,
+    private text: GuestAwareObjectType<string>,
     private factories: {
       guestInTheMiddle: FactoryType<GuestObjectType>;
     },
-  ) {}
+  ) { }
 
   public noHtml(guest: GuestObjectType<string>) {
     this.text.value(

@@ -1,16 +1,18 @@
 import { ShareFileDocument } from '@/modules/share/SharedFile';
 import {
-  GuestAwareType, GuestChain, GuestType, Patron, Source,
+  GuestAwareAll,
+  GuestAwareObjectType,
+  GuestType, Patron, Source,
 } from 'patron-oop';
 
-export class ShareConflict implements GuestAwareType<boolean> {
+export class ShareConflict implements GuestAwareObjectType<boolean> {
   private conflictSource = new Source(false);
 
-  public constructor(oneSource: GuestAwareType<ShareFileDocument>, anotherSource: GuestAwareType<ShareFileDocument>) {
-    const chain = new GuestChain<{ one: any, another: any }>();
-    oneSource.value(new Patron(chain.receiveKey('one')));
-    anotherSource.value(new Patron(chain.receiveKey('another')));
-    chain.result(new Patron(({ one, another }) => {
+  public constructor(oneSource: GuestAwareObjectType<ShareFileDocument>, anotherSource: GuestAwareObjectType<ShareFileDocument>) {
+    const chain = new GuestAwareAll<{ one: any, another: any }>();
+    oneSource.value(new Patron(chain.guestKey('one')));
+    anotherSource.value(new Patron(chain.guestKey('another')));
+    chain.value(new Patron(({ one, another }) => {
       this.conflictSource.give(one.name !== another.name);
     }));
   }

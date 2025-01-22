@@ -18,7 +18,7 @@ import { Module } from '@/modules/system/source/Module';
 import { debug } from 'debug';
 import Konva from 'konva';
 import throttle from 'lodash/throttle';
-import { ChainType, FactoryType, give, GuestAware, GuestAwareType, GuestObjectType, SourceType } from 'patron-oop';
+import { GuestAwareAllType, FactoryType, give, GuestAware, GuestAwareObjectType, GuestObjectType, SourceType } from 'patron-oop';
 
 const { Arrow } = Konva;
 
@@ -40,18 +40,18 @@ export class MapObjectsArrows {
     private factories: {
       patron: FactoryType<GuestObjectType>;
       guest: FactoryType<GuestObjectType>;
-      chain: FactoryType<ChainType>;
+      chain: FactoryType<GuestAwareAllType>;
       cache: FactoryType<SourceType>;
     },
   ) {
     localDebug('draw arrows on canvas');
     const chain = this.factories.chain.create();
 
-    this.konvaLayer.layer(this.factories.patron.create(chain.receiveKey('layer')));
-    this.mapFile.currentMap(this.factories.patron.create(chain.receiveKey('map')));
-    this.mapDep.objects(this.factories.patron.create(chain.receiveKey('objects')));
+    this.konvaLayer.layer(this.factories.patron.create(chain.guestKey('layer')));
+    this.mapFile.currentMap(this.factories.patron.create(chain.guestKey('map')));
+    this.mapDep.objects(this.factories.patron.create(chain.guestKey('objects')));
 
-    chain.result(
+    chain.value(
       this.factories.patron.create(
         this.factories.guest.create(
           throttle(({ layer, map, objects }: ChainParamsType) => {
@@ -63,13 +63,18 @@ export class MapObjectsArrows {
               acc[item.id] = item;
               return acc;
             }, {});
-            const extremePoints = new ArrowSamePointsGap(new GuestAwareSequence<ArrowDepsDocument, ArrowPoints>(new ArrowExtremePoints(
-              new GuestAware((guest) => give(objects, guest)),
-              new GuestAware((guest) => give(objectsMap, guest))
-            ), new Module((dep: GuestAwareType<ArrowDepsDocument>) => {
-              const arrowType = new ArrowType(dep);
-              return new GuestAwareFirst([new ArrowTwoBreaksPath(arrowType), new ArrowThreeBreaksPath(arrowType)])
-            })));
+            const extremePoints = new ArrowSamePointsGap(
+              new GuestAwareSequence<ArrowDepsDocument, ArrowPoints>(
+                new ArrowExtremePoints(
+                  new GuestAware((guest) => give(objects, guest)),
+                  new GuestAware((guest) => give(objectsMap, guest))
+                ),
+                new Module((dep: GuestAwareObjectType<ArrowDepsDocument>) => {
+                  const arrowType = new ArrowType(dep);
+                  return new GuestAwareFirst<ArrowPoints>([new ArrowTwoBreaksPath(arrowType), new ArrowThreeBreaksPath(arrowType)])
+                })
+              )
+            );
 
             extremePoints.value((pointsCoords) => {
               pointsCoords.forEach((arrowPoints) => {

@@ -1,7 +1,7 @@
-import { GuestAwareType, GuestObjectType } from 'patron-oop';
+import { GuestAwareObjectType, GuestObjectType } from 'patron-oop';
 
 export class DocumentTitle implements GuestObjectType<string> {
-  public constructor(title: GuestAwareType<string>) {
+  public constructor(title: GuestAwareObjectType<string>) {
     title.value(this);
   }
 

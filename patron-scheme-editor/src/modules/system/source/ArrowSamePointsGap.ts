@@ -1,21 +1,21 @@
 import { ArrowPoints } from "@/modules/application/l1/l2/visualisation/arrows/ArrowType";
 import { ArrowSamePointsGroups, ShiftPoint } from "@/modules/system/source/ArrowSamePointsGroups";
-import { give, GuestAwareType, GuestCast, GuestChain, GuestType } from "patron-oop";
+import { give, GuestAwareAll, GuestAwareObjectType, GuestCast, GuestType } from "patron-oop";
 
 const gapSize = 15;
 
-export class ArrowSamePointsGap implements GuestAwareType<ArrowPoints[]> {
+export class ArrowSamePointsGap implements GuestAwareObjectType<ArrowPoints[]> {
   private pointGroups: ArrowSamePointsGroups;
 
-  public constructor(private basePoints: GuestAwareType<ArrowPoints[]>) {
+  public constructor(private basePoints: GuestAwareObjectType<ArrowPoints[]>) {
     this.pointGroups = new ArrowSamePointsGroups(basePoints);
   }
 
   public value(guest: GuestType<ArrowPoints[]>) {
-    const chain = new GuestChain<{ pointGroups: Record<string, ShiftPoint[]>, basePoints: ArrowPoints[] }>();
-    this.pointGroups.value(new GuestCast(guest, chain.receiveKey('pointGroups')));
-    this.basePoints.value(new GuestCast(guest, chain.receiveKey('basePoints')));
-    chain.result(
+    const chain = new GuestAwareAll<{ pointGroups: Record<string, ShiftPoint[]>, basePoints: ArrowPoints[] }>();
+    this.pointGroups.value(new GuestCast(guest, chain.guestKey('pointGroups')));
+    this.basePoints.value(new GuestCast(guest, chain.guestKey('basePoints')));
+    chain.value(
       new GuestCast(guest, ({ pointGroups, basePoints }) => {
         Object.values(pointGroups).forEach(s => {
           if (s.length <= 1) {

@@ -1,7 +1,7 @@
-import { GuestAwareType, GuestObjectType } from 'patron-oop';
+import { GuestAwareObjectType, GuestObjectType } from 'patron-oop';
 
 export class Draggable implements GuestObjectType<HTMLElement> {
-  public constructor(private el: GuestAwareType<HTMLElement>) {
+  public constructor(private el: GuestAwareObjectType<HTMLElement>) {
     el.value(this);
   }
 

@@ -1,4 +1,4 @@
-import { GuestObjectType, FactoryType, GuestAwareType } from 'patron-oop';
+import { GuestObjectType, FactoryType, GuestAwareObjectType } from 'patron-oop';
 import { Keyboard } from '@/modules/integration/browser/keyboard/Keyboard';
 import { debug } from 'debug';
 
@@ -14,7 +14,7 @@ export class ControlCombo {
       guest: FactoryType<GuestObjectType>;
       guestInTheMiddle: FactoryType<GuestObjectType>;
     },
-  ) {}
+  ) { }
 
   /**
    * Случилась комбинация ctrl + keyCode
@@ -36,7 +36,7 @@ export class ControlCombo {
    */
   public happenedConditional(
     keyCode: string,
-    comboCondition: GuestAwareType<boolean>,
+    comboCondition: GuestAwareObjectType<boolean>,
     eventGuest: GuestObjectType<KeyboardEvent>,
   ) {
     localDebug('combo control happened registration');

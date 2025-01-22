@@ -1,20 +1,20 @@
-import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
-import { GuestAwareType, GuestObjectType, FactoryType } from 'patron-oop';
-import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
-import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
-import { debug } from 'debug';
 import { StageMoveRestrictionType } from '@/modules/application/l1/l2/l3/l4/types/stage/StageMoveRestrictionType';
+import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
+import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
+import { BrowserCanvasType } from '@/modules/integration/browser/canvas/BrowserCanvasType';
+import { debug } from 'debug';
+import { FactoryType, GuestAwareObjectType, GuestObjectType } from 'patron-oop';
 
 const localDebug = debug('StageMoveRestriction');
 
 export class StageMoveRestriction implements StageMoveRestrictionType {
   public constructor(
     private canvasDep: BrowserCanvasType,
-    private stageSize: GuestAwareType<SizeDocument>,
+    private stageSize: GuestAwareObjectType<SizeDocument>,
     private factories: {
       guest: FactoryType<GuestObjectType>;
     },
-  ) {}
+  ) { }
 
   public position(pos: PointDocument, guest: GuestObjectType<PointDocument>): GuestObjectType {
     this.canvasDep.canvas(

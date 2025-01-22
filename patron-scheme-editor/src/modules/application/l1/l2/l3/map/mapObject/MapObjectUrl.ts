@@ -1,10 +1,10 @@
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import { GuestObjectType, FactoryType, GuestAwareType, SourceType } from 'patron-oop';
-import debounce from 'lodash/debounce';
-import { debug } from 'debug';
-import { MapNameFromUrl } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapNameFromUrl';
 import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentIDType';
+import { MapNameFromUrl } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapNameFromUrl';
 import { TextNoHtml } from '@/modules/application/l1/l2/l3/text/TextNoHtml';
+import { debug } from 'debug';
+import debounce from 'lodash/debounce';
+import { FactoryType, GuestAwareObjectType, GuestObjectType, SourceType } from 'patron-oop';
 
 const urlTrim = (url: string) => {
   if (url[url.length - 1] === '/') {
@@ -31,7 +31,7 @@ export class MapObjectUrl {
       mapNameFromUrl: FactoryType<MapNameFromUrl>;
       textNoHtml: FactoryType<TextNoHtml>;
     },
-  ) {}
+  ) { }
 
   public open(object: MapObjectDocument, openByNameGuest: GuestObjectType<string>) {
     if (object?.linked) {
@@ -56,7 +56,7 @@ export class MapObjectUrl {
   }
 
   public url<R extends GuestObjectType<string>>(
-    theObject: GuestAwareType<MapObjectDocument>,
+    theObject: GuestAwareObjectType<MapObjectDocument>,
     guest: R,
   ) {
     theObject.value(

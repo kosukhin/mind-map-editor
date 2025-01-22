@@ -1,13 +1,13 @@
-import { give, GuestAwareType, GuestCast, GuestType } from "patron-oop";
+import { give, GuestAwareObjectType, GuestCast, GuestType } from "patron-oop";
 
 export type DeviceDocument = {
   isMobile: boolean,
   isDesktop: boolean,
 }
 
-export class Device implements GuestAwareType<DeviceDocument> {
+export class Device implements GuestAwareObjectType<DeviceDocument> {
   public constructor(
-    private windowWidth: GuestAwareType<number>,
+    private windowWidth: GuestAwareObjectType<number>,
     private mobileLimit = 768
   ) { }
 

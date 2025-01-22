@@ -4,9 +4,9 @@ import debug from 'debug';
 import {
   Guest,
   GuestAware,
-  GuestAwareType,
+  GuestAwareAll,
+  GuestAwareObjectType,
   GuestCast,
-  GuestChain,
   GuestObject,
   GuestObjectType,
   Patron,
@@ -27,11 +27,11 @@ interface MapCurrentIDType extends GuestObjectType<string> {
 const localDebug = debug('ShareContent');
 
 export class ShareContent {
-  private contentSource: GuestAwareType<string>;
+  private contentSource: GuestAwareObjectType<string>;
 
   public constructor(
     private sharedSource: SourceType<ShareFileDocument>,
-    private sharedFromWorker: GuestAwareType<ShareFileDocument>,
+    private sharedFromWorker: GuestAwareObjectType<ShareFileDocument>,
     private htmlTemplate: HtmlTemplate,
     private mapCurrentID: MapCurrentIDType,
     private storageChangedGuest: GuestObjectType<boolean>,
@@ -59,15 +59,15 @@ export class ShareContent {
       }));
     });
 
-    const storageChain = new GuestChain<{
+    const storageChain = new GuestAwareAll<{
       fromStorage: ShareFileDocument,
       storageRemembered: number
     }>();
-    this.sharedSource.value(new Patron(storageChain.receiveKey('fromStorage')));
+    this.sharedSource.value(new Patron(storageChain.guestKey('fromStorage')));
     this.sharedSource.value(new PatronOnce((v) => {
-      storageChain.receiveKey('storageRemembered').give(v.content.length);
+      storageChain.guestKey('storageRemembered').give(v.content.length);
     }));
-    storageChain.result(new Patron(({ fromStorage, storageRemembered }) => {
+    storageChain.value(new Patron(({ fromStorage, storageRemembered }) => {
       this.storageChangedGuest.give(fromStorage.content.length !== storageRemembered);
     }));
   }

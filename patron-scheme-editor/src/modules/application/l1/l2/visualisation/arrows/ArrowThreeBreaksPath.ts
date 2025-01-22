@@ -1,9 +1,9 @@
 import { MapObjectDocument } from "@/modules/application/l1/l2/l3/map/documents/MapStructures";
 import { ArrowDepsDocumentWithType, ArrowPoints } from "@/modules/application/l1/l2/visualisation/arrows/ArrowType";
-import { give, GuestAwareType, GuestCast, GuestType } from "patron-oop";
+import { give, GuestAwareObjectType, GuestCast, GuestType } from "patron-oop";
 
-export class ArrowThreeBreaksPath implements GuestAwareType<ArrowPoints> {
-  public constructor(private arrowDeps: GuestAwareType<ArrowDepsDocumentWithType>) { }
+export class ArrowThreeBreaksPath implements GuestAwareObjectType<ArrowPoints> {
+  public constructor(private arrowDeps: GuestAwareObjectType<ArrowDepsDocumentWithType>) { }
 
   public value(guest: GuestType<ArrowPoints>): this {
     this.arrowDeps.value(

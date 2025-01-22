@@ -7,7 +7,7 @@ import { StageMoveType } from '@/modules/application/l1/l2/visualisation/stage/S
 import { BrowserCanvas } from '@/modules/integration/browser/canvas/BrowserCanvas';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
 import { debug } from 'debug';
-import { FactoryType, GuestAwareType, GuestObjectType } from 'patron-oop';
+import { FactoryType, GuestAwareAllType, GuestObjectType } from 'patron-oop';
 
 const localDebug = debug('position');
 
@@ -18,7 +18,7 @@ export class KonvaMove implements StageMoveType {
   public constructor(
     private layer: LayerBase,
     private canvas: BrowserCanvas,
-    private stageSize: GuestAwareType<SizeDocument>,
+    private stageSize: GuestAwareAllType<SizeDocument>,
     private stageMoveRestriction: StageMoveRestrictionType,
     private factories: {
       guest: FactoryType<GuestObjectType>;

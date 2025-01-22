@@ -1,10 +1,12 @@
-import {
-  GuestCast, GuestChain, GuestObjectType,
-} from 'patron-oop';
-import { BrowserLaunchQueue, FileSystemContent } from 'patron-scheme-editor';
-import debug from 'debug';
 import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
 import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
+import debug from 'debug';
+import {
+  GuestAwareAll,
+  GuestCast,
+  GuestObjectType,
+} from 'patron-oop';
+import { BrowserLaunchQueue, FileSystemContent } from 'patron-scheme-editor';
 
 const localDebug = debug('FSHtmlContent');
 
@@ -35,10 +37,10 @@ export class FSHtmlContent {
 
   public canBeUsed(guest: GuestObjectType<boolean>) {
     localDebug('check canbe used');
-    const chain = new GuestChain<{ fileHandler: FileSystemFileHandle, canBeUsed: boolean }>();
-    this.launchQueue.fileHandler(new GuestCast(guest, chain.receiveKey('fileHandler')));
-    this.fsContent.canBeUsed(new GuestCast(guest, chain.receiveKey('canBeUsed')));
-    chain.result(({ fileHandler, canBeUsed }) => {
+    const chain = new GuestAwareAll<{ fileHandler: FileSystemFileHandle, canBeUsed: boolean }>();
+    this.launchQueue.fileHandler(new GuestCast(guest, chain.guestKey('fileHandler')));
+    this.fsContent.canBeUsed(new GuestCast(guest, chain.guestKey('canBeUsed')));
+    chain.value(({ fileHandler, canBeUsed }) => {
       const isHTML = fileHandler.name.indexOf('.html') > 0;
       localDebug('isHTML', isHTML, canBeUsed);
       guest.give(canBeUsed && isHTML);

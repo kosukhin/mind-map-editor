@@ -1,11 +1,11 @@
-import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
-import { GuestAwareType, FactoryType, ChainType, GuestObjectType } from 'patron-oop';
-import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
-import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
-import { debug } from 'debug';
+import { SizeDocument } from '@/modules/application/l1/l2/l3/map/documents/SizeDocument';
+import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
+import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
+import { debug } from 'debug';
+import { FactoryType, GuestAwareAllType, GuestAwareObjectType, GuestObjectType } from 'patron-oop';
 
 type ObjectsConfig = {
   axis: 'x' | 'y';
@@ -43,10 +43,10 @@ const localDebug = debug('ObjectsOutsideScreen');
 export class ObjectsOutsideScreen {
   public constructor(
     private map: MapType,
-    private stageSize: GuestAwareType<SizeDocument>,
+    private stageSize: GuestAwareObjectType<SizeDocument>,
     private layer: LayerBase,
     private factories: {
-      chain: FactoryType<ChainType<unknown>>;
+      chain: FactoryType<GuestAwareAllType<unknown>>;
       guestCast: FactoryType<GuestObjectType>;
       guestInTheMiddle: FactoryType<GuestObjectType>;
     },
@@ -55,10 +55,10 @@ export class ObjectsOutsideScreen {
   public count<R extends GuestObjectType<CountDocument>>(config: ObjectsConfig, guest: R) {
     const isPositiveDirection = config.direction === 'positive';
     const chain = this.factories.chain.create();
-    this.map.objects(this.factories.guestCast.create(guest, chain.receiveKey('objects')));
-    this.layer.layer(this.factories.guestCast.create(guest, chain.receiveKey('layer')));
-    this.layer.position(this.factories.guestCast.create(guest, chain.receiveKey('position')));
-    chain.result(
+    this.map.objects(this.factories.guestCast.create(guest, chain.guestKey('objects')));
+    this.layer.layer(this.factories.guestCast.create(guest, chain.guestKey('layer')));
+    this.layer.position(this.factories.guestCast.create(guest, chain.guestKey('position')));
+    chain.value(
       this.factories.guestInTheMiddle.create(
         guest,
         ({ objects, layer, position }: ChainDocument) => {

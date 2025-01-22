@@ -1,12 +1,12 @@
 import debounce from "lodash/debounce";
-import { GuestAware, GuestAwareType, GuestType, Source, SourceEmpty } from "patron-oop"
+import { GuestAwareObjectType, GuestType, Source } from "patron-oop";
 
 type WindowDocument = {
   height: number,
   width: number
 }
 
-export class Window implements GuestAwareType<WindowDocument> {
+export class Window implements GuestAwareObjectType<WindowDocument> {
   private source = new Source<WindowDocument>({
     height: window.innerHeight,
     width: window.innerWidth
