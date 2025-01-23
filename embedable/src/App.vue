@@ -6,5 +6,5 @@ const content = ref(window.content ?? '');
 </script>
 
 <template>
-  <PatronSchemeEditor v-model="content" readonly />
+  <PatronSchemeEditor style="font: 14px Arial, sans-serif" v-model="content" readonly />
 </template>
