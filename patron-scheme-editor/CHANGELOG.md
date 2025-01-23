@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.17](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.16...v0.0.17) (2025-01-23)
+
+
+### Features
+
+* **61-actualize-project-with-last-version-of-patron-oop:** coming to last version of patron-oop ([2c5adf7](https://github.com/kosukhin/patron-scheme-editor/commit/2c5adf71d3ed83b8e7f62be79d4806cb194afb12))
+* **61-actualize-project-with-last-version-of-patron-oop:** font-size fix ([8dfc525](https://github.com/kosukhin/patron-scheme-editor/commit/8dfc525a67ff84f64e711f3166daf97df4c2a0b3))
+* **61-actualize-project-with-last-version-of-patron-oop:** latest changed for actualization on patron-oop ([c3e6094](https://github.com/kosukhin/patron-scheme-editor/commit/c3e6094f9f3058b7cb8ceb96b3a5ea8b80437102))
+
 ### [0.0.16](https://github.com/kosukhin/patron-scheme-editor/compare/v0.0.15...v0.0.16) (2025-01-21)
 
 
