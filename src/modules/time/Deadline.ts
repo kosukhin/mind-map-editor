@@ -1,11 +1,13 @@
 import {
-  GuestAwareType,
+  give,
+  GuestAwareObjectType,
   GuestCast,
   GuestObjectType,
+  GuestType,
 } from 'patron-oop';
 
-export class Deadline<T, DT> implements GuestAwareType<T | DT>, GuestObjectType<T> {
-  public constructor(private baseSource: GuestAwareType<T>, private defaultValue: DT, private timeout = 1000) { }
+export class Deadline<T, DT> implements GuestAwareObjectType<T | DT>, GuestObjectType<T> {
+  public constructor(private baseSource: GuestAwareObjectType<T>, private defaultValue: DT, private timeout = 1000) { }
 
   public give(value: T) {
     const mbGuest = this.baseSource as unknown as GuestObjectType<T | DT>;
@@ -15,13 +17,13 @@ export class Deadline<T, DT> implements GuestAwareType<T | DT>, GuestObjectType<
     return this;
   }
 
-  public value(guest: GuestObjectType<T | DT>) {
+  public value(guest: GuestType<T | DT>) {
     const timerHead = setTimeout(() => {
-      guest.give(this.defaultValue);
+      give(this.defaultValue, guest);
     }, this.timeout);
     this.baseSource.value(new GuestCast(guest, (value) => {
       clearTimeout(timerHead);
-      guest.give(value);
+      give(value, guest);
     }));
     return this;
   }

@@ -15,7 +15,7 @@ import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
 import { debug } from 'debug';
 import Konva from 'konva';
-import { ChainType, FactoryType, GuestAwareType, GuestObjectType, SourceType } from 'patron-oop';
+import { GuestAwareAllType, FactoryType, GuestAwareObjectType, GuestObjectType, SourceType } from 'patron-oop';
 
 const localDebug = debug('MapObjectsRectsPatron');
 
@@ -33,12 +33,12 @@ export class MapObjectsRects implements GuestObjectType<MapObjectDocument[]> {
     private mapObjectCurrent: MapObjectCurrentType,
     private mapObjectForRendering: MapObjectType,
     private objectPosition: ObjectPositionType,
-    private settings: GuestAwareType<EditorSettings>,
+    private settings: GuestAwareObjectType<EditorSettings>,
     private factories: {
       patronOnce: FactoryType<GuestObjectType>;
       guest: FactoryType<GuestObjectType>;
       cache: FactoryType<SourceType>;
-      chain: FactoryType<ChainType>;
+      chain: FactoryType<GuestAwareAllType>;
     },
   ) {
     mapObjectsVisible.objects(this);
@@ -49,9 +49,9 @@ export class MapObjectsRects implements GuestObjectType<MapObjectDocument[]> {
       this.factories.patronOnce.create(
         this.factories.guest.create((layer: KonvaLayer) => {
           const chain = this.factories.chain.create();
-          this.mapFile.currentMap(chain.receiveKey('map'));
-          this.settings.value(chain.receiveKey('settings'));
-          chain.result(
+          this.mapFile.currentMap(chain.guestKey('map'));
+          this.settings.value(chain.guestKey('settings'));
+          chain.value(
             this.factories.guest.create((props: { map: MapDocument; settings: EditorSettings }) => {
               const { map: latestMap, settings } = props;
               localDebug('rerender object rects');

@@ -1,6 +1,6 @@
 import { MapObjectsType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
-import { GuestObjectType, FactoryType, ChainType } from 'patron-oop';
+import { GuestObjectType, FactoryType, GuestAwareAllType } from 'patron-oop';
 import {
   MapObjectDocument,
   MapTypeDocument,
@@ -20,17 +20,17 @@ export class MapObjectsWithTemplates {
     private mapObjects: MapObjectsType,
     private map: MapType,
     private factories: {
-      chain: FactoryType<ChainType>;
+      chain: FactoryType<GuestAwareAllType>;
       guestCast: FactoryType<GuestObjectType>;
       guestInTheMiddle: FactoryType<GuestObjectType>;
     },
-  ) {}
+  ) { }
 
   public objects<R extends GuestObjectType<MapObjectWithTemplateDocument[]>>(guest: R) {
     const chain = this.factories.chain.create();
-    this.map.types(this.factories.guestCast.create(guest, chain.receiveKey('types')));
-    this.mapObjects.objects(this.factories.guestCast.create(guest, chain.receiveKey('objects')));
-    chain.result(
+    this.map.types(this.factories.guestCast.create(guest, chain.guestKey('types')));
+    this.mapObjects.objects(this.factories.guestCast.create(guest, chain.guestKey('objects')));
+    chain.value(
       this.factories.guestInTheMiddle.create(guest, ({ types, objects }: ChainProps) => {
         localDebug('visible objects', objects);
         const withTemplates = objects.map((object) => {

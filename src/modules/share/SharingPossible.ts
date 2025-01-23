@@ -1,6 +1,9 @@
-import { give, GuestAwareType, GuestType } from 'patron-oop';
+import {
+  give, GuestAwareObjectType,
+  GuestType,
+} from 'patron-oop';
 
-export class SharingPossible implements GuestAwareType<boolean> {
+export class SharingPossible implements GuestAwareObjectType<boolean> {
   value(guest: GuestType<boolean>) {
     if (!navigator.share || !navigator.canShare) {
       give(false, guest);

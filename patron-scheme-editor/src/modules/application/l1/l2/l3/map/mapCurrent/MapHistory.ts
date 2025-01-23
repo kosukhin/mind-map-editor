@@ -1,7 +1,7 @@
 import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapCurrentIDType';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 import { debug } from 'debug';
-import { ChainType, FactoryType, GuestObjectType, SourceType } from 'patron-oop';
+import { GuestAwareAllType, FactoryType, GuestObjectType, SourceType } from 'patron-oop';
 import { MapDocument } from '../documents/MapStructures';
 import { MapFileType } from '../mapFile/MapFileType';
 
@@ -38,7 +38,7 @@ export class MapHistory implements GuestObjectType<MapDocument> {
       guest: FactoryType<GuestObjectType>;
       guestInTheMiddle: FactoryType<GuestObjectType>;
       guestCast: FactoryType<GuestObjectType>;
-      chain: FactoryType<ChainType>;
+      chain: FactoryType<GuestAwareAllType>;
       patron: FactoryType<GuestObjectType>;
     },
   ) {
@@ -84,10 +84,10 @@ export class MapHistory implements GuestObjectType<MapDocument> {
   public isPrevPossible<R extends GuestObjectType<boolean>>(guest: R) {
     const chain = this.factories.chain.create(this);
     this.historyIndex.value(
-      this.factories.guestCast.create(guest, chain.receiveKey('historyIndex')),
+      this.factories.guestCast.create(guest, chain.guestKey('historyIndex')),
     );
-    this.mapsHistory.value(this.factories.guestCast.create(guest, chain.receiveKey('mapsHistory')));
-    chain.result(
+    this.mapsHistory.value(this.factories.guestCast.create(guest, chain.guestKey('mapsHistory')));
+    chain.value(
       this.factories.guestInTheMiddle.create(
         guest,
         ({ historyIndex, mapsHistory }: HistoryProps) => {
@@ -118,10 +118,10 @@ export class MapHistory implements GuestObjectType<MapDocument> {
   public isNextPossible<R extends GuestObjectType<boolean>>(guest: R) {
     const chain = this.factories.chain.create(this);
     this.historyIndex.value(
-      this.factories.guestCast.create(guest, chain.receiveKey('historyIndex')),
+      this.factories.guestCast.create(guest, chain.guestKey('historyIndex')),
     );
-    this.mapsHistory.value(this.factories.guestCast.create(guest, chain.receiveKey('mapsHistory')));
-    chain.result(
+    this.mapsHistory.value(this.factories.guestCast.create(guest, chain.guestKey('mapsHistory')));
+    chain.value(
       this.factories.guestInTheMiddle.create(
         guest,
         ({ historyIndex, mapsHistory }: HistoryProps) => {

@@ -1,17 +1,17 @@
+import { ArrowPathType } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
-import {
-  GuestAwareType,
-  FactoryType,
-  SourceType,
-  GuestObjectType,
-  removePatronFromPools,
-} from 'patron-oop';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
-import Konva from 'konva';
-import { ArrowPathType } from '@/modules/application/l1/l2/l3/l4/types/arrow/ArrowPathType';
-import { debug } from 'debug';
 import { KonvaArrow, KonvaLayer } from '@/modules/integration/konva/KonvaTypes';
+import { debug } from 'debug';
+import Konva from 'konva';
+import {
+  FactoryType,
+  GuestAwareObjectType,
+  GuestObjectType,
+  removePatronFromPools,
+  SourceType,
+} from 'patron-oop';
 
 const { Arrow } = Konva;
 
@@ -32,7 +32,7 @@ export class NewArrow {
 
   public constructor(
     private konvaLayer: LayerBase,
-    private cursorPosition: GuestAwareType<PointDocument>,
+    private cursorPosition: GuestAwareObjectType<PointDocument>,
     private arrowPath: ArrowPathType,
     private factories: {
       sourceEmpty: FactoryType<SourceType>;

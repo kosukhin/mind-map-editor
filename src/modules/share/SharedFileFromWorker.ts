@@ -1,12 +1,12 @@
 import { ShareFileDocument } from '@/modules/share/ShareContent';
 import {
   ActionType,
-  GuestAwareType,
+  GuestAwareObjectType,
   GuestType,
   SourceEmpty,
 } from 'patron-oop';
 
-export class SharedFileFromWorker implements GuestAwareType<ShareFileDocument>, ActionType<void> {
+export class SharedFileFromWorker implements GuestAwareObjectType<ShareFileDocument>, ActionType<void> {
   private source = new SourceEmpty<ShareFileDocument>()
 
   public do(): this {

@@ -6,7 +6,7 @@ import { MapCurrentIDType } from '@/modules/application/l1/l2/l3/map/mapCurrent/
 import { MapFileType } from '@/modules/application/l1/l2/l3/map/mapFile/MapFileType';
 import { Transformed } from '@/modules/system/transformed/Transformed';
 import { debug } from 'debug';
-import { ChainType, FactoryType, GuestObjectType, PoolType, SourceType } from 'patron-oop';
+import { GuestAwareAllType, FactoryType, GuestObjectType, PoolType, SourceType } from 'patron-oop';
 
 const localDebug = debug('MapFile');
 type CurrentMapChainProps = { mapId: string; mapFile: MapFileDocument };
@@ -25,7 +25,7 @@ export class MapFile implements MapFileType {
     private factories: {
       pool: FactoryType<PoolType>;
       guest: FactoryType<GuestObjectType>;
-      chain: FactoryType<ChainType>;
+      chain: FactoryType<GuestAwareAllType>;
       guestCast: FactoryType<GuestObjectType>;
       patron: FactoryType<GuestObjectType>;
       guestInTheMiddle: FactoryType<GuestObjectType>;
@@ -50,9 +50,9 @@ export class MapFile implements MapFileType {
 
   public currentMap<R extends GuestObjectType<MapDocument>>(currentMapGuest: R): R {
     const chain = this.factories.chain.create();
-    this.mapId.id(this.factories.guestCast.create(currentMapGuest, chain.receiveKey('mapId')));
-    this.mapFile(this.factories.guestCast.create(currentMapGuest, chain.receiveKey('mapFile')));
-    chain.result(
+    this.mapId.id(this.factories.guestCast.create(currentMapGuest, chain.guestKey('mapId')));
+    this.mapFile(this.factories.guestCast.create(currentMapGuest, chain.guestKey('mapFile')));
+    chain.value(
       this.factories.guestInTheMiddle.create(
         currentMapGuest,
         ({ mapId, mapFile }: CurrentMapChainProps) => {

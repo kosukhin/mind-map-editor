@@ -1,13 +1,13 @@
-import { GuestAwareType, GuestObjectType, FactoryType } from 'patron-oop';
+import { FactoryType, GuestAwareObjectType, GuestObjectType } from 'patron-oop';
 
 export class MapNameFromUrl {
   public constructor(
-    private mapUrl: GuestAwareType<string>,
+    private mapUrl: GuestAwareObjectType<string>,
     private factories: {
       guest: FactoryType<GuestObjectType>;
       guestInTheMiddle: FactoryType<GuestObjectType>;
     },
-  ) {}
+  ) { }
 
   public name(guest: GuestObjectType<string>) {
     this.mapUrl.value(

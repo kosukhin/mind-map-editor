@@ -1,13 +1,13 @@
-import { FactoryType, give, GuestAwareType, GuestCast, GuestChain, GuestType, SourceEmpty } from "patron-oop";
+import { FactoryType, give, GuestAwareAll, GuestAwareObjectType, GuestCast, GuestType, SourceEmpty } from "patron-oop";
 
-export class GuestAwareSequence<T, TG> implements GuestAwareType<TG[]> {
+export class GuestAwareSequence<T, TG> implements GuestAwareObjectType<TG[]> {
   public constructor(
-    private baseSource: GuestAwareType<T[]>,
-    private targetSourceFactory: FactoryType<GuestAwareType<TG>>
+    private baseSource: GuestAwareObjectType<T[]>,
+    private targetSourceFactory: FactoryType<GuestAwareObjectType<TG>>
   ) { }
 
   public value(guest: GuestType<TG[]>) {
-    const chain = new GuestChain<TG[]>();
+    const chain = new GuestAwareAll<TG[]>();
     const sequenceSource = new SourceEmpty();
     const targetSource = this.targetSourceFactory.create(
       sequenceSource
@@ -22,13 +22,13 @@ export class GuestAwareSequence<T, TG> implements GuestAwareType<TG[]> {
             index = index + 1;
             handle();
           } else {
-            chain.resultArray(guest);
+            chain.valueArray(guest);
           }
         }
 
         function handle() {
           sequenceSource.give(value[index]);
-          targetSource.value(chain.receiveKey('' + index));
+          targetSource.value(chain.guestKey('' + index));
           targetSource.value(nextItemHandle);
         }
 

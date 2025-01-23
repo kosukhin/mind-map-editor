@@ -1,5 +1,5 @@
 import { MapObjectDocument } from "@/modules/application/l1/l2/l3/map/documents/MapStructures";
-import { give, GuestAwareType, GuestCast, GuestType } from "patron-oop";
+import { give, GuestAwareObjectType, GuestCast, GuestType } from "patron-oop";
 
 export type ArrowTypeType = 'twoBreaks' | 'threeBreaks';
 
@@ -17,9 +17,9 @@ export interface ArrowPoints {
   points: number[]
 }
 
-export class ArrowType implements GuestAwareType<ArrowDepsDocumentWithType> {
+export class ArrowType implements GuestAwareObjectType<ArrowDepsDocumentWithType> {
   public constructor(
-    private arrowDepsSource: GuestAwareType<ArrowDepsDocument>,
+    private arrowDepsSource: GuestAwareObjectType<ArrowDepsDocument>,
     private centerGap = 10
   ) { }
 

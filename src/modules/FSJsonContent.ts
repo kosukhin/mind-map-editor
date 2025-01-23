@@ -1,7 +1,9 @@
 import baseJsonTemplate from '@/modules/json/baseJsonTemplate';
 import debug from 'debug';
 import {
-  GuestCast, GuestChain, GuestObjectType,
+  GuestAwareAll,
+  GuestCast,
+  GuestObjectType,
 } from 'patron-oop';
 import { BrowserLaunchQueue, FileSystemContent } from 'patron-scheme-editor';
 
@@ -31,10 +33,10 @@ export class FSJsonContent {
 
   public canBeUsed(guest: GuestObjectType<boolean>) {
     localDebug('check canbe used');
-    const chain = new GuestChain<{fileHandler: FileSystemFileHandle, canBeUsed: boolean}>();
-    this.launchQueue.fileHandler(new GuestCast(guest, chain.receiveKey('fileHandler')));
-    this.fsContent.canBeUsed(new GuestCast(guest, chain.receiveKey('canBeUsed')));
-    chain.result(({ fileHandler, canBeUsed }) => {
+    const chain = new GuestAwareAll<{ fileHandler: FileSystemFileHandle, canBeUsed: boolean }>();
+    this.launchQueue.fileHandler(new GuestCast(guest, chain.guestKey('fileHandler')));
+    this.fsContent.canBeUsed(new GuestCast(guest, chain.guestKey('canBeUsed')));
+    chain.value(({ fileHandler, canBeUsed }) => {
       const isJSON = fileHandler.name.indexOf('.json') > 0;
       localDebug('isJSON', isJSON);
       guest.give(canBeUsed && isJSON);

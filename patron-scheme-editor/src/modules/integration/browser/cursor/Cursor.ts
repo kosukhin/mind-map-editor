@@ -1,7 +1,7 @@
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { debug } from 'debug';
-import { FactoryType, GuestAwareType, GuestObjectType, PoolType } from 'patron-oop';
+import { FactoryType, give, GuestAwareObjectType, GuestObject, GuestObjectType, GuestType, PoolType } from 'patron-oop';
 
 const localDebug = debug('Cursor');
 
@@ -9,7 +9,7 @@ const localDebug = debug('Cursor');
  * Позиция курсора внутри стейджа, будто курсор это
  * часть стеджа. Для упрощения расчетов
  */
-export class Cursor implements GuestAwareType<PointDocument> {
+export class Cursor implements GuestAwareObjectType<PointDocument> {
   private cursorPool: PoolType<PointDocument>;
 
   public constructor(
@@ -45,8 +45,8 @@ export class Cursor implements GuestAwareType<PointDocument> {
     );
   }
 
-  public value(guest: GuestObjectType<PointDocument>) {
-    this.cursorPool.add(guest);
+  public value(guest: GuestType<PointDocument>) {
+    this.cursorPool.add(new GuestObject(guest));
     return this;
   }
 }

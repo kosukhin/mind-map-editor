@@ -1,4 +1,4 @@
-import { GuestAwareType, GuestObjectType, FactoryType } from 'patron-oop';
+import { GuestAwareObjectType, GuestObjectType, FactoryType } from 'patron-oop';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { MapType } from '@/modules/application/l1/l2/l3/map/mapCurrent/MapType';
 import { debug } from 'debug';
@@ -13,10 +13,10 @@ export class ObjectsMatchedToQuery {
       guestInTheMiddle: FactoryType<GuestObjectType>;
       guest: FactoryType<GuestObjectType>;
     },
-  ) {}
+  ) { }
 
   public objects<R extends GuestObjectType<MapObjectDocument[]>>(
-    querySource: GuestAwareType<string>,
+    querySource: GuestAwareObjectType<string>,
     guest: R,
   ): R {
     const objectsDebounceDelay = 500;

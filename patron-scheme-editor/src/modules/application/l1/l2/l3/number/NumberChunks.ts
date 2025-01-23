@@ -1,13 +1,13 @@
-import { GuestObjectType, GuestAwareType, FactoryType } from 'patron-oop';
+import { GuestObjectType, FactoryType, GuestAwareObjectType } from 'patron-oop';
 
 export class NumberChunks {
   public constructor(
     private chunksCount: number,
-    private baseNumber: GuestAwareType<number>,
+    private baseNumber: GuestAwareObjectType<number>,
     private factories: {
       guestInTheMiddle: FactoryType<GuestObjectType>;
     },
-  ) {}
+  ) { }
 
   public chunks<R extends GuestObjectType<number[]>>(guest: R) {
     this.baseNumber.value(

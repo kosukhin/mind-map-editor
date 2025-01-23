@@ -1,31 +1,31 @@
-import { GuestAwareType, GuestObjectType, FactoryType, ChainType } from 'patron-oop';
+import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
 import { MapObjectsType } from '@/modules/application/l1/l2/l3/map/mapObject/MapObjectType';
-import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { debug } from 'debug';
+import { FactoryType, GuestAwareAllType, GuestAwareObjectType, GuestObjectType, GuestType, give } from 'patron-oop';
 
 type CursorProps = { objects: MapObjectDocument[]; cursor: PointDocument };
 
 const localDebug = debug('CursorWithObjects');
 
-export class CursorWithObjects implements GuestAwareType<PointDocument> {
+export class CursorWithObjects implements GuestAwareObjectType<PointDocument> {
   public constructor(
     private objectsVisible: MapObjectsType,
-    private cursor: GuestAwareType<PointDocument>,
+    private cursor: GuestAwareObjectType<PointDocument>,
     private factories: {
       guestInTheMiddle: FactoryType<GuestObjectType>;
-      chain: FactoryType<ChainType>;
+      chain: FactoryType<GuestAwareAllType>;
       guestCast: FactoryType<GuestObjectType>;
     },
-  ) {}
+  ) { }
 
-  public value(guest: GuestObjectType<PointDocument>): this {
+  public value(guest: GuestType<PointDocument>): this {
     const chain = this.factories.chain.create();
-    this.cursor.value(this.factories.guestCast.create(guest, chain.receiveKey('cursor')));
+    this.cursor.value(this.factories.guestCast.create(guest, chain.guestKey('cursor')));
     this.objectsVisible.objects(
-      this.factories.guestCast.create(guest, chain.receiveKey('objects')),
+      this.factories.guestCast.create(guest, chain.guestKey('objects')),
     );
-    chain.result(
+    chain.value(
       this.factories.guestInTheMiddle.create(guest, ({ cursor, objects }: CursorProps) => {
         const crossedObject = objects.find((object) => {
           const xStart = object.position[0];
@@ -40,13 +40,13 @@ export class CursorWithObjects implements GuestAwareType<PointDocument> {
 
         if (crossedObject) {
           localDebug('crossed with', crossedObject);
-          guest.give({
+          give({
             x: crossedObject.position[0] + crossedObject.width / 2,
             y: crossedObject.position[1] + crossedObject.height / 2,
-          });
+          }, guest);
         } else {
           localDebug('cursor pos', cursor);
-          guest.give(cursor);
+          give(cursor, guest);
         }
       }),
     );
