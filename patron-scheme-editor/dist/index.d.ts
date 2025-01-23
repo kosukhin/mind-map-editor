@@ -1,12 +1,12 @@
 import { ActionType } from 'patron-oop';
-import { ChainType } from 'patron-oop';
 import { Factory } from 'patron-oop';
 import { FactoryType } from 'patron-oop';
 import { Guest } from 'patron-oop';
 import { GuestAware } from 'patron-oop';
-import { GuestAwareType } from 'patron-oop';
+import { GuestAwareAll } from 'patron-oop';
+import { GuestAwareAllType } from 'patron-oop';
+import { GuestAwareObjectType } from 'patron-oop';
 import { GuestCast } from 'patron-oop';
-import { GuestChain } from 'patron-oop';
 import { GuestObjectType } from 'patron-oop';
 import { GuestSync } from 'patron-oop';
 import { GuestType } from 'patron-oop';
@@ -43,7 +43,7 @@ declare class Breadcrumbs {
         guestInTheMiddle: FactoryType<GuestObjectType>;
         guestCast: FactoryType<GuestObjectType>;
         guest: FactoryType<GuestObjectType>;
-        chain: FactoryType<ChainType>;
+        chain: FactoryType<GuestAwareAllType>;
     });
     list<R extends GuestObjectType<unknown[]>>(guest: R): R;
 }
@@ -109,7 +109,7 @@ declare class ControlCombo {
     /**
      * Случилась комбинация ctrl + keyCode с условием comboCondition
      */
-    happenedConditional(keyCode: string, comboCondition: GuestAwareType<boolean>, eventGuest: GuestObjectType<KeyboardEvent>): void;
+    happenedConditional(keyCode: string, comboCondition: GuestAwareObjectType<boolean>, eventGuest: GuestObjectType<KeyboardEvent>): void;
 }
 
 declare type CountDocument = {
@@ -117,10 +117,10 @@ declare type CountDocument = {
     nearestObjectId: string;
 };
 
-declare class Device implements GuestAwareType<DeviceDocument> {
+declare class Device implements GuestAwareObjectType<DeviceDocument> {
     private windowWidth;
     private mobileLimit;
-    constructor(windowWidth: GuestAwareType<number>, mobileLimit?: number);
+    constructor(windowWidth: GuestAwareObjectType<number>, mobileLimit?: number);
     value(guest: GuestType<DeviceDocument>): this;
 }
 
@@ -130,7 +130,7 @@ declare type DeviceDocument = {
 };
 
 declare class DocumentTitle implements GuestObjectType<string> {
-    constructor(title: GuestAwareType<string>);
+    constructor(title: GuestAwareObjectType<string>);
     give(value: string): this;
     introduction(): "patron";
 }
@@ -144,10 +144,10 @@ declare class Drawer implements GuestObjectType<string> {
         guestInTheMiddle: FactoryType<GuestObjectType>;
         patron: FactoryType<GuestObjectType>;
         guest: FactoryType<GuestObjectType>;
-        guestAware: FactoryType<GuestAwareType>;
+        guestAware: FactoryType<GuestAwareObjectType<any>>;
     });
     isOpenedByName<R extends GuestObjectType<boolean>>(name: string, guest: R): R;
-    openedByName(name: string): GuestAwareType<boolean>;
+    openedByName(name: string): GuestAwareObjectType<boolean>;
     give(value: string): this;
 }
 
@@ -230,8 +230,8 @@ declare class KonvaLayer_2 implements LayerBase {
     private guestChain;
     private positionCache;
     private layerCache;
-    constructor(canvasDep: BrowserCanvasType, stageSizeDep: GuestAwareType<SizeDocument>, stageMoveRestriction: StageMoveRestrictionType, factories: {
-        chain: FactoryType<ChainType<{
+    constructor(canvasDep: BrowserCanvasType, stageSizeDep: GuestAwareObjectType<SizeDocument>, stageMoveRestriction: StageMoveRestrictionType, factories: {
+        chain: FactoryType<GuestAwareAllType<{
             canvas: HTMLElement;
         }>>;
         cache: FactoryType<SourceType>;
@@ -330,7 +330,7 @@ declare class MapFile implements MapFileType {
     constructor(mapFileContent: SourceType<string>, mapId: MapCurrentIDType, factories: {
         pool: FactoryType<PoolType>;
         guest: FactoryType<GuestObjectType>;
-        chain: FactoryType<ChainType>;
+        chain: FactoryType<GuestAwareAllType>;
         guestCast: FactoryType<GuestObjectType>;
         patron: FactoryType<GuestObjectType>;
         guestInTheMiddle: FactoryType<GuestObjectType>;
@@ -381,7 +381,7 @@ declare class MapHistory implements GuestObjectType<MapDocument> {
         guest: FactoryType<GuestObjectType>;
         guestInTheMiddle: FactoryType<GuestObjectType>;
         guestCast: FactoryType<GuestObjectType>;
-        chain: FactoryType<ChainType>;
+        chain: FactoryType<GuestAwareAllType>;
         patron: FactoryType<GuestObjectType>;
     });
     give(value: MapDocument): this;
@@ -394,7 +394,7 @@ declare class MapHistory implements GuestObjectType<MapDocument> {
 declare class MapNameFromUrl {
     private mapUrl;
     private factories;
-    constructor(mapUrl: GuestAwareType<string>, factories: {
+    constructor(mapUrl: GuestAwareObjectType<string>, factories: {
         guest: FactoryType<GuestObjectType>;
         guestInTheMiddle: FactoryType<GuestObjectType>;
     });
@@ -534,7 +534,7 @@ declare class MapObjectRemoved implements GuestObjectType<MapObjectDocument> {
     private factories;
     constructor(map: MapType, mapFile: MapFileType, checks: CheckNotificationType<MapObjectDocument>[], factories: {
         guest: FactoryType<GuestObjectType>;
-        chain: FactoryType<ChainType>;
+        chain: FactoryType<GuestAwareAllType>;
     });
     give(value: MapObjectDocument): this;
 }
@@ -552,7 +552,7 @@ declare class MapObjectsArrows {
     constructor(konvaLayer: LayerBase, mapFile: MapFileType, mapDep: MapType, arrowPath: ArrowPathType, factories: {
         patron: FactoryType<GuestObjectType>;
         guest: FactoryType<GuestObjectType>;
-        chain: FactoryType<ChainType>;
+        chain: FactoryType<GuestAwareAllType>;
         cache: FactoryType<SourceType>;
     });
     introduction(): "patron";
@@ -590,11 +590,11 @@ declare class MapObjectsRects implements GuestObjectType<MapObjectDocument[]> {
     private settings;
     private factories;
     private previouslyRenderedRects;
-    constructor(konvaLayer: LayerBase, mapFile: MapFileType, mapObject: MapObjectType, mapObjectsVisible: MapObjectsType, mapObjectCurrent: MapObjectCurrentType, mapObjectForRendering: MapObjectType, objectPosition: ObjectPositionType, settings: GuestAwareType<EditorSettings>, factories: {
+    constructor(konvaLayer: LayerBase, mapFile: MapFileType, mapObject: MapObjectType, mapObjectsVisible: MapObjectsType, mapObjectCurrent: MapObjectCurrentType, mapObjectForRendering: MapObjectType, objectPosition: ObjectPositionType, settings: GuestAwareObjectType<EditorSettings>, factories: {
         patronOnce: FactoryType<GuestObjectType>;
         guest: FactoryType<GuestObjectType>;
         cache: FactoryType<SourceType>;
-        chain: FactoryType<ChainType>;
+        chain: FactoryType<GuestAwareAllType>;
     });
     give(objects: MapObjectDocument[]): this;
     introduction(): "patron";
@@ -613,7 +613,7 @@ declare interface MapObjectsType {
 declare class MapObjectsVisible implements MapObjectsType {
     private visibleObjectsCache;
     constructor(layerDep: LayerBase, canvas: BrowserCanvas, mapFile: MapFileType, factories: {
-        chain: FactoryType<ChainType<unknown>>;
+        chain: FactoryType<GuestAwareAllType<unknown>>;
         patron: FactoryType<GuestObjectType<unknown>>;
         guest: FactoryType<GuestObjectType<unknown>>;
     });
@@ -637,7 +637,7 @@ declare class MapObjectUrl {
         textNoHtml: FactoryType<TextNoHtml>;
     });
     open(object: MapObjectDocument, openByNameGuest: GuestObjectType<string>): this;
-    url<R extends GuestObjectType<string>>(theObject: GuestAwareType<MapObjectDocument>, guest: R): R;
+    url<R extends GuestObjectType<string>>(theObject: GuestAwareObjectType<MapObjectDocument>, guest: R): R;
 }
 
 declare class MapRemoved implements GuestObjectType<string> {
@@ -727,7 +727,7 @@ declare class MapTypeRemoved implements GuestObjectType<MapTypeDocument> {
     private factories;
     constructor(map: MapType, mapFile: MapFileType, checks: CheckNotificationType<MapTypeWithNameDocument>[], factories: {
         guest: FactoryType<GuestObjectType>;
-        chain: FactoryType<ChainType>;
+        chain: FactoryType<GuestAwareAllType>;
     });
     give(value: MapTypeDocument): this;
 }
@@ -742,7 +742,7 @@ declare class MapTypes implements GuestObjectType<MapTypeWithNameDocument> {
     private factories;
     constructor(map: MapType, mapFile: MapFileType, checks: CheckNotificationType<MapTypeWithNameDocument>[], factories: {
         guest: FactoryType<GuestObjectType>;
-        chain: FactoryType<ChainType>;
+        chain: FactoryType<GuestAwareAllType>;
     });
     give(value: MapTypeWithNameDocument): this;
 }
@@ -775,9 +775,9 @@ declare class MiniMap {
     private theSize;
     private thePoints;
     private viewportSizeCache;
-    constructor(map: MapType, layer: LayerBase, stageSize: GuestAwareType<SizeDocument>, factories: {
+    constructor(map: MapType, layer: LayerBase, stageSize: GuestAwareObjectType<SizeDocument>, factories: {
         sourceEmpty: FactoryType<SourceType>;
-        chain: FactoryType<ChainType<unknown>>;
+        chain: FactoryType<GuestAwareAllType<unknown>>;
         patron: FactoryType<GuestObjectType>;
         guest: FactoryType<GuestObjectType>;
         guestInTheMiddle: FactoryType<GuestObjectType>;
@@ -797,11 +797,11 @@ declare class Modal implements GuestObjectType<string> {
         cache: FactoryType<SourceType>;
         patron: FactoryType<GuestObjectType>;
         guest: FactoryType<GuestObjectType>;
-        guestAware: FactoryType<GuestAwareType>;
+        guestAware: FactoryType<GuestAwareObjectType<any>>;
         guestInTheMiddle: FactoryType<GuestObjectType>;
     });
     isOpenedByName<R extends GuestObjectType<boolean>>(name: string, guest: R): R;
-    openedByName(name: string): GuestAwareType<boolean>;
+    openedByName(name: string): GuestAwareObjectType<boolean>;
     give(value: string): this;
 }
 
@@ -824,7 +824,7 @@ declare class NewArrow {
     private factories;
     private cursorGuest;
     private arrowCache;
-    constructor(konvaLayer: LayerBase, cursorPosition: GuestAwareType<PointDocument>, arrowPath: ArrowPathType, factories: {
+    constructor(konvaLayer: LayerBase, cursorPosition: GuestAwareObjectType<PointDocument>, arrowPath: ArrowPathType, factories: {
         sourceEmpty: FactoryType<SourceType>;
         patron: FactoryType<GuestObjectType>;
         guest: FactoryType<GuestObjectType>;
@@ -866,7 +866,7 @@ declare class NumberChunks {
     private chunksCount;
     private baseNumber;
     private factories;
-    constructor(chunksCount: number, baseNumber: GuestAwareType<number>, factories: {
+    constructor(chunksCount: number, baseNumber: GuestAwareObjectType<number>, factories: {
         guestInTheMiddle: FactoryType<GuestObjectType>;
     });
     chunks<R extends GuestObjectType<number[]>>(guest: R): R;
@@ -916,7 +916,7 @@ declare class ObjectsMatchedToQuery {
         guestInTheMiddle: FactoryType<GuestObjectType>;
         guest: FactoryType<GuestObjectType>;
     });
-    objects<R extends GuestObjectType<MapObjectDocument[]>>(querySource: GuestAwareType<string>, guest: R): R;
+    objects<R extends GuestObjectType<MapObjectDocument[]>>(querySource: GuestAwareObjectType<string>, guest: R): R;
 }
 
 declare class ObjectsOutsideScreen {
@@ -924,8 +924,8 @@ declare class ObjectsOutsideScreen {
     private stageSize;
     private layer;
     private factories;
-    constructor(map: MapType, stageSize: GuestAwareType<SizeDocument>, layer: LayerBase, factories: {
-        chain: FactoryType<ChainType<unknown>>;
+    constructor(map: MapType, stageSize: GuestAwareObjectType<SizeDocument>, layer: LayerBase, factories: {
+        chain: FactoryType<GuestAwareAllType<unknown>>;
         guestCast: FactoryType<GuestObjectType>;
         guestInTheMiddle: FactoryType<GuestObjectType>;
     });
@@ -940,7 +940,7 @@ declare class ParentTypes {
         guestInTheMiddle: FactoryType<GuestObjectType>;
         guestCast: FactoryType<GuestObjectType>;
         guest: FactoryType<GuestObjectType>;
-        chain: FactoryType<ChainType>;
+        chain: FactoryType<GuestAwareAllType>;
     });
     types<R extends GuestObjectType<MapTypeDocument[]>>(guest: R): R;
 }
@@ -995,8 +995,8 @@ declare interface SizeDocument_2 {
     height: number;
 }
 
-declare class StageDefaultSize implements GuestAwareType<SizeDocument> {
-    value<R extends GuestObjectType<SizeDocument>>(guest: R): R;
+declare class StageDefaultSize implements GuestAwareObjectType<SizeDocument> {
+    value<R extends GuestType<SizeDocument>>(guest: R): R;
 }
 
 declare interface StageMoveRestrictionType {
@@ -1019,7 +1019,7 @@ declare class StagePositionByObjectId {
     constructor(stageMove: StageMoveType, factories: {
         guest: FactoryType<GuestObjectType>;
     });
-    move(map: GuestAwareType<MapDocument>, objectId: string): this;
+    move(map: GuestAwareObjectType<MapDocument>, objectId: string): this;
 }
 
 declare interface StagePositionType {
@@ -1088,7 +1088,7 @@ declare class TextNlAsBr implements TextType {
 declare class TextNoHtml {
     private text;
     private factories;
-    constructor(text: GuestAwareType<string>, factories: {
+    constructor(text: GuestAwareObjectType<string>, factories: {
         guestInTheMiddle: FactoryType<GuestObjectType>;
     });
     noHtml(guest: GuestObjectType<string>): GuestObjectType<string>;
@@ -1210,10 +1210,10 @@ export declare const useFactories: () => {
     textNlAsBr: Factory<TextNlAsBr>;
     textWithoutHTML: Factory<TextWithoutHTML>;
     cache: Factory<Source<any>>;
-    chain: Factory<GuestChain<any>>;
+    chain: Factory<GuestAwareAll<any>>;
     guest: Factory<Guest<any>>;
     guestCast: Factory<GuestCast<any>>;
-    guestAware: FactoryType<GuestAwareType<any>>;
+    guestAware: FactoryType<GuestAwareObjectType<any>>;
     guestInTheMiddle: Factory<GuestCast<any>>;
     guestSync: Factory<GuestSync<any>>;
     patron: Factory<Patron<any>>;

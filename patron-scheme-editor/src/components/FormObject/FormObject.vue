@@ -38,9 +38,9 @@ const {
 type ObjectChainProps = {map: MapDocument, objectId: string};
 const object = new VueComputedPatron<MapObjectDocument>(() => {
   const theChain = chain.create();
-  mapObjectCurrent.objectId(patron.create(theChain.receiveKey('objectId')));
-  mapFile.currentMap(patron.create(theChain.receiveKey('map')));
-  theChain.result(patron.create(
+  mapObjectCurrent.objectId(patron.create(theChain.guestKey('objectId')));
+  mapFile.currentMap(patron.create(theChain.guestKey('map')));
+  theChain.value(patron.create(
     guest.create(({ map, objectId }: ObjectChainProps) => {
       localDebug('object opened', objectId);
       object.value = map.objects[objectId];
@@ -51,7 +51,7 @@ const object = new VueComputedPatron<MapObjectDocument>(() => {
 const types = mapCurrent.types(new VueRefPatron()).ref();
 
 const map = mapFile.currentMap(new VueRefPatron<MapDocument>()).ref();
-const objectSource = new VueSource(object);
+const objectSource = new VueSource<MapObjectDocument>(object);
 const objectUrl = mapObjectUrl.url(objectSource, new VueRefPatron<string>()).ref();
 
 const close = () => {

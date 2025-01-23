@@ -1,4 +1,4 @@
-import { GuestObjectType, FactoryType, ChainType } from 'patron-oop';
+import { GuestObjectType, FactoryType, GuestAwareAllType } from 'patron-oop';
 import { MapObjectDocument } from '@/modules/application/l1/l2/l3/map/documents/MapStructures';
 import { LayerBase } from '@/modules/application/l1/l2/l3/types/LayerBase';
 import { PointDocument } from '@/modules/application/l1/l2/l3/map/documents/PointDocument';
@@ -14,19 +14,19 @@ export class MapObjectsVisibleWithLayerShift implements MapObjectsType {
     private layerDep: LayerBase,
     private mapObjectsVisible: MapObjectsType,
     private factories: {
-      chain: FactoryType<ChainType>;
+      chain: FactoryType<GuestAwareAllType>;
       guestCast: FactoryType<GuestObjectType>;
       guestInTheMiddle: FactoryType<GuestObjectType>;
     },
-  ) {}
+  ) { }
 
   public objects(guest: GuestObjectType<MapObjectDocument[]>) {
     const chain = this.factories.chain.create();
-    this.layerDep.position(this.factories.guestCast.create(guest, chain.receiveKey('position')));
+    this.layerDep.position(this.factories.guestCast.create(guest, chain.guestKey('position')));
     this.mapObjectsVisible.objects(
-      this.factories.guestCast.create(guest, chain.receiveKey('objects')),
+      this.factories.guestCast.create(guest, chain.guestKey('objects')),
     );
-    chain.result(
+    chain.value(
       this.factories.guestInTheMiddle.create(guest, ({ position, objects }: ChainProps) => {
         guest.give(
           objects.map((object) => ({

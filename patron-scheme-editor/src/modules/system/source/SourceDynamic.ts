@@ -1,10 +1,10 @@
-import { give, GuestAwareType, GuestType, PatronPool, SourceType } from 'patron-oop';
+import { give, GuestAwareObjectType, GuestType, PatronPool, SourceType } from 'patron-oop';
 
 export class SourceDynamic<T = unknown> implements SourceType<T> {
   public constructor(
     private baseGuest: GuestType<T>,
-    private baseGuestAware: GuestAwareType<T>,
-  ) {}
+    private baseGuestAware: GuestAwareObjectType<T>,
+  ) { }
 
   public value(guest: GuestType<T>) {
     this.baseGuestAware.value(guest);

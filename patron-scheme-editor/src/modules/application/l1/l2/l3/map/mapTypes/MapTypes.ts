@@ -1,4 +1,4 @@
-import { GuestObjectType, FactoryType, ChainType } from 'patron-oop';
+import { GuestObjectType, FactoryType, GuestAwareAllType } from 'patron-oop';
 import {
   MapDocument,
   MapTypeWithNameDocument,
@@ -17,17 +17,17 @@ export class MapTypes implements GuestObjectType<MapTypeWithNameDocument> {
     private checks: CheckNotificationType<MapTypeWithNameDocument>[],
     private factories: {
       guest: FactoryType<GuestObjectType>;
-      chain: FactoryType<ChainType>;
+      chain: FactoryType<GuestAwareAllType>;
     },
-  ) {}
+  ) { }
 
   public give(value: MapTypeWithNameDocument): this {
     const checksChain = this.factories.chain.create(this);
     this.checks.forEach((check, index) => {
-      check.breakOnFail(value, checksChain.receiveKey(String(index)));
+      check.breakOnFail(value, checksChain.guestKey(String(index)));
     });
 
-    checksChain.result(
+    checksChain.value(
       this.factories.guest.create(() => {
         this.mapFile.currentMap(
           this.factories.guest.create((latestMap: MapDocument) => {

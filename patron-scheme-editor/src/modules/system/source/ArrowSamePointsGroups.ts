@@ -1,5 +1,5 @@
 import { ArrowPoints } from "@/modules/application/l1/l2/visualisation/arrows/ArrowType";
-import { give, GuestAwareType, GuestCast, GuestType } from "patron-oop";
+import { give, GuestAwareObjectType, GuestCast, GuestType } from "patron-oop";
 
 export type ShiftPoint = {
   arrowIndex: number,
@@ -8,8 +8,8 @@ export type ShiftPoint = {
   breakPointStartIndex: number,
 };
 
-export class ArrowSamePointsGroups implements GuestAwareType<Record<string, ShiftPoint[]>> {
-  public constructor(private basePoints: GuestAwareType<ArrowPoints[]>) { }
+export class ArrowSamePointsGroups implements GuestAwareObjectType<Record<string, ShiftPoint[]>> {
+  public constructor(private basePoints: GuestAwareObjectType<ArrowPoints[]>) { }
 
   public value(guest: GuestType<Record<string, ShiftPoint[]>>) {
 

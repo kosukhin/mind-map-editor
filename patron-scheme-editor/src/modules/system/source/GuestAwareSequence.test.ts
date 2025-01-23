@@ -1,9 +1,9 @@
 import { GuestAwareSequence } from "@/modules/system/source/GuestAwareSequence";
-import { Factory, give, GuestAwareType, GuestCast, GuestType, Source } from "patron-oop";
+import { Factory, give, GuestAwareObjectType, GuestCast, GuestType, Source } from "patron-oop";
 import { expect, test } from "vitest";
 
-class X2 implements GuestAwareType<number> {
-  public constructor(private baseNumber: GuestAwareType<number>) { }
+class X2 implements GuestAwareObjectType<number> {
+  public constructor(private baseNumber: GuestAwareObjectType<number>) { }
 
   public value(guest: GuestType<number>) {
     this.baseNumber.value(

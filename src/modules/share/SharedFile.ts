@@ -1,7 +1,7 @@
 import debug from 'debug';
 import {
   ActionType,
-  GuestAwareType,
+  GuestAwareObjectType,
   GuestObjectType,
   GuestType, Source,
 } from 'patron-oop';
@@ -14,11 +14,11 @@ export interface ShareFileDocument {
 
 const localDebug = debug('SharedFile');
 
-export class SharedFile implements GuestAwareType<boolean>, ActionType<void> {
+export class SharedFile implements GuestAwareObjectType<boolean>, ActionType<void> {
   private loading = new Source(false);
 
   public constructor(
-    private fileSource: GuestAwareType<ShareFileDocument>,
+    private fileSource: GuestAwareObjectType<ShareFileDocument>,
     private sharedLastTimestamp: GuestObjectType<{ name: string, timestamp: number }>,
     private sharingTitle = 'Share file',
   ) { }

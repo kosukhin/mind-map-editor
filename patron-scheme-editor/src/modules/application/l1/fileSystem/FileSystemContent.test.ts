@@ -2,7 +2,7 @@ import { expect, test } from 'vitest';
 import { FileSystemContent } from '@/modules/application/l1/fileSystem/FileSystemContent';
 import { BrowserLaunchQueueFake } from '@/modules/integration/browser/launchQueue/BrowserLaunchQueueFake';
 import { Notification } from '@/modules/application/l1/l2/visualisation/notification/Notification';
-import { Guest, Patron, Factory, FactoryDynamic } from 'patron-oop';
+import { Guest, Patron, Factory, Module } from 'patron-oop';
 import { useFactories } from '@/composables/useFactories';
 import { BrowserFileFake } from '@/modules/integration/browser/file/BrowserFileFake';
 import { SystemFileText } from '@/modules/system/file/SystemFileText';
@@ -10,7 +10,7 @@ import { SystemFileText } from '@/modules/system/file/SystemFileText';
 test('map file content fs', () => {
   const factories = useFactories();
 
-  const systemFileTextFactory = new FactoryDynamic(() => new SystemFileText('hello world!'));
+  const systemFileTextFactory = new Module(() => new SystemFileText('hello world!'));
   const browserFileFakeFactory = new Factory(BrowserFileFake);
 
   const queue = new BrowserLaunchQueueFake();

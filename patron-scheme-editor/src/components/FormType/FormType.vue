@@ -32,9 +32,9 @@ type ChainProps = {map: MapDocument, typeId: string};
 const typeName = ref<string>('');
 const theChain = chain.create();
 const type = new VueComputedPatron<MapTypeDocument>(() => {
-  mapTypeCurrent.typeId(patron.create(theChain.receiveKey('typeId')));
-  mapFile.currentMap(patron.create(theChain.receiveKey('map')));
-  theChain.result(patron.create(
+  mapTypeCurrent.typeId(patron.create(theChain.guestKey('typeId')));
+  mapFile.currentMap(patron.create(theChain.guestKey('map')));
+  theChain.value(patron.create(
     guest.create(({ map, typeId }: ChainProps) => {
       type.value = map.types[typeId];
       typeName.value = type.value?.name;
@@ -45,7 +45,7 @@ const type = new VueComputedPatron<MapTypeDocument>(() => {
 const close = () => {
   mapTypeCurrent.give('');
   modal.give('');
-  theChain.receiveKey('typeId').give('');
+  theChain.guestKey('typeId').give('');
 };
 
 const save = () => {
