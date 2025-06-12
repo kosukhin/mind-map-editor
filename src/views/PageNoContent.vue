@@ -44,9 +44,10 @@ onMounted(() => {
       <p>
         или откройте по ссылке.
       </p>
-      <file-tree class="file-tree" filesToIndex="['json']">
+      <file-tree class="file-tree">
         <button class="open-dir" type="button" slot="browse-button">Открыть директорию</button>
       </file-tree>
+      ^^^
     </div>
   </div>
 </template>
