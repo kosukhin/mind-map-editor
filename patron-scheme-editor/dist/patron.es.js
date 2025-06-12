@@ -4899,9 +4899,7 @@ const du = /* @__PURE__ */ Xe(cu, [["render", uu]]), hu = "default", pu = /* @__
             style: ce(`width:${A.type.width}px;height:${A.type.height}px`),
             title: f.$t("general.notifications.dragToCanvasToAdd"),
             onDragend: (j) => d(e).byTypeName(A.type.id, j),
-            onDblclick: (j) => {
-              d(e).byTypeName(A.type.id, j), f.$emit("close");
-            }
+            onDblclick: (j) => d(e).byTypeName(A.type.id, j)
           }, null, 44, mu),
           d(v).value.readonly ? S("", !0) : (g(), y("div", vu, [
             m(P, {
