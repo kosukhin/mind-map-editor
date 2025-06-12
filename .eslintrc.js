@@ -20,6 +20,7 @@ module.exports = {
     'vuejs-accessibility/form-control-has-label': 'off',
     'vuejs-accessibility/label-has-for': 'off',
     'vuejs-accessibility/click-events-have-key-events': 'off',
+    'vue/no-deprecated-slot-attribute': 'off',
     'no-param-reassign': 'off',
     'no-useless-constructor': 'off',
     'class-methods-use-this': 'off',

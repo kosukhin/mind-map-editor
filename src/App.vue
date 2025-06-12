@@ -23,6 +23,19 @@ serviceFileContent.content(patron.create((content: boolean) => {
   patronContentRef.value = content;
 }));
 
+const directoryContent = ref();
+
+watch(directoryContent, (newValue) => {
+  canBeUsed.value = true;
+  patronContentRef.value = newValue;
+});
+
+watch(patronContentRef, (newValue) => {
+  if (directoryContent.value) {
+    directoryContent.value = newValue;
+  }
+});
+
 watch(patronContentRef, (patronContentValue: string) => {
   serviceFileContent.give(patronContentValue);
 });
@@ -98,7 +111,7 @@ sharedLastTimestamp.value(sharedLastTimestampPatron);
       </p>
     </template>
   </PatronSchemeEditor>
-  <PageNoContent v-else />
+  <PageNoContent v-show="!(canBeUsed && patronContentRef)" v-model="directoryContent" />
 </template>
 
 <style>
