@@ -17,6 +17,7 @@
 
 <script setup lang="ts">
 import { watch, onMounted } from 'vue';
+import { debounce } from 'lodash';
 
 document.title = 'Нет данных!';
 
@@ -25,11 +26,18 @@ const model = defineModel();
 
 let fileTree: any;
 
-watch(model, (newModel) => {
+watch(model, debounce(async (newModel) => {
   if (fileTree) {
-    fileTree.saveFile(newModel);
+    try {
+      console.log(newModel);
+
+      await fileTree.saveFile(newModel);
+    // eslint-disable-next-line no-empty
+    } catch (e) {
+      console.error(e);
+    }
   }
-});
+}, 1000));
 
 onMounted(() => {
   import('@dannymoerkerke/file-tree').then(() => {
@@ -45,7 +53,7 @@ onMounted(() => {
       if (fileTree) {
         fileTree.filesToIndex = ['json'];
         fileTree.addEventListener('file-selected', (e: any) => {
-          const content = e.detail?.file?.contents ?? '';
+          const content = e.detail?.file?.contents || '{}';
           if (content) {
             model.value = content;
           }
