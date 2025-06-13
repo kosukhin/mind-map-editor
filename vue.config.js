@@ -12,7 +12,7 @@ module.exports = defineConfig({
       .tap((options) => {
         options.compilerOptions = {
           ...options.compilerOptions,
-          isCustomElement: (tag) => tag.includes('-'), // Игнорировать все теги с дефисом (по стандарту веб-компонентов)
+          isCustomElement: (tag) => tag.includes('-'),
         };
         return options;
       });

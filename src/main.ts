@@ -1,11 +1,12 @@
 import i18n from '@/plugins/i18n';
-import { createApp } from 'vue';
 import { registerServiceWorker } from '@/registerServiceWorker';
+import { createApp } from 'vue/dist/vue.esm-bundler';
 import App from './App.vue';
-import '@dannymoerkerke/file-tree';
 
-createApp(App)
-  .use(i18n)
+const app = createApp(App);
+app.config.compilerOptions.isCustomElement = (tag) => tag.includes('-');
+
+app.use(i18n)
   .mount('#app');
 
 registerServiceWorker();

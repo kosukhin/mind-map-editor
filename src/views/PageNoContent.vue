@@ -1,5 +1,22 @@
+<template>
+  <div class="flex h-full w-full justify-center">
+    <div class="flex flex-col text-center justify-center">
+      <h3 class="text-h3 font-bold m-lg">
+        Нет данных для отображения!
+      </h3>
+      <p>
+        Чтобы открыть схему установите приложение
+      </p>
+      <p>
+        или откройте по ссылке.
+      </p>
+      <div class="file-tree-place"></div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { onMounted, watch } from 'vue';
+import { watch, onMounted } from 'vue';
 
 document.title = 'Нет данных!';
 
@@ -15,42 +32,32 @@ watch(model, (newModel) => {
 });
 
 onMounted(() => {
-  fileTree = document.querySelector('file-tree') as any;
+  import('@dannymoerkerke/file-tree').then(() => {
+    const fileTreePlace = document.querySelector('.file-tree-place');
+    if (fileTreePlace) {
+      fileTreePlace.innerHTML = `<file-tree class="file-tree">
+  <button class="open-dir" type="button" slot="browse-button">
+    Открыть директорию
+  </button>
+</file-tree>`;
+      fileTree = document.querySelector('file-tree') as any;
 
-  if (fileTree) {
-    fileTree.filesToIndex = ['json'];
-    fileTree.addEventListener('file-selected', (e: any) => {
-      const content = e.detail?.file?.contents ?? '';
-      if (content) {
-        model.value = content;
+      if (fileTree) {
+        fileTree.filesToIndex = ['json'];
+        fileTree.addEventListener('file-selected', (e: any) => {
+          const content = e.detail?.file?.contents ?? '';
+          if (content) {
+            model.value = content;
+          }
+        });
+        const style = document.createElement('style');
+        style.innerHTML = '#file-container { overflow: visible }';
+        fileTree?.shadowRoot?.appendChild(style);
       }
-    });
-    const style = document.createElement('style');
-    style.innerHTML = '#file-container { overflow: visible }';
-    fileTree?.shadowRoot?.appendChild(style);
-  }
+    }
+  });
 });
 </script>
-
-<template>
-  <div class="flex h-full w-full justify-center">
-    <div class="flex flex-col text-center justify-center">
-      <h3 class="text-h3 font-bold m-lg">
-        Нет данных для отображения!
-      </h3>
-      <p>
-        Чтобы открыть схему установите приложение
-      </p>
-      <p>
-        или откройте по ссылке.
-      </p>
-      <file-tree class="file-tree">
-        <button class="open-dir" type="button" slot="browse-button">Открыть директорию</button>
-      </file-tree>
-      ^^^
-    </div>
-  </div>
-</template>
 
 <style lang="scss">
 .file-tree #file-container {
