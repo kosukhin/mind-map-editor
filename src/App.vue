@@ -14,6 +14,7 @@ import presets from '../public/data/presets.json';
 const { serviceFileContent, shareConflict, sharedFromWorker } = useService();
 
 const canBeUsed = serviceFileContent.canBeUsed(new VueRefPatron()).ref();
+const closed = ref(false);
 
 const { patron } = useFactories();
 const { sharedFile, sharedLastTimestamp } = useSharing();
@@ -26,6 +27,7 @@ serviceFileContent.content(patron.create((content: boolean) => {
 const directoryContent = ref();
 
 watch(directoryContent, (newValue) => {
+  closed.value = false;
   canBeUsed.value = true;
   patronContentRef.value = newValue;
 });
@@ -64,7 +66,7 @@ sharedLastTimestamp.value(sharedLastTimestampPatron);
 
 <template>
   <PatronSchemeEditor
-    v-if="canBeUsed && patronContentRef"
+    v-if="canBeUsed && patronContentRef && !closed"
     v-model="patronContentRef"
     :presets="presets"
   >
@@ -72,6 +74,14 @@ sharedLastTimestamp.value(sharedLastTimestampPatron);
       <TheSharingButton v-if="sharingPossiblePatron.value" />
     </template>
     <template #beforeSettingsButtons>
+      <button
+        v-if="patronContentRef"
+        type="button"
+        class="rounded-main text-md p-md bg-primary hover:bg-primary-second text-white"
+        @click="closed = true"
+      >
+        Закрыть
+      </button>
       <button
         v-if="sharedStoragePatron.value"
         type="button"
@@ -111,7 +121,7 @@ sharedLastTimestamp.value(sharedLastTimestampPatron);
       </p>
     </template>
   </PatronSchemeEditor>
-  <PageNoContent v-show="!(canBeUsed && patronContentRef)" v-model="directoryContent" />
+  <PageNoContent v-show="!(canBeUsed && patronContentRef && !closed)" v-model="directoryContent" />
 </template>
 
 <style>
