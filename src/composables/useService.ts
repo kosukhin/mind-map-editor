@@ -3,8 +3,9 @@ import { FSHtmlContent } from '@/modules/FSHtmlContent';
 import { FSJsonContent } from '@/modules/FSJsonContent';
 import baseHtmlTemplate from '@/modules/html/baseHtmlTemplate';
 import { HtmlTemplate } from '@/modules/html/HtmlTemplate';
-import { SharedFileFromWorker } from '@/modules/share/SharedFileFromWorker';
+import { ShareConflict } from '@/modules/share/ShareConflict';
 import { ShareContent } from '@/modules/share/ShareContent';
+import { SharedFileFromWorker } from '@/modules/share/SharedFileFromWorker';
 import { Source } from 'patron-oop';
 import {
   BrowserLaunchQueue,
@@ -14,7 +15,6 @@ import {
   useApplication,
   useFactories,
 } from 'patron-scheme-editor';
-import { ShareConflict } from '@/modules/share/ShareConflict';
 
 const factories = useFactories();
 const { notification, mapCurrentID } = useApplication();
@@ -54,6 +54,7 @@ const modules = {
   sharingStorageChanged,
   shareConflict,
   sharedFromWorker,
+  htmlTemplate,
 };
 
 export const useService = () => modules;

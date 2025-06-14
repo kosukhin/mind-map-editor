@@ -18,20 +18,31 @@
 <script setup lang="ts">
 import { watch, onMounted } from 'vue';
 import { debounce } from 'lodash';
+import { useService } from '@/composables/useService';
+import { Guest } from 'patron-oop';
 
 document.title = 'Нет данных!';
+
+const { htmlTemplate } = useService();
+const isHTML = (fileName: string) => fileName.includes('.html');
 
 // eslint-disable-next-line no-undef
 const model = defineModel();
 
 let fileTree: any;
+let isHTMLFileName = false;
 
 watch(model, debounce(async (newModel) => {
   if (fileTree) {
     try {
       console.log(newModel);
-
-      await fileTree.saveFile(newModel);
+      if (isHTMLFileName) {
+        htmlTemplate.jsonToHtml(newModel, new Guest(async (html) => {
+          await fileTree.saveFile(html);
+        }));
+      } else {
+        await fileTree.saveFile(newModel);
+      }
     // eslint-disable-next-line no-empty
     } catch (e) {
       console.error(e);
@@ -53,9 +64,18 @@ onMounted(() => {
       if (fileTree) {
         fileTree.filesToIndex = ['json'];
         fileTree.addEventListener('file-selected', (e: any) => {
+          const fileName = e.detail?.file?.name || 'empty.json';
+
           const content = e.detail?.file?.contents || '{}';
           if (content) {
-            model.value = content;
+            if (isHTML(fileName)) {
+              isHTMLFileName = true;
+              htmlTemplate.htmlToJson(content, new Guest((json) => {
+                model.value = json;
+              }));
+            } else {
+              model.value = content;
+            }
           }
         });
         const style = document.createElement('style');
