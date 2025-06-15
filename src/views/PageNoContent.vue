@@ -79,7 +79,7 @@ onMounted(() => {
           }
         });
         const style = document.createElement('style');
-        style.innerHTML = '#file-container { overflow: visible }';
+        style.innerHTML = '#file-container { overflow: auto }';
         fileTree?.shadowRoot?.appendChild(style);
       }
     }
