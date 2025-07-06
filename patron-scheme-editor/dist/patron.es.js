@@ -1,14 +1,14 @@
-var Ss = Object.defineProperty;
-var Ts = (n, e, t) => e in n ? Ss(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
-var $ = (n, e, t) => Ts(n, typeof e != "symbol" ? e + "" : e, t);
-import { ref as te, defineComponent as E, openBlock as g, createBlock as U, Transition as rs, withCtx as w, unref as d, createElementBlock as y, createElementVNode as b, withModifiers as we, createCommentVNode as S, renderSlot as K, withDirectives as Le, isRef as je, vModelText as os, watch as Be, createVNode as m, normalizeClass as se, computed as Oe, createTextVNode as O, Fragment as W, renderList as J, toDisplayString as C, normalizeStyle as ce, vModelCheckbox as Is, onBeforeUnmount as js, vModelSelect as Bs, onMounted as as, createStaticVNode as Os } from "vue";
-import { useScriptTag as Ps, useMagicKeys as Es, useVModel as Qe, useShare as Ds } from "@vueuse/core";
-import he from "konva";
-import { FontAwesomeIcon as Rs } from "@fortawesome/vue-fontawesome";
-import { faShareNodes as Hs, faArrowUp as Ns, faArrowDown as Vs, faArrowRight as zs, faArrowLeft as Us, faClose as Ls, faMap as Qs, faRotateRight as Ws, faRotateLeft as Gs, faFileText as Ks, faCog as Js, faPlusSquare as qs, faHistory as Ys, faSearch as Zs, faTextWidth as Xs, faBarsStaggered as ei, faBars as ti } from "@fortawesome/free-solid-svg-icons";
-import { useEditor as si, EditorContent as ii, BubbleMenu as ni } from "@tiptap/vue-3";
-import ri from "@tiptap/starter-kit";
-class oi {
+var V = Object.defineProperty;
+var N = (r, e, t) => e in r ? V(r, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[e] = t;
+var b = (r, e, t) => N(r, typeof e != "symbol" ? e + "" : e, t);
+import { ref, defineComponent, openBlock, createBlock, Transition, withCtx, unref, createElementBlock, createElementVNode, withModifiers, createCommentVNode, renderSlot, withDirectives, isRef, vModelText, watch, createVNode, normalizeClass, computed, createTextVNode, Fragment, renderList, toDisplayString, normalizeStyle, vModelCheckbox, onBeforeUnmount, vModelSelect, onMounted, createStaticVNode } from "vue";
+import { useScriptTag, useMagicKeys, useVModel, useShare } from "@vueuse/core";
+import Konva from "konva";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faShareNodes, faArrowUp, faArrowDown, faArrowRight, faArrowLeft, faClose, faMap, faRotateRight, faRotateLeft, faFileText, faCog, faPlusSquare, faHistory, faSearch, faTextWidth, faBarsStaggered, faBars } from "@fortawesome/free-solid-svg-icons";
+import { useEditor, EditorContent, BubbleMenu } from "@tiptap/vue-3";
+import StarterKit from "@tiptap/starter-kit";
+class DocumentTitle {
   constructor(e) {
     e.value(this);
   }
@@ -19,21 +19,21 @@ class oi {
     return "patron";
   }
 }
-function ai(n, e) {
-  return typeof n == "function" ? n(e) : n.value(e);
+function value(r, e) {
+  return typeof r == "function" ? r(e) : r.value(e);
 }
-class be {
+class GuestAware {
   constructor(e) {
     this.guestAware = e;
   }
   value(e) {
-    return ai(this.guestAware, e), e;
+    return value(this.guestAware, e), e;
   }
 }
-function H(n, e, t) {
-  typeof e == "function" ? e(n, t) : e.give(n, t);
+function give(r, e, t) {
+  typeof e == "function" ? e(r, t) : e.give(r, t);
 }
-class fe {
+class Guest {
   constructor(e) {
     this.receiver = e;
   }
@@ -41,7 +41,7 @@ class fe {
     return this.receiver(e, t), this;
   }
 }
-class L {
+class GuestCast {
   constructor(e, t) {
     this.sourceGuest = e, this.targetGuest = t;
   }
@@ -50,7 +50,7 @@ class L {
   }
   give(e, t) {
     var s;
-    return H(e, this.targetGuest, {
+    return give(e, this.targetGuest, {
       ...t,
       data: {
         ...(t == null ? void 0 : t.data) ?? {},
@@ -63,26 +63,26 @@ class L {
     return t.disposed ? t.disposed(e) : !1;
   }
 }
-var ci = Object.defineProperty, li = (n, e, t) => e in n ? ci(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t, It = (n, e, t) => li(n, typeof e != "symbol" ? e + "" : e, t);
-const cs = /* @__PURE__ */ new Map(), jt = (n) => {
-  cs.forEach((e) => {
-    e.delete(n);
+var __defProp$6 = Object.defineProperty, __defNormalProp$6 = (r, e, t) => e in r ? __defProp$6(r, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[e] = t, __publicField$6 = (r, e, t) => __defNormalProp$6(r, typeof e != "symbol" ? e + "" : e, t);
+const poolSets = /* @__PURE__ */ new Map(), removePatronFromPools = (r) => {
+  poolSets.forEach((e) => {
+    e.delete(r);
   });
 };
-class We {
+class PatronPool {
   constructor(e) {
-    this.initiator = e, It(this, "patrons"), It(this, "give"), this.patrons = /* @__PURE__ */ new Set(), cs.set(this, this.patrons);
+    this.initiator = e, __publicField$6(this, "patrons"), __publicField$6(this, "give"), this.patrons = /* @__PURE__ */ new Set(), poolSets.set(this, this.patrons);
     let t = null;
-    const s = (i, r) => {
-      this.patrons.forEach((o) => {
-        this.sendValueToGuest(i, o, r);
+    const s = (o, i) => {
+      this.patrons.forEach((n) => {
+        this.sendValueToGuest(o, n, i);
       });
     };
-    this.give = (i, r) => {
-      const o = () => {
-        o === t && s(i, r);
+    this.give = (o, i) => {
+      const n = () => {
+        n === t && s(o, i);
       };
-      return t = o, queueMicrotask(o), this;
+      return t = n, queueMicrotask(n), this;
     };
   }
   size() {
@@ -100,7 +100,7 @@ class We {
     return this.add(t), this.sendValueToGuest(e, t, {}), this;
   }
   sendValueToGuest(e, t, s) {
-    this.guestDisposed(e, t) || H(e, t, {
+    this.guestDisposed(e, t) || give(e, t, {
       ...s,
       data: {
         ...(s == null ? void 0 : s.data) ?? {},
@@ -114,10 +114,10 @@ class We {
     return (s = t.disposed) != null && s.call(t, e) ? (this.remove(t), !0) : !1;
   }
 }
-var ui = Object.defineProperty, di = (n, e, t) => e in n ? ui(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t, hi = (n, e, t) => di(n, e + "", t);
-class xe {
+var __defProp$5 = Object.defineProperty, __defNormalProp$5 = (r, e, t) => e in r ? __defProp$5(r, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[e] = t, __publicField$5 = (r, e, t) => __defNormalProp$5(r, e + "", t);
+class Source {
   constructor(e) {
-    this.sourceDocument = e, hi(this, "thePool", new We(this));
+    this.sourceDocument = e, __publicField$5(this, "thePool", new PatronPool(this));
   }
   pool() {
     return this.thePool;
@@ -126,16 +126,16 @@ class xe {
     return this.sourceDocument = e, this.thePool.give(this.sourceDocument), this;
   }
   value(e) {
-    return typeof e == "function" ? this.thePool.distribute(this.sourceDocument, new fe(e)) : this.thePool.distribute(this.sourceDocument, e), this;
+    return typeof e == "function" ? this.thePool.distribute(this.sourceDocument, new Guest(e)) : this.thePool.distribute(this.sourceDocument, e), this;
   }
 }
-class Te {
+class GuestObject {
   constructor(e) {
     this.baseGuest = e;
   }
   give(e, t) {
     let s = this.baseGuest;
-    return typeof s == "function" && (s = new fe(s)), s.give(e, t), this;
+    return typeof s == "function" && (s = new Guest(s)), s.give(e, t), this;
   }
   introduction() {
     return typeof this.baseGuest == "function" || !this.baseGuest.introduction ? "guest" : this.baseGuest.introduction();
@@ -145,10 +145,10 @@ class Te {
     return t.disposed ? t.disposed(e) : !1;
   }
 }
-var pi = Object.defineProperty, gi = (n, e, t) => e in n ? pi(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t, Bt = (n, e, t) => gi(n, typeof e != "symbol" ? e + "" : e, t);
-class fi {
+var __defProp$4 = Object.defineProperty, __defNormalProp$4 = (r, e, t) => e in r ? __defProp$4(r, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[e] = t, __publicField$4 = (r, e, t) => __defNormalProp$4(r, typeof e != "symbol" ? e + "" : e, t);
+class GuestPool {
   constructor(e) {
-    Bt(this, "guests", /* @__PURE__ */ new Set()), Bt(this, "patronPool"), this.patronPool = new We(e);
+    __publicField$4(this, "guests", /* @__PURE__ */ new Set()), __publicField$4(this, "patronPool"), this.patronPool = new PatronPool(e);
   }
   give(e, t) {
     return this.deliverToGuests(e, t), this.patronPool.give(e, t), this;
@@ -167,46 +167,46 @@ class fi {
   }
   deliverToGuests(e, t) {
     this.guests.forEach((s) => {
-      H(e, s, t);
+      give(e, s, t);
     }), this.guests.clear();
   }
 }
-var mi = Object.defineProperty, vi = (n, e, t) => e in n ? mi(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t, Pe = (n, e, t) => vi(n, typeof e != "symbol" ? e + "" : e, t);
-class Ge {
+var __defProp$3 = Object.defineProperty, __defNormalProp$3 = (r, e, t) => e in r ? __defProp$3(r, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[e] = t, __publicField$3 = (r, e, t) => __defNormalProp$3(r, typeof e != "symbol" ? e + "" : e, t);
+class GuestAwareAll {
   constructor() {
-    Pe(this, "theAll"), Pe(this, "keysKnown", /* @__PURE__ */ new Set()), Pe(this, "keysFilled", /* @__PURE__ */ new Set()), Pe(this, "filledAllPool", new fi(this)), this.theAll = new xe({});
+    __publicField$3(this, "theAll"), __publicField$3(this, "keysKnown", /* @__PURE__ */ new Set()), __publicField$3(this, "keysFilled", /* @__PURE__ */ new Set()), __publicField$3(this, "filledAllPool", new GuestPool(this)), this.theAll = new Source({});
   }
   valueArray(e) {
-    const t = new Te(e);
+    const t = new GuestObject(e);
     return this.filledAllPool.add(
-      new L(t, (s) => {
+      new GuestCast(t, (s) => {
         t.give(Object.values(s));
       })
     ), this.isAllFilled() && this.theAll.value(
-      new fe((s) => {
+      new Guest((s) => {
         this.filledAllPool.give(Object.values(s));
       })
     ), this;
   }
   value(e) {
-    const t = new Te(e);
+    const t = new GuestObject(e);
     return this.isAllFilled() ? (this.filledAllPool.add(t), this.theAll.value(
-      new fe((s) => {
+      new Guest((s) => {
         this.filledAllPool.give(s);
       })
     )) : this.filledAllPool.add(t), this;
   }
   guestKey(e) {
-    return this.keysKnown.add(e), new fe((t) => {
+    return this.keysKnown.add(e), new Guest((t) => {
       queueMicrotask(() => {
         this.theAll.value(
-          new fe((s) => {
+          new Guest((s) => {
             this.keysFilled.add(e);
-            const i = {
+            const o = {
               ...s,
               [e]: t
             };
-            this.theAll.give(i), this.isAllFilled() && this.filledAllPool.give(i);
+            this.theAll.give(o), this.isAllFilled() && this.filledAllPool.give(o);
           })
         );
       });
@@ -216,15 +216,15 @@ class Ge {
     return this.keysFilled.size > 0 && this.keysFilled.size === this.keysKnown.size;
   }
 }
-var Ai = Object.defineProperty, yi = (n, e, t) => e in n ? Ai(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t, bi = (n, e, t) => yi(n, e + "", t);
-class ue {
+var __defProp$2 = Object.defineProperty, __defNormalProp$2 = (r, e, t) => e in r ? __defProp$2(r, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[e] = t, __publicField$2 = (r, e, t) => __defNormalProp$2(r, e + "", t);
+class SourceEmpty {
   constructor() {
-    bi(this, "baseSource", new xe(null));
+    __publicField$2(this, "baseSource", new Source(null));
   }
   value(e) {
     return this.baseSource.value(
-      new L(e, (t, s) => {
-        t !== null && H(t, e, s);
+      new GuestCast(e, (t, s) => {
+        t !== null && give(t, e, s);
       })
     ), this;
   }
@@ -235,7 +235,7 @@ class ue {
     return this.baseSource.pool();
   }
 }
-class wi {
+class GuestSync {
   constructor(e) {
     this.theValue = e;
   }
@@ -246,7 +246,7 @@ class wi {
     return this.theValue;
   }
 }
-class Ke {
+class Patron {
   constructor(e) {
     this.willBePatron = e;
   }
@@ -254,7 +254,7 @@ class Ke {
     return "patron";
   }
   give(e, t) {
-    return H(e, this.willBePatron, t), this;
+    return give(e, this.willBePatron, t), this;
   }
   disposed(e) {
     var s;
@@ -262,16 +262,16 @@ class Ke {
     return ((s = t == null ? void 0 : t.disposed) == null ? void 0 : s.call(t, e)) || !1;
   }
 }
-var xi = Object.defineProperty, Ci = (n, e, t) => e in n ? xi(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t, _i = (n, e, t) => Ci(n, e + "", t);
-class $i {
+var __defProp = Object.defineProperty, __defNormalProp = (r, e, t) => e in r ? __defProp(r, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[e] = t, __publicField = (r, e, t) => __defNormalProp(r, e + "", t);
+class PatronOnce {
   constructor(e) {
-    this.baseGuest = e, _i(this, "received", !1);
+    this.baseGuest = e, __publicField(this, "received", !1);
   }
   introduction() {
     return "patron";
   }
   give(e, t) {
-    return this.received || (this.received = !0, H(e, this.baseGuest, t)), this;
+    return this.received || (this.received = !0, give(e, this.baseGuest, t)), this;
   }
   disposed(e) {
     if (this.received)
@@ -280,7 +280,7 @@ class $i {
     return t.disposed ? t.disposed(e) : !1;
   }
 }
-class N {
+class Factory {
   constructor(e, t = {}) {
     this.constructorFn = e, this.factories = t;
   }
@@ -291,12 +291,12 @@ class N {
     );
   }
 }
-class Ie extends Error {
+class RuntimeError extends Error {
   constructor(e, t) {
     super(e, t);
   }
 }
-class ki {
+class SystemFileFromHandler {
   constructor(e) {
     this.fileHandler = e;
   }
@@ -304,27 +304,27 @@ class ki {
     return this.fileHandler.getFile().then(async (t) => await new Response(t).text()).then((t) => {
       e.give(t);
     }).catch((t) => {
-      throw new Ie("Problem when reading file in SystemFileFromHandler", {
+      throw new RuntimeError("Problem when reading file in SystemFileFromHandler", {
         cause: t
       });
     }), this;
   }
 }
-class Mi {
+class BrowserFileSaved {
   constructor(e) {
     this.fileHandler = e;
   }
   save(e) {
     return this.fileHandler.createWritable().then((t) => (t.write(e).catch((s) => {
-      throw new Ie("Cant save file in browser", { cause: s });
+      throw new RuntimeError("Cant save file in browser", { cause: s });
     }), t)).then((t) => {
       t.close().catch((s) => {
-        throw new Ie("Cant close written file in browser", { cause: s });
+        throw new RuntimeError("Cant close written file in browser", { cause: s });
       });
     }), this;
   }
 }
-class Fi {
+class TransformedFromJSON {
   constructor(e) {
     this.content = e;
   }
@@ -332,7 +332,7 @@ class Fi {
     return JSON.parse(this.content);
   }
 }
-class Si {
+class TransformedToJSON {
   constructor(e) {
     this.content = e;
   }
@@ -340,7 +340,7 @@ class Si {
     return JSON.stringify(this.content);
   }
 }
-class Ti {
+class SvgImage {
   constructor(e, t = 100, s = 100) {
     this.svgContent = e, this.width = t, this.height = s;
   }
@@ -348,7 +348,7 @@ class Ti {
     return this.svgContent.replaceAll("${width}", String(this.width)).replaceAll("${height}", String(this.height));
   }
 }
-class Ii {
+class SvgMapTypeImage {
   constructor(e, t) {
     this.type = e, this.factories = t;
   }
@@ -356,22 +356,22 @@ class Ii {
     return this.factories.svgImage.create(this.type.svg, this.type.width, this.type.height).markup();
   }
 }
-class ji {
+class NumberChunks {
   constructor(e, t, s) {
     this.chunksCount = e, this.baseNumber = t, this.factories = s;
   }
   chunks(e) {
     return this.baseNumber.value(
       this.factories.guestInTheMiddle.create(e, (t) => {
-        const s = Math.round(t / this.chunksCount), i = [];
-        for (let r = 1; r <= this.chunksCount; r += 1)
-          i.push(r * s);
-        e.give(i);
+        const s = Math.round(t / this.chunksCount), o = [];
+        for (let i = 1; i <= this.chunksCount; i += 1)
+          o.push(i * s);
+        e.give(o);
       })
     ), e;
   }
 }
-class Bi {
+class MapNameFromUrl {
   constructor(e, t) {
     this.mapUrl = e, this.factories = t;
   }
@@ -384,7 +384,7 @@ class Bi {
     );
   }
 }
-class Oi {
+class TextNoHtml {
   constructor(e, t) {
     this.text = e, this.factories = t;
   }
@@ -393,26 +393,26 @@ class Oi {
       this.factories.guestInTheMiddle.create(e, (t) => {
         const s = document.createElement("DIV");
         s.innerHTML = t;
-        const i = s.textContent || s.innerText || "";
-        e.give(i);
+        const o = s.textContent || s.innerText || "";
+        e.give(o);
       })
     ), e;
   }
 }
-class Pi {
-  constructor(e, t, s, i) {
-    $(this, "loadingCache");
-    this.callbackName = e, this.url = t, this.emptyValue = s, this.factories = i, this.loadingCache = i.sourceEmpty.create();
+class JSONP {
+  constructor(e, t, s, o) {
+    b(this, "loadingCache");
+    this.callbackName = e, this.url = t, this.emptyValue = s, this.factories = o, this.loadingCache = o.sourceEmpty.create();
   }
   content(e) {
     this.loadingCache.give(!0);
     const t = setTimeout(() => {
       this.loadingCache.give(!1), e.give(this.emptyValue);
     }, 1e4);
-    return Ps(this.url, () => {
-      var i;
+    return useScriptTag(this.url, () => {
+      var o;
       clearInterval(t);
-      const s = ((i = window[this.callbackName]) == null ? void 0 : i.call(window)) || this.emptyValue;
+      const s = ((o = window[this.callbackName]) == null ? void 0 : o.call(window)) || this.emptyValue;
       e.give(s), this.loadingCache.give(!1);
     }), e;
   }
@@ -420,7 +420,7 @@ class Pi {
     return this.loadingCache.value(e), e;
   }
 }
-class Ei {
+class TextOf {
   constructor(e) {
     this.text = e;
   }
@@ -428,7 +428,7 @@ class Ei {
     return e.give(this.text), e;
   }
 }
-class Di {
+class TextWithoutHTML {
   constructor(e, t) {
     this.baseText = e, this.factories = t;
   }
@@ -440,72 +440,72 @@ class Di {
     ), e;
   }
 }
-var Ee = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-function dt(n) {
-  return n && n.__esModule && Object.prototype.hasOwnProperty.call(n, "default") ? n.default : n;
+var commonjsGlobal = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
+function getDefaultExportFromCjs(r) {
+  return r && r.__esModule && Object.prototype.hasOwnProperty.call(r, "default") ? r.default : r;
 }
-var ut = { exports: {} }, et, Ot;
-function Ri() {
-  if (Ot) return et;
-  Ot = 1;
-  var n = 1e3, e = n * 60, t = e * 60, s = t * 24, i = s * 7, r = s * 365.25;
-  et = function(u, l) {
+var browser = { exports: {} }, ms, hasRequiredMs;
+function requireMs() {
+  if (hasRequiredMs) return ms;
+  hasRequiredMs = 1;
+  var r = 1e3, e = r * 60, t = e * 60, s = t * 24, o = s * 7, i = s * 365.25;
+  ms = function(u, l) {
     l = l || {};
-    var p = typeof u;
-    if (p === "string" && u.length > 0)
-      return o(u);
-    if (p === "number" && isFinite(u))
+    var d = typeof u;
+    if (d === "string" && u.length > 0)
+      return n(u);
+    if (d === "number" && isFinite(u))
       return l.long ? a(u) : c(u);
     throw new Error(
       "val is not a non-empty string or a valid number. val=" + JSON.stringify(u)
     );
   };
-  function o(u) {
+  function n(u) {
     if (u = String(u), !(u.length > 100)) {
       var l = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
         u
       );
       if (l) {
-        var p = parseFloat(l[1]), v = (l[2] || "ms").toLowerCase();
-        switch (v) {
+        var d = parseFloat(l[1]), m = (l[2] || "ms").toLowerCase();
+        switch (m) {
           case "years":
           case "year":
           case "yrs":
           case "yr":
           case "y":
-            return p * r;
+            return d * i;
           case "weeks":
           case "week":
           case "w":
-            return p * i;
+            return d * o;
           case "days":
           case "day":
           case "d":
-            return p * s;
+            return d * s;
           case "hours":
           case "hour":
           case "hrs":
           case "hr":
           case "h":
-            return p * t;
+            return d * t;
           case "minutes":
           case "minute":
           case "mins":
           case "min":
           case "m":
-            return p * e;
+            return d * e;
           case "seconds":
           case "second":
           case "secs":
           case "sec":
           case "s":
-            return p * n;
+            return d * r;
           case "milliseconds":
           case "millisecond":
           case "msecs":
           case "msec":
           case "ms":
-            return p;
+            return d;
           default:
             return;
         }
@@ -514,84 +514,84 @@ function Ri() {
   }
   function c(u) {
     var l = Math.abs(u);
-    return l >= s ? Math.round(u / s) + "d" : l >= t ? Math.round(u / t) + "h" : l >= e ? Math.round(u / e) + "m" : l >= n ? Math.round(u / n) + "s" : u + "ms";
+    return l >= s ? Math.round(u / s) + "d" : l >= t ? Math.round(u / t) + "h" : l >= e ? Math.round(u / e) + "m" : l >= r ? Math.round(u / r) + "s" : u + "ms";
   }
   function a(u) {
     var l = Math.abs(u);
-    return l >= s ? h(u, l, s, "day") : l >= t ? h(u, l, t, "hour") : l >= e ? h(u, l, e, "minute") : l >= n ? h(u, l, n, "second") : u + " ms";
+    return l >= s ? h(u, l, s, "day") : l >= t ? h(u, l, t, "hour") : l >= e ? h(u, l, e, "minute") : l >= r ? h(u, l, r, "second") : u + " ms";
   }
-  function h(u, l, p, v) {
-    var f = l >= p * 1.5;
-    return Math.round(u / p) + " " + v + (f ? "s" : "");
+  function h(u, l, d, m) {
+    var p = l >= d * 1.5;
+    return Math.round(u / d) + " " + m + (p ? "s" : "");
   }
-  return et;
+  return ms;
 }
-function Hi(n) {
-  t.debug = t, t.default = t, t.coerce = a, t.disable = r, t.enable = i, t.enabled = o, t.humanize = Ri(), t.destroy = h, Object.keys(n).forEach((u) => {
-    t[u] = n[u];
+function setup(r) {
+  t.debug = t, t.default = t, t.coerce = a, t.disable = i, t.enable = o, t.enabled = n, t.humanize = requireMs(), t.destroy = h, Object.keys(r).forEach((u) => {
+    t[u] = r[u];
   }), t.names = [], t.skips = [], t.formatters = {};
   function e(u) {
     let l = 0;
-    for (let p = 0; p < u.length; p++)
-      l = (l << 5) - l + u.charCodeAt(p), l |= 0;
+    for (let d = 0; d < u.length; d++)
+      l = (l << 5) - l + u.charCodeAt(d), l |= 0;
     return t.colors[Math.abs(l) % t.colors.length];
   }
   t.selectColor = e;
   function t(u) {
-    let l, p = null, v, f;
-    function x(...A) {
-      if (!x.enabled)
+    let l, d = null, m, p;
+    function g(...f) {
+      if (!g.enabled)
         return;
-      const k = x, j = Number(/* @__PURE__ */ new Date()), G = j - (l || j);
-      k.diff = G, k.prev = l, k.curr = j, l = j, A[0] = t.coerce(A[0]), typeof A[0] != "string" && A.unshift("%O");
-      let R = 0;
-      A[0] = A[0].replace(/%([a-zA-Z%])/g, (D, B) => {
-        if (D === "%%")
+      const v = g, y = Number(/* @__PURE__ */ new Date()), x = y - (l || y);
+      v.diff = x, v.prev = l, v.curr = y, l = y, f[0] = t.coerce(f[0]), typeof f[0] != "string" && f.unshift("%O");
+      let $ = 0;
+      f[0] = f[0].replace(/%([a-zA-Z%])/g, (C, k) => {
+        if (C === "%%")
           return "%";
-        R++;
-        const F = t.formatters[B];
-        if (typeof F == "function") {
-          const M = A[R];
-          D = F.call(k, M), A.splice(R, 1), R--;
+        $++;
+        const _ = t.formatters[k];
+        if (typeof _ == "function") {
+          const w = f[$];
+          C = _.call(v, w), f.splice($, 1), $--;
         }
-        return D;
-      }), t.formatArgs.call(k, A), (k.log || t.log).apply(k, A);
+        return C;
+      }), t.formatArgs.call(v, f), (v.log || t.log).apply(v, f);
     }
-    return x.namespace = u, x.useColors = t.useColors(), x.color = t.selectColor(u), x.extend = s, x.destroy = t.destroy, Object.defineProperty(x, "enabled", {
+    return g.namespace = u, g.useColors = t.useColors(), g.color = t.selectColor(u), g.extend = s, g.destroy = t.destroy, Object.defineProperty(g, "enabled", {
       enumerable: !0,
       configurable: !1,
-      get: () => p !== null ? p : (v !== t.namespaces && (v = t.namespaces, f = t.enabled(u)), f),
-      set: (A) => {
-        p = A;
+      get: () => d !== null ? d : (m !== t.namespaces && (m = t.namespaces, p = t.enabled(u)), p),
+      set: (f) => {
+        d = f;
       }
-    }), typeof t.init == "function" && t.init(x), x;
+    }), typeof t.init == "function" && t.init(g), g;
   }
   function s(u, l) {
-    const p = t(this.namespace + (typeof l > "u" ? ":" : l) + u);
-    return p.log = this.log, p;
+    const d = t(this.namespace + (typeof l > "u" ? ":" : l) + u);
+    return d.log = this.log, d;
   }
-  function i(u) {
+  function o(u) {
     t.save(u), t.namespaces = u, t.names = [], t.skips = [];
     let l;
-    const p = (typeof u == "string" ? u : "").split(/[\s,]+/), v = p.length;
-    for (l = 0; l < v; l++)
-      p[l] && (u = p[l].replace(/\*/g, ".*?"), u[0] === "-" ? t.skips.push(new RegExp("^" + u.slice(1) + "$")) : t.names.push(new RegExp("^" + u + "$")));
+    const d = (typeof u == "string" ? u : "").split(/[\s,]+/), m = d.length;
+    for (l = 0; l < m; l++)
+      d[l] && (u = d[l].replace(/\*/g, ".*?"), u[0] === "-" ? t.skips.push(new RegExp("^" + u.slice(1) + "$")) : t.names.push(new RegExp("^" + u + "$")));
   }
-  function r() {
+  function i() {
     const u = [
       ...t.names.map(c),
       ...t.skips.map(c).map((l) => "-" + l)
     ].join(",");
     return t.enable(""), u;
   }
-  function o(u) {
+  function n(u) {
     if (u[u.length - 1] === "*")
       return !0;
-    let l, p;
-    for (l = 0, p = t.skips.length; l < p; l++)
+    let l, d;
+    for (l = 0, d = t.skips.length; l < d; l++)
       if (t.skips[l].test(u))
         return !1;
-    for (l = 0, p = t.names.length; l < p; l++)
+    for (l = 0, d = t.names.length; l < d; l++)
       if (t.names[l].test(u))
         return !0;
     return !1;
@@ -607,9 +607,9 @@ function Hi(n) {
   }
   return t.enable(t.load()), t;
 }
-var Ni = Hi;
-(function(n, e) {
-  e.formatArgs = s, e.save = i, e.load = r, e.useColors = t, e.storage = o(), e.destroy = /* @__PURE__ */ (() => {
+var common = setup;
+(function(r, e) {
+  e.formatArgs = s, e.save = o, e.load = i, e.useColors = t, e.storage = n(), e.destroy = /* @__PURE__ */ (() => {
     let a = !1;
     return () => {
       a || (a = !0, console.warn("Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`."));
@@ -705,24 +705,24 @@ var Ni = Hi;
     typeof navigator < "u" && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/);
   }
   function s(a) {
-    if (a[0] = (this.useColors ? "%c" : "") + this.namespace + (this.useColors ? " %c" : " ") + a[0] + (this.useColors ? "%c " : " ") + "+" + n.exports.humanize(this.diff), !this.useColors)
+    if (a[0] = (this.useColors ? "%c" : "") + this.namespace + (this.useColors ? " %c" : " ") + a[0] + (this.useColors ? "%c " : " ") + "+" + r.exports.humanize(this.diff), !this.useColors)
       return;
     const h = "color: " + this.color;
     a.splice(1, 0, h, "color: inherit");
     let u = 0, l = 0;
-    a[0].replace(/%[a-zA-Z%]/g, (p) => {
-      p !== "%%" && (u++, p === "%c" && (l = u));
+    a[0].replace(/%[a-zA-Z%]/g, (d) => {
+      d !== "%%" && (u++, d === "%c" && (l = u));
     }), a.splice(l, 0, h);
   }
   e.log = console.debug || console.log || (() => {
   });
-  function i(a) {
+  function o(a) {
     try {
       a ? e.storage.setItem("debug", a) : e.storage.removeItem("debug");
     } catch {
     }
   }
-  function r() {
+  function i() {
     let a;
     try {
       a = e.storage.getItem("debug");
@@ -730,14 +730,14 @@ var Ni = Hi;
     }
     return !a && typeof process < "u" && "env" in process && (a = process.env.DEBUG), a;
   }
-  function o() {
+  function n() {
     try {
       return localStorage;
     } catch {
     }
   }
-  n.exports = Ni(e);
-  const { formatters: c } = n.exports;
+  r.exports = common(e);
+  const { formatters: c } = r.exports;
   c.j = function(a) {
     try {
       return JSON.stringify(a);
@@ -745,10 +745,10 @@ var Ni = Hi;
       return "[UnexpectedJSONParseError]: " + h.message;
     }
   };
-})(ut, ut.exports);
-var I = ut.exports;
-const ls = /* @__PURE__ */ dt(I), Vi = I.debug("TextNlAsBr");
-class zi {
+})(browser, browser.exports);
+var browserExports = browser.exports;
+const debug = /* @__PURE__ */ getDefaultExportFromCjs(browserExports), localDebug$B = browserExports.debug("TextNlAsBr");
+class TextNlAsBr {
   constructor(e, t) {
     this.baseText = e, this.factories = t;
   }
@@ -758,41 +758,41 @@ class zi {
         if (typeof t > "u" || t === null)
           return "";
         const s = "<br />";
-        return Vi(t), e.give((t ?? "").replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, `$1${s}$2`)), !0;
+        return localDebug$B(t), e.give((t ?? "").replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, `$1${s}$2`)), !0;
       })
     ), e;
   }
 }
-const Ui = new N(xe), Li = new N(xe), Qi = new N(ue), Wi = new N(fe), Gi = new N(L), Ki = new N(be), Ji = new N(We), qi = new N(Ke), Yi = new N($i), Zi = new N(L), Xi = new N(Ge), en = new N(wi), pe = {
-  cache: Ui,
-  chain: Xi,
-  guest: Wi,
-  guestCast: Gi,
-  guestAware: Ki,
-  guestInTheMiddle: Zi,
-  guestSync: en,
-  patron: qi,
-  patronOnce: Yi,
-  pool: Ji,
-  source: Li,
-  sourceEmpty: Qi
-}, tn = new N(ki), sn = new N(Mi), nn = new N(Si), rn = new N(Fi), us = new N(Ti), on = new N(Ii, { ...pe, svgImage: us }), an = new N(ji, pe), cn = new N(Bi, pe), ln = new N(Oi, pe), un = new N(Pi, pe), dn = new N(Ei), hn = new N(Di, pe), pn = new N(zi, pe), gn = {
-  ...pe,
-  fileHandlerContent: tn,
-  browserFileSaved: sn,
-  transformToString: nn,
-  transformToObject: rn,
-  svgImage: us,
-  svgMapTypeImage: on,
-  numberChunks: an,
-  mapNameFromUrl: cn,
-  textNoHtml: ln,
-  jsonp: un,
-  textOf: dn,
-  textNlAsBr: pn,
-  textWithoutHTML: hn
-}, Z = () => gn;
-class ht {
+const cache = new Factory(Source), source = new Factory(Source), sourceEmpty = new Factory(SourceEmpty), guest = new Factory(Guest), guestCast = new Factory(GuestCast), guestAware = new Factory(GuestAware), pool = new Factory(PatronPool), patron = new Factory(Patron), patronOnce = new Factory(PatronOnce), guestInTheMiddle = new Factory(GuestCast), chain = new Factory(GuestAwareAll), guestSync = new Factory(GuestSync), systemFactories = {
+  cache,
+  chain,
+  guest,
+  guestCast,
+  guestAware,
+  guestInTheMiddle,
+  guestSync,
+  patron,
+  patronOnce,
+  pool,
+  source,
+  sourceEmpty
+}, fileHandlerContent = new Factory(SystemFileFromHandler), browserFileSaved = new Factory(BrowserFileSaved), transformToString = new Factory(TransformedToJSON), transformToObject = new Factory(TransformedFromJSON), svgImage = new Factory(SvgImage), svgMapTypeImage = new Factory(SvgMapTypeImage, { ...systemFactories, svgImage }), numberChunks = new Factory(NumberChunks, systemFactories), mapNameFromUrl = new Factory(MapNameFromUrl, systemFactories), textNoHtml = new Factory(TextNoHtml, systemFactories), jsonp = new Factory(JSONP, systemFactories), textOf = new Factory(TextOf), textWithoutHTML = new Factory(TextWithoutHTML, systemFactories), textNlAsBr = new Factory(TextNlAsBr, systemFactories), factories$1 = {
+  ...systemFactories,
+  fileHandlerContent,
+  browserFileSaved,
+  transformToString,
+  transformToObject,
+  svgImage,
+  svgMapTypeImage,
+  numberChunks,
+  mapNameFromUrl,
+  textNoHtml,
+  jsonp,
+  textOf,
+  textNlAsBr,
+  textWithoutHTML
+}, useFactories = () => factories$1;
+class CheckNotification {
   constructor(e, t, s) {
     this.notification = e, this.check = t, this.factories = s;
   }
@@ -819,19 +819,19 @@ class ht {
     ), this;
   }
 }
-const tt = I.debug("MapCurrent");
-class ds {
+const localDebug$A = browserExports.debug("MapCurrent");
+class MapCurrent {
   constructor(e, t, s) {
-    $(this, "objectsCache");
-    $(this, "settingsCache");
-    $(this, "typesCache");
+    b(this, "objectsCache");
+    b(this, "settingsCache");
+    b(this, "typesCache");
     this.mapFile = e, this.mapId = t, this.factories = s, this.objectsCache = s.sourceEmpty.create(), this.settingsCache = s.sourceEmpty.create(), this.typesCache = s.sourceEmpty.create(), e.currentMap(
       s.patron.create(
-        s.guest.create((i) => {
-          tt("current map changed", i), this.settingsCache.give(i.settings), this.objectsCache.give(Object.values(i.objects)), this.typesCache.give(
-            Object.entries(i.types).map(([r, o]) => ({
-              ...o,
-              id: r
+        s.guest.create((o) => {
+          localDebug$A("current map changed", o), this.settingsCache.give(o.settings), this.objectsCache.give(Object.values(o.objects)), this.typesCache.give(
+            Object.entries(o.types).map(([i, n]) => ({
+              ...n,
+              id: i
             }))
           );
         })
@@ -842,13 +842,13 @@ class ds {
     return this.settingsCache.value(e), e;
   }
   objects(e) {
-    return tt("notify about new objects"), this.objectsCache.value(e), e;
+    return localDebug$A("notify about new objects"), this.objectsCache.value(e), e;
   }
   types(e) {
     return this.typesCache.value(e), e;
   }
   give(e) {
-    return tt("save map document", e), this.mapId.id(
+    return localDebug$A("save map document", e), this.mapId.id(
       this.factories.guest.create((t) => {
         this.mapFile.mapFile(
           this.factories.guest.create((s) => {
@@ -862,9 +862,9 @@ class ds {
     ), this;
   }
 }
-class fn {
+class MapCurrentID {
   constructor(e) {
-    $(this, "idCache");
+    b(this, "idCache");
     this.idCache = e.cache.create("current");
   }
   id(e) {
@@ -874,31 +874,31 @@ class fn {
     return this.idCache.give(e), this;
   }
 }
-class mn {
+class MapCurrentTitle {
   constructor(e) {
     this.mapFile = e;
   }
   value(e) {
     return this.mapFile.currentMap(
-      new L(e, (t) => {
-        H(t.settings.title, e);
+      new GuestCast(e, (t) => {
+        give(t.settings.title, e);
       })
     ), this;
   }
 }
-const De = I.debug("MapHistory"), Pt = (n) => {
-  const e = JSON.parse(JSON.stringify(n));
+const localDebug$z = browserExports.debug("MapHistory"), normalizeMapDocumentAndSerialize = (r) => {
+  const e = JSON.parse(JSON.stringify(r));
   return Object.values(e.objects).forEach((t) => {
     t.width = 0, t.height = 0;
   }), JSON.stringify(e);
 };
-class vn {
-  constructor(e, t, s, i) {
-    $(this, "mapsHistory");
-    $(this, "historyIndex");
-    this.mapFile = e, this.map = t, this.mapId = s, this.factories = i, this.mapsHistory = i.cache.create([]), this.historyIndex = i.cache.create(0), this.mapFile.currentMap(i.patron.create(this)), this.mapId.id(
-      i.patron.create(
-        i.guest.create(() => {
+class MapHistory {
+  constructor(e, t, s, o) {
+    b(this, "mapsHistory");
+    b(this, "historyIndex");
+    this.mapFile = e, this.map = t, this.mapId = s, this.factories = o, this.mapsHistory = o.cache.create([]), this.historyIndex = o.cache.create(0), this.mapFile.currentMap(o.patron.create(this)), this.mapId.id(
+      o.patron.create(
+        o.guest.create(() => {
           this.mapsHistory.give([]), this.historyIndex.give(0);
         })
       )
@@ -910,13 +910,13 @@ class vn {
         this.factories.guest.create((t) => {
           this.mapsHistory.value(
             this.factories.guest.create((s) => {
-              De("add map to history", s, e);
-              const i = s.some(
-                (r) => Pt(r) === Pt(e)
+              localDebug$z("add map to history", s, e);
+              const o = s.some(
+                (i) => normalizeMapDocumentAndSerialize(i) === normalizeMapDocumentAndSerialize(e)
               );
-              if (De("isMapFromHistory", i), !i) {
-                const r = s[t] ? [s[t]] : [];
-                this.historyIndex.give(0), this.mapsHistory.give([e, ...r, ...s.slice(0, 9)]);
+              if (localDebug$z("isMapFromHistory", o), !o) {
+                const i = s[t] ? [s[t]] : [];
+                this.historyIndex.give(0), this.mapsHistory.give([e, ...i, ...s.slice(0, 9)]);
               }
             })
           );
@@ -931,9 +931,9 @@ class vn {
     ), this.mapsHistory.value(this.factories.guestCast.create(e, t.guestKey("mapsHistory"))), t.value(
       this.factories.guestInTheMiddle.create(
         e,
-        ({ historyIndex: s, mapsHistory: i }) => {
-          const r = s < i.length - 1;
-          De("recalculate is prev possible", r), e.give(r);
+        ({ historyIndex: s, mapsHistory: o }) => {
+          const i = s < o.length - 1;
+          localDebug$z("recalculate is prev possible", i), e.give(i);
         }
       )
     ), e;
@@ -944,8 +944,8 @@ class vn {
         const t = e + 1;
         this.historyIndex.give(t), this.mapsHistory.value(
           this.factories.guest.create((s) => {
-            const i = s[t];
-            this.map.give(i);
+            const o = s[t];
+            this.map.give(o);
           })
         );
       })
@@ -958,9 +958,9 @@ class vn {
     ), this.mapsHistory.value(this.factories.guestCast.create(e, t.guestKey("mapsHistory"))), t.value(
       this.factories.guestInTheMiddle.create(
         e,
-        ({ historyIndex: s, mapsHistory: i }) => {
-          const r = s > 0 && s <= i.length - 1;
-          De("recalculate is next possible", r), e.give(r);
+        ({ historyIndex: s, mapsHistory: o }) => {
+          const i = s > 0 && s <= o.length - 1;
+          localDebug$z("recalculate is next possible", i), e.give(i);
         }
       )
     ), e;
@@ -971,15 +971,15 @@ class vn {
         const t = e - 1;
         this.historyIndex.give(t), this.mapsHistory.value(
           this.factories.guest.create((s) => {
-            const i = s[t];
-            this.map.give(i);
+            const o = s[t];
+            this.map.give(o);
           })
         );
       })
     );
   }
 }
-class An {
+class MapRemoved {
   constructor(e, t, s) {
     this.mapFile = e, this.mapId = t, this.factories = s;
   }
@@ -992,17 +992,17 @@ class An {
     ), this;
   }
 }
-const Re = I.debug("MapFile");
-class yn {
+const localDebug$y = browserExports.debug("MapFile");
+class MapFile {
   constructor(e, t, s) {
-    $(this, "currentMapPatrons");
-    $(this, "mapFileCache");
+    b(this, "currentMapPatrons");
+    b(this, "mapFileCache");
     this.mapFileContent = e, this.mapId = t, this.factories = s, this.currentMapPatrons = s.pool.create(this), this.mapFileCache = s.cache.create(!1), e.value(
-      s.patron.create((i) => {
-        if (!i)
+      s.patron.create((o) => {
+        if (!o)
           return;
-        const r = this.factories.transformToObject.create(i).result();
-        Re("get map file", r), this.mapFileCache.give(r);
+        const i = this.factories.transformToObject.create(o).result();
+        localDebug$y("get map file", i), this.mapFileCache.give(i);
       })
     );
   }
@@ -1011,13 +1011,13 @@ class yn {
     return this.mapId.id(this.factories.guestCast.create(e, t.guestKey("mapId"))), this.mapFile(this.factories.guestCast.create(e, t.guestKey("mapFile"))), t.value(
       this.factories.guestInTheMiddle.create(
         e,
-        ({ mapId: s, mapFile: i }) => {
-          if (Re("get current map", s, i, typeof i), !i[s])
+        ({ mapId: s, mapFile: o }) => {
+          if (localDebug$y("get current map", s, o, typeof o), !o[s])
             this.createEmptyMapByName(s, e);
           else {
-            const r = i[s];
+            const i = o[s];
             this.currentMapPatrons.distribute(
-              r != null && r.structure ? r.structure : r,
+              i != null && i.structure ? i.structure : i,
               e
             );
           }
@@ -1026,18 +1026,18 @@ class yn {
     ), e;
   }
   give(e) {
-    return Re("save map file document", e), this.mapFileContent.give(this.factories.transformToString.create(e).result()), this;
+    return localDebug$y("save map file document", e), this.mapFileContent.give(this.factories.transformToString.create(e).result()), this;
   }
   mapFile(e) {
     return this.mapFileCache.value(e), e;
   }
   createEmptyMapByName(e, t) {
-    Re("creating empty map by name", e);
+    localDebug$y("creating empty map by name", e);
     const s = this.factories.transformToObject.create(this.generateEmptyMapFile()).result();
     this.mapFile(
-      this.factories.guest.create((i) => {
+      this.factories.guest.create((o) => {
         this.give({
-          ...i,
+          ...o,
           [e]: s.current
         }), t.give(s.current);
       })
@@ -1047,10 +1047,10 @@ class yn {
     return '{"current":{"progress":0,"settings":{"colored":false,"title":"current"},"objects":{},"types":{},"url":"/current","parent":""}}';
   }
 }
-const bn = I.debug("MapFileForRendering");
-class wn {
+const localDebug$x = browserExports.debug("MapFileForRendering");
+class MapFileForRendering {
   constructor(e, t, s) {
-    $(this, "mapCache");
+    b(this, "mapCache");
     this.mapId = t, this.factories = s, this.mapCache = s.cache.create({ objects: {}, types: {}, settings: {} }), e.currentMap(s.patron.create(this.mapCache));
   }
   currentMap(e) {
@@ -1070,12 +1070,12 @@ class wn {
   give(e) {
     return this.mapId.id(
       this.factories.guest.create((t) => {
-        bn("received map file, objects = ", e[t].objects), this.mapCache.give(e[t]);
+        localDebug$x("received map file, objects = ", e[t].objects), this.mapCache.give(e[t]);
       })
     ), this;
   }
 }
-class hs {
+class MapObject {
   constructor(e, t, s) {
     this.map = e, this.mapFile = t, this.factories = s;
   }
@@ -1097,11 +1097,11 @@ class hs {
     ), this;
   }
 }
-const Et = ls("app:MapObjectCurrent");
-class xn {
+const localDebug$w = debug("app:MapObjectCurrent");
+class MapObjectCurrent {
   constructor(e, t) {
-    $(this, "idCache");
-    $(this, "silenceActivator");
+    b(this, "idCache");
+    b(this, "silenceActivator");
     this.drawer = e, this.factories = t, this.idCache = t.sourceEmpty.create(), this.silenceActivator = t.source.create(!1), this.idCache.value(
       t.patron.create(
         t.guest.create((s) => {
@@ -1120,44 +1120,44 @@ class xn {
     return this.idCache.value(e), e;
   }
   give(e) {
-    return Et("new value current object", e), this.silenceActivator.value(
+    return localDebug$w("new value current object", e), this.silenceActivator.value(
       this.factories.guest.create((t) => {
-        Et("silence activator", t), t ? t.give(e) : this.idCache.give(e);
+        localDebug$w("silence activator", t), t ? t.give(e) : this.idCache.give(e);
       })
     ), this;
   }
 }
-class Cn {
+class MapObjectHasArrowCheck {
   constructor(e, t) {
     this.mapFile = e, this.factories = t;
   }
   check(e, t) {
     return this.mapFile.currentMap(
       this.factories.guest.create((s) => {
-        let i = !1;
-        Object.values(s.objects).forEach((r) => {
-          i = i || r.arrows.some((o) => o.id === e.id);
-        }), t.give(!i || "У объекта есть входящие связи!");
+        let o = !1;
+        Object.values(s.objects).forEach((i) => {
+          o = o || i.arrows.some((n) => n.id === e.id);
+        }), t.give(!o || "У объекта есть входящие связи!");
       })
     ), this;
   }
 }
-const st = I.debug("MapObjectNew");
-class _n {
-  constructor(e, t, s, i, r) {
-    this.map = e, this.mapObject = t, this.canvas = s, this.stagePosition = i, this.factories = r;
+const localDebug$v = browserExports.debug("MapObjectNew");
+class MapObjectNew {
+  constructor(e, t, s, o, i) {
+    this.map = e, this.mapObject = t, this.canvas = s, this.stagePosition = o, this.factories = i;
   }
   byTypeName(e, t) {
-    return st("start to add new type", e, t), this.stagePosition.position(
+    return localDebug$v("start to add new type", e, t), this.stagePosition.position(
       this.factories.guest.create((s) => {
         this.map.types(
-          this.factories.guest.create((i) => {
+          this.factories.guest.create((o) => {
             this.canvas.canvas(
-              this.factories.guest.create((r) => {
-                const o = r.getBoundingClientRect(), c = i.find((u) => u.id === e);
-                st("is type found", c);
-                const a = t.x - o.left, h = t.y - o.top;
-                c && (st("add new type"), this.mapObject.give({
+              this.factories.guest.create((i) => {
+                const n = i.getBoundingClientRect(), c = o.find((u) => u.id === e);
+                localDebug$v("is type found", c);
+                const a = t.x - n.left, h = t.y - n.top;
+                c && (localDebug$v("add new type"), this.mapObject.give({
                   additionalName: "",
                   arrows: [],
                   description: "",
@@ -1188,25 +1188,25 @@ class _n {
     ), this;
   }
 }
-class $n {
+class MapObjectParentNames {
   constructor(e, t) {
     this.mapId = e, this.factories = t;
   }
   names(e) {
     return this.mapId.id(
       this.factories.guestInTheMiddle.create(e, (t) => {
-        const s = t.split("_").filter((o) => !!o);
-        let i = "";
-        const r = s.map((o) => {
-          const c = `${i}${o}`;
-          return i || (i = "_"), i += `${o}_`, c;
+        const s = t.split("_").filter((n) => !!n);
+        let o = "";
+        const i = s.map((n) => {
+          const c = `${o}${n}`;
+          return o || (o = "_"), o += `${n}_`, c;
         });
-        i = "", e.give(r);
+        o = "", e.give(i);
       })
     ), e;
   }
 }
-class kn {
+class MapObjectRelationRemoved {
   constructor(e) {
     this.mapObject = e;
   }
@@ -1218,14 +1218,14 @@ class kn {
     }), this;
   }
 }
-class Mn {
-  constructor(e, t, s, i) {
-    this.map = e, this.mapFile = t, this.checks = s, this.factories = i;
+class MapObjectRemoved {
+  constructor(e, t, s, o) {
+    this.map = e, this.mapFile = t, this.checks = s, this.factories = o;
   }
   give(e) {
     const t = this.factories.chain.create(this);
-    return this.checks.forEach((s, i) => {
-      s.breakOnFail(e, t.guestKey(String(i)));
+    return this.checks.forEach((s, o) => {
+      s.breakOnFail(e, t.guestKey(String(o)));
     }), t.value(
       this.factories.guest.create(() => {
         this.mapFile.currentMap(
@@ -1237,11 +1237,11 @@ class Mn {
     ), this;
   }
 }
-const Fn = I.debug("MapObjectsLink");
-class Sn {
-  constructor(e, t, s, i, r) {
-    $(this, "objectIdsCache");
-    this.mapObjectCurrent = e, this.map = t, this.mapObject = s, this.newArrow = i, this.factories = r, this.objectIdsCache = r.cache.create([]);
+const localDebug$u = browserExports.debug("MapObjectsLink");
+class MapObjectsLink {
+  constructor(e, t, s, o, i) {
+    b(this, "objectIdsCache");
+    this.mapObjectCurrent = e, this.map = t, this.mapObject = s, this.newArrow = o, this.factories = i, this.objectIdsCache = i.cache.create([]);
   }
   objectIds(e) {
     return this.objectIdsCache.value(e), e;
@@ -1256,20 +1256,20 @@ class Sn {
         const t = ["first"];
         this.objectIdsCache.give(t), this.mapObjectCurrent.silenceOn(
           this.factories.guest.create((s) => {
-            t.push(s), this.objectIdsCache.give([...t]), Fn("object ids", t), t.length === 2 && this.map.objects(
-              this.factories.guest.create((i) => {
-                const [, r] = t, o = i.find((c) => c.id === r);
-                o && this.newArrow.forObject(o);
+            t.push(s), this.objectIdsCache.give([...t]), localDebug$u("object ids", t), t.length === 2 && this.map.objects(
+              this.factories.guest.create((o) => {
+                const [, i] = t, n = o.find((c) => c.id === i);
+                n && this.newArrow.forObject(n);
               })
             ), t.length === 3 && (this.newArrow.dispose(), this.mapObjectCurrent.silenceOff(), this.map.objects(
-              this.factories.guest.create((i) => {
-                const [, r, o] = t, c = i.find((a) => a.id === r);
-                c && o && (this.objectIdsCache.give([]), this.mapObject.give({
+              this.factories.guest.create((o) => {
+                const [, i, n] = t, c = o.find((a) => a.id === i);
+                c && n && (this.objectIdsCache.give([]), this.mapObject.give({
                   ...c,
                   arrows: [
                     ...c.arrows,
                     {
-                      id: o,
+                      id: n,
                       label: ""
                     }
                   ]
@@ -1282,135 +1282,135 @@ class Sn {
     );
   }
 }
-function Tn(n) {
-  var e = typeof n;
-  return n != null && (e == "object" || e == "function");
+function isObject$3(r) {
+  var e = typeof r;
+  return r != null && (e == "object" || e == "function");
 }
-var pt = Tn, In = typeof Ee == "object" && Ee && Ee.Object === Object && Ee, jn = In, Bn = jn, On = typeof self == "object" && self && self.Object === Object && self, Pn = Bn || On || Function("return this")(), ps = Pn, En = ps, Dn = function() {
-  return En.Date.now();
-}, Rn = Dn, Hn = /\s/;
-function Nn(n) {
-  for (var e = n.length; e-- && Hn.test(n.charAt(e)); )
+var isObject_1 = isObject$3, freeGlobal$1 = typeof commonjsGlobal == "object" && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal, _freeGlobal = freeGlobal$1, freeGlobal = _freeGlobal, freeSelf = typeof self == "object" && self && self.Object === Object && self, root$2 = freeGlobal || freeSelf || Function("return this")(), _root = root$2, root$1 = _root, now$1 = function() {
+  return root$1.Date.now();
+}, now_1 = now$1, reWhitespace = /\s/;
+function trimmedEndIndex$1(r) {
+  for (var e = r.length; e-- && reWhitespace.test(r.charAt(e)); )
     ;
   return e;
 }
-var Vn = Nn, zn = Vn, Un = /^\s+/;
-function Ln(n) {
-  return n && n.slice(0, zn(n) + 1).replace(Un, "");
+var _trimmedEndIndex = trimmedEndIndex$1, trimmedEndIndex = _trimmedEndIndex, reTrimStart = /^\s+/;
+function baseTrim$1(r) {
+  return r && r.slice(0, trimmedEndIndex(r) + 1).replace(reTrimStart, "");
 }
-var Qn = Ln, Wn = ps, Gn = Wn.Symbol, gs = Gn, Dt = gs, fs = Object.prototype, Kn = fs.hasOwnProperty, Jn = fs.toString, _e = Dt ? Dt.toStringTag : void 0;
-function qn(n) {
-  var e = Kn.call(n, _e), t = n[_e];
+var _baseTrim = baseTrim$1, root = _root, Symbol$3 = root.Symbol, _Symbol = Symbol$3, Symbol$2 = _Symbol, objectProto$1 = Object.prototype, hasOwnProperty = objectProto$1.hasOwnProperty, nativeObjectToString$1 = objectProto$1.toString, symToStringTag$1 = Symbol$2 ? Symbol$2.toStringTag : void 0;
+function getRawTag$1(r) {
+  var e = hasOwnProperty.call(r, symToStringTag$1), t = r[symToStringTag$1];
   try {
-    n[_e] = void 0;
+    r[symToStringTag$1] = void 0;
     var s = !0;
   } catch {
   }
-  var i = Jn.call(n);
-  return s && (e ? n[_e] = t : delete n[_e]), i;
+  var o = nativeObjectToString$1.call(r);
+  return s && (e ? r[symToStringTag$1] = t : delete r[symToStringTag$1]), o;
 }
-var Yn = qn, Zn = Object.prototype, Xn = Zn.toString;
-function er(n) {
-  return Xn.call(n);
+var _getRawTag = getRawTag$1, objectProto = Object.prototype, nativeObjectToString = objectProto.toString;
+function objectToString$1(r) {
+  return nativeObjectToString.call(r);
 }
-var tr = er, Rt = gs, sr = Yn, ir = tr, nr = "[object Null]", rr = "[object Undefined]", Ht = Rt ? Rt.toStringTag : void 0;
-function or(n) {
-  return n == null ? n === void 0 ? rr : nr : Ht && Ht in Object(n) ? sr(n) : ir(n);
+var _objectToString = objectToString$1, Symbol$1 = _Symbol, getRawTag = _getRawTag, objectToString = _objectToString, nullTag = "[object Null]", undefinedTag = "[object Undefined]", symToStringTag = Symbol$1 ? Symbol$1.toStringTag : void 0;
+function baseGetTag$1(r) {
+  return r == null ? r === void 0 ? undefinedTag : nullTag : symToStringTag && symToStringTag in Object(r) ? getRawTag(r) : objectToString(r);
 }
-var ar = or;
-function cr(n) {
-  return n != null && typeof n == "object";
+var _baseGetTag = baseGetTag$1;
+function isObjectLike$1(r) {
+  return r != null && typeof r == "object";
 }
-var lr = cr, ur = ar, dr = lr, hr = "[object Symbol]";
-function pr(n) {
-  return typeof n == "symbol" || dr(n) && ur(n) == hr;
+var isObjectLike_1 = isObjectLike$1, baseGetTag = _baseGetTag, isObjectLike = isObjectLike_1, symbolTag = "[object Symbol]";
+function isSymbol$1(r) {
+  return typeof r == "symbol" || isObjectLike(r) && baseGetTag(r) == symbolTag;
 }
-var gr = pr, fr = Qn, Nt = pt, mr = gr, Vt = NaN, vr = /^[-+]0x[0-9a-f]+$/i, Ar = /^0b[01]+$/i, yr = /^0o[0-7]+$/i, br = parseInt;
-function wr(n) {
-  if (typeof n == "number")
-    return n;
-  if (mr(n))
-    return Vt;
-  if (Nt(n)) {
-    var e = typeof n.valueOf == "function" ? n.valueOf() : n;
-    n = Nt(e) ? e + "" : e;
+var isSymbol_1 = isSymbol$1, baseTrim = _baseTrim, isObject$2 = isObject_1, isSymbol = isSymbol_1, NAN = NaN, reIsBadHex = /^[-+]0x[0-9a-f]+$/i, reIsBinary = /^0b[01]+$/i, reIsOctal = /^0o[0-7]+$/i, freeParseInt = parseInt;
+function toNumber$1(r) {
+  if (typeof r == "number")
+    return r;
+  if (isSymbol(r))
+    return NAN;
+  if (isObject$2(r)) {
+    var e = typeof r.valueOf == "function" ? r.valueOf() : r;
+    r = isObject$2(e) ? e + "" : e;
   }
-  if (typeof n != "string")
-    return n === 0 ? n : +n;
-  n = fr(n);
-  var t = Ar.test(n);
-  return t || yr.test(n) ? br(n.slice(2), t ? 2 : 8) : vr.test(n) ? Vt : +n;
+  if (typeof r != "string")
+    return r === 0 ? r : +r;
+  r = baseTrim(r);
+  var t = reIsBinary.test(r);
+  return t || reIsOctal.test(r) ? freeParseInt(r.slice(2), t ? 2 : 8) : reIsBadHex.test(r) ? NAN : +r;
 }
-var xr = wr, Cr = pt, it = Rn, zt = xr, _r = "Expected a function", $r = Math.max, kr = Math.min;
-function Mr(n, e, t) {
-  var s, i, r, o, c, a, h = 0, u = !1, l = !1, p = !0;
-  if (typeof n != "function")
-    throw new TypeError(_r);
-  e = zt(e) || 0, Cr(t) && (u = !!t.leading, l = "maxWait" in t, r = l ? $r(zt(t.maxWait) || 0, e) : r, p = "trailing" in t ? !!t.trailing : p);
-  function v(D) {
-    var B = s, F = i;
-    return s = i = void 0, h = D, o = n.apply(F, B), o;
+var toNumber_1 = toNumber$1, isObject$1 = isObject_1, now = now_1, toNumber = toNumber_1, FUNC_ERROR_TEXT$1 = "Expected a function", nativeMax = Math.max, nativeMin = Math.min;
+function debounce$1(r, e, t) {
+  var s, o, i, n, c, a, h = 0, u = !1, l = !1, d = !0;
+  if (typeof r != "function")
+    throw new TypeError(FUNC_ERROR_TEXT$1);
+  e = toNumber(e) || 0, isObject$1(t) && (u = !!t.leading, l = "maxWait" in t, i = l ? nativeMax(toNumber(t.maxWait) || 0, e) : i, d = "trailing" in t ? !!t.trailing : d);
+  function m(C) {
+    var k = s, _ = o;
+    return s = o = void 0, h = C, n = r.apply(_, k), n;
   }
-  function f(D) {
-    return h = D, c = setTimeout(k, e), u ? v(D) : o;
+  function p(C) {
+    return h = C, c = setTimeout(v, e), u ? m(C) : n;
   }
-  function x(D) {
-    var B = D - a, F = D - h, M = e - B;
-    return l ? kr(M, r - F) : M;
+  function g(C) {
+    var k = C - a, _ = C - h, w = e - k;
+    return l ? nativeMin(w, i - _) : w;
   }
-  function A(D) {
-    var B = D - a, F = D - h;
-    return a === void 0 || B >= e || B < 0 || l && F >= r;
+  function f(C) {
+    var k = C - a, _ = C - h;
+    return a === void 0 || k >= e || k < 0 || l && _ >= i;
   }
-  function k() {
-    var D = it();
-    if (A(D))
-      return j(D);
-    c = setTimeout(k, x(D));
+  function v() {
+    var C = now();
+    if (f(C))
+      return y(C);
+    c = setTimeout(v, g(C));
   }
-  function j(D) {
-    return c = void 0, p && s ? v(D) : (s = i = void 0, o);
+  function y(C) {
+    return c = void 0, d && s ? m(C) : (s = o = void 0, n);
   }
-  function G() {
-    c !== void 0 && clearTimeout(c), h = 0, s = a = i = c = void 0;
+  function x() {
+    c !== void 0 && clearTimeout(c), h = 0, s = a = o = c = void 0;
   }
-  function R() {
-    return c === void 0 ? o : j(it());
+  function $() {
+    return c === void 0 ? n : y(now());
   }
-  function re() {
-    var D = it(), B = A(D);
-    if (s = arguments, i = this, a = D, B) {
+  function F() {
+    var C = now(), k = f(C);
+    if (s = arguments, o = this, a = C, k) {
       if (c === void 0)
-        return f(a);
+        return p(a);
       if (l)
-        return clearTimeout(c), c = setTimeout(k, e), v(a);
+        return clearTimeout(c), c = setTimeout(v, e), m(a);
     }
-    return c === void 0 && (c = setTimeout(k, e)), o;
+    return c === void 0 && (c = setTimeout(v, e)), n;
   }
-  return re.cancel = G, re.flush = R, re;
+  return F.cancel = x, F.flush = $, F;
 }
-var ms = Mr;
-const me = /* @__PURE__ */ dt(ms), Fr = (n) => {
-  if (n[n.length - 1] === "/") {
-    const e = n.split("");
+var debounce_1 = debounce$1;
+const debounce$2 = /* @__PURE__ */ getDefaultExportFromCjs(debounce_1), urlTrim = (r) => {
+  if (r[r.length - 1] === "/") {
+    const e = r.split("");
     return e.splice(e.length - 1, 1), e.join("");
   }
-  return n;
-}, Sr = me((n) => {
-  window == null || window.open(n);
-}, 200), nt = I.debug("MapObjectUrl");
-class Tr {
+  return r;
+}, openExternalLink = debounce$2((r) => {
+  window == null || window.open(r);
+}, 200), localDebug$t = browserExports.debug("MapObjectUrl");
+class MapObjectUrl {
   constructor(e, t) {
     this.mapId = e, this.factories = t;
   }
   open(e, t) {
     if (e != null && e.linked) {
       const s = e.outlink;
-      e.targetBlank ? Sr(s) : (nt("open new map", s), this.factories.mapNameFromUrl.create(
+      e.targetBlank ? openExternalLink(s) : (localDebug$t("open new map", s), this.factories.mapNameFromUrl.create(
         this.factories.source.create(s)
       ).name(
-        this.factories.guest.create((r) => {
-          nt("open map name", s, r), t.give(r);
+        this.factories.guest.create((i) => {
+          localDebug$t("open map name", s, i), t.give(i);
         })
       ));
     }
@@ -1420,12 +1420,12 @@ class Tr {
     return e.value(
       this.factories.guestInTheMiddle.create(t, (s) => {
         this.mapId.id(
-          this.factories.guest.create((i) => {
-            const r = i[0] === "_" ? i.replaceAll("_", "/") : "/current", o = s.name ? s.name : s.additionalName ? s.additionalName : "";
-            this.factories.textNoHtml.create(this.factories.source.create(o)).noHtml(
+          this.factories.guest.create((o) => {
+            const i = o[0] === "_" ? o.replaceAll("_", "/") : "/current", n = s.name ? s.name : s.additionalName ? s.additionalName : "";
+            this.factories.textNoHtml.create(this.factories.source.create(n)).noHtml(
               this.factories.guest.create((c) => {
-                let a = s.outlink ? s.outlink : `${r}/${Ir(c)}`;
-                nt("link is", a), a = Fr(a), t.give(a);
+                let a = s.outlink ? s.outlink : `${i}/${slugify(c)}`;
+                localDebug$t("link is", a), a = urlTrim(a), t.give(a);
               })
             );
           })
@@ -1434,29 +1434,29 @@ class Tr {
     ), t;
   }
 }
-function Ir(n) {
-  return n.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+function slugify(r) {
+  return r.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 }
-const jr = I.debug("ObjectPositionBounds");
-class Br {
+const localDebug$s = browserExports.debug("ObjectPositionBounds");
+class ObjectPositionBounds {
   constructor(e, t) {
     this.stageSize = e, this.factories = t;
   }
   position(e, t, s) {
     return this.stageSize.value(
-      this.factories.guestInTheMiddle.create(s, (i) => {
-        let { x: r, y: o } = t;
-        r < 30 && (r = 30), o < 30 && (o = 30);
-        const c = i.width - e.width;
-        r > c && (r = c);
-        const a = i.height - e.height;
-        o > a && (o = a), jr("position", r, o), s.give({ x: r, y: o });
+      this.factories.guestInTheMiddle.create(s, (o) => {
+        let { x: i, y: n } = t;
+        i < 30 && (i = 30), n < 30 && (n = 30);
+        const c = o.width - e.width;
+        i > c && (i = c);
+        const a = o.height - e.height;
+        n > a && (n = a), localDebug$s("position", i, n), s.give({ x: i, y: n });
       })
     ), s;
   }
 }
-const He = 15;
-class Or {
+const gridSize = 15;
+class ObjectPositionGridStick {
   constructor(e, t) {
     this.baseRestriction = e, this.factories = t;
   }
@@ -1464,50 +1464,50 @@ class Or {
     return this.baseRestriction.position(
       e,
       t,
-      this.factories.guestInTheMiddle.create(s, (i) => {
+      this.factories.guestInTheMiddle.create(s, (o) => {
         s.give({
-          x: Math.round(i.x / He) * He,
-          y: Math.round(i.y / He) * He
+          x: Math.round(o.x / gridSize) * gridSize,
+          y: Math.round(o.y / gridSize) * gridSize
         });
       })
     ), s;
   }
 }
-const Ut = {
+const axisToSize = {
   x: "width",
   y: "height"
-}, rt = {
+}, axisToPositionIndex = {
   x: 0,
   y: 1
-}, Pr = {
+}, directionMultiplier = {
   positive: 1,
   negative: -1
-}, Lt = I.debug("ObjectsOutsideScreen");
-class Er {
-  constructor(e, t, s, i) {
-    this.map = e, this.stageSize = t, this.layer = s, this.factories = i;
+}, localDebug$r = browserExports.debug("ObjectsOutsideScreen");
+class ObjectsOutsideScreen {
+  constructor(e, t, s, o) {
+    this.map = e, this.stageSize = t, this.layer = s, this.factories = o;
   }
   count(e, t) {
-    const s = e.direction === "positive", i = this.factories.chain.create();
-    return this.map.objects(this.factories.guestCast.create(t, i.guestKey("objects"))), this.layer.layer(this.factories.guestCast.create(t, i.guestKey("layer"))), this.layer.position(this.factories.guestCast.create(t, i.guestKey("position"))), i.value(
+    const s = e.direction === "positive", o = this.factories.chain.create();
+    return this.map.objects(this.factories.guestCast.create(t, o.guestKey("objects"))), this.layer.layer(this.factories.guestCast.create(t, o.guestKey("layer"))), this.layer.position(this.factories.guestCast.create(t, o.guestKey("position"))), o.value(
       this.factories.guestInTheMiddle.create(
         t,
-        ({ objects: r, layer: o, position: c }) => {
+        ({ objects: i, layer: n, position: c }) => {
           var l;
-          const a = Pr[e.direction], u = r.sort(
-            (p, v) => p.position[rt[e.axis]] * a - v.position[rt[e.axis]] * a
-          ).filter((p) => {
-            const v = p.position[rt[e.axis]] + (s ? 0 : p[Ut[e.axis]]), f = c[e.axis] * -1 + (s ? o[Ut[e.axis]]() : 0);
-            return Lt(
+          const a = directionMultiplier[e.direction], u = i.sort(
+            (d, m) => d.position[axisToPositionIndex[e.axis]] * a - m.position[axisToPositionIndex[e.axis]] * a
+          ).filter((d) => {
+            const m = d.position[axisToPositionIndex[e.axis]] + (s ? 0 : d[axisToSize[e.axis]]), p = c[e.axis] * -1 + (s ? n[axisToSize[e.axis]]() : 0);
+            return localDebug$r(
               "mb nearest points",
               e.direction,
               "objectP=",
-              v,
+              m,
               "screenP=",
-              f
-            ), s ? v > f : v < f;
+              p
+            ), s ? m > p : m < p;
           });
-          Lt("nearest", u), t.give({
+          localDebug$r("nearest", u), t.give({
             count: u.length,
             nearestObjectId: ((l = u.at(s ? -1 : 0)) == null ? void 0 : l.id) ?? ""
           });
@@ -1516,7 +1516,7 @@ class Er {
     ), t;
   }
 }
-class Dr {
+class MapSettings {
   constructor(e, t, s) {
     this.mapFile = e, this.map = t, this.factories = s;
   }
@@ -1531,9 +1531,9 @@ class Dr {
     ), this;
   }
 }
-class Rr {
+class MapTypeCurrent {
   constructor(e) {
-    $(this, "idCache");
+    b(this, "idCache");
     this.idCache = e.sourceEmpty.create();
   }
   typeId(e) {
@@ -1543,7 +1543,7 @@ class Rr {
     return this.idCache.give(e), this;
   }
 }
-class Hr {
+class MapTypeNew {
   constructor(e) {
     this.mapType = e;
   }
@@ -1561,19 +1561,19 @@ class Hr {
     });
   }
 }
-class Nr {
-  constructor(e, t, s, i) {
-    this.map = e, this.mapFile = t, this.checks = s, this.factories = i;
+class MapTypeRemoved {
+  constructor(e, t, s, o) {
+    this.map = e, this.mapFile = t, this.checks = s, this.factories = o;
   }
   give(e) {
     const t = this.factories.chain.create(this);
-    return this.checks.forEach((s, i) => {
+    return this.checks.forEach((s, o) => {
       s.breakOnFail(
         {
           name: e.id,
           type: e
         },
-        t.guestKey(String(i))
+        t.guestKey(String(o))
       );
     }), t.value(
       this.factories.guest.create(() => {
@@ -1586,14 +1586,14 @@ class Nr {
     ), this;
   }
 }
-class Vr {
-  constructor(e, t, s, i) {
-    this.map = e, this.mapFile = t, this.checks = s, this.factories = i;
+class MapTypes {
+  constructor(e, t, s, o) {
+    this.map = e, this.mapFile = t, this.checks = s, this.factories = o;
   }
   give(e) {
     const t = this.factories.chain.create(this);
-    return this.checks.forEach((s, i) => {
-      s.breakOnFail(e, t.guestKey(String(i)));
+    return this.checks.forEach((s, o) => {
+      s.breakOnFail(e, t.guestKey(String(o)));
     }), t.value(
       this.factories.guest.create(() => {
         this.mapFile.currentMap(
@@ -1611,23 +1611,23 @@ class Vr {
     ), this;
   }
 }
-const zr = I.debug("MapTypeUsed");
-class Ur {
+const localDebug$q = browserExports.debug("MapTypeUsed");
+class MapTypeUsed {
   constructor(e, t) {
     this.mapFile = e, this.factories = t;
   }
   check(e, t) {
     return this.mapFile.currentMap(
       this.factories.guest.create((s) => {
-        const i = Object.values(s.objects).some(
-          (r) => r.type === e.name
+        const o = Object.values(s.objects).some(
+          (i) => i.type === e.name
         );
-        zr("is type used", i), t.give(!i || "Тип карты использован");
+        localDebug$q("is type used", o), t.give(!o || "Тип карты использован");
       })
     ), this;
   }
 }
-class Lr {
+class MapTypeUsedNameChangedCheck {
   constructor(e, t) {
     this.mapTypeUsedCheck = e, this.factories = t;
   }
@@ -1640,30 +1640,30 @@ class Lr {
     ), this;
   }
 }
-const Qt = I.debug("ParentTypes");
-class Qr {
+const localDebug$p = browserExports.debug("ParentTypes");
+class ParentTypes {
   constructor(e, t, s) {
     this.parentNames = e, this.mapFile = t, this.factories = s;
   }
   types(e) {
-    Qt("parent types requested");
+    localDebug$p("parent types requested");
     const t = this.factories.chain.create();
     return this.parentNames.names(this.factories.guestCast.create(e, t.guestKey("parentNames"))), this.mapFile.mapFile(this.factories.guestCast.create(e, t.guestKey("mapFile"))), t.value(
-      this.factories.guestInTheMiddle.create(e, ({ parentNames: s, mapFile: i }) => {
-        const r = s.slice(0, -1);
-        Qt("parent names", r);
-        const o = {};
-        r.map((a) => i[a]).forEach((a) => {
+      this.factories.guestInTheMiddle.create(e, ({ parentNames: s, mapFile: o }) => {
+        const i = s.slice(0, -1);
+        localDebug$p("parent names", i);
+        const n = {};
+        i.map((a) => o[a]).forEach((a) => {
           Object.values(a.types).forEach((h) => {
-            o[h.name] = h;
+            n[h.name] = h;
           });
-        }), e.give(Object.values(o));
+        }), e.give(Object.values(n));
       })
     ), e;
   }
 }
-const Wt = I.debug("ObjectsMatchedToQuery");
-class Wr {
+const localDebug$o = browserExports.debug("ObjectsMatchedToQuery");
+class ObjectsMatchedToQuery {
   constructor(e, t) {
     this.map = e, this.factories = t;
   }
@@ -1671,20 +1671,20 @@ class Wr {
     return e.value(
       this.factories.guestInTheMiddle.create(
         t,
-        me((i) => {
-          i = i.toLowerCase(), this.map.objects(
-            this.factories.guest.create((r) => {
-              if (!i) {
-                Wt("reset results"), t.give([]);
+        debounce$2((o) => {
+          o = o.toLowerCase(), this.map.objects(
+            this.factories.guest.create((i) => {
+              if (!o) {
+                localDebug$o("reset results"), t.give([]);
                 return;
               }
-              const o = r.filter(
+              const n = i.filter(
                 (c) => {
                   var a;
-                  return c.name.toLowerCase().includes(i) || ((a = c.additionalName) == null ? void 0 : a.toLowerCase().includes(i)) || Object.values(c.additionalFields ?? {}).join(" ").toLowerCase().includes(i);
+                  return c.name.toLowerCase().includes(o) || ((a = c.additionalName) == null ? void 0 : a.toLowerCase().includes(o)) || Object.values(c.additionalFields ?? {}).join(" ").toLowerCase().includes(o);
                 }
               );
-              Wt("objects in searching", o, i), t.give(o);
+              localDebug$o("objects in searching", n, o), t.give(n);
             })
           );
         }, 500)
@@ -1692,17 +1692,17 @@ class Wr {
     ), t;
   }
 }
-const Gr = {
+const layerGeometry = {
   height: 3e3,
   width: 3e3
 };
-class Kr {
+class StageDefaultSize {
   value(e) {
-    return H(Gr, e), e;
+    return give(layerGeometry, e), e;
   }
 }
-const Gt = I.debug("StageMoveRestriction");
-class Jr {
+const localDebug$n = browserExports.debug("StageMoveRestriction");
+class StageMoveRestriction {
   constructor(e, t, s) {
     this.canvasDep = e, this.stageSize = t, this.factories = s;
   }
@@ -1710,14 +1710,14 @@ class Jr {
     return this.canvasDep.canvas(
       this.factories.guest.create((s) => {
         this.stageSize.value(
-          this.factories.guest.create((i) => {
-            Gt("income position", e);
-            const r = i.width - s.clientWidth, o = i.height - s.clientHeight, c = e.x * -1, a = e.y * -1;
-            if (o < 0 || r < 0)
+          this.factories.guest.create((o) => {
+            localDebug$n("income position", e);
+            const i = o.width - s.clientWidth, n = o.height - s.clientHeight, c = e.x * -1, a = e.y * -1;
+            if (n < 0 || i < 0)
               return { x: 0, y: 0 };
-            Gt("boundings", o, r, a, c), t.give({
-              x: e.x > 0 ? 0 : c > r ? r * -1 : e.x,
-              y: e.y > 0 ? 0 : a > o ? o * -1 : e.y
+            localDebug$n("boundings", n, i, a, c), t.give({
+              x: e.x > 0 ? 0 : c > i ? i * -1 : e.x,
+              y: e.y > 0 ? 0 : a > n ? n * -1 : e.y
             });
           })
         );
@@ -1725,25 +1725,25 @@ class Jr {
     ), t;
   }
 }
-const $e = I.debug("app:MapObjectsVisible");
-class qr {
-  constructor(e, t, s, i) {
-    $(this, "visibleObjectsCache", new ue());
-    $e("constructor initialized");
-    const r = i.chain.create();
-    t.size(i.patron.create(r.guestKey("size"))), e.position(i.patron.create(r.guestKey("position"))), s.currentMap(i.patron.create(r.guestKey("map"))), r.value(
-      i.patron.create(
-        i.guest.create(({ position: o, size: c, map: a }) => {
+const localDebug$m = browserExports.debug("app:MapObjectsVisible");
+class MapObjectsVisible {
+  constructor(e, t, s, o) {
+    b(this, "visibleObjectsCache", new SourceEmpty());
+    localDebug$m("constructor initialized");
+    const i = o.chain.create();
+    t.size(o.patron.create(i.guestKey("size"))), e.position(o.patron.create(i.guestKey("position"))), s.currentMap(o.patron.create(i.guestKey("map"))), i.value(
+      o.patron.create(
+        o.guest.create(({ position: n, size: c, map: a }) => {
           const h = Object.values(a.objects);
-          $e("objects come to result", h);
+          localDebug$m("objects come to result", h);
           const u = h.filter((l) => {
-            const p = a.types[l.type] ?? {}, v = {
-              width: l.width || p.width,
-              height: l.height || p.height
+            const d = a.types[l.type] ?? {}, m = {
+              width: l.width || d.width,
+              height: l.height || d.height
             };
-            return this.isInBounding(o, c, l.position, v);
+            return this.isInBounding(n, c, l.position, m);
           });
-          $e("visible objects calculated", u), this.visibleObjectsCache.give(u);
+          localDebug$m("visible objects calculated", u), this.visibleObjectsCache.give(u);
         })
       )
     );
@@ -1751,18 +1751,18 @@ class qr {
   objects(e) {
     return this.visibleObjectsCache.value(e), this;
   }
-  isInBounding(e, t, s, i) {
-    const r = e.x, o = e.x - t.width, c = e.y, a = e.y - t.height, [h, u] = s;
-    return $e("bounding vars", r, o, c, a), $e("object position", s), r > -h - i.width && -h > o && c > -u - i.height && -u > a;
+  isInBounding(e, t, s, o) {
+    const i = e.x, n = e.x - t.width, c = e.y, a = e.y - t.height, [h, u] = s;
+    return localDebug$m("bounding vars", i, n, c, a), localDebug$m("object position", s), i > -h - o.width && -h > n && c > -u - o.height && -u > a;
   }
 }
-const Yr = (n, e) => {
-  const t = n.matchAll(e);
+const regexpMatches = (r, e) => {
+  const t = r.matchAll(e);
   return Array.from(t).map((s) => s[1]);
-}, Zr = (n, e) => n.reduce((t, s) => (t[s] = e[s] || s, t), {});
-class Xr {
-  constructor(e, t, s, i) {
-    this.mapFile = t, this.mapObject = s, this.factories = i, e.objectId(this);
+}, buildMapFromArray = (r, e) => r.reduce((t, s) => (t[s] = e[s] || s, t), {});
+class ObjectAdditionalFieldsFix {
+  constructor(e, t, s, o) {
+    this.mapFile = t, this.mapObject = s, this.factories = o, e.objectId(this);
   }
   give(e) {
     return this.mapFile.currentMap(
@@ -1770,8 +1770,8 @@ class Xr {
         const s = t.objects[e];
         if (!s)
           return;
-        const i = t.types[s.type], r = /\$\{([a-zA-Z1-9]+)\}/g, c = Yr(i.svg, r).filter((a) => a !== "width" && a !== "height");
-        s.additionalFields = Zr(c, s.additionalFields ?? {}), this.mapObject.give(s);
+        const o = t.types[s.type], i = /\$\{([a-zA-Z1-9]+)\}/g, c = regexpMatches(o.svg, i).filter((a) => a !== "width" && a !== "height");
+        s.additionalFields = buildMapFromArray(c, s.additionalFields ?? {}), this.mapObject.give(s);
       })
     ), this;
   }
@@ -1779,113 +1779,113 @@ class Xr {
     return "patron";
   }
 }
-class eo {
+class ArrowPath {
   constructor() {
-    $(this, "filledPoints", /* @__PURE__ */ new Map());
+    b(this, "filledPoints", /* @__PURE__ */ new Map());
   }
   clear() {
     this.filledPoints.clear();
   }
   breakPoints(e, t, s) {
-    const i = this.arrowPointPosition(
+    const o = this.arrowPointPosition(
       e.shapeGeometry,
       e.shapePosition,
       e.lookToGeometry,
       e.lookToPosition
-    ), r = this.arrowPointPosition(
+    ), i = this.arrowPointPosition(
       t.shapeGeometry,
       t.shapePosition,
       t.lookToGeometry,
       t.lookToPosition
     );
     return s.give([
-      +i.point.x + i.shift.x,
-      +i.point.y + i.shift.y,
+      +o.point.x + o.shift.x,
+      +o.point.y + o.shift.y,
+      +o.breakPoint.x + o.shift.x,
+      +o.breakPoint.y + o.shift.y,
       +i.breakPoint.x + i.shift.x,
       +i.breakPoint.y + i.shift.y,
-      +r.breakPoint.x + r.shift.x,
-      +r.breakPoint.y + r.shift.y,
-      +r.point.x + r.shift.x,
-      +r.point.y + r.shift.y
+      +i.point.x + i.shift.x,
+      +i.point.y + i.shift.y
     ]), this;
   }
-  arrowPointPosition(e, t, s, i) {
+  arrowPointPosition(e, t, s, o) {
     return this.arrowPointPositionNear(
       e,
       t,
       s,
-      i
+      o
     );
   }
-  arrowPointPositionNear(e, t, s, i) {
-    const r = {
-      x: +i.x + Math.round(s.width / 2),
-      y: +i.y + Math.round(s.height / 2)
-    }, o = {
+  arrowPointPositionNear(e, t, s, o) {
+    const i = {
+      x: +o.x + Math.round(s.width / 2),
+      y: +o.y + Math.round(s.height / 2)
+    }, n = {
       x: +t.x + Math.round(e.width / 2),
       y: +t.y + Math.round(e.height / 2)
-    }, c = o.x - r.x, a = o.y - r.y, h = Math.abs(a) > Math.abs(c);
+    }, c = n.x - i.x, a = n.y - i.y, h = Math.abs(a) > Math.abs(c);
     let u = +t.x, l = +t.y;
-    const p = h && a >= 0, v = !h && c >= 0, f = h && a < 0, x = !h && c < 0, A = { x: 0, y: 0 };
-    let k = 0, j = 0;
-    p ? (u += Math.round(e.width / 2), A.x = u, A.y = (t.y + i.y + s.height) / 2, k = i.x > t.x ? 1 : -1) : x ? (l += Math.round(e.height / 2), u += +e.width, A.x = (t.x + e.width + i.x) / 2, A.y = l, j = i.y > t.y ? 1 : -1) : f ? (u += Math.round(e.width / 2), l += +e.height, A.x = u, A.y = (t.y + e.height + i.y) / 2, k = i.x > t.x ? 1 : -1) : v && (l += Math.round(e.height / 2), A.x = (t.x + i.x + s.width) / 2, A.y = l, j = i.y > t.y ? 1 : -1);
-    const G = [u, l].join("-"), R = this.filledPoints.get(G) || 0;
-    return this.filledPoints.set(G, R + 1), {
+    const d = h && a >= 0, m = !h && c >= 0, p = h && a < 0, g = !h && c < 0, f = { x: 0, y: 0 };
+    let v = 0, y = 0;
+    d ? (u += Math.round(e.width / 2), f.x = u, f.y = (t.y + o.y + s.height) / 2, v = o.x > t.x ? 1 : -1) : g ? (l += Math.round(e.height / 2), u += +e.width, f.x = (t.x + e.width + o.x) / 2, f.y = l, y = o.y > t.y ? 1 : -1) : p ? (u += Math.round(e.width / 2), l += +e.height, f.x = u, f.y = (t.y + e.height + o.y) / 2, v = o.x > t.x ? 1 : -1) : m && (l += Math.round(e.height / 2), f.x = (t.x + o.x + s.width) / 2, f.y = l, y = o.y > t.y ? 1 : -1);
+    const x = [u, l].join("-"), $ = this.filledPoints.get(x) || 0;
+    return this.filledPoints.set(x, $ + 1), {
       point: { x: u, y: l },
-      breakPoint: A,
+      breakPoint: f,
       shift: {
-        x: k * R * 10,
-        y: j * R * 10
+        x: v * $ * 10,
+        y: y * $ * 10
       }
     };
   }
 }
-class to {
+class ArrowExtremePoints {
   constructor(e, t) {
     this.objectsSource = e, this.objectsMapSource = t;
   }
   value(e) {
-    const t = new Ge();
-    return this.objectsSource.value(new L(e, t.guestKey("objects"))), this.objectsMapSource.value(new L(e, t.guestKey("objectsMap"))), t.value(
-      new L(
+    const t = new GuestAwareAll();
+    return this.objectsSource.value(new GuestCast(e, t.guestKey("objects"))), this.objectsMapSource.value(new GuestCast(e, t.guestKey("objectsMap"))), t.value(
+      new GuestCast(
         e,
-        ({ objects: s, objectsMap: i }) => {
-          const r = [];
-          s.forEach((o) => {
-            o.arrows.forEach((c) => {
-              const a = i[c.id];
-              a && r.push({
-                fromObject: o,
+        ({ objects: s, objectsMap: o }) => {
+          const i = [];
+          s.forEach((n) => {
+            n.arrows.forEach((c) => {
+              const a = o[c.id];
+              a && i.push({
+                fromObject: n,
                 toObject: a
               });
             });
-          }), H(r, e);
+          }), give(i, e);
         }
       )
     ), this;
   }
 }
-class so {
+class ArrowThreeBreaksPath {
   constructor(e) {
     this.arrowDeps = e;
   }
   value(e) {
     return this.arrowDeps.value(
-      new L(e, (t) => {
+      new GuestCast(e, (t) => {
         if (t.type !== "threeBreaks")
           return;
-        const s = this.points(t.fromObject, t.toObject), i = this.points(t.toObject, t.fromObject);
-        H({
+        const s = this.points(t.fromObject, t.toObject), o = this.points(t.toObject, t.fromObject);
+        give({
           key: t.fromObject.id + "-" + t.toObject.id,
           points: [
             +s.point.x + s.shift.x,
             +s.point.y + s.shift.y,
             +s.breakPoint.x + s.shift.x,
             +s.breakPoint.y + s.shift.y,
-            +i.breakPoint.x + i.shift.x,
-            +i.breakPoint.y + i.shift.y,
-            +i.point.x + i.shift.x,
-            +i.point.y + i.shift.y
+            +o.breakPoint.x + o.shift.x,
+            +o.breakPoint.y + o.shift.y,
+            +o.point.x + o.shift.x,
+            +o.point.y + o.shift.y
           ]
         }, e);
       })
@@ -1895,15 +1895,15 @@ class so {
     const s = {
       x: +t.position[0] + Math.round(t.width / 2),
       y: +t.position[1] + Math.round(t.height / 2)
-    }, i = {
+    }, o = {
       x: +e.position[0] + Math.round(e.width / 2),
       y: +e.position[1] + Math.round(e.height / 2)
-    }, r = i.x - s.x, o = i.y - s.y, c = Math.abs(o) > Math.abs(r);
+    }, i = o.x - s.x, n = o.y - s.y, c = Math.abs(n) > Math.abs(i);
     let a = +e.position[0], h = +e.position[1];
-    const u = c && o >= 0, l = !c && r >= 0, p = c && o < 0, v = !c && r < 0, f = { x: 0, y: 0 };
-    return u ? (a += Math.round(e.width / 2), f.x = a, f.y = (e.position[1] + t.position[1] + t.height) / 2, t.position[0] > e.position[0]) : v ? (h += Math.round(e.height / 2), a += +e.width, f.x = (e.position[0] + e.width + t.position[0]) / 2, f.y = h, t.position[1] > e.position[1]) : p ? (a += Math.round(e.width / 2), h += +e.height, f.x = a, f.y = (e.position[1] + e.height + t.position[1]) / 2, t.position[1] > e.position[1]) : l && (h += Math.round(e.height / 2), f.x = (e.position[0] + t.position[0] + t.width) / 2, f.y = h, t.position[1] > e.position[1]), {
+    const u = c && n >= 0, l = !c && i >= 0, d = c && n < 0, m = !c && i < 0, p = { x: 0, y: 0 };
+    return u ? (a += Math.round(e.width / 2), p.x = a, p.y = (e.position[1] + t.position[1] + t.height) / 2, t.position[0] > e.position[0]) : m ? (h += Math.round(e.height / 2), a += +e.width, p.x = (e.position[0] + e.width + t.position[0]) / 2, p.y = h, t.position[1] > e.position[1]) : d ? (a += Math.round(e.width / 2), h += +e.height, p.x = a, p.y = (e.position[1] + e.height + t.position[1]) / 2, t.position[1] > e.position[1]) : l && (h += Math.round(e.height / 2), p.x = (e.position[0] + t.position[0] + t.width) / 2, p.y = h, t.position[1] > e.position[1]), {
       point: { x: a, y: h },
-      breakPoint: f,
+      breakPoint: p,
       shift: {
         x: 0,
         y: 0
@@ -1911,14 +1911,14 @@ class so {
     };
   }
 }
-class io {
+class ArrowTwoBreaksPath {
   constructor(e) {
     this.arrowDeps = e;
   }
   value(e) {
     return this.arrowDeps.value(
-      new L(e, (t) => {
-        t.type === "twoBreaks" && H({
+      new GuestCast(e, (t) => {
+        t.type === "twoBreaks" && give({
           key: t.fromObject.id + "-" + t.toObject.id,
           points: this.points(t.fromObject, t.toObject)
         }, e);
@@ -1933,61 +1933,61 @@ class io {
       midWidth: e.position[0] + Math.round(e.width / 2),
       fullHeight: e.position[1] + e.height,
       fullWidth: e.position[0] + e.width
-    }, i = {
+    }, o = {
       startHeight: t.position[1],
       startWidth: t.position[0],
       midHeight: t.position[1] + Math.round(t.height / 2),
       midWidth: t.position[0] + Math.round(t.width / 2),
       fullHeight: t.position[1] + t.height,
       fullWidth: t.position[0] + t.width
-    }, r = {
-      "left-top": () => s.fullWidth < i.startWidth && s.fullHeight < i.startHeight,
-      "right-top": () => i.fullWidth < s.startWidth && s.fullHeight < i.startHeight,
-      "left-bottom": () => s.fullWidth < i.startWidth && i.fullHeight < s.startHeight,
-      "right-bottom": () => i.fullWidth < s.startWidth && i.fullHeight < s.startHeight
-    }, o = {
-      "left-top": () => [s.fullWidth, s.midHeight, i.midWidth, s.midHeight, i.midWidth, i.startHeight],
+    }, i = {
+      "left-top": () => s.fullWidth < o.startWidth && s.fullHeight < o.startHeight,
+      "right-top": () => o.fullWidth < s.startWidth && s.fullHeight < o.startHeight,
+      "left-bottom": () => s.fullWidth < o.startWidth && o.fullHeight < s.startHeight,
+      "right-bottom": () => o.fullWidth < s.startWidth && o.fullHeight < s.startHeight
+    }, n = {
+      "left-top": () => [s.fullWidth, s.midHeight, o.midWidth, s.midHeight, o.midWidth, o.startHeight],
       "right-top": () => [
         s.startWidth,
         s.midHeight,
-        i.midWidth,
+        o.midWidth,
         s.midHeight,
-        i.midWidth,
-        i.startHeight
+        o.midWidth,
+        o.startHeight
       ],
-      "left-bottom": () => [s.fullWidth, s.midHeight, i.midWidth, s.midHeight, i.midWidth, i.fullHeight],
-      "right-bottom": () => [s.startWidth, s.midHeight, i.midWidth, s.midHeight, i.midWidth, i.fullHeight]
-    }, c = Object.entries(r).reduce((a, [h, u]) => (u() && (a = h), a), "left-top");
-    return o[c]();
+      "left-bottom": () => [s.fullWidth, s.midHeight, o.midWidth, s.midHeight, o.midWidth, o.fullHeight],
+      "right-bottom": () => [s.startWidth, s.midHeight, o.midWidth, s.midHeight, o.midWidth, o.fullHeight]
+    }, c = Object.entries(i).reduce((a, [h, u]) => (u() && (a = h), a), "left-top");
+    return n[c]();
   }
 }
-class no {
+class ArrowType {
   constructor(e, t = 10) {
     this.arrowDepsSource = e, this.centerGap = t;
   }
   value(e) {
     return this.arrowDepsSource.value(
-      new L(e, ({ fromObject: t, toObject: s }) => {
-        const i = {
+      new GuestCast(e, ({ fromObject: t, toObject: s }) => {
+        const o = {
           width: t.width,
           height: t.height
-        }, r = {
+        }, i = {
           x: t.position[0],
           y: t.position[1]
-        }, o = {
+        }, n = {
           width: s.width,
           height: s.height
         }, c = {
           x: s.position[0],
           y: s.position[1]
         }, a = {
-          x: +c.x + Math.round(o.width / 2),
-          y: +c.y + Math.round(o.height / 2)
+          x: +c.x + Math.round(n.width / 2),
+          y: +c.y + Math.round(n.height / 2)
         }, h = {
-          x: +r.x + Math.round(i.width / 2),
-          y: +r.y + Math.round(i.height / 2)
-        }, u = Math.abs(a.x - h.x) - (o.width + this.centerGap), l = Math.abs(a.y - h.y) - (o.height + this.centerGap);
-        H({
+          x: +i.x + Math.round(o.width / 2),
+          y: +i.y + Math.round(o.height / 2)
+        }, u = Math.abs(a.x - h.x) - (n.width + this.centerGap), l = Math.abs(a.y - h.y) - (n.height + this.centerGap);
+        give({
           fromObject: t,
           toObject: s,
           type: u < 0 || l < 0 ? "threeBreaks" : "twoBreaks"
@@ -1996,66 +1996,66 @@ class no {
     ), this;
   }
 }
-class ro {
+class ArrowSamePointsGroups {
   constructor(e) {
     this.basePoints = e;
   }
   value(e) {
     return this.basePoints.value(
-      new L(e, (t) => {
+      new GuestCast(e, (t) => {
         const s = {};
-        t.forEach((i, r) => {
-          const o = "" + i.points.at(0) + i.points.at(1);
-          s[o] || (s[o] = []), s[o].push({
-            arrowIndex: r,
+        t.forEach((o, i) => {
+          const n = "" + o.points.at(0) + o.points.at(1);
+          s[n] || (s[n] = []), s[n].push({
+            arrowIndex: i,
             pointStartIndex: 0,
             breakPointStartIndex: 2,
-            pointEndIndex: i.points.length - 2
+            pointEndIndex: o.points.length - 2
           });
-          const c = "" + i.points.at(-2) + i.points.at(-1);
+          const c = "" + o.points.at(-2) + o.points.at(-1);
           s[c] || (s[c] = []), s[c].push({
-            arrowIndex: r,
-            pointStartIndex: i.points.length - 2,
-            breakPointStartIndex: i.points.length - 4,
+            arrowIndex: i,
+            pointStartIndex: o.points.length - 2,
+            breakPointStartIndex: o.points.length - 4,
             pointEndIndex: 0
           });
-        }), H(s, e);
+        }), give(s, e);
       })
     ), this;
   }
 }
-const Ne = 15;
-class oo {
+const gapSize = 15;
+class ArrowSamePointsGap {
   constructor(e) {
-    $(this, "pointGroups");
-    this.basePoints = e, this.pointGroups = new ro(e);
+    b(this, "pointGroups");
+    this.basePoints = e, this.pointGroups = new ArrowSamePointsGroups(e);
   }
   value(e) {
-    const t = new Ge();
-    return this.pointGroups.value(new L(e, t.guestKey("pointGroups"))), this.basePoints.value(new L(e, t.guestKey("basePoints"))), t.value(
-      new L(e, ({ pointGroups: s, basePoints: i }) => {
-        Object.values(s).forEach((r) => {
-          if (r.length <= 1)
+    const t = new GuestAwareAll();
+    return this.pointGroups.value(new GuestCast(e, t.guestKey("pointGroups"))), this.basePoints.value(new GuestCast(e, t.guestKey("basePoints"))), t.value(
+      new GuestCast(e, ({ pointGroups: s, basePoints: o }) => {
+        Object.values(s).forEach((i) => {
+          if (i.length <= 1)
             return;
-          r.sort((a, h) => i[h.arrowIndex].points[h.pointEndIndex] - i[a.arrowIndex].points[a.pointEndIndex]);
-          let o = 0, c = 0;
-          r.forEach((a, h) => {
-            const u = i[a.arrowIndex].points[a.pointStartIndex], l = i[a.arrowIndex].points[a.pointStartIndex + 1], p = i[a.arrowIndex].points[a.pointEndIndex], v = i[a.arrowIndex].points[a.pointEndIndex + 1], f = i[a.arrowIndex].points[a.breakPointStartIndex], x = i[a.arrowIndex].points[a.breakPointStartIndex + 1], A = u > f ? -1 : u < f ? 1 : 0, k = l > x ? -1 : l < x ? 1 : 0, j = u > p ? -1 : u < p ? 1 : 0, G = l > v ? -1 : l < v ? 1 : 0;
-            if (A !== 0) {
-              let R = 0;
-              h !== 0 && (G > 0 ? (c += 1, R = c) : (o += 1, R = o)), G && (i[a.arrowIndex].points[a.pointStartIndex + 1] = i[a.arrowIndex].points[a.pointStartIndex + 1] + R * G * Ne), i[a.arrowIndex].points[a.breakPointStartIndex + 1] = i[a.arrowIndex].points[a.breakPointStartIndex + 1] + R * G * Ne;
+          i.sort((a, h) => o[h.arrowIndex].points[h.pointEndIndex] - o[a.arrowIndex].points[a.pointEndIndex]);
+          let n = 0, c = 0;
+          i.forEach((a, h) => {
+            const u = o[a.arrowIndex].points[a.pointStartIndex], l = o[a.arrowIndex].points[a.pointStartIndex + 1], d = o[a.arrowIndex].points[a.pointEndIndex], m = o[a.arrowIndex].points[a.pointEndIndex + 1], p = o[a.arrowIndex].points[a.breakPointStartIndex], g = o[a.arrowIndex].points[a.breakPointStartIndex + 1], f = u > p ? -1 : u < p ? 1 : 0, v = l > g ? -1 : l < g ? 1 : 0, y = u > d ? -1 : u < d ? 1 : 0, x = l > m ? -1 : l < m ? 1 : 0;
+            if (f !== 0) {
+              let $ = 0;
+              h !== 0 && (x > 0 ? (c += 1, $ = c) : (n += 1, $ = n)), x && (o[a.arrowIndex].points[a.pointStartIndex + 1] = o[a.arrowIndex].points[a.pointStartIndex + 1] + $ * x * gapSize), o[a.arrowIndex].points[a.breakPointStartIndex + 1] = o[a.arrowIndex].points[a.breakPointStartIndex + 1] + $ * x * gapSize;
             }
-            if (k !== 0) {
-              let R = 0;
-              h !== 0 && (j > 0 ? (c += 1, R = c) : (o += 1, R = o)), i[a.arrowIndex].points[a.pointStartIndex] = i[a.arrowIndex].points[a.pointStartIndex] + R * j * Ne, i[a.arrowIndex].points[a.breakPointStartIndex] = i[a.arrowIndex].points[a.breakPointStartIndex] + R * j * Ne;
+            if (v !== 0) {
+              let $ = 0;
+              h !== 0 && (y > 0 ? (c += 1, $ = c) : (n += 1, $ = n)), o[a.arrowIndex].points[a.pointStartIndex] = o[a.arrowIndex].points[a.pointStartIndex] + $ * y * gapSize, o[a.arrowIndex].points[a.breakPointStartIndex] = o[a.arrowIndex].points[a.breakPointStartIndex] + $ * y * gapSize;
             }
           });
-        }), H(i, e);
+        }), give(o, e);
       })
     ), this;
   }
 }
-class ao {
+class GuestAwareFirst {
   constructor(e) {
     this.guestAwares = e;
   }
@@ -2063,36 +2063,36 @@ class ao {
     let t = null;
     return this.guestAwares.forEach((s) => {
       s.value(
-        new L(e, (i) => {
-          (!t || t === s) && (H(i, e), t = s);
+        new GuestCast(e, (o) => {
+          (!t || t === s) && (give(o, e), t = s);
         })
       );
     }), this;
   }
 }
-class co {
+class GuestAwareSequence {
   constructor(e, t) {
     this.baseSource = e, this.targetSourceFactory = t;
   }
   value(e) {
-    const t = new Ge(), s = new ue(), i = this.targetSourceFactory.create(
+    const t = new GuestAwareAll(), s = new SourceEmpty(), o = this.targetSourceFactory.create(
       s
     );
     return this.baseSource.value(
-      new L(e, (r) => {
-        let o = 0;
+      new GuestCast(e, (i) => {
+        let n = 0;
         const c = () => {
-          r[o + 1] !== void 0 ? (o = o + 1, a()) : t.valueArray(e);
+          i[n + 1] !== void 0 ? (n = n + 1, a()) : t.valueArray(e);
         };
         function a() {
-          s.give(r[o]), i.value(t.guestKey("" + o)), i.value(c);
+          s.give(i[n]), o.value(t.guestKey("" + n)), o.value(c);
         }
-        r[o] !== void 0 ? a() : H([], e);
+        i[n] !== void 0 ? a() : give([], e);
       })
     ), this;
   }
 }
-class lo {
+class Module {
   constructor(e) {
     this.buildingFn = e;
   }
@@ -2100,55 +2100,55 @@ class lo {
     return this.buildingFn(...e);
   }
 }
-var uo = ms, ho = pt, po = "Expected a function";
-function go(n, e, t) {
-  var s = !0, i = !0;
-  if (typeof n != "function")
-    throw new TypeError(po);
-  return ho(t) && (s = "leading" in t ? !!t.leading : s, i = "trailing" in t ? !!t.trailing : i), uo(n, e, {
+var debounce = debounce_1, isObject = isObject_1, FUNC_ERROR_TEXT = "Expected a function";
+function throttle(r, e, t) {
+  var s = !0, o = !0;
+  if (typeof r != "function")
+    throw new TypeError(FUNC_ERROR_TEXT);
+  return isObject(t) && (s = "leading" in t ? !!t.leading : s, o = "trailing" in t ? !!t.trailing : o), debounce(r, e, {
     leading: s,
     maxWait: e,
-    trailing: i
+    trailing: o
   });
 }
-var fo = go;
-const mo = /* @__PURE__ */ dt(fo), { Arrow: vo } = he, Ao = I.debug("MapObjectsArrows");
-class yo {
-  constructor(e, t, s, i, r) {
-    $(this, "previouslyRenderedArrows", /* @__PURE__ */ new Map());
-    this.konvaLayer = e, this.mapFile = t, this.mapDep = s, this.arrowPath = i, this.factories = r, Ao("draw arrows on canvas");
-    const o = this.factories.chain.create();
-    this.konvaLayer.layer(this.factories.patron.create(o.guestKey("layer"))), this.mapFile.currentMap(this.factories.patron.create(o.guestKey("map"))), this.mapDep.objects(this.factories.patron.create(o.guestKey("objects"))), o.value(
+var throttle_1 = throttle;
+const throttle$1 = /* @__PURE__ */ getDefaultExportFromCjs(throttle_1), { Arrow: Arrow$1 } = Konva, localDebug$l = browserExports.debug("MapObjectsArrows");
+class MapObjectsArrows {
+  constructor(e, t, s, o, i) {
+    b(this, "previouslyRenderedArrows", /* @__PURE__ */ new Map());
+    this.konvaLayer = e, this.mapFile = t, this.mapDep = s, this.arrowPath = o, this.factories = i, localDebug$l("draw arrows on canvas");
+    const n = this.factories.chain.create();
+    this.konvaLayer.layer(this.factories.patron.create(n.guestKey("layer"))), this.mapFile.currentMap(this.factories.patron.create(n.guestKey("map"))), this.mapDep.objects(this.factories.patron.create(n.guestKey("objects"))), n.value(
       this.factories.patron.create(
         this.factories.guest.create(
-          mo(({ layer: c, map: a, objects: h }) => {
-            this.previouslyRenderedArrows.forEach((p) => {
-              p.arrow.hide();
+          throttle$1(({ layer: c, map: a, objects: h }) => {
+            this.previouslyRenderedArrows.forEach((d) => {
+              d.arrow.hide();
             });
-            const u = h.reduce((p, v) => (p[v.id] = v, p), {});
-            new oo(
-              new co(
-                new to(
-                  new be((p) => H(h, p)),
-                  new be((p) => H(u, p))
+            const u = h.reduce((d, m) => (d[m.id] = m, d), {});
+            new ArrowSamePointsGap(
+              new GuestAwareSequence(
+                new ArrowExtremePoints(
+                  new GuestAware((d) => give(h, d)),
+                  new GuestAware((d) => give(u, d))
                 ),
-                new lo((p) => {
-                  const v = new no(p);
-                  return new ao([new io(v), new so(v)]);
+                new Module((d) => {
+                  const m = new ArrowType(d);
+                  return new GuestAwareFirst([new ArrowTwoBreaksPath(m), new ArrowThreeBreaksPath(m)]);
                 })
               )
-            ).value((p) => {
-              p.forEach((v) => {
-                const f = v.key;
-                if (this.previouslyRenderedArrows.has(f)) {
-                  const A = this.previouslyRenderedArrows.get(f);
-                  A.arrow.show(), A.arrow.points(v.points);
+            ).value((d) => {
+              d.forEach((m) => {
+                const p = m.key;
+                if (this.previouslyRenderedArrows.has(p)) {
+                  const f = this.previouslyRenderedArrows.get(p);
+                  f.arrow.show(), f.arrow.points(m.points);
                   return;
                 }
-                const x = new vo({
+                const g = new Arrow$1({
                   x: 0,
                   y: 0,
-                  points: v.points,
+                  points: m.points,
                   pointerLength: 20,
                   pointerWidth: 10,
                   fill: "#ccc",
@@ -2156,9 +2156,9 @@ class yo {
                   strokeWidth: 2,
                   zIndex: 2
                 });
-                this.previouslyRenderedArrows.set(f, {
-                  arrow: x
-                }), c.add(x);
+                this.previouslyRenderedArrows.set(p, {
+                  arrow: g
+                }), c.add(g);
               });
             });
           }, 50)
@@ -2170,31 +2170,31 @@ class yo {
     return "patron";
   }
 }
-const { Arrow: bo } = he, ot = I.debug("NewArrow"), Kt = {
+const { Arrow } = Konva, localDebug$k = browserExports.debug("NewArrow"), arrowGeometry = {
   width: 10,
   height: 10
 };
-class wo {
-  constructor(e, t, s, i) {
-    $(this, "cursorGuest");
-    $(this, "arrowCache");
-    this.konvaLayer = e, this.cursorPosition = t, this.arrowPath = s, this.factories = i, this.cursorGuest = this.factories.sourceEmpty.create(), this.arrowCache = this.factories.sourceEmpty.create();
+class NewArrow {
+  constructor(e, t, s, o) {
+    b(this, "cursorGuest");
+    b(this, "arrowCache");
+    this.konvaLayer = e, this.cursorPosition = t, this.arrowPath = s, this.factories = o, this.cursorGuest = this.factories.sourceEmpty.create(), this.arrowCache = this.factories.sourceEmpty.create();
   }
   /**
    * Создать новую стрелку для объекта
    */
   forObject(e) {
-    ot("start watch cursor"), this.cursorGuest.value(
-      this.factories.guest.create((i) => {
-        jt(i);
+    localDebug$k("start watch cursor"), this.cursorGuest.value(
+      this.factories.guest.create((o) => {
+        removePatronFromPools(o);
       })
     );
     let t = null;
     const s = this.factories.patron.create(
-      this.factories.guest.create((i) => {
-        ot("cursor moves"), this.konvaLayer.layer(
-          this.factories.guest.create((r) => {
-            ot("cursor moves in layer"), this.arrowPath.breakPoints(
+      this.factories.guest.create((o) => {
+        localDebug$k("cursor moves"), this.konvaLayer.layer(
+          this.factories.guest.create((i) => {
+            localDebug$k("cursor moves in layer"), this.arrowPath.breakPoints(
               {
                 shapeGeometry: {
                   width: e.width,
@@ -2204,8 +2204,8 @@ class wo {
                   x: e.position[0],
                   y: e.position[1]
                 },
-                lookToGeometry: Kt,
-                lookToPosition: i
+                lookToGeometry: arrowGeometry,
+                lookToPosition: o
               },
               {
                 lookToGeometry: {
@@ -2216,25 +2216,25 @@ class wo {
                   x: e.position[0],
                   y: e.position[1]
                 },
-                shapeGeometry: Kt,
-                shapePosition: i
+                shapeGeometry: arrowGeometry,
+                shapePosition: o
               },
-              this.factories.guest.create((o) => {
+              this.factories.guest.create((n) => {
                 if (t) {
-                  t.points(o);
+                  t.points(n);
                   return;
                 }
-                t = new bo({
+                t = new Arrow({
                   x: 0,
                   y: 0,
-                  points: o,
+                  points: n,
                   pointerLength: 20,
                   pointerWidth: 10,
                   fill: "#ccc",
                   stroke: "#bbb",
                   strokeWidth: 2,
                   zIndex: 2
-                }), r.add(t), this.arrowCache.give(t);
+                }), i.add(t), this.arrowCache.give(t);
               })
             );
           })
@@ -2249,7 +2249,7 @@ class wo {
   dispose() {
     this.cursorGuest.value(
       this.factories.guest.create((e) => {
-        jt(e);
+        removePatronFromPools(e);
       })
     ), this.arrowCache.value(
       this.factories.guest.create((e) => {
@@ -2258,34 +2258,34 @@ class wo {
     );
   }
 }
-const ke = I.debug("MapObjectBackground"), xo = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/4gKwSUNDX1BST0ZJTEUAAQEAAAKgbGNtcwQwAABtbnRyUkdCIFhZWiAH6AAMAAQADQAqAAthY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1kZXNjAAABIAAAAEBjcHJ0AAABYAAAADZ3dHB0AAABmAAAABRjaGFkAAABrAAAACxyWFlaAAAB2AAAABRiWFlaAAAB7AAAABRnWFlaAAACAAAAABRyVFJDAAACFAAAACBnVFJDAAACFAAAACBiVFJDAAACFAAAACBjaHJtAAACNAAAACRkbW5kAAACWAAAACRkbWRkAAACfAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACQAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABzAFIARwBCbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA9tYAAQAAAADTLXNmMzIAAAAAAAEMQgAABd7///MlAAAHkwAA/ZD///uh///9ogAAA9wAAMBuWFlaIAAAAAAAAG+gAAA49QAAA5BYWVogAAAAAAAAJJ8AAA+EAAC2xFhZWiAAAAAAAABilwAAt4cAABjZcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltjaHJtAAAAAAADAAAAAKPXAABUfAAATM0AAJmaAAAmZwAAD1xtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAEcASQBNAFBtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEL/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wgARCAAeAB4DAREAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAwUEAAj/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAH1SCMTDaCMTiuCMTDgxDGf/8QAHhAAAgIBBQEAAAAAAAAAAAAAAAMBAgQFExUyMxL/2gAIAQEAAQUCG9TUPHdga2PndgzrxZQ3qah48gsvnUtHILMrKq5f/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAwEBPwEH/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAgEBPwEH/8QAHhAAAgIBBQEAAAAAAAAAAAAAAAECMXIQQUKSsVH/2gAIAQEABj8CFkvdFkVLqzla4v6VLqxXe60WS90WRUipWipCSTvc/8QAIxAAAgADCAMAAAAAAAAAAAAAAAEQUfAhMUGhscHR8RFhcf/aAAgBAQABPyErMkMi0ZW2wylmzHorbYSSX3Vg5wrMkMi0Z0a5FVK8Llg05nRrkRmteVg//9oADAMBAAIAAwAAABCCQQSCSST/xAAUEQEAAAAAAAAAAAAAAAAAAABA/9oACAEDAQE/EAf/xAAUEQEAAAAAAAAAAAAAAAAAAABA/9oACAECAQE/EAf/xAAeEAEAAQQCAwAAAAAAAAAAAAABIRARIDEAQVFxkf/aAAgBAQABPxDEMgTA4U0lpO6EwKiFh/YAyDIEAZSTdCnwUQAma0AtZOl88//Z";
-class Co {
-  constructor(e, t, s, i) {
-    $(this, "mapNameCache");
-    this.konvaLayer = e, this.mapFile = t, this.zIndex = s, this.factories = i, this.mapNameCache = i.cache.create(""), this.mapFile.currentMap(i.patron.create(this));
+const localDebug$j = browserExports.debug("MapObjectBackground"), imageBackground = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEBLAEsAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/4gKwSUNDX1BST0ZJTEUAAQEAAAKgbGNtcwQwAABtbnRyUkdCIFhZWiAH6AAMAAQADQAqAAthY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1kZXNjAAABIAAAAEBjcHJ0AAABYAAAADZ3dHB0AAABmAAAABRjaGFkAAABrAAAACxyWFlaAAAB2AAAABRiWFlaAAAB7AAAABRnWFlaAAACAAAAABRyVFJDAAACFAAAACBnVFJDAAACFAAAACBiVFJDAAACFAAAACBjaHJtAAACNAAAACRkbW5kAAACWAAAACRkbWRkAAACfAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACQAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABzAFIARwBCbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA9tYAAQAAAADTLXNmMzIAAAAAAAEMQgAABd7///MlAAAHkwAA/ZD///uh///9ogAAA9wAAMBuWFlaIAAAAAAAAG+gAAA49QAAA5BYWVogAAAAAAAAJJ8AAA+EAAC2xFhZWiAAAAAAAABilwAAt4cAABjZcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltjaHJtAAAAAAADAAAAAKPXAABUfAAATM0AAJmaAAAmZwAAD1xtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAEcASQBNAFBtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEL/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wgARCAAeAB4DAREAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAwUEAAj/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAH1SCMTDaCMTiuCMTDgxDGf/8QAHhAAAgIBBQEAAAAAAAAAAAAAAAMBAgQFExUyMxL/2gAIAQEAAQUCG9TUPHdga2PndgzrxZQ3qah48gsvnUtHILMrKq5f/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAwEBPwEH/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAgEBPwEH/8QAHhAAAgIBBQEAAAAAAAAAAAAAAAECMXIQQUKSsVH/2gAIAQEABj8CFkvdFkVLqzla4v6VLqxXe60WS90WRUipWipCSTvc/8QAIxAAAgADCAMAAAAAAAAAAAAAAAEQUfAhMUGhscHR8RFhcf/aAAgBAQABPyErMkMi0ZW2wylmzHorbYSSX3Vg5wrMkMi0Z0a5FVK8Llg05nRrkRmteVg//9oADAMBAAIAAwAAABCCQQSCSST/xAAUEQEAAAAAAAAAAAAAAAAAAABA/9oACAEDAQE/EAf/xAAUEQEAAAAAAAAAAAAAAAAAAABA/9oACAECAQE/EAf/xAAeEAEAAQQCAwAAAAAAAAAAAAABIRARIDEAQVFxkf/aAAgBAQABPxDEMgTA4U0lpO6EwKiFh/YAyDIEAZSTdCnwUQAma0AtZOl88//Z";
+class MapObjectBackground {
+  constructor(e, t, s, o) {
+    b(this, "mapNameCache");
+    this.konvaLayer = e, this.mapFile = t, this.zIndex = s, this.factories = o, this.mapNameCache = o.cache.create(""), this.mapFile.currentMap(o.patron.create(this));
   }
   give(e) {
     return this.konvaLayer.layer(
       this.factories.patronOnce.create((t) => {
-        ke("map received in background", e), this.mapNameCache.value(
+        localDebug$j("map received in background", e), this.mapNameCache.value(
           this.factories.guest.create((s) => {
             if (s === e.url)
               return;
-            ke("background cache is not equals", s), this.mapNameCache.give(e.url);
-            const i = new Image(), r = document.querySelector(".grid-example");
-            ke("grid example", r), i.src = xo, i.onload = () => {
-              ke("canvas pattern loaded"), ke("konva layer loaded");
-              const o = new he.Rect({
+            localDebug$j("background cache is not equals", s), this.mapNameCache.give(e.url);
+            const o = new Image(), i = document.querySelector(".grid-example");
+            localDebug$j("grid example", i), o.src = imageBackground, o.onload = () => {
+              localDebug$j("canvas pattern loaded"), localDebug$j("konva layer loaded");
+              const n = new Konva.Rect({
                 width: 3e3,
                 height: 3e3,
                 x: 0,
                 y: 0,
-                fillPatternImage: i,
+                fillPatternImage: o,
                 zIndex: 1
               });
               this.zIndex.give(() => {
-                o.zIndex(0);
-              }), t.add(o);
+                n.zIndex(0);
+              }), t.add(n);
             };
           })
         );
@@ -2293,21 +2293,21 @@ class Co {
     ), this;
   }
 }
-const _o = I.debug("Breadcrumbs");
-class $o {
+const localDebug$i = browserExports.debug("Breadcrumbs");
+class Breadcrumbs {
   constructor(e, t, s) {
     this.parentNames = e, this.mapFile = t, this.factories = s;
   }
   list(e) {
     const t = this.factories.chain.create();
     return this.parentNames.names(this.factories.guestCast.create(e, t.guestKey("names"))), this.mapFile.mapFile(this.factories.guestCast.create(e, t.guestKey("mapFile"))), t.value(
-      this.factories.guestInTheMiddle.create(e, ({ names: s, mapFile: i }) => {
-        _o("map id", s, i), e.give(
-          s.map((r) => {
-            var o, c;
+      this.factories.guestInTheMiddle.create(e, ({ names: s, mapFile: o }) => {
+        localDebug$i("map id", s, o), e.give(
+          s.map((i) => {
+            var n, c;
             return {
-              title: ((c = (o = i[r]) == null ? void 0 : o.settings) == null ? void 0 : c.title) || "unknown",
-              name: r
+              title: ((c = (n = o[i]) == null ? void 0 : n.settings) == null ? void 0 : c.title) || "unknown",
+              name: i
             };
           })
         );
@@ -2315,8 +2315,8 @@ class $o {
     ), e;
   }
 }
-const Jt = I.debug("CursorWithObjects");
-class ko {
+const localDebug$h = browserExports.debug("CursorWithObjects");
+class CursorWithObjects {
   constructor(e, t, s) {
     this.objectsVisible = e, this.cursor = t, this.factories = s;
   }
@@ -2325,27 +2325,27 @@ class ko {
     return this.cursor.value(this.factories.guestCast.create(e, t.guestKey("cursor"))), this.objectsVisible.objects(
       this.factories.guestCast.create(e, t.guestKey("objects"))
     ), t.value(
-      this.factories.guestInTheMiddle.create(e, ({ cursor: s, objects: i }) => {
-        const r = i.find((o) => {
-          const c = o.position[0], a = o.position[0] + o.width || 100, h = o.position[1], u = o.position[1] + o.height || 100;
+      this.factories.guestInTheMiddle.create(e, ({ cursor: s, objects: o }) => {
+        const i = o.find((n) => {
+          const c = n.position[0], a = n.position[0] + n.width || 100, h = n.position[1], u = n.position[1] + n.height || 100;
           return s.x >= c && s.x <= a && s.y >= h && s.y <= u;
         });
-        r ? (Jt("crossed with", r), H({
-          x: r.position[0] + r.width / 2,
-          y: r.position[1] + r.height / 2
-        }, e)) : (Jt("cursor pos", s), H(s, e));
+        i ? (localDebug$h("crossed with", i), give({
+          x: i.position[0] + i.width / 2,
+          y: i.position[1] + i.height / 2
+        }, e)) : (localDebug$h("cursor pos", s), give(s, e));
       })
     ), this;
   }
 }
-class Mo {
+class Device {
   constructor(e, t = 768) {
     this.windowWidth = e, this.mobileLimit = t;
   }
   value(e) {
     return this.windowWidth.value(
-      new L(e, (t) => {
-        H({
+      new GuestCast(e, (t) => {
+        give({
           isMobile: t <= this.mobileLimit,
           isDesktop: t > this.mobileLimit
         }, e);
@@ -2353,14 +2353,14 @@ class Mo {
     ), this;
   }
 }
-const qt = I.debug("Drawer");
-class Fo {
+const localDebug$g = browserExports.debug("Drawer");
+class Drawer {
   constructor(e, t) {
-    $(this, "drawerNameCache");
+    b(this, "drawerNameCache");
     this.keyboard = e, this.factories = t, this.drawerNameCache = t.cache.create(""), this.keyboard.pressed(
       this.factories.patron.create(
         this.factories.guest.create((s) => {
-          qt("new key in drawer", s), s === "Escape" && this.give("");
+          localDebug$g("new key in drawer", s), s === "Escape" && this.give("");
         })
       )
     );
@@ -2368,7 +2368,7 @@ class Fo {
   isOpenedByName(e, t) {
     return this.drawerNameCache.value(
       this.factories.guestInTheMiddle.create(t, (s) => {
-        qt("new drawer name", s), t.give(s === e);
+        localDebug$g("new drawer name", s), t.give(s === e);
       })
     ), t;
   }
@@ -2381,48 +2381,48 @@ class Fo {
     return this.drawerNameCache.give(e), this;
   }
 }
-class So {
+class Fps {
   value(e) {
     typeof performance > "u" && e.give(0);
     const t = 10;
-    let s = performance.now(), i = 0;
-    const r = () => requestAnimationFrame(() => {
-      if (i += 1, i >= t) {
-        const o = performance.now(), c = o - s;
-        e.give(Math.round(1e3 / (c / i))), s = o, i = 0;
+    let s = performance.now(), o = 0;
+    const i = () => requestAnimationFrame(() => {
+      if (o += 1, o >= t) {
+        const n = performance.now(), c = n - s;
+        e.give(Math.round(1e3 / (c / o))), s = n, o = 0;
       }
-      r();
+      i();
     });
-    return r(), e;
+    return i(), e;
   }
 }
-class To {
+class Menu {
   constructor(e, t) {
     this.mapFile = e, this.factories = t;
   }
   menuObjects(e) {
     return this.mapFile.currentMap(
       this.factories.guestInTheMiddle.create(e, (t) => {
-        const s = Object.values(t.objects).filter((i) => i.inMenu);
+        const s = Object.values(t.objects).filter((o) => o.inMenu);
         e.give(s);
       })
     ), e;
   }
 }
-const Yt = I.debug("app:MiniMap"), Zt = 130;
-class Io {
-  constructor(e, t, s, i) {
-    $(this, "theSize");
-    $(this, "thePoints");
-    $(this, "viewportSizeCache");
-    this.map = e, this.layer = t, this.stageSize = s, this.factories = i, this.theSize = i.sourceEmpty.create(), this.thePoints = i.sourceEmpty.create(), this.viewportSizeCache = i.sourceEmpty.create();
-    const r = i.chain.create();
-    e.objects(i.patron.create(r.guestKey("objects"))), t.layer(i.patron.create(r.guestKey("layer"))), s.value(i.patron.create(r.guestKey("size"))), r.value(
-      i.patron.create(
-        i.guest.create(({ layer: o, size: c, objects: a }) => {
-          const h = Zt / c.width, u = {
-            width: Math.round(o.width() * h),
-            height: Math.round(o.height() * h)
+const localDebug$f = browserExports.debug("app:MiniMap"), minimapWidth = 130;
+class MiniMap {
+  constructor(e, t, s, o) {
+    b(this, "theSize");
+    b(this, "thePoints");
+    b(this, "viewportSizeCache");
+    this.map = e, this.layer = t, this.stageSize = s, this.factories = o, this.theSize = o.sourceEmpty.create(), this.thePoints = o.sourceEmpty.create(), this.viewportSizeCache = o.sourceEmpty.create();
+    const i = o.chain.create();
+    e.objects(o.patron.create(i.guestKey("objects"))), t.layer(o.patron.create(i.guestKey("layer"))), s.value(o.patron.create(i.guestKey("size"))), i.value(
+      o.patron.create(
+        o.guest.create(({ layer: n, size: c, objects: a }) => {
+          const h = minimapWidth / c.width, u = {
+            width: Math.round(n.width() * h),
+            height: Math.round(n.height() * h)
           };
           this.viewportSizeCache.give(u);
           const l = {
@@ -2430,14 +2430,14 @@ class Io {
             height: Math.round(c.height * h)
           };
           this.theSize.give(l);
-          const p = a.map((v) => ({
-            id: v.id,
-            x: Math.round(v.position[0] * h),
-            y: Math.round(v.position[1] * h),
-            width: Math.round(v.width * h),
-            height: Math.round(v.height * h)
+          const d = a.map((m) => ({
+            id: m.id,
+            x: Math.round(m.position[0] * h),
+            y: Math.round(m.position[1] * h),
+            width: Math.round(m.width * h),
+            height: Math.round(m.height * h)
           }));
-          Yt("minimap points", p), this.thePoints.give(p);
+          localDebug$f("minimap points", d), this.thePoints.give(d);
         })
       )
     );
@@ -2445,12 +2445,12 @@ class Io {
   viewportPosition(e) {
     const t = this.factories.chain.create();
     return this.stageSize.value(this.factories.guestCast.create(e, t.guestKey("size"))), this.layer.position(this.factories.guestCast.create(e, t.guestKey("position"))), t.value(
-      this.factories.guestInTheMiddle.create(e, ({ size: s, position: i }) => {
-        const r = Zt / s.width, o = {
-          x: i.x * r * -1,
-          y: i.y * r * -1
+      this.factories.guestInTheMiddle.create(e, ({ size: s, position: o }) => {
+        const i = minimapWidth / s.width, n = {
+          x: o.x * i * -1,
+          y: o.y * i * -1
         };
-        Yt("scaled position is", o), e.give(o);
+        localDebug$f("scaled position is", n), e.give(n);
       })
     ), e;
   }
@@ -2464,14 +2464,14 @@ class Io {
     return this.thePoints.value(e), e;
   }
 }
-const Xt = I.debug("Modal");
-class jo {
+const localDebug$e = browserExports.debug("Modal");
+class Modal {
   constructor(e, t) {
-    $(this, "modalNameCache");
-    this.keyboard = e, this.factories = t, Xt("modal created"), this.modalNameCache = t.cache.create(""), this.keyboard.pressed(
+    b(this, "modalNameCache");
+    this.keyboard = e, this.factories = t, localDebug$e("modal created"), this.modalNameCache = t.cache.create(""), this.keyboard.pressed(
       this.factories.patron.create(
         this.factories.guest.create((s) => {
-          Xt("new key in modal", s), s === "Escape" && this.give("");
+          localDebug$e("new key in modal", s), s === "Escape" && this.give("");
         })
       )
     );
@@ -2492,11 +2492,11 @@ class jo {
     return this.modalNameCache.give(e), this;
   }
 }
-class Bo {
+class Notification {
   constructor(e) {
-    $(this, "messageCache");
-    $(this, "notificationLifetimeDelay", 3500);
-    $(this, "lastTimerHead", null);
+    b(this, "messageCache");
+    b(this, "notificationLifetimeDelay", 3500);
+    b(this, "lastTimerHead", null);
     this.messageCache = e.sourceEmpty.create();
   }
   message(e) {
@@ -2511,27 +2511,27 @@ class Bo {
     }, this.notificationLifetimeDelay), this;
   }
 }
-const Me = I.debug("ObjectGeometryFix");
-class Oo {
-  constructor(e, t, s, i) {
-    $(this, "innerReceive");
-    this.mapFile = t, this.map = s, this.factories = i, e.objects(i.patron.create(this)), this.innerReceive = me((r) => {
+const localDebug$d = browserExports.debug("ObjectGeometryFix");
+class ObjectGeometryFix {
+  constructor(e, t, s, o) {
+    b(this, "innerReceive");
+    this.mapFile = t, this.map = s, this.factories = o, e.objects(o.patron.create(this)), this.innerReceive = debounce$2((i) => {
       this.mapFile.currentMap(
-        this.factories.guest.create((o) => {
-          Me("objects to fix", r);
-          const c = document.querySelectorAll(".objects-container .rendered-object"), a = o.objects;
+        this.factories.guest.create((n) => {
+          localDebug$d("objects to fix", i);
+          const c = document.querySelectorAll(".objects-container .rendered-object"), a = n.objects;
           let h = !1;
           c.forEach((u) => {
             const l = u.getAttribute("data-object-id");
-            if (Me("i see id", l), !l)
+            if (localDebug$d("i see id", l), !l)
               return;
-            const p = a[l];
-            if (p && (Me("dom object geometry", u.clientWidth, u.clientHeight), Me("saved object geometry", p.width, p.height), (p.width !== u.clientWidth || p.height !== u.clientHeight) && (h = !0, Me("update object geometry"), p.width = u.clientWidth, p.height = u.clientHeight), !p.width || !p.height)) {
-              const v = o.types[p.type];
-              p.width = v.width, p.height = v.height;
+            const d = a[l];
+            if (d && (localDebug$d("dom object geometry", u.clientWidth, u.clientHeight), localDebug$d("saved object geometry", d.width, d.height), (d.width !== u.clientWidth || d.height !== u.clientHeight) && (h = !0, localDebug$d("update object geometry"), d.width = u.clientWidth, d.height = u.clientHeight), !d.width || !d.height)) {
+              const m = n.types[d.type];
+              d.width = m.width, d.height = m.height;
             }
           }), h && this.map.give({
-            ...o,
+            ...n,
             objects: a
           });
         })
@@ -2542,11 +2542,11 @@ class Oo {
     return this.innerReceive(e), this;
   }
 }
-const Fe = I.debug("MapObjectsRectsPatron");
-class Po {
-  constructor(e, t, s, i, r, o, c, a, h) {
-    $(this, "previouslyRenderedRects", /* @__PURE__ */ new Map());
-    this.konvaLayer = e, this.mapFile = t, this.mapObject = s, this.mapObjectCurrent = r, this.mapObjectForRendering = o, this.objectPosition = c, this.settings = a, this.factories = h, i.objects(this);
+const localDebug$c = browserExports.debug("MapObjectsRectsPatron");
+class MapObjectsRects {
+  constructor(e, t, s, o, i, n, c, a, h) {
+    b(this, "previouslyRenderedRects", /* @__PURE__ */ new Map());
+    this.konvaLayer = e, this.mapFile = t, this.mapObject = s, this.mapObjectCurrent = i, this.mapObjectForRendering = n, this.objectPosition = c, this.settings = a, this.factories = h, o.objects(this);
   }
   give(e) {
     return this.konvaLayer.layer(
@@ -2554,25 +2554,25 @@ class Po {
         this.factories.guest.create((t) => {
           const s = this.factories.chain.create();
           this.mapFile.currentMap(s.guestKey("map")), this.settings.value(s.guestKey("settings")), s.value(
-            this.factories.guest.create((i) => {
-              const { map: r, settings: o } = i;
-              Fe("rerender object rects"), this.previouslyRenderedRects.forEach((c) => {
+            this.factories.guest.create((o) => {
+              const { map: i, settings: n } = o;
+              localDebug$c("rerender object rects"), this.previouslyRenderedRects.forEach((c) => {
                 c.hide();
               }), e.forEach((c) => {
-                const a = r.types[c.type], h = +c.width || +a.width || 100, u = +c.height || +a.height || 100;
+                const a = i.types[c.type], h = +c.width || +a.width || 100, u = +c.height || +a.height || 100;
                 if (this.previouslyRenderedRects.has(c)) {
-                  const v = this.previouslyRenderedRects.get(c);
-                  v.width(h), v.height(u), v.x(+c.position[0]), v.y(+c.position[1]), v.show();
+                  const m = this.previouslyRenderedRects.get(c);
+                  m.width(h), m.height(u), m.x(+c.position[0]), m.y(+c.position[1]), m.show();
                   return;
                 }
-                Fe("rect object", c, a);
-                const l = new he.Rect({
+                localDebug$c("rect object", c, a);
+                const l = new Konva.Rect({
                   x: +c.position[0],
                   y: +c.position[1],
                   width: h,
                   height: u,
                   name: c.id,
-                  draggable: !o.readonly,
+                  draggable: !n.readonly,
                   objectId: c.id,
                   zIndex: 3
                 });
@@ -2581,38 +2581,38 @@ class Po {
                 }), l.on("mouseleave", () => {
                   t.getStage().container().style.cursor = "default";
                 }), l.on("dragend", () => {
-                  Fe("drag ended"), this.objectPosition.position(
+                  localDebug$c("drag ended"), this.objectPosition.position(
                     c,
                     {
                       x: l.x(),
                       y: l.y()
                     },
-                    this.factories.guest.create((v) => {
+                    this.factories.guest.create((m) => {
                       this.mapObject.give({
                         ...c,
-                        position: [v.x, v.y]
+                        position: [m.x, m.y]
                       });
                     })
                   );
                 }), l.on("dragmove", () => {
-                  Fe("dragmove works", l.x(), l.y()), t.getStage().container().style.cursor = "move", this.objectPosition.position(
+                  localDebug$c("dragmove works", l.x(), l.y()), t.getStage().container().style.cursor = "move", this.objectPosition.position(
                     c,
                     {
                       x: l.x(),
                       y: l.y()
                     },
-                    this.factories.guest.create((v) => {
+                    this.factories.guest.create((m) => {
                       this.mapObjectForRendering.give({
                         ...c,
-                        position: [v.x, v.y]
+                        position: [m.x, m.y]
                       });
                     })
                   );
                 });
-                const p = () => {
-                  Fe("object clicked with id", c.id), this.mapObjectCurrent.give(c.id);
+                const d = () => {
+                  localDebug$c("object clicked with id", c.id), this.mapObjectCurrent.give(c.id);
                 };
-                l.on("click", p), l.on("tap", p);
+                l.on("click", d), l.on("tap", d);
               });
             })
           );
@@ -2624,20 +2624,20 @@ class Po {
     return "patron";
   }
 }
-class Eo {
-  constructor(e, t, s, i) {
-    this.canvas = t, this.konvaLayer = s, this.factories = i, e.currentMap(this);
+class Resizing {
+  constructor(e, t, s, o) {
+    this.canvas = t, this.konvaLayer = s, this.factories = o, e.currentMap(this);
   }
   give() {
     const e = new ResizeObserver((s) => {
       requestAnimationFrame(() => {
-        const [i] = s;
+        const [o] = s;
         this.canvas.canvas(
-          this.factories.guest.create((r) => {
-            const o = r.getBoundingClientRect();
+          this.factories.guest.create((i) => {
+            const n = i.getBoundingClientRect();
             this.konvaLayer.layer(
               this.factories.guest.create((c) => {
-                c.getStage().width(i.contentRect.width - o.left), c.getStage().height(i.contentRect.height - o.top), this.canvas.give(r), this.konvaLayer.give(c);
+                c.getStage().width(o.contentRect.width - n.left), c.getStage().height(o.contentRect.height - n.top), this.canvas.give(i), this.konvaLayer.give(c);
               })
             );
           })
@@ -2647,16 +2647,16 @@ class Eo {
     return t && e.observe(t), this;
   }
 }
-const Do = I.debug("StagePosition");
-class Ro {
+const localDebug$b = browserExports.debug("StagePosition");
+class StagePosition {
   constructor(e) {
     this.stageMove = e;
   }
   give(e) {
-    return Do("received position", e), this.stageMove.move(e), this;
+    return localDebug$b("received position", e), this.stageMove.move(e), this;
   }
 }
-class Ho {
+class StagePositionByObjectId {
   constructor(e, t) {
     this.stageMove = e, this.factories = t;
   }
@@ -2668,13 +2668,13 @@ class Ho {
     ), this;
   }
 }
-class No {
+class Window {
   constructor() {
-    $(this, "source", new xe({
+    b(this, "source", new Source({
       height: window.innerHeight,
       width: window.innerWidth
     }));
-    const e = new ResizeObserver(me((s) => {
+    const e = new ResizeObserver(debounce$2((s) => {
       requestAnimationFrame(() => {
         this.source.give({
           height: window.innerHeight,
@@ -2688,32 +2688,32 @@ class No {
     return this.source.value(e), this;
   }
 }
-const es = I.debug("Zindex");
-class Vo {
+const localDebug$a = browserExports.debug("Zindex");
+class Zindex {
   constructor(e) {
-    $(this, "fnsCache");
+    b(this, "fnsCache");
     this.factories = e, this.fnsCache = e.cache.create([]), this.fnsCache.value(
       e.patron.create(
         e.guest.create(
-          me((t) => {
-            es("zindex fns run"), t.forEach((s) => s());
+          debounce$2((t) => {
+            localDebug$a("zindex fns run"), t.forEach((s) => s());
           }, 50)
         )
       )
     );
   }
   give(e) {
-    return es("zindex received value"), this.fnsCache.value(
+    return localDebug$a("zindex received value"), this.fnsCache.value(
       this.factories.guest.create((t) => {
         this.fnsCache.give(t.concat(e));
       })
     ), this;
   }
 }
-const ts = I.debug("app:BrowserCanvas");
-class zo {
+const localDebug$9 = browserExports.debug("app:BrowserCanvas");
+class BrowserCanvas {
   constructor(e) {
-    $(this, "canvasCache");
+    b(this, "canvasCache");
     this.factories = e, this.canvasCache = e.sourceEmpty.create();
   }
   canvas(e) {
@@ -2722,46 +2722,46 @@ class zo {
   size(e) {
     return this.canvasCache.value(
       this.factories.guestInTheMiddle.create(e, (t) => {
-        const s = t.width || t.clientWidth, i = t.height || t.clientHeight;
-        ts("canvas size", s, i), e.give({
-          height: i,
+        const s = t.width || t.clientWidth, o = t.height || t.clientHeight;
+        localDebug$9("canvas size", s, o), e.give({
+          height: o,
           width: s
         });
       })
     ), this;
   }
   give(e) {
-    return ts("receive new canvas", e), this.canvasCache.give(e), this;
+    return localDebug$9("receive new canvas", e), this.canvasCache.give(e), this;
   }
 }
-const Uo = I.debug("Cursor");
-class Lo {
+const localDebug$8 = browserExports.debug("Cursor");
+class Cursor {
   constructor(e, t) {
-    $(this, "cursorPool");
+    b(this, "cursorPool");
     this.cursorPool = t.pool.create(this);
     const s = {
       x: 0,
       y: 0
     };
-    window == null || window.addEventListener("mousemove", (i) => {
-      const r = {
-        x: i.offsetX + -s.x,
-        y: i.offsetY + -s.y
+    window == null || window.addEventListener("mousemove", (o) => {
+      const i = {
+        x: o.offsetX + -s.x,
+        y: o.offsetY + -s.y
       };
-      Uo("move cursor fired", r), this.cursorPool.give(r);
+      localDebug$8("move cursor fired", i), this.cursorPool.give(i);
     }), e.position(
       t.patron.create(
-        t.guest.create((i) => {
-          s.x = i.x, s.y = i.y;
+        t.guest.create((o) => {
+          s.x = o.x, s.y = o.y;
         })
       )
     );
   }
   value(e) {
-    return this.cursorPool.add(new Te(e)), this;
+    return this.cursorPool.add(new GuestObject(e)), this;
   }
 }
-class Qo {
+class Draggable {
   constructor(e) {
     this.el = e, e.value(this);
   }
@@ -2770,13 +2770,13 @@ class Qo {
       const s = t.target;
       if (!s)
         return;
-      const i = s.cloneNode(!0);
-      i.style.transform = "translate(0,0)", i.style.position = "absolute", i.style.top = "0", i.style.left = "0", i.style.zIndex = "999", t.dataTransfer && t.dataTransfer.setDragImage(i, 0, 0), document.body.append(i);
-      const r = (o) => {
-        i.style.transform = `translate(${o.clientX}px, ${o.clientY}px)`;
+      const o = s.cloneNode(!0);
+      o.style.transform = "translate(0,0)", o.style.position = "absolute", o.style.top = "0", o.style.left = "0", o.style.zIndex = "999", t.dataTransfer && t.dataTransfer.setDragImage(o, 0, 0), document.body.append(o);
+      const i = (n) => {
+        o.style.transform = `translate(${n.clientX}px, ${n.clientY}px)`;
       };
-      s.addEventListener("drag", r, { passive: !0 }), s.addEventListener("dragend", () => {
-        i.removeEventListener("drag", r), i.remove();
+      s.addEventListener("drag", i, { passive: !0 }), s.addEventListener("dragend", () => {
+        o.removeEventListener("drag", i), o.remove();
       });
     }), this;
   }
@@ -2784,8 +2784,8 @@ class Qo {
     return "patron";
   }
 }
-const Ve = I.debug("ControlCombo");
-class Wo {
+const localDebug$7 = browserExports.debug("ControlCombo");
+class ControlCombo {
   constructor(e, t) {
     this.keyboard = e, this.factories = t;
   }
@@ -2795,7 +2795,7 @@ class Wo {
   happened(e, t) {
     this.keyboard.event(
       this.factories.guestInTheMiddle.create(t, (s) => {
-        Ve("combo happened look for key", e, "received", s.code), s.ctrlKey && s.code === e && s.type === "keydown" && (s.preventDefault(), t.give(s));
+        localDebug$7("combo happened look for key", e, "received", s.code), s.ctrlKey && s.code === e && s.type === "keydown" && (s.preventDefault(), t.give(s));
       })
     );
   }
@@ -2803,41 +2803,41 @@ class Wo {
    * Случилась комбинация ctrl + keyCode с условием comboCondition
    */
   happenedConditional(e, t, s) {
-    Ve("combo control happened registration"), this.keyboard.event(
-      this.factories.guestInTheMiddle.create(s, (i) => {
-        Ve("keyboard event come"), t.value(
-          this.factories.guest.create((r) => {
-            Ve("combo happened look for key", e, "received", i.code), r && i.ctrlKey && i.code === e && i.type === "keydown" && (i.preventDefault(), s.give(i));
+    localDebug$7("combo control happened registration"), this.keyboard.event(
+      this.factories.guestInTheMiddle.create(s, (o) => {
+        localDebug$7("keyboard event come"), t.value(
+          this.factories.guest.create((i) => {
+            localDebug$7("combo happened look for key", e, "received", o.code), i && o.ctrlKey && o.code === e && o.type === "keydown" && (o.preventDefault(), s.give(o));
           })
         );
       })
     );
   }
 }
-const Se = I.debug("Keyboard");
-class Go {
+const localDebug$6 = browserExports.debug("Keyboard");
+class Keyboard {
   constructor(e) {
-    $(this, "pressedPool");
-    $(this, "combinationsPool");
-    Se("keyboard created"), this.pressedPool = e.pool.create(this), this.combinationsPool = e.pool.create(this), window == null || window.addEventListener("keyup", (t) => {
-      Se("keyboard pressed", t.key), this.pressedPool.give(t.key);
-    }), Es({
+    b(this, "pressedPool");
+    b(this, "combinationsPool");
+    localDebug$6("keyboard created"), this.pressedPool = e.pool.create(this), this.combinationsPool = e.pool.create(this), window == null || window.addEventListener("keyup", (t) => {
+      localDebug$6("keyboard pressed", t.key), this.pressedPool.give(t.key);
+    }), useMagicKeys({
       passive: !1,
       onEventFired: (t) => {
-        Se("magic combination happens 11", t.ctrlKey, t.key), this.combinationsPool.give(t);
+        localDebug$6("magic combination happens 11", t.ctrlKey, t.key), this.combinationsPool.give(t);
       }
     });
   }
   pressed(e) {
-    return Se("keyboard receive pressed subscriber"), this.pressedPool.add(e), this;
+    return localDebug$6("keyboard receive pressed subscriber"), this.pressedPool.add(e), this;
   }
   event(e) {
-    return Se("keyboard receive combination subscriber"), this.combinationsPool.add(e), this;
+    return localDebug$6("keyboard receive combination subscriber"), this.combinationsPool.add(e), this;
   }
 }
-class Ko {
+class SessionRecord {
   constructor(e) {
-    $(this, "source", new ue());
+    b(this, "source", new SourceEmpty());
     if (this.name = e, sessionStorage[e])
       try {
         this.source.give(JSON.parse(sessionStorage[e]));
@@ -2861,40 +2861,40 @@ class Ko {
     return this.pool();
   }
 }
-const ss = I.debug("app:konva:KonvaLayer");
-class Jo {
-  constructor(e, t, s, i) {
-    $(this, "guestChain");
-    $(this, "positionCache");
-    $(this, "layerCache");
-    this.canvasDep = e, this.stageMoveRestriction = s, this.factories = i, this.positionCache = i.cache.create({
+const localDebug$5 = browserExports.debug("app:konva:KonvaLayer");
+class KonvaLayer {
+  constructor(e, t, s, o) {
+    b(this, "guestChain");
+    b(this, "positionCache");
+    b(this, "layerCache");
+    this.canvasDep = e, this.stageMoveRestriction = s, this.factories = o, this.positionCache = o.cache.create({
       x: 0,
       y: 0
-    }), this.guestChain = i.chain.create(), this.layerCache = i.sourceEmpty.create(), this.canvasDep.canvas(i.patron.create(this.guestChain.guestKey("canvas"))), t.value(this.guestChain.guestKey("stageSize")), this.guestChain.value(
-      i.guest.create(
-        ({ canvas: r }) => {
-          ss("create new konva stage");
-          const o = new he.Stage({
-            width: r.clientWidth,
-            height: r.clientHeight,
-            container: r,
+    }), this.guestChain = o.chain.create(), this.layerCache = o.sourceEmpty.create(), this.canvasDep.canvas(o.patron.create(this.guestChain.guestKey("canvas"))), t.value(this.guestChain.guestKey("stageSize")), this.guestChain.value(
+      o.guest.create(
+        ({ canvas: i }) => {
+          localDebug$5("create new konva stage");
+          const n = new Konva.Stage({
+            width: i.clientWidth,
+            height: i.clientHeight,
+            container: i,
             fill: "#ffeeee",
             draggable: !0
-          }), c = new he.Layer();
-          o.add(c), c.draw(), this.layerCache.give(c), o.on("dragend", (h) => {
-            if (!(h.target instanceof he.Stage))
+          }), c = new Konva.Layer();
+          n.add(c), c.draw(), this.layerCache.give(c), n.on("dragend", (h) => {
+            if (!(h.target instanceof Konva.Stage))
               return;
             const u = {
-              x: o.x(),
-              y: o.y()
+              x: n.x(),
+              y: n.y()
             };
-            ss("new position", u), this.positionCache.give(u);
-          }), o.on("dragmove", (h) => {
-            if (!(h.target instanceof he.Stage))
+            localDebug$5("new position", u), this.positionCache.give(u);
+          }), n.on("dragmove", (h) => {
+            if (!(h.target instanceof Konva.Stage))
               return;
             const u = {
-              x: o.x(),
-              y: o.y()
+              x: n.x(),
+              y: n.y()
             };
             this.positionCache.give(u);
           });
@@ -2902,7 +2902,7 @@ class Jo {
             x: 0,
             y: 0
           });
-          o.dragBoundFunc((h) => (s.position(h, a), a.value()));
+          n.dragBoundFunc((h) => (s.position(h, a), a.value()));
         }
       )
     );
@@ -2922,7 +2922,7 @@ class Jo {
     }), this;
   }
 }
-class qo {
+class KonvaLayerShiftPoint {
   constructor(e, t) {
     this.konvaLayer = e, this.factories = t;
   }
@@ -2937,24 +2937,24 @@ class qo {
     ), e;
   }
 }
-const Yo = I.debug("position");
-class Zo {
-  constructor(e, t, s, i, r) {
-    this.layer = e, this.canvas = t, this.stageSize = s, this.stageMoveRestriction = i, this.factories = r;
+const localDebug$4 = browserExports.debug("position");
+class KonvaMove {
+  constructor(e, t, s, o, i) {
+    this.layer = e, this.canvas = t, this.stageSize = s, this.stageMoveRestriction = o, this.factories = i;
   }
   move(e) {
-    Yo("move stage to new point", e.position), this.stageSize.value(
+    localDebug$4("move stage to new point", e.position), this.stageSize.value(
       this.factories.guest.create(() => {
         this.canvas.size(
           this.factories.guest.create((t) => {
             this.layer.layer(
               this.factories.guest.create((s) => {
-                const [i, r] = e.position, o = {
-                  x: -i - Math.round(e.width / 2) + Math.round(t.width / 2),
-                  y: -r - Math.round(e.height / 2) + Math.round(t.height / 2)
+                const [o, i] = e.position, n = {
+                  x: -o - Math.round(e.width / 2) + Math.round(t.width / 2),
+                  y: -i - Math.round(e.height / 2) + Math.round(t.height / 2)
                 };
                 this.stageMoveRestriction.position(
-                  o,
+                  n,
                   this.factories.guest.create((c) => {
                     s.getStage().position(c), setTimeout(() => {
                       this.layer.give(s);
@@ -2969,123 +2969,123 @@ class Zo {
     );
   }
 }
-const _ = Z(), Je = new Go(_), vs = new xe({
+const factories = useFactories(), keyboard = new Keyboard(factories), settings = new Source({
   readonly: !1,
   presets: {}
-}), Xo = new jo(Je, _), As = new Fo(Je, _), qe = new Bo(_), de = new fn(_), ys = _.sourceEmpty.create(), V = new yn(ys, de, _), ea = new mn(V), ta = new oi(ea), sa = new Ko("current-map");
-V.currentMap(new Ke(sa));
-const gt = new wn(V, de, _), ft = new ds(gt, de, _), ia = new hs(ft, gt, _), ie = new ds(V, de, _), na = new be((n) => {
-  V.currentMap(new Te(n));
-}), Ye = new xn(As, _), ra = new Rr(_), oa = new Dr(V, ie, _), ve = new zo(_), Ae = new Kr(), bs = new Jr(ve, Ae, _), ne = new Jo(ve, Ae, bs, _), aa = new Vo(_), ca = new Co(ne, V, aa, _), Ce = new hs(ie, V, _), la = new Mn(
-  ie,
-  V,
-  [new ht(qe, new Cn(V, _), _)],
-  _
-), ua = new qo(ne, _), da = new _n(ie, Ce, ve, ua, _), ws = new Ur(V, _), xs = new Vr(
-  ie,
-  V,
+}), modal = new Modal(keyboard, factories), drawer = new Drawer(keyboard, factories), notification = new Notification(factories), mapCurrentID = new MapCurrentID(factories), fileContent = factories.sourceEmpty.create(), mapFile = new MapFile(fileContent, mapCurrentID, factories), mapCurrentTitle = new MapCurrentTitle(mapFile), documentTitle = new DocumentTitle(mapCurrentTitle), sessionMap = new SessionRecord("current-map");
+mapFile.currentMap(new Patron(sessionMap));
+const mapFileForRendering = new MapFileForRendering(mapFile, mapCurrentID, factories), mapForRendering = new MapCurrent(mapFileForRendering, mapCurrentID, factories), mapObjectForRendering = new MapObject(mapForRendering, mapFileForRendering, factories), mapCurrent = new MapCurrent(mapFile, mapCurrentID, factories), mapCurrentSource = new GuestAware((r) => {
+  mapFile.currentMap(new GuestObject(r));
+}), mapObjectCurrent = new MapObjectCurrent(drawer, factories), mapTypeCurrent = new MapTypeCurrent(factories), mapSettings = new MapSettings(mapFile, mapCurrent, factories), canvas = new BrowserCanvas(factories), stageSize = new StageDefaultSize(), stageMoveRestriction = new StageMoveRestriction(canvas, stageSize, factories), konvaLayer = new KonvaLayer(canvas, stageSize, stageMoveRestriction, factories), zIndex = new Zindex(factories), mapBackground = new MapObjectBackground(konvaLayer, mapFile, zIndex, factories), mapObject = new MapObject(mapCurrent, mapFile, factories), mapObjectRemoved = new MapObjectRemoved(
+  mapCurrent,
+  mapFile,
+  [new CheckNotification(notification, new MapObjectHasArrowCheck(mapFile, factories), factories)],
+  factories
+), konvaLayerPosition = new KonvaLayerShiftPoint(konvaLayer, factories), mapObjectNew = new MapObjectNew(mapCurrent, mapObject, canvas, konvaLayerPosition, factories), mapTypeUsedCheck = new MapTypeUsed(mapFile, factories), mapType = new MapTypes(
+  mapCurrent,
+  mapFile,
   [
-    new ht(
-      qe,
-      new Lr(ws, _),
-      _
+    new CheckNotification(
+      notification,
+      new MapTypeUsedNameChangedCheck(mapTypeUsedCheck, factories),
+      factories
     )
   ],
-  _
-), ha = new Nr(
-  ie,
-  V,
-  [new ht(qe, ws, _)],
-  _
-), pa = new Hr(xs), Ze = new qr(ne, ve, gt, _), ga = new Oo(
-  Ze,
-  V,
-  ie,
-  _
-), fa = new Po(
-  ne,
-  V,
-  Ce,
-  Ze,
-  Ye,
-  ia,
-  new Or(new Br(Ae, _), _),
-  vs,
-  _
-), ma = new Lo(ne, _), va = new ko(Ze, ma, _), Cs = new eo(), _s = new wo(ne, va, Cs, _), Aa = new yo(ne, V, ft, Cs, _), ya = new Io(ft, ne, Ae, _), ba = new Sn(
-  Ye,
-  ie,
-  Ce,
-  _s,
-  _
-), wa = new Eo(V, ve, ne, _), xa = new Xr(
-  Ye,
-  V,
-  Ce,
-  _
-), Ca = new An(V, de, _), _a = new kn(Ce), $a = new So(), mt = new $n(de, _), ka = new $o(mt, V, _), Ma = new Tr(de, _), Fa = new Qr(mt, V, _), Sa = new Wo(Je, _), Ta = new To(V, _), $s = new Zo(ne, ve, Ae, bs, _), Ia = new Ro($s), ja = new Ho($s, _), Ba = new Wr(ie, _), Oa = new vn(V, ie, de, _), Pa = new Er(ie, Ae, ne, _), ks = new ue();
-new Qo(ks);
-const Ea = new No(), Da = new be((n) => {
-  Ea.value(
-    new L(n, (e) => {
-      H(e.width, n);
+  factories
+), mapTypeRemoved = new MapTypeRemoved(
+  mapCurrent,
+  mapFile,
+  [new CheckNotification(notification, mapTypeUsedCheck, factories)],
+  factories
+), mapTypeNew = new MapTypeNew(mapType), mapObjectsVisible = new MapObjectsVisible(konvaLayer, canvas, mapFileForRendering, factories), mapObjectsGeometryFix = new ObjectGeometryFix(
+  mapObjectsVisible,
+  mapFile,
+  mapCurrent,
+  factories
+), mapRects = new MapObjectsRects(
+  konvaLayer,
+  mapFile,
+  mapObject,
+  mapObjectsVisible,
+  mapObjectCurrent,
+  mapObjectForRendering,
+  new ObjectPositionGridStick(new ObjectPositionBounds(stageSize, factories), factories),
+  settings,
+  factories
+), cursor = new Cursor(konvaLayer, factories), cursorWithObjects = new CursorWithObjects(mapObjectsVisible, cursor, factories), arrowPath = new ArrowPath(), newArrow = new NewArrow(konvaLayer, cursorWithObjects, arrowPath, factories), mapArrows = new MapObjectsArrows(konvaLayer, mapFile, mapForRendering, arrowPath, factories), miniMap = new MiniMap(mapForRendering, konvaLayer, stageSize, factories), mapObjectsLink = new MapObjectsLink(
+  mapObjectCurrent,
+  mapCurrent,
+  mapObject,
+  newArrow,
+  factories
+), resizing = new Resizing(mapFile, canvas, konvaLayer, factories), objectAdditionalFieldsFix = new ObjectAdditionalFieldsFix(
+  mapObjectCurrent,
+  mapFile,
+  mapObject,
+  factories
+), mapRemoved = new MapRemoved(mapFile, mapCurrentID, factories), mapObjectRelationRemoved = new MapObjectRelationRemoved(mapObject), fps = new Fps(), parentNames = new MapObjectParentNames(mapCurrentID, factories), breadcrumbs = new Breadcrumbs(parentNames, mapFile, factories), mapObjectUrl = new MapObjectUrl(mapCurrentID, factories), parentTypes = new ParentTypes(parentNames, mapFile, factories), controlCombo = new ControlCombo(keyboard, factories), menu = new Menu(mapFile, factories), konvaMove = new KonvaMove(konvaLayer, canvas, stageSize, stageMoveRestriction, factories), stagePosition = new StagePosition(konvaMove), stagePositionByObjectId = new StagePositionByObjectId(konvaMove, factories), objectsMatchedToQuery = new ObjectsMatchedToQuery(mapCurrent, factories), mapHistory = new MapHistory(mapFile, mapCurrent, mapCurrentID, factories), objectsOutsideScreen = new ObjectsOutsideScreen(mapCurrent, stageSize, konvaLayer, factories), sidebarDraggable = new SourceEmpty();
+new Draggable(sidebarDraggable);
+const theWindow = new Window(), windowWidth = new GuestAware((r) => {
+  theWindow.value(
+    new GuestCast(r, (e) => {
+      give(e.width, r);
     })
   );
-}), Ra = new Mo(Da), Ha = {
-  mapCurrentID: de,
-  mapFile: V,
-  mapCurrent: ie,
-  mapCurrentSource: na,
-  mapRemoved: Ca,
-  mapSettings: oa,
-  mapObject: Ce,
-  mapObjectRemoved: la,
-  mapType: xs,
-  mapTypeRemoved: ha,
-  mapTypeNew: pa,
-  mapObjectsVisible: Ze,
-  mapObjectCurrent: Ye,
-  mapObjectNew: da,
-  mapObjectsLink: ba,
-  mapTypeCurrent: ra,
-  mapRects: fa,
-  mapBackground: ca,
-  mapObjectArrows: Aa,
-  mapObjectsGeometryFix: ga,
-  canvas: ve,
-  miniMap: ya,
-  notification: qe,
-  modal: Xo,
-  drawer: As,
-  konvaLayer: ne,
-  resizing: wa,
-  objectAdditionalFieldsFix: xa,
-  mapObjectRelationRemoved: _a,
-  fps: $a,
-  breadcrumbs: ka,
-  mapObjectUrl: Ma,
-  keyboard: Je,
-  parentNames: mt,
-  parentTypes: Fa,
-  controlCombo: Sa,
-  menu: Ta,
-  stagePosition: Ia,
-  stagePositionByObjectId: ja,
-  objectsMatchedToQuery: Ba,
-  stageSize: Ae,
-  mapHistory: Oa,
-  fileContent: ys,
-  newArrow: _s,
-  objectsOutsideScreen: Pa,
-  settings: vs,
-  documentTitle: ta,
-  sidebarDraggable: ks,
-  device: Ra
-}, Q = () => Ha;
-class T {
+}), device = new Device(windowWidth), modules = {
+  mapCurrentID,
+  mapFile,
+  mapCurrent,
+  mapCurrentSource,
+  mapRemoved,
+  mapSettings,
+  mapObject,
+  mapObjectRemoved,
+  mapType,
+  mapTypeRemoved,
+  mapTypeNew,
+  mapObjectsVisible,
+  mapObjectCurrent,
+  mapObjectNew,
+  mapObjectsLink,
+  mapTypeCurrent,
+  mapRects,
+  mapBackground,
+  mapObjectArrows: mapArrows,
+  mapObjectsGeometryFix,
+  canvas,
+  miniMap,
+  notification,
+  modal,
+  drawer,
+  konvaLayer,
+  resizing,
+  objectAdditionalFieldsFix,
+  mapObjectRelationRemoved,
+  fps,
+  breadcrumbs,
+  mapObjectUrl,
+  keyboard,
+  parentNames,
+  parentTypes,
+  controlCombo,
+  menu,
+  stagePosition,
+  stagePositionByObjectId,
+  objectsMatchedToQuery,
+  stageSize,
+  mapHistory,
+  fileContent,
+  newArrow,
+  objectsOutsideScreen,
+  settings,
+  documentTitle,
+  sidebarDraggable,
+  device
+}, useApplication = () => modules;
+class VueRefPatron {
   constructor(e = void 0) {
-    $(this, "innerRef");
-    this.innerRef = te(e);
+    b(this, "innerRef");
+    this.innerRef = ref(e);
   }
   get value() {
     return this.innerRef.value;
@@ -3100,17 +3100,17 @@ class T {
     return "patron";
   }
 }
-const Na = {
+const _hoisted_1$q = {
   key: 0,
   title: "Назад",
   class: "absolute text-white left-0 top-0 -ml-5 flex justify-center items-center bg-primary/70 hover:bg-primary-second/70 cursor-pointer w-5"
-}, Va = {
+}, _hoisted_2$i = {
   key: 1,
   class: "BaseModal-Header"
-}, za = { class: "overflow-y-auto flex-grow" }, Ua = {
+}, _hoisted_3$e = { class: "overflow-y-auto flex-grow" }, _hoisted_4$b = {
   key: 2,
   class: "BaseModal-Footer"
-}, ge = /* @__PURE__ */ E({
+}, _sfc_main$v = /* @__PURE__ */ defineComponent({
   __name: "BaseModal",
   props: {
     name: {
@@ -3118,44 +3118,44 @@ const Na = {
       required: !0
     }
   },
-  setup(n) {
-    const { modal: e } = Q(), t = n, s = e.isOpenedByName(t.name, new T()).ref(), i = [], r = () => {
+  setup(r) {
+    const { modal: e } = useApplication(), t = r, s = e.isOpenedByName(t.name, new VueRefPatron()).ref(), o = [], i = () => {
       e.give("");
     };
-    return (o, c) => (g(), U(rs, { name: "fade" }, {
-      default: w(() => [
-        d(s) ? (g(), y("div", {
+    return (n, c) => (openBlock(), createBlock(Transition, { name: "fade" }, {
+      default: withCtx(() => [
+        unref(s) ? (openBlock(), createElementBlock("div", {
           key: 0,
           class: "absolute rounded-main overflow-y-auto flex justify-center items-center top-0 left-0 bg-black/10 z-20 h-full w-full",
-          onClick: r
+          onClick: i
         }, [
-          b("div", {
+          createElementVNode("div", {
             class: "w-full relative flex flex-col max-w-[800px] max-h-[90%] bg-white p-3",
-            onClick: c[0] || (c[0] = we(() => {
+            onClick: c[0] || (c[0] = withModifiers(() => {
             }, ["stop"]))
           }, [
-            i.length > 1 ? (g(), y("div", Na, " < ")) : S("", !0),
-            b("div", {
+            o.length > 1 ? (openBlock(), createElementBlock("div", _hoisted_1$q, " < ")) : createCommentVNode("", !0),
+            createElementVNode("div", {
               title: "Закрыть",
               class: "e2e-modal-close absolute text-white right-0 top-0 -mr-5 flex justify-center items-center bg-danger/70 hover:bg-danger-second/70 cursor-pointer w-5",
-              onClick: r
+              onClick: i
             }, " × "),
-            o.$slots.header ? (g(), y("div", Va, [
-              K(o.$slots, "header")
-            ])) : S("", !0),
-            b("div", za, [
-              K(o.$slots, "default")
+            n.$slots.header ? (openBlock(), createElementBlock("div", _hoisted_2$i, [
+              renderSlot(n.$slots, "header")
+            ])) : createCommentVNode("", !0),
+            createElementVNode("div", _hoisted_3$e, [
+              renderSlot(n.$slots, "default")
             ]),
-            o.$slots.footer ? (g(), y("div", Ua, [
-              K(o.$slots, "footer")
-            ])) : S("", !0)
+            n.$slots.footer ? (openBlock(), createElementBlock("div", _hoisted_4$b, [
+              renderSlot(n.$slots, "footer")
+            ])) : createCommentVNode("", !0)
           ])
-        ])) : S("", !0)
+        ])) : createCommentVNode("", !0)
       ]),
       _: 3
     }));
   }
-}), La = { class: "BaseTextarea" }, Qa = ["v-bind"], Ms = /* @__PURE__ */ E({
+}), _hoisted_1$p = { class: "BaseTextarea" }, _hoisted_2$h = ["v-bind"], _sfc_main$u = /* @__PURE__ */ defineComponent({
   inheritAttrs: !1,
   __name: "BaseTextarea",
   props: {
@@ -3165,21 +3165,21 @@ const Na = {
     }
   },
   emits: ["update:modelValue"],
-  setup(n, { emit: e }) {
-    const i = Qe(n, "modelValue", e);
-    return (r, o) => (g(), y("div", La, [
-      Le(b("textarea", {
+  setup(r, { emit: e }) {
+    const o = useVModel(r, "modelValue", e);
+    return (i, n) => (openBlock(), createElementBlock("div", _hoisted_1$p, [
+      withDirectives(createElementVNode("textarea", {
         ref: "textarea",
-        "v-bind": r.$attrs,
-        "onUpdate:modelValue": o[0] || (o[0] = (c) => je(i) ? i.value = c : null),
+        "v-bind": i.$attrs,
+        "onUpdate:modelValue": n[0] || (n[0] = (c) => isRef(o) ? o.value = c : null),
         class: "rounded-main block w-full p-2 border min-h-[200px] border-solid border-body-dark"
-      }, null, 8, Qa), [
-        [os, d(i)]
+      }, null, 8, _hoisted_2$h), [
+        [vModelText, unref(o)]
       ])
     ]));
   }
 });
-class Wa {
+class VueRefPatronDuplex {
   constructor(e, t, s = !1) {
     this.basePatron = e, this.guest = t, this.refWatcherCreated = s;
   }
@@ -3193,7 +3193,7 @@ class Wa {
     return this.basePatron.introduction();
   }
   give(e) {
-    return this.basePatron.give(e), this.refWatcherCreated || (this.refWatcherCreated = !0, Be(
+    return this.basePatron.give(e), this.refWatcherCreated || (this.refWatcherCreated = !0, watch(
       this.basePatron.ref(),
       (t) => {
         t && this.guest.give(t);
@@ -3204,14 +3204,14 @@ class Wa {
     )), this;
   }
 }
-class Ga {
+class Jsoned {
   constructor(e) {
     this.baseSource = e;
   }
   value(e) {
     return this.baseSource.value(
-      new L(e, (t) => {
-        H(JSON.stringify(t), e);
+      new GuestCast(e, (t) => {
+        give(JSON.stringify(t), e);
       })
     ), this;
   }
@@ -3224,7 +3224,7 @@ class Ga {
     return this.baseSource.pool();
   }
 }
-class Ka {
+class SourceDynamic {
   constructor(e, t) {
     this.baseGuest = e, this.baseGuestAware = t;
   }
@@ -3232,31 +3232,31 @@ class Ka {
     return this.baseGuestAware.value(e), this;
   }
   give(e) {
-    return H(e, this.baseGuest), this;
+    return give(e, this.baseGuest), this;
   }
   pool() {
     throw Error("No pool in SourceDynamic");
   }
 }
-const Ja = { class: "AppPresets" }, qa = /* @__PURE__ */ b("div", { class: "text-md font-bold mb-2" }, "Экспорт\\Импорт текущей карты", -1), Ya = { class: "flex flex-col gap-2" }, Za = /* @__PURE__ */ E({
+const _hoisted_1$o = { class: "AppPresets" }, _hoisted_2$g = /* @__PURE__ */ createElementVNode("div", { class: "text-md font-bold mb-2" }, "Экспорт\\Импорт текущей карты", -1), _hoisted_3$d = { class: "flex flex-col gap-2" }, _sfc_main$t = /* @__PURE__ */ defineComponent({
   __name: "AppExport",
-  setup(n) {
-    const { mapFile: e, mapCurrent: t } = Q(), s = new Ka(
+  setup(r) {
+    const { mapFile: e, mapCurrent: t } = useApplication(), s = new SourceDynamic(
       t,
-      new be((c) => {
-        e.currentMap(new Te(c));
+      new GuestAware((c) => {
+        e.currentMap(new GuestObject(c));
       })
-    ), i = new Ga(s), r = new Wa(new T(), i);
-    i.value(r);
-    const o = r.ref();
-    return (c, a) => (g(), U(ge, { name: "export" }, {
-      default: w(() => [
-        b("div", Ja, [
-          qa,
-          b("div", Ya, [
-            m(Ms, {
-              modelValue: d(o),
-              "onUpdate:modelValue": a[0] || (a[0] = (h) => je(o) ? o.value = h : null)
+    ), o = new Jsoned(s), i = new VueRefPatronDuplex(new VueRefPatron(), o);
+    o.value(i);
+    const n = i.ref();
+    return (c, a) => (openBlock(), createBlock(_sfc_main$v, { name: "export" }, {
+      default: withCtx(() => [
+        createElementVNode("div", _hoisted_1$o, [
+          _hoisted_2$g,
+          createElementVNode("div", _hoisted_3$d, [
+            createVNode(_sfc_main$u, {
+              modelValue: unref(n),
+              "onUpdate:modelValue": a[0] || (a[0] = (h) => isRef(n) ? n.value = h : null)
             }, null, 8, ["modelValue"])
           ])
         ])
@@ -3264,35 +3264,35 @@ const Ja = { class: "AppPresets" }, qa = /* @__PURE__ */ b("div", { class: "text
       _: 1
     }));
   }
-}), P = /* @__PURE__ */ E({
+}), _sfc_main$s = /* @__PURE__ */ defineComponent({
   __name: "BaseButton",
   props: {
     size: {
       type: String,
       default: "md",
-      validator: (n) => ["sm", "md", "lg"].includes(n)
+      validator: (r) => ["sm", "md", "lg"].includes(r)
     },
     type: {
       type: String,
       default: "standard"
     }
   },
-  setup(n) {
-    const e = n, t = ["rounded-main", `text-${e.size}`, `p-${e.size}`, `bg-${e.type} hover:bg-${e.type}-second`];
-    return t.push(""), (s, i) => (g(), y("button", {
+  setup(r) {
+    const e = r, t = ["rounded-main", `text-${e.size}`, `p-${e.size}`, `bg-${e.type} hover:bg-${e.type}-second`];
+    return t.push(""), (s, o) => (openBlock(), createElementBlock("button", {
       type: "button",
-      class: se(t)
+      class: normalizeClass(t)
     }, [
-      K(s.$slots, "default")
+      renderSlot(s.$slots, "default")
     ]));
   }
-}), Xa = { key: 0 }, ec = { class: "flex-grow overflow-y-auto" }, tc = {
+}), _hoisted_1$n = { key: 0 }, _hoisted_2$f = { class: "flex-grow overflow-y-auto" }, _hoisted_3$c = {
   key: 1,
   class: "flex gap-1"
-}, sc = {
+}, _hoisted_4$a = {
   key: 2,
   class: "flex gap-1"
-}, vt = /* @__PURE__ */ E({
+}, _sfc_main$r = /* @__PURE__ */ defineComponent({
   __name: "BaseDrawer",
   props: {
     name: {
@@ -3302,126 +3302,126 @@ const Ja = { class: "AppPresets" }, qa = /* @__PURE__ */ b("div", { class: "text
     direction: {
       type: String,
       default: "ltr",
-      validator: (n) => ["ltr", "rtl", "ttb", "btt"].includes(n)
+      validator: (r) => ["ltr", "rtl", "ttb", "btt"].includes(r)
     }
   },
   emits: ["close"],
-  setup(n, { emit: e }) {
-    const t = n, s = e, i = Oe(() => ["e2e-drawer-back absolute z-10 top-0 left-0 w-full h-full bg-black/50"]), r = {
+  setup(r, { emit: e }) {
+    const t = r, s = e, o = computed(() => ["e2e-drawer-back absolute z-10 top-0 left-0 w-full h-full bg-black/50"]), i = {
       ltr: "top-0 left-0 w-[50%] max-w-[900px] ",
       rtl: "top-0 right-0 w-[50%] max-w-[900px] ",
       ttb: "top-0 right-0 left-0",
       btt: "top-auto h-[900px] max-h-[50%] bottom-0 right-0 left-0"
-    }, { drawer: o, device: c } = Q(), a = () => {
-      o.give(""), s("close");
-    }, h = o.isOpenedByName(t.name, new T()).ref();
-    c.value(new Ke((l) => {
-      l.isMobile ? (r.ltr = r.ltr.replace("[50%]", "[100%]"), r.rtl = r.rtl.replace("[50%]", "[100%]")) : (r.ltr = r.ltr.replace("[100%]", "[50%]"), r.rtl = r.rtl.replace("[100%]", "[50%]"));
+    }, { drawer: n, device: c } = useApplication(), a = () => {
+      n.give(""), s("close");
+    }, h = n.isOpenedByName(t.name, new VueRefPatron()).ref();
+    c.value(new Patron((l) => {
+      l.isMobile ? (i.ltr = i.ltr.replace("[50%]", "[100%]"), i.rtl = i.rtl.replace("[50%]", "[100%]")) : (i.ltr = i.ltr.replace("[100%]", "[50%]"), i.rtl = i.rtl.replace("[100%]", "[50%]"));
     }));
-    const u = new T();
-    return c.value(u), (l, p) => (g(), U(rs, { name: "fade" }, {
-      default: w(() => [
-        d(h) ? (g(), y("div", {
+    const u = new VueRefPatron();
+    return c.value(u), (l, d) => (openBlock(), createBlock(Transition, { name: "fade" }, {
+      default: withCtx(() => [
+        unref(h) ? (openBlock(), createElementBlock("div", {
           key: 0,
-          class: se(i.value),
+          class: normalizeClass(o.value),
           onClick: a
         }, [
-          b("div", {
-            class: se(["absolute bg-white h-full p-3 flex flex-col overflow-hidden", r[n.direction]]),
-            onClick: p[1] || (p[1] = we(() => {
+          createElementVNode("div", {
+            class: normalizeClass(["absolute bg-white h-full p-3 flex flex-col overflow-hidden", i[r.direction]]),
+            onClick: d[1] || (d[1] = withModifiers(() => {
             }, ["stop"]))
           }, [
-            l.$slots.header ? (g(), y("div", Xa, [
-              K(l.$slots, "header", { class: "BaseDrawer-Header" })
-            ])) : S("", !0),
-            b("div", ec, [
-              K(l.$slots, "default")
+            l.$slots.header ? (openBlock(), createElementBlock("div", _hoisted_1$n, [
+              renderSlot(l.$slots, "header", { class: "BaseDrawer-Header" })
+            ])) : createCommentVNode("", !0),
+            createElementVNode("div", _hoisted_2$f, [
+              renderSlot(l.$slots, "default")
             ]),
-            l.$slots.footer ? (g(), y("div", tc, [
-              K(l.$slots, "footer")
-            ])) : S("", !0),
-            d(u).value.isMobile ? (g(), y("div", sc, [
-              m(P, {
+            l.$slots.footer ? (openBlock(), createElementBlock("div", _hoisted_3$c, [
+              renderSlot(l.$slots, "footer")
+            ])) : createCommentVNode("", !0),
+            unref(u).value.isMobile ? (openBlock(), createElementBlock("div", _hoisted_4$a, [
+              createVNode(_sfc_main$s, {
                 type: "primary",
                 class: "text-white w-full block mt-2",
-                onClick: p[0] || (p[0] = (v) => d(o).give(""))
+                onClick: d[0] || (d[0] = (m) => unref(n).give(""))
               }, {
-                default: w(() => [
-                  O(" Закрыть ")
+                default: withCtx(() => [
+                  createTextVNode(" Закрыть ")
                 ]),
                 _: 1
               })
-            ])) : S("", !0)
+            ])) : createCommentVNode("", !0)
           ], 2)
-        ], 2)) : S("", !0)
+        ], 2)) : createCommentVNode("", !0)
       ]),
       _: 3
     }));
   }
-}), q = /* @__PURE__ */ E({
+}), _sfc_main$q = /* @__PURE__ */ defineComponent({
   __name: "BaseIcon",
   props: {
     icon: {
       type: String
     }
   },
-  setup(n) {
+  setup(r) {
     const e = {
-      "fa-bars": ti,
-      "fa-bars-staggered": ei,
-      "fa-text-width": Xs,
-      "fa-search": Zs,
-      "fa-history": Ys,
-      "fa-plus-square": qs,
-      "fa-cog": Js,
-      "fa-file-text": Ks,
-      "fa-rotate-left": Gs,
-      "fa-rotate-right": Ws,
-      "fa-map": Qs,
-      "fa-close": Ls,
-      "fa-arrow-left": Us,
-      "fa-arrow-right": zs,
-      "fa-arrow-down": Vs,
-      "fa-arrow-up": Ns,
-      "fa-share-nodes": Hs
+      "fa-bars": faBars,
+      "fa-bars-staggered": faBarsStaggered,
+      "fa-text-width": faTextWidth,
+      "fa-search": faSearch,
+      "fa-history": faHistory,
+      "fa-plus-square": faPlusSquare,
+      "fa-cog": faCog,
+      "fa-file-text": faFileText,
+      "fa-rotate-left": faRotateLeft,
+      "fa-rotate-right": faRotateRight,
+      "fa-map": faMap,
+      "fa-close": faClose,
+      "fa-arrow-left": faArrowLeft,
+      "fa-arrow-right": faArrowRight,
+      "fa-arrow-down": faArrowDown,
+      "fa-arrow-up": faArrowUp,
+      "fa-share-nodes": faShareNodes
     };
-    return (t, s) => (g(), U(d(Rs), {
-      icon: e[n.icon]
+    return (t, s) => (openBlock(), createBlock(unref(FontAwesomeIcon), {
+      icon: e[r.icon]
     }, null, 8, ["icon"]));
   }
-}), ic = /* @__PURE__ */ b("h2", { class: "text-lg font-bold" }, " Карты в файле ", -1), nc = ["onClick"], rc = /* @__PURE__ */ E({
+}), _hoisted_1$m = /* @__PURE__ */ createElementVNode("h2", { class: "text-lg font-bold" }, " Карты в файле ", -1), _hoisted_2$e = ["onClick"], _sfc_main$p = /* @__PURE__ */ defineComponent({
   __name: "AppFileMaps",
-  setup(n) {
+  setup(r) {
     const {
       mapFile: e,
       mapCurrentID: t,
       drawer: s,
-      mapRemoved: i
-    } = Q(), r = e.mapFile(new T()).ref(), o = t.id(new T()).ref(), c = (a) => {
-      confirm("Вы уверены?") && i.give(a);
+      mapRemoved: o
+    } = useApplication(), i = e.mapFile(new VueRefPatron()).ref(), n = t.id(new VueRefPatron()).ref(), c = (a) => {
+      confirm("Вы уверены?") && o.give(a);
     };
-    return (a, h) => (g(), U(vt, {
+    return (a, h) => (openBlock(), createBlock(_sfc_main$r, {
       direction: "rtl",
       name: "fileMaps"
     }, {
-      header: w(() => [
-        ic
+      header: withCtx(() => [
+        _hoisted_1$m
       ]),
-      default: w(() => [
-        b("div", null, [
-          (g(!0), y(W, null, J(d(r), (u, l) => (g(), y("div", {
+      default: withCtx(() => [
+        createElementVNode("div", null, [
+          (openBlock(!0), createElementBlock(Fragment, null, renderList(unref(i), (u, l) => (openBlock(), createElementBlock("div", {
             key: l,
             class: "flex items-center gap-2"
           }, [
-            b("a", {
+            createElementVNode("a", {
               href: "#",
-              class: se({ "font-bold": d(o) === l }),
-              onClick: we((p) => {
-                d(t).give(l), d(s).give("");
+              class: normalizeClass({ "font-bold": unref(n) === l }),
+              onClick: withModifiers((d) => {
+                unref(t).give(l), unref(s).give("");
               }, ["prevent"])
-            }, C(u.settings.title), 11, nc),
-            m(q, {
-              onClick: (p) => c(l),
+            }, toDisplayString(u.settings.title), 11, _hoisted_2$e),
+            createVNode(_sfc_main$q, {
+              onClick: (d) => c(l),
               class: "text-danger-second cursor-pointer",
               title: "Удалить карту",
               icon: "fa-close"
@@ -3432,63 +3432,63 @@ const Ja = { class: "AppPresets" }, qa = /* @__PURE__ */ b("div", { class: "text
       _: 1
     }));
   }
-}), oc = { class: "AppMenuObject" }, ac = {
+}), _hoisted_1$l = { class: "AppMenuObject" }, _hoisted_2$d = {
   key: 0,
   class: "AppMenuObject-Empty"
-}, cc = {
+}, _hoisted_3$b = {
   key: 1,
   class: "flex flex-col gap-1"
-}, lc = ["onClick"], uc = ["innerHTML"], dc = /* @__PURE__ */ E({
+}, _hoisted_4$9 = ["onClick"], _hoisted_5$6 = ["innerHTML"], _sfc_main$o = /* @__PURE__ */ defineComponent({
   __name: "AppMenuObject",
-  setup(n) {
+  setup(r) {
     const {
       controlCombo: e,
       drawer: t,
       menu: s,
-      stagePosition: i
-    } = Q(), { guest: r, patron: o } = Z(), c = s.menuObjects(new T()).ref();
+      stagePosition: o
+    } = useApplication(), { guest: i, patron: n } = useFactories(), c = s.menuObjects(new VueRefPatron()).ref();
     return e.happened(
       "KeyM",
-      o.create(r.create(() => {
+      n.create(i.create(() => {
         t.give("menu");
       }))
-    ), (a, h) => (g(), U(vt, {
+    ), (a, h) => (openBlock(), createBlock(_sfc_main$r, {
       direction: "rtl",
       name: "menu"
     }, {
-      default: w(() => [
-        b("div", oc, [
-          d(c).length ? (g(), y("div", cc, [
-            (g(!0), y(W, null, J(d(c), (u) => (g(), y("a", {
+      default: withCtx(() => [
+        createElementVNode("div", _hoisted_1$l, [
+          unref(c).length ? (openBlock(), createElementBlock("div", _hoisted_3$b, [
+            (openBlock(!0), createElementBlock(Fragment, null, renderList(unref(c), (u) => (openBlock(), createElementBlock("a", {
               key: u.id,
               class: "AppMenuObject-Item",
               href: "#",
-              onClick: we((l) => {
-                d(i).give(u), d(t).give("");
+              onClick: withModifiers((l) => {
+                unref(o).give(u), unref(t).give("");
               }, ["prevent"])
             }, [
-              b("span", {
+              createElementVNode("span", {
                 innerHTML: u.additionalName ? u.additionalName : u.name
-              }, null, 8, uc)
-            ], 8, lc))), 128))
-          ])) : (g(), y("div", ac, C(a.$t("appMenuObject.noItems")), 1))
+              }, null, 8, _hoisted_5$6)
+            ], 8, _hoisted_4$9))), 128))
+          ])) : (openBlock(), createElementBlock("div", _hoisted_2$d, toDisplayString(a.$t("appMenuObject.noItems")), 1))
         ])
       ]),
       _: 1
     }));
   }
-}), hc = { class: "AppPresets" }, pc = /* @__PURE__ */ b("div", { class: "text-md font-bold mb-2" }, "Общие", -1), gc = { class: "flex flex-col gap-2" }, fc = { class: "text-md font-bold mb-1" }, mc = { class: "flex gap-2 flex-wrap items-end" }, vc = { class: "AppTypesParent-ItemTitle" }, Ac = ["innerHTML"], yc = /* @__PURE__ */ E({
+}), _hoisted_1$k = { class: "AppPresets" }, _hoisted_2$c = /* @__PURE__ */ createElementVNode("div", { class: "text-md font-bold mb-2" }, "Общие", -1), _hoisted_3$a = { class: "flex flex-col gap-2" }, _hoisted_4$8 = { class: "text-md font-bold mb-1" }, _hoisted_5$5 = { class: "flex gap-2 flex-wrap items-end" }, _hoisted_6$4 = { class: "AppTypesParent-ItemTitle" }, _hoisted_7$4 = ["innerHTML"], _sfc_main$n = /* @__PURE__ */ defineComponent({
   __name: "AppPresets",
-  setup(n) {
+  setup(r) {
     const {
       svgMapTypeImage: e
-    } = Z(), { mapType: t, settings: s } = Q(), i = new T();
-    s.value(i);
-    const r = Oe(
+    } = useFactories(), { mapType: t, settings: s } = useApplication(), o = new VueRefPatron();
+    s.value(o);
+    const i = computed(
       () => Object.fromEntries(
-        Object.entries(i.value.presets).map(
-          ([o, c]) => [
-            o,
+        Object.entries(o.value.presets).map(
+          ([n, c]) => [
+            n,
             c.map(
               (a) => ({
                 preset: a,
@@ -3499,32 +3499,32 @@ const Ja = { class: "AppPresets" }, qa = /* @__PURE__ */ b("div", { class: "text
         )
       )
     );
-    return (o, c) => (g(), U(ge, { name: "presets" }, {
-      default: w(() => [
-        b("div", hc, [
-          pc,
-          b("div", gc, [
-            (g(!0), y(W, null, J(r.value, (a, h) => (g(), y("div", { key: h }, [
-              b("h3", fc, C(h), 1),
-              b("div", mc, [
-                (g(!0), y(W, null, J(a, (u) => (g(), y("div", {
+    return (n, c) => (openBlock(), createBlock(_sfc_main$v, { name: "presets" }, {
+      default: withCtx(() => [
+        createElementVNode("div", _hoisted_1$k, [
+          _hoisted_2$c,
+          createElementVNode("div", _hoisted_3$a, [
+            (openBlock(!0), createElementBlock(Fragment, null, renderList(i.value, (a, h) => (openBlock(), createElementBlock("div", { key: h }, [
+              createElementVNode("h3", _hoisted_4$8, toDisplayString(h), 1),
+              createElementVNode("div", _hoisted_5$5, [
+                (openBlock(!0), createElementBlock(Fragment, null, renderList(a, (u) => (openBlock(), createElementBlock("div", {
                   key: u.preset.name,
                   class: "flex flex-col gap-2"
                 }, [
-                  b("div", vc, C(u.preset.name), 1),
-                  b("div", {
+                  createElementVNode("div", _hoisted_6$4, toDisplayString(u.preset.name), 1),
+                  createElementVNode("div", {
                     class: "AppTypesParent-ItemImage",
                     innerHTML: u.image,
-                    style: ce(`width:${u.preset.width}px;height:${u.preset.height}px`)
-                  }, null, 12, Ac),
-                  m(P, {
+                    style: normalizeStyle(`width:${u.preset.width}px;height:${u.preset.height}px`)
+                  }, null, 12, _hoisted_7$4),
+                  createVNode(_sfc_main$s, {
                     class: "AppTypesParent-ItemButton e2e-add-preset-type",
                     type: "success",
                     size: "sm",
-                    onClick: (l) => d(t).give({ name: u.preset.name, type: u.preset })
+                    onClick: (l) => unref(t).give({ name: u.preset.name, type: u.preset })
                   }, {
-                    default: w(() => [
-                      O(C(o.$t("general.addToMap")), 1)
+                    default: withCtx(() => [
+                      createTextVNode(toDisplayString(n.$t("general.addToMap")), 1)
                     ]),
                     _: 2
                   }, 1032, ["onClick"])
@@ -3537,7 +3537,7 @@ const Ja = { class: "AppPresets" }, qa = /* @__PURE__ */ b("div", { class: "text
       _: 1
     }));
   }
-}), ae = /* @__PURE__ */ E({
+}), _sfc_main$m = /* @__PURE__ */ defineComponent({
   __name: "BaseInput",
   props: {
     modelValue: {
@@ -3550,30 +3550,30 @@ const Ja = { class: "AppPresets" }, qa = /* @__PURE__ */ b("div", { class: "text
     }
   },
   emits: ["update:modelValue"],
-  setup(n, { emit: e }) {
-    const t = n, s = e, i = te(null);
-    Be(
-      i,
-      me(() => {
-        t.autofocus && i.value.focus();
+  setup(r, { emit: e }) {
+    const t = r, s = e, o = ref(null);
+    watch(
+      o,
+      debounce$2(() => {
+        t.autofocus && o.value.focus();
       }, 500)
     );
-    const r = Qe(t, "modelValue", s);
-    return (o, c) => Le((g(), y("input", {
+    const i = useVModel(t, "modelValue", s);
+    return (n, c) => withDirectives((openBlock(), createElementBlock("input", {
       ref_key: "input",
-      ref: i,
-      "onUpdate:modelValue": c[0] || (c[0] = (a) => je(r) ? r.value = a : null),
+      ref: o,
+      "onUpdate:modelValue": c[0] || (c[0] = (a) => isRef(i) ? i.value = a : null),
       class: "block rounded-main w-full p-2 border border-solid border-body-dark",
       type: "text"
     }, null, 512)), [
-      [os, d(r)]
+      [vModelText, unref(i)]
     ]);
   }
 });
-class At {
+class VueSource {
   constructor(e) {
-    $(this, "pool", new We(this));
-    this.refSource = e, Be(
+    b(this, "pool", new PatronPool(this));
+    this.refSource = e, watch(
       e,
       (t) => {
         t !== void 0 && this.pool.give(t);
@@ -3584,110 +3584,110 @@ class At {
     );
   }
   value(e) {
-    return this.refSource.value && H(this.refSource.value, e), this.pool.add(e), this;
+    return this.refSource.value && give(this.refSource.value, e), this.pool.add(e), this;
   }
 }
-const bc = { class: "AppSearch" }, wc = {
+const _hoisted_1$j = { class: "AppSearch" }, _hoisted_2$b = {
   key: 0,
   class: "AppSearch-Items"
-}, xc = ["onClick"], Cc = ["innerHTML"], _c = ["innerHTML"], $c = ["innerHTML"], kc = { key: 1 }, Mc = { key: 2 }, Fc = /* @__PURE__ */ E({
+}, _hoisted_3$9 = ["onClick"], _hoisted_4$7 = ["innerHTML"], _hoisted_5$4 = ["innerHTML"], _hoisted_6$3 = ["innerHTML"], _hoisted_7$3 = { key: 1 }, _hoisted_8$3 = { key: 2 }, _sfc_main$l = /* @__PURE__ */ defineComponent({
   __name: "AppSearch",
-  setup(n) {
+  setup(r) {
     const {
       objectsMatchedToQuery: e,
       controlCombo: t,
       modal: s,
-      stagePosition: i
-    } = Q(), { guest: r, patron: o } = Z(), c = te(), a = I.debug("app:AppSearch");
+      stagePosition: o
+    } = useApplication(), { guest: i, patron: n } = useFactories(), c = ref(), a = browserExports.debug("app:AppSearch");
     s.isOpenedByName(
       "search",
-      o.create(r.create((l) => {
+      n.create(i.create((l) => {
         setTimeout(() => {
           l && c.value && (a("search is opened", l), c.value.$el.focus());
         }, 500);
       }))
     );
-    const h = te(""), u = e.objects(
-      new At(h),
-      new T([])
+    const h = ref(""), u = e.objects(
+      new VueSource(h),
+      new VueRefPatron([])
     ).ref();
     return t.happened(
       "KeyF",
-      o.create(r.create(() => {
+      n.create(i.create(() => {
         s.give("search");
       }))
-    ), (l, p) => (g(), U(ge, { name: "search" }, {
-      default: w(() => [
-        b("div", bc, [
-          m(ae, {
+    ), (l, d) => (openBlock(), createBlock(_sfc_main$v, { name: "search" }, {
+      default: withCtx(() => [
+        createElementVNode("div", _hoisted_1$j, [
+          createVNode(_sfc_main$m, {
             ref_key: "inputRef",
             ref: c,
             modelValue: h.value,
-            "onUpdate:modelValue": p[0] || (p[0] = (v) => h.value = v),
+            "onUpdate:modelValue": d[0] || (d[0] = (m) => h.value = m),
             class: "mb-2 e2e-query-input",
             placeholder: l.$t("general.specifyQuery")
           }, null, 8, ["modelValue", "placeholder"]),
-          d(u).length ? (g(), y("div", wc, [
-            (g(!0), y(W, null, J(d(u), (v) => (g(), y("div", {
-              key: v.name,
+          unref(u).length ? (openBlock(), createElementBlock("div", _hoisted_2$b, [
+            (openBlock(!0), createElementBlock(Fragment, null, renderList(unref(u), (m) => (openBlock(), createElementBlock("div", {
+              key: m.name,
               class: "cursor-pointer",
-              onClick: we((f) => {
-                d(i).give(v), d(s).give("");
+              onClick: withModifiers((p) => {
+                unref(o).give(m), unref(s).give("");
               }, ["prevent"])
             }, [
-              b("b", {
+              createElementVNode("b", {
                 class: "AppSearch-ItemName",
-                innerHTML: v.name
-              }, null, 8, Cc),
-              v.additionalName ? (g(), y("b", {
+                innerHTML: m.name
+              }, null, 8, _hoisted_4$7),
+              m.additionalName ? (openBlock(), createElementBlock("b", {
                 key: 0,
                 class: "AppSearch-ItemName",
-                innerHTML: v.additionalName
-              }, null, 8, _c)) : S("", !0),
-              v.additionalFields ? (g(), y("div", {
+                innerHTML: m.additionalName
+              }, null, 8, _hoisted_5$4)) : createCommentVNode("", !0),
+              m.additionalFields ? (openBlock(), createElementBlock("div", {
                 key: 1,
-                innerHTML: Object.values(v.additionalFields).join(" ")
-              }, null, 8, $c)) : S("", !0)
-            ], 8, xc))), 128))
-          ])) : h.value ? (g(), y("div", kc, C(l.$t("general.noResults")), 1)) : (g(), y("div", Mc, C(l.$t("general.resultsWillBeHere")), 1))
+                innerHTML: Object.values(m.additionalFields).join(" ")
+              }, null, 8, _hoisted_6$3)) : createCommentVNode("", !0)
+            ], 8, _hoisted_3$9))), 128))
+          ])) : h.value ? (openBlock(), createElementBlock("div", _hoisted_7$3, toDisplayString(l.$t("general.noResults")), 1)) : (openBlock(), createElementBlock("div", _hoisted_8$3, toDisplayString(l.$t("general.resultsWillBeHere")), 1))
         ])
       ]),
       _: 1
     }));
   }
-}), Sc = { class: "AppTypes" }, Tc = /* @__PURE__ */ b("div", { class: "text-md font-bold mb-2" }, "Родительские типы", -1), Ic = { class: "flex gap-2 items-end" }, jc = { class: "AppTypesParent-ItemTitle" }, Bc = ["innerHTML"], Oc = /* @__PURE__ */ E({
+}), _hoisted_1$i = { class: "AppTypes" }, _hoisted_2$a = /* @__PURE__ */ createElementVNode("div", { class: "text-md font-bold mb-2" }, "Родительские типы", -1), _hoisted_3$8 = { class: "flex gap-2 items-end" }, _hoisted_4$6 = { class: "AppTypesParent-ItemTitle" }, _hoisted_5$3 = ["innerHTML"], _sfc_main$k = /* @__PURE__ */ defineComponent({
   __name: "AppTypesParent",
-  setup(n) {
-    const { parentTypes: e, mapType: t } = Q(), { svgMapTypeImage: s } = Z(), i = e.types(new T()).ref(), r = Oe(() => {
-      var o;
-      return (o = i.value) == null ? void 0 : o.map((c) => ({
+  setup(r) {
+    const { parentTypes: e, mapType: t } = useApplication(), { svgMapTypeImage: s } = useFactories(), o = e.types(new VueRefPatron()).ref(), i = computed(() => {
+      var n;
+      return (n = o.value) == null ? void 0 : n.map((c) => ({
         type: c,
         image: s.create(c).markup()
       })).sort((c, a) => +(c.type.name >= a.type.name));
     });
-    return (o, c) => (g(), U(ge, { name: "parentTypes" }, {
-      default: w(() => [
-        b("div", Sc, [
-          Tc,
-          b("div", Ic, [
-            (g(!0), y(W, null, J(r.value, (a) => (g(), y("div", {
+    return (n, c) => (openBlock(), createBlock(_sfc_main$v, { name: "parentTypes" }, {
+      default: withCtx(() => [
+        createElementVNode("div", _hoisted_1$i, [
+          _hoisted_2$a,
+          createElementVNode("div", _hoisted_3$8, [
+            (openBlock(!0), createElementBlock(Fragment, null, renderList(i.value, (a) => (openBlock(), createElementBlock("div", {
               key: a.type.name,
               class: "flex flex-col gap-2"
             }, [
-              b("div", jc, C(a.type.name), 1),
-              b("div", {
+              createElementVNode("div", _hoisted_4$6, toDisplayString(a.type.name), 1),
+              createElementVNode("div", {
                 class: "AppTypesParent-ItemImage",
                 innerHTML: a.image,
-                style: ce(`width:${a.type.width}px;height:${a.type.height}px`)
-              }, null, 12, Bc),
-              m(P, {
+                style: normalizeStyle(`width:${a.type.width}px;height:${a.type.height}px`)
+              }, null, 12, _hoisted_5$3),
+              createVNode(_sfc_main$s, {
                 class: "AppTypesParent-ItemButton e2e-add-preset-type",
                 type: "success",
                 size: "sm",
-                onClick: (h) => d(t).give({ name: a.type.name, type: a.type })
+                onClick: (h) => unref(t).give({ name: a.type.name, type: a.type })
               }, {
-                default: w(() => [
-                  O(C(o.$t("general.addToMap")), 1)
+                default: withCtx(() => [
+                  createTextVNode(toDisplayString(n.$t("general.addToMap")), 1)
                 ]),
                 _: 2
               }, 1032, ["onClick"])
@@ -3699,16 +3699,16 @@ const bc = { class: "AppSearch" }, wc = {
     }));
   }
 });
-class Fs {
+class VueComputedPatron {
   constructor(e, t = void 0) {
-    $(this, "innerRef");
-    this.executor = e, this.innerRef = te(t);
+    b(this, "innerRef");
+    this.executor = e, this.innerRef = ref(t);
   }
   ref() {
     return this.executor(this.innerRef), this.innerRef;
   }
 }
-const Pc = { class: "flex gap-2" }, at = /* @__PURE__ */ E({
+const _hoisted_1$h = { class: "flex gap-2" }, _sfc_main$j = /* @__PURE__ */ defineComponent({
   __name: "BaseCheckbox",
   props: {
     modelValue: {
@@ -3720,38 +3720,38 @@ const Pc = { class: "flex gap-2" }, at = /* @__PURE__ */ E({
     }
   },
   emits: ["update:modelValue"],
-  setup(n, { emit: e }) {
-    const i = Qe(n, "modelValue", e);
-    return (r, o) => (g(), y("label", Pc, [
-      Le(b("input", {
-        "onUpdate:modelValue": o[0] || (o[0] = (c) => je(i) ? i.value = c : null),
+  setup(r, { emit: e }) {
+    const o = useVModel(r, "modelValue", e);
+    return (i, n) => (openBlock(), createElementBlock("label", _hoisted_1$h, [
+      withDirectives(createElementVNode("input", {
+        "onUpdate:modelValue": n[0] || (n[0] = (c) => isRef(o) ? o.value = c : null),
         type: "checkbox"
       }, null, 512), [
-        [Is, d(i)]
+        [vModelCheckbox, unref(o)]
       ]),
-      r.$slots.default ? K(r.$slots, "default", { key: 0 }) : (g(), y(W, { key: 1 }, [
-        O(C(n.label), 1)
+      i.$slots.default ? renderSlot(i.$slots, "default", { key: 0 }) : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
+        createTextVNode(toDisplayString(r.label), 1)
       ], 64))
     ]));
   }
-}), Xe = (n, e) => {
-  const t = n.__vccOpts || n;
-  for (const [s, i] of e)
-    t[s] = i;
+}), _export_sfc = (r, e) => {
+  const t = r.__vccOpts || r;
+  for (const [s, o] of e)
+    t[s] = o;
   return t;
-}, Ec = {}, Dc = { class: "text-sm font-bold" };
-function Rc(n, e) {
-  return g(), y("div", Dc, [
-    K(n.$slots, "default")
+}, _sfc_main$i = {}, _hoisted_1$g = { class: "text-sm font-bold" };
+function _sfc_render$3(r, e) {
+  return openBlock(), createElementBlock("div", _hoisted_1$g, [
+    renderSlot(r.$slots, "default")
   ]);
 }
-const Y = /* @__PURE__ */ Xe(Ec, [["render", Rc]]), Hc = {}, Nc = { class: "mb-2" };
-function Vc(n, e) {
-  return g(), y("div", Nc, [
-    K(n.$slots, "default")
+const BaseInputTitle = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$3]]), _sfc_main$h = {}, _hoisted_1$f = { class: "mb-2" };
+function _sfc_render$2(r, e) {
+  return openBlock(), createElementBlock("div", _hoisted_1$f, [
+    renderSlot(r.$slots, "default")
   ]);
 }
-const ee = /* @__PURE__ */ Xe(Hc, [["render", Vc]]), zc = { class: "rounded-main p-2 border border-solid border-body-dark" }, Uc = { class: "flex gap-2 p-2 bg-white border border-solid border-body-dark rounded-main" }, ze = /* @__PURE__ */ E({
+const BaseInputRow = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$2]]), _hoisted_1$e = { class: "rounded-main p-2 border border-solid border-body-dark" }, _hoisted_2$9 = { class: "flex gap-2 p-2 bg-white border border-solid border-body-dark rounded-main" }, _sfc_main$g = /* @__PURE__ */ defineComponent({
   __name: "BaseEditor",
   props: {
     modelValue: {
@@ -3760,49 +3760,49 @@ const ee = /* @__PURE__ */ Xe(Hc, [["render", Vc]]), zc = { class: "rounded-main
     }
   },
   emits: ["update:modelValue"],
-  setup(n, { emit: e }) {
-    const t = n, s = e, i = si({
+  setup(r, { emit: e }) {
+    const t = r, s = e, o = useEditor({
       content: t.modelValue,
       extensions: [
-        ri
+        StarterKit
       ],
       onUpdate: () => {
-        i.value && s("update:modelValue", i.value.getHTML());
+        o.value && s("update:modelValue", o.value.getHTML());
       }
     });
-    return js(() => {
-      var r;
-      (r = i.value) == null || r.destroy();
-    }), Be(() => t.modelValue, (r) => {
-      !i.value || i.value.getHTML() === r || i.value.commands.setContent(r, !1);
-    }), (r, o) => (g(), y("div", zc, [
-      m(d(ii), { editor: d(i) }, null, 8, ["editor"]),
-      d(i) ? (g(), U(d(ni), {
+    return onBeforeUnmount(() => {
+      var i;
+      (i = o.value) == null || i.destroy();
+    }), watch(() => t.modelValue, (i) => {
+      !o.value || o.value.getHTML() === i || o.value.commands.setContent(i, !1);
+    }), (i, n) => (openBlock(), createElementBlock("div", _hoisted_1$e, [
+      createVNode(unref(EditorContent), { editor: unref(o) }, null, 8, ["editor"]),
+      unref(o) ? (openBlock(), createBlock(unref(BubbleMenu), {
         key: 0,
-        editor: d(i),
+        editor: unref(o),
         "tippy-options": { duration: 100 }
       }, {
-        default: w(() => [
-          b("div", Uc, [
-            b("button", {
-              onClick: o[0] || (o[0] = (c) => d(i).chain().focus().toggleBold().run()),
-              class: se({ "font-bold": d(i).isActive("bold") })
+        default: withCtx(() => [
+          createElementVNode("div", _hoisted_2$9, [
+            createElementVNode("button", {
+              onClick: n[0] || (n[0] = (c) => unref(o).chain().focus().toggleBold().run()),
+              class: normalizeClass({ "font-bold": unref(o).isActive("bold") })
             }, " bold ", 2),
-            b("button", {
-              onClick: o[1] || (o[1] = (c) => d(i).chain().focus().toggleItalic().run()),
-              class: se({ "font-bold": d(i).isActive("italic") })
+            createElementVNode("button", {
+              onClick: n[1] || (n[1] = (c) => unref(o).chain().focus().toggleItalic().run()),
+              class: normalizeClass({ "font-bold": unref(o).isActive("italic") })
             }, " italic ", 2),
-            b("button", {
-              onClick: o[2] || (o[2] = (c) => d(i).chain().focus().toggleStrike().run()),
-              class: se({ "font-bold": d(i).isActive("strike") })
+            createElementVNode("button", {
+              onClick: n[2] || (n[2] = (c) => unref(o).chain().focus().toggleStrike().run()),
+              class: normalizeClass({ "font-bold": unref(o).isActive("strike") })
             }, " strike ", 2)
           ])
         ]),
         _: 1
-      }, 8, ["editor"])) : S("", !0)
+      }, 8, ["editor"])) : createCommentVNode("", !0)
     ]));
   }
-}), Lc = ["value"], Qc = /* @__PURE__ */ E({
+}), _hoisted_1$d = ["value"], _sfc_main$f = /* @__PURE__ */ defineComponent({
   __name: "BaseSelect",
   props: {
     modelValue: {
@@ -3823,836 +3823,860 @@ const ee = /* @__PURE__ */ Xe(Hc, [["render", Vc]]), zc = { class: "rounded-main
     }
   },
   emits: ["update:modelValue"],
-  setup(n, { emit: e }) {
-    const t = n, i = Qe(t, "modelValue", e);
-    return (r, o) => Le((g(), y("select", {
+  setup(r, { emit: e }) {
+    const t = r, o = useVModel(t, "modelValue", e);
+    return (i, n) => withDirectives((openBlock(), createElementBlock("select", {
       label: "select",
-      "onUpdate:modelValue": o[0] || (o[0] = (c) => je(i) ? i.value = c : null),
+      "onUpdate:modelValue": n[0] || (n[0] = (c) => isRef(o) ? o.value = c : null),
       class: "block bg-white rounded-main w-full p-2 border border-solid border-body-dark"
     }, [
-      (g(!0), y(W, null, J(t.items, (c) => (g(), y("option", {
+      (openBlock(!0), createElementBlock(Fragment, null, renderList(t.items, (c) => (openBlock(), createElementBlock("option", {
         key: c[t.optionId],
         value: c[t.optionId]
-      }, C(c[t.optionLabel]), 9, Lc))), 128))
+      }, toDisplayString(c[t.optionLabel]), 9, _hoisted_1$d))), 128))
     ], 512)), [
-      [Bs, d(i)]
+      [vModelSelect, unref(o)]
     ]);
   }
-}), Wc = { class: "text-lg font-bold" }, Gc = {
+}), _hoisted_1$c = { class: "text-lg font-bold" }, _hoisted_2$8 = {
   key: 0,
   class: "flex gap-2 items-center"
-}, Kc = {
+}, _hoisted_3$7 = {
   key: 1,
   class: "flex gap-2 mt-2"
-}, Jc = { key: 0 }, qc = { key: 1 }, Yc = {
+}, _hoisted_4$5 = { key: 0 }, _hoisted_5$2 = { key: 1 }, _hoisted_6$2 = {
   key: 0,
   class: "flex flex-col gap-2"
-}, Zc = { class: "FormObject-Inner" }, Xc = { class: "FormObject-Row" }, el = { class: "FormObject-Row" }, tl = { class: "FormObject-Row" }, sl = { class: "my-2" }, il = { class: "FormObject-Title" }, nl = { class: "FormObject-Row" }, rl = { class: "FormObject-Title" }, ol = { class: "FormObject-Row" }, al = {
+}, _hoisted_7$2 = { class: "FormObject-Inner" }, _hoisted_8$2 = { class: "FormObject-Row" }, _hoisted_9$2 = { class: "FormObject-Row" }, _hoisted_10$1 = { class: "FormObject-Row" }, _hoisted_11$1 = { class: "my-2" }, _hoisted_12$1 = { class: "FormObject-Title" }, _hoisted_13$1 = { class: "FormObject-Row" }, _hoisted_14$1 = { class: "FormObject-Title" }, _hoisted_15$1 = { class: "FormObject-Row" }, _hoisted_16$1 = {
   key: 0,
   class: "FormObject-ArrowName"
-}, cl = { class: "py-3 flex gap-1" }, ll = /* @__PURE__ */ E({
+}, _hoisted_17$1 = { class: "py-3 flex gap-1" }, _sfc_main$e = /* @__PURE__ */ defineComponent({
   __name: "FormObject",
-  setup(n) {
-    const e = ls("FormObject"), {
+  setup(r) {
+    const e = debug("FormObject"), {
       mapObjectCurrent: t,
       mapFile: s,
-      mapObject: i,
-      mapCurrent: r,
-      drawer: o,
+      mapObject: o,
+      mapCurrent: i,
+      drawer: n,
       mapObjectRemoved: c,
       mapObjectRelationRemoved: a,
       mapObjectUrl: h,
       controlCombo: u
-    } = Q(), {
+    } = useApplication(), {
       patron: l,
-      chain: p,
-      guest: v
-    } = Z(), f = new Fs(() => {
-      const B = p.create();
-      t.objectId(l.create(B.guestKey("objectId"))), s.currentMap(l.create(B.guestKey("map"))), B.value(l.create(
-        v.create(({ map: F, objectId: M }) => {
-          e("object opened", M), f.value = F.objects[M];
+      chain: d,
+      guest: m
+    } = useFactories(), p = new VueComputedPatron(() => {
+      const _ = d.create();
+      t.objectId(l.create(_.guestKey("objectId"))), s.currentMap(l.create(_.guestKey("map"))), _.value(l.create(
+        m.create(({ map: w, objectId: A }) => {
+          e("object opened", A), p.value = w.objects[A];
         })
       ));
-    }).ref(), x = r.types(new T()).ref(), A = s.currentMap(new T()).ref(), k = new At(f), j = h.url(k, new T()).ref(), G = () => {
-      t.give(""), o.give("");
-    }, R = () => {
-      c.give(f.value), G();
-    }, re = () => {
-      i.give({
-        ...f.value,
-        outlink: f.value.outlink || j.value
-      }), G();
-    }, D = (B) => {
+    }).ref(), g = i.types(new VueRefPatron()).ref(), f = s.currentMap(new VueRefPatron()).ref(), v = new VueSource(p), y = h.url(v, new VueRefPatron()).ref(), x = () => {
+      t.give(""), n.give("");
+    }, $ = () => {
+      c.give(p.value), x();
+    }, F = () => {
+      o.give({
+        ...p.value,
+        outlink: p.value.outlink || y.value
+      }), x();
+    }, C = (_) => {
       a.give({
-        index: B,
-        object: f.value
+        index: _,
+        object: p.value
       });
     };
-    return u.happenedConditional(
+    u.happenedConditional(
       "KeyS",
-      o.openedByName("object"),
-      l.create(v.create(re))
-    ), (B, F) => (g(), U(vt, {
+      n.openedByName("object"),
+      l.create(m.create(F))
+    );
+    const k = ref(!0);
+    return (_, w) => (openBlock(), createBlock(_sfc_main$r, {
       name: "object",
-      onClose: G
+      onClose: x
     }, {
-      header: w(() => [
-        b("h2", Wc, C(B.$t("general.mapObject")), 1),
-        d(f) ? (g(), y("small", Gc, [
-          b("span", null, " ID #" + C(d(f).id), 1)
-        ])) : S("", !0),
-        d(f) ? (g(), y("div", Kc, [
-          d(f).createTimestamp ? (g(), y("div", Jc, " Создан: " + C(new Date(d(f).createTimestamp).toLocaleString()), 1)) : S("", !0),
-          d(f).changeTimestamp ? (g(), y("div", qc, " Изменен: " + C(new Date(d(f).changeTimestamp).toLocaleString()), 1)) : S("", !0)
-        ])) : S("", !0)
+      header: withCtx(() => [
+        createElementVNode("h2", _hoisted_1$c, toDisplayString(_.$t("general.mapObject")), 1),
+        unref(p) ? (openBlock(), createElementBlock("small", _hoisted_2$8, [
+          createElementVNode("span", null, " ID #" + toDisplayString(unref(p).id), 1)
+        ])) : createCommentVNode("", !0),
+        unref(p) ? (openBlock(), createElementBlock("div", _hoisted_3$7, [
+          unref(p).createTimestamp ? (openBlock(), createElementBlock("div", _hoisted_4$5, " Создан: " + toDisplayString(new Date(unref(p).createTimestamp).toLocaleString()), 1)) : createCommentVNode("", !0),
+          unref(p).changeTimestamp ? (openBlock(), createElementBlock("div", _hoisted_5$2, " Изменен: " + toDisplayString(new Date(unref(p).changeTimestamp).toLocaleString()), 1)) : createCommentVNode("", !0)
+        ])) : createCommentVNode("", !0)
       ]),
-      footer: w(() => [
-        b("div", cl, [
-          m(P, {
+      footer: withCtx(() => [
+        createElementVNode("div", _hoisted_17$1, [
+          createVNode(_sfc_main$s, {
             type: "success",
-            onClick: re
+            onClick: F
           }, {
-            default: w(() => [
-              O(C(B.$t("general.save")), 1)
+            default: withCtx(() => [
+              createTextVNode(toDisplayString(_.$t("general.save")), 1)
             ]),
             _: 1
           }),
-          m(P, {
+          createVNode(_sfc_main$s, {
             type: "danger",
-            onClick: R
+            onClick: $
           }, {
-            default: w(() => [
-              O(C(B.$t("general.delete")), 1)
+            default: withCtx(() => [
+              createTextVNode(toDisplayString(_.$t("general.delete")), 1)
             ]),
             _: 1
           }),
-          m(P, { onClick: G }, {
-            default: w(() => [
-              O(C(B.$t("general.cancel")), 1)
+          createVNode(_sfc_main$s, { onClick: x }, {
+            default: withCtx(() => [
+              createTextVNode(toDisplayString(_.$t("general.cancel")), 1)
             ]),
             _: 1
           })
         ])
       ]),
-      default: w(() => [
-        d(f) ? (g(), y("div", Yc, [
-          b("div", Zc, [
-            b("div", Xc, [
-              m(at, {
-                modelValue: d(f).linked,
-                "onUpdate:modelValue": F[0] || (F[0] = (M) => d(f).linked = M),
-                label: B.$t("general.nameAsLink")
+      default: withCtx(() => [
+        unref(p) ? (openBlock(), createElementBlock("div", _hoisted_6$2, [
+          createElementVNode("div", _hoisted_7$2, [
+            createElementVNode("div", _hoisted_8$2, [
+              createVNode(_sfc_main$j, {
+                modelValue: unref(p).linked,
+                "onUpdate:modelValue": w[0] || (w[0] = (A) => unref(p).linked = A),
+                label: _.$t("general.nameAsLink")
               }, null, 8, ["modelValue", "label"])
             ]),
-            d(f).linked ? (g(), y(W, { key: 0 }, [
-              m(Y, null, {
-                default: w(() => [
-                  O(C(B.$t("general.outerLink")), 1)
+            unref(p).linked ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+              createVNode(BaseInputTitle, null, {
+                default: withCtx(() => [
+                  createTextVNode(toDisplayString(_.$t("general.outerLink")), 1)
                 ]),
                 _: 1
               }),
-              b("div", el, [
-                m(ae, {
-                  "model-value": d(f).outlink || d(j),
-                  "onUpdate:modelValue": F[1] || (F[1] = (M) => d(f).outlink = M)
+              createElementVNode("div", _hoisted_9$2, [
+                createVNode(_sfc_main$m, {
+                  "model-value": unref(p).outlink || unref(y),
+                  "onUpdate:modelValue": w[1] || (w[1] = (A) => unref(p).outlink = A)
                 }, null, 8, ["model-value"])
               ]),
-              b("div", tl, [
-                m(at, {
-                  modelValue: d(f).targetBlank,
-                  "onUpdate:modelValue": F[2] || (F[2] = (M) => d(f).targetBlank = M),
-                  label: B.$t("general.inNewTab")
+              createElementVNode("div", _hoisted_10$1, [
+                createVNode(_sfc_main$j, {
+                  modelValue: unref(p).targetBlank,
+                  "onUpdate:modelValue": w[2] || (w[2] = (A) => unref(p).targetBlank = A),
+                  label: _.$t("general.inNewTab")
                 }, null, 8, ["modelValue", "label"])
               ])
-            ], 64)) : S("", !0),
-            (g(!0), y(W, null, J(d(f).additionalFields, (M, X) => (g(), U(ee, {
+            ], 64)) : createCommentVNode("", !0),
+            (openBlock(!0), createElementBlock(Fragment, null, renderList(unref(p).additionalFields, (A, S) => (openBlock(), createBlock(BaseInputRow, {
               class: "mb-2",
-              key: X
+              key: S
             }, {
-              default: w(() => [
-                m(Y, { class: "mb-1" }, {
-                  default: w(() => [
-                    O(C(X), 1)
+              default: withCtx(() => [
+                createVNode(BaseInputTitle, { class: "mb-1" }, {
+                  default: withCtx(() => [
+                    createTextVNode(toDisplayString(S), 1)
                   ]),
                   _: 2
                 }, 1024),
-                m(ze, {
-                  modelValue: d(f).additionalFields[X],
-                  "onUpdate:modelValue": (le) => d(f).additionalFields[X] = le
-                }, null, 8, ["modelValue", "onUpdate:modelValue"])
+                k.value ? (openBlock(), createBlock(_sfc_main$g, {
+                  key: 0,
+                  modelValue: unref(p).additionalFields[S],
+                  "onUpdate:modelValue": (B) => unref(p).additionalFields[S] = B
+                }, null, 8, ["modelValue", "onUpdate:modelValue"])) : (openBlock(), createBlock(_sfc_main$u, {
+                  key: 1,
+                  modelValue: unref(p).additionalFields[S],
+                  "onUpdate:modelValue": (B) => unref(p).additionalFields[S] = B
+                }, null, 8, ["modelValue", "onUpdate:modelValue"])),
+                createElementVNode("div", null, [
+                  createElementVNode("a", {
+                    href: "#",
+                    onClick: w[3] || (w[3] = (B) => k.value = !0)
+                  }, "Editor"),
+                  createTextVNode(" | "),
+                  createElementVNode("a", {
+                    href: "#",
+                    onClick: w[4] || (w[4] = (B) => k.value = !1)
+                  }, "HTML")
+                ])
               ]),
               _: 2
             }, 1024))), 128)),
-            m(ee, null, {
-              default: w(() => [
-                m(Y, null, {
-                  default: w(() => [
-                    O(C(B.$t("general.topName")), 1)
+            createVNode(BaseInputRow, null, {
+              default: withCtx(() => [
+                createVNode(BaseInputTitle, null, {
+                  default: withCtx(() => [
+                    createTextVNode(toDisplayString(_.$t("general.topName")), 1)
                   ]),
                   _: 1
                 }),
-                m(ze, {
-                  modelValue: d(f).additionalName,
-                  "onUpdate:modelValue": F[3] || (F[3] = (M) => d(f).additionalName = M)
+                createVNode(_sfc_main$g, {
+                  modelValue: unref(p).additionalName,
+                  "onUpdate:modelValue": w[5] || (w[5] = (A) => unref(p).additionalName = A)
                 }, null, 8, ["modelValue"])
               ]),
               _: 1
             }),
-            m(ee, null, {
-              default: w(() => [
-                m(Y, null, {
-                  default: w(() => [
-                    O(C(B.$t("general.bottomName")), 1)
+            createVNode(BaseInputRow, null, {
+              default: withCtx(() => [
+                createVNode(BaseInputTitle, null, {
+                  default: withCtx(() => [
+                    createTextVNode(toDisplayString(_.$t("general.bottomName")), 1)
                   ]),
                   _: 1
                 }),
-                m(ze, {
-                  modelValue: d(f).name,
-                  "onUpdate:modelValue": F[4] || (F[4] = (M) => d(f).name = M)
+                createVNode(_sfc_main$g, {
+                  modelValue: unref(p).name,
+                  "onUpdate:modelValue": w[6] || (w[6] = (A) => unref(p).name = A)
                 }, null, 8, ["modelValue"])
               ]),
               _: 1
             }),
-            m(ee, null, {
-              default: w(() => [
-                m(Y, null, {
-                  default: w(() => [
-                    O(C(B.$t("general.description")), 1)
+            createVNode(BaseInputRow, null, {
+              default: withCtx(() => [
+                createVNode(BaseInputTitle, null, {
+                  default: withCtx(() => [
+                    createTextVNode(toDisplayString(_.$t("general.description")), 1)
                   ]),
                   _: 1
                 }),
-                m(ze, {
-                  modelValue: d(f).description,
-                  "onUpdate:modelValue": F[5] || (F[5] = (M) => d(f).description = M)
+                createVNode(_sfc_main$g, {
+                  modelValue: unref(p).description,
+                  "onUpdate:modelValue": w[7] || (w[7] = (A) => unref(p).description = A)
                 }, null, 8, ["modelValue"])
               ]),
               _: 1
             }),
-            m(ee, null, {
-              default: w(() => [
-                m(Y, null, {
-                  default: w(() => [
-                    O(" Z-Index ")
+            createVNode(BaseInputRow, null, {
+              default: withCtx(() => [
+                createVNode(BaseInputTitle, null, {
+                  default: withCtx(() => [
+                    createTextVNode(" Z-Index ")
                   ]),
                   _: 1
                 }),
-                m(ae, {
-                  modelValue: d(f).zindex,
-                  "onUpdate:modelValue": F[6] || (F[6] = (M) => d(f).zindex = M),
+                createVNode(_sfc_main$m, {
+                  modelValue: unref(p).zindex,
+                  "onUpdate:modelValue": w[8] || (w[8] = (A) => unref(p).zindex = A),
                   type: "number"
                 }, null, 8, ["modelValue"])
               ]),
               _: 1
             }),
-            m(ee, null, {
-              default: w(() => [
-                m(Y, null, {
-                  default: w(() => [
-                    O(" Width ")
+            createVNode(BaseInputRow, null, {
+              default: withCtx(() => [
+                createVNode(BaseInputTitle, null, {
+                  default: withCtx(() => [
+                    createTextVNode(" Width ")
                   ]),
                   _: 1
                 }),
-                m(ae, {
-                  modelValue: d(f).width,
-                  "onUpdate:modelValue": F[7] || (F[7] = (M) => d(f).width = M),
+                createVNode(_sfc_main$m, {
+                  modelValue: unref(p).width,
+                  "onUpdate:modelValue": w[9] || (w[9] = (A) => unref(p).width = A),
                   step: "20",
                   type: "number"
                 }, null, 8, ["modelValue"])
               ]),
               _: 1
             }),
-            m(ee, null, {
-              default: w(() => [
-                m(Y, null, {
-                  default: w(() => [
-                    O(" Height ")
+            createVNode(BaseInputRow, null, {
+              default: withCtx(() => [
+                createVNode(BaseInputTitle, null, {
+                  default: withCtx(() => [
+                    createTextVNode(" Height ")
                   ]),
                   _: 1
                 }),
-                m(ae, {
-                  modelValue: d(f).height,
-                  "onUpdate:modelValue": F[8] || (F[8] = (M) => d(f).height = M),
+                createVNode(_sfc_main$m, {
+                  modelValue: unref(p).height,
+                  "onUpdate:modelValue": w[10] || (w[10] = (A) => unref(p).height = A),
                   step: "20",
                   type: "number"
                 }, null, 8, ["modelValue"])
               ]),
               _: 1
             }),
-            m(ee, null, {
-              default: w(() => [
-                m(Y, null, {
-                  default: w(() => [
-                    O(C(B.$t("general.objectType")), 1)
+            createVNode(BaseInputRow, null, {
+              default: withCtx(() => [
+                createVNode(BaseInputTitle, null, {
+                  default: withCtx(() => [
+                    createTextVNode(toDisplayString(_.$t("general.objectType")), 1)
                   ]),
                   _: 1
                 }),
-                m(Qc, {
-                  modelValue: d(f).type,
-                  "onUpdate:modelValue": F[9] || (F[9] = (M) => d(f).type = M),
-                  items: d(x),
+                createVNode(_sfc_main$f, {
+                  modelValue: unref(p).type,
+                  "onUpdate:modelValue": w[11] || (w[11] = (A) => unref(p).type = A),
+                  items: unref(g),
                   "option-id": "id",
                   "option-label": "name"
                 }, null, 8, ["modelValue", "items"])
               ]),
               _: 1
             }),
-            b("div", sl, [
-              m(at, {
-                modelValue: d(f).inMenu,
-                "onUpdate:modelValue": F[10] || (F[10] = (M) => d(f).inMenu = M),
-                label: B.$t("general.useInMenu")
+            createElementVNode("div", _hoisted_11$1, [
+              createVNode(_sfc_main$j, {
+                modelValue: unref(p).inMenu,
+                "onUpdate:modelValue": w[12] || (w[12] = (A) => unref(p).inMenu = A),
+                label: _.$t("general.useInMenu")
               }, null, 8, ["modelValue", "label"])
             ]),
-            d(f).inMenu ? (g(), y(W, { key: 1 }, [
-              b("div", il, C(B.$t("general.menuOrder")), 1),
-              b("div", nl, [
-                m(ae, {
-                  modelValue: d(f).menuOrder,
-                  "onUpdate:modelValue": F[11] || (F[11] = (M) => d(f).menuOrder = M),
+            unref(p).inMenu ? (openBlock(), createElementBlock(Fragment, { key: 1 }, [
+              createElementVNode("div", _hoisted_12$1, toDisplayString(_.$t("general.menuOrder")), 1),
+              createElementVNode("div", _hoisted_13$1, [
+                createVNode(_sfc_main$m, {
+                  modelValue: unref(p).menuOrder,
+                  "onUpdate:modelValue": w[13] || (w[13] = (A) => unref(p).menuOrder = A),
                   type: "number"
                 }, null, 8, ["modelValue"])
               ])
-            ], 64)) : S("", !0),
-            d(f).arrows && d(f).arrows.length ? (g(), y(W, { key: 2 }, [
-              b("div", rl, C(B.$t("general.relations")), 1),
-              b("div", ol, [
-                (g(!0), y(W, null, J(d(f).arrows, (M, X) => {
-                  var le;
-                  return g(), y("div", {
-                    key: M.id,
+            ], 64)) : createCommentVNode("", !0),
+            unref(p).arrows && unref(p).arrows.length ? (openBlock(), createElementBlock(Fragment, { key: 2 }, [
+              createElementVNode("div", _hoisted_14$1, toDisplayString(_.$t("general.relations")), 1),
+              createElementVNode("div", _hoisted_15$1, [
+                (openBlock(!0), createElementBlock(Fragment, null, renderList(unref(p).arrows, (A, S) => {
+                  var B;
+                  return openBlock(), createElementBlock("div", {
+                    key: A.id,
                     class: "FormObject-Arrow"
                   }, [
-                    (le = d(A)) != null && le.objects[M.id] ? (g(), y("span", al, " #" + C(X + 1) + " " + C(d(A).objects[M.id].name), 1)) : S("", !0),
-                    m(P, {
+                    (B = unref(f)) != null && B.objects[A.id] ? (openBlock(), createElementBlock("span", _hoisted_16$1, " #" + toDisplayString(S + 1) + " " + toDisplayString(unref(f).objects[A.id].name), 1)) : createCommentVNode("", !0),
+                    createVNode(_sfc_main$s, {
                       class: "FormObject-ArrowButton",
                       type: "danger",
                       size: "sm",
-                      onClick: (ye) => D(X)
+                      onClick: (T) => C(S)
                     }, {
-                      default: w(() => [
-                        O(C(B.$t("general.delete")), 1)
+                      default: withCtx(() => [
+                        createTextVNode(toDisplayString(_.$t("general.delete")), 1)
                       ]),
                       _: 2
                     }, 1032, ["onClick"])
                   ]);
                 }), 128))
               ])
-            ], 64)) : S("", !0)
+            ], 64)) : createCommentVNode("", !0)
           ])
-        ])) : S("", !0)
+        ])) : createCommentVNode("", !0)
       ]),
       _: 1
     }));
   }
-}), ul = { class: "text-lg font-bold" }, dl = {
+}), _hoisted_1$b = { class: "text-lg font-bold" }, _hoisted_2$7 = {
   key: 0,
   class: "flex flex-col"
-}, hl = { class: "flex justify-end pt-4 gap-2" }, pl = /* @__PURE__ */ E({
+}, _hoisted_3$6 = { class: "flex justify-end pt-4 gap-2" }, _sfc_main$d = /* @__PURE__ */ defineComponent({
   __name: "FormType",
-  setup(n) {
+  setup(r) {
     const {
       mapTypeCurrent: e,
       mapFile: t,
       mapType: s,
-      modal: i,
-      controlCombo: r
-    } = Q(), { patron: o, chain: c, guest: a } = Z();
+      modal: o,
+      controlCombo: i
+    } = useApplication(), { patron: n, chain: c, guest: a } = useFactories();
     e.typeId(
-      o.create(a.create((f) => {
-        f && i.give("type");
+      n.create(a.create((p) => {
+        p && o.give("type");
       }))
     );
-    const h = te(""), u = c.create(), l = new Fs(() => {
-      e.typeId(o.create(u.guestKey("typeId"))), t.currentMap(o.create(u.guestKey("map"))), u.value(o.create(
-        a.create(({ map: f, typeId: x }) => {
-          var A;
-          l.value = f.types[x], h.value = (A = l.value) == null ? void 0 : A.name;
+    const h = ref(""), u = c.create(), l = new VueComputedPatron(() => {
+      e.typeId(n.create(u.guestKey("typeId"))), t.currentMap(n.create(u.guestKey("map"))), u.value(n.create(
+        a.create(({ map: p, typeId: g }) => {
+          var f;
+          l.value = p.types[g], h.value = (f = l.value) == null ? void 0 : f.name;
         })
       ));
-    }).ref(), p = () => {
-      e.give(""), i.give(""), u.guestKey("typeId").give("");
-    }, v = () => {
+    }).ref(), d = () => {
+      e.give(""), o.give(""), u.guestKey("typeId").give("");
+    }, m = () => {
       s.give({
         name: h.value,
         type: l.value
-      }), p();
+      }), d();
     };
-    return r.happenedConditional(
+    return i.happenedConditional(
       "KeyS",
-      i.openedByName("type"),
-      o.create(a.create(v))
-    ), (f, x) => (g(), U(ge, { name: "type" }, {
-      header: w(() => [
-        b("h2", ul, C(f.$t("general.mapType")), 1)
+      o.openedByName("type"),
+      n.create(a.create(m))
+    ), (p, g) => (openBlock(), createBlock(_sfc_main$v, { name: "type" }, {
+      header: withCtx(() => [
+        createElementVNode("h2", _hoisted_1$b, toDisplayString(p.$t("general.mapType")), 1)
       ]),
-      footer: w(() => [
-        b("div", hl, [
-          m(P, {
+      footer: withCtx(() => [
+        createElementVNode("div", _hoisted_3$6, [
+          createVNode(_sfc_main$s, {
             type: "success",
-            onClick: v
+            onClick: m
           }, {
-            default: w(() => [
-              O(C(f.$t("general.save")), 1)
+            default: withCtx(() => [
+              createTextVNode(toDisplayString(p.$t("general.save")), 1)
             ]),
             _: 1
           }),
-          m(P, { onClick: p }, {
-            default: w(() => [
-              O(C(f.$t("general.cancel")), 1)
+          createVNode(_sfc_main$s, { onClick: d }, {
+            default: withCtx(() => [
+              createTextVNode(toDisplayString(p.$t("general.cancel")), 1)
             ]),
             _: 1
           })
         ])
       ]),
-      default: w(() => [
-        d(l) ? (g(), y("div", dl, [
-          m(ee, null, {
-            default: w(() => [
-              m(Y, null, {
-                default: w(() => [
-                  O(" Название типа ")
+      default: withCtx(() => [
+        unref(l) ? (openBlock(), createElementBlock("div", _hoisted_2$7, [
+          createVNode(BaseInputRow, null, {
+            default: withCtx(() => [
+              createVNode(BaseInputTitle, null, {
+                default: withCtx(() => [
+                  createTextVNode(" Название типа ")
                 ]),
                 _: 1
               }),
-              m(ae, {
-                modelValue: d(l).name,
-                "onUpdate:modelValue": x[0] || (x[0] = (A) => d(l).name = A)
+              createVNode(_sfc_main$m, {
+                modelValue: unref(l).name,
+                "onUpdate:modelValue": g[0] || (g[0] = (f) => unref(l).name = f)
               }, null, 8, ["modelValue"])
             ]),
             _: 1
           }),
-          m(ee, null, {
-            default: w(() => [
-              m(Y, null, {
-                default: w(() => [
-                  O(" SVG ")
+          createVNode(BaseInputRow, null, {
+            default: withCtx(() => [
+              createVNode(BaseInputTitle, null, {
+                default: withCtx(() => [
+                  createTextVNode(" SVG ")
                 ]),
                 _: 1
               }),
-              m(Ms, {
-                modelValue: d(l).svg,
-                "onUpdate:modelValue": x[1] || (x[1] = (A) => d(l).svg = A)
+              createVNode(_sfc_main$u, {
+                modelValue: unref(l).svg,
+                "onUpdate:modelValue": g[1] || (g[1] = (f) => unref(l).svg = f)
               }, null, 8, ["modelValue"])
             ]),
             _: 1
           }),
-          m(ee, null, {
-            default: w(() => [
-              m(Y, null, {
-                default: w(() => [
-                  O(" Ширина ")
+          createVNode(BaseInputRow, null, {
+            default: withCtx(() => [
+              createVNode(BaseInputTitle, null, {
+                default: withCtx(() => [
+                  createTextVNode(" Ширина ")
                 ]),
                 _: 1
               }),
-              m(ae, {
-                modelValue: d(l).width,
-                "onUpdate:modelValue": x[2] || (x[2] = (A) => d(l).width = A)
+              createVNode(_sfc_main$m, {
+                modelValue: unref(l).width,
+                "onUpdate:modelValue": g[2] || (g[2] = (f) => unref(l).width = f)
               }, null, 8, ["modelValue"])
             ]),
             _: 1
           }),
-          m(ee, null, {
-            default: w(() => [
-              m(Y, null, {
-                default: w(() => [
-                  O(" Высота ")
+          createVNode(BaseInputRow, null, {
+            default: withCtx(() => [
+              createVNode(BaseInputTitle, null, {
+                default: withCtx(() => [
+                  createTextVNode(" Высота ")
                 ]),
                 _: 1
               }),
-              m(ae, {
-                modelValue: d(l).height,
-                "onUpdate:modelValue": x[3] || (x[3] = (A) => d(l).height = A)
+              createVNode(_sfc_main$m, {
+                modelValue: unref(l).height,
+                "onUpdate:modelValue": g[3] || (g[3] = (f) => unref(l).height = f)
               }, null, 8, ["modelValue"])
             ]),
             _: 1
           })
-        ])) : S("", !0)
+        ])) : createCommentVNode("", !0)
       ]),
       _: 1
     }));
   }
-}), ct = I.debug("MapObjectsWithTemplates");
-class gl {
+}), localDebug$3 = browserExports.debug("MapObjectsWithTemplates");
+class MapObjectsWithTemplates {
   constructor(e, t, s) {
     this.mapObjects = e, this.map = t, this.factories = s;
   }
   objects(e) {
     const t = this.factories.chain.create();
     return this.map.types(this.factories.guestCast.create(e, t.guestKey("types"))), this.mapObjects.objects(this.factories.guestCast.create(e, t.guestKey("objects"))), t.value(
-      this.factories.guestInTheMiddle.create(e, ({ types: s, objects: i }) => {
-        ct("visible objects", i);
-        const r = i.map((o) => {
-          const c = s.find((h) => String(h.id) === String(o.type));
-          if (ct("check type existed", c), !c)
+      this.factories.guestInTheMiddle.create(e, ({ types: s, objects: o }) => {
+        localDebug$3("visible objects", o);
+        const i = o.map((n) => {
+          const c = s.find((h) => String(h.id) === String(n.type));
+          if (localDebug$3("check type existed", c), !c)
             return {
-              obj: o,
+              obj: n,
               template: ""
             };
           let { svg: a } = c;
-          return ct("type svg", a), o.additionalFields && Object.entries(o.additionalFields).forEach(([h, u]) => {
+          return localDebug$3("type svg", a), n.additionalFields && Object.entries(n.additionalFields).forEach(([h, u]) => {
             a = a.replaceAll(`\${${h}}`, u);
           }), ["width", "height"].forEach((h) => {
-            a = a.replaceAll(`\${${h}}`, o[h]);
+            a = a.replaceAll(`\${${h}}`, n[h]);
           }), {
-            obj: o,
+            obj: n,
             template: a
           };
         });
-        e.give(r);
+        e.give(i);
       })
     ), e;
   }
 }
-const fl = /* @__PURE__ */ E({
+const _sfc_main$c = /* @__PURE__ */ defineComponent({
   __name: "BaseNotify",
-  setup(n) {
-    const { notification: e } = Q(), t = e.message(new T()).ref();
-    return (s, i) => d(t) && d(t).text !== "hide" ? (g(), y("div", {
+  setup(r) {
+    const { notification: e } = useApplication(), t = e.message(new VueRefPatron()).ref();
+    return (s, o) => unref(t) && unref(t).text !== "hide" ? (openBlock(), createElementBlock("div", {
       key: 0,
-      class: se(["inline font-bold", `text-${d(t).type}-second`])
-    }, C(d(t).text), 3)) : S("", !0);
+      class: normalizeClass(["inline font-bold", `text-${unref(t).type}-second`])
+    }, toDisplayString(unref(t).text), 3)) : createCommentVNode("", !0);
   }
-}), ml = { class: "relative" }, vl = { class: "absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-1" }, Al = { class: "text-sm z-10 p-2 absolute bottom-0 left-5" }, yl = /* @__PURE__ */ Os('<div class="absolute bottom-3 shadow-standard-second shadow-md drop-shadow right-3 z-10"><div class="grid-example grid grid-rows-2 grid-cols-2 bg-standard-second border border-standard-second gap-[1px] border-t-0 border-l-0"><div class="w-[14px] h-[14px] bg-white"></div><div class="w-[14px] h-[14px] bg-white"></div><div class="w-[14px] h-[14px] bg-white"></div><div class="w-[14px] h-[14px] bg-white"></div></div></div><div class="absolute z-30 top-0 left-0 h-[18px] w-[22px] bg-white"></div>', 2), bl = ["title"], wl = { class: "font-bold" }, xl = ["title"], Cl = { class: "font-bold" }, _l = ["title"], $l = { class: "font-bold" }, kl = ["title"], Ml = { class: "font-bold" }, Fl = ["data-object-id"], Sl = { class: "absolute bottom-[100%] left-[50%] translate-x-[-50%] text-center pb-2 pointer-events-auto text-sm w-[300px]" }, Tl = ["innerHTML", "onClick"], Il = ["innerHTML"], jl = ["data-object-id", "innerHTML"], Bl = /* @__PURE__ */ E({
+}), _hoisted_1$a = { class: "relative" }, _hoisted_2$6 = { class: "absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-1" }, _hoisted_3$5 = { class: "text-sm z-10 p-2 absolute bottom-0 left-5" }, _hoisted_4$4 = /* @__PURE__ */ createStaticVNode('<div class="absolute bottom-3 shadow-standard-second shadow-md drop-shadow right-3 z-10"><div class="grid-example grid grid-rows-2 grid-cols-2 bg-standard-second border border-standard-second gap-[1px] border-t-0 border-l-0"><div class="w-[14px] h-[14px] bg-white"></div><div class="w-[14px] h-[14px] bg-white"></div><div class="w-[14px] h-[14px] bg-white"></div><div class="w-[14px] h-[14px] bg-white"></div></div></div><div class="absolute z-30 top-0 left-0 h-[18px] w-[22px] bg-white"></div>', 2), _hoisted_6$1 = ["title"], _hoisted_7$1 = { class: "font-bold" }, _hoisted_8$1 = ["title"], _hoisted_9$1 = { class: "font-bold" }, _hoisted_10 = ["title"], _hoisted_11 = { class: "font-bold" }, _hoisted_12 = ["title"], _hoisted_13 = { class: "font-bold" }, _hoisted_14 = ["data-object-id"], _hoisted_15 = { class: "absolute bottom-[100%] left-[50%] translate-x-[-50%] text-center pb-2 pointer-events-auto text-sm w-[300px]" }, _hoisted_16 = ["innerHTML", "onClick"], _hoisted_17 = ["innerHTML"], _hoisted_18 = ["data-object-id", "innerHTML"], _sfc_main$b = /* @__PURE__ */ defineComponent({
   __name: "TheEditor",
-  setup(n) {
+  setup(__props) {
     const {
-      canvas: e,
-      mapObjectsVisible: t,
-      mapCurrent: s,
-      konvaLayer: i,
-      fps: r,
-      mapCurrentID: o,
-      mapObjectUrl: c,
-      stageSize: a,
-      objectsOutsideScreen: h,
-      stagePositionByObjectId: u,
-      mapCurrentSource: l
-    } = Q(), p = Z(), v = r.value(new T()).ref(), x = new gl(
-      t,
-      s,
-      p
-    ).objects(new T([])).ref(), A = a.value(new T()).ref(), k = i.position(new T()).ref(), j = Oe(() => {
-      var ye;
-      return (ye = A.value) == null ? void 0 : ye.width;
-    }), G = new At(j), R = p.numberChunks.create(10, G).chunks(new T()).ref(), re = te();
-    as(() => {
-      e.give(re.value);
+      canvas,
+      mapObjectsVisible,
+      mapCurrent,
+      konvaLayer,
+      fps,
+      mapCurrentID,
+      mapObjectUrl,
+      stageSize,
+      objectsOutsideScreen,
+      stagePositionByObjectId,
+      mapCurrentSource
+    } = useApplication(), factories = useFactories(), fpsValue = fps.value(new VueRefPatron()).ref(), objectsWithTemplates = new MapObjectsWithTemplates(
+      mapObjectsVisible,
+      mapCurrent,
+      factories
+    ), objects = objectsWithTemplates.objects(new VueRefPatron([])).ref(), layerSize = stageSize.value(new VueRefPatron()).ref(), layerPosition = konvaLayer.position(new VueRefPatron()).ref(), layerWidth = computed(() => {
+      var r;
+      return (r = layerSize.value) == null ? void 0 : r.width;
+    }), layerWidthSource = new VueSource(layerWidth), chunks = factories.numberChunks.create(10, layerWidthSource).chunks(new VueRefPatron()).ref(), canvasWrapper = ref();
+    onMounted(() => {
+      canvas.give(canvasWrapper.value);
     });
-    const D = (ye) => {
-      c.open(ye, p.guest.create((oe) => {
-        o.give(oe);
+    const onObjectClick = (r) => {
+      mapObjectUrl.open(r, factories.guest.create((e) => {
+        mapCurrentID.give(e);
       }));
-    }, B = h.count(
+    }, hiddenOnLeftObjects = objectsOutsideScreen.count(
       { axis: "x", direction: "negative" },
-      new T()
-    ).ref(), F = h.count(
+      new VueRefPatron()
+    ).ref(), hiddenOnRightObjects = objectsOutsideScreen.count(
       { axis: "x", direction: "positive" },
-      new T()
-    ).ref(), M = h.count(
+      new VueRefPatron()
+    ).ref(), hiddenOnTopObjects = objectsOutsideScreen.count(
       { axis: "y", direction: "negative" },
-      new T()
-    ).ref(), X = h.count(
+      new VueRefPatron()
+    ).ref(), hiddenOnBottomObjects = objectsOutsideScreen.count(
       { axis: "y", direction: "positive" },
-      new T()
-    ).ref(), le = u.move.bind(u, l);
-    return (ye, oe) => {
-      var yt, bt, wt, xt, Ct, _t, $t, kt, Mt, Ft, St, Tt;
-      return g(), y("div", ml, [
-        b("div", vl, [
-          b("div", Al, [
-            O(" Видимых объектов: " + C(d(x).length) + ", FPS: " + C(d(v)) + ", ", 1),
-            m(fl)
+      new VueRefPatron()
+    ).ref(), moveToObjectId = stagePositionByObjectId.move.bind(stagePositionByObjectId, mapCurrentSource);
+    return window.doJS = () => {
+      const html = objects.value.map((r) => r.template).join(""), regex = /<script\b[^>]*>([\s\S]*?)<\/script>/g, scripts = [];
+      let match;
+      for (; (match = regex.exec(html)) !== null; )
+        scripts.push(match[1]);
+      eval(scripts.join(""));
+    }, (r, e) => {
+      var t, s, o, i, n, c, a, h, u, l, d, m;
+      return openBlock(), createElementBlock("div", _hoisted_1$a, [
+        createElementVNode("div", _hoisted_2$6, [
+          createElementVNode("div", _hoisted_3$5, [
+            createTextVNode(" Видимых объектов: " + toDisplayString(unref(objects).length) + ", FPS: " + toDisplayString(unref(fpsValue)) + ", ", 1),
+            createVNode(_sfc_main$c)
           ]),
-          yl,
-          ((yt = d(B)) == null ? void 0 : yt.count) > 0 ? (g(), y("div", {
+          _hoisted_4$4,
+          ((t = unref(hiddenOnLeftObjects)) == null ? void 0 : t.count) > 0 ? (openBlock(), createElementBlock("div", {
             key: 0,
             class: "pointer-events-auto absolute z-30 top-0 left-4 h-[18px] bg-white flex items-center gap-1 text-body-dark text-sm cursor-pointer",
-            title: `${(bt = d(B)) == null ? void 0 : bt.count} шт. объектов левее`,
-            onClick: oe[0] || (oe[0] = (z) => d(le)(d(B).nearestObjectId))
+            title: `${(s = unref(hiddenOnLeftObjects)) == null ? void 0 : s.count} шт. объектов левее`,
+            onClick: e[0] || (e[0] = (p) => unref(moveToObjectId)(unref(hiddenOnLeftObjects).nearestObjectId))
           }, [
-            m(q, { icon: "fa-arrow-left" }),
-            b("span", wl, C((wt = d(B)) == null ? void 0 : wt.count), 1)
-          ], 8, bl)) : S("", !0),
-          ((xt = d(F)) == null ? void 0 : xt.count) > 0 ? (g(), y("div", {
+            createVNode(_sfc_main$q, { icon: "fa-arrow-left" }),
+            createElementVNode("span", _hoisted_7$1, toDisplayString((o = unref(hiddenOnLeftObjects)) == null ? void 0 : o.count), 1)
+          ], 8, _hoisted_6$1)) : createCommentVNode("", !0),
+          ((i = unref(hiddenOnRightObjects)) == null ? void 0 : i.count) > 0 ? (openBlock(), createElementBlock("div", {
             key: 1,
             class: "pointer-events-auto absolute z-30 p-1 top-0 right-0 h-[18px] bg-white flex items-center gap-1 text-body-dark text-sm cursor-pointer",
-            title: `${(Ct = d(F)) == null ? void 0 : Ct.count} шт. объектов правее`,
-            onClick: oe[1] || (oe[1] = (z) => d(le)(d(F).nearestObjectId))
+            title: `${(n = unref(hiddenOnRightObjects)) == null ? void 0 : n.count} шт. объектов правее`,
+            onClick: e[1] || (e[1] = (p) => unref(moveToObjectId)(unref(hiddenOnRightObjects).nearestObjectId))
           }, [
-            b("span", Cl, C((_t = d(F)) == null ? void 0 : _t.count), 1),
-            m(q, { icon: "fa-arrow-right" })
-          ], 8, xl)) : S("", !0),
-          (($t = d(M)) == null ? void 0 : $t.count) > 0 ? (g(), y("div", {
+            createElementVNode("span", _hoisted_9$1, toDisplayString((c = unref(hiddenOnRightObjects)) == null ? void 0 : c.count), 1),
+            createVNode(_sfc_main$q, { icon: "fa-arrow-right" })
+          ], 8, _hoisted_8$1)) : createCommentVNode("", !0),
+          ((a = unref(hiddenOnTopObjects)) == null ? void 0 : a.count) > 0 ? (openBlock(), createElementBlock("div", {
             key: 2,
             class: "pointer-events-auto absolute z-30 top-[18px] left-0 w-[18px] bg-white flex flex-col leading-4 items-center gap-1 text-body-dark text-sm cursor-pointer",
-            title: `${(kt = d(M)) == null ? void 0 : kt.count} шт. объектов выше`,
-            onClick: oe[2] || (oe[2] = (z) => d(le)(d(M).nearestObjectId))
+            title: `${(h = unref(hiddenOnTopObjects)) == null ? void 0 : h.count} шт. объектов выше`,
+            onClick: e[2] || (e[2] = (p) => unref(moveToObjectId)(unref(hiddenOnTopObjects).nearestObjectId))
           }, [
-            m(q, { icon: "fa-arrow-up" }),
-            b("span", $l, C((Mt = d(M)) == null ? void 0 : Mt.count), 1)
-          ], 8, _l)) : S("", !0),
-          ((Ft = d(X)) == null ? void 0 : Ft.count) > 0 ? (g(), y("div", {
+            createVNode(_sfc_main$q, { icon: "fa-arrow-up" }),
+            createElementVNode("span", _hoisted_11, toDisplayString((u = unref(hiddenOnTopObjects)) == null ? void 0 : u.count), 1)
+          ], 8, _hoisted_10)) : createCommentVNode("", !0),
+          ((l = unref(hiddenOnBottomObjects)) == null ? void 0 : l.count) > 0 ? (openBlock(), createElementBlock("div", {
             key: 3,
             class: "pointer-events-auto absolute z-30 p-1 bottom-0 left-0 w-[18px] bg-white flex flex-col-reverse leading-4 items-center gap-1 text-body-dark text-sm cursor-pointer",
-            title: `${(St = d(X)) == null ? void 0 : St.count} шт. объектов ниже`,
-            onClick: oe[3] || (oe[3] = (z) => d(le)(d(X).nearestObjectId))
+            title: `${(d = unref(hiddenOnBottomObjects)) == null ? void 0 : d.count} шт. объектов ниже`,
+            onClick: e[3] || (e[3] = (p) => unref(moveToObjectId)(unref(hiddenOnBottomObjects).nearestObjectId))
           }, [
-            m(q, { icon: "fa-arrow-down" }),
-            b("span", Ml, C((Tt = d(X)) == null ? void 0 : Tt.count), 1)
-          ], 8, kl)) : S("", !0),
-          b("div", {
-            class: se({ "objects-container absolute top-0 left-0": !0 }),
-            style: ce({ width: `${d(A).width}px`, height: `${d(A).height}px`, transform: `translate(${d(k).x}px, ${d(k).y}px)` })
+            createVNode(_sfc_main$q, { icon: "fa-arrow-down" }),
+            createElementVNode("span", _hoisted_13, toDisplayString((m = unref(hiddenOnBottomObjects)) == null ? void 0 : m.count), 1)
+          ], 8, _hoisted_12)) : createCommentVNode("", !0),
+          createElementVNode("div", {
+            class: normalizeClass({ "objects-container absolute top-0 left-0": !0 }),
+            style: normalizeStyle({ width: `${unref(layerSize).width}px`, height: `${unref(layerSize).height}px`, transform: `translate(${unref(layerPosition).x}px, ${unref(layerPosition).y}px)` })
           }, [
-            b("div", {
+            createElementVNode("div", {
               class: "absolute flex top-0 left-0 w-full z-20 h-[20px] bg-default border-b-2 border-border text-right text-sm px-2",
-              style: ce({ transform: `translate(0, ${-d(k).y}px)` })
+              style: normalizeStyle({ transform: `translate(0, ${-unref(layerPosition).y}px)` })
             }, [
-              (g(!0), y(W, null, J(d(R), (z) => (g(), y("span", {
+              (openBlock(!0), createElementBlock(Fragment, null, renderList(unref(chunks), (p) => (openBlock(), createElementBlock("span", {
                 class: "flex-1 text-body-dark",
-                key: `horiz_${z}`
-              }, C(z) + "px", 1))), 128))
+                key: `horiz_${p}`
+              }, toDisplayString(p) + "px", 1))), 128))
             ], 4),
-            b("div", {
+            createElementVNode("div", {
               class: "absolute flex [writing-mode:vertical-lr] top-0 left-0 h-full z-20 w-[20px] bg-default border-r-2 border-border text-left text-sm py-2",
-              style: ce({ transform: `translate(${-d(k).x}px, 0)` })
+              style: normalizeStyle({ transform: `translate(${-unref(layerPosition).x}px, 0)` })
             }, [
-              (g(!0), y(W, null, J(d(R), (z) => (g(), y("span", {
+              (openBlock(!0), createElementBlock(Fragment, null, renderList(unref(chunks), (p) => (openBlock(), createElementBlock("span", {
                 class: "flex-1 rotate-180 text-body-dark",
-                key: `vert_${z}`
-              }, C(z) + "px", 1))), 128))
+                key: `vert_${p}`
+              }, toDisplayString(p) + "px", 1))), 128))
             ], 4),
-            (g(!0), y(W, null, J(d(x), (z) => (g(), y("div", {
-              key: z.obj.id,
+            (openBlock(!0), createElementBlock(Fragment, null, renderList(unref(objects), (p) => (openBlock(), createElementBlock("div", {
+              key: p.obj.id,
               class: "absolute z-10",
-              "data-object-id": z.obj.id,
-              style: ce(`width:${z.obj.width}px;height: ${z.obj.height}px;top: ${z.obj.position[1]}px;left:${z.obj.position[0]}px;z-index:${z.obj.zindex}`)
+              "data-object-id": p.obj.id,
+              style: normalizeStyle(`width:${p.obj.width}px;height: ${p.obj.height}px;top: ${p.obj.position[1]}px;left:${p.obj.position[0]}px;z-index:${p.obj.zindex}`)
             }, [
-              b("div", Sl, [
-                b("span", {
-                  innerHTML: z.obj.additionalName,
-                  class: se([z.obj.linked && "cursor-pointer underline"]),
-                  onClick: (ku) => D(z.obj)
-                }, null, 10, Tl)
+              createElementVNode("div", _hoisted_15, [
+                createElementVNode("span", {
+                  innerHTML: p.obj.additionalName,
+                  class: normalizeClass([p.obj.linked && "cursor-pointer underline"]),
+                  onClick: (g) => onObjectClick(p.obj)
+                }, null, 10, _hoisted_16)
               ]),
-              b("div", {
+              createElementVNode("div", {
                 class: "absolute top-[100%] left-[50%] translate-x-[-50%] text-center pt-2 text-sm w-[300px]",
-                innerHTML: z.obj.name
-              }, null, 8, Il),
-              b("div", {
-                "data-object-id": z.obj.id,
+                innerHTML: p.obj.name
+              }, null, 8, _hoisted_17),
+              createElementVNode("div", {
+                "data-object-id": p.obj.id,
                 class: "rendered-object",
-                innerHTML: z.template
-              }, null, 8, jl)
-            ], 12, Fl))), 128))
+                innerHTML: p.template
+              }, null, 8, _hoisted_18)
+            ], 12, _hoisted_14))), 128))
           ], 4)
         ]),
-        b("div", {
+        createElementVNode("div", {
           class: "h-full",
           ref_key: "canvasWrapper",
-          ref: re
+          ref: canvasWrapper
         }, null, 512)
       ]);
     };
   }
-}), Ol = { class: "flex flex-wrap gap-2" }, Pl = { key: 0 }, El = { key: 1 }, Dl = ["onClick"], Rl = /* @__PURE__ */ E({
+}), _hoisted_1$9 = { class: "flex flex-wrap gap-2" }, _hoisted_2$5 = { key: 0 }, _hoisted_3$4 = { key: 1 }, _hoisted_4$3 = ["onClick"], _sfc_main$a = /* @__PURE__ */ defineComponent({
   __name: "BaseBreadcrumbs",
-  setup(n) {
+  setup(r) {
     const {
       breadcrumbs: e,
       mapCurrentID: t
-    } = Q(), s = e.list(new T()).ref();
-    return (i, r) => (g(), y("div", Ol, [
-      (g(!0), y(W, null, J(d(s), (o, c) => (g(), y("span", {
+    } = useApplication(), s = e.list(new VueRefPatron()).ref();
+    return (o, i) => (openBlock(), createElementBlock("div", _hoisted_1$9, [
+      (openBlock(!0), createElementBlock(Fragment, null, renderList(unref(s), (n, c) => (openBlock(), createElementBlock("span", {
         class: "flex gap-2",
-        key: o.name
+        key: n.name
       }, [
-        c !== 0 ? (g(), y("span", Pl, "/")) : S("", !0),
-        c === d(s).length - 1 ? (g(), y("b", El, "Открыто: " + C(o.title), 1)) : (g(), y("a", {
+        c !== 0 ? (openBlock(), createElementBlock("span", _hoisted_2$5, "/")) : createCommentVNode("", !0),
+        c === unref(s).length - 1 ? (openBlock(), createElementBlock("b", _hoisted_3$4, "Открыто: " + toDisplayString(n.title), 1)) : (openBlock(), createElementBlock("a", {
           key: 2,
           href: "#",
-          onClick: we((a) => d(t).give(o.name), ["prevent"])
-        }, C(o.title), 9, Dl))
+          onClick: withModifiers((a) => unref(t).give(n.name), ["prevent"])
+        }, toDisplayString(n.title), 9, _hoisted_4$3))
       ]))), 128))
     ]));
   }
-}), Hl = { class: "flex items-center p-3 gap-3" }, Nl = { class: "ml-auto gap-1 flex" }, Vl = /* @__PURE__ */ E({
+}), _hoisted_1$8 = { class: "flex items-center p-3 gap-3" }, _hoisted_2$4 = { class: "ml-auto gap-1 flex" }, _sfc_main$9 = /* @__PURE__ */ defineComponent({
   __name: "TheHeader",
-  setup(n) {
+  setup(r) {
     const {
       drawer: e,
       modal: t,
       mapHistory: s,
-      controlCombo: i,
-      settings: r
-    } = Q(), { patron: o, guest: c } = Z(), a = s.isNextPossible(new T()).ref(), h = s.isPrevPossible(new T()).ref();
-    i.happened(
+      controlCombo: o,
+      settings: i
+    } = useApplication(), { patron: n, guest: c } = useFactories(), a = s.isNextPossible(new VueRefPatron()).ref(), h = s.isPrevPossible(new VueRefPatron()).ref();
+    o.happened(
       "KeyZ",
-      o.create(c.create(() => {
+      n.create(c.create(() => {
         h.value && s.prev();
       }))
-    ), i.happened(
+    ), o.happened(
       "KeyP",
-      o.create(c.create(() => {
+      n.create(c.create(() => {
         a.value && s.next();
       }))
     );
-    const u = new T();
-    return r.value(u), (l, p) => (g(), y("div", Hl, [
-      m(Rl, { class: "TheHeader-Breadcrumbs" }),
-      b("div", Nl, [
-        d(a) && !d(u).value.readonly ? (g(), U(P, {
+    const u = new VueRefPatron();
+    return i.value(u), (l, d) => (openBlock(), createElementBlock("div", _hoisted_1$8, [
+      createVNode(_sfc_main$a, { class: "TheHeader-Breadcrumbs" }),
+      createElementVNode("div", _hoisted_2$4, [
+        unref(a) && !unref(u).value.readonly ? (openBlock(), createBlock(_sfc_main$s, {
           key: 0,
           size: "sm",
           title: "Отменить последнее действие",
           class: "w-7 block",
-          onClick: p[0] || (p[0] = (v) => d(s).next())
+          onClick: d[0] || (d[0] = (m) => unref(s).next())
         }, {
-          default: w(() => [
-            m(q, { icon: "fa-rotate-left" })
+          default: withCtx(() => [
+            createVNode(_sfc_main$q, { icon: "fa-rotate-left" })
           ]),
           _: 1
-        })) : S("", !0),
-        d(h) && !d(u).value.readonly ? (g(), U(P, {
+        })) : createCommentVNode("", !0),
+        unref(h) && !unref(u).value.readonly ? (openBlock(), createBlock(_sfc_main$s, {
           key: 1,
           size: "sm",
           title: "Вернуть отмененное действие",
           class: "w-7 block",
-          onClick: p[1] || (p[1] = (v) => d(s).prev())
+          onClick: d[1] || (d[1] = (m) => unref(s).prev())
         }, {
-          default: w(() => [
-            m(q, { icon: "fa-rotate-right" })
+          default: withCtx(() => [
+            createVNode(_sfc_main$q, { icon: "fa-rotate-right" })
           ]),
           _: 1
-        })) : S("", !0),
-        m(P, {
+        })) : createCommentVNode("", !0),
+        createVNode(_sfc_main$s, {
           type: "success",
           size: "sm",
           class: "w-7 block e2e-open-menu",
           title: l.$t("general.menu"),
-          onClick: p[2] || (p[2] = (v) => d(e).give("menu"))
+          onClick: d[2] || (d[2] = (m) => unref(e).give("menu"))
         }, {
-          default: w(() => [
-            m(q, { icon: "fa-bars" })
+          default: withCtx(() => [
+            createVNode(_sfc_main$q, { icon: "fa-bars" })
           ]),
           _: 1
         }, 8, ["title"]),
-        m(P, {
+        createVNode(_sfc_main$s, {
           title: l.$t("general.byText"),
           type: "primary",
           size: "sm",
           class: "w-7 block",
-          onClick: p[3] || (p[3] = (v) => d(t).give("mapAsText"))
+          onClick: d[3] || (d[3] = (m) => unref(t).give("mapAsText"))
         }, {
-          default: w(() => [
-            m(q, { icon: "fa-text-width" })
+          default: withCtx(() => [
+            createVNode(_sfc_main$q, { icon: "fa-text-width" })
           ]),
           _: 1
         }, 8, ["title"]),
-        m(P, {
+        createVNode(_sfc_main$s, {
           class: "w-7 block e2e-search",
           size: "sm",
-          onClick: p[4] || (p[4] = (v) => d(t).give("search"))
+          onClick: d[4] || (d[4] = (m) => unref(t).give("search"))
         }, {
-          default: w(() => [
-            m(q, { icon: "fa-search" })
+          default: withCtx(() => [
+            createVNode(_sfc_main$q, { icon: "fa-search" })
           ]),
           _: 1
         }),
-        m(P, {
+        createVNode(_sfc_main$s, {
           size: "sm",
           title: "Все карты файла",
           class: "w-7 block",
-          onClick: p[5] || (p[5] = (v) => d(e).give("fileMaps"))
+          onClick: d[5] || (d[5] = (m) => unref(e).give("fileMaps"))
         }, {
-          default: w(() => [
-            m(q, { icon: "fa-map" })
+          default: withCtx(() => [
+            createVNode(_sfc_main$q, { icon: "fa-map" })
           ]),
           _: 1
         })
       ])
     ]));
   }
-}), zl = {}, Ul = { class: "text-lg font-bold" };
-function Ll(n, e) {
-  return g(), y("span", Ul, [
-    K(n.$slots, "default")
+}), _sfc_main$8 = {}, _hoisted_1$7 = { class: "text-lg font-bold" };
+function _sfc_render$1(r, e) {
+  return openBlock(), createElementBlock("span", _hoisted_1$7, [
+    renderSlot(r.$slots, "default")
   ]);
 }
-const Ql = /* @__PURE__ */ Xe(zl, [["render", Ll]]), Wl = { class: "flex gap-1" }, Gl = {
+const BaseTextTitle = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$1]]), _hoisted_1$6 = { class: "flex gap-1" }, _hoisted_2$3 = {
   key: 0,
   class: "TheMapAsText select-auto"
-}, Kl = ["innerHTML"], Jl = /* @__PURE__ */ E({
+}, _hoisted_3$3 = ["innerHTML"], _sfc_main$7 = /* @__PURE__ */ defineComponent({
   __name: "TheMapAsText",
-  setup(n) {
-    const { mapFile: e, mapCurrent: t } = Q(), {
+  setup(r) {
+    const { mapFile: e, mapCurrent: t } = useApplication(), {
       guest: s,
-      patron: i,
-      textOf: r,
-      textNlAsBr: o,
+      patron: o,
+      textOf: i,
+      textNlAsBr: n,
       textWithoutHTML: c
-    } = Z(), a = e.currentMap(new T()).ref(), h = te(""), u = te([]);
+    } = useFactories(), a = e.currentMap(new VueRefPatron()).ref(), h = ref(""), u = ref([]);
     t.objects(
-      i.create(
-        s.create(me((A) => {
-          u.value = A, o.create(
-            r.create(
-              A.map((k) => `<div class="TheMapAsText-Item">
-                <h3>${k.name}</h3><p>${k.additionalName || ""}</p><p>${k.description || ""}</p><p>${k.additionalFields && Object.values(k.additionalFields).join("</p><p>")}</p></div>`).join("")
+      o.create(
+        s.create(debounce$2((f) => {
+          u.value = f, n.create(
+            i.create(
+              f.map((v) => `<div class="TheMapAsText-Item">
+                <h3>${v.name}</h3><p>${v.additionalName || ""}</p><p>${v.description || ""}</p><p>${v.additionalFields && Object.values(v.additionalFields).join("</p><p>")}</p></div>`).join("")
             )
           ).asString(
-            s.create((k) => {
-              h.value = k;
+            s.create((v) => {
+              h.value = v;
             })
           );
         }, 500))
       )
     );
-    const { share: l, isSupported: p } = Ds(), v = () => {
-      p.value || alert("Sharing is not supported"), c.create(
-        r.create(
+    const { share: l, isSupported: d } = useShare(), m = () => {
+      d.value || alert("Sharing is not supported"), c.create(
+        i.create(
           h.value
         )
       ).asString(
-        s.create((A) => {
+        s.create((f) => {
           l({
-            text: A
+            text: f
           });
         })
       );
-    }, f = te(), x = () => {
-      var A, k;
+    }, p = ref(), g = () => {
+      var f, v;
       if (a.value) {
-        const j = new Range();
-        j.setStart(f.value, 0), j.setEnd(f.value, Object.values(u.value).length), (A = document.getSelection()) == null || A.removeAllRanges(), (k = document.getSelection()) == null || k.addRange(j);
+        const y = new Range();
+        y.setStart(p.value, 0), y.setEnd(p.value, Object.values(u.value).length), (f = document.getSelection()) == null || f.removeAllRanges(), (v = document.getSelection()) == null || v.addRange(y);
       }
     };
-    return (A, k) => (g(), U(ge, { name: "mapAsText" }, {
-      header: w(() => [
-        m(Ql, { class: "block mb-3" }, {
-          default: w(() => [
-            O(C(A.$t("general.mapAsText")) + " ", 1),
-            b("div", Wl, [
-              m(P, {
+    return (f, v) => (openBlock(), createBlock(_sfc_main$v, { name: "mapAsText" }, {
+      header: withCtx(() => [
+        createVNode(BaseTextTitle, { class: "block mb-3" }, {
+          default: withCtx(() => [
+            createTextVNode(toDisplayString(f.$t("general.mapAsText")) + " ", 1),
+            createElementVNode("div", _hoisted_1$6, [
+              createVNode(_sfc_main$s, {
                 size: "sm",
                 type: "success",
                 class: "font-normal",
-                onClick: v
+                onClick: m
               }, {
-                default: w(() => [
-                  O(C(A.$t("general.share")), 1)
+                default: withCtx(() => [
+                  createTextVNode(toDisplayString(f.$t("general.share")), 1)
                 ]),
                 _: 1
               }),
-              m(P, {
+              createVNode(_sfc_main$s, {
                 size: "sm",
                 type: "primary",
                 class: "font-normal",
-                onClick: x
+                onClick: g
               }, {
-                default: w(() => [
-                  O(C(A.$t("general.selectAll")), 1)
+                default: withCtx(() => [
+                  createTextVNode(toDisplayString(f.$t("general.selectAll")), 1)
                 ]),
                 _: 1
               })
@@ -4661,311 +4685,311 @@ const Ql = /* @__PURE__ */ Xe(zl, [["render", Ll]]), Wl = { class: "flex gap-1" 
           _: 1
         })
       ]),
-      default: w(() => [
-        d(a) ? (g(), y("article", Gl, [
-          b("div", {
+      default: withCtx(() => [
+        unref(a) ? (openBlock(), createElementBlock("article", _hoisted_2$3, [
+          createElementVNode("div", {
             ref_key: "textRef",
-            ref: f,
+            ref: p,
             innerHTML: h.value
-          }, null, 8, Kl)
-        ])) : S("", !0)
+          }, null, 8, _hoisted_3$3)
+        ])) : createCommentVNode("", !0)
       ]),
       _: 1
     }));
   }
-}), ql = { key: 1 }, Yl = /* @__PURE__ */ E({
+}), _hoisted_1$5 = { key: 1 }, _sfc_main$6 = /* @__PURE__ */ defineComponent({
   __name: "TheMiniMap",
-  setup(n) {
-    const { miniMap: e } = Q(), t = e.points(new T()).ref(), s = e.size(new T()).ref(), i = e.viewportSize(new T()).ref(), r = e.viewportPosition(new T()).ref();
-    return (o, c) => d(s) ? (g(), y("div", {
+  setup(r) {
+    const { miniMap: e } = useApplication(), t = e.points(new VueRefPatron()).ref(), s = e.size(new VueRefPatron()).ref(), o = e.viewportSize(new VueRefPatron()).ref(), i = e.viewportPosition(new VueRefPatron()).ref();
+    return (n, c) => unref(s) ? (openBlock(), createElementBlock("div", {
       key: 0,
-      style: ce({
-        width: `${d(s).width}px`,
-        height: `${d(s).height}px`
+      style: normalizeStyle({
+        width: `${unref(s).width}px`,
+        height: `${unref(s).height}px`
       }),
       class: "absolute pointer-events-none block bg-white bottom-[10px] mt-3 right-3 z-1 border border-solid border-body-dark"
     }, [
-      d(r) ? (g(), y("div", {
+      unref(i) ? (openBlock(), createElementBlock("div", {
         key: 0,
-        style: ce({
-          width: `${d(i).width}px`,
-          height: `${d(i).height}px`,
-          top: `${d(r).y}px`,
-          left: `${d(r).x}px`
+        style: normalizeStyle({
+          width: `${unref(o).width}px`,
+          height: `${unref(o).height}px`,
+          top: `${unref(i).y}px`,
+          left: `${unref(i).x}px`
         }),
         class: "absolute bg-primary/50"
-      }, null, 4)) : S("", !0),
-      d(t) ? (g(), y("div", ql, [
-        (g(!0), y(W, null, J(d(t), (a) => (g(), y("div", {
+      }, null, 4)) : createCommentVNode("", !0),
+      unref(t) ? (openBlock(), createElementBlock("div", _hoisted_1$5, [
+        (openBlock(!0), createElementBlock(Fragment, null, renderList(unref(t), (a) => (openBlock(), createElementBlock("div", {
           key: a.id,
           class: "absolute w-1 h-1 block bg-danger",
-          style: ce({
+          style: normalizeStyle({
             top: `${a.y}px`,
             left: `${a.x}px`,
             width: `${a.width}px`,
             height: `${a.height}px`
           })
         }, null, 4))), 128))
-      ])) : S("", !0)
-    ], 4)) : S("", !0);
+      ])) : createCommentVNode("", !0)
+    ], 4)) : createCommentVNode("", !0);
   }
-}), Zl = { class: "text-lg font-bold" }, Xl = {
+}), _hoisted_1$4 = { class: "text-lg font-bold" }, _hoisted_2$2 = {
   key: 0,
   class: "TheSettings"
-}, eu = { class: "mb-2" }, tu = { class: "TheSettings-Row" }, su = { class: "flex gap-2 mb-2" }, iu = { class: "mb-2" }, nu = { class: "mb-2" }, ru = {
+}, _hoisted_3$2 = { class: "mb-2" }, _hoisted_4$2 = { class: "TheSettings-Row" }, _hoisted_5$1 = { class: "flex gap-2 mb-2" }, _hoisted_6 = { class: "mb-2" }, _hoisted_7 = { class: "mb-2" }, _hoisted_8 = {
   href: "https://github.com/kosukhin/mind-map-creator",
   target: "_blank"
-}, ou = { class: "flex gap-2" }, au = /* @__PURE__ */ E({
+}, _hoisted_9 = { class: "flex gap-2" }, _sfc_main$5 = /* @__PURE__ */ defineComponent({
   __name: "FormSettings",
-  setup(n) {
+  setup(r) {
     const {
       modal: e,
       mapFile: t,
       mapRemoved: s,
-      mapSettings: i,
-      controlCombo: r,
-      parentNames: o,
+      mapSettings: o,
+      controlCombo: i,
+      parentNames: n,
       mapCurrentID: c
-    } = Q(), { patron: a, guest: h } = Z(), u = o.names(new T()).ref(), l = t.currentMap(new T()).ref(), p = c.id(new T()).ref(), v = () => {
+    } = useApplication(), { patron: a, guest: h } = useFactories(), u = n.names(new VueRefPatron()).ref(), l = t.currentMap(new VueRefPatron()).ref(), d = c.id(new VueRefPatron()).ref(), m = () => {
       e.give("");
-    }, f = () => {
-      i.give(l.value.settings), v();
+    }, p = () => {
+      o.give(l.value.settings), m();
     };
-    return r.happenedConditional(
+    return i.happenedConditional(
       "KeyS",
       e.openedByName("settings"),
-      a.create(h.create(f))
-    ), (x, A) => (g(), U(ge, { name: "settings" }, {
-      header: w(() => [
-        b("h2", Zl, C(x.$t("general.mapSettings")), 1)
+      a.create(h.create(p))
+    ), (g, f) => (openBlock(), createBlock(_sfc_main$v, { name: "settings" }, {
+      header: withCtx(() => [
+        createElementVNode("h2", _hoisted_1$4, toDisplayString(g.$t("general.mapSettings")), 1)
       ]),
-      default: w(() => {
-        var k;
+      default: withCtx(() => {
+        var v;
         return [
-          (k = d(l)) != null && k.settings ? (g(), y("div", Xl, [
-            b("div", eu, [
-              b("div", tu, [
-                b("div", su, [
-                  K(x.$slots, "beforeButtons"),
-                  d(u).length > 1 ? (g(), U(P, {
+          (v = unref(l)) != null && v.settings ? (openBlock(), createElementBlock("div", _hoisted_2$2, [
+            createElementVNode("div", _hoisted_3$2, [
+              createElementVNode("div", _hoisted_4$2, [
+                createElementVNode("div", _hoisted_5$1, [
+                  renderSlot(g.$slots, "beforeButtons"),
+                  unref(u).length > 1 ? (openBlock(), createBlock(_sfc_main$s, {
                     key: 0,
                     type: "primary",
                     class: "text-white",
-                    onClick: A[0] || (A[0] = (j) => d(e).give("parentTypes"))
+                    onClick: f[0] || (f[0] = (y) => unref(e).give("parentTypes"))
                   }, {
-                    default: w(() => [
-                      O(C(x.$t("general.parentTypes")), 1)
+                    default: withCtx(() => [
+                      createTextVNode(toDisplayString(g.$t("general.parentTypes")), 1)
                     ]),
                     _: 1
-                  })) : S("", !0),
-                  m(P, {
+                  })) : createCommentVNode("", !0),
+                  createVNode(_sfc_main$s, {
                     type: "primary",
                     class: "text-white",
-                    onClick: A[1] || (A[1] = (j) => d(e).give("export"))
+                    onClick: f[1] || (f[1] = (y) => unref(e).give("export"))
                   }, {
-                    default: w(() => [
-                      O(C(x.$t("general.exportOrImport")), 1)
+                    default: withCtx(() => [
+                      createTextVNode(toDisplayString(g.$t("general.exportOrImport")), 1)
                     ]),
                     _: 1
                   }),
-                  m(P, {
+                  createVNode(_sfc_main$s, {
                     type: "primary",
                     class: "text-white e2e-open-presets",
-                    onClick: A[2] || (A[2] = (j) => d(e).give("presets"))
+                    onClick: f[2] || (f[2] = (y) => unref(e).give("presets"))
                   }, {
-                    default: w(() => [
-                      O(" Пресеты ")
+                    default: withCtx(() => [
+                      createTextVNode(" Пресеты ")
                     ]),
                     _: 1
                   })
                 ])
               ]),
-              b("div", iu, [
-                b("label", null, [
-                  b("b", null, C(x.$t("general.mapName")), 1),
-                  m(ae, {
-                    modelValue: d(l).settings.title,
-                    "onUpdate:modelValue": A[3] || (A[3] = (j) => d(l).settings.title = j)
+              createElementVNode("div", _hoisted_6, [
+                createElementVNode("label", null, [
+                  createElementVNode("b", null, toDisplayString(g.$t("general.mapName")), 1),
+                  createVNode(_sfc_main$m, {
+                    modelValue: unref(l).settings.title,
+                    "onUpdate:modelValue": f[3] || (f[3] = (y) => unref(l).settings.title = y)
                   }, null, 8, ["modelValue"])
                 ])
               ]),
-              b("div", nu, [
-                b("a", ru, C(x.$t("general.githubRepo")), 1)
+              createElementVNode("div", _hoisted_7, [
+                createElementVNode("a", _hoisted_8, toDisplayString(g.$t("general.githubRepo")), 1)
               ])
             ]),
-            b("div", ou, [
-              m(P, {
+            createElementVNode("div", _hoisted_9, [
+              createVNode(_sfc_main$s, {
                 class: "TheSettings-Button",
                 type: "success",
-                onClick: A[4] || (A[4] = (j) => f())
+                onClick: f[4] || (f[4] = (y) => p())
               }, {
-                default: w(() => [
-                  O(C(x.$t("general.save")), 1)
+                default: withCtx(() => [
+                  createTextVNode(toDisplayString(g.$t("general.save")), 1)
                 ]),
                 _: 1
               }),
-              m(P, {
+              createVNode(_sfc_main$s, {
                 class: "TheSettings-Button",
-                onClick: v
+                onClick: m
               }, {
-                default: w(() => [
-                  O(C(x.$t("general.cancel")), 1)
+                default: withCtx(() => [
+                  createTextVNode(toDisplayString(g.$t("general.cancel")), 1)
                 ]),
                 _: 1
               }),
-              m(P, {
+              createVNode(_sfc_main$s, {
                 class: "TheSettings-Button",
                 type: "danger",
-                onClick: A[5] || (A[5] = (j) => {
-                  d(s).give(d(p)), v();
+                onClick: f[5] || (f[5] = (y) => {
+                  unref(s).give(unref(d)), m();
                 })
               }, {
-                default: w(() => [
-                  O(C(x.$t("general.removeMap")), 1)
+                default: withCtx(() => [
+                  createTextVNode(toDisplayString(g.$t("general.removeMap")), 1)
                 ]),
                 _: 1
               })
             ])
-          ])) : S("", !0)
+          ])) : createCommentVNode("", !0)
         ];
       }),
       _: 3
     }));
   }
-}), cu = {}, lu = { class: "BaseGroup" };
-function uu(n, e) {
-  return g(), y("div", lu, [
-    K(n.$slots, "default")
+}), _sfc_main$4 = {}, _hoisted_1$3 = { class: "BaseGroup" };
+function _sfc_render(r, e) {
+  return openBlock(), createElementBlock("div", _hoisted_1$3, [
+    renderSlot(r.$slots, "default")
   ]);
 }
-const du = /* @__PURE__ */ Xe(cu, [["render", uu]]), hu = "default", pu = /* @__PURE__ */ E({
+const BaseGroup = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render]]), type = "default", _sfc_main$3 = /* @__PURE__ */ defineComponent({
   __name: "TheLinker",
-  setup(n) {
-    const { mapObjectsLink: e } = Q(), t = e.objectIds(new T([])).ref();
-    return (s, i) => (g(), U(P, {
-      type: hu,
-      onClick: i[0] || (i[0] = (r) => d(e).startLink())
+  setup(r) {
+    const { mapObjectsLink: e } = useApplication(), t = e.objectIds(new VueRefPatron([])).ref();
+    return (s, o) => (openBlock(), createBlock(_sfc_main$s, {
+      type,
+      onClick: o[0] || (o[0] = (i) => unref(e).startLink())
     }, {
-      default: w(() => [
-        O(C(d(t).length === 1 ? "Выбиретие объект" : d(t).length === 2 ? "Второй объект" : "Связать объекты"), 1)
+      default: withCtx(() => [
+        createTextVNode(toDisplayString(unref(t).length === 1 ? "Выбиретие объект" : unref(t).length === 2 ? "Второй объект" : "Связать объекты"), 1)
       ]),
       _: 1
     }));
   }
-}), gu = { class: "flex e2e-sidebar flex-col items-center gap-3 max-h-[100%] overflow-hidden" }, fu = { class: "TheSideBar-ItemName" }, mu = ["innerHTML", "draggable", "title", "onDragend", "onDblclick"], vu = {
+}), _hoisted_1$2 = { class: "flex e2e-sidebar flex-col items-center gap-3 max-h-[100%] overflow-hidden" }, _hoisted_2$1 = { class: "TheSideBar-ItemName" }, _hoisted_3$1 = ["innerHTML", "draggable", "title", "onDragend", "onDblclick"], _hoisted_4$1 = {
   key: 0,
   class: "flex gap-1"
-}, Au = {
+}, _hoisted_5 = {
   key: 0,
   class: "mt-auto w-full p-3 pt-0"
-}, yu = /* @__PURE__ */ E({
+}, _sfc_main$2 = /* @__PURE__ */ defineComponent({
   __name: "TheSideBar",
-  setup(n) {
+  setup(r) {
     const {
       mapObjectNew: e,
       mapCurrent: t,
       mapTypeCurrent: s,
-      mapTypeRemoved: i,
-      mapTypeNew: r,
-      modal: o,
+      mapTypeRemoved: o,
+      mapTypeNew: i,
+      modal: n,
       settings: c,
       sidebarDraggable: a
-    } = Q(), h = t.types(new T()).ref(), u = te();
-    as(() => {
+    } = useApplication(), h = t.types(new VueRefPatron()).ref(), u = ref();
+    onMounted(() => {
       a.give(u.value);
     });
-    const { svgMapTypeImage: l } = Z(), p = Oe(() => {
-      var f;
-      return (f = h.value) == null ? void 0 : f.map((x) => ({
-        type: x,
-        image: l.create(x).markup()
-      })).sort((x, A) => +(x.type.name >= A.type.name));
-    }), v = new T();
-    return c.value(v), (f, x) => (g(), y("div", gu, [
-      b("div", {
+    const { svgMapTypeImage: l } = useFactories(), d = computed(() => {
+      var p;
+      return (p = h.value) == null ? void 0 : p.map((g) => ({
+        type: g,
+        image: l.create(g).markup()
+      })).sort((g, f) => +(g.type.name >= f.type.name));
+    }), m = new VueRefPatron();
+    return c.value(m), (p, g) => (openBlock(), createElementBlock("div", _hoisted_1$2, [
+      createElementVNode("div", {
         ref_key: "dragWrapperRef",
         ref: u,
         class: "flex flex-col gap-3 flex-grow w-full overflow-y-auto"
       }, [
-        (g(!0), y(W, null, J(p.value, (A, k) => (g(), y("div", {
-          key: k,
+        (openBlock(!0), createElementBlock(Fragment, null, renderList(d.value, (f, v) => (openBlock(), createElementBlock("div", {
+          key: v,
           class: "flex flex-col items-center justify-center gap-2"
         }, [
-          b("div", fu, C(A.type.name), 1),
-          b("div", {
-            innerHTML: A.image,
+          createElementVNode("div", _hoisted_2$1, toDisplayString(f.type.name), 1),
+          createElementVNode("div", {
+            innerHTML: f.image,
             class: "TheSideBar-ItemImage",
-            draggable: d(v).value.readonly ? "false" : "true",
-            style: ce(`width:${A.type.width}px;height:${A.type.height}px`),
-            title: f.$t("general.notifications.dragToCanvasToAdd"),
-            onDragend: (j) => d(e).byTypeName(A.type.id, j),
-            onDblclick: (j) => d(e).byTypeName(A.type.id, j)
-          }, null, 44, mu),
-          d(v).value.readonly ? S("", !0) : (g(), y("div", vu, [
-            m(P, {
+            draggable: unref(m).value.readonly ? "false" : "true",
+            style: normalizeStyle(`width:${f.type.width}px;height:${f.type.height}px`),
+            title: p.$t("general.notifications.dragToCanvasToAdd"),
+            onDragend: (y) => unref(e).byTypeName(f.type.id, y),
+            onDblclick: (y) => unref(e).byTypeName(f.type.id, y)
+          }, null, 44, _hoisted_3$1),
+          unref(m).value.readonly ? createCommentVNode("", !0) : (openBlock(), createElementBlock("div", _hoisted_4$1, [
+            createVNode(_sfc_main$s, {
               class: "text-white",
               size: "sm",
               type: "primary",
-              onClick: (j) => d(s).give(A.type.id)
+              onClick: (y) => unref(s).give(f.type.id)
             }, {
-              default: w(() => [
-                O(C(f.$t("general.change")), 1)
+              default: withCtx(() => [
+                createTextVNode(toDisplayString(p.$t("general.change")), 1)
               ]),
               _: 2
             }, 1032, ["onClick"]),
-            m(P, {
+            createVNode(_sfc_main$s, {
               class: "text-white",
               size: "sm",
               type: "danger",
-              onClick: (j) => d(i).give(A.type)
+              onClick: (y) => unref(o).give(f.type)
             }, {
-              default: w(() => [
-                O(C(f.$t("general.delete")), 1)
+              default: withCtx(() => [
+                createTextVNode(toDisplayString(p.$t("general.delete")), 1)
               ]),
               _: 2
             }, 1032, ["onClick"])
           ]))
         ]))), 128))
       ], 512),
-      d(v).value.readonly ? S("", !0) : (g(), y("div", Au, [
-        m(du, { class: "mb-1 grid gap-1 grid-cols-2" }, {
-          default: w(() => [
-            m(P, {
-              title: f.$t("general.addType"),
+      unref(m).value.readonly ? createCommentVNode("", !0) : (openBlock(), createElementBlock("div", _hoisted_5, [
+        createVNode(BaseGroup, { class: "mb-1 grid gap-1 grid-cols-2" }, {
+          default: withCtx(() => [
+            createVNode(_sfc_main$s, {
+              title: p.$t("general.addType"),
               type: "success",
-              onClick: x[0] || (x[0] = (A) => d(r).byName())
+              onClick: g[0] || (g[0] = (f) => unref(i).byName())
             }, {
-              default: w(() => [
-                m(q, { icon: "fa-plus-square" })
+              default: withCtx(() => [
+                createVNode(_sfc_main$q, { icon: "fa-plus-square" })
               ]),
               _: 1
             }, 8, ["title"]),
-            m(P, {
+            createVNode(_sfc_main$s, {
               class: "e2e-show-settings",
-              title: f.$t("general.settings"),
+              title: p.$t("general.settings"),
               type: "primary",
-              onClick: x[1] || (x[1] = (A) => d(o).give("settings"))
+              onClick: g[1] || (g[1] = (f) => unref(n).give("settings"))
             }, {
-              default: w(() => [
-                m(q, { icon: "fa-cog" })
+              default: withCtx(() => [
+                createVNode(_sfc_main$q, { icon: "fa-cog" })
               ]),
               _: 1
             }, 8, ["title"])
           ]),
           _: 1
         }),
-        m(pu, { class: "w-[100%] block mb-1" })
+        createVNode(_sfc_main$3, { class: "w-[100%] block mb-1" })
       ]))
     ]));
   }
-}), bu = { class: "absolute bg-body hover:bg-border cursor-pointer border-solid border-border bottom-[150px] z-10 right-3 p-3 w-15 h-15" }, wu = /* @__PURE__ */ E({
+}), _hoisted_1$1 = { class: "absolute bg-body hover:bg-border cursor-pointer border-solid border-border bottom-[150px] z-10 right-3 p-3 w-15 h-15" }, _sfc_main$1 = /* @__PURE__ */ defineComponent({
   __name: "TheSidebarButton",
-  setup(n) {
-    return (e, t) => (g(), y("div", bu, [
-      m(q, { icon: "fa-bars-staggered" })
+  setup(r) {
+    return (e, t) => (openBlock(), createElementBlock("div", _hoisted_1$1, [
+      createVNode(_sfc_main$q, { icon: "fa-bars-staggered" })
     ]));
   }
-}), xu = { class: "bg-body absolute top-0 left-0 w-full h-full" }, Cu = { class: "AppClientModal" }, _u = { class: "text-md font-bold mb-2" }, $u = { class: "flex flex-col gap-2" }, Pu = /* @__PURE__ */ E({
+}), _hoisted_1 = { class: "bg-body absolute top-0 left-0 w-full h-full" }, _hoisted_2 = { class: "AppClientModal" }, _hoisted_3 = { class: "text-md font-bold mb-2" }, _hoisted_4 = { class: "flex flex-col gap-2" }, _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "PatronSchemeEditor",
   props: {
     modelValue: {
@@ -4982,67 +5006,67 @@ const du = /* @__PURE__ */ Xe(cu, [["render", uu]]), hu = "default", pu = /* @__
     }
   },
   emits: ["update:modelValue"],
-  setup(n, { emit: e }) {
-    const t = n, s = e, { fileContent: i, settings: r, device: o } = Q(), { guest: c, patron: a } = Z();
-    r.value((l) => {
-      r.give({
+  setup(r, { emit: e }) {
+    const t = r, s = e, { fileContent: o, settings: i, device: n } = useApplication(), { guest: c, patron: a } = useFactories();
+    i.value((l) => {
+      i.give({
         ...l,
         readonly: t.readonly,
         presets: t.presets
       });
-    }), Be(() => t.modelValue, (l) => {
-      i.value(c.create((p) => {
-        l !== p && i.give(l);
+    }), watch(() => t.modelValue, (l) => {
+      o.value(c.create((d) => {
+        l !== d && o.give(l);
       }));
     }, {
       immediate: !0
-    }), i.value(a.create((l) => {
+    }), o.value(a.create((l) => {
       s("update:modelValue", l);
     }));
-    const h = te(!0), u = new T();
-    return o.value(u), o.value(new Ke((l) => {
+    const h = ref(!0), u = new VueRefPatron();
+    return n.value(u), n.value(new Patron((l) => {
       h.value = l.isDesktop;
-    })), (l, p) => (g(), y("div", xu, [
-      b("div", {
-        class: se(["grid grid-rows-[50px_1fr] h-dvh relative", { "grid-cols-[200px_1fr]": !d(u).value.isMobile, "grid-cols-[1fr]": d(u).value.isMobile }])
+    })), (l, d) => (openBlock(), createElementBlock("div", _hoisted_1, [
+      createElementVNode("div", {
+        class: normalizeClass(["grid grid-rows-[50px_1fr] h-dvh relative", { "grid-cols-[200px_1fr]": !unref(u).value.isMobile, "grid-cols-[1fr]": unref(u).value.isMobile }])
       }, [
-        m(Vl, { class: "col-span-2" }),
-        h.value ? (g(), U(yu, {
+        createVNode(_sfc_main$9, { class: "col-span-2" }),
+        h.value ? (openBlock(), createBlock(_sfc_main$2, {
           key: 0,
-          class: se({ "bg-[#f3f4f6] w-[200px] absolute top-[50px] left-0 z-10 bottom-0": d(u).value.isMobile }),
-          onClose: p[0] || (p[0] = (v) => h.value = !1)
-        }, null, 8, ["class"])) : S("", !0),
-        m(Bl, { class: "w-auto col-auto h-full" }),
-        m(Yl),
-        d(u).value.isMobile ? (g(), U(wu, {
+          class: normalizeClass({ "bg-[#f3f4f6] w-[200px] absolute top-[50px] left-0 z-10 bottom-0": unref(u).value.isMobile }),
+          onClose: d[0] || (d[0] = (m) => h.value = !1)
+        }, null, 8, ["class"])) : createCommentVNode("", !0),
+        createVNode(_sfc_main$b, { class: "w-auto col-auto h-full" }),
+        createVNode(_sfc_main$6),
+        unref(u).value.isMobile ? (openBlock(), createBlock(_sfc_main$1, {
           key: 1,
-          onClick: p[1] || (p[1] = (v) => h.value = !h.value)
-        })) : S("", !0),
-        K(l.$slots, "insideGrid")
+          onClick: d[1] || (d[1] = (m) => h.value = !h.value)
+        })) : createCommentVNode("", !0),
+        renderSlot(l.$slots, "insideGrid")
       ], 2),
-      m(ll),
-      m(pl),
-      m(au, null, {
-        beforeButtons: w(() => [
-          K(l.$slots, "beforeSettingsButtons")
+      createVNode(_sfc_main$e),
+      createVNode(_sfc_main$d),
+      createVNode(_sfc_main$5, null, {
+        beforeButtons: withCtx(() => [
+          renderSlot(l.$slots, "beforeSettingsButtons")
         ]),
         _: 3
       }),
-      m(yc),
-      m(Oc),
-      m(Za),
-      m(dc),
-      m(Jl),
-      m(Fc),
-      m(rc),
-      m(ge, { name: "custom" }, {
-        default: w(() => [
-          b("div", Cu, [
-            b("div", _u, [
-              K(l.$slots, "customModalTitle")
+      createVNode(_sfc_main$n),
+      createVNode(_sfc_main$k),
+      createVNode(_sfc_main$t),
+      createVNode(_sfc_main$o),
+      createVNode(_sfc_main$7),
+      createVNode(_sfc_main$l),
+      createVNode(_sfc_main$p),
+      createVNode(_sfc_main$v, { name: "custom" }, {
+        default: withCtx(() => [
+          createElementVNode("div", _hoisted_2, [
+            createElementVNode("div", _hoisted_3, [
+              renderSlot(l.$slots, "customModalTitle")
             ]),
-            b("div", $u, [
-              K(l.$slots, "customModalBody")
+            createElementVNode("div", _hoisted_4, [
+              renderSlot(l.$slots, "customModalBody")
             ])
           ])
         ]),
@@ -5050,31 +5074,31 @@ const du = /* @__PURE__ */ Xe(cu, [["render", uu]]), hu = "default", pu = /* @__
       })
     ]));
   }
-}), is = I.debug("FileSystemContent");
-class Eu {
+}), localDebug$2 = browserExports.debug("FileSystemContent");
+class FileSystemContent {
   constructor(e, t, s) {
-    $(this, "contentPatrons");
-    $(this, "fileHandler", null);
-    $(this, "contentSource");
+    b(this, "contentPatrons");
+    b(this, "fileHandler", null);
+    b(this, "contentSource");
     this.launchQueue = e, this.notification = t, this.factories = s, this.contentPatrons = s.pool.create(this), this.contentSource = s.sourceEmpty.create();
   }
   content(e) {
     const t = this.factories.guest.create((s) => {
       this.fileHandler = s, this.factories.fileHandlerContent.create(s).content(
-        this.factories.guest.create((i) => {
-          this.contentPatrons.distribute(i, e), this.contentSource.give(i);
+        this.factories.guest.create((o) => {
+          this.contentPatrons.distribute(o, e), this.contentSource.give(o);
         })
       );
     });
     return this.fileHandler || this.launchQueue.fileHandler(t), this.contentSource.value(e), this;
   }
   give(e) {
-    if (is("save file as content string", e), !this.fileHandler)
-      throw new Ie("Cant save file because no fileHandler");
+    if (localDebug$2("save file as content string", e), !this.fileHandler)
+      throw new RuntimeError("Cant save file because no fileHandler");
     try {
       return this.contentSource.give(e), this.factories.browserFileSaved.create(this.fileHandler).save(e), this.contentPatrons.give(e), this;
     } catch (t) {
-      throw new Ie("Cant handle receive for map file FS", { cause: t });
+      throw new RuntimeError("Cant handle receive for map file FS", { cause: t });
     } finally {
       this.notification.give({
         type: "success",
@@ -5084,26 +5108,26 @@ class Eu {
   }
   canBeUsed(e) {
     const t = "launchQueue" in window;
-    is("can be used", t);
+    localDebug$2("can be used", t);
     const s = window && window.matchMedia("(display-mode: standalone)");
     return e.give(t && s.matches), e;
   }
 }
-const Ue = I.debug("FirstPossibleFileContent");
-class Du {
+const localDebug$1 = browserExports.debug("FirstPossibleFileContent");
+class FirstPossibleFileContent {
   constructor(e, t) {
-    $(this, "firstPossibleFileContent", null);
-    $(this, "contentSource", new ue());
-    $(this, "canBeUsedSource", new ue());
-    Ue("length", e.length), e.forEach((s) => {
+    b(this, "firstPossibleFileContent", null);
+    b(this, "contentSource", new SourceEmpty());
+    b(this, "canBeUsedSource", new SourceEmpty());
+    localDebug$1("length", e.length), e.forEach((s) => {
       s.canBeUsed(
         t.patronOnce.create(
-          t.guest.create((i) => {
-            Ue("canbeused result", s, i), i && !this.firstPossibleFileContent && (this.firstPossibleFileContent = s, s.canBeUsed(t.patron.create(this.canBeUsedSource)), s.content(t.patron.create(this.contentSource)), this.contentSource.value(
-              t.patron.create((r) => {
+          t.guest.create((o) => {
+            localDebug$1("canbeused result", s, o), o && !this.firstPossibleFileContent && (this.firstPossibleFileContent = s, s.canBeUsed(t.patron.create(this.canBeUsedSource)), s.content(t.patron.create(this.contentSource)), this.contentSource.value(
+              t.patron.create((i) => {
                 s.content(
-                  t.guest.create((o) => {
-                    r !== o && s.give(r);
+                  t.guest.create((n) => {
+                    i !== n && s.give(i);
                   })
                 );
               })
@@ -5114,29 +5138,29 @@ class Du {
     });
   }
   canBeUsed(e) {
-    return Ue("can be used to", this.firstPossibleFileContent), this.canBeUsedSource.value(e), e;
+    return localDebug$1("can be used to", this.firstPossibleFileContent), this.canBeUsedSource.value(e), e;
   }
   content(e) {
-    return Ue("content to", this.firstPossibleFileContent), this.contentSource.value(e), this;
+    return localDebug$1("content to", this.firstPossibleFileContent), this.contentSource.value(e), this;
   }
   give(e) {
     return this.contentSource.give(e), this;
   }
 }
-const lt = I.debug("UrlContent");
-class Ru {
+const localDebug = browserExports.debug("UrlContent");
+class UrlContent {
   constructor(e, t) {
-    $(this, "contentCache");
+    b(this, "contentCache");
     this.notification = e, this.factories = t, this.contentCache = t.sourceEmpty.create();
   }
   canBeUsed(e) {
     if (!window)
       return e.give(!1), this;
     const t = window.location.search.indexOf("?view=") > -1;
-    if (lt("can be used", t), e.give(window.location.search.indexOf("?view=") > -1), t) {
+    if (localDebug("can be used", t), e.give(window.location.search.indexOf("?view=") > -1), t) {
       const s = window.location.search.split("=")[1] ?? "";
-      fetch(s, { redirect: "follow" }).then((i) => i.text()).then((i) => {
-        lt("received text", i), this.contentCache.give(i);
+      fetch(s, { redirect: "follow" }).then((o) => o.text()).then((o) => {
+        localDebug("received text", o), this.contentCache.give(o);
       });
     }
     return e;
@@ -5145,7 +5169,7 @@ class Ru {
     if (!window)
       return this;
     const t = window.location.search.split("=")[1] ?? "";
-    return lt("visit url", t), this.contentCache.value(this.factories.patronOnce.create(e)), this;
+    return localDebug("visit url", t), this.contentCache.value(this.factories.patronOnce.create(e)), this;
   }
   give() {
     return this.notification.give({
@@ -5154,24 +5178,24 @@ class Ru {
     }), this;
   }
 }
-const ns = new ue();
-class Hu {
+const fileHandle = new SourceEmpty();
+class BrowserLaunchQueue {
   constructor(e = window.launchQueue, t = "launchQueue" in window) {
-    $(this, "isCalculated", !1);
+    b(this, "isCalculated", !1);
     this.launchQueue = e, this.isLaunchQueueSupported = t;
   }
   fileHandler(e) {
     return this.isLaunchQueueSupported && !this.isCalculated && (this.isCalculated = !0, this.launchQueue.setConsumer((t) => {
       if (t.files && t.files.length) {
         const [s] = t.files;
-        ns.give(s);
+        fileHandle.give(s);
       }
-    })), ns.value(e), this;
+    })), fileHandle.value(e), this;
   }
 }
-class Nu {
+class StorageRecord {
   constructor(e) {
-    $(this, "source", new ue());
+    b(this, "source", new SourceEmpty());
     this.name = e;
     const t = JSON.parse(localStorage.getItem(e) || "null");
     this.source.give(t), document.addEventListener(
@@ -5196,13 +5220,13 @@ class Nu {
   }
 }
 export {
-  Hu as BrowserLaunchQueue,
-  Eu as FileSystemContent,
-  Du as FirstPossibleFileContent,
-  Pu as PatronSchemeEditor,
-  Nu as StorageRecord,
-  Ru as UrlContent,
-  T as VueRefPatron,
-  Q as useApplication,
-  Z as useFactories
+  BrowserLaunchQueue,
+  FileSystemContent,
+  FirstPossibleFileContent,
+  _sfc_main as PatronSchemeEditor,
+  StorageRecord,
+  UrlContent,
+  VueRefPatron,
+  useApplication,
+  useFactories
 };
