@@ -17,6 +17,8 @@ import BaseSelect from '@/components/BaseSelect/BaseSelect.vue';
 import { VueRefPatron } from '@/modules/integration/vue/VueRefPatron';
 import { VueSource } from '@/modules/integration/vue/VueSource';
 import debug from 'debug';
+import { ref } from 'vue';
+import BaseTextarea from '@/components/BaseTextarea/BaseTextarea.vue';
 
 const localDebug = debug('FormObject');
 
@@ -84,6 +86,8 @@ controlCombo.happenedConditional(
   drawer.openedByName('object'),
   patron.create(guest.create(save)),
 );
+
+const useEditor = ref(true);
 </script>
 
 <template>
@@ -126,7 +130,12 @@ controlCombo.happenedConditional(
           <BaseInputTitle class="mb-1">
             {{ key }}
           </BaseInputTitle>
-          <BaseEditor v-model="object.additionalFields[key]" />
+          <BaseEditor v-if="useEditor" v-model="object.additionalFields[key]" />
+          <BaseTextarea v-else v-model="object.additionalFields[key]" />
+          <div>
+            <a href="#" @click="useEditor = true">Editor</a> |
+            <a href="#" @click="useEditor = false">HTML</a>
+          </div>
         </BaseInputRow>
         <BaseInputRow>
           <BaseInputTitle>

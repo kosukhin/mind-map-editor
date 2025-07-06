@@ -83,6 +83,19 @@ const hiddenOnBottomObjects = objectsOutsideScreen.count(
 
 const moveToObjectId = stagePositionByObjectId.move.bind(stagePositionByObjectId, mapCurrentSource);
 
+(window as any).doJS = () => {
+  const html = objects.value.map((o: any) => o.template).join('');
+  const regex = /<script\b[^>]*>([\s\S]*?)<\/script>/g;
+  const scripts = [];
+  let match;
+
+  while ((match = regex.exec(html)) !== null) {
+    scripts.push(match[1]); // match[1] содержит содержимое тега
+  }
+
+  eval(scripts.join(''))
+}
+
 // For tailwind bg-body
 </script>
 
