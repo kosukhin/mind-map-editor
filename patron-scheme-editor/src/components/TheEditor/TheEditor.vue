@@ -93,7 +93,10 @@ const moveToObjectId = stagePositionByObjectId.move.bind(stagePositionByObjectId
     scripts.push(match[1]); // match[1] содержит содержимое тега
   }
 
-  eval(scripts.join(''))
+  const script = document.createElement('script');
+  script.type = 'module';
+  script.textContent = scripts.join('');
+  document.body.appendChild(script);
 }
 
 // For tailwind bg-body
@@ -171,3 +174,18 @@ const moveToObjectId = stagePositionByObjectId.move.bind(stagePositionByObjectId
     <div class="h-full" ref="canvasWrapper"></div>
   </div>
 </template>
+
+<style lang="scss">
+.objects-container {
+  .clickable {
+    pointer-events: auto;
+  }
+
+  .button {
+    @extend .clickable;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+  }
+}
+</style>
