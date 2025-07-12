@@ -21,27 +21,6 @@ import { Source } from 'patron-oop';
 import { SourceEmpty } from 'patron-oop';
 import { SourceType } from 'patron-oop';
 
-declare const __VLS_component: any;
-
-declare function __VLS_template(): {
-    slots: {
-        insideGrid?(_: {}): any;
-        beforeSettingsButtons?(_: {}): any;
-        customModalTitle?(_: {}): any;
-        customModalBody?(_: {}): any;
-    };
-    refs: {};
-    attrs: Partial<{}>;
-};
-
-declare type __VLS_TemplateResult = ReturnType<typeof __VLS_template>;
-
-declare type __VLS_WithTemplateSlots<T, S> = T & {
-    new (): {
-        $slots: S;
-    };
-};
-
 declare type ActionsType = 'empty';
 
 declare interface ArrowPathType {
@@ -966,7 +945,7 @@ declare class ParentTypes {
     types<R extends GuestObjectType<MapTypeDocument[]>>(guest: R): R;
 }
 
-export declare const PatronSchemeEditor: __VLS_WithTemplateSlots<typeof __VLS_component, __VLS_TemplateResult["slots"]>;
+export declare const PatronSchemeEditor: any;
 
 /**
  * Данные для точки с координатами
