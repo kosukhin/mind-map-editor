@@ -5,7 +5,7 @@ import { ref, defineComponent, openBlock, createBlock, Transition, withCtx, unre
 import { useScriptTag, useMagicKeys, useVModel, useShare } from "@vueuse/core";
 import Konva from "konva";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faShareNodes, faArrowUp, faArrowDown, faArrowRight, faArrowLeft, faClose, faMap, faRotateRight, faRotateLeft, faFileText, faCog, faPlusSquare, faHistory, faSearch, faTextWidth, faBarsStaggered, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBarsStaggered, faTextWidth, faSearch, faHistory, faPlusSquare, faCog, faFileText, faRotateLeft, faRotateRight, faMap, faClose, faArrowLeft, faArrowRight, faArrowDown, faArrowUp, faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { useEditor, EditorContent, BubbleMenu } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 class DocumentTitle {
