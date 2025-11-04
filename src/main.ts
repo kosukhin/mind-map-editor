@@ -1,3 +1,4 @@
+import '@dannymoerkerke/file-tree';
 import i18n from '@/plugins/i18n';
 import { registerServiceWorker } from '@/registerServiceWorker';
 import { createApp } from 'vue/dist/vue.esm-bundler';
